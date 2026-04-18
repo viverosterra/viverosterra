@@ -12,8 +12,8 @@
   <meta name="language" content="es-MX">
   <link rel="alternate" hreflang="es-MX" href="https://www.viverosterra.com">
 
-  <link rel="icon" type="image/png" href="/img/logo-viveros-terra-tampico.png">
-  <link rel="apple-touch-icon" href="/img/logo-viveros-terra-tampico.png">
+  <link rel="icon" type="image/png" href="img/logo-viveros-terra-tampico.png">
+  <link rel="apple-touch-icon" href="img/logo-viveros-terra-tampico.png">
   <!-- Open Graph / WhatsApp / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.viverosterra.com">
@@ -71,10 +71,10 @@
     .img-card:hover img{transform:scale(1.04)}
     .gallery-grid img{transition:transform .4s ease}
     .gallery-grid div:hover img{transform:scale(1.05)}
-    /* Logo rendering — negro desaparece sobre fondo blanco con multiply */
-    .logo-header{mix-blend-mode:multiply;image-rendering:crisp-edges}
-    /* En fondo oscuro (footer/hero): invertir colores → negro→blanco, verde→verde claro */
-    .logo-dark{filter:invert(1) hue-rotate(85deg) brightness(1.4) saturate(1.2)}
+    /* Logo — SVG real sin fondo */
+    .logo-light{ height:44px; width:auto; display:block; }
+    .logo-dark{ height:44px; width:auto; display:block;
+      filter: brightness(0) invert(1); }
     /* Before/After slider */
     .before-after{position:relative;overflow:hidden;border-radius:1.25rem;cursor:ew-resize;user-select:none}
     .before-after .after-img{position:absolute;inset:0;overflow:hidden}
@@ -165,11 +165,12 @@
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
   <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Navegación principal">
     <div class="flex items-center justify-between h-16">
-      <a href="/" class="flex items-center" aria-label="Viveros Terra - Inicio">
-        <img src="/img/logo-viveros-terra-tampico.png"
-             alt="Viveros Terra — Jardinería y Pasto en Rollo Tampico"
-             class="logo-header h-10 w-auto"
-             loading="eager">
+      <a href="/" class="flex items-center" aria-label="Viveros Terra — Jardinería y Pasto en Rollo Tampico">
+        <img src="img/logo-viveros-terra-tampico.svg"
+             alt="Viveros Terra — Pasto en Rollo y Jardinería en Tampico"
+             class="logo-light"
+             loading="eager"
+             fetchpriority="high">
       </a>
       <div class="hidden md:flex items-center gap-6">
         <a href="#servicios" class="text-gray-600 hover:text-primary transition-colors text-sm font-medium">Servicios</a>
@@ -208,7 +209,7 @@
 <!-- HERO con imagen real de fondo -->
 <section id="inicio" class="relative text-white overflow-hidden min-h-[85vh] flex items-center">
   <div class="absolute inset-0">
-    <img src="/img/jardineria-areas-verdes-tampico.png"
+    <img src="img/jardineria-areas-verdes-tampico.png"
          alt="Jardinería profesional y áreas verdes en Tampico por Viveros Terra"
          class="w-full h-full object-cover object-center"
          loading="eager" fetchpriority="high">
@@ -316,7 +317,7 @@
       <!-- Pasto en rollo -->
       <article class="service-card bg-white rounded-2xl shadow-sm border border-gray-100 cursor-pointer overflow-hidden reveal" onclick="window.open('https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20pasto%20en%20rollo','_blank')">
         <div class="img-card h-48">
-          <img src="/img/instalacion-pasto-rollo-san-agustin-tampico.png"
+          <img src="img/instalacion-pasto-rollo-san-agustin-tampico.png"
                alt="Instalación de pasto San Agustín en rollo en Tampico por técnico Viveros Terra"
                class="w-full h-full object-cover" loading="lazy">
         </div>
@@ -333,7 +334,7 @@
       <!-- Diseño de jardines -->
       <article class="service-card bg-white rounded-2xl shadow-sm border border-gray-100 cursor-pointer overflow-hidden reveal" onclick="window.open('https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20diseño%20de%20jardín','_blank')">
         <div class="img-card h-48">
-          <img src="/img/diseno-jardines-tampico-viveros-terra.jpg"
+          <img src="img/diseno-jardines-tampico-viveros-terra.jpg"
                alt="Diseño profesional de jardines en Tampico, Ciudad Madero y Altamira por Viveros Terra"
                class="w-full h-full object-cover" loading="lazy">
         </div>
@@ -350,7 +351,7 @@
       <!-- Sistema de riego -->
       <article class="service-card bg-white rounded-2xl shadow-sm border border-gray-100 cursor-pointer overflow-hidden reveal" onclick="window.open('https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20sistema%20de%20riego','_blank')">
         <div class="img-card h-48">
-          <img src="/img/sistema-riego-automatizado-tampico.webp"
+          <img src="img/sistema-riego-automatizado-tampico.webp"
                alt="Instalación de sistema de riego automatizado en jardín Tampico Tamaulipas"
                class="w-full h-full object-cover" loading="lazy">
         </div>
@@ -367,7 +368,7 @@
       <!-- Mantenimiento -->
       <article class="service-card bg-white rounded-2xl shadow-sm border border-gray-100 cursor-pointer overflow-hidden reveal" onclick="window.open('https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20mantenimiento','_blank')">
         <div class="img-card h-48">
-          <img src="/img/mantenimiento-jardines-poda-pasto-tampico.png"
+          <img src="img/mantenimiento-jardines-poda-pasto-tampico.png"
                alt="Mantenimiento profesional de jardines y poda de pasto en Tampico por Viveros Terra"
                class="w-full h-full object-cover object-top" loading="lazy">
         </div>
@@ -384,7 +385,7 @@
       <!-- Plantas y palmas -->
       <article class="service-card bg-white rounded-2xl shadow-sm border border-gray-100 cursor-pointer overflow-hidden reveal" onclick="window.open('https://wa.me/528333268008?text=Hola%2C%20me%20interesan%20plantas%20y%20palmas','_blank')">
         <div class="img-card h-48">
-          <img src="/img/plantas-ornamentales-tampico-viveros-terra.png"
+          <img src="img/plantas-ornamentales-tampico-viveros-terra.png"
                alt="Venta de plantas ornamentales tropicales en Tampico Viveros Terra Madero"
                class="w-full h-full object-cover" loading="lazy">
         </div>
@@ -401,7 +402,7 @@
       <!-- Pasto sintético -->
       <article class="service-card bg-white rounded-2xl shadow-sm border border-gray-100 cursor-pointer overflow-hidden reveal" onclick="window.open('https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20pasto%20sintético','_blank')">
         <div class="img-card h-48">
-          <img src="/img/pasto-sintetico-residencial-tampico.png"
+          <img src="img/pasto-sintetico-residencial-tampico.png"
                alt="Instalación pasto sintético residencial con losetas en Tampico Madero Altamira"
                class="w-full h-full object-cover" loading="lazy">
         </div>
@@ -435,32 +436,32 @@
     </div>
     <div class="gallery-grid grid grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="img-card overflow-hidden rounded-2xl h-56 col-span-2 lg:col-span-1 reveal">
-        <img src="/img/jardin-residencial-tropical-tampico.jpg"
+        <img src="img/jardin-residencial-tropical-tampico.jpg"
              alt="Jardín residencial tropical con plantas nativas diseñado por Viveros Terra en Tampico"
              class="w-full h-full object-cover" loading="lazy">
       </div>
       <div class="img-card overflow-hidden rounded-2xl h-56 reveal">
-        <img src="/img/diseno-jardines-madero-altamira-pasto.png"
+        <img src="img/diseno-jardines-madero-altamira-pasto.png"
              alt="Diseño de jardines con pasto en Madero y Altamira Tamaulipas Viveros Terra"
              class="w-full h-full object-cover" loading="lazy">
       </div>
       <div class="img-card overflow-hidden rounded-2xl h-56 reveal">
-        <img src="/img/jardin-residencial-plantas-pasto-tampico.jpg"
+        <img src="img/jardin-residencial-plantas-pasto-tampico.jpg"
              alt="Jardín residencial con plantas ornamentales y pasto San Agustín en Tampico Altamira"
              class="w-full h-full object-cover" loading="lazy">
       </div>
       <div class="img-card overflow-hidden rounded-2xl h-56 reveal">
-        <img src="/img/areas-verdes-paisajismo-tampico.png"
+        <img src="img/areas-verdes-paisajismo-tampico.png"
              alt="Áreas verdes y paisajismo en parques y espacios públicos en Tamaulipas"
              class="w-full h-full object-cover" loading="lazy">
       </div>
       <div class="img-card overflow-hidden rounded-2xl h-56 reveal">
-        <img src="/img/paisajismo-diseno-jardines-tampico.webp"
+        <img src="img/paisajismo-diseno-jardines-tampico.webp"
              alt="Paisajismo y diseño de jardines residenciales en Tampico Tamaulipas"
              class="w-full h-full object-cover" loading="lazy">
       </div>
       <div class="img-card overflow-hidden rounded-2xl h-56 col-span-2 lg:col-span-1 reveal">
-        <img src="/img/paisajismo-alberca-plantas-tampico.jpg"
+        <img src="img/paisajismo-alberca-plantas-tampico.jpg"
              alt="Paisajismo profesional con alberca y plantas tropicales en Tamaulipas por Viveros Terra"
              class="w-full h-full object-cover" loading="lazy">
       </div>
@@ -485,14 +486,14 @@
 
     <!-- Before/After Slider -->
     <div class="before-after reveal mx-auto" id="ba-slider" style="height:420px;max-width:760px">
-      <!-- BEFORE (base layer) -->
-      <img src="/img/tierra-negra-jardin-tampico.png"
-           alt="Antes de instalación de pasto San Agustín — terreno preparado con tierra negra en Tampico"
+      <!-- Imagen BASE (fondo completo) = DESPUÉS — pasto instalado -->
+      <img src="img/despues-instalacion-pasto-san-agustin-tampico.png"
+           alt="Después — pasto San Agustín instalado en jardín residencial Tampico por Viveros Terra"
            class="w-full h-full object-cover" loading="lazy">
-      <!-- AFTER (clipped layer) -->
+      <!-- Imagen CLIPPED (izquierda, se reduce al arrastrar) = ANTES — tierra negra -->
       <div class="after-img" id="ba-after" style="width:50%">
-        <img src="/img/despues-instalacion-pasto-san-agustin-tampico.png"
-             alt="Después de instalación de pasto San Agustín en rollo — jardín terminado en Tampico por Viveros Terra"
+        <img src="img/tierra-negra-jardin-tampico.png"
+             alt="Antes — terreno con tierra negra preparada listo para instalar pasto en Tampico"
              style="width:760px;max-width:760px" loading="lazy">
       </div>
       <!-- Divider + handle -->
@@ -626,7 +627,7 @@
       <!-- Imagen real lado derecho -->
       <div class="reveal">
         <div class="img-card rounded-3xl overflow-hidden h-96 shadow-2xl">
-          <img src="/img/jardin-residencial-plantas-pasto-tampico.jpg"
+          <img src="img/jardin-residencial-plantas-pasto-tampico.jpg"
                alt="Jardín residencial diseñado e instalado por Viveros Terra en Tampico Tamaulipas"
                class="w-full h-full object-cover" loading="lazy">
         </div>
@@ -655,7 +656,7 @@
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
       <div class="bg-white rounded-2xl shadow-sm overflow-hidden reveal hover:shadow-md transition-shadow">
-        <div class="img-card h-40"><img src="/img/pasto-en-rollo-san-agustin-tampico.jpg" alt="Pasto San Agustín en rollo venta y entrega en Tampico Tamaulipas" class="w-full h-full object-cover" loading="lazy"></div>
+        <div class="img-card h-40"><img src="img/pasto-en-rollo-san-agustin-tampico.jpg" alt="Pasto San Agustín en rollo venta y entrega en Tampico Tamaulipas" class="w-full h-full object-cover" loading="lazy"></div>
         <div class="p-5">
           <h3 class="font-display font-bold text-gray-900 mb-1">Pasto San Agustín</h3>
           <p class="text-gray-400 text-sm mb-3">Venta por m² · Rollo fresco · Clima Huasteca</p>
@@ -663,7 +664,7 @@
         </div>
       </div>
       <div class="bg-white rounded-2xl shadow-sm overflow-hidden reveal hover:shadow-md transition-shadow">
-        <div class="img-card h-40"><img src="/img/plantas-tropicales-tampico-viveros.png" alt="Plantas tropicales y ornamentales para jardín en Tampico Viveros Terra" class="w-full h-full object-cover" loading="lazy"></div>
+        <div class="img-card h-40"><img src="img/plantas-tropicales-tampico-viveros.png" alt="Plantas tropicales y ornamentales para jardín en Tampico Viveros Terra" class="w-full h-full object-cover" loading="lazy"></div>
         <div class="p-5">
           <h3 class="font-display font-bold text-gray-900 mb-1">Plantas y Palmas</h3>
           <p class="text-gray-400 text-sm mb-3">Ornamentales tropicales · Árboles · Especies locales</p>
@@ -671,7 +672,7 @@
         </div>
       </div>
       <div class="bg-white rounded-2xl shadow-sm overflow-hidden reveal hover:shadow-md transition-shadow">
-        <div class="img-card h-40"><img src="/img/tierra-negra-jardin-tampico.png" alt="Venta de tierra negra preparada para jardín en Tampico y Madero Tamaulipas" class="w-full h-full object-cover" loading="lazy"></div>
+        <div class="img-card h-40"><img src="img/tierra-negra-jardin-tampico.png" alt="Venta de tierra negra preparada para jardín en Tampico y Madero Tamaulipas" class="w-full h-full object-cover" loading="lazy"></div>
         <div class="p-5">
           <h3 class="font-display font-bold text-gray-900 mb-1">Tierra Negra y Tezontle</h3>
           <p class="text-gray-400 text-sm mb-3">Por costal, m³ o camión · Sustratos preparados</p>
@@ -679,7 +680,7 @@
         </div>
       </div>
       <div class="bg-white rounded-2xl shadow-sm overflow-hidden reveal hover:shadow-md transition-shadow">
-        <div class="img-card h-40"><img src="/img/piedra-marmol-blanca-decorativa-jardin-tampico.webp" alt="Piedra mármol blanca decorativa para jardín en Tampico Tamaulipas" class="w-full h-full object-cover" loading="lazy"></div>
+        <div class="img-card h-40"><img src="img/piedra-marmol-blanca-decorativa-jardin-tampico.webp" alt="Piedra mármol blanca decorativa para jardín en Tampico Tamaulipas" class="w-full h-full object-cover" loading="lazy"></div>
         <div class="p-5">
           <h3 class="font-display font-bold text-gray-900 mb-1">Piedra Decorativa</h3>
           <p class="text-gray-400 text-sm mb-3">Mármol blanco · Tezontle rojo · Senderos y jardines</p>
@@ -839,7 +840,7 @@
 <!-- CTA + CONTACTO -->
 <section id="contacto" class="py-20 relative overflow-hidden">
   <div class="absolute inset-0">
-    <img src="/img/jardineria-profesional-tampico-empresa.png"
+    <img src="img/jardineria-profesional-tampico-empresa.png"
          alt="Jardinería profesional en Tampico empresa de paisajismo Viveros Terra"
          class="w-full h-full object-cover" loading="lazy">
     <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(13,43,14,.93) 0%,rgba(27,94,32,.90) 100%)"></div>
@@ -932,9 +933,9 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
       <div class="space-y-4">
         <div class="flex items-center">
-          <img src="/img/logo-viveros-terra-tampico.png"
+          <img src="img/logo-viveros-terra-tampico.svg"
                alt="Viveros Terra Tampico — Jardinería Profesional"
-               class="logo-dark h-10 w-auto"
+               class="logo-dark"
                loading="lazy">
         </div>
         <p class="text-white/50 text-sm leading-relaxed">Viveros Terra es la empresa líder en pasto en rollo, jardinería y paisajismo en Tampico, Madero y Altamira, Tamaulipas. Más de 20 años transformando espacios verdes.</p>
