@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.viverosterra.com/sitemap.xml
+
+# Permitir bots de AI para citación en búsquedas
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Bloquear solo rastreadores de entrenamiento masivo (Common Crawl)
+User-agent: CCBot
+Disallow: /
