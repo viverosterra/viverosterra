@@ -4,41 +4,89 @@
   <!-- Homepage -->
   <url>
     <loc>https://www.viverosterra.com/</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Subpáginas de servicios -->
+  <!-- Servicios principales -->
   <url>
     <loc>https://www.viverosterra.com/pasto-en-rollo-tampico</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.viverosterra.com/diseno-jardines-tampico</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.viverosterra.com/sistema-riego-tampico</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.viverosterra.com/mantenimiento-jardines-tampico</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <!-- Plantas, Palmas y Árboles — NUEVA (recupera 5,383 impresiones del Wix) -->
+  <url>
+    <loc>https://www.viverosterra.com/plantas-palmas-arboles-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Pasto Sintético — NUEVA (recupera 1,525 impresiones del Wix) -->
+  <url>
+    <loc>https://www.viverosterra.com/pasto-sintetico-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Tierra Negra — NUEVA (consolida 2 URLs Wix: 6,841 impresiones) -->
+  <url>
+    <loc>https://www.viverosterra.com/tierra-negra-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Tezontle — NUEVA (recupera 4,498 impresiones + 143 clicks del Wix) -->
+  <url>
+    <loc>https://www.viverosterra.com/tezontle-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Piedra Bola de Río — NUEVA -->
+  <url>
+    <loc>https://www.viverosterra.com/piedra-bola-rio-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Mármol Blanco — NUEVA (recupera 1,865 impresiones del Wix) -->
+  <url>
+    <loc>https://www.viverosterra.com/marmol-blanco-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Blog índice -->
   <url>
     <loc>https://www.viverosterra.com/blog</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -46,25 +94,25 @@
   <!-- Artículos del blog -->
   <url>
     <loc>https://www.viverosterra.com/blog/pasto-san-agustin-instalacion-mantenimiento</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.viverosterra.com/blog/como-ahorrar-agua-jardin-tampico</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.viverosterra.com/blog/plantas-interior-tampico</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.viverosterra.com/blog/jardines-temporada-lluvias-tampico</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
