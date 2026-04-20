@@ -145,6 +145,71 @@ footer{background:var(--td);color:rgba(255,255,255,.5);text-align:center;padding
   .grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;padding:0 .85rem 1.25rem}
   .hstats{gap:1rem}
 }
+
+/* =================== COTIZADOR =================== */
+/* Botón + en cada card */
+.btn-add{position:absolute;top:7px;right:7px;width:30px;height:30px;background:var(--tl);border:none;border-radius:50%;color:var(--td);font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:4;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:transform .15s,background .15s;line-height:1}
+.btn-add:hover{transform:scale(1.12);background:var(--tl2)}
+.btn-add.added{background:var(--td);color:var(--tl)}
+
+/* FAB carrito */
+.cartfab{position:fixed;bottom:80px;right:20px;width:52px;height:52px;background:var(--td);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(27,77,46,.4);border:none;z-index:998;transition:transform .2s;display:none}
+.cartfab:hover{transform:scale(1.08)}
+.cartfab.visible{display:flex}
+.cartbadge{position:absolute;top:-4px;right:-4px;background:var(--tl);color:var(--td);font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+
+/* Modal tamaño/cantidad */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:var(--tw);border-radius:20px 20px 0 0;padding:1.5rem;width:100%;max-width:480px;transform:translateY(30px);transition:transform .25s;max-height:90vh;overflow-y:auto}
+.modal-overlay.open .modal-box{transform:translateY(0)}
+.modal-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--td);margin-bottom:.25rem}
+.modal-sc{font-size:11px;color:var(--tm);font-style:italic;margin-bottom:1.1rem}
+.modal-label{font-size:11px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem;display:block}
+.modal-select{width:100%;padding:10px 12px;border:1.5px solid var(--tcd);border-radius:var(--r8);font-size:13px;background:var(--tw);color:var(--ts);outline:none;margin-bottom:1rem;font-family:'DM Sans',sans-serif;cursor:pointer}
+.modal-select:focus{border-color:var(--tl)}
+.qty-row{display:flex;align-items:center;gap:12px;margin-bottom:1.25rem}
+.qty-btn{width:38px;height:38px;border:1.5px solid var(--tcd);border-radius:var(--r8);background:var(--tw);font-size:18px;font-weight:700;color:var(--td);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
+.qty-btn:hover{background:var(--tc)}
+.qty-input{width:60px;text-align:center;padding:8px 4px;border:1.5px solid var(--tcd);border-radius:var(--r8);font-size:16px;font-weight:700;color:var(--td);outline:none;font-family:'DM Sans',sans-serif}
+.qty-input:focus{border-color:var(--tl)}
+.qty-label{font-size:12px;color:var(--tm)}
+.modal-btns{display:flex;gap:8px}
+.modal-btn-add{flex:1;padding:12px;background:var(--td);color:#fff;border:none;border-radius:var(--r8);font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.modal-btn-add:hover{background:#26693e}
+.modal-btn-cancel{padding:12px 16px;background:var(--tc);color:var(--tm);border:none;border-radius:var(--r8);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* Panel carrito */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1001;opacity:0;pointer-events:none;transition:opacity .2s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-panel{position:fixed;bottom:0;left:0;right:0;background:var(--tw);border-radius:20px 20px 0 0;z-index:1002;transform:translateY(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);max-height:88vh;display:flex;flex-direction:column}
+.cart-panel.open{transform:translateY(0)}
+.cart-header{padding:1.25rem 1.25rem .75rem;border-bottom:1px solid var(--tcd);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.cart-htitle{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--td)}
+.cart-hcount{font-size:11px;color:var(--tm);margin-top:2px}
+.cart-close{width:32px;height:32px;background:var(--tc);border:none;border-radius:50%;cursor:pointer;font-size:16px;color:var(--tm);display:flex;align-items:center;justify-content:center}
+.cart-body{flex:1;overflow-y:auto;padding:.75rem 1.25rem}
+.cart-empty{text-align:center;padding:2rem;color:var(--tm);font-size:13px}
+.cart-item{display:flex;align-items:center;gap:10px;padding:.65rem 0;border-bottom:1px solid #f0ebe0}
+.cart-item:last-child{border-bottom:none}
+.cart-item-emoji{font-size:22px;width:36px;text-align:center;flex-shrink:0}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-size:12.5px;font-weight:700;color:var(--td);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-sz{font-size:10.5px;color:var(--tm);margin-top:1px}
+.cart-item-qty{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.cart-qty-btn{width:26px;height:26px;border:1px solid var(--tcd);border-radius:6px;background:var(--tw);font-size:14px;font-weight:700;color:var(--td);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cart-qty-btn:hover{background:var(--tc)}
+.cart-qty-n{font-size:13px;font-weight:700;color:var(--td);min-width:20px;text-align:center}
+.cart-del{width:26px;height:26px;border:none;background:none;color:#ccc;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cart-del:hover{color:#e53935}
+.cart-footer{padding:1rem 1.25rem 1.5rem;border-top:1px solid var(--tcd);flex-shrink:0}
+.cart-summary{display:flex;justify-content:space-between;margin-bottom:.85rem;font-size:11.5px;color:var(--tm)}
+.cart-summary span{font-weight:700;color:var(--td)}
+.cart-wa-btn{width:100%;padding:13px;background:#25D366;color:#fff;border:none;border-radius:var(--r8);font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
+.cart-wa-btn:hover{background:#1ebe5a}
+.cart-clear{width:100%;padding:8px;background:none;border:none;color:#bbb;font-size:11px;cursor:pointer;margin-top:.5rem;font-family:'DM Sans',sans-serif}
+.cart-clear:hover{color:#e53935}
+
 </style>
 </head>
 <body>
@@ -415,7 +480,7 @@ function render(){
     return;
   }
   g.innerHTML=f.map(p=>{
-    const id='c_'+p.name.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
+    const pidx=f.indexOf(p);const id='c_'+p.name.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
     const isExp=expId===id;
     const bd=p.b.map(x=>{
       if(x==='bb')return'<span class="badge bb">Banqueta</span>';
@@ -459,6 +524,7 @@ function render(){
       <div class="cimg" onclick="toggleExp('${id}',event)" role="button" tabindex="0" aria-label="Ver ficha de ${p.name}">
         ${imgHtml}
         ${bd?'<div class="badges">'+bd+'</div>':''}
+        <button class="btn-add" onclick="openAddModal(f[${pidx}],event)" aria-label="Agregar a lista">+</button>
       </div>
       <div class="cbody">
         <h3 class="cname" onclick="toggleExp('${id}',event)">${p.name}</h3>
@@ -495,6 +561,192 @@ function openWA(){
 }
 
 render();
+
+// =================== COTIZADOR ===================
+let cart = []; // [{name, sc, emoji, sz, qty}]
+let pendingPlant = null;
+
+function openAddModal(plant, e) {
+  if(e) e.stopPropagation();
+  pendingPlant = plant;
+  document.getElementById('modalTitle').textContent = plant.name;
+  document.getElementById('modalSc').textContent = plant.sc;
+  const sel = document.getElementById('modalSize');
+  sel.innerHTML = plant.sz.map(s => `<option value="${s}">${s}</option>`).join('');
+  // Si ya está en carrito, preseleccionar el mismo tamaño
+  const existing = cart.find(i => i.name === plant.name);
+  if(existing) sel.value = existing.sz;
+  document.getElementById('modalQty').value = existing ? existing.qty : 1;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('modalSize').focus();
+}
+
+function closeModal(e) {
+  if(e && e.target !== document.getElementById('modalOverlay')) return;
+  document.getElementById('modalOverlay').classList.remove('open');
+  pendingPlant = null;
+}
+
+function changeQty(delta) {
+  const inp = document.getElementById('modalQty');
+  const val = Math.max(1, Math.min(999, parseInt(inp.value)||1 + delta));
+  inp.value = val;
+}
+
+function confirmAdd() {
+  if(!pendingPlant) return;
+  const sz = document.getElementById('modalSize').value;
+  const qty = Math.max(1, parseInt(document.getElementById('modalQty').value)||1);
+  // Si ya existe misma planta+tamaño, actualizar cantidad
+  const idx = cart.findIndex(i => i.name === pendingPlant.name && i.sz === sz);
+  if(idx >= 0) {
+    cart[idx].qty = qty;
+  } else {
+    cart.push({ name: pendingPlant.name, sc: pendingPlant.sc, emoji: pendingPlant.i, sz, qty });
+  }
+  document.getElementById('modalOverlay').classList.remove('open');
+  pendingPlant = null;
+  updateCartUI();
+  // Feedback visual en la card
+  const btn = document.querySelector(`[data-plant="${CSS.escape(cart[cart.length-1]?.name || '')}"]`);
+  if(btn) btn.classList.add('added');
+}
+
+function updateCartUI() {
+  const total = cart.reduce((s,i) => s+i.qty, 0);
+  const fab = document.getElementById('cartFab');
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = cart.length;
+  fab.classList.toggle('visible', cart.length > 0);
+  document.getElementById('cartHCount').textContent = cart.length > 0
+    ? `${cart.length} variedad${cart.length>1?'es':''} · ${total} unidad${total>1?'es':''}`
+    : '';
+}
+
+function openCart() {
+  renderCartBody();
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartPanel').classList.add('open');
+}
+
+function closeCart(e) {
+  if(e && e.target !== document.getElementById('cartOverlay')) return;
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartPanel').classList.remove('open');
+}
+
+function renderCartBody() {
+  const body = document.getElementById('cartBody');
+  const footer = document.getElementById('cartFooter');
+  if(cart.length === 0) {
+    body.innerHTML = '<div class="cart-empty">Tu lista está vacía.<br><small>Toca el <strong>+</strong> en cualquier planta para agregarla.</small></div>';
+    footer.style.display = 'none';
+    document.getElementById('cartHCount').textContent = '';
+    return;
+  }
+  const total = cart.reduce((s,i) => s+i.qty, 0);
+  body.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item">
+      <div class="cart-item-emoji">${item.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-sz">${item.sz}</div>
+      </div>
+      <div class="cart-item-qty">
+        <button class="cart-qty-btn" onclick="cartChangeQty(${idx},-1)" aria-label="Reducir">−</button>
+        <span class="cart-qty-n">${item.qty}</span>
+        <button class="cart-qty-btn" onclick="cartChangeQty(${idx},1)" aria-label="Aumentar">+</button>
+      </div>
+      <button class="cart-del" onclick="removeItem(${idx})" aria-label="Eliminar">✕</button>
+    </div>
+  `).join('');
+  footer.style.display = 'block';
+  document.getElementById('cartSummaryText').textContent = `${cart.length} variedad${cart.length>1?'es':''}`;
+  document.getElementById('cartSummaryUnits').textContent = `${total} unidad${total>1?'es':''}`;
+  document.getElementById('cartHCount').textContent = `${cart.length} variedad${cart.length>1?'es':''} · ${total} unidad${total>1?'es':''}`;
+}
+
+function cartChangeQty(idx, delta) {
+  cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+  updateCartUI();
+  renderCartBody();
+}
+
+function removeItem(idx) {
+  cart.splice(idx, 1);
+  updateCartUI();
+  renderCartBody();
+}
+
+function clearCart() {
+  if(!confirm('¿Vaciar toda la lista?')) return;
+  cart = [];
+  updateCartUI();
+  renderCartBody();
+  // Quitar clase added de todos los botones
+  document.querySelectorAll('.btn-add.added').forEach(b => b.classList.remove('added'));
+}
+
+function sendWA() {
+  if(cart.length === 0) return;
+  const lines = cart.map(i => `• ${i.name} (${i.sz}) × ${i.qty}`).join('\n');
+  const total = cart.reduce((s,i) => s+i.qty, 0);
+  const msg = `Hola Viveros Terra 🌿\n\nQuisiera cotizar lo siguiente:\n\n${lines}\n\nTotal: ${cart.length} variedad${cart.length>1?'es':''}, ${total} unidad${total>1?'es':''}\n\n¿Pueden darme precio y disponibilidad?`;
+  window.open('https://wa.me/528333268008?text=' + encodeURIComponent(msg), '_blank');
+}
+
 </script>
+
+<!-- MODAL AGREGAR AL CARRITO -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-sc" id="modalSc"></div>
+    <label class="modal-label" for="modalSize">Tamaño</label>
+    <select class="modal-select" id="modalSize"></select>
+    <label class="modal-label">Cantidad</label>
+    <div class="qty-row">
+      <button class="qty-btn" onclick="changeQty(-1)" aria-label="Reducir cantidad">−</button>
+      <input class="qty-input" id="modalQty" type="number" min="1" max="999" value="1" aria-label="Cantidad"/>
+      <button class="qty-btn" onclick="changeQty(1)" aria-label="Aumentar cantidad">+</button>
+      <span class="qty-label">unidades</span>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="modal-btn-add" onclick="confirmAdd()">✅ Agregar a lista</button>
+    </div>
+  </div>
+</div>
+
+<!-- FAB CARRITO -->
+<button class="cartfab" id="cartFab" onclick="openCart()" aria-label="Ver lista de cotización">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+  <div class="cartbadge" id="cartBadge">0</div>
+</button>
+
+<!-- PANEL CARRITO -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart(event)"></div>
+<div class="cart-panel" id="cartPanel" role="dialog" aria-modal="true" aria-label="Lista de cotización">
+  <div class="cart-header">
+    <div>
+      <div class="cart-htitle">🌿 Mi Lista de Cotización</div>
+      <div class="cart-hcount" id="cartHCount"></div>
+    </div>
+    <button class="cart-close" onclick="closeCart()" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-summary">
+      <span id="cartSummaryText"></span>
+      <span id="cartSummaryUnits"></span>
+    </div>
+    <button class="cart-wa-btn" onclick="sendWA()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enviar cotización por WhatsApp
+    </button>
+    <button class="cart-clear" onclick="clearCart()">🗑 Vaciar lista</button>
+  </div>
+</div>
+
 </body>
 </html>
