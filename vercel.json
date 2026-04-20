@@ -1,180 +1,792 @@
 {
   "redirects": [
-
-    { "source": "/pasto-san-agustin-rollo", "destination": "/pasto-en-rollo-tampico", "permanent": true },
-    { "source": "/pasto-en-rollo-san-agustin-tampico", "destination": "/pasto-en-rollo-tampico", "permanent": true },
-    { "source": "/pasto-en-rollo-san-agustin-mayoreo-victoria-tuxpan-tabasco", "destination": "/pasto-en-rollo-tampico", "permanent": true },
-    { "source": "/viveros-tampico-pasto-en-rollo", "destination": "/pasto-en-rollo-tampico", "permanent": true },
-    { "source": "/pasto-en-rollo-mexico-precio-tierra", "destination": "/pasto-en-rollo-tampico", "permanent": true },
-    { "source": "/pasto-en-rollo-por-mayoreo-precio-desde-1000m2", "destination": "/pasto-en-rollo-tampico", "permanent": true },
-    { "source": "/venta-palmas-mayoreo-huasteca", "destination": "/pasto-en-rollo-tampico", "permanent": true },
-
-    { "source": "/pasto-sintetico-tampico-altamira-madero", "destination": "/pasto-sintetico-tampico", "permanent": true },
-
-    { "source": "/tezontle-rojo-jardin-tampico-madero-altamira", "destination": "/tezontle-tampico", "permanent": true },
-    { "source": "/tezontle-rojo-tampico-madero-altamira", "destination": "/tezontle-tampico", "permanent": true },
-
-    { "source": "/tierra-negra-vegetal-tampico-madero-altamira", "destination": "/tierra-negra-tampico", "permanent": true },
-    { "source": "/tierra-negra-para-jardin-tampico", "destination": "/tierra-negra-tampico", "permanent": true },
-    { "source": "/copia-de-tierra-negra", "destination": "/tierra-negra-tampico", "permanent": true },
-
-    { "source": "/piedra-marmol-blanca-tampico", "destination": "/marmol-blanco-tampico", "permanent": true },
-
-    { "source": "/plantas-palmas-arboles-productos-jardineria", "destination": "/plantas-palmas-arboles-tampico", "permanent": true },
-    { "source": "/catalogo-plantas-2026", "destination": "/plantas-palmas-arboles-tampico", "permanent": true },
-    { "source": "/catalogo-plantas-2026/:path*", "destination": "/plantas-palmas-arboles-tampico", "permanent": true },
-    { "source": "/nochebuenas-mayoreo-tampico", "destination": "/plantas-palmas-arboles-tampico", "permanent": true },
-    { "source": "/palmas", "destination": "/plantas-palmas-arboles-tampico", "permanent": true },
-
-    { "source": "/diseno-de-jardines-tampico-altamira-madero", "destination": "/diseno-jardines-tampico", "permanent": true },
-    { "source": "/dise%C3%B1o-de-jardines-tampico", "destination": "/diseno-jardines-tampico", "permanent": true },
-
-    { "source": "/mantenimiento-de-jardin-tampico-madero-altamira", "destination": "/mantenimiento-jardines-tampico", "permanent": true },
-    { "source": "/mantenimiento-areas-verdes-industriales-tampico-altamira-madero", "destination": "/mantenimiento-jardines-tampico", "permanent": true },
-
-    { "source": "/sistema-de-riego-tampico-madero-altamira", "destination": "/sistema-riego-tampico", "permanent": true },
-
-    { "source": "/servicios-jardineria-tampico-plantas", "destination": "/", "permanent": true },
-    { "source": "/jardineria-tampico-madero-altamira", "destination": "/", "permanent": true },
-    { "source": "/viveros-en-tampico-plantas-madero", "destination": "/", "permanent": true },
-    { "source": "/members", "destination": "/", "permanent": true },
-    { "source": "/politica-de-privacidad", "destination": "/", "permanent": true },
-    { "source": "/pol%C3%ADtica-de-privacidad", "destination": "/", "permanent": true },
-    { "source": "/profile/:path*", "destination": "/", "permanent": true },
-
-    { "source": "/blog-vivero-tampico", "destination": "/blog", "permanent": true },
-    { "source": "/blog-vivero-tampico/:path*", "destination": "/blog", "permanent": true },
-    { "source": "/blog-jardineria-y-plantas-tampico", "destination": "/blog", "permanent": true },
-    { "source": "/blog-jardineria-y-plantas-tampico/:path*", "destination": "/blog", "permanent": true },
-    { "source": "/blog/categories/:path*", "destination": "/blog", "permanent": true },
-
-
-    { "source": "/post/arboles-para-sembrar-en-banqueta", "destination": "/blog/arboles-para-sembrar-en-banqueta", "permanent": true },
-    { "source": "/post/arboles-para-sembrar-en-banqueta/", "destination": "/blog/arboles-para-sembrar-en-banqueta", "permanent": true },
-    { "source": "/post/los-6-mejores-%C3%A1rboles-para-banquetas-en-tampico-gu%C3%ADa-de-jardiner%C3%ADa-urbana", "destination": "/blog/arboles-para-sembrar-en-banqueta", "permanent": true },
-    { "source": "/post/los-6-mejores-árboles-para-banquetas-en-tampico-guía-de-jardinería-urbana", "destination": "/blog/arboles-para-sembrar-en-banqueta", "permanent": true },
-    { "source": "/post/los-6-mejores-árboles-para-banquetas-en-tampico-guá-de-jardinería-urbana", "destination": "/blog/arboles-para-sembrar-en-banqueta", "permanent": true },
-    { "source": "/post/árboles-ideales-para-banquetas-en-tampico", "destination": "/blog/arboles-para-sembrar-en-banqueta", "permanent": true },
-    { "source": "/post/sembrar-en-tampico-arboles", "destination": "/blog/arboles-para-sembrar-en-banqueta", "permanent": true },
-    { "source": "/post/venta-de-arboles-viveros-terra", "destination": "/plantas-palmas-arboles-tampico", "permanent": true },
-
-    { "source": "/post/cuidados-de-palma-de-viajero-ravenala-madagascariensis", "destination": "/blog/cuidados-palma-del-viajero-ravenala", "permanent": true },
-    { "source": "/post/descubre-la-elegancia-de-nuestras-palmas", "destination": "/plantas-palmas-arboles-tampico", "permanent": true },
-    { "source": "/post/gu%C3%ADa-completa-de-palmeras-en-tampico-viveros-terra-belleza-tropical-para-tu-jard%C3%ADn", "destination": "/plantas-palmas-arboles-tampico", "permanent": true },
-    { "source": "/post/guía-completa-de-palmeras-en-tampico-viveros-terra-belleza-tropical-para-tu-jardín", "destination": "/plantas-palmas-arboles-tampico", "permanent": true },
-
-    { "source": "/post/que-tipo-de-pasto-me-conviene-instalar-san-agustin-o-japones", "destination": "/blog/pasto-san-agustin-vs-japones", "permanent": true },
-    { "source": "/post/que-tipo-de-pasto-me-conviene-instalar-san-agustin-o-japones/", "destination": "/blog/pasto-san-agustin-vs-japones", "permanent": true },
-    { "source": "/post/que-pasto-elegir-para-mi-jardin-san-agustin-o-japones", "destination": "/blog/pasto-san-agustin-vs-japones", "permanent": true },
-    { "source": "/post/porque-instalar-pasto-japones-en-rollo", "destination": "/blog/pasto-san-agustin-vs-japones", "permanent": true },
-    { "source": "/post/te-sorprender%C3%A1s-cual-te-conviene-mas-pasto-san-agust%C3%ADn-o-japon%C3%A9s", "destination": "/blog/pasto-san-agustin-vs-japones", "permanent": true },
-    { "source": "/post/te-sorprenderás-cual-te-conviene-mas-pasto-san-agustín-o-japonés", "destination": "/blog/pasto-san-agustin-vs-japones", "permanent": true },
-    { "source": "/post/pasto-en-rollo-o-en-semilla-que-conviene-mas", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-
-    { "source": "/post/pasto-en-rollo-san-agust%C3%ADn-precio-por-m-y-todo-lo-que-necesitas-saber", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/pasto-en-rollo-san-agustín-precio-por-m-y-todo-lo-que-necesitas-saber", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/pasto-en-rollo-san-agustín-precio-por-m-y-todo-lo-que-necesitas-saber/", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/pasto-en-rollo-san-agustin-precio-y-todo-lo-que-necesitas-saber", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/como-sembrar-pasto-en-rollo-san-agustin", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/cansado-del-coquillo-en-tu-c%C3%A9sped-aqu%C3%AD-tienes-la-gu%C3%ADa-definitiva-para-eliminarlo", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/cansado-del-coquillo-en-tu-césped-aquí-tienes-la-guía-definitiva-para-eliminarlo", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/cuando-es-mejor-regar-mi-pasto-en-rollo-san-agustin-jardin", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/cuando-es-mejor-regar-mi-pasto-en-rollo-san-agustin-jardin/", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/cuidados-para-pasto-japon%C3%A9s-reci%C3%A9n-instalado", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/cuidados-para-pasto-japonés-recién-instalado", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/cuidados-para-pasto-japonés-recién-instalado/", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/el-secreto-para-un-pasto-san-agust%C3%ADn-verde-y-saludable-aqu%C3%AD-te-lo-contamos", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/el-secreto-para-un-pasto-san-agustín-verde-y-saludable-aquí-te-lo-contamos", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/gu%C3%ADa-de-instalaci%C3%B3n-de-pasto-en-rollo-tips-pasos-y-consejos-expertos-2025", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/guía-de-instalación-de-pasto-en-rollo-tips-pasos-y-consejos-expertos-2025", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/cada-cu%C3%A1nto-podar-el-pasto-san-agust%C3%ADn-en-tampico-cuidados-clave-para-mantenerlo-verde-y-saluda", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/cada-cuánto-podar-el-pasto-san-agustín-en-tampico-cuidados-clave-para-mantenerlo-verde-y-saluda", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/elimina-las-manchas-de-tu-pasto-san-agustin", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/tu-pasto-san-agustin-esta-amarillo", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/c%C3%B3mo-mantener-el-pasto-siempre-verde-en-climas-c%C3%A1lidos-como-tampico", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/cómo-mantener-el-pasto-siempre-verde-en-climas-cálidos-como-tampico", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/c%C3%B3mo-instalar-pasto-en-rollo-en-tu-jard%C3%ADn-gu%C3%ADa-pr%C3%A1ctica-para-hogares-en-tampico-madero-y-altami", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/cómo-instalar-pasto-en-rollo-en-tu-jardín-guía-práctica-para-hogares-en-tampico-madero-y-altami", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/gu%C3%ADa-completa-para-el-cuidado-del-pasto-en-rollo-san-agust%C3%ADn-en-tampico", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/guía-completa-para-el-cuidado-del-pasto-en-rollo-san-agustín-en-tampico", "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento", "permanent": true },
-    { "source": "/post/rancho-productor-de-pasto-en-rollo-san-agust%C3%ADn-mayoreo-mejor-precio-y-env%C3%ADos-a-todo-m%C3%A9xico", "destination": "/pasto-en-rollo-tampico", "permanent": true },
-    { "source": "/post/rancho-productor-de-pasto-en-rollo-san-agustín-mayoreo-mejor-precio-y-envíos-a-todo-méxico", "destination": "/pasto-en-rollo-tampico", "permanent": true },
-    { "source": "/post/pasto-en-rollo-por-mayoreo-precio-por-m2", "destination": "/pasto-en-rollo-tampico", "permanent": true },
-
-    { "source": "/post/pasto-sint%C3%A9tico-tampico-15-razones-poderosas-para-usarlo-en-tu-jard%C3%ADn-gu%C3%ADa-2025", "destination": "/pasto-sintetico-tampico", "permanent": true },
-    { "source": "/post/pasto-sintético-tampico-15-razones-poderosas-para-usarlo-en-tu-jardín-guía-2025", "destination": "/pasto-sintetico-tampico", "permanent": true },
-    { "source": "/post/como-instalar-pasto-sintetico", "destination": "/pasto-sintetico-tampico", "permanent": true },
-
-    { "source": "/post/beneficios-ecol%C3%B3gicos-de-la-tierra-negra-vegetal", "destination": "/tierra-negra-tampico", "permanent": true },
-    { "source": "/post/beneficios-ecológicos-de-la-tierra-negra-vegetal", "destination": "/tierra-negra-tampico", "permanent": true },
-
-    { "source": "/post/piedra-m%C3%A1rmol-bola-blanca-usos-y-beneficios-para-tu-jard%C3%ADn-en-tampico", "destination": "/marmol-blanco-tampico", "permanent": true },
-    { "source": "/post/piedra-mármol-bola-blanca-usos-y-beneficios-para-tu-jardín-en-tampico", "destination": "/marmol-blanco-tampico", "permanent": true },
-
-    { "source": "/post/cuidados-de-los-ficus-elastica-gu%C3%ADa-definitiva-para-un-%C3%A1rbol-del-caucho-saludable", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/cuidados-de-los-ficus-elastica-guía-definitiva-para-un-árbol-del-caucho-saludable", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/como-cuidar-de-tu-ficus-elastica-hule-en-tampico-tamaulipas", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/tips-ficus-lyrata-o-pandurata", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/que-hacer-para-que-no-se-me-muera-mi-ficus-lyrata-o-pandurata", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/alocasia-odora-step-by-step-desde-la-siembra-hasta-el-cuidado-diario", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/tips-basicos-para-el-cuidado-de-zamioculka-seca", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/gu%C3%ADa-completa-2025-cuidados-de-la-monstera-deliciosa-en-casa-o-interior", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/guía-completa-2025-cuidados-de-la-monstera-deliciosa-en-casa-o-interior", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/gu%C3%ADa-completa-para-el-cuidado-de-la-monstera-deliciosa-en-tampico", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/guía-completa-para-el-cuidado-de-la-monstera-deliciosa-en-tampico", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/que-no-se-te-muera-tu-monstera", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/monstera-thai-constellation-la-joya-bot%C3%A1nica-que-transforma-cualquier-espacio-en-m%C3%A9xico", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/monstera-thai-constellation-la-joya-botánica-que-transforma-cualquier-espacio-en-méxico", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/philodendron-pink-princess-elegancia-rosa-para-amantes-de-las-plantas-%C3%BAnicas-en-m%C3%A9xico", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/philodendron-pink-princess-elegancia-rosa-para-amantes-de-las-plantas-únicas-en-méxico", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/conoces-la-rosa-del-desierto", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/plantas-enredaderas", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/las-mejores-plantas-para-interior", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/plantas-de-interior-gu%C3%ADa-para-tu-hogar-en-tampico", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/plantas-de-interior-guía-para-tu-hogar-en-tampico", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/las-10-mejores-plantas-para-interior-en-tampico-tamaulipas-gu%C3%ADa-2025", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/las-10-mejores-plantas-para-interior-en-tampico-tamaulipas-guía-2025", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/por-qu%C3%A9-se-ponen-amarillas-las-hojas-de-mis-plantas", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/por-qué-se-ponen-amarillas-las-hojas-de-mis-plantas", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/consejos-para-elegir-plantas-nativas-de-tamaulipas-jard%C3%ADnes-xer%C3%B3filos-ideales-para-tampico", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-    { "source": "/post/consejos-para-elegir-plantas-nativas-de-tamaulipas-jardines-xerófilos-ideales-para-tampico", "destination": "/blog/plantas-interior-tampico", "permanent": true },
-
-    { "source": "/post/sistemas-de-riego-automatizado-tampico", "destination": "/sistema-riego-tampico", "permanent": true },
-    { "source": "/post/gu%C3%ADa-definitiva-del-sistema-de-riego-autom%C3%A1tico-en-m%C3%A9xico-ahorra-agua-y-optimiza-tu-jard%C3%ADn", "destination": "/sistema-riego-tampico", "permanent": true },
-    { "source": "/post/guía-definitiva-del-sistema-de-riego-automático-en-méxico-ahorra-agua-y-optimiza-tu-jardín", "destination": "/sistema-riego-tampico", "permanent": true },
-    { "source": "/post/por-qu%C3%A9-es-conveniente-un-sistema-de-riego", "destination": "/sistema-riego-tampico", "permanent": true },
-    { "source": "/post/por-qué-es-conveniente-un-sistema-de-riego", "destination": "/sistema-riego-tampico", "permanent": true },
-
-    { "source": "/post/dise%C3%B1o-de-jardines-tampico", "destination": "/diseno-jardines-tampico", "permanent": true },
-    { "source": "/post/diseño-de-jardines-tampico", "destination": "/diseno-jardines-tampico", "permanent": true },
-    { "source": "/post/dise%C3%B1o-de-jardines-en-tampico-madero-y-altamira-tamaulipas-gu%C3%ADa-completa-2025", "destination": "/diseno-jardines-tampico", "permanent": true },
-    { "source": "/post/diseño-de-jardines-en-tampico-madero-y-altamira-tamaulipas-guía-completa-2025", "destination": "/diseno-jardines-tampico", "permanent": true },
-    { "source": "/post/c%C3%B3mo-dise%C3%B1ar-tu-jard%C3%ADn-en-tampico-tips-consejos-y-preparaciones-clave-de-viveros-terra", "destination": "/diseno-jardines-tampico", "permanent": true },
-    { "source": "/post/cómo-diseñar-tu-jardín-en-tampico-tips-consejos-y-preparaciones-clave-de-viveros-terra", "destination": "/diseno-jardines-tampico", "permanent": true },
-
-    { "source": "/post/mantenimiento-de-jardines-en-tampico-gu%C3%ADa-completa", "destination": "/mantenimiento-jardines-tampico", "permanent": true },
-    { "source": "/post/mantenimiento-de-jardines-en-tampico-guía-completa", "destination": "/mantenimiento-jardines-tampico", "permanent": true },
-    { "source": "/post/beneficios-de-contratar-jardiner%C3%ADa-profesional-en-la-zona-sur-de-tamaulipas", "destination": "/mantenimiento-jardines-tampico", "permanent": true },
-    { "source": "/post/beneficios-de-contratar-jardinería-profesional-en-la-zona-sur-de-tamaulipas", "destination": "/mantenimiento-jardines-tampico", "permanent": true },
-    { "source": "/post/transforma-tu-jard%C3%ADn-con-servicios-de-jardiner%C3%ADa-profesional", "destination": "/", "permanent": true },
-    { "source": "/post/transforma-tu-jardín-con-servicios-de-jardinería-profesional", "destination": "/", "permanent": true },
-
-    { "source": "/post/cual-es-la-mejor-hora-para-regar-mi-jardin", "destination": "/blog/como-ahorrar-agua-jardin-tampico", "permanent": true },
-    { "source": "/post/cuanta-agua-debo-aplicar-a-una-planta", "destination": "/blog/como-ahorrar-agua-jardin-tampico", "permanent": true },
-    { "source": "/post/10-tips-para-ahorra-agua-en-tu-jardin", "destination": "/blog/como-ahorrar-agua-jardin-tampico", "permanent": true },
-    { "source": "/post/cuidado-con-el-agua-salada", "destination": "/blog/como-ahorrar-agua-jardin-tampico", "permanent": true },
-
-    { "source": "/post/nochebuenas-tampico-madero-mayoreo", "destination": "/plantas-palmas-arboles-tampico", "permanent": true },
-    { "source": "/post/productores-de-nochebuenas-mayoreo", "destination": "/plantas-palmas-arboles-tampico", "permanent": true },
-
-    { "source": "/post/cada-cu%C3%A1nto-hay-que-fertilizar-las-plantas-gu%C3%ADa-pr%C3%A1ctica-para-jardineros-modernos", "destination": "/blog", "permanent": true },
-    { "source": "/post/cada-cuánto-hay-que-fertilizar-las-plantas-guía-práctica-para-jardineros-modernos", "destination": "/blog", "permanent": true },
-    { "source": "/post/razones-para-invertir-en-tu-jardin", "destination": "/", "permanent": true },
-    { "source": "/post/como-mantener-tu-jardin-en-tampico", "destination": "/blog", "permanent": true },
-    { "source": "/post/7-cuidados-esenciales-del-bamb%C3%BA-en-m%C3%A9xico-que-debes-conocer", "destination": "/blog", "permanent": true },
-    { "source": "/post/7-cuidados-esenciales-del-bambú-en-méxico-que-debes-conocer", "destination": "/blog", "permanent": true },
-    { "source": "/post/10-mejores-consejos-de-jardineria", "destination": "/blog", "permanent": true },
-    { "source": "/post/tienes-problemas-de-hormigas", "destination": "/blog", "permanent": true },
-    { "source": "/post/viveros-terra-tampico", "destination": "/", "permanent": true }
+    {
+      "source": "/pasto-san-agustin-rollo",
+      "destination": "/pasto-en-rollo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/pasto-en-rollo-san-agustin-tampico",
+      "destination": "/pasto-en-rollo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/pasto-en-rollo-san-agustin-mayoreo-victoria-tuxpan-tabasco",
+      "destination": "/pasto-en-rollo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/viveros-tampico-pasto-en-rollo",
+      "destination": "/pasto-en-rollo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/pasto-en-rollo-mexico-precio-tierra",
+      "destination": "/pasto-en-rollo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/pasto-en-rollo-por-mayoreo-precio-desde-1000m2",
+      "destination": "/pasto-en-rollo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/venta-palmas-mayoreo-huasteca",
+      "destination": "/pasto-en-rollo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/pasto-sintetico-tampico-altamira-madero",
+      "destination": "/pasto-sintetico-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/tezontle-rojo-jardin-tampico-madero-altamira",
+      "destination": "/tezontle-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/tezontle-rojo-tampico-madero-altamira",
+      "destination": "/tezontle-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/tierra-negra-vegetal-tampico-madero-altamira",
+      "destination": "/tierra-negra-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/tierra-negra-para-jardin-tampico",
+      "destination": "/tierra-negra-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/copia-de-tierra-negra",
+      "destination": "/tierra-negra-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/piedra-marmol-blanca-tampico",
+      "destination": "/marmol-blanco-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/plantas-palmas-arboles-productos-jardineria",
+      "destination": "/plantas-palmas-arboles-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/catalogo-plantas-2026",
+      "destination": "/plantas-palmas-arboles-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/catalogo-plantas-2026/:path*",
+      "destination": "/plantas-palmas-arboles-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/nochebuenas-mayoreo-tampico",
+      "destination": "/plantas-palmas-arboles-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/palmas",
+      "destination": "/plantas-palmas-arboles-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/diseno-de-jardines-tampico-altamira-madero",
+      "destination": "/diseno-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/dise%C3%B1o-de-jardines-tampico",
+      "destination": "/diseno-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/mantenimiento-de-jardin-tampico-madero-altamira",
+      "destination": "/mantenimiento-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/mantenimiento-areas-verdes-industriales-tampico-altamira-madero",
+      "destination": "/mantenimiento-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/sistema-de-riego-tampico-madero-altamira",
+      "destination": "/sistema-riego-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/servicios-jardineria-tampico-plantas",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-tampico-madero-altamira",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/viveros-en-tampico-plantas-madero",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/members",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/politica-de-privacidad",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/pol%C3%ADtica-de-privacidad",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/profile/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/blog-vivero-tampico",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-vivero-tampico/:path*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-jardineria-y-plantas-tampico",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-jardineria-y-plantas-tampico/:path*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/categories/:path*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/post/arboles-para-sembrar-en-banqueta",
+      "destination": "/blog/arboles-para-sembrar-en-banqueta",
+      "permanent": true
+    },
+    {
+      "source": "/post/arboles-para-sembrar-en-banqueta/",
+      "destination": "/blog/arboles-para-sembrar-en-banqueta",
+      "permanent": true
+    },
+    {
+      "source": "/post/los-6-mejores-%C3%A1rboles-para-banquetas-en-tampico-gu%C3%ADa-de-jardiner%C3%ADa-urbana",
+      "destination": "/blog/arboles-para-sembrar-en-banqueta",
+      "permanent": true
+    },
+    {
+      "source": "/post/los-6-mejores-árboles-para-banquetas-en-tampico-guía-de-jardinería-urbana",
+      "destination": "/blog/arboles-para-sembrar-en-banqueta",
+      "permanent": true
+    },
+    {
+      "source": "/post/los-6-mejores-árboles-para-banquetas-en-tampico-guá-de-jardinería-urbana",
+      "destination": "/blog/arboles-para-sembrar-en-banqueta",
+      "permanent": true
+    },
+    {
+      "source": "/post/árboles-ideales-para-banquetas-en-tampico",
+      "destination": "/blog/arboles-para-sembrar-en-banqueta",
+      "permanent": true
+    },
+    {
+      "source": "/post/sembrar-en-tampico-arboles",
+      "destination": "/blog/arboles-para-sembrar-en-banqueta",
+      "permanent": true
+    },
+    {
+      "source": "/post/venta-de-arboles-viveros-terra",
+      "destination": "/plantas-palmas-arboles-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/cuidados-de-palma-de-viajero-ravenala-madagascariensis",
+      "destination": "/blog/cuidados-palma-del-viajero-ravenala",
+      "permanent": true
+    },
+    {
+      "source": "/post/descubre-la-elegancia-de-nuestras-palmas",
+      "destination": "/plantas-palmas-arboles-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/gu%C3%ADa-completa-de-palmeras-en-tampico-viveros-terra-belleza-tropical-para-tu-jard%C3%ADn",
+      "destination": "/plantas-palmas-arboles-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/guía-completa-de-palmeras-en-tampico-viveros-terra-belleza-tropical-para-tu-jardín",
+      "destination": "/plantas-palmas-arboles-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/que-tipo-de-pasto-me-conviene-instalar-san-agustin-o-japones",
+      "destination": "/blog/pasto-san-agustin-vs-japones",
+      "permanent": true
+    },
+    {
+      "source": "/post/que-tipo-de-pasto-me-conviene-instalar-san-agustin-o-japones/",
+      "destination": "/blog/pasto-san-agustin-vs-japones",
+      "permanent": true
+    },
+    {
+      "source": "/post/que-pasto-elegir-para-mi-jardin-san-agustin-o-japones",
+      "destination": "/blog/pasto-san-agustin-vs-japones",
+      "permanent": true
+    },
+    {
+      "source": "/post/porque-instalar-pasto-japones-en-rollo",
+      "destination": "/blog/pasto-san-agustin-vs-japones",
+      "permanent": true
+    },
+    {
+      "source": "/post/te-sorprender%C3%A1s-cual-te-conviene-mas-pasto-san-agust%C3%ADn-o-japon%C3%A9s",
+      "destination": "/blog/pasto-san-agustin-vs-japones",
+      "permanent": true
+    },
+    {
+      "source": "/post/te-sorprenderás-cual-te-conviene-mas-pasto-san-agustín-o-japonés",
+      "destination": "/blog/pasto-san-agustin-vs-japones",
+      "permanent": true
+    },
+    {
+      "source": "/post/pasto-en-rollo-o-en-semilla-que-conviene-mas",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/pasto-en-rollo-san-agust%C3%ADn-precio-por-m-y-todo-lo-que-necesitas-saber",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/pasto-en-rollo-san-agustín-precio-por-m-y-todo-lo-que-necesitas-saber",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/pasto-en-rollo-san-agustín-precio-por-m-y-todo-lo-que-necesitas-saber/",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/pasto-en-rollo-san-agustin-precio-y-todo-lo-que-necesitas-saber",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/como-sembrar-pasto-en-rollo-san-agustin",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/cansado-del-coquillo-en-tu-c%C3%A9sped-aqu%C3%AD-tienes-la-gu%C3%ADa-definitiva-para-eliminarlo",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/cansado-del-coquillo-en-tu-césped-aquí-tienes-la-guía-definitiva-para-eliminarlo",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/cuando-es-mejor-regar-mi-pasto-en-rollo-san-agustin-jardin",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/cuando-es-mejor-regar-mi-pasto-en-rollo-san-agustin-jardin/",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/cuidados-para-pasto-japon%C3%A9s-reci%C3%A9n-instalado",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/cuidados-para-pasto-japonés-recién-instalado",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/cuidados-para-pasto-japonés-recién-instalado/",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/el-secreto-para-un-pasto-san-agust%C3%ADn-verde-y-saludable-aqu%C3%AD-te-lo-contamos",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/el-secreto-para-un-pasto-san-agustín-verde-y-saludable-aquí-te-lo-contamos",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/gu%C3%ADa-de-instalaci%C3%B3n-de-pasto-en-rollo-tips-pasos-y-consejos-expertos-2025",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/guía-de-instalación-de-pasto-en-rollo-tips-pasos-y-consejos-expertos-2025",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/cada-cu%C3%A1nto-podar-el-pasto-san-agust%C3%ADn-en-tampico-cuidados-clave-para-mantenerlo-verde-y-saluda",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/cada-cuánto-podar-el-pasto-san-agustín-en-tampico-cuidados-clave-para-mantenerlo-verde-y-saluda",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/elimina-las-manchas-de-tu-pasto-san-agustin",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/tu-pasto-san-agustin-esta-amarillo",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/c%C3%B3mo-mantener-el-pasto-siempre-verde-en-climas-c%C3%A1lidos-como-tampico",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/cómo-mantener-el-pasto-siempre-verde-en-climas-cálidos-como-tampico",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/c%C3%B3mo-instalar-pasto-en-rollo-en-tu-jard%C3%ADn-gu%C3%ADa-pr%C3%A1ctica-para-hogares-en-tampico-madero-y-altami",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/cómo-instalar-pasto-en-rollo-en-tu-jardín-guía-práctica-para-hogares-en-tampico-madero-y-altami",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/gu%C3%ADa-completa-para-el-cuidado-del-pasto-en-rollo-san-agust%C3%ADn-en-tampico",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/guía-completa-para-el-cuidado-del-pasto-en-rollo-san-agustín-en-tampico",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/post/rancho-productor-de-pasto-en-rollo-san-agust%C3%ADn-mayoreo-mejor-precio-y-env%C3%ADos-a-todo-m%C3%A9xico",
+      "destination": "/pasto-en-rollo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/rancho-productor-de-pasto-en-rollo-san-agustín-mayoreo-mejor-precio-y-envíos-a-todo-méxico",
+      "destination": "/pasto-en-rollo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/pasto-en-rollo-por-mayoreo-precio-por-m2",
+      "destination": "/pasto-en-rollo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/pasto-sint%C3%A9tico-tampico-15-razones-poderosas-para-usarlo-en-tu-jard%C3%ADn-gu%C3%ADa-2025",
+      "destination": "/pasto-sintetico-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/pasto-sintético-tampico-15-razones-poderosas-para-usarlo-en-tu-jardín-guía-2025",
+      "destination": "/pasto-sintetico-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/como-instalar-pasto-sintetico",
+      "destination": "/pasto-sintetico-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/beneficios-ecol%C3%B3gicos-de-la-tierra-negra-vegetal",
+      "destination": "/tierra-negra-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/beneficios-ecológicos-de-la-tierra-negra-vegetal",
+      "destination": "/tierra-negra-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/piedra-m%C3%A1rmol-bola-blanca-usos-y-beneficios-para-tu-jard%C3%ADn-en-tampico",
+      "destination": "/marmol-blanco-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/piedra-mármol-bola-blanca-usos-y-beneficios-para-tu-jardín-en-tampico",
+      "destination": "/marmol-blanco-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/cuidados-de-los-ficus-elastica-gu%C3%ADa-definitiva-para-un-%C3%A1rbol-del-caucho-saludable",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/cuidados-de-los-ficus-elastica-guía-definitiva-para-un-árbol-del-caucho-saludable",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/como-cuidar-de-tu-ficus-elastica-hule-en-tampico-tamaulipas",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/tips-ficus-lyrata-o-pandurata",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/que-hacer-para-que-no-se-me-muera-mi-ficus-lyrata-o-pandurata",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/alocasia-odora-step-by-step-desde-la-siembra-hasta-el-cuidado-diario",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/tips-basicos-para-el-cuidado-de-zamioculka-seca",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/gu%C3%ADa-completa-2025-cuidados-de-la-monstera-deliciosa-en-casa-o-interior",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/guía-completa-2025-cuidados-de-la-monstera-deliciosa-en-casa-o-interior",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/gu%C3%ADa-completa-para-el-cuidado-de-la-monstera-deliciosa-en-tampico",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/guía-completa-para-el-cuidado-de-la-monstera-deliciosa-en-tampico",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/que-no-se-te-muera-tu-monstera",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/monstera-thai-constellation-la-joya-bot%C3%A1nica-que-transforma-cualquier-espacio-en-m%C3%A9xico",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/monstera-thai-constellation-la-joya-botánica-que-transforma-cualquier-espacio-en-méxico",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/philodendron-pink-princess-elegancia-rosa-para-amantes-de-las-plantas-%C3%BAnicas-en-m%C3%A9xico",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/philodendron-pink-princess-elegancia-rosa-para-amantes-de-las-plantas-únicas-en-méxico",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/conoces-la-rosa-del-desierto",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/plantas-enredaderas",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/las-mejores-plantas-para-interior",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/plantas-de-interior-gu%C3%ADa-para-tu-hogar-en-tampico",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/plantas-de-interior-guía-para-tu-hogar-en-tampico",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/las-10-mejores-plantas-para-interior-en-tampico-tamaulipas-gu%C3%ADa-2025",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/las-10-mejores-plantas-para-interior-en-tampico-tamaulipas-guía-2025",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/por-qu%C3%A9-se-ponen-amarillas-las-hojas-de-mis-plantas",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/por-qué-se-ponen-amarillas-las-hojas-de-mis-plantas",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/consejos-para-elegir-plantas-nativas-de-tamaulipas-jard%C3%ADnes-xer%C3%B3filos-ideales-para-tampico",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/consejos-para-elegir-plantas-nativas-de-tamaulipas-jardines-xerófilos-ideales-para-tampico",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/sistemas-de-riego-automatizado-tampico",
+      "destination": "/sistema-riego-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/gu%C3%ADa-definitiva-del-sistema-de-riego-autom%C3%A1tico-en-m%C3%A9xico-ahorra-agua-y-optimiza-tu-jard%C3%ADn",
+      "destination": "/sistema-riego-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/guía-definitiva-del-sistema-de-riego-automático-en-méxico-ahorra-agua-y-optimiza-tu-jardín",
+      "destination": "/sistema-riego-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/por-qu%C3%A9-es-conveniente-un-sistema-de-riego",
+      "destination": "/sistema-riego-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/por-qué-es-conveniente-un-sistema-de-riego",
+      "destination": "/sistema-riego-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/dise%C3%B1o-de-jardines-tampico",
+      "destination": "/diseno-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/diseño-de-jardines-tampico",
+      "destination": "/diseno-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/dise%C3%B1o-de-jardines-en-tampico-madero-y-altamira-tamaulipas-gu%C3%ADa-completa-2025",
+      "destination": "/diseno-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/diseño-de-jardines-en-tampico-madero-y-altamira-tamaulipas-guía-completa-2025",
+      "destination": "/diseno-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/c%C3%B3mo-dise%C3%B1ar-tu-jard%C3%ADn-en-tampico-tips-consejos-y-preparaciones-clave-de-viveros-terra",
+      "destination": "/diseno-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/cómo-diseñar-tu-jardín-en-tampico-tips-consejos-y-preparaciones-clave-de-viveros-terra",
+      "destination": "/diseno-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/mantenimiento-de-jardines-en-tampico-gu%C3%ADa-completa",
+      "destination": "/mantenimiento-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/mantenimiento-de-jardines-en-tampico-guía-completa",
+      "destination": "/mantenimiento-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/beneficios-de-contratar-jardiner%C3%ADa-profesional-en-la-zona-sur-de-tamaulipas",
+      "destination": "/mantenimiento-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/beneficios-de-contratar-jardinería-profesional-en-la-zona-sur-de-tamaulipas",
+      "destination": "/mantenimiento-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/transforma-tu-jard%C3%ADn-con-servicios-de-jardiner%C3%ADa-profesional",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/post/transforma-tu-jardín-con-servicios-de-jardinería-profesional",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/post/cual-es-la-mejor-hora-para-regar-mi-jardin",
+      "destination": "/blog/como-ahorrar-agua-jardin-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/cuanta-agua-debo-aplicar-a-una-planta",
+      "destination": "/blog/como-ahorrar-agua-jardin-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/10-tips-para-ahorra-agua-en-tu-jardin",
+      "destination": "/blog/como-ahorrar-agua-jardin-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/cuidado-con-el-agua-salada",
+      "destination": "/blog/como-ahorrar-agua-jardin-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/nochebuenas-tampico-madero-mayoreo",
+      "destination": "/plantas-palmas-arboles-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/productores-de-nochebuenas-mayoreo",
+      "destination": "/plantas-palmas-arboles-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/post/cada-cu%C3%A1nto-hay-que-fertilizar-las-plantas-gu%C3%ADa-pr%C3%A1ctica-para-jardineros-modernos",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/post/cada-cuánto-hay-que-fertilizar-las-plantas-guía-práctica-para-jardineros-modernos",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/post/razones-para-invertir-en-tu-jardin",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/post/como-mantener-tu-jardin-en-tampico",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/post/7-cuidados-esenciales-del-bamb%C3%BA-en-m%C3%A9xico-que-debes-conocer",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/post/7-cuidados-esenciales-del-bambú-en-méxico-que-debes-conocer",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/post/10-mejores-consejos-de-jardineria",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/post/tienes-problemas-de-hormigas",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/post/viveros-terra-tampico",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(js|css|woff2|woff|ttf|svg|png|jpg|jpeg|webp|ico|gif)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
   ]
 }
