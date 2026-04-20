@@ -2,213 +2,381 @@
 <html lang="es-MX">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog de Jardinería Tampico | Viveros Terra — Consejos y Guías</title>
-<meta name="description" content="Consejos de jardinería para el clima de Tampico. Guías sobre pasto San Agustín, riego, plantas tropicales y mantenimiento de jardines en Tamaulipas. Por Viveros Terra.">
+<title>Blog de Jardinería Tampico | Viveros Terra — Guías y Consejos</title>
+<meta name="description" content="Blog de jardinería para el clima de Tampico. Guías de pasto San Agustín, palmas tropicales, árboles para banqueta, riego y diseño de jardines en Tamaulipas.">
 <link rel="canonical" href="https://www.viverosterra.com/blog">
 <meta name="robots" content="index, follow"><meta name="geo.region" content="MX-TAM">
-<link rel="icon" type="image/png" href="../img/logo-viveros-terra-tampico.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.viverosterra.com/blog">
 <meta property="og:title" content="Blog de Jardinería Tampico | Viveros Terra">
-<meta property="og:description" content="Consejos y guías de jardinería para el clima de Tampico y la zona Huasteca.">
+<meta property="og:description" content="Guías prácticas de jardinería adaptadas al clima cálido-húmedo de Tampico y la zona Huasteca.">
 <meta property="og:image" content="https://www.viverosterra.com/img/jardineria-areas-verdes-tampico.png">
 <meta property="og:locale" content="es_MX">
+<link rel="icon" type="image/png" href="../img/logo-viveros-terra-tampico.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={theme:{extend:{colors:{primary:"#1B5E20",secondary:"#2E7D32",accent:"#66BB6A",dark:"#0D2B0E",wa:"#25D366",bgwarm:"#FAFAF7",bggreen:"#F0F7F0"},fontFamily:{display:["Playfair Display","serif"]}}}}</script>
+<script>tailwind.config={theme:{extend:{colors:{primary:"#1B5E20",secondary:"#2E7D32",accent:"#66BB6A",gold:"#C9A94E",dark:"#0D2B0E",wa:"#25D366",bgwarm:"#FAFAF7",bggreen:"#F0F7F0"},fontFamily:{display:["Playfair Display","serif"]}}}}</script>
 <style>
-html{scroll-behavior:smooth}body{font-family:"Inter",sans-serif;background:#FAFAF7}
-h1,h2,h3{font-family:"Playfair Display",serif}
-.logo-light{height:44px;width:auto;display:block;mix-blend-mode:multiply}
-.logo-dark{height:44px;width:auto;display:block;filter:brightness(0) invert(1)}
+html{scroll-behavior:smooth}body{font-family:"Inter",sans-serif;background:#FAFAF7;color:#1a1a1a}
+h1,h2,h3,h4{font-family:"Playfair Display",serif}
+.logo-light{height:42px;width:auto;display:block;mix-blend-mode:multiply}
+.logo-dark{height:42px;width:auto;display:block;filter:brightness(0) invert(1)}
 .wa-float{position:fixed;bottom:24px;right:24px;z-index:100;animation:pulse-wa 2.5s infinite}
 @keyframes pulse-wa{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.4)}70%{box-shadow:0 0 0 14px rgba(37,211,102,0)}}
-.img-card{overflow:hidden;border-radius:1rem}.img-card img{transition:transform .4s ease;width:100%;height:100%;object-fit:cover}.img-card:hover img{transform:scale(1.04)}
-.card-hover:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(27,94,32,.12)}
-.card-hover{transition:transform .3s ease,box-shadow .3s ease}
+.card{transition:transform .3s ease,box-shadow .3s ease;display:block}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(27,94,32,.13)}
+.badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.25rem .75rem;border-radius:9999px}
+.cat-arboles{background:#e8f5e9;color:#1B5E20}
+.cat-pasto{background:#fff8e1;color:#8D6E00}
+.cat-palmas{background:#e3f2fd;color:#0D47A1}
+.cat-plantas{background:#fce4ec;color:#880E4F}
+.cat-riego{background:#e0f7fa;color:#006064}
+.cat-diseno{background:#f3e5f5;color:#4A148C}
+.cat-sustrato{background:#fff3e0;color:#E65100}
+.tag-hot{background:#ff5252;color:#fff;font-size:.65rem;font-weight:700;padding:.15rem .5rem;border-radius:99px;vertical-align:middle;margin-left:.35rem}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Blog","name":"Blog Viveros Terra Tampico","description":"Consejos y guías de jardinería para el clima de Tampico y la zona Huasteca","url":"https://www.viverosterra.com/blog","publisher":{"@type":"Organization","name":"Viveros Terra","logo":{"@type":"ImageObject","url":"https://www.viverosterra.com/img/logo-viveros-terra-tampico.svg"}}}
+{"@context":"https://schema.org","@type":"Blog","name":"Blog Viveros Terra Tampico","description":"Guías prácticas de jardinería para el clima de Tampico y la zona Huasteca","url":"https://www.viverosterra.com/blog","publisher":{"@type":"Organization","name":"Viveros Terra","logo":{"@type":"ImageObject","url":"https://www.viverosterra.com/img/logo-viveros-terra-tampico.svg"}}}
 </script>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-<symbol id="ic-whatsapp" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
+<symbol id="ic-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
 <symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 11a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.98 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></symbol>
-<symbol id="ic-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-5 7-11 7-11s7 6 7 11a7 7 0 0 1-7 7z"/><path d="M11 20v-9"/></symbol>
-<symbol id="ic-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></symbol>
-<symbol id="ic-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></symbol>
+<symbol id="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></symbol>
+<symbol id="ic-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></symbol>
 <symbol id="ic-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
 <symbol id="ic-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></symbol>
 <symbol id="ic-facebook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
 <symbol id="ic-youtube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor"/></symbol>
 <symbol id="ic-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.77a4.85 4.85 0 01-1.01-.08z"/></symbol>
-<symbol id="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></symbol>
-<symbol id="ic-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></symbol>
+<symbol id="ic-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+<symbol id="ic-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></symbol>
+<symbol id="ic-fire" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
 </svg>
 </head>
 <body>
 
-<a href="https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20una%20cotización%20de%20Viveros%20Terra" target="_blank" rel="noopener" class="wa-float flex items-center gap-2 bg-wa text-white px-4 py-3 rounded-full font-semibold text-sm shadow-xl hover:bg-green-500 transition-colors">
-  <svg class="w-5 h-5 flex-shrink-0"><use href="#ic-whatsapp"/></svg><span class="hidden sm:inline">Cotizar ahora</span>
+<!-- WA FLOAT -->
+<a href="https://wa.me/528333268008?text=Hola%2C%20vi%20el%20blog%20de%20Viveros%20Terra%20y%20quiero%20cotizar" target="_blank" rel="noopener" class="wa-float flex items-center gap-2 bg-wa text-white px-4 py-3 rounded-full font-semibold text-sm shadow-xl hover:bg-green-500 transition-colors">
+  <svg class="w-5 h-5 flex-shrink-0"><use href="#ic-wa"/></svg><span class="hidden sm:inline">Cotizar gratis</span>
 </a>
 
+<!-- HEADER -->
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
-  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
-      <a href="/" aria-label="Viveros Terra"><img src="../img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-light" loading="eager"></a>
-      <nav class="hidden md:flex items-center gap-2 text-sm text-gray-500" aria-label="Breadcrumb">
-        <a href="/" class="hover:text-primary">Inicio</a><span>/</span>
-        <span class="text-primary font-medium">Blog de Jardinería</span>
-      </nav>
-      <div class="hidden md:flex items-center gap-4">
-        <a href="tel:8333268008" class="flex items-center gap-1.5 text-gray-700 hover:text-primary text-sm font-medium"><svg class="w-4 h-4"><use href="#ic-phone"/></svg>833 326 8008</a>
-        <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-secondary transition-colors shadow-md">
-          <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Gratis
-        </a>
-      </div>
-      <button id="menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100" aria-label="Menú" aria-expanded="false"><svg class="w-6 h-6 text-gray-700"><use href="#ic-menu"/></svg></button>
-    </div>
-    <div id="mobile-menu" class="hidden md:hidden pb-4 pt-2 border-t border-gray-100 mt-2">
-      <a href="/" class="block py-2.5 px-3 text-gray-700 hover:text-primary hover:bg-bggreen rounded-lg">Inicio</a>
-      <a href="https://wa.me/528333268008" target="_blank" class="flex items-center justify-center gap-2 bg-wa text-white px-5 py-3 rounded-full font-semibold mt-2">
-        <svg class="w-5 h-5"><use href="#ic-whatsapp"/></svg>Cotizar por WhatsApp
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+    <a href="/"><img src="../img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-light" loading="eager"></a>
+    <nav class="hidden md:flex items-center gap-2 text-sm text-gray-500">
+      <a href="/" class="hover:text-primary transition-colors">Inicio</a><span>/</span>
+      <span class="text-primary font-semibold">Blog de Jardinería</span>
+    </nav>
+    <div class="hidden md:flex items-center gap-3">
+      <a href="tel:8333268008" class="flex items-center gap-1.5 text-sm text-gray-700 hover:text-primary font-medium"><svg class="w-4 h-4"><use href="#ic-phone"/></svg>833 326 8008</a>
+      <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar" target="_blank" class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-secondary transition-colors shadow">
+        <svg class="w-4 h-4"><use href="#ic-wa"/></svg>Cotizar gratis
       </a>
     </div>
-  </nav>
+    <button id="menu-btn" class="md:hidden p-2"><svg class="w-6 h-6"><use href="#ic-menu"/></svg></button>
+  </div>
+  <div id="mob-menu" class="hidden md:hidden border-t bg-white px-4 py-3 space-y-1.5 text-sm">
+    <a href="/" class="block py-2 text-gray-700">Inicio</a>
+    <a href="/pasto-en-rollo-tampico" class="block py-2 text-gray-700">Pasto en Rollo</a>
+    <a href="/plantas-palmas-arboles-tampico" class="block py-2 text-gray-700">Plantas y Palmas</a>
+    <a href="/diseno-jardines-tampico" class="block py-2 text-gray-700">Diseño de Jardines</a>
+    <a href="https://wa.me/528333268008" target="_blank" class="flex items-center justify-center gap-2 bg-wa text-white py-2.5 rounded-full font-semibold mt-2"><svg class="w-4 h-4"><use href="#ic-wa"/></svg>WhatsApp</a>
+  </div>
 </header>
 
-<!-- HERO BLOG -->
-<section class="bg-bggreen py-16 border-b border-green-100">
+<!-- HERO -->
+<section class="bg-gradient-to-br from-dark via-primary to-secondary text-white py-16 sm:py-20">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <span class="text-primary font-semibold text-sm uppercase tracking-wider">Viveros Terra · Tampico</span>
-    <h1 class="text-4xl sm:text-5xl font-display font-bold text-gray-900 mt-3 mb-4">Blog de Jardinería en Tampico</h1>
-    <p class="text-gray-600 text-lg max-w-2xl mx-auto">Guías prácticas, consejos y recomendaciones de jardinería adaptadas al clima cálido-húmedo de Tampico y la zona Huasteca. Por el equipo de Viveros Terra.</p>
+    <span class="bg-white/15 text-white text-xs font-semibold px-4 py-1.5 rounded-full border border-white/20 mb-5 inline-block">Viveros Terra · Tampico, Tamaulipas</span>
+    <h1 class="text-4xl sm:text-5xl font-display font-bold mt-4 mb-4 leading-tight">Blog de Jardinería<br>para Tampico</h1>
+    <p class="text-white/75 text-lg max-w-2xl mx-auto">Guías prácticas, comparativas honestas y consejos adaptados al clima cálido-húmedo del sur de Tamaulipas. Por el equipo de Viveros Terra.</p>
+    <div class="flex flex-wrap justify-center gap-2 mt-6 text-xs text-white/60">
+      <span class="bg-white/10 px-3 py-1 rounded-full">14 artículos</span>
+      <span class="bg-white/10 px-3 py-1 rounded-full">Actualizado abril 2026</span>
+      <span class="bg-white/10 px-3 py-1 rounded-full">Especialistas locales</span>
+    </div>
   </div>
 </section>
 
-<!-- ARTÍCULOS -->
-<section class="py-20 bg-bgwarm">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid md:grid-cols-2 gap-8">
+<!-- POSTS DESTACADOS -->
+<section class="py-16 bg-bgwarm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <!-- Artículo 1 -->
-      <a href="/blog/pasto-san-agustin-instalacion-mantenimiento" class="bg-white rounded-3xl overflow-hidden border border-green-100 card-hover block">
-        <div class="img-card h-52"><img src="../img/pasto-en-rollo-san-agustin-tampico.jpg" alt="Pasto San Agustín instalación y mantenimiento guía completa Tampico" loading="lazy"></div>
-        <div class="p-7">
-          <div class="flex gap-2 mb-3">
-            <span class="bg-bggreen text-primary text-xs font-semibold px-3 py-1 rounded-full">Pasto · Césped</span>
-            <span class="text-gray-400 text-xs py-1">24 mar 2026 · 8 min</span>
+    <!-- SECCIÓN: MÁS POPULARES -->
+    <div class="flex items-center gap-3 mb-8">
+      <svg class="w-5 h-5 text-red-500"><use href="#ic-fire"/></svg>
+      <h2 class="text-2xl font-display font-bold text-gray-900">Los más buscados</h2>
+      <span class="text-gray-400 text-sm">· Recuperados del Wix con miles de búsquedas</span>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 mb-14">
+
+      <!-- POST 1: ÁRBOLES BANQUETA -->
+      <a href="/blog/arboles-para-sembrar-en-banqueta" class="card bg-white rounded-2xl overflow-hidden border border-green-100 group">
+        <div class="bg-gradient-to-br from-primary to-secondary h-40 flex items-center justify-center text-6xl">🌳</div>
+        <div class="p-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="badge cat-arboles">Árboles</span>
+            <span class="tag-hot">🔥 2,170 búsquedas</span>
           </div>
-          <h2 class="text-xl font-display font-bold text-gray-900 mb-2 leading-tight">Pasto San Agustín: guía completa de instalación y mantenimiento en Tampico</h2>
-          <p class="text-gray-600 text-sm leading-relaxed mb-4">Todo lo que necesitas saber sobre el pasto más popular de Tampico: cómo instalarlo, cuándo regarlo, cada cuánto podarlo y cómo mantenerlo verde todo el año.</p>
-          <span class="text-primary text-sm font-semibold inline-flex items-center gap-1">Leer guía <svg class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
+          <h3 class="font-display font-bold text-gray-900 text-lg leading-snug mb-2 group-hover:text-primary transition-colors">7 Árboles para Banqueta que No Levantan el Pavimento</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-4">Las especies con raíz no invasiva que dan sombra real sin destruir tu banqueta en Tampico. Con tabla comparativa.</p>
+          <span class="text-primary text-sm font-semibold inline-flex items-center gap-1">Leer guía completa <svg class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
         </div>
       </a>
 
-      <!-- Artículo 2 -->
-      <a href="/blog/como-ahorrar-agua-jardin-tampico" class="bg-white rounded-3xl overflow-hidden border border-green-100 card-hover block">
-        <div class="img-card h-52"><img src="../img/sistema-riego-automatizado-tampico.webp" alt="Cómo ahorrar agua en tu jardín en Tampico sin sacrificar la belleza" loading="lazy"></div>
-        <div class="p-7">
-          <div class="flex gap-2 mb-3">
-            <span class="bg-bggreen text-primary text-xs font-semibold px-3 py-1 rounded-full">Riego · Agua</span>
-            <span class="text-gray-400 text-xs py-1">24 mar 2026 · 6 min</span>
+      <!-- POST 2: PALMA VIAJERO -->
+      <a href="/blog/cuidados-palma-del-viajero-ravenala" class="card bg-white rounded-2xl overflow-hidden border border-green-100 group">
+        <div class="bg-gradient-to-br from-secondary to-accent h-40 flex items-center justify-center text-6xl">🌴</div>
+        <div class="p-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="badge cat-palmas">Palmas</span>
+            <span class="tag-hot">🔥 1,559 búsquedas</span>
           </div>
-          <h2 class="text-xl font-display font-bold text-gray-900 mb-2 leading-tight">Cómo ahorrar agua en tu jardín en Tampico sin sacrificar la belleza</h2>
-          <p class="text-gray-600 text-sm leading-relaxed mb-4">El agua es un recurso valioso. Te mostramos cómo mantener un jardín hermoso en Tampico reduciendo hasta un 50% el consumo hídrico con técnicas accesibles.</p>
-          <span class="text-primary text-sm font-semibold inline-flex items-center gap-1">Leer guía <svg class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
+          <h3 class="font-display font-bold text-gray-900 text-lg leading-snug mb-2 group-hover:text-primary transition-colors">Palma del Viajero: Guía Completa (Crece el Doble en Tampico)</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-4">Por qué la Ravenala crece 2× más rápido en Tamaulipas, cómo regarla y dónde plantarla correctamente.</p>
+          <span class="text-primary text-sm font-semibold inline-flex items-center gap-1">Leer guía completa <svg class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
         </div>
       </a>
 
-      <!-- Artículo 3 -->
-      <a href="/blog/plantas-interior-tampico" class="bg-white rounded-3xl overflow-hidden border border-green-100 card-hover block">
-        <div class="img-card h-52"><img src="../img/plantas-ornamentales-tampico-viveros-terra.png" alt="Plantas de interior para casas en Tampico las más recomendadas" loading="lazy"></div>
-        <div class="p-7">
-          <div class="flex gap-2 mb-3">
-            <span class="bg-bggreen text-primary text-xs font-semibold px-3 py-1 rounded-full">Plantas · Interior</span>
-            <span class="text-gray-400 text-xs py-1">24 mar 2026 · 7 min</span>
+      <!-- POST 3: PASTO COMPARATIVA -->
+      <a href="/blog/pasto-san-agustin-vs-japones" class="card bg-white rounded-2xl overflow-hidden border border-green-100 group">
+        <div class="bg-gradient-to-br from-accent to-green-300 h-40 flex items-center justify-center text-6xl">🌿</div>
+        <div class="p-6">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="badge cat-pasto">Pasto</span>
+            <span class="tag-hot">🔥 935 búsquedas</span>
           </div>
-          <h2 class="text-xl font-display font-bold text-gray-900 mb-2 leading-tight">Plantas de interior para casas en Tampico: las más recomendadas</h2>
-          <p class="text-gray-600 text-sm leading-relaxed mb-4">El clima cálido de Tampico favorece muchas plantas de interior. Conoce las especies que mejor funcionan en ambientes cerrados y cómo cuidarlas.</p>
-          <span class="text-primary text-sm font-semibold inline-flex items-center gap-1">Leer guía <svg class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
+          <h3 class="font-display font-bold text-gray-900 text-lg leading-snug mb-2 group-hover:text-primary transition-colors">San Agustín vs Japonés: La Comparativa Honesta para Tampico</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-4">Tabla real, diferencias que importan y cuál elegir según tu jardín, sol y presupuesto.</p>
+          <span class="text-primary text-sm font-semibold inline-flex items-center gap-1">Leer comparativa <svg class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
+        </div>
+      </a>
+    </div>
+
+    <!-- SECCIÓN: TODOS LOS ARTÍCULOS -->
+    <h2 class="text-2xl font-display font-bold text-gray-900 mb-8">Todos los artículos</h2>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <!-- Ficus -->
+      <a href="/blog/ficus-elastica-cuidados-tampico" class="card bg-white rounded-2xl p-5 border border-green-100 group flex flex-col">
+        <span class="badge cat-plantas mb-3">Plantas de Interior</span>
+        <h3 class="font-display font-bold text-gray-900 leading-snug mb-2 group-hover:text-primary transition-colors">Ficus Elastica en Tampico: Guía para No Matarlo</h3>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-3">Luz, riego, sustrato y los 5 errores que matan el árbol del caucho en climas cálidos.</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 mt-auto">
+          <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5"><use href="#ic-clock"/></svg>7 min</span>
+          <span class="text-primary font-semibold inline-flex items-center gap-1">Leer <svg class="w-3 h-3"><use href="#ic-chevron-right"/></svg></span>
         </div>
       </a>
 
-      <!-- Artículo 4 -->
-      <a href="/blog/jardines-temporada-lluvias-tampico" class="bg-white rounded-3xl overflow-hidden border border-green-100 card-hover block">
-        <div class="img-card h-52"><img src="../img/jardin-residencial-plantas-pasto-tampico.jpg" alt="Cómo cuidar jardines en temporada de lluvias en Tampico" loading="lazy"></div>
-        <div class="p-7">
-          <div class="flex gap-2 mb-3">
-            <span class="bg-bggreen text-primary text-xs font-semibold px-3 py-1 rounded-full">Jardines · Temporada</span>
-            <span class="text-gray-400 text-xs py-1">24 mar 2026 · 7 min</span>
-          </div>
-          <h2 class="text-xl font-display font-bold text-gray-900 mb-2 leading-tight">Jardines en temporada de lluvias en Tampico: guía de cuidados</h2>
-          <p class="text-gray-600 text-sm leading-relaxed mb-4">Las lluvias de verano en Tampico pueden dañar tu jardín si no tomas precauciones. Aprende a protegerlo y aprovecharlo correctamente durante la temporada.</p>
-          <span class="text-primary text-sm font-semibold inline-flex items-center gap-1">Leer guía <svg class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
+      <!-- Riego pasto -->
+      <a href="/blog/cuando-regar-pasto-san-agustin-tampico" class="card bg-white rounded-2xl p-5 border border-green-100 group flex flex-col">
+        <span class="badge cat-riego mb-3">Riego</span>
+        <h3 class="font-display font-bold text-gray-900 leading-snug mb-2 group-hover:text-primary transition-colors">¿Cuándo Regar el Pasto San Agustín? Guía por Temporada</h3>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-3">Horarios, frecuencia y cómo ahorrar hasta 40% de agua sin perder el verde en Tampico.</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 mt-auto">
+          <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5"><use href="#ic-clock"/></svg>6 min</span>
+          <span class="text-primary font-semibold inline-flex items-center gap-1">Leer <svg class="w-3 h-3"><use href="#ic-chevron-right"/></svg></span>
+        </div>
+      </a>
+
+      <!-- Sintético vs Natural -->
+      <a href="/blog/pasto-sintetico-vs-natural-tampico" class="card bg-white rounded-2xl p-5 border border-green-100 group flex flex-col">
+        <span class="badge cat-pasto mb-3">Pasto</span>
+        <h3 class="font-display font-bold text-gray-900 leading-snug mb-2 group-hover:text-primary transition-colors">Pasto Sintético vs Natural: La Comparativa Honesta</h3>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-3">Costos reales a 10 años, mantenimiento y en qué casos el sintético sí vale la pena en Tampico.</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 mt-auto">
+          <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5"><use href="#ic-clock"/></svg>7 min</span>
+          <span class="text-primary font-semibold inline-flex items-center gap-1">Leer <svg class="w-3 h-3"><use href="#ic-chevron-right"/></svg></span>
+        </div>
+      </a>
+
+      <!-- Palmas tropicales -->
+      <a href="/blog/palmas-tropicales-jardin-tampico" class="card bg-white rounded-2xl p-5 border border-green-100 group flex flex-col">
+        <span class="badge cat-palmas mb-3">Palmas Tropicales</span>
+        <h3 class="font-display font-bold text-gray-900 leading-snug mb-2 group-hover:text-primary transition-colors">Las 8 Palmas Más Espectaculares para Jardines en Tampico</h3>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-3">Guía visual: tamaños, cuidados, precios y cuál palma es la correcta para tu espacio.</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 mt-auto">
+          <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5"><use href="#ic-clock"/></svg>8 min</span>
+          <span class="text-primary font-semibold inline-flex items-center gap-1">Leer <svg class="w-3 h-3"><use href="#ic-chevron-right"/></svg></span>
+        </div>
+      </a>
+
+      <!-- Sistema de riego -->
+      <a href="/blog/sistema-riego-automatizado-tampico" class="card bg-white rounded-2xl p-5 border border-green-100 group flex flex-col">
+        <span class="badge cat-riego mb-3">Sistema de Riego</span>
+        <h3 class="font-display font-bold text-gray-900 leading-snug mb-2 group-hover:text-primary transition-colors">Riego Automático en Tampico: ¿Vale la Pena? Costos Reales</h3>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-3">Tipos, costos de instalación y en cuántos meses se paga solo un sistema de riego en Tampico.</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 mt-auto">
+          <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5"><use href="#ic-clock"/></svg>7 min</span>
+          <span class="text-primary font-semibold inline-flex items-center gap-1">Leer <svg class="w-3 h-3"><use href="#ic-chevron-right"/></svg></span>
+        </div>
+      </a>
+
+      <!-- Diseño jardines -->
+      <a href="/blog/diseno-jardines-tampico-guia" class="card bg-white rounded-2xl p-5 border border-green-100 group flex flex-col">
+        <span class="badge cat-diseno mb-3">Diseño de Jardines</span>
+        <h3 class="font-display font-bold text-gray-900 leading-snug mb-2 group-hover:text-primary transition-colors">Cómo Diseñar Tu Jardín en Tampico: Guía Paso a Paso</h3>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-3">Distribución de zonas, selección de plantas y los 7 errores que arruinan jardines en el Golfo.</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 mt-auto">
+          <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5"><use href="#ic-clock"/></svg>8 min</span>
+          <span class="text-primary font-semibold inline-flex items-center gap-1">Leer <svg class="w-3 h-3"><use href="#ic-chevron-right"/></svg></span>
+        </div>
+      </a>
+
+      <!-- Tezontle -->
+      <a href="/blog/tezontle-usos-jardin-tampico" class="card bg-white rounded-2xl p-5 border border-green-100 group flex flex-col">
+        <span class="badge cat-sustrato mb-3">Piedras y Sustrato</span>
+        <h3 class="font-display font-bold text-gray-900 leading-snug mb-2 group-hover:text-primary transition-colors">Tezontle Rojo: 8 Usos que Transforman Tu Jardín</h3>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-3">Cómo usarlo para control de maleza, senderos, drenaje y decoración. Con calculadora de cantidad.</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 mt-auto">
+          <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5"><use href="#ic-clock"/></svg>7 min</span>
+          <span class="text-primary font-semibold inline-flex items-center gap-1">Leer <svg class="w-3 h-3"><use href="#ic-chevron-right"/></svg></span>
+        </div>
+      </a>
+
+      <!-- Pasto SA instalación -->
+      <a href="/blog/pasto-san-agustin-instalacion-mantenimiento" class="card bg-white rounded-2xl p-5 border border-green-100 group flex flex-col">
+        <span class="badge cat-pasto mb-3">Pasto</span>
+        <h3 class="font-display font-bold text-gray-900 leading-snug mb-2 group-hover:text-primary transition-colors">Pasto San Agustín: Guía Completa de Instalación y Mantenimiento</h3>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-3">Todo sobre el pasto más popular de Tampico: instalación, riego, poda y mantenimiento anual.</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 mt-auto">
+          <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5"><use href="#ic-clock"/></svg>8 min</span>
+          <span class="text-primary font-semibold inline-flex items-center gap-1">Leer <svg class="w-3 h-3"><use href="#ic-chevron-right"/></svg></span>
+        </div>
+      </a>
+
+      <!-- Ahorro agua -->
+      <a href="/blog/como-ahorrar-agua-jardin-tampico" class="card bg-white rounded-2xl p-5 border border-green-100 group flex flex-col">
+        <span class="badge cat-riego mb-3">Riego · Agua</span>
+        <h3 class="font-display font-bold text-gray-900 leading-snug mb-2 group-hover:text-primary transition-colors">Cómo Ahorrar Hasta 50% de Agua en Tu Jardín en Tampico</h3>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-3">Técnicas accesibles para reducir el consumo sin sacrificar el verde de tu jardín.</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 mt-auto">
+          <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5"><use href="#ic-clock"/></svg>6 min</span>
+          <span class="text-primary font-semibold inline-flex items-center gap-1">Leer <svg class="w-3 h-3"><use href="#ic-chevron-right"/></svg></span>
+        </div>
+      </a>
+
+      <!-- Plantas interior -->
+      <a href="/blog/plantas-interior-tampico" class="card bg-white rounded-2xl p-5 border border-green-100 group flex flex-col">
+        <span class="badge cat-plantas mb-3">Plantas de Interior</span>
+        <h3 class="font-display font-bold text-gray-900 leading-snug mb-2 group-hover:text-primary transition-colors">Plantas de Interior para Casas en Tampico: Las Más Recomendadas</h3>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-3">Las especies que mejor funcionan en el clima cálido-húmedo del Golfo dentro de casa.</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 mt-auto">
+          <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5"><use href="#ic-clock"/></svg>7 min</span>
+          <span class="text-primary font-semibold inline-flex items-center gap-1">Leer <svg class="w-3 h-3"><use href="#ic-chevron-right"/></svg></span>
+        </div>
+      </a>
+
+      <!-- Temporada lluvias -->
+      <a href="/blog/jardines-temporada-lluvias-tampico" class="card bg-white rounded-2xl p-5 border border-green-100 group flex flex-col">
+        <span class="badge cat-diseno mb-3">Jardines · Temporada</span>
+        <h3 class="font-display font-bold text-gray-900 leading-snug mb-2 group-hover:text-primary transition-colors">Jardines en Temporada de Lluvias en Tampico: Guía de Cuidados</h3>
+        <p class="text-gray-500 text-sm leading-relaxed flex-1 mb-3">Cómo proteger tu jardín y aprovechar las lluvias de verano en el sur de Tamaulipas.</p>
+        <div class="flex items-center justify-between text-xs text-gray-400 mt-auto">
+          <span class="flex items-center gap-1"><svg class="w-3.5 h-3.5"><use href="#ic-clock"/></svg>7 min</span>
+          <span class="text-primary font-semibold inline-flex items-center gap-1">Leer <svg class="w-3 h-3"><use href="#ic-chevron-right"/></svg></span>
         </div>
       </a>
 
     </div>
 
-    <!-- CTA blog -->
-    <div class="mt-14 bg-bggreen rounded-3xl p-8 text-center border border-green-100">
-      <h2 class="text-2xl font-display font-bold text-gray-900 mb-3">¿Necesitas un jardín profesional en Tampico?</h2>
-      <p class="text-gray-600 mb-6">Pasto en rollo, diseño de jardines, sistema de riego y mantenimiento mensual. Más de 20 años de experiencia en la zona.</p>
-      <a href="https://wa.me/528333268008?text=Hola%2C%20vi%20el%20blog%20y%20me%20interesa%20una%20cotización%20de%20Viveros%20Terra" target="_blank" rel="noopener"
-         class="inline-flex items-center gap-2 bg-wa text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-400 transition-colors shadow-xl">
-        <svg class="w-5 h-5"><use href="#ic-whatsapp"/></svg>Cotizar gratis por WhatsApp
-      </a>
+    <!-- SERVICIOS RELACIONADOS (INTERLINKING) -->
+    <div class="mt-16 bg-bggreen rounded-3xl p-8 border border-green-100">
+      <h2 class="text-2xl font-display font-bold text-gray-900 mb-2 text-center">¿Buscas servicio profesional en Tampico?</h2>
+      <p class="text-gray-500 text-center mb-8 text-sm">Más de 20 años de experiencia. Cotización gratis — respondemos el mismo día.</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <a href="/pasto-en-rollo-tampico" class="flex items-center gap-3 bg-white rounded-xl p-4 border border-green-100 hover:border-primary hover:shadow-sm transition-all group">
+          <span class="text-2xl">🌿</span>
+          <div><div class="font-semibold text-gray-900 text-sm group-hover:text-primary">Pasto en Rollo</div><div class="text-gray-400 text-xs">San Agustín · Japonés · Bermuda</div></div>
+        </a>
+        <a href="/pasto-sintetico-tampico" class="flex items-center gap-3 bg-white rounded-xl p-4 border border-green-100 hover:border-primary hover:shadow-sm transition-all group">
+          <span class="text-2xl">🏟️</span>
+          <div><div class="font-semibold text-gray-900 text-sm group-hover:text-primary">Pasto Sintético</div><div class="text-gray-400 text-xs">Venta e instalación profesional</div></div>
+        </a>
+        <a href="/plantas-palmas-arboles-tampico" class="flex items-center gap-3 bg-white rounded-xl p-4 border border-green-100 hover:border-primary hover:shadow-sm transition-all group">
+          <span class="text-2xl">🌴</span>
+          <div><div class="font-semibold text-gray-900 text-sm group-hover:text-primary">Plantas, Palmas y Árboles</div><div class="text-gray-400 text-xs">Vivero productor directo</div></div>
+        </a>
+        <a href="/tezontle-tampico" class="flex items-center gap-3 bg-white rounded-xl p-4 border border-green-100 hover:border-primary hover:shadow-sm transition-all group">
+          <span class="text-2xl">🔴</span>
+          <div><div class="font-semibold text-gray-900 text-sm group-hover:text-primary">Tezontle Rojo</div><div class="text-gray-400 text-xs">Costal y camión volteo</div></div>
+        </a>
+        <a href="/tierra-negra-tampico" class="flex items-center gap-3 bg-white rounded-xl p-4 border border-green-100 hover:border-primary hover:shadow-sm transition-all group">
+          <span class="text-2xl">🌱</span>
+          <div><div class="font-semibold text-gray-900 text-sm group-hover:text-primary">Tierra Negra Vegetal</div><div class="text-gray-400 text-xs">Costal y camión volteo</div></div>
+        </a>
+        <a href="/diseno-jardines-tampico" class="flex items-center gap-3 bg-white rounded-xl p-4 border border-green-100 hover:border-primary hover:shadow-sm transition-all group">
+          <span class="text-2xl">✏️</span>
+          <div><div class="font-semibold text-gray-900 text-sm group-hover:text-primary">Diseño de Jardines</div><div class="text-gray-400 text-xs">Plan Terra · Desde $3,000</div></div>
+        </a>
+      </div>
+      <div class="text-center mt-8">
+        <a href="https://wa.me/528333268008?text=Hola%2C%20vi%20el%20blog%20y%20quiero%20cotizar%20un%20servicio%20de%20Viveros%20Terra" target="_blank" class="inline-flex items-center gap-2 bg-wa text-white px-8 py-4 rounded-full font-bold text-base hover:bg-green-400 transition-colors shadow-lg">
+          <svg class="w-5 h-5"><use href="#ic-wa"/></svg>Cotizar por WhatsApp gratis
+        </a>
+      </div>
     </div>
+
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer class="bg-dark text-white border-t border-white/10">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-      <div class="space-y-4">
-        <div class="flex items-center"><img src="../img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-dark" loading="lazy"></div>
-        <p class="text-white/50 text-sm leading-relaxed">Blog de jardinería profesional en Tampico. Consejos, guías y tips del equipo de Viveros Terra.</p>
-        <div class="flex gap-2.5">
-          <a href="https://www.instagram.com/viverosterramx" target="_blank" rel="noopener" aria-label="Instagram" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-instagram"/></svg></a>
-          <a href="https://www.facebook.com/viverosterra/" target="_blank" rel="noopener" aria-label="Facebook" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-facebook"/></svg></a>
-          <a href="https://www.youtube.com/@viverosterramx" target="_blank" rel="noopener" aria-label="YouTube" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-youtube"/></svg></a>
-          <a href="http://www.tiktok.com/@viverosterra" target="_blank" rel="noopener" aria-label="TikTok" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-fuchsia-700 transition-colors"><svg class="w-4 h-4"><use href="#ic-tiktok"/></svg></a>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div>
+        <img src="../img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-dark mb-4">
+        <p class="text-white/50 text-sm leading-relaxed">Blog de jardinería profesional. Consejos adaptados al clima de Tampico y la zona Huasteca.</p>
+        <div class="flex gap-2 mt-4">
+          <a href="https://www.instagram.com/viverosterramx" target="_blank" class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors" aria-label="Instagram"><svg class="w-4 h-4"><use href="#ic-instagram"/></svg></a>
+          <a href="https://www.facebook.com/viverosterra/" target="_blank" class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors" aria-label="Facebook"><svg class="w-4 h-4"><use href="#ic-facebook"/></svg></a>
+          <a href="https://www.youtube.com/@viverosterramx" target="_blank" class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors" aria-label="YouTube"><svg class="w-4 h-4"><use href="#ic-youtube"/></svg></a>
+          <a href="http://www.tiktok.com/@viverosterra" target="_blank" class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center hover:bg-fuchsia-700 transition-colors" aria-label="TikTok"><svg class="w-4 h-4"><use href="#ic-tiktok"/></svg></a>
         </div>
       </div>
       <div>
-        <h4 class="font-bold text-white mb-5">Artículos</h4>
-        <ul class="space-y-2.5 text-white/50 text-sm">
-          <li><a href="/blog/pasto-san-agustin-instalacion-mantenimiento" class="hover:text-accent transition-colors">Pasto San Agustín Tampico</a></li>
-          <li><a href="/blog/como-ahorrar-agua-jardin-tampico" class="hover:text-accent transition-colors">Ahorrar agua en tu jardín</a></li>
-          <li><a href="/blog/plantas-interior-tampico" class="hover:text-accent transition-colors">Plantas de interior Tampico</a></li>
-          <li><a href="/blog/jardines-temporada-lluvias-tampico" class="hover:text-accent transition-colors">Jardines temporada lluvias</a></li>
+        <h4 class="font-bold mb-4">Artículos populares</h4>
+        <ul class="space-y-2 text-white/50 text-sm">
+          <li><a href="/blog/arboles-para-sembrar-en-banqueta" class="hover:text-accent transition-colors">Árboles para banqueta</a></li>
+          <li><a href="/blog/cuidados-palma-del-viajero-ravenala" class="hover:text-accent transition-colors">Palma del viajero</a></li>
+          <li><a href="/blog/pasto-san-agustin-vs-japones" class="hover:text-accent transition-colors">San Agustín vs Japonés</a></li>
+          <li><a href="/blog/ficus-elastica-cuidados-tampico" class="hover:text-accent transition-colors">Ficus elastica</a></li>
+          <li><a href="/blog/tezontle-usos-jardin-tampico" class="hover:text-accent transition-colors">Usos del tezontle</a></li>
         </ul>
       </div>
       <div>
-        <h4 class="font-bold text-white mb-5">Servicios</h4>
-        <ul class="space-y-2.5 text-white/50 text-sm">
+        <h4 class="font-bold mb-4">Servicios</h4>
+        <ul class="space-y-2 text-white/50 text-sm">
           <li><a href="/pasto-en-rollo-tampico" class="hover:text-accent transition-colors">Pasto en Rollo</a></li>
+          <li><a href="/pasto-sintetico-tampico" class="hover:text-accent transition-colors">Pasto Sintético</a></li>
+          <li><a href="/plantas-palmas-arboles-tampico" class="hover:text-accent transition-colors">Plantas y Palmas</a></li>
+          <li><a href="/tezontle-tampico" class="hover:text-accent transition-colors">Tezontle Rojo</a></li>
+          <li><a href="/tierra-negra-tampico" class="hover:text-accent transition-colors">Tierra Negra</a></li>
           <li><a href="/diseno-jardines-tampico" class="hover:text-accent transition-colors">Diseño de Jardines</a></li>
-          <li><a href="/sistema-riego-tampico" class="hover:text-accent transition-colors">Sistema de Riego</a></li>
-          <li><a href="/mantenimiento-jardines-tampico" class="hover:text-accent transition-colors">Mantenimiento</a></li>
         </ul>
       </div>
       <div>
-        <h4 class="font-bold text-white mb-5">Contacto</h4>
-        <ul class="space-y-3 text-white/50 text-sm">
-          <li><a href="https://wa.me/528333268008" target="_blank" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg class="w-4 h-4 text-wa flex-shrink-0"><use href="#ic-whatsapp"/></svg>833 326 8008</a></li>
-          <li><a href="tel:8333268008" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg class="w-4 h-4 flex-shrink-0"><use href="#ic-phone"/></svg>833 326 8008</a></li>
-          <li class="flex items-start gap-2.5"><svg class="w-4 h-4 flex-shrink-0 mt-0.5"><use href="#ic-pin"/></svg>Av. Álvaro Obregón 601, Cd. Madero</li>
-          <li class="flex items-center gap-2.5"><svg class="w-4 h-4 flex-shrink-0"><use href="#ic-clock"/></svg>Lun–Vie 9am–6pm · Sáb 9am–2pm</li>
+        <h4 class="font-bold mb-4">Contacto</h4>
+        <ul class="space-y-2 text-white/50 text-sm">
+          <li><a href="https://wa.me/528333268008" target="_blank" class="flex items-center gap-2 hover:text-accent"><svg class="w-4 h-4 text-wa"><use href="#ic-wa"/></svg>833 326 8008</a></li>
+          <li><a href="mailto:viverosterra@hotmail.com" class="flex items-center gap-2 hover:text-accent"><svg class="w-4 h-4"><use href="#ic-mail"/></svg>viverosterra@hotmail.com</a></li>
+          <li class="flex items-start gap-2"><svg class="w-4 h-4 mt-0.5 flex-shrink-0"><use href="#ic-pin"/></svg>Av. Álvaro Obregón 601, Cd. Madero</li>
         </ul>
       </div>
     </div>
-    <div class="border-t border-white/10 mt-12 pt-8 text-center text-white/30 text-xs">
-      <p>© 2026 Viveros Terra · Blog de Jardinería Tampico · Tamaulipas · México</p>
+    <div class="border-t border-white/10 mt-10 pt-6 text-white/30 text-xs text-center">
+      © 2026 Viveros Terra · Blog de Jardinería · Tampico, Tamaulipas · México
     </div>
   </div>
 </footer>
 
 <script>
-  const mb=document.getElementById('menu-btn'),mm=document.getElementById('mobile-menu');
-  mb.addEventListener('click',()=>{const o=!mm.classList.contains('hidden');mm.classList.toggle('hidden');mb.setAttribute('aria-expanded',String(!o));});
+const mb=document.getElementById('menu-btn'),mm=document.getElementById('mob-menu');
+if(mb)mb.addEventListener('click',()=>mm.classList.toggle('hidden'));
 </script>
 </body>
 </html>
