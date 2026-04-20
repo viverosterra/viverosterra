@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Catálogo 2025 — Viveros Terra</title>
+<meta name="description" content="Catálogo completo de plantas, árboles, palmas y pasto. Viveros Terra, Tampico, Madero y Altamira."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --td:#1B4D2E;--tl:#8DC63F;--tl2:#6BA02F;
+  --tc:#F5F0E8;--tcd:#DDD8CC;--tm:#4a7a4a;
+  --tw:#ffffff;--ts:#1a2e1a;
+  --r12:12px;--r8:8px;--r50:50px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--tc);color:var(--ts);min-height:100vh}
+
+/* HERO */
+.hero{background:var(--td);padding:2rem 1.5rem 0;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:rgba(141,198,63,.07);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;background:rgba(141,198,63,.05);border-radius:50%}
+.hlogo{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:.75rem;position:relative;z-index:1}
+.hicon{width:48px;height:48px;background:var(--tl);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.htitle{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:-.5px;line-height:1}
+.hsub{font-size:11px;color:var(--tl);font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-top:3px}
+.hdesc{font-size:13px;color:rgba(255,255,255,.6);margin-top:.6rem;line-height:1.6;position:relative;z-index:1}
+.hstats{display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem;margin-top:1.25rem;padding:1.25rem 0 1.5rem;border-top:1px solid rgba(255,255,255,.1);position:relative;z-index:1}
+.stat-n{font-size:20px;font-weight:700;color:var(--tl);line-height:1;font-family:'Playfair Display',serif}
+.stat-l{font-size:10px;color:rgba(255,255,255,.45);margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+
+/* TABS */
+.tabs{background:var(--td);display:flex;justify-content:center;flex-wrap:wrap;gap:5px;padding:.75rem 1rem}
+.tab{padding:7px 17px;border:none;border-radius:var(--r50);font-size:12px;font-weight:600;cursor:pointer;transition:all .18s;background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);font-family:'DM Sans',sans-serif}
+.tab:hover{background:rgba(255,255,255,.18);color:rgba(255,255,255,.95)}
+.tab.active{background:var(--tl);color:var(--td)}
+
+/* SEARCH */
+.sbar{padding:1rem 1.25rem .5rem;max-width:540px;margin:0 auto}
+.siw{position:relative}
+.si{width:100%;padding:10px 14px 10px 40px;border:1.5px solid var(--tcd);border-radius:var(--r50);font-size:13px;background:var(--tw);color:var(--ts);outline:none;transition:border-color .2s;font-family:'DM Sans',sans-serif}
+.si:focus{border-color:var(--tl)}
+.si::placeholder{color:#aaa}
+.sico{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--tm);pointer-events:none}
+.cnt{text-align:center;font-size:11px;color:var(--tm);padding:.2rem 0 .6rem}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:14px;padding:0 1.25rem 1.5rem;max-width:1000px;margin:0 auto}
+
+/* CARD */
+.card{background:var(--tw);border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,.07);transition:transform .2s,box-shadow .2s}
+.card:not(.exp):hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(27,77,46,.12)}
+.card.exp{grid-column:1/-1}
+.cimg{background:var(--tc);height:130px;position:relative;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.card.exp .cimg{height:220px;cursor:default}
+.cimg img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:opacity .3s}
+.cimg img.loaded{opacity:1}
+.cimg img:not(.loaded){opacity:0}
+.emoji{font-size:46px;user-select:none;z-index:1;transition:opacity .2s}
+.cimg img.loaded + .emoji{opacity:0;pointer-events:none}
+.badges{position:absolute;top:7px;left:7px;display:flex;flex-direction:column;gap:3px;z-index:3}
+.badge{font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:var(--r50);letter-spacing:.4px;text-transform:uppercase}
+.bb{background:var(--td);color:#fff}
+.bi{background:#1565C0;color:#fff}
+.bv{background:#E65100;color:#fff}
+.cbody{padding:10px 11px 12px}
+.cname{font-size:12.5px;font-weight:700;color:var(--td);line-height:1.3;margin-bottom:3px;cursor:pointer}
+.csc{font-size:9.5px;color:var(--tm);font-style:italic;margin-bottom:6px}
+.sizes{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px}
+.sz{background:var(--tc);color:var(--td);font-size:9px;font-weight:600;padding:2px 7px;border-radius:var(--r50)}
+.btns{display:flex;flex-direction:column;gap:4px}
+.btn-main{width:100%;padding:7px;background:var(--td);color:#fff;border:none;border-radius:var(--r8);font-size:10.5px;font-weight:600;cursor:pointer;transition:background .2s;font-family:'DM Sans',sans-serif}
+.btn-main:hover{background:#26693e}
+.btn-sec{width:100%;padding:6px;background:transparent;color:var(--tm);border:1px solid var(--tcd);border-radius:var(--r8);font-size:10px;cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif}
+.btn-sec:hover{background:var(--tc);color:var(--td)}
+
+/* FICHA EXPANDIDA */
+.ficha{display:none;padding:0 14px 18px;border-top:1px solid rgba(0,0,0,.06);margin-top:4px}
+.card.exp .ficha{display:block}
+.ficons{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 10px}
+.fi{display:flex;align-items:center;gap:5px;background:var(--tc);padding:5px 10px;border-radius:var(--r50);font-size:11px;font-weight:600;color:var(--td)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:10px}
+.fitem{background:var(--tc);border-radius:var(--r8);padding:9px 11px}
+.flabel{font-size:9px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
+.fval{font-size:12px;font-weight:600;color:var(--td)}
+.fdesc{font-size:11.5px;color:#2d5a2d;line-height:1.7;margin-bottom:12px;padding:10px 12px;background:#EEF7E6;border-radius:var(--r8);border-left:3px solid var(--tl)}
+.fsizes{margin-bottom:12px}
+.sztag{display:inline-block;background:#E8F5E9;color:var(--td);font-size:10px;font-weight:600;padding:3px 9px;border-radius:var(--r50);margin:2px}
+.szspec{display:inline-block;background:#FFF3E0;color:#8a4a00;font-size:10px;font-weight:600;padding:3px 9px;border-radius:var(--r50);margin:2px;border:1px dashed #E65100}
+.factions{display:flex;gap:8px;flex-wrap:wrap}
+.fa-wa{flex:1;min-width:130px;padding:9px;background:var(--td);color:#fff;border:none;border-radius:var(--r8);font-size:11.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.fa-wa:hover{background:#26693e}
+.fa-esp{flex:1;min-width:130px;padding:9px;background:var(--tw);color:var(--td);border:1.5px solid var(--td);border-radius:var(--r8);font-size:11.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+.fa-esp:hover{background:var(--tc)}
+.fa-close{padding:9px 16px;background:rgba(0,0,0,.06);color:#666;border:none;border-radius:var(--r8);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* SOLICITAR */
+.solsec{background:var(--tw);margin:.75rem 1.25rem;border-radius:14px;padding:1.25rem;max-width:1000px;margin-left:auto;margin-right:auto;border:1.5px dashed var(--tl)}
+.solsec h3{font-family:'Playfair Display',serif;color:var(--td);font-size:14px;font-weight:700;margin-bottom:.4rem}
+.solsec p{font-size:11.5px;color:var(--tm);margin-bottom:.75rem;line-height:1.5}
+.solrow{display:flex;gap:8px;flex-wrap:wrap}
+.solinput{flex:1;min-width:150px;padding:9px 13px;border:1.5px solid var(--tcd);border-radius:var(--r8);font-size:12.5px;background:var(--tw);color:var(--ts);outline:none;font-family:'DM Sans',sans-serif}
+.solinput:focus{border-color:var(--tl)}
+.solbtn{padding:9px 20px;background:var(--tl);color:var(--td);border:none;border-radius:var(--r8);font-size:12.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.solbtn:hover{background:var(--tl2)}
+
+/* PASTO */
+.pastosec{background:var(--td);margin:.75rem 1.25rem;border-radius:14px;padding:1.25rem;max-width:1000px;margin-left:auto;margin-right:auto}
+.pastosec h3{font-family:'Playfair Display',serif;color:var(--tl);font-size:15px;font-weight:700;margin-bottom:.85rem}
+.pastorow{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.pcard{background:rgba(255,255,255,.09);border-radius:10px;padding:11px 13px;border:1px solid rgba(255,255,255,.1)}
+.pcard h4{font-size:12px;font-weight:700;color:#fff;margin-bottom:4px}
+.pcard p{font-size:10.5px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:8px}
+.pcard button{width:100%;padding:6px;background:var(--tl);color:var(--td);border:none;border-radius:6px;font-size:10.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+.pcard button:hover{background:var(--tl2)}
+.tierrasec{background:var(--tw);margin:.75rem 1.25rem;border-radius:14px;padding:1.25rem;max-width:1000px;margin-left:auto;margin-right:auto;border:1px solid rgba(0,0,0,.07)}
+.tierrasec h3{font-family:'Playfair Display',serif;color:var(--td);font-size:15px;font-weight:700;margin-bottom:.85rem}
+.tierrarow{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:10px}
+.tcard{background:var(--tc);border-radius:10px;padding:10px 12px}
+.tcard h4{font-size:11.5px;font-weight:700;color:var(--td);margin-bottom:3px}
+.tcard p{font-size:10px;color:var(--tm);line-height:1.4}
+.tstats{display:flex;gap:8px;flex-wrap:wrap;margin-top:.85rem}
+.tstat{flex:1;min-width:120px;background:var(--tc);border-radius:10px;padding:9px 12px}
+.tstat-n{font-size:12px;font-weight:700;color:var(--td)}
+.tstat-l{font-size:10px;color:var(--tm);margin-top:2px}
+
+/* FAB */
+.wafab{position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(37,211,102,.45);border:none;z-index:999;transition:transform .2s}
+.wafab:hover{transform:scale(1.1)}
+
+/* FOOTER */
+footer{background:var(--td);color:rgba(255,255,255,.5);text-align:center;padding:1.5rem 1rem;font-size:11px;line-height:2;margin-top:.75rem}
+.footer-brand{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:.25rem}
+.footer-lime{color:var(--tl)}
+
+/* EMPTY */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--tm);grid-column:1/-1;font-size:13px}
+.empty-icon{font-size:36px;margin-bottom:.5rem}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+  .htitle{font-size:22px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;padding:0 .85rem 1.25rem}
+  .hstats{gap:1rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hlogo">
+    <div class="hicon">
+      <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+        <path d="M14 4C14 4 8 10 8 16a6 6 0 0012 0C20 10 14 4 14 4z" fill="#1B4D2E"/>
+        <path d="M14 12v10M10 16c2-1 4 0 4 0M18 14c-2 1-4 0-4 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="htitle">VIVEROS TERRA</div>
+      <div class="hsub">Catálogo 2025</div>
+    </div>
+  </div>
+  <p class="hdesc">Plantas, árboles y palmas para Tampico, Madero y Altamira</p>
+  <div class="hstats">
+    <div><div class="stat-n" id="totalCount">155+</div><div class="stat-l">Variedades</div></div>
+    <div><div class="stat-n">+900</div><div class="stat-l">Clientes</div></div>
+    <div><div class="stat-n">200k m²</div><div class="stat-l">Pasto inst.</div></div>
+    <div><div class="stat-n">10+ años</div><div class="stat-l">Experiencia</div></div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Categorías">
+  <button class="tab active" onclick="setTab('todos',this)">Todos</button>
+  <button class="tab" onclick="setTab('arboles',this)">🌳 Árboles</button>
+  <button class="tab" onclick="setTab('palmas',this)">🌴 Palmas</button>
+  <button class="tab" onclick="setTab('plantas',this)">🪴 Plantas</button>
+  <button class="tab" onclick="setTab('pasto',this)">🌿 Pasto &amp; Tierra</button>
+</nav>
+
+<div class="sbar" id="searchWrap">
+  <div class="siw">
+    <svg class="sico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M15 15l-3.5-3.5"/></svg>
+    <input class="si" id="si" type="search" placeholder="Buscar planta, árbol, palma o tipo..." oninput="doFilter()" aria-label="Buscar en catálogo"/>
+  </div>
+</div>
+<p class="cnt" id="cnt" aria-live="polite"></p>
+<main class="grid" id="grid" aria-label="Catálogo de plantas"></main>
+
+<section class="solsec" id="solsec" aria-label="Solicitar variedad especial">
+  <h3>🔍 ¿No encontraste lo que buscas?</h3>
+  <p>Dinos qué planta, árbol, tamaño o medida necesitas y te cotizamos. Manejamos muchas más variedades.</p>
+  <div class="solrow">
+    <input class="solinput" id="solinput" type="text" placeholder="Ej: Palmera Phoenix 4m, Bambú negro..."/>
+    <button class="solbtn" onclick="solEsp()">Solicitar cotización →</button>
+  </div>
+</section>
+
+<section id="pastoSection" style="display:none" aria-label="Pasto y materiales">
+  <div class="pastosec">
+    <h3>🌿 Pasto en Rollo Natural</h3>
+    <div class="pastorow">
+      <div class="pcard"><h4>San Agustín</h4><p>El más popular para Tampico. Tolerante al calor, lluvia y humedad. Residencial y comercial.</p><button onclick="cotizar('Pasto San Agustín en rollo')">Cotizar por m²</button></div>
+      <div class="pcard"><h4>Japonés</h4><p>Textura fina y uniforme. Bajo mantenimiento. Jardines ornamentales.</p><button onclick="cotizar('Pasto Japonés en rollo')">Cotizar por m²</button></div>
+      <div class="pcard"><h4>Bermuda</h4><p>Alta resistencia al tráfico. Áreas deportivas, parques e industrias.</p><button onclick="cotizar('Pasto Bermuda en rollo')">Cotizar por m²</button></div>
+      <div class="pcard"><h4>Pasto Sintético</h4><p>Sin riego ni mantenimiento. Terrazas, canchas y áreas secas. Garantía incluida.</p><button onclick="cotizar('Instalación pasto sintético')">Cotizar</button></div>
+    </div>
+  </div>
+  <div class="tierrasec">
+    <h3>🪨 Materiales &amp; Tierra</h3>
+    <div class="tierrarow">
+      <div class="tcard"><h4>Tierra Negra</h4><p>Sustrato premium para jardines y trasplantes. Por m³.</p></div>
+      <div class="tcard"><h4>Bola de Río</h4><p>Piedra natural decorativa para senderos y jardines.</p></div>
+      <div class="tcard"><h4>Tezontle</h4><p>Piedra volcánica para macetas y drenaje.</p></div>
+      <div class="tcard"><h4>Mármol</h4><p>Grava de mármol para áreas de descanso.</p></div>
+      <div class="tcard"><h4>Laja</h4><p>Perfecta para senderos y áreas naturales.</p></div>
+      <div class="tcard"><h4>Macetas</h4><p>Macetones decorativos y mobiliario exterior.</p></div>
+    </div>
+    <div class="tstats">
+      <div class="tstat"><div class="tstat-n">+200,000 m²</div><div class="tstat-l">de pasto instalado en la región</div></div>
+      <div class="tstat"><div class="tstat-n">+1,500 instalaciones</div><div class="tstat-l">de pasto en rollo</div></div>
+      <div class="tstat"><div class="tstat-n">Ahorro 40% agua</div><div class="tstat-l">con riego automatizado</div></div>
+    </div>
+  </div>
+  <div class="solsec" style="margin:.75rem 1.25rem">
+    <h3>¿Necesitas pasto o material especial?</h3>
+    <div class="solrow">
+      <input class="solinput" id="solpasto" type="text" placeholder="Ej: 300m² San Agustín con instalación..."/>
+      <button class="solbtn" onclick="solPasto()">Solicitar →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Viveros <span class="footer-lime">Terra</span></div>
+  Av. Álvaro Obregón 601 Col. Ampliación Unidad Nacional · Ciudad Madero, Tamaulipas<br>
+  <span class="footer-lime">833 326 8008</span> · viverosterra@hotmail.com · www.viverosterra.com
+</footer>
+
+<button class="wafab" onclick="openWA()" aria-label="Contactar por WhatsApp">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</button>
+
+<script>
+// Función para construir URL de imagen via API proxy
+function img(id){ return '/api/img?id=' + id; }
+
+const plants = [
+  // ÁRBOLES
+  {cat:'arboles',name:'Olivo Negro',sc:'Bucida Buceras',sz:['1 m','2-3 m','4-5 m'],b:['bb'],i:'🌳',img:'1TR82jlLbrXUPt6f9gZoFcrH5GkhbQbSb',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 15 m',flor:'No',mant:'Bajo',tipo:'Árbol grande banqueta',desc:'Árbol ornamental resistente, ideal para banquetas y espacios amplios. Muy tolerante al calor y sal marina. Excelente para dar sombra y delimitar espacios en Tampico.'},
+  {cat:'arboles',name:'Encino Siempreverde',sc:'Quercus Virginiana',sz:['1 m','1-2 m','2-3 m','3-4 m'],b:['bb'],i:'🌳',img:'1L1L4nhFnA1VKlVNnboRHoWv455DFFAOq',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 20 m',flor:'No',mant:'Bajo',tipo:'Árbol grande banqueta',desc:'Roble siempreverde de gran porte. Muy longevo y resistente. Excelente para banquetas, parques y jardines que necesitan sombra densa permanente.'},
+  {cat:'arboles',name:'Crespón Astronómica',sc:'Lagerstroemia Indica',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌸',img:'1eTgwu_mJpK3v1ZHjuTR1lm3t5F68sqXS',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 7 m',flor:'Sí — rosa/lila/blanca',mant:'Bajo',tipo:'Árbol florido banqueta',desc:'Árbol de floración espectacular en verano. Sus racimos de flores cubren toda la copa. Muy popular en jardines residenciales y avenidas por su espectacular belleza.'},
+  {cat:'arboles',name:'Lluvia de Oro',sc:'Cassia Fistula',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌼',img:null,luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 8 m',flor:'Sí — amarilla espectacular',mant:'Bajo',tipo:'Árbol florido',desc:'Uno de los árboles de flor más llamativos. Sus racimos de flores amarillas intensas cubren el árbol entero en primavera. Perfecto para jardines y banquetas.'},
+  {cat:'arboles',name:'Flamboyán Tabachín',sc:'Delonix Regia',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌺',img:null,luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 12 m',flor:'Sí — roja/naranja',mant:'Bajo',tipo:'Árbol grande',desc:'El árbol más llamativo del trópico. Sus flores rojo-naranja brillante lo convierten en el protagonista de cualquier jardín. Crece rápido y da excelente sombra.'},
+  {cat:'arboles',name:'Neem',sc:'Azadirachta indica',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌿',img:null,luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 20 m',flor:'Sí (blanca pequeña)',mant:'Muy bajo',tipo:'Árbol grande banqueta',desc:'Árbol de rápido crecimiento y follaje denso. Muy resistente al calor y la sequía. Ideal para banquetas y camellones. Propiedades naturales contra insectos.'},
+  {cat:'arboles',name:'Jacaranda',sc:'Jacaranda Mimisfolia',sz:['1 m','1-2 m','2-3 m'],b:[],i:'💜',img:null,luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 15 m',flor:'Sí — morada espectacular',mant:'Bajo',tipo:'Árbol grande',desc:'Uno de los árboles más bellos del mundo. En temporada de floración se cubre de racimos morados que crean un espectáculo visual único. Ideal para jardines amplios.'},
+  {cat:'arboles',name:'Palo de Rosa Guayacán',sc:'Tabubeia Rosea',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌸',img:null,luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 30 m',flor:'Sí — rosa brillante',mant:'Bajo',tipo:'Árbol grande',desc:'Árbol de floración masiva color rosa. Cuando florece, sus ramas se cubren completamente antes de que salgan las hojas, creando un efecto visual de gran impacto.'},
+  {cat:'arboles',name:'Fresno',sc:'Fraxinus sp.',sz:['1 m','1-2 m','2-3 m','4-5 m'],b:['bb'],i:'🍃',img:null,luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 20 m',flor:'No',mant:'Medio',tipo:'Árbol grande banqueta',desc:'Árbol de follaje frondoso ideal para sombra. Crece rápido y tiene buena adaptación al clima de la región. Muy usado en banquetas, camellones y jardines amplios.'},
+  {cat:'arboles',name:'Sauce Llorón',sc:'Salix babylonica',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌿',img:null,luz:'☀️ Sol / 🌤 Media Sombra',agua:'Abundante',altura:'Hasta 20 m',flor:'No',mant:'Medio',tipo:'Árbol grande banqueta',desc:'Árbol de silueta inconfundible con ramas colgantes elegantes. Requiere riego abundante. Perfecto cerca de fuentes de agua y jardines con sistema de riego.'},
+  {cat:'arboles',name:'Magnolia',sc:'Magnolia grandiflora',sz:['1 m','1-2 m','2-3 m','4-5 m'],b:['bb'],i:'🌸',img:null,luz:'☀️ Sol / 🌤 Media Sombra',agua:'Regular',altura:'Hasta 25 m',flor:'Sí — blanca grande fragante',mant:'Medio',tipo:'Árbol grande banqueta',desc:'Árbol de gran porte con flores blancas de aroma intenso. Muy apreciado en jardines formales y residencias de alto nivel. Una de las especies más elegantes.'},
+  {cat:'arboles',name:'Liquidambar',sc:'Liquidambar styraciflua',sz:['1 m','1-2 m','2-3 m','4-5 m'],b:['bb'],i:'🍂',img:null,luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 25 m',flor:'No',mant:'Bajo',tipo:'Árbol grande banqueta',desc:'Árbol de hojas estrelladas que cambian de color en otoño. Sus colores rojos, naranjas y dorados son espectaculares. Excelente para banquetas y parques.'},
+  {cat:'arboles',name:'Níspero',sc:'Eriobotrya japonica',sz:['1 m','1-2 m','2-3 m','3-4 m'],b:['bb'],i:'🍑',img:null,luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 10 m',flor:'Sí — blanca fragante',mant:'Bajo',tipo:'Árbol frutal ornamental',desc:'Árbol frutal muy ornamental con frutos comestibles. Sus hojas grandes y brillantes son muy decorativas. Excelente para jardines que quieren fruto y sombra.'},
+  {cat:'arboles',name:'Eucalipto',sc:'Eucalyptus sp.',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🍃',img:null,luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 30 m',flor:'Sí (pequeña)',mant:'Muy bajo',tipo:'Árbol rápido crecimiento',desc:'Árbol de crecimiento muy rápido. Su aroma mentolado es muy agradable. Excelente para cortinas rompevientos y proyectos que necesitan sombra rápida.'},
+  {cat:'arboles',name:'Parota Orejon',sc:'Enterolobium cyclocarpum',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌳',img:null,luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 40 m',flor:'Sí (pequeña)',mant:'Bajo',tipo:'Árbol gigante',desc:'Uno de los árboles más grandes de México. Copa muy amplia que da sombra abundante. Muy resistente al calor y sequía. Ideal para proyectos de gran escala.'},
+  {cat:'arboles',name:'Acacia Negra',sc:'Acacia melanoxylon',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌿',img:null,luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 15 m',flor:'Sí — amarilla',mant:'Muy bajo',tipo:'Árbol banqueta',desc:'Árbol de rápido crecimiento y bajo mantenimiento. Sus flores amarillas son muy ornamentales. Excelente para banquetas y camellones. Muy resistente al calor.'},
+  {cat:'arboles',name:'Ficus Benjamin',sc:'Ficus benjamina',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🍃',img:null,luz:'☀️ Sol / 🌤 Media Sombra',agua:'Moderado',altura:'Hasta 15 m',flor:'No',mant:'Medio',tipo:'Árbol ornamental',desc:'Árbol muy popular para jardines y exteriores. Su follaje brillante y copa densa lo hacen muy ornamental. Excelente para crear privacidad y sombra.'},
+  {cat:'arboles',name:'Tronadora',sc:'Tecoma Stans',sz:['1-2 m','2-3 m'],b:[],i:'🌻',img:null,luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 8 m',flor:'Sí — amarilla abundante',mant:'Muy bajo',tipo:'Árbol florido',desc:'Árbol de flores amarillas trompeta muy llamativas. Florece casi todo el año. Muy resistente al calor y sequía. Árbol nacional de Trinidad y Tobago.'},
+  {cat:'arboles',name:'Huizache',sc:'Acacia farnesiana',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌼',img:null,luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 8 m',flor:'Sí — amarilla fragante',mant:'Muy bajo',tipo:'Árbol xérico',desc:'Árbol nativo muy resistente. Sus flores amarillas son intensamente fragantes. Perfecta para jardines xéricos y proyectos de reforestación con plantas nativas.'},
+  {cat:'arboles',name:'Sabino Ahuehuete',sc:'Taxodium mucronatum',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌲',img:null,luz:'☀️ Pleno Sol',agua:'Abundante',altura:'Hasta 40 m',flor:'No',mant:'Bajo',tipo:'Árbol patrimonial',desc:'El árbol nacional de México. Muy longevo, puede vivir miles de años. Su follaje caduco crea efectos visuales únicos. Perfecto cerca del agua.'},
+  {cat:'arboles',name:'Polyalthia',sc:'Polyalthia longifolia',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌲',img:null,luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 15 m',flor:'Sí (discreta)',mant:'Bajo',tipo:'Árbol columnar banqueta',desc:'Árbol de porte columnar muy elegante. Sus hojas onduladas son muy ornamentales. Excelente para banquetas, ya que crece hacia arriba sin invadir espacio lateral.'},
+  {cat:'arboles',name:'Flor de Mayo',sc:'Plumeria sp.',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌼',img:null,luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 8 m',flor:'Sí — muy fragante',mant:'Bajo',tipo:'Árbol florido banqueta',desc:'El árbol más fragante del trópico. Sus flores de cinco pétalos en blanco, rosa y amarillo son icónicas. Muy resistente al calor y la sequía.'},
+  {cat:'arboles',name:'Hule',sc:'Ficus Elastica',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌿',img:null,luz:'☀️ Sol / 🌤 Media Sombra',agua:'Moderado',altura:'Hasta 30 m',flor:'No',mant:'Bajo',tipo:'Árbol interior/exterior',desc:'Árbol de hojas grandes brillantes muy decorativas. Disponible en verde, variegado y púrpura. Uno de los árboles más versátiles para interior y exterior.'},
+  {cat:'arboles',name:'Orquídea Pata de Vaca',sc:'Bahuinia sp.',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌸',img:null,luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 10 m',flor:'Sí — rosa/morada',mant:'Bajo',tipo:'Árbol florido banqueta',desc:'Árbol de flores similares a orquídeas muy llamativas. Sus hojas en forma de pezuña de vaca son únicas. Una de las floaciones más elegantes de la región.'},
+  {cat:'arboles',name:'Ceiba',sc:'Ceiba pentandra',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌲',img:null,luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 70 m',flor:'Sí — blanca',mant:'Bajo',tipo:'Árbol gigante',desc:'Árbol sagrado de la cultura maya. Uno de los árboles más grandes del mundo. Su tronco con contrafuertes es espectacular. Para proyectos de gran escala.'},
+
+  // PALMAS
+  {cat:'palmas',name:'Coco Plumoso',sc:'Syagrus romanzoffiana',sz:['1-2 m','2-3 m','3-4 m','+5 m'],b:[],i:'🌴',img:'1VQ2urkzIqBFO4rZeKHQpe-c3X9TViVWJ',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 15 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Palma elegante de plumas arqueadas. Muy resistente al viento y al calor tropical. Excelente para jardines residenciales y proyectos paisajísticos de impacto.'},
+  {cat:'palmas',name:'Palma Cola de Zorra',sc:'Wodyetia bifurcata',sz:['1-2 m','2-3 m','3-4 m','+5 m'],b:[],i:'🌴',img:'1kIwetkOcVkm7Wb7xvVaEeMcvAdl_nDMO',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 10 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Una de las palmas más elegantes del mercado. Su follaje denso en forma de cola de zorro la hace muy llamativa. Ideal para entradas de casas, hoteles y fraccionamientos.'},
+  {cat:'palmas',name:'Palma Real',sc:'Roystonea regia',sz:['1-2 m','2-3 m','3-4 m','+5 m'],b:[],i:'🌴',img:'1xlji_TnPZ_Gn0nouFx8oMhEnsifD_R10',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 30 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'La palma más majestuosa. Su tronco gris plateado y follaje erguido le da un porte regio incomparable. Muy usada en avenidas, hoteles y proyectos de gran escala.'},
+  {cat:'palmas',name:'Palma Areca',sc:'Dypsis lutescens',sz:['1-2 m','2-3 m','3-4 m'],b:['bi'],i:'🪴',img:'1f9yY6hRqr0lf47QeunWBgNR_RXqZHHZM',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 8 m',flor:'Sí',mant:'Medio',tipo:'Palma interior/exterior',desc:'La palma de interior más popular del mundo. Sus tallos múltiples y follaje plumoso crean una atmósfera tropical. Excelente purificadora de aire para interiores.'},
+  {cat:'palmas',name:'Palma Washingtona',sc:'Washingtonia robusta',sz:['1 m','1-2 m','2-3 m','+4 m'],b:[],i:'🌴',img:null,luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 30 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Palma de gran altura con faldilla de hojas secas característica. Muy resistente al calor y la sequía. Icónica en avenidas y espacios industriales o comerciales.'},
+  {cat:'palmas',name:'Palma Cica Revoluta',sc:'Cycas revoluta',sz:['-0.60 m','0.60 m','1 m'],b:[],i:'🌿',img:'1Pp66DaLg1hg0YvVA6ZUxpT8hkgmCcdKJ',luz:'☀️ Sol / 🌤 Media Sombra',agua:'Poco',altura:'Hasta 3 m',flor:'No',mant:'Muy bajo',tipo:'Cica / Fósil viviente',desc:'Una de las plantas más antiguas del planeta. Su forma simétrica perfecta y hojas arqueadas brillantes la hacen ideal para jardines formales y entradas.'},
+  {cat:'palmas',name:'Palma Kerpis',sc:'Chamaedorea sp.',sz:['1-2 m','2-3 m','3-4 m'],b:[],i:'🪴',img:'1rD9tgujODXJ03znMkru4eB1wvMuardSJ',luz:'🌤 Media Sombra',agua:'Moderado',altura:'Hasta 5 m',flor:'Sí',mant:'Bajo',tipo:'Palma sombra',desc:'Palma de porte elegante y crecimiento lento. Muy decorativa en jardines con sombra. Sus tallos esbeltos y follaje plumoso la hacen muy apreciada.'},
+  {cat:'palmas',name:'Palma Bismarkia',sc:'Bismarckia nobilis',sz:['1 m','1-2 m','3-4 m'],b:[],i:'🌴',img:null,luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 25 m',flor:'Sí',mant:'Muy bajo',tipo:'Palma',desc:'Palma de hojas color plateado-azulado única en el mundo. Su color metálico la hace completamente diferente a cualquier otra. Un punto focal incomparable en jardines de diseño.'},
+  {cat:'palmas',name:'Palma Cola de Pescado',sc:'Caryota sp.',sz:['1-2 m','2-3 m','3-4 m'],b:[],i:'🌿',img:null,luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 25 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Palma de hojas con forma de cola de pez única. Sus folíolos irregulares le dan una textura muy especial. Muy decorativa en jardines tropicales y exteriores.'},
+  {cat:'palmas',name:'Palma Mascareña',sc:'Hyophorbe lagenicaulis',sz:['1-2 m','+2 m'],b:[],i:'🌴',img:null,luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 9 m',flor:'Sí',mant:'Bajo',tipo:'Palma botella',desc:'La palma botella. Su tronco hinchado en el centro es completamente único. Muy lenta en crecimiento, lo que la hace muy valiosa como pieza de colección.'},
+  {cat:'palmas',name:'Palma Triangular',sc:'Dypsis decaryi',sz:['1-2 m','2-3 m','3-4 m'],b:[],i:'🌴',img:null,luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 8 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Palma única cuyas hojas surgen de tres lados formando un triángulo perfecto. Un diseño arquitectónico muy codiciado en jardines de alto nivel y resorts.'},
+  {cat:'palmas',name:'Palma Cocotera',sc:'Cocos nucifera',sz:['1 m','2-3 m','+4 m'],b:[],i:'🌴',img:null,luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 30 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'La palma tropical por excelencia. Evoca playa y paraíso. Muy resistente al viento y la salinidad costera. Perfecta para casas de playa y jardines costeros de Tampico.'},
+  {cat:'palmas',name:'Palma Estrella',sc:'Rhapis excelsa',sz:['1 m','1-2 m'],b:['bi'],i:'🪴',img:null,luz:'🌤 Media Sombra',agua:'Moderado',altura:'Hasta 4 m',flor:'Sí',mant:'Bajo',tipo:'Palma interior',desc:'Palma de interior con múltiples tallos esbeltos y hojas en abanico. Muy apreciada en decoración de interiores por su elegancia y resistencia a la sombra.'},
+  {cat:'palmas',name:'Palma Seifrixi Bambú',sc:'Chamaedorea seifrizii',sz:['1 m','2 m'],b:['bi'],i:'🪴',img:null,luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 4 m',flor:'Sí',mant:'Bajo',tipo:'Palma interior',desc:'Palma de tallos delgados similares al bambú. Excelente para interiores. Muy resistente a la poca luz y el aire acondicionado. Popular en oficinas y lobbies.'},
+  {cat:'palmas',name:'Palma Licuala',sc:'Licuala grandis',sz:['1 m','1-2 m'],b:['bi'],i:'🪴',img:null,luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 3 m',flor:'Sí',mant:'Medio',tipo:'Palma interior exótica',desc:'Palma de hojas redondas plisadas completamente únicas. Una de las palmas más exóticas y codiciadas. Su hoja circular es un diseño de la naturaleza sin igual.'},
+  {cat:'palmas',name:'Palma Datilera',sc:'Phoenix dactylifera',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌴',img:null,luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 25 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Palma icónica del desierto con gran resistencia al calor extremo. Sus penachos arqueados son muy decorativos. Excelente para proyectos con look mediterráneo.'},
+  {cat:'palmas',name:'Palma Rubelina',sc:'Phoenix roebelenii',sz:['-1 m','1-2 m','2-3 m'],b:[],i:'🌴',img:null,luz:'☀️ Sol / 🌤 Media Sombra',agua:'Moderado',altura:'Hasta 4 m',flor:'Sí',mant:'Bajo',tipo:'Palma pequeña',desc:'Versión miniatura de la palma datilera. Sus hojas arqueadas finísimas son muy ornamentales. Perfecta para jardines pequeños, macetones y espacios reducidos.'},
+  {cat:'palmas',name:'Palma Viajera Ravenala',sc:'Ravenala madagascariensis',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌿',img:null,luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 10 m',flor:'Sí — blanca',mant:'Bajo',tipo:'Palma-Árbol',desc:'La palma del viajero. Sus hojas en abanico bidimensional perfecto son únicas. Planta arquitectónica de gran impacto visual para jardines de diseño.'},
+  {cat:'palmas',name:'Palma de Madagascar',sc:'Pachypodium lamerei',sz:['1 m','2 m'],b:[],i:'🌵',img:'1mJ8k8jw6szm9wQgpb9Bnb8ls2qVNB62V',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 8 m',flor:'Sí — blanca',mant:'Muy bajo',tipo:'Suculenta árbol',desc:'Tronco espinoso plateado con corona de hojas largas. Parece una palma del desierto. Muy resistente. Una pieza única y llamativa para jardines de colección.'},
+
+  // PLANTAS
+  {cat:'plantas',name:'Ave de Paraíso',sc:'Strelitzia reginae',sz:['30 cm','60 cm','80 cm'],b:['bv'],i:'🌺',img:'1AP3FbBUp3js1lZnSHmw8QPFemXzBkXww',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 1.5 m',flor:'Sí — naranja/morada',mant:'Bajo',tipo:'Planta tropical',desc:'Una de las flores más elegantes del mundo. Su forma imita la cabeza de un ave tropical. Muy resistente y de larga duración. Ideal para jardines modernos y minimalistas.'},
+  {cat:'plantas',name:'Monstera Piñanona',sc:'Monstera deliciosa',sz:['30 cm','60 cm','80 cm'],b:['bv'],i:'🍃',img:'1C4zUYrj3Iv1S5BAjzrpsDfzMGqxQ69oR',luz:'🌤 Media Sombra',agua:'Moderado',altura:'Hasta 4 m',flor:'Rara',mant:'Bajo',tipo:'Planta tropical',desc:'La planta tropical de moda. Sus hojas grandes con perforaciones naturales son un ícono del diseño moderno. Perfecta para interiores luminosos y jardines sombreados.'},
+  {cat:'plantas',name:'Sansiviera',sc:'Sansevieria trifasciata',sz:['60-70 cm'],b:['bv'],i:'🌿',img:'1IeuS5ZJlowycNcexuJBaevU6wa1FTavo',luz:'🌤 Media Sombra / ☀️ Sol',agua:'Muy poco',altura:'Hasta 1.2 m',flor:'Rara (fragante)',mant:'Muy bajo',tipo:'Interior resistente',desc:'Casi indestructible. Purifica el aire de toxinas y funciona en interiores con poca luz. Perfecta para oficinas, lobbies y espacios comerciales con mínimo mantenimiento.'},
+  {cat:'plantas',name:'Bambú Tarro',sc:'Bambusa vulgaris',sz:['Sencillo 3-4 m','Doble 1.8 m','+4 m'],b:['bv'],i:'🌿',img:'1uXtiicBu9i7QBMdl8IcoPSb0833BYkHo',luz:'☀️ Sol / 🌤 Media',agua:'Regular',altura:'Hasta 20 m',flor:'Rara',mant:'Medio',tipo:'Gramínea gigante',desc:'El bambú más popular para cercos vivos. Crece muy rápido. Sus cañas lisas son perfectas para privacidad y barreras acústicas naturales. Un clásico del paisajismo.'},
+  {cat:'plantas',name:'Palma ZZ Plant',sc:'Zamioculcas zamiifolia',sz:['30 cm','50 cm','70 cm'],b:['bv','bi'],i:'🪴',img:'1GnD6p6bAy5FH_BIIFDMkgb4VPu49uw2O',luz:'🌑 Sombra / 🌤 Media',agua:'Muy poco',altura:'Hasta 1 m',flor:'Rara',mant:'Muy bajo',tipo:'Interior resistente',desc:'La planta perfecta para interiores oscuros. Funciona con muy poca luz natural. Extremadamente resistente a la falta de riego. Ideal para oficinas y baños.'},
+  {cat:'plantas',name:'Agapando',sc:'Agapanthus africanus',sz:['30-40 cm'],b:[],i:'💜',img:'1kpeqUB0wgCFWVtMYGjnmsk05Xx74nD-7',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 60 cm',flor:'Sí — azul/morada',mant:'Bajo',tipo:'Planta bulbosa',desc:'Flores en racimos azul-morado muy vistosas. Floración de primavera-verano. Excelente para bordes y jardines que buscan color prolongado.'},
+  {cat:'plantas',name:'Bugambilea Mini Morada',sc:'Bougainvillea sp.',sz:['25-30 cm','50-60 cm','1 m'],b:[],i:'💜',img:'1sZD_bR56XTn6OtkUq-BKVEmCDsM9i0LK',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 3 m',flor:'Sí — morada intensa',mant:'Bajo',tipo:'Arbusto trepador',desc:'Versión compacta de bugambilea en morado intenso. Florece casi todo el año con pleno sol y muy poco riego. Perfecta para macetones, bardas bajas y jardines pequeños.'},
+  {cat:'plantas',name:'Bugambilea Envarada',sc:'Bougainvillea sp.',sz:['0.80 m','1 m'],b:[],i:'🌸',img:'1PQHRsGnbn6G5-0s93wNV9B8iLp_AHf5Y',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Trepadora hasta 12 m',flor:'Sí — roja/naranja/lila',mant:'Bajo',tipo:'Trepadora envarada',desc:'Bugambilea ya formada en vara. Lista para plantar con efecto inmediato. Florece casi todo el año. La reina de las plantas de exterior en clima cálido.'},
+  {cat:'plantas',name:'Plumbago',sc:'Plumbago auriculata',sz:['40 cm','80 cm'],b:['bv'],i:'💙',img:'1OY2LnExTjU39Bhbw5V0Oy5BP-RL5G7wR',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 2 m',flor:'Sí — azul celeste',mant:'Bajo',tipo:'Arbusto florido',desc:'Arbusto de flores azul celeste que florece casi todo el año. Su color es raro y muy codiciado en jardines. Ideal para setos bajos con contraste de color.'},
+  {cat:'plantas',name:'Agave Atenuata',sc:'Agave attenuata',sz:['30 cm','80 cm-1 m'],b:[],i:'🌵',img:'1_ymnFLK8cBiSjI0ggLcFd4wFVZxnZmGR',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 1.5 m',flor:'Sí (1 vez al madurar)',mant:'Muy bajo',tipo:'Suculenta / Agave',desc:'El agave sin espinas. Sus hojas suaves y arqueadas lo hacen seguro para jardines familiares. Muy resistente al calor. Forma rosetas perfectas muy decorativas.'},
+  {cat:'plantas',name:'Árbol de la Abundancia',sc:'Pachira aquatica',sz:['20-30 cm'],b:[],i:'🌿',img:'1G536Zq546RnMWRc8h_dyCGkU6J2OfZvE',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 18 m',flor:'Sí',mant:'Bajo',tipo:'Interior / Exterior',desc:'Símbolo de buena suerte y prosperidad. Su tronco trenzado y follaje exuberante lo hacen muy decorativo. Muy popular en oficinas, lobbies y espacios corporativos.'},
+  {cat:'plantas',name:'Aralia Golden',sc:'Schefflera arboricola var.',sz:['20-25 cm','80 cm'],b:[],i:'🌿',img:'1gxwIwcw243Gfso-EVVUd15QPj1xHbN--',luz:'☀️ Sol / 🌤 Media',agua:'Moderado',altura:'Hasta 4 m',flor:'No',mant:'Bajo',tipo:'Arbusto',desc:'Follaje multicolor en tonos verdes y dorados muy decorativo. Muy resistente y fácil de mantener. Perfecta para exteriores e interiores luminosos.'},
+  {cat:'plantas',name:'Aralia Elegantísima',sc:'Schefflera elegantissima',sz:['1 m','1.5 m'],b:[],i:'🌿',img:'1pghtMQSQ4O0-_aJUafx9_M3m8b6GHBxb',luz:'🌤 Media Sombra',agua:'Moderado',altura:'Hasta 3 m',flor:'No',mant:'Bajo',tipo:'Arbusto interior',desc:'Hojas delgadas y elegantes en tonos oscuros. Muy apreciada en diseño de interiores. Su porte esbelto la hace perfecta para espacios modernos y minimalistas.'},
+  {cat:'plantas',name:'Azalea',sc:'Rhododendron sp.',sz:['0.25 m','1 m'],b:[],i:'🌺',img:'1ctIMQEz71IvaQ9km70o6Kx3vqA67OFh4',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 2 m',flor:'Sí — múltiples colores',mant:'Medio',tipo:'Arbusto florido',desc:'Una de las plantas de flor más espectaculares. En floración se cubre completamente. Disponible en rosa, rojo, blanco y lila. Muy vistosa en jardines.'},
+  {cat:'plantas',name:'Adelfa Enana',sc:'Nerium oleander nana',sz:['30-50 cm'],b:[],i:'🌺',img:'1em_Wx4Rxh_35trX0XMzlyAsCyYF5Xsj2',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 1 m',flor:'Sí — rosa/roja',mant:'Muy bajo',tipo:'Arbusto florido',desc:'Versión compacta de la adelfa. Muy resistente al calor y la sequía. Florece casi todo el año con muy poco mantenimiento. Ideal para bordes y jardines.'},
+  {cat:'plantas',name:'Adenium Rosa del Desierto',sc:'Adenium obesum',sz:['20-30 cm','50-70 cm'],b:[],i:'🌸',img:'1HVOWle5lFxezfSlsKJHwBJrhr5Fgfr7X',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 80 cm',flor:'Sí — rosa espectacular',mant:'Muy bajo',tipo:'Suculenta florida',desc:'Planta de flores rosadas intensas sobre tronco carnoso muy llamativo. Requiere muy poca agua. Excelente como planta de colección y jardines de diseño contemporáneo.'},
+  {cat:'plantas',name:'Beucarnea Soyate',sc:'Beaucarnea recurvata',sz:['20-30 cm','1 m','+1 m'],b:[],i:'🌴',img:'1nbuXOmnGL0QYOkUBH-Q_nM1_ptydvn-k',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 9 m',flor:'Rara',mant:'Muy bajo',tipo:'Árbol suculento',desc:'El pata de elefante. Su tronco hinchado almacena agua. Follaje largo y ondulado muy ornamental. Muy resistente a la sequía. Codiciado en jardines modernos.'},
+  {cat:'plantas',name:'Box Arrayán Bola',sc:'Buxus sempervirens',sz:['30-40 cm','50-60 cm','70-80 cm'],b:['bv'],i:'🟢',img:'1WAN-77xq-lxXIRakKSIhm4MVG9YscJUH',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Formado según tamaño',flor:'No',mant:'Medio',tipo:'Topiario',desc:'Arbusto formado en esfera perfecta. Da un toque formal y elegante a entradas y jardines de diseño. Disponible en varios tamaños listo para plantar.'},
+  {cat:'plantas',name:'Cactus Órgano',sc:'Stenocereus sp.',sz:['80 cm-1 m','+1 m'],b:[],i:'🌵',img:'1Tqwp_2SYARAYJ5LY9KJDOOyLOr4ipbqt',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 10 m',flor:'Sí (nocturna)',mant:'Muy bajo',tipo:'Cactus columnar',desc:'Cactus columnar imponente. Requiere casi nada de agua. Da un carácter muy especial a jardines desérticos y xeroscape modernos. Casi inmortal.'},
+  {cat:'plantas',name:'Casuarina',sc:'Casuarina equisetifolia',sz:['50-60 cm','+1 m'],b:[],i:'🌲',img:'1YEUyJ4xIYG8murecTZatUD9jogKUZMHn',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 35 m',flor:'No',mant:'Muy bajo',tipo:'Árbol costero',desc:'Árbol de follaje muy fino y plumoso. Muy resistente a la sal marina y el viento costero. Ideal para jardines cerca del mar y cortinas rompevientos.'},
+  {cat:'plantas',name:'Cipres Italiano',sc:'Cupressus sempervirens',sz:['60 cm','1.20 m','1.8 m','+2 m'],b:['bv'],i:'🌲',img:'1dXREZpp2iPK_lXZaJy2RYafpuzaqqQIY',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 35 m',flor:'No',mant:'Muy bajo',tipo:'Conífera columnar',desc:'El árbol columnar más elegante. Su forma perfectamente vertical le da un look mediterráneo incomparable. Ideal para enmarcar entradas y delimitar propiedades.'},
+  {cat:'plantas',name:'Citronella',sc:'Cymbopogon nardus',sz:['20-30 cm'],b:[],i:'🌿',img:'1oIvS48sngxOG6zatv6vUHXVK_tPlM6K4',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 1.8 m',flor:'Rara',mant:'Bajo',tipo:'Aromática / Repelente',desc:'Planta repelente de mosquitos natural. Su aroma cítrico intenso aleja insectos. Perfecta para terrazas y áreas de convivencia al aire libre en Tampico.'},
+  {cat:'plantas',name:'Cola de Caballo',sc:'Equisetum hyemale',sz:['60-80 cm'],b:[],i:'🌿',img:'1AkAma3foJsSDReMa3rwmjPDFc0wxxNDv',luz:'☀️ Sol / 🌤 Media',agua:'Abundante',altura:'Hasta 1.5 m',flor:'No',mant:'Bajo',tipo:'Ribereña / Acuática',desc:'Planta de tallos segmentados muy ornamental. Perfecta cerca de fuentes. Le da un toque asiático y minimalista a cualquier jardín o área de agua.'},
+  {cat:'plantas',name:'Copa de Oro',sc:'Solandra maxima',sz:['40-60 cm','80 cm'],b:['bv'],i:'🌻',img:'1bwGQOIoz2jnxdSe3rEVHy3JhYXSpxXj4',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Trepadora hasta 15 m',flor:'Sí — amarilla gigante',mant:'Bajo',tipo:'Trepadora',desc:'Flores amarillas de gran tamaño muy llamativas. Una de las trepadoras más impresionantes del trópico. Perfecta para cubrir muros y pérgolas.'},
+  {cat:'plantas',name:'Croto Petra',sc:'Codiaeum variegatum',sz:['25 cm','60-70 cm'],b:[],i:'🍂',img:'1Wg2HzkOME_lMfSEbODYp0P9EAiX0ir08',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 3 m',flor:'No',mant:'Bajo',tipo:'Arbusto colorido',desc:'Hojas multicolor en rojo, amarillo, naranja y verde. Una de las plantas más coloridas del jardín tropical. Perfecta para dar contraste y vida a jardines.'},
+  {cat:'plantas',name:'Croto Tornillo',sc:'Codiaeum sp.',sz:['30-50 cm'],b:['bv'],i:'🍂',img:'1rjDtGotBSxyjuCFZKLxbpPTMIYY4nqM-',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 2 m',flor:'No',mant:'Bajo',tipo:'Arbusto colorido',desc:'Variedad de croto con hojas en espiral muy llamativas. Sus colores brillantes hacen de este arbusto un punto focal irresistible en cualquier jardín.'},
+  {cat:'plantas',name:'Cuna de Moisés',sc:'Spathiphyllum sp.',sz:['30 cm'],b:[],i:'🤍',img:'17RFLZsuCbeXlBECOlsvW873mNT_w5u9j',luz:'🌑 Sombra / 🌤 Media',agua:'Regular',altura:'Hasta 50 cm',flor:'Sí — blanca elegante',mant:'Bajo',tipo:'Interior / Sombra',desc:'Planta de interior con elegantes flores blancas. Una de las mejores purificadoras de aire. Muy popular en oficinas, consultorios y hogares.'},
+  {cat:'plantas',name:'Duranta Cubana',sc:'Duranta erecta',sz:['25-30 cm','40-60 cm'],b:['bv'],i:'🟢',img:'1DaHl79oILg8OBCpYUSTVNAHAP1DH_IQl',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 6 m',flor:'Sí — lila pequeña',mant:'Bajo',tipo:'Arbusto / Seto',desc:'Uno de los mejores arbustos para setos vivos. Muy resistente al calor. Crece rápido y se puede podar fácilmente para mantener formas. Un clásico de Tampico.'},
+  {cat:'plantas',name:'Duranta Golden',sc:'Duranta erecta var.',sz:['30 cm','40-60 cm'],b:[],i:'🌿',img:'1P4T0n7LhQ7E2MXcDpRwFNnIxi93ol5oL',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 4 m',flor:'Sí',mant:'Bajo',tipo:'Arbusto colorido',desc:'Variedad dorada de la duranta. Follaje amarillo-dorado brillante contrasta perfectamente con plantas verdes. Muy popular en paisajismo moderno.'},
+  {cat:'plantas',name:'Duranta Zafiro',sc:'Duranta erecta',sz:['60-70 cm'],b:['bv'],i:'🌸',img:'1Msm_jCbZFEASib-6oWPrktjCVlJdpkye',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 4 m',flor:'Sí — lila/morada',mant:'Bajo',tipo:'Arbusto florido',desc:'La más vendida por su floración continua y resistencia. Flores lila-moradas muy abundantes. Excelente para setos con color todo el año.'},
+  {cat:'plantas',name:'Esparrago Springery',sc:'Asparagus densiflorus',sz:['20 cm'],b:[],i:'🌿',img:'1iXJstx1vlsfXNpX6gsQwi1rnvzUjR2zt',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 60 cm colgante',flor:'Sí (pequeña)',mant:'Bajo',tipo:'Colgante / Interior',desc:'Follaje muy fino y plumoso ideal para macetas colgantes y espacios sombreados. Su textura suave contrasta perfectamente con hojas más grandes.'},
+  {cat:'plantas',name:'Esparrago Meyeri',sc:'Asparagus meyeri',sz:['20 cm','30-40 cm'],b:[],i:'🌿',img:'131sDbYulpLdMr646jxYTvFH4xk29Z45n',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 60 cm',flor:'Sí (pequeña)',mant:'Bajo',tipo:'Interior / Exterior',desc:'Tallos erectos muy densos como plumas verdes. Más compacto que el springery. Ideal para composiciones en maceta y jardines sombreados.'},
+  {cat:'plantas',name:'Eugenia',sc:'Syzygium sp.',sz:['20-30 cm','50-60 cm'],b:[],i:'🌿',img:'1Wwrf6sUIk3n1BSqGgarVqaF_2NqPzLe-',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 15 m',flor:'Sí (pequeña)',mant:'Bajo',tipo:'Árbol / Seto',desc:'Excelente para setos y topiarios. Follaje denso muy fácil de podar. Sus brotes nuevos rojizos son muy decorativos. Muy usado en jardinería formal.'},
+  {cat:'plantas',name:'Ficus Lyrata Pandurata',sc:'Ficus lyrata',sz:['25-30 cm','60 cm','+1 m'],b:['bv'],i:'🍃',img:'1BJ7asY8_nkVrQzkFXE_qGe0YyflktpD1',luz:'🌤 Media Sombra',agua:'Moderado',altura:'Hasta 12 m',flor:'No',mant:'Bajo',tipo:'Árbol interior',desc:'La planta de diseño de interiores más popular del mundo. Sus hojas gigantes en forma de violín son únicas. Imprescindible en espacios modernos y oficinas de lujo.'},
+  {cat:'plantas',name:'Floripondio',sc:'Brugmansia sp.',sz:['60 cm-1 m'],b:[],i:'🌼',img:'1FB3HEjFyWqyipYuxSyjZIvz3OL28FXWm',luz:'☀️ Sol / 🌤 Media',agua:'Regular',altura:'Hasta 5 m',flor:'Sí — trompeta gigante',mant:'Medio',tipo:'Árbol/Arbusto',desc:'Flores en trompeta gigante colgante con aroma nocturno intenso. Una de las plantas más impresionantes del jardín tropical. Blanco, amarillo y rosa.'},
+  {cat:'plantas',name:'Fornio Phormium',sc:'Phormium tenax',sz:['80 cm-1 m'],b:[],i:'🌿',img:'1KYRExkM1w94O6sRBhuUdZTfAbFYyDH5R',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 3 m',flor:'Sí',mant:'Bajo',tipo:'Planta arquitectónica',desc:'Hojas largas y erectas como espadas. Efecto arquitectónico y moderno inigualable. Disponible en verde, rojo y variegado. Perfecta para jardines contemporáneos.'},
+  {cat:'plantas',name:'Helecho Boston',sc:'Nephrolepis exaltata',sz:['20-30 cm'],b:[],i:'🌿',img:'1uAvjLr5K9TAiHVIJBmdwxHUsfPelf7_p',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 90 cm',flor:'No',mant:'Medio',tipo:'Helecho colgante',desc:'El helecho más popular del mundo. Sus frondas largas y arqueadas son perfectas para macetas colgantes. Excelente purificador de aire. Muy fresco visualmente.'},
+  {cat:'plantas',name:'Helecho Macho',sc:'Dryopteris sp.',sz:['20 cm','30-40 cm'],b:['bv'],i:'🌿',img:'1NmDqxKUb00U8gHAk2HLxEEtvwqZFXpU3',luz:'🌤 Media / 🌑 Sombra',agua:'Regular',altura:'Hasta 1 m',flor:'No',mant:'Bajo',tipo:'Helecho',desc:'Helecho grande y robusto. Muy resistente. Perfecto para jardines sombreados y áreas húmedas. Sus hojas arqueadas crean un efecto de selva tropical.'},
+  {cat:'plantas',name:'Helecho Peine',sc:'Blechnum sp.',sz:['40-50 cm'],b:[],i:'🌿',img:'1WmFt1SVxVYx6uNEcqXkh8GbKO0Dd_kel',luz:'🌑 Sombra',agua:'Regular',altura:'Hasta 60 cm',flor:'No',mant:'Bajo',tipo:'Helecho sombra',desc:'Helecho de frondas rígidas muy decorativas. Sus nuevas frondas de color rojizo-bronce son llamativas. Ideal para jardines tropicales sombreados.'},
+  {cat:'plantas',name:'Hoja Elegante Alocasia',sc:'Alocasia macrorrhiza',sz:['70 cm','1 m','+1 m'],b:[],i:'🍃',img:'1yo8jlcB5sLYsHk_OCrEOOUWZiOsVi28h',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 4 m',flor:'Rara',mant:'Medio',tipo:'Tropical gigante',desc:'Hojas gigantes en forma de oreja de elefante. Crea un efecto tropical dramático inmediato. Muy valorada en jardines de diseño y exteriores contemporáneos.'},
+  {cat:'plantas',name:'Ixora Karla',sc:'Ixora javanica',sz:['30-40 cm'],b:['bv'],i:'🌺',img:'13PLyS4DeHVOA0gu12D_4sRZ3PAilnrPM',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 2 m',flor:'Sí — naranja/roja',mant:'Bajo',tipo:'Arbusto florido',desc:'Arbusto de floración continua en tonos naranja-rojo. Sus flores en racimos compactos se mantienen casi todo el año. Perfecta para setos con color.'},
+  {cat:'plantas',name:'Jazmín',sc:'Jasminum sp.',sz:['25-40 cm'],b:[],i:'🤍',img:'1jKlhI0E5sd6zE6081E0Zx_pRgB7b5H3v',luz:'☀️ Sol / 🌤 Media',agua:'Regular',altura:'Trepadora hasta 6 m',flor:'Sí — blanca fragante',mant:'Bajo',tipo:'Trepadora fragante',desc:'Una de las plantas más fragantes. Su aroma es inconfundible y muy agradable. Perfecta para pérgolas y jardines donde se quiere perfume natural.'},
+  {cat:'plantas',name:'Kalanchoe',sc:'Kalanchoe blossfeldiana',sz:['20 cm'],b:['bv'],i:'🌺',img:'1m7Khtf6sVlmB0bOs42RIE5AYNkL2CSVJ',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 45 cm',flor:'Sí — múltiples colores',mant:'Muy bajo',tipo:'Suculenta florida',desc:'Planta suculenta de flores muy vistosas en amarillo, naranja, rosa y rojo. Larga duración de floración. Perfecta para macetones en terrazas.'},
+  {cat:'plantas',name:'Limonaria',sc:'Murraya paniculata',sz:['30-50 cm'],b:[],i:'🌿',img:'1n7VYd3siJj8Otrv4xOb5Utmv4oK6Q0yZ',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 7 m',flor:'Sí — blanca muy fragante',mant:'Bajo',tipo:'Árbol / Seto',desc:'Uno de los arbustos más perfumados. Sus flores blancas tienen un aroma a azahar intenso. Excelente para setos aromáticos y jardines sensoriales.'},
+  {cat:'plantas',name:'Papiro Egipcio',sc:'Cyperus papyrus',sz:['1.20-1.5 m'],b:[],i:'🌿',img:'1ZvI5ANdoJ8qRMc28kLcvAh5Bc9ywvCu6',luz:'☀️ Sol / 🌤 Media',agua:'Abundante',altura:'Hasta 3 m',flor:'Sí',mant:'Bajo',tipo:'Acuática / Ribereña',desc:'La planta del papel del antiguo Egipto. Sus tallos triangulares terminan en plumeros muy decorativos. Perfecta cerca de fuentes y jardines húmedos.'},
+  {cat:'plantas',name:'Papiro Estrella',sc:'Cyperus alternifolius',sz:['80 cm'],b:[],i:'🌿',img:'1FShWEJlNhGHi7K9J-iB7F0f2MKyA4bhF',luz:'☀️ Sol / 🌤 Media',agua:'Abundante',altura:'Hasta 1.5 m',flor:'Sí',mant:'Bajo',tipo:'Acuática / Ribereña',desc:'Versión compacta del papiro. Sus hojas en estrella son muy ornamentales. Ideal para fuentes y bordes de jardines húmedos.'},
+  {cat:'plantas',name:'Pasto Dianela',sc:'Dianella tasmanica',sz:['30 cm'],b:[],i:'🌿',img:'1HpFCEwmOlA_rXoZZwsVtiDLvoPvfm1gp',luz:'☀️ Sol / 🌤 Media',agua:'Poco',altura:'Hasta 1 m',flor:'Sí — azul',mant:'Muy bajo',tipo:'Gramínea ornamental',desc:'Gramínea ornamental moderna. Muy usada en paisajismo contemporáneo. Excelente cubresuelos y planta de borde de bajo mantenimiento.'},
+  {cat:'plantas',name:'Pasto Liriope',sc:'Liriope muscari',sz:['25 cm'],b:[],i:'🌿',img:'1HbGR8_NXgA8Xl6Ku6PfIL4wrCVLMalBZ',luz:'🌤 Media / 🌑 Sombra',agua:'Poco',altura:'Hasta 40 cm',flor:'Sí — morada',mant:'Muy bajo',tipo:'Cubresuelos',desc:'El mejor cubresuelos para sombra. Muy resistente y de bajo mantenimiento. Sus flores moradas en espigas son muy ornamentales. Ideal bajo árboles.'},
+  {cat:'plantas',name:'Philodendro Xanadu',sc:'Thaumatophyllum xanadu',sz:['30 cm','60 cm'],b:[],i:'🍃',img:'1DxPrCUUi0gqifdpP2L8GsB7g03yXvSJd',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 1.5 m',flor:'Rara',mant:'Bajo',tipo:'Tropical',desc:'Hojas grandes profundamente recortadas muy decorativas. Una de las plantas tropicales más valoradas en diseño de interiores y jardines contemporáneos.'},
+  {cat:'plantas',name:'Sansiviera Variegada',sc:'Sansevieria trifasciata',sz:['60-70 cm'],b:['bv'],i:'🌿',img:'1IeuS5ZJlowycNcexuJBaevU6wa1FTavo',luz:'🌤 Media Sombra',agua:'Muy poco',altura:'Hasta 1.2 m',flor:'Rara',mant:'Muy bajo',tipo:'Interior resistente',desc:'Variedad variegada con bordes amarillos. Casi indestructible. Purifica el aire y tolera cualquier condición de interior.'},
+  {cat:'plantas',name:'Uva de Playa',sc:'Coccoloba uvifera',sz:['80 cm-1 m'],b:[],i:'🍃',img:'14Xq1BSGA0MJF1VIZx3D8NNIBWBbywNpu',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 15 m',flor:'Sí',mant:'Muy bajo',tipo:'Árbol costero',desc:'Árbol costero de hojas redondas grandes y brillantes. Muy resistente a la sal y el viento. Ideal para jardines en zona costera de Tampico.'},
+  {cat:'plantas',name:'Wudelia Rastrera',sc:'Wedelia trilobata',sz:['20-25 cm'],b:[],i:'🌼',img:'1MbNqUWWXlah_79CoinEswxFJWJteXvGg',luz:'☀️ Sol / 🌤 Media',agua:'Poco',altura:'Rastrera 15 cm',flor:'Sí — amarilla',mant:'Muy bajo',tipo:'Cubresuelos',desc:'Cubresuelos de flores amarillas que florece casi todo el año. Crece muy rápido. Perfecta para taludes, bordes y jardines de bajo mantenimiento.'},
+  {cat:'plantas',name:'Mussaenda',sc:'Mussaenda sp.',sz:['50 cm','80 cm'],b:[],i:'🌸',img:'1nETDOzwNVZTgVoPRjaS_W4Dz73dhZ6Fn',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 4 m',flor:'Sí — muy llamativa',mant:'Medio',tipo:'Arbusto florido',desc:'Arbusto de gran impacto visual con brácteas brillantes en rosa, rojo y blanco. Floración prolongada. Una de las plantas más llamativas del jardín tropical.'},
+  {cat:'plantas',name:'Floripondio',sc:'Brugmansia sp.',sz:['60 cm-1 m'],b:[],i:'🌼',img:'1FB3FyWqyipYuxSyjZIvz3OL28FXWm',luz:'☀️ Sol / 🌤 Media',agua:'Regular',altura:'Hasta 5 m',flor:'Sí — trompeta gigante',mant:'Medio',tipo:'Árbol/Arbusto',desc:'Flores en trompeta gigante con aroma nocturno. Blanco, amarillo y rosa disponible.'},
+];
+
+let tab='todos', q='', expId=null;
+
+function setTab(t,el){
+  tab=t; q=''; document.getElementById('si').value='';
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  const isPasto=t==='pasto';
+  document.getElementById('pastoSection').style.display=isPasto?'block':'none';
+  document.getElementById('grid').style.display=isPasto?'none':'grid';
+  document.getElementById('cnt').style.display=isPasto?'none':'block';
+  document.getElementById('searchWrap').style.display=isPasto?'none':'block';
+  document.getElementById('solsec').style.display=isPasto?'none':'block';
+  expId=null; render();
+}
+
+function doFilter(){q=document.getElementById('si').value.toLowerCase();expId=null;render();}
+
+function toggleExp(id,e){
+  if(e){e.stopPropagation();}
+  expId=expId===id?null:id;render();
+  if(expId===id){
+    setTimeout(()=>{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+  }
+}
+
+function render(){
+  const g=document.getElementById('grid');
+  const c=document.getElementById('cnt');
+  if(tab==='pasto')return;
+  const f=plants.filter(p=>{
+    const mt=tab==='todos'||p.cat===tab;
+    const ms=!q||p.name.toLowerCase().includes(q)||p.sc.toLowerCase().includes(q)||p.tipo.toLowerCase().includes(q)||p.luz.toLowerCase().includes(q);
+    return mt&&ms;
+  });
+  document.getElementById('totalCount').textContent=plants.length+'+';
+  c.textContent=f.length+' variedades encontradas';
+  if(!f.length){
+    g.innerHTML='<div class="empty"><div class="empty-icon">🌱</div>Sin resultados para "'+q+'"<br><small style="display:block;margin-top:.5rem">Usa el formulario de abajo para solicitar lo que buscas</small></div>';
+    return;
+  }
+  g.innerHTML=f.map(p=>{
+    const id='c_'+p.name.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
+    const isExp=expId===id;
+    const bd=p.b.map(x=>{
+      if(x==='bb')return'<span class="badge bb">Banqueta</span>';
+      if(x==='bi')return'<span class="badge bi">Interior</span>';
+      if(x==='bv')return'<span class="badge bv">+ Vendido</span>';
+      return'';
+    }).join('');
+    const imgHtml=p.img
+      ? `<img src="/api/img?id=${p.img}" alt="${p.name}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.display='none'"/><span class="emoji">${p.i}</span>`
+      : `<span class="emoji">${p.i}</span>`;
+    const szCats=p.sz.map(s=>'<span class="sz">'+s+'</span>').join('');
+    const szTags=p.sz.map(s=>'<span class="sztag">'+s+'</span>').join('');
+    const ficha=isExp?`
+    <div class="ficha">
+      <div class="ficons">
+        <span class="fi">${p.luz}</span>
+        <span class="fi">💧 ${p.agua}</span>
+        <span class="fi">📏 ${p.altura}</span>
+        <span class="fi">🌸 Flor: ${p.flor}</span>
+        <span class="fi">🔧 Mant: ${p.mant}</span>
+      </div>
+      <div class="fgrid">
+        <div class="fitem"><div class="flabel">Clasificación</div><div class="fval">${p.tipo}</div></div>
+        <div class="fitem"><div class="flabel">Nombre científico</div><div class="fval" style="font-style:italic;font-size:11px">${p.sc}</div></div>
+        <div class="fitem"><div class="flabel">Agua requerida</div><div class="fval">${p.agua}</div></div>
+        <div class="fitem"><div class="flabel">Altura adulta</div><div class="fval">${p.altura}</div></div>
+      </div>
+      <div class="fdesc">${p.desc}</div>
+      <div class="fsizes">
+        <div class="flabel" style="margin-bottom:5px">Tamaños disponibles:</div>
+        ${szTags}
+        <span class="szspec">+ Otras medidas disponibles</span>
+      </div>
+      <div class="factions">
+        <button class="fa-wa" onclick="cotizar('${p.name.replace(/'/g,"\\'")}')">📲 Cotizar por WhatsApp</button>
+        <button class="fa-esp" onclick="solMedida('${p.name.replace(/'/g,"\\'")}')">📐 Medida especial</button>
+        <button class="fa-close" onclick="toggleExp('${id}',event)">✕ Cerrar</button>
+      </div>
+    </div>`:'';
+    return`<article class="card${isExp?' exp':''}" id="${id}" role="article">
+      <div class="cimg" onclick="toggleExp('${id}',event)" role="button" tabindex="0" aria-label="Ver ficha de ${p.name}">
+        ${imgHtml}
+        ${bd?'<div class="badges">'+bd+'</div>':''}
+      </div>
+      <div class="cbody">
+        <h3 class="cname" onclick="toggleExp('${id}',event)">${p.name}</h3>
+        <p class="csc">${p.sc}</p>
+        ${!isExp?`<div class="sizes">${szCats}</div><div class="btns"><button class="btn-sec" onclick="toggleExp('${id}',event)">Ver ficha técnica ↓</button><button class="btn-main" onclick="cotizar('${p.name.replace(/'/g,"\\'")}')">Cotizar ahora</button></div>`:''}
+      </div>
+      ${ficha}
+    </article>`;
+  }).join('');
+}
+
+function cotizar(n){
+  const m=encodeURIComponent('Hola Viveros Terra 🌿\n\nMe interesa cotizar: *'+n+'*\n¿Pueden darme precio y disponibilidad por tamaño?');
+  window.open('https://wa.me/528333268008?text='+m,'_blank');
+}
+function solMedida(n){
+  const m=encodeURIComponent('Hola Viveros Terra 🌿\n\nBusco *'+n+'* en una medida o tamaño especial.\n¿Pueden conseguirla o cotizarme?');
+  window.open('https://wa.me/528333268008?text='+m,'_blank');
+}
+function solEsp(){
+  const v=document.getElementById('solinput').value.trim();
+  if(!v)return;
+  const m=encodeURIComponent('Hola Viveros Terra 🌿\n\nBusco: *'+v+'*\nNo lo encontré en el catálogo. ¿Lo manejan o pueden cotizarme?');
+  window.open('https://wa.me/528333268008?text='+m,'_blank');
+}
+function solPasto(){
+  const v=document.getElementById('solpasto').value.trim();
+  if(!v)return;
+  const m=encodeURIComponent('Hola Viveros Terra 🌿\n\nMe interesa cotizar: *'+v+'*\n¿Pueden asesorarme?');
+  window.open('https://wa.me/528333268008?text='+m,'_blank');
+}
+function openWA(){
+  window.open('https://wa.me/528333268008?text='+encodeURIComponent('Hola Viveros Terra 🌿\n\nVi su catálogo y quisiera asesoría para mi jardín.'),'_blank');
+}
+
+render();
+</script>
+</body>
+</html>
