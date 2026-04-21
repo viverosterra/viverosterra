@@ -153,9 +153,9 @@ footer{background:var(--td);color:rgba(255,255,255,.5);text-align:center;padding
 .btn-add.added{background:var(--td);color:var(--tl)}
 
 /* FAB carrito */
-.cartfab{position:fixed;bottom:80px;right:20px;width:52px;height:52px;background:var(--td);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(27,77,46,.4);border:none;z-index:998;transition:transform .2s;display:none}
+.cartfab{position:fixed;bottom:80px;right:20px;width:52px;height:52px;background:var(--td);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(27,77,46,.4);border:none;z-index:998;transition:transform .2s}
 .cartfab:hover{transform:scale(1.08)}
-.cartfab.visible{display:flex}
+.cartfab{display:none}.cartfab.visible{display:flex!important}
 .cartbadge{position:absolute;top:-4px;right:-4px;background:var(--tl);color:var(--td);font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
 
 /* Modal tamaño/cantidad */
@@ -485,7 +485,7 @@ function render(){
     return;
   }
   g.innerHTML=f.map(p=>{
-    const pidx=f.indexOf(p);const id='c_'+p.name.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
+    const id='c_'+p.name.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
     const isExp=expId===id;
     const bd=p.b.map(x=>{
       if(x==='bb')return'<span class="badge bb">Banqueta</span>';
@@ -529,7 +529,7 @@ function render(){
       <div class="cimg" onclick="toggleExp('${id}',event)" role="button" tabindex="0" aria-label="Ver ficha de ${p.name}">
         ${imgHtml}
         ${bd?'<div class="badges">'+bd+'</div>':''}
-        <button class="btn-add" onclick="openAddModal(f[${pidx}],event)" aria-label="Agregar a lista">+</button>
+        <button class="btn-add" onclick="addToCart(event,'${p.name.replace(/'/g,'&#39;')}')">+</button>
       </div>
       <div class="cbody">
         <h3 class="cname" onclick="toggleExp('${id}',event)">${p.name}</h3>
@@ -570,6 +570,12 @@ render();
 // =================== COTIZADOR ===================
 let cart = []; // [{name, sc, emoji, sz, qty}]
 let pendingPlant = null;
+
+function addToCart(e, name) {
+  e.stopPropagation();
+  const plant = plants.find(p => p.name === name);
+  if(plant) openAddModal(plant, e);
+}
 
 function openAddModal(plant, e) {
   if(e) e.stopPropagation();
