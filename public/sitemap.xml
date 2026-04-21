@@ -1,33 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- PÁGINAS PRINCIPALES -->
-  <url><loc>https://www.viverosterra.com/</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-en-rollo-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-sintetico-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.viverosterra.com/plantas-palmas-arboles-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.viverosterra.com/diseno-jardines-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.viverosterra.com/mantenimiento-jardines-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/sistema-riego-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/tezontle-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/tierra-negra-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/marmol-blanco-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/piedra-bola-rio-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <!-- BLOG INDEX -->
-  <url><loc>https://www.viverosterra.com/blog</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <!-- BLOG POSTS — 10 NUEVOS (alta prioridad GSC) -->
-  <url><loc>https://www.viverosterra.com/blog/arboles-para-sembrar-en-banqueta</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/cuidados-palma-del-viajero-ravenala</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/pasto-san-agustin-vs-japones</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/ficus-elastica-cuidados-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/cuando-regar-pasto-san-agustin-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/pasto-sintetico-vs-natural-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/palmas-tropicales-jardin-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/sistema-riego-automatizado-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/diseno-jardines-tampico-guia</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/tezontle-usos-jardin-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <!-- BLOG POSTS EXISTENTES -->
-  <url><loc>https://www.viverosterra.com/blog/como-ahorrar-agua-jardin-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/jardines-temporada-lluvias-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/pasto-san-agustin-instalacion-mantenimiento</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.viverosterra.com/blog/plantas-interior-tampico</loc><lastmod>2026-04-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- PÁGINA PRINCIPAL -->
+  <url>
+    <loc>https://www.viverosterra.com/</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- CATÁLOGO INTERACTIVO -->
+  <url>
+    <loc>https://www.viverosterra.com/catalogo</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- HUB PLANTAS / PALMAS / ÁRBOLES -->
+  <url>
+    <loc>https://www.viverosterra.com/plantas-palmas-arboles-tampico</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- PÁGINAS pSEO — NUEVAS -->
+  <url>
+    <loc>https://www.viverosterra.com/palmas-para-jardin-tampico</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/palmas-tropicales-tampico</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/arboles-ornamentales-tampico</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/arboles-para-banqueta-tampico</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/plantas-para-jardin-tampico</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/plantas-de-interior-tampico</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- SERVICIOS PRINCIPALES -->
+  <url>
+    <loc>https://www.viverosterra.com/pasto-en-rollo-tampico</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/diseno-jardines-tampico</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/sistema-riego-tampico</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/mantenimiento-jardines-tampico</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- PRODUCTOS -->
+  <url>
+    <loc>https://www.viverosterra.com/pasto-sintetico-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/tezontle-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/tierra-negra-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/piedra-bola-rio-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/marmol-blanco-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- BLOG -->
+  <url>
+    <loc>https://www.viverosterra.com/blog</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/blog/como-elegir-palma-jardin-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/blog/plantas-resistentes-calor-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/blog/como-instalar-pasto-en-rollo</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/blog/diseno-jardines-tropicales-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/blog/sistema-riego-automatico-jardin</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/blog/arboles-banqueta-tampico-sin-dano</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/blog/plantas-interior-oficinas-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/blog/mantenimiento-jardin-tampico-guia</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/blog/pasto-sintetico-vs-natural-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.viverosterra.com/blog/palmas-exoticas-coleccion-tampico</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+
 </urlset>
