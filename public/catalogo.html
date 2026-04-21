@@ -166,14 +166,18 @@ footer{background:var(--td);color:rgba(255,255,255,.5);text-align:center;padding
 .modal-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--td);margin-bottom:.25rem}
 .modal-sc{font-size:11px;color:var(--tm);font-style:italic;margin-bottom:1.1rem}
 .modal-label{font-size:11px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem;display:block}
-.modal-select{width:100%;padding:10px 12px;border:1.5px solid var(--tcd);border-radius:var(--r8);font-size:13px;background:var(--tw);color:var(--ts);outline:none;margin-bottom:1rem;font-family:'DM Sans',sans-serif;cursor:pointer}
+.modal-select{width:100%;padding:10px 12px;border:1.5px solid var(--tcd);border-radius:var(--r8);font-size:13px;background:var(--tw);color:var(--ts);outline:none;margin-bottom:.5rem;font-family:'DM Sans',sans-serif;cursor:pointer}
 .modal-select:focus{border-color:var(--tl)}
-.qty-row{display:flex;align-items:center;gap:12px;margin-bottom:1.25rem}
-.qty-btn{width:38px;height:38px;border:1.5px solid var(--tcd);border-radius:var(--r8);background:var(--tw);font-size:18px;font-weight:700;color:var(--td);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
+.otro-size-row{display:none;margin-bottom:1rem}
+.otro-size-row.visible{display:block}
+.otro-size-input{width:100%;padding:9px 12px;border:1.5px solid var(--tl);border-radius:var(--r8);font-size:13px;background:var(--tw);color:var(--ts);outline:none;font-family:'DM Sans',sans-serif}
+.otro-size-input:focus{border-color:var(--tl2)}
+.qty-row{display:flex;align-items:center;gap:12px;margin-bottom:1.25rem;margin-top:.75rem}
+.qty-btn{width:44px;height:44px;border:1.5px solid var(--tcd);border-radius:var(--r8);background:var(--tw);font-size:22px;font-weight:700;color:var(--td);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
 .qty-btn:hover{background:var(--tc)}
-.qty-input{width:60px;text-align:center;padding:8px 4px;border:1.5px solid var(--tcd);border-radius:var(--r8);font-size:16px;font-weight:700;color:var(--td);outline:none;font-family:'DM Sans',sans-serif}
+.qty-input{flex:1;text-align:center;padding:10px 4px;border:1.5px solid var(--tcd);border-radius:var(--r8);font-size:22px;font-weight:700;color:var(--td);outline:none;font-family:'DM Sans',sans-serif}
 .qty-input:focus{border-color:var(--tl)}
-.qty-label{font-size:12px;color:var(--tm)}
+.qty-label{font-size:12px;color:var(--tm);white-space:nowrap}
 .modal-btns{display:flex;gap:8px}
 .modal-btn-add{flex:1;padding:12px;background:var(--td);color:#fff;border:none;border-radius:var(--r8);font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
 .modal-btn-add:hover{background:#26693e}
@@ -473,6 +477,7 @@ function render(){
     const ms=!q||p.name.toLowerCase().includes(q)||p.sc.toLowerCase().includes(q)||p.tipo.toLowerCase().includes(q)||p.luz.toLowerCase().includes(q);
     return mt&&ms;
   });
+  f.sort((a,b)=>a.name.localeCompare(b.name,'es'));
   document.getElementById('totalCount').textContent=plants.length+'+';
   c.textContent=f.length+' variedades encontradas';
   if(!f.length){
@@ -572,7 +577,7 @@ function openAddModal(plant, e) {
   document.getElementById('modalTitle').textContent = plant.name;
   document.getElementById('modalSc').textContent = plant.sc;
   const sel = document.getElementById('modalSize');
-  sel.innerHTML = plant.sz.map(s => `<option value="${s}">${s}</option>`).join('');
+  sel.innerHTML = plant.sz.map(s => `<option value="${s}">${s}</option>`).join('') + '<option value="__otro__">📐 Otro tamaño / Medida especial</option>';
   // Si ya está en carrito, preseleccionar el mismo tamaño
   const existing = cart.find(i => i.name === plant.name);
   if(existing) sel.value = existing.sz;
@@ -587,15 +592,26 @@ function closeModal(e) {
   pendingPlant = null;
 }
 
+function onSizeChange(sel) {
+  const row = document.getElementById('otroSizeRow');
+  row.classList.toggle('visible', sel.value === '__otro__');
+  if(sel.value === '__otro__') {
+    setTimeout(()=>document.getElementById('otroSizeInput').focus(), 50);
+  }
+}
+
 function changeQty(delta) {
   const inp = document.getElementById('modalQty');
-  const val = Math.max(1, Math.min(999, parseInt(inp.value)||1 + delta));
+  const val = Math.max(1, Math.min(9999, (parseInt(inp.value)||1) + delta));
   inp.value = val;
 }
 
 function confirmAdd() {
   if(!pendingPlant) return;
-  const sz = document.getElementById('modalSize').value;
+  const selVal = document.getElementById('modalSize').value;
+  const sz = selVal === '__otro__'
+    ? (document.getElementById('otroSizeInput').value.trim() || 'Medida especial')
+    : selVal;
   const qty = Math.max(1, parseInt(document.getElementById('modalQty').value)||1);
   // Si ya existe misma planta+tamaño, actualizar cantidad
   const idx = cart.findIndex(i => i.name === pendingPlant.name && i.sz === sz);
@@ -702,14 +718,17 @@ function sendWA() {
   <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-title" id="modalTitle"></div>
     <div class="modal-sc" id="modalSc"></div>
-    <label class="modal-label" for="modalSize">Tamaño</label>
-    <select class="modal-select" id="modalSize"></select>
-    <label class="modal-label">Cantidad</label>
+    <label class="modal-label" for="modalSize">Tamaño disponible</label>
+    <select class="modal-select" id="modalSize" onchange="onSizeChange(this)"></select>
+    <div class="otro-size-row" id="otroSizeRow">
+      <input class="otro-size-input" id="otroSizeInput" type="text" placeholder="Ej: 5 metros, 3.5m, medida especial..."/>
+    </div>
+    <label class="modal-label">¿Cuántas unidades necesitas?</label>
     <div class="qty-row">
       <button class="qty-btn" onclick="changeQty(-1)" aria-label="Reducir cantidad">−</button>
-      <input class="qty-input" id="modalQty" type="number" min="1" max="999" value="1" aria-label="Cantidad"/>
+      <input class="qty-input" id="modalQty" type="number" min="1" max="9999" value="1" aria-label="Cantidad"/>
       <button class="qty-btn" onclick="changeQty(1)" aria-label="Aumentar cantidad">+</button>
-      <span class="qty-label">unidades</span>
+      <span class="qty-label">piezas</span>
     </div>
     <div class="modal-btns">
       <button class="modal-btn-cancel" onclick="closeModal()">Cancelar</button>
