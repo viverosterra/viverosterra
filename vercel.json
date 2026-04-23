@@ -1,6 +1,36 @@
 {
   "redirects": [
     {
+      "source": "/tierra-negra-tampico",
+      "destination": "/tierra-negra-vegetal-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/tezontle-tampico",
+      "destination": "/tezontle-rojo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/tierra-negra-vegetal-tampico-madero-altamira",
+      "destination": "/tierra-negra-vegetal-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/tierra-negra-para-jardin-tampico",
+      "destination": "/tierra-negra-vegetal-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/tezontle-rojo-tampico-madero-altamira",
+      "destination": "/tezontle-rojo-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/tezontle-rojo-jardin-tampico-madero-altamira",
+      "destination": "/tezontle-rojo-tampico",
+      "permanent": true
+    },
+    {
       "source": "/pasto-san-agustin-rollo",
       "destination": "/pasto-en-rollo-tampico",
       "permanent": true
@@ -38,26 +68,6 @@
     {
       "source": "/pasto-sintetico-tampico-altamira-madero",
       "destination": "/pasto-sintetico-tampico",
-      "permanent": true
-    },
-    {
-      "source": "/tezontle-rojo-jardin-tampico-madero-altamira",
-      "destination": "/tezontle-tampico",
-      "permanent": true
-    },
-    {
-      "source": "/tezontle-rojo-tampico-madero-altamira",
-      "destination": "/tezontle-tampico",
-      "permanent": true
-    },
-    {
-      "source": "/tierra-negra-vegetal-tampico-madero-altamira",
-      "destination": "/tierra-negra-tampico",
-      "permanent": true
-    },
-    {
-      "source": "/tierra-negra-para-jardin-tampico",
-      "destination": "/tierra-negra-tampico",
       "permanent": true
     },
     {
@@ -787,22 +797,6 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
-    }
-  ],
-  "functions": {
-    "api/img.js": {
-      "memory": 512,
-      "maxDuration": 10
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/catalogo",
-      "destination": "/catalogo/index.html"
-    },
-    {
-      "source": "/catalogo/",
-      "destination": "/catalogo/index.html"
     }
   ]
 }
