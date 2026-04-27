@@ -206,7 +206,7 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px #25D36
       <!-- Beneficio de pago flexible -->
       <div class="flex items-center gap-2 bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 mb-7 w-fit">
         <svg class="w-4 h-4 text-accent flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-        <span class="text-white/85 text-sm"><strong class="text-white">Esquema de pago flexible.</strong> Nos adaptamos a lo que más te convenga.</span>
+        <span class="text-white/85 text-sm"><strong class="text-white">Pagas cuando ves tu jardín listo.</strong> Sin pago total por adelantado.</span>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3 mb-4">
@@ -277,7 +277,7 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px #25D36
           <svg class="w-6 h-6 text-primary mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
           <div class="text-3xl font-display font-bold text-primary">Flexible</div>
         </div>
-        <div class="text-gray-500 text-sm mt-1">Paga como más te convenga</div>
+        <div class="text-gray-500 text-sm mt-1">Pagas cuando ves el resultado</div>
       </div>
     </div>
   </div>
@@ -333,24 +333,30 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px #25D36
             </div>
           </div>
 
-          <!-- Resultado: Pasto + instalación -->
+          <!-- Resultado: Pasto + instalación — bloque motivacional sin precio genérico -->
           <div id="res-bloque-instalacion" class="hidden">
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-white/60 text-sm">Estimado del pasto (${m2} m²)</span>
-              <span class="text-2xl font-display font-bold text-accent" id="res-pasto-inst">—</span>
+            <div class="bg-gradient-to-r from-primary/40 to-secondary/40 border border-white/20 rounded-xl p-5 mb-4">
+              <div class="text-center mb-3">
+                <div class="text-3xl font-display font-bold text-accent" id="res-pasto-inst">—</div>
+                <div class="text-white/60 text-xs mt-1">Estimado del pasto <span id="res-inst-m2"></span></div>
+              </div>
+              <div class="border-t border-white/10 pt-3">
+                <p class="text-white font-semibold text-sm text-center mb-2">La instalación se cotiza a tu medida — y eso te conviene</p>
+                <p class="text-white/65 text-xs text-center leading-relaxed">El precio de instalación depende de tu terreno: distancia, si necesita nivelación, herbicida o tierra negra. Cotizar genérico sería cobrarte de más. Mándanos una foto de tu jardín y te respondemos en menos de 1 hora con el precio exacto.</p>
+              </div>
             </div>
-            <div class="bg-white/8 border border-white/15 rounded-xl p-4 mb-4 space-y-2.5">
-              <div class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-yellow-300 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-                <p class="text-white/75 text-xs leading-relaxed"><strong class="text-white">Entrega e instalación se cotizan aparte</strong> — el precio varía según distancia y condiciones del terreno.</p>
+            <div class="space-y-2 mb-4">
+              <div class="flex items-center gap-2.5 bg-white/8 rounded-xl px-4 py-2.5">
+                <svg class="w-4 h-4 text-green-300 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                <p class="text-white/75 text-xs">Evaluación del terreno sin costo — antes de cualquier cobro</p>
               </div>
-              <div class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-yellow-300 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-                <p class="text-white/75 text-xs leading-relaxed">Si tu terreno requiere <strong class="text-white">nivelación, herbicida o tierra negra</strong>, se evalúa sin costo y se cotiza por separado antes de iniciar.</p>
+              <div class="flex items-center gap-2.5 bg-white/8 rounded-xl px-4 py-2.5">
+                <svg class="w-4 h-4 text-green-300 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                <p class="text-white/75 text-xs"><strong class="text-green-300">Garantía de arraigo en 21 días</strong> incluida con instalación</p>
               </div>
-              <div class="flex items-start gap-2.5">
-                <svg class="w-4 h-4 text-green-300 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-                <p class="text-white/75 text-xs leading-relaxed"><strong class="text-green-300">Garantía de arraigo incluida</strong> al contratar instalación completa.</p>
+              <div class="flex items-center gap-2.5 bg-white/8 rounded-xl px-4 py-2.5">
+                <svg class="w-4 h-4 text-green-300 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                <p class="text-white/75 text-xs">Pagas cuando ves tu jardín listo — sin pago total por adelantado</p>
               </div>
             </div>
           </div>
@@ -425,7 +431,7 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px #25D36
           </tr>
           <tr class="comp-row">
             <td class="py-3.5 px-5 font-medium">Forma de pago</td>
-            <td class="text-center px-4"><span class="text-primary font-bold">Pago flexible a tu conveniencia</span></td>
+            <td class="text-center px-4"><span class="text-primary font-bold">Pagas cuando ves el resultado</span></td>
             <td class="text-center px-4 text-gray-400">Todo por adelantado</td>
           </tr>
           <tr class="comp-row bg-gray-50">
@@ -506,7 +512,7 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px #25D36
           <ul class="space-y-2 text-sm text-gray-700 mb-6">
             <li class="flex items-center gap-2"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg><strong>Garantía de arraigo en 21 días</strong></li>
             <li class="flex items-center gap-2"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Preparación del terreno incluida</li>
-            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Esquema de pago flexible a tu medida</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Pagas cuando ves tu jardín listo</li>
             <li class="flex items-center gap-2"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Protocolo de cuidados 21 días</li>
           </ul>
           <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20pasto%20con%20instalaci%C3%B3n%20completa%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank"
@@ -569,7 +575,7 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px #25D36
         <div class="w-10 h-10 bg-primary rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">2</div>
         <div>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">"¿Tengo que pagar todo antes?"</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">No. Tenemos <strong>esquemas de pago flexibles</strong> — nos adaptamos a lo que más te convenga. Lo importante es que empieces tu jardín sin preocupaciones financieras.</p>
+          <p class="text-gray-600 text-sm leading-relaxed">No. <strong>Pagas cuando ves tu jardín terminado.</strong> Sin pago total por adelantado, sin sorpresas. Lo importante es que empieces con tranquilidad y que confíes en el resultado.</p>
         </div>
       </div>
 
@@ -593,7 +599,7 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px #25D36
         <div class="w-10 h-10 bg-accent rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">5</div>
         <div>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">"¿Y si el pasto no arraiga?"</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">Si contratas instalación y sigues el protocolo de riego de 21 días que te entregamos, <strong>garantizamos el arraigo. Si alguna sección falla, la reponemos sin costo.</strong> Sin excusas.</p>
+          <p class="text-gray-600 text-sm leading-relaxed">Si contratas instalación y sigues el <a href="/protocolo-cuidados-pasto-san-agustin" target="_blank" class="text-primary font-semibold underline underline-offset-2">protocolo de cuidados de 21 días</a> que te entregamos, <strong>garantizamos el arraigo. Si alguna sección falla, la reponemos sin costo.</strong> Sin excusas.</p>
         </div>
       </div>
     </div>
@@ -604,6 +610,15 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px #25D36
          class="inline-flex items-center gap-2 bg-wa text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-green-400 transition-colors shadow-xl">
         <svg class="w-5 h-5"><use href="#ic-wa"/></svg>Empezar mi cotización
       </a>
+    </div>
+    <!-- Protocolo de cuidados — micro-CTA de confianza -->
+    <div class="mt-6 text-center reveal">
+      <a href="/protocolo-cuidados-pasto-san-agustin" target="_blank"
+         class="inline-flex items-center gap-2 text-primary text-sm font-semibold hover:underline">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Ver el protocolo de cuidados de 21 días →
+      </a>
+      <p class="text-gray-400 text-xs mt-1">El documento que te entregamos junto con la instalación</p>
     </div>
   </div>
 </section>
@@ -855,7 +870,7 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px #25D36
           <svg class="fq-ic w-5 h-5 text-gray-400 flex-shrink-0 transition-transform"><use href="#ic-chevron-down"/></svg>
         </button>
         <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed">
-          <div class="pb-5">Sí. Manejamos <strong>esquemas de pago flexibles</strong> — adaptamos las condiciones a tu proyecto y conveniencia. Lo que no hacemos es pedirte el 100% por adelantado sin haber entregado nada. Pregúntanos al cotizar y te decimos qué opciones hay para tu caso.</div>
+          <div class="pb-5">Sí. La idea es sencilla: <strong>pagas cuando ves el resultado.</strong> No pedimos el 100% por adelantado. Al confirmar tu proyecto coordinamos el esquema contigo directamente — sin letras chicas ni sorpresas. de pago flexibles</strong> — adaptamos las condiciones a tu proyecto y conveniencia. Lo que no hacemos es pedirte el 100% por adelantado sin haber entregado nada. Pregúntanos al cotizar y te decimos qué opciones hay para tu caso.</div>
         </div>
       </div>
 
@@ -949,7 +964,7 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px #25D36
   </div>
   <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-3xl sm:text-4xl font-display font-bold text-white mb-3 reveal">Tu jardín verde, esta semana.</h2>
-    <p class="text-white/60 text-lg mb-8 reveal">Cotización en menos de 1 hora. Sin compromiso. Esquema de pago flexible. Sin sorpresas.</p>
+    <p class="text-white/60 text-lg mb-8 reveal">Cotización en menos de 1 hora. Sin compromiso. Pagas cuando ves tu jardín listo.</p>
 
     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 max-w-md mx-auto reveal">
       <div class="space-y-3 mb-5">
@@ -969,7 +984,7 @@ input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 2px #25D36
       </button>
       <div class="flex items-center justify-center gap-4 mt-4 text-white/40 text-xs">
         <span>✓ Sin compromiso</span>
-        <span>✓ Pago flexible</span>
+        <span>✓ Pagas al ver el resultado</span>
         <span>✓ Lun–Sáb</span>
       </div>
     </div>
@@ -1073,7 +1088,9 @@ function calcularPasto(){
   } else if(tipo==='instalacion'){
     document.getElementById('res-bloque-instalacion').classList.remove('hidden');
     document.getElementById('res-pasto-inst').textContent='desde $'+precioPasto.toLocaleString();
-    document.getElementById('btn-calc-text').textContent='Cotizar instalación para '+m2+' m²';
+    const instM2El = document.getElementById('res-inst-m2');
+    if(instM2El) instM2El.textContent='('+m2+' m²)';
+    document.getElementById('btn-calc-text').textContent='Cotizar instalación para '+m2+' m² por WhatsApp';
   } else {
     document.getElementById('res-bloque-mayoreo').classList.remove('hidden');
     document.getElementById('res-m2-mayoreo').textContent=m2+' m²';
@@ -1100,7 +1117,7 @@ function cotizarPasto(){
     msg='Hola, quiero cotizar pasto en rollo San Agustín con instalación completa.\n\n';
     msg+='Área: '+m2+' m²\n';
     msg+='Costo estimado del pasto: desde $'+precio.toLocaleString()+'\n\n';
-    msg+='¿Me pueden cotizar la instalación y entrega según mi dirección y el estado del terreno?';
+    msg+='Para cotizar la instalación necesito compartirles:\n- Mi dirección o colonia\n- Una foto del terreno si es posible\n\n¿Me pueden cotizar con base en eso?';
   } else {
     msg='Hola, tengo un proyecto de mayoreo y quiero cotizar pasto en rollo San Agustín.\n\n';
     msg+='Área del proyecto: '+m2+' m²\n\n';
