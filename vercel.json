@@ -799,5 +799,5 @@
       ]
     }
   ],
-  "outputDirectory": "."
+  "outputDirectory": "public"
 }
