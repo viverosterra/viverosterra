@@ -78,291 +78,118 @@
     <p>Viveros Terra — Información para el diseño de tu jardín</p>
   </div>
   <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
-
   <div class="vt-body">
     <form id="mainForm" action="https://formspree.io/f/xlgaqlzn" method="POST">
       <input type="hidden" name="_subject" value="Nuevo cuestionario de jardín — Viveros Terra">
-      <input type="hidden" name="_replyto" value="">
-
-      <!-- SECCIÓN 1 -->
       <div class="vt-section">
         <div class="section-label"><div class="section-num">1</div><span class="section-title">Datos del cliente</span></div>
         <div class="field-row cols2">
-          <div class="field"><label class="fl">Nombre completo *</label><input type="text" name="nombre" placeholder="Ej. María González" required /></div>
-          <div class="field"><label class="fl">WhatsApp *</label><input type="tel" name="whatsapp" placeholder="+52 833 000 0000" required /></div>
+          <div class="field"><label class="fl">Nombre completo *</label><input type="text" name="nombre" placeholder="Ej. María González" required/></div>
+          <div class="field"><label class="fl">WhatsApp *</label><input type="tel" name="whatsapp" placeholder="+52 833 000 0000" required/></div>
         </div>
         <div class="field-row cols2">
-          <div class="field"><label class="fl">Correo electrónico</label><input type="email" name="email" placeholder="correo@ejemplo.com" /></div>
-          <div class="field"><label class="fl">¿Cómo nos conoció?</label>
-            <select name="como_nos_conocio">
-              <option value="">Seleccionar...</option>
-              <option>Página web</option><option>Instagram / Facebook</option><option>Referido</option><option>Google</option><option>Otro</option>
-            </select>
-          </div>
+          <div class="field"><label class="fl">Correo electrónico</label><input type="email" name="email" placeholder="correo@ejemplo.com"/></div>
+          <div class="field"><label class="fl">¿Cómo nos conoció?</label><select name="como_nos_conocio"><option value="">Seleccionar...</option><option>Página web</option><option>Instagram / Facebook</option><option>Referido</option><option>Google</option><option>Otro</option></select></div>
         </div>
-        <div class="field-row">
-          <div class="field"><label class="fl">Dirección del inmueble / colonia</label><input type="text" name="direccion" placeholder="Ej. Fracc. Las Palmas, Altamira" /></div>
-        </div>
+        <div class="field-row"><div class="field"><label class="fl">Dirección del inmueble / colonia</label><input type="text" name="direccion" placeholder="Ej. Fracc. Las Palmas, Altamira"/></div></div>
       </div>
-
-      <!-- SECCIÓN 2 -->
       <div class="vt-section">
         <div class="section-label"><div class="section-num">2</div><span class="section-title">Espacio a diseñar</span></div>
-        <div class="field-row">
-          <div class="field"><label class="fl">¿Qué tipo de espacio es?</label>
-            <div class="radio-group">
-              <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Jardín frontal"> Jardín frontal</label>
-              <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Jardín trasero"> Jardín trasero</label>
-              <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Ambos"> Ambos</label>
-              <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Interior / patio"> Interior / patio</label>
-              <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Banqueta"> Banqueta</label>
-              <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Plaza comercial"> Plaza comercial</label>
-              <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Restaurante"> Restaurante</label>
-              <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Otro" id="rb-otro-esp"> Otro</label>
-            </div>
-            <div class="otro-field" id="otro-esp-wrap"><input type="text" name="tipo_espacio_otro" placeholder="Especificar tipo de espacio..." /></div>
+        <div class="field-row"><div class="field"><label class="fl">Qué tipo de espacio es?</label>
+          <div class="radio-group">
+            <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Jardín frontal"> Jardín frontal</label>
+            <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Jardín trasero"> Jardín trasero</label>
+            <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Ambos"> Ambos</label>
+            <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Interior / patio"> Interior / patio</label>
+            <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Banqueta"> Banqueta</label>
+            <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Plaza comercial"> Plaza comercial</label>
+            <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Restaurante"> Restaurante</label>
+            <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Otro" id="rb-otro-esp"> Otro</label>
           </div>
-        </div>
+          <div class="otro-field" id="otro-esp-wrap"><input type="text" name="tipo_espacio_otro" placeholder="Especificar..."/></div>
+        </div></div>
         <div class="field-row cols3">
-          <div class="field"><label class="fl">Área aprox. de pasto (m²)</label><input type="number" name="area_pasto" id="area_pasto" placeholder="Ej. 60" min="0" /></div>
-          <div class="field"><label class="fl">Área aprox. jardinera (m²)</label><input type="number" name="area_jardinera" id="area_jard" placeholder="Ej. 20" min="0" /></div>
-          <div class="field"><label class="fl">Área total (m²)</label><input type="number" name="area_total" id="area_total_input" placeholder="Ej. 80" min="0" /></div>
+          <div class="field"><label class="fl">Área pasto (m2)</label><input type="number" name="area_pasto" id="area_pasto" placeholder="Ej. 60" min="0"/></div>
+          <div class="field"><label class="fl">Área jardinera (m2)</label><input type="number" name="area_jardinera" id="area_jard" placeholder="Ej. 20" min="0"/></div>
+          <div class="field"><label class="fl">Área total (m2)</label><input type="number" name="area_total" id="area_total_input" placeholder="Ej. 80" min="0"/></div>
         </div>
-        <div class="area-total" id="area-display" style="display:none;"><span>Área total calculada</span><strong id="area-total-val">0 m²</strong></div>
-
-        <div class="field-row cols2" style="margin-top:16px;">
-          <div class="field"><label class="fl">¿Tiene riego instalado?</label>
+        <div class="area-total" id="area-display" style="display:none"><span>Área total calculada</span><strong id="area-total-val">0 m2</strong></div>
+        <div class="field-row cols2" style="margin-top:16px">
+          <div class="field"><label class="fl">Tiene riego instalado?</label>
             <div class="radio-group">
               <label class="radio-pill"><input type="radio" name="riego_instalado" value="Sí"> Sí</label>
               <label class="radio-pill"><input type="radio" name="riego_instalado" value="No" class="riego-trigger"> No</label>
               <label class="radio-pill"><input type="radio" name="riego_instalado" value="Parcial" class="riego-trigger"> Parcial</label>
             </div>
-            <div class="cond-block" id="cond-riego">
-              <label class="fl" style="margin-bottom:8px;">¿Considera instalar riego?</label>
-              <div class="radio-group">
-                <label class="radio-pill"><input type="radio" name="instalar_riego" value="Sí, de inmediato"> Sí, de inmediato</label>
-                <label class="radio-pill"><input type="radio" name="instalar_riego" value="En un futuro"> En un futuro</label>
-                <label class="radio-pill"><input type="radio" name="instalar_riego" value="No"> No</label>
-              </div>
+            <div class="cond-block" id="cond-riego"><label class="fl" style="margin-bottom:8px">Considera instalar riego?</label>
+              <div class="radio-group"><label class="radio-pill"><input type="radio" name="instalar_riego" value="Sí, de inmediato"> Sí, de inmediato</label><label class="radio-pill"><input type="radio" name="instalar_riego" value="En un futuro"> En un futuro</label><label class="radio-pill"><input type="radio" name="instalar_riego" value="No"> No</label></div>
             </div>
           </div>
-          <div class="field"><label class="fl">¿Cuenta con presurizador hidroneumático?</label>
-            <div class="radio-group">
-              <label class="radio-pill"><input type="radio" name="hidroneumatico" value="Sí"> Sí</label>
-              <label class="radio-pill"><input type="radio" name="hidroneumatico" value="No"> No</label>
-              <label class="radio-pill"><input type="radio" name="hidroneumatico" value="No sé"> No sé</label>
-            </div>
+          <div class="field"><label class="fl">Cuenta con presurizador hidroneumatico?</label>
+            <div class="radio-group"><label class="radio-pill"><input type="radio" name="hidroneumatico" value="Si"> Si</label><label class="radio-pill"><input type="radio" name="hidroneumatico" value="No"> No</label><label class="radio-pill"><input type="radio" name="hidroneumatico" value="No se"> No se</label></div>
           </div>
         </div>
-        <div class="field-row">
-          <div class="field"><label class="fl">Elementos existentes a considerar (bardas, árboles, construcciones)</label>
-            <textarea name="elementos_existentes" placeholder="Describe brevemente el estado actual del espacio..."></textarea>
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label class="fl">Consideraciones adicionales del terreno</label>
-            <textarea name="consideraciones_terreno" placeholder="Pendientes, tipo de suelo, restricciones del fraccionamiento, servidumbres..."></textarea>
-          </div>
-        </div>
+        <div class="field-row"><div class="field"><label class="fl">Elementos existentes a considerar</label><textarea name="elementos_existentes" placeholder="Bardas, arboles, construcciones..."></textarea></div></div>
+        <div class="field-row"><div class="field"><label class="fl">Consideraciones adicionales del terreno</label><textarea name="consideraciones_terreno" placeholder="Pendientes, tipo de suelo, restricciones..."></textarea></div></div>
       </div>
-
-      <!-- SECCIÓN 3 -->
       <div class="vt-section">
         <div class="section-label"><div class="section-num">3</div><span class="section-title">Gustos, estilo y uso</span></div>
-        <div class="field-row">
-          <div class="field"><label class="fl">¿Cómo usará principalmente el jardín? (puede elegir varios)</label>
-            <div class="check-group">
-              <label class="check-pill"><input type="checkbox" name="uso[]" value="Convivencia familiar"> Convivencia familiar</label>
-              <label class="check-pill"><input type="checkbox" name="uso[]" value="Descanso / lectura"> Descanso / lectura</label>
-              <label class="check-pill"><input type="checkbox" name="uso[]" value="Juego de niños"> Juego de niños</label>
-              <label class="check-pill"><input type="checkbox" name="uso[]" value="Mascotas"> Mascotas</label>
-              <label class="check-pill"><input type="checkbox" name="uso[]" value="Asados / reuniones"> Asados / reuniones</label>
-              <label class="check-pill"><input type="checkbox" name="uso[]" value="Imagen / fachada"> Imagen / fachada</label>
-              <label class="check-pill"><input type="checkbox" name="uso[]" value="Solo estético"> Solo estético</label>
-            </div>
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label class="fl">Estilo de jardín que le atrae</label>
-            <div class="check-group">
-              <label class="check-pill"><input type="checkbox" name="estilo[]" value="Tropical / exuberante"> Tropical / exuberante</label>
-              <label class="check-pill"><input type="checkbox" name="estilo[]" value="Minimalista / moderno"> Minimalista / moderno</label>
-              <label class="check-pill"><input type="checkbox" name="estilo[]" value="Mediterráneo / rústico"> Mediterráneo / rústico</label>
-              <label class="check-pill"><input type="checkbox" name="estilo[]" value="Japonés / zen"> Japonés / zen</label>
-              <label class="check-pill"><input type="checkbox" name="estilo[]" value="Colorido / flores"> Colorido / flores</label>
-              <label class="check-pill"><input type="checkbox" name="estilo[]" value="Natural / silvestre"> Natural / silvestre</label>
-              <label class="check-pill"><input type="checkbox" name="estilo[]" value="Sin preferencia"> Sin preferencia</label>
-            </div>
-          </div>
-        </div>
+        <div class="field-row"><div class="field"><label class="fl">Como usara el jardin?</label>
+          <div class="check-group"><label class="check-pill"><input type="checkbox" name="uso" value="Convivencia familiar"> Convivencia familiar</label><label class="check-pill"><input type="checkbox" name="uso" value="Descanso"> Descanso</label><label class="check-pill"><input type="checkbox" name="uso" value="Juego de ninos"> Juego ninos</label><label class="check-pill"><input type="checkbox" name="uso" value="Mascotas"> Mascotas</label><label class="check-pill"><input type="checkbox" name="uso" value="Asados"> Asados</label><label class="check-pill"><input type="checkbox" name="uso" value="Imagen"> Imagen</label><label class="check-pill"><input type="checkbox" name="uso" value="Estetico"> Estetico</label></div>
+        </div></div>
+        <div class="field-row"><div class="field"><label class="fl">Estilo de jardin que le atrae</label>
+          <div class="check-group"><label class="check-pill"><input type="checkbox" name="estilo" value="Tropical"> Tropical</label><label class="check-pill"><input type="checkbox" name="estilo" value="Minimalista"> Minimalista</label><label class="check-pill"><input type="checkbox" name="estilo" value="Mediterraneo"> Mediterraneo</label><label class="check-pill"><input type="checkbox" name="estilo" value="Japones"> Japones</label><label class="check-pill"><input type="checkbox" name="estilo" value="Colorido"> Colorido</label><label class="check-pill"><input type="checkbox" name="estilo" value="Natural"> Natural</label></div>
+        </div></div>
         <div class="field-row cols2">
-          <div class="field"><label class="fl">¿Prefiere árboles o palmas?</label>
-            <div class="radio-group">
-              <label class="radio-pill"><input type="radio" name="arboles_palmas" value="Árboles"> Árboles</label>
-              <label class="radio-pill"><input type="radio" name="arboles_palmas" value="Palmas"> Palmas</label>
-              <label class="radio-pill"><input type="radio" name="arboles_palmas" value="Ambos"> Ambos</label>
-              <label class="radio-pill"><input type="radio" name="arboles_palmas" value="Ninguno"> Ninguno</label>
-              <label class="radio-pill"><input type="radio" name="arboles_palmas" value="Me da igual"> Me da igual</label>
-            </div>
-          </div>
-          <div class="field"><label class="fl">¿Prefiere plantas de bajo mantenimiento?</label>
-            <div class="radio-group">
-              <label class="radio-pill"><input type="radio" name="mantenimiento" value="Sí, lo más fácil posible"> Sí, fácil</label>
-              <label class="radio-pill"><input type="radio" name="mantenimiento" value="No me importa el mantenimiento"> No importa</label>
-              <label class="radio-pill"><input type="radio" name="mantenimiento" value="Dispuesto a mantenerlo"> Dispuesto</label>
-            </div>
-          </div>
+          <div class="field"><label class="fl">Prefiere arboles o palmas?</label><div class="radio-group"><label class="radio-pill"><input type="radio" name="arboles_palmas" value="Arboles"> Arboles</label><label class="radio-pill"><input type="radio" name="arboles_palmas" value="Palmas"> Palmas</label><label class="radio-pill"><input type="radio" name="arboles_palmas" value="Ambos"> Ambos</label><label class="radio-pill"><input type="radio" name="arboles_palmas" value="Ninguno"> Ninguno</label></div></div>
+          <div class="field"><label class="fl">Prefiere plantas de bajo mantenimiento?</label><div class="radio-group"><label class="radio-pill"><input type="radio" name="mantenimiento" value="Si facil"> Si facil</label><label class="radio-pill"><input type="radio" name="mantenimiento" value="No importa"> No importa</label><label class="radio-pill"><input type="radio" name="mantenimiento" value="Dispuesto"> Dispuesto</label></div></div>
         </div>
-        <div class="field-row">
-          <div class="field"><label class="fl">¿Tiene preferencia por alguna planta en específico?</label>
-            <textarea name="plantas_preferencia" placeholder="Ej. Me gustan las buganvilias, helechos, cactus, o cualquier planta que tenga en mente..."></textarea>
-          </div>
-        </div>
+        <div class="field-row"><div class="field"><label class="fl">Que plantas le gustan?</label><textarea name="plantas_preferencia" placeholder="Ej. buganvilias, helechos, cactus..."></textarea></div></div>
         <div class="field-row cols2">
-          <div class="field"><label class="fl">¿Tiene plantas o elementos que quiere conservar?</label>
-            <textarea name="conservar" placeholder="Árboles, macetas, fuentes, pérgolas..."></textarea>
-          </div>
-          <div class="field"><label class="fl">Colores que le gustan o quiere evitar</label>
-            <textarea name="colores" placeholder="Ej. Me gustan los tonos verdes y morados, no quiero amarillo..."></textarea>
-          </div>
+          <div class="field"><label class="fl">Plantas o elementos a conservar?</label><textarea name="conservar" placeholder="Arboles, macetas, fuentes..."></textarea></div>
+          <div class="field"><label class="fl">Colores que le gustan o quiere evitar</label><textarea name="colores" placeholder="Ej. verdes y morados..."></textarea></div>
         </div>
-        <div class="field-row">
-          <div class="field"><label class="fl">¿Tiene fotos de referencia o jardines que le gusten?</label>
-            <textarea name="referencias" placeholder="Descripción o link de Pinterest / Instagram..."></textarea>
-          </div>
-        </div>
+        <div class="field-row"><div class="field"><label class="fl">Fotos de referencia o jardines que le gusten?</label><textarea name="referencias" placeholder="Link de Pinterest / Instagram..."></textarea></div></div>
       </div>
-
-      <!-- SECCIÓN 4 -->
       <div class="vt-section">
-        <div class="section-label"><div class="section-num">4</div><span class="section-title">Presupuesto estimado de ejecución</span></div>
-        <p style="font-size:13px;color:#777;margin-bottom:14px;">Esto nos ayuda a proponer un diseño acorde a su inversión real. (Aparte del plan de diseño contratado)</p>
+        <div class="section-label"><div class="section-num">4</div><span class="section-title">Presupuesto de ejecucion</span></div>
+        <p style="font-size:13px;color:#777;margin-bottom:14px">Aparte del plan de diseno contratado</p>
         <div class="budget-grid">
-          <label class="budget-card"><input type="radio" name="presupuesto_ejecucion" value="$5,000 – $15,000 MXN">
-            <div class="amount">$5,000 – $15,000 MXN</div><div class="desc">Proyecto básico / detalles</div>
-          </label>
-          <label class="budget-card"><input type="radio" name="presupuesto_ejecucion" value="$15,000 – $40,000 MXN">
-            <div class="amount">$15,000 – $40,000 MXN</div><div class="desc">Proyecto medio con plantas y piso</div>
-          </label>
-          <label class="budget-card"><input type="radio" name="presupuesto_ejecucion" value="$40,000 – $80,000 MXN">
-            <div class="amount">$40,000 – $80,000 MXN</div><div class="desc">Proyecto completo con instalaciones</div>
-          </label>
-          <label class="budget-card"><input type="radio" name="presupuesto_ejecucion" value="$80,000 MXN en adelante">
-            <div class="amount">$80,000 MXN en adelante</div><div class="desc">Proyecto ejecutivo / premium</div>
-          </label>
+          <label class="budget-card"><input type="radio" name="presupuesto" value="$5000-$15000 MXN"><div class="amount">$5,000 - $15,000</div><div class="desc">Proyecto basico</div></label>
+          <label class="budget-card"><input type="radio" name="presupuesto" value="$15000-$40000 MXN"><div class="amount">$15,000 - $40,000</div><div class="desc">Proyecto medio</div></label>
+          <label class="budget-card"><input type="radio" name="presupuesto" value="$40000-$80000 MXN"><div class="amount">$40,000 - $80,000</div><div class="desc">Proyecto completo</div></label>
+          <label class="budget-card"><input type="radio" name="presupuesto" value="$80000+ MXN"><div class="amount">$80,000+</div><div class="desc">Proyecto premium</div></label>
         </div>
-        <div class="field-row" style="margin-top:16px;">
-          <div class="field"><label class="fl">¿Tiene fecha tentativa para iniciar la ejecución?</label>
-            <div class="radio-group">
-              <label class="radio-pill"><input type="radio" name="fecha_inicio" value="Lo antes posible"> Lo antes posible</label>
-              <label class="radio-pill"><input type="radio" name="fecha_inicio" value="1–3 meses"> 1–3 meses</label>
-              <label class="radio-pill"><input type="radio" name="fecha_inicio" value="3–6 meses"> 3–6 meses</label>
-              <label class="radio-pill"><input type="radio" name="fecha_inicio" value="Más de 6 meses"> Más de 6 meses</label>
-              <label class="radio-pill"><input type="radio" name="fecha_inicio" value="Solo el diseño por ahora"> Solo el diseño por ahora</label>
-            </div>
-          </div>
-        </div>
+        <div class="field-row" style="margin-top:16px"><div class="field"><label class="fl">Fecha tentativa para iniciar?</label>
+          <div class="radio-group"><label class="radio-pill"><input type="radio" name="fecha_inicio" value="Lo antes posible"> Lo antes posible</label><label class="radio-pill"><input type="radio" name="fecha_inicio" value="1-3 meses"> 1-3 meses</label><label class="radio-pill"><input type="radio" name="fecha_inicio" value="3-6 meses"> 3-6 meses</label><label class="radio-pill"><input type="radio" name="fecha_inicio" value="Mas de 6 meses"> Mas de 6 meses</label><label class="radio-pill"><input type="radio" name="fecha_inicio" value="Solo el diseno"> Solo el diseno</label></div>
+        </div></div>
       </div>
-
-      <!-- SECCIÓN 5 -->
       <div class="vt-section">
-        <div class="section-label"><div class="section-num">5</div><span class="section-title">Observaciones adicionales</span></div>
-        <div class="field-row">
-          <div class="field"><label class="fl">¿Algo más que debamos saber antes de empezar el diseño?</label>
-            <textarea name="observaciones" style="min-height:110px;" placeholder="Limitaciones, ideas especiales, preguntas, lo que no está contemplado arriba..."></textarea>
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label class="fl">¿Cuál es su mayor prioridad para este jardín?</label>
-            <div class="radio-group">
-              <label class="radio-pill"><input type="radio" name="prioridad" value="Que se vea increíble"> Que se vea increíble</label>
-              <label class="radio-pill"><input type="radio" name="prioridad" value="Que sea funcional"> Que sea funcional</label>
-              <label class="radio-pill"><input type="radio" name="prioridad" value="Fácil de mantener"> Fácil de mantener</label>
-              <label class="radio-pill"><input type="radio" name="prioridad" value="Que dure mucho"> Que dure mucho</label>
-              <label class="radio-pill"><input type="radio" name="prioridad" value="Valor a la propiedad"> Valor a la propiedad</label>
-            </div>
-          </div>
-        </div>
+        <div class="section-label"><div class="section-num">5</div><span class="section-title">Observaciones</span></div>
+        <div class="field-row"><div class="field"><label class="fl">Algo mas que debamos saber?</label><textarea name="observaciones" style="min-height:110px" placeholder="Limitaciones, ideas especiales..."></textarea></div></div>
+        <div class="field-row"><div class="field"><label class="fl">Cual es su mayor prioridad?</label>
+          <div class="radio-group"><label class="radio-pill"><input type="radio" name="prioridad" value="Que se vea increible"> Que se vea increible</label><label class="radio-pill"><input type="radio" name="prioridad" value="Funcional"> Funcional</label><label class="radio-pill"><input type="radio" name="prioridad" value="Facil mantenerlo"> Facil de mantener</label><label class="radio-pill"><input type="radio" name="prioridad" value="Que dure mucho"> Que dure mucho</label><label class="radio-pill"><input type="radio" name="prioridad" value="Valor propiedad"> Valor propiedad</label></div>
+        </div></div>
       </div>
-
       <div class="vt-footer">
         <button type="button" class="btn-clear" onclick="clearForm()">Limpiar</button>
         <button type="submit" class="btn-send">Enviar cuestionario &rarr;</button>
       </div>
     </form>
-
-    <div class="success-msg" id="success-msg">
-      <div class="success-icon">&#10003;</div>
-      <h2>¡Gracias por tu información!</h2>
-      <p>Hemos recibido tu cuestionario. Un diseñador de Viveros Terra se pondrá en contacto contigo pronto.</p>
-    </div>
+    <div class="success-msg" id="success-msg"><div class="success-icon">&#10003;</div><h2 style="font-family:'Playfair Display';font-size:26px;color:#1a3a1f;font-weight:400;margin-bottom:10px">Gracias por tu informacion!</h2><p style="color:#666">Hemos recibido tu cuestionario. Un disenor de Viveros Terra se pondra en contacto contigo pronto.</p></div>
   </div>
 </div>
-
 <script>
-  document.getElementById('rb-otro-esp').addEventListener('change', function() {
-    document.getElementById('otro-esp-wrap').classList.toggle('visible', this.checked);
-  });
-  document.querySelectorAll('.riego-trigger').forEach(r => {
-    r.addEventListener('change', () => document.getElementById('cond-riego').classList.add('visible'));
-  });
-  document.querySelector('input[name="riego_instalado"][value="Sí"]').addEventListener('change', function() {
-    document.getElementById('cond-riego').classList.remove('visible');
-  });
-  function calcTotal() {
-    const p = parseFloat(document.getElementById('area_pasto').value) || 0;
-    const j = parseFloat(document.getElementById('area_jard').value) || 0;
-    if (p > 0 || j > 0) {
-      const t = Math.round(p + j);
-      document.getElementById('area-display').style.display = 'flex';
-      document.getElementById('area-total-val').textContent = t + ' m²';
-      document.getElementById('area_total_input').value = t;
-    }
-  }
-  document.getElementById('area_pasto').addEventListener('input', calcTotal);
-  document.getElementById('area_jard').addEventListener('input', calcTotal);
-  document.getElementById('area_total_input').addEventListener('input', function() {
-    if (this.value) {
-      document.getElementById('area-display').style.display = 'flex';
-      document.getElementById('area-total-val').textContent = Math.round(this.value) + ' m²';
-    }
-  });
-  function updateProgress() {
-    const inputs = document.querySelectorAll('input[type=text], input[type=tel], input[type=email], input[type=number], select, textarea');
-    let filled = 0;
-    inputs.forEach(i => { if (i.value.trim()) filled++; });
-    document.getElementById('prog').style.width = Math.round((filled / inputs.length) * 100) + '%';
-  }
-  document.querySelectorAll('input, select, textarea').forEach(el => {
-    el.addEventListener('input', updateProgress);
-    el.addEventListener('change', updateProgress);
-  });
-  function clearForm() {
-    document.getElementById('mainForm').reset();
-    document.getElementById('area-display').style.display = 'none';
-    document.querySelectorAll('.cond-block, .otro-field').forEach(el => el.classList.remove('visible'));
-    updateProgress();
-  }
-  document.getElementById('mainForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    const btn = this.querySelector('.btn-send');
-    btn.textContent = 'Enviando...';
-    btn.disabled = true;
-    try {
-      const res = await fetch(this.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
-      if (res.ok) {
-        this.style.display = 'none';
-        document.getElementById('success-msg').style.display = 'block';
-      } else {
-        btn.textContent = 'Error, intenta de nuevo';
-        btn.disabled = false;
-      }
-    } catch {
-      btn.textContent = 'Error, intenta de nuevo';
-      btn.disabled = false;
-    }
-  });
+document.getElementById('rb-otro-esp').addEventListener('change',function(){document.getElementById('otro-esp-wrap').classList.toggle('visible',this.checked)});
+document.querySelectorAll('.riego-trigger').forEach(r=>{r.addEventListener('change',()=>document.getElementById('cond-riego').classList.add('visible'))});
+const rsi=document.querySelector('input[name="riego_instalado"][value="Si"]');if(rsi)rsi.addEventListener('change',function(){document.getElementById('cond-riego').classList.remove('visible')});
+function calcTotal(){const p=parseFloat(document.getElementById('area_pasto').value)||0;const j=parseFloat(document.getElementById('area_jard').value)||0;if(p>0||j>0){const t=Math.round(p+j);document.getElementById('area-display').style.display='flex';document.getElementById('area-total-val').textContent=t+' m2';document.getElementById('area_total_input').value=t}}
+document.getElementById('area_pasto').addEventListener('input',calcTotal);
+document.getElementById('area_jard').addEventListener('input',calcTotal);
+function updateProgress(){const inputs=document.querySelectorAll('input[type=text],input[type=tel],input[type=email],input[type=number],select,textarea');let f=0;inputs.forEach(i=>{if(i.value.trim())f++});document.getElementById('prog').style.width=Math.round((f/inputs.length)*100)+'%'}
+document.querySelectorAll('input,select,textarea').forEach(el=>{el.addEventListener('input',updateProgress);el.addEventListener('change',updateProgress)});
+function clearForm(){document.getElementById('mainForm').reset();document.getElementById('area-display').style.display='none';document.querySelectorAll('.cond-block,.otro-field').forEach(el=>el.classList.remove('visible'));updateProgress()}
+document.getElementById('mainForm').addEventListener('submit',async function(e){e.preventDefault();const fd=new FormData(this);const btn=this.querySelector('.btn-send');btn.textContent='Enviando...';btn.disabled=true;try{const r=await fetch(this.action,{method:'POST',body:fd,headers:{'Accept':'application/json'}});if(r.ok){this.style.display='none';document.getElementById('success-msg').style.display='block'}else{btn.textContent='Error, intenta de nuevo';btn.disabled=false}}catch{btn.textContent='Error, intenta de nuevo';btn.disabled=false}});
 </script>
 </body>
 </html>
