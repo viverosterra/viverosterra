@@ -1465,8 +1465,7 @@
 <script>
   /* ── Mobile menu ── */
   const menuBtn=document.getElementById('menu-btn'),mobileMenu=document.getElementById('mobile-menu');
-  menuBtn.addEventListener('click',()=>{const o=!mobileMenu.classList.contains('hidden');mobileMenu.classList.toggle('hidden');menuBtn.setAttribute('aria-expanded',String(!o));});
-  mobileMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>mobileMenu.classList.add('hidden')));
+  if(menuBtn&&mobileMenu){menuBtn.addEventListener('click',()=>{const o=!mobileMenu.classList.contains('hidden');mobileMenu.classList.toggle('hidden');menuBtn.setAttribute('aria-expanded',String(!o));});mobileMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>mobileMenu.classList.add('hidden')));}
 
   /* ── FAQ accordion ── */
   document.querySelectorAll('.faq-btn').forEach(btn=>{
