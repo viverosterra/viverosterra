@@ -1,986 +1,777 @@
 <!DOCTYPE html>
-<html lang="es-MX">
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo de Plantas, Pasto y Materiales en Tampico · Viveros Terra 2026</title>
-<meta name="description" content="Catálogo completo de Viveros Terra en Tampico — pasto San Agustín, palmas, plantas ornamentales y materiales. +150 variedades, entrega a domicilio en Madero y Altamira. Cotiza hoy.">
-<link rel="canonical" href="https://www.viverosterra.com/catalogo">
-<meta name="robots" content="index, follow">
-<meta name="geo.region" content="MX-TAM">
-<meta name="geo.placename" content="Tampico, Tamaulipas">
-<link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
-<link rel="icon" type="image/png" href="/img/logo-viveros-terra-tampico.png">
-<link rel="apple-touch-icon" href="/img/logo-viveros-terra-tampico.png">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.viverosterra.com/catalogo">
-<meta property="og:title" content="Catálogo Viveros Terra — Plantas, Pasto y Materiales en Tampico">
-<meta property="og:description" content="Catálogo completo de Viveros Terra en Tampico — pasto San Agustín, palmas, plantas ornamentales y materiales. +150 variedades, entrega a domicilio.">
-<meta property="og:image" content="https://www.viverosterra.com/img/jardin-residencial-tropical-tampico.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="Viveros Terra">
-<meta property="og:locale" content="es_MX">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Catálogo Viveros Terra — Plantas, Pasto y Materiales en Tampico">
-<meta name="twitter:image" content="https://www.viverosterra.com/img/jardin-residencial-tropical-tampico.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={theme:{extend:{colors:{primary:"#1B5E20",secondary:"#2E7D32",accent:"#66BB6A",gold:"#C9A94E",dark:"#0D2B0E",wa:"#25D366",bgwarm:"#FAFAF7",bggreen:"#F0F7F0"},fontFamily:{display:["Playfair Display","serif"]}}}}</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Catálogo 2025 — Viveros Terra</title>
+<meta name="description" content="Catálogo completo de plantas, árboles, palmas y pasto. Viveros Terra, Tampico, Madero y Altamira."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
+:root{
+  --td:#1B4D2E;--tl:#8DC63F;--tl2:#6BA02F;
+  --tc:#F5F0E8;--tcd:#DDD8CC;--tm:#4a7a4a;
+  --tw:#ffffff;--ts:#1a2e1a;
+  --r12:12px;--r8:8px;--r50:50px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:"Inter",sans-serif;background:#FAFAF7}
-h1,h2,h3{font-family:"Playfair Display",serif}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.logo-light{height:44px;width:auto;display:block;mix-blend-mode:multiply}
-.logo-dark{height:44px;width:auto;display:block;filter:brightness(0) invert(1)}
-.wa-float{position:fixed;bottom:24px;right:24px;z-index:100;animation:pulse-wa 2.5s infinite}
-@keyframes pulse-wa{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.4)}70%{box-shadow:0 0 0 14px rgba(37,211,102,0)}}
-.img-card{overflow:hidden}.img-card img{transition:transform .4s ease;width:100%;height:100%;object-fit:cover}.img-card:hover img{transform:scale(1.04)}
-.filter-btn.active{background:#1B5E20;color:#fff;border-color:#1B5E20}
-.catalog-card{transition:opacity .2s ease}
-.faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease}.faq-answer.open{max-height:400px}
-</style>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@graph":[
-    {
-      "@type":"ItemList",
-      "name":"Catálogo Viveros Terra Tampico",
-      "description":"Catálogo completo de plantas, pasto y materiales disponibles en Viveros Terra, Tampico, Tamaulipas",
-      "url":"https://www.viverosterra.com/catalogo",
-      "numberOfItems":16,
-      "itemListElement":[
-        {"@type":"ListItem","position":1,"name":"Pasto San Agustín en Rollo","url":"https://www.viverosterra.com/pasto-en-rollo-tampico"},
-        {"@type":"ListItem","position":2,"name":"Pasto Japonés en Rollo","url":"https://www.viverosterra.com/pasto-en-rollo-tampico"},
-        {"@type":"ListItem","position":3,"name":"Pasto Sintético","url":"https://www.viverosterra.com/pasto-sintetico-tampico"},
-        {"@type":"ListItem","position":4,"name":"Palma del Viajero","url":"https://www.viverosterra.com/palmas-tropicales-tampico"},
-        {"@type":"ListItem","position":5,"name":"Palma Areca","url":"https://www.viverosterra.com/palmas-para-jardin-tampico"},
-        {"@type":"ListItem","position":6,"name":"Palma Real","url":"https://www.viverosterra.com/plantas-palmas-arboles-tampico"},
-        {"@type":"ListItem","position":7,"name":"Palma Coco","url":"https://www.viverosterra.com/plantas-palmas-arboles-tampico"},
-        {"@type":"ListItem","position":8,"name":"Ficus Elastica","url":"https://www.viverosterra.com/plantas-palmas-arboles-tampico"},
-        {"@type":"ListItem","position":9,"name":"Plantas Ornamentales","url":"https://www.viverosterra.com/plantas-para-jardin-tampico"},
-        {"@type":"ListItem","position":10,"name":"Plantas de Interior","url":"https://www.viverosterra.com/plantas-de-interior-tampico"},
-        {"@type":"ListItem","position":11,"name":"Árboles para Jardín y Banqueta","url":"https://www.viverosterra.com/arboles-para-banqueta-tampico"},
-        {"@type":"ListItem","position":12,"name":"Tierra Negra Vegetal","url":"https://www.viverosterra.com/tierra-negra-vegetal-tampico"},
-        {"@type":"ListItem","position":13,"name":"Tierra Negra para Maceta","url":"https://www.viverosterra.com/tierra-negra-vegetal-tampico"},
-        {"@type":"ListItem","position":14,"name":"Tezontle Rojo","url":"https://www.viverosterra.com/tezontle-rojo-tampico"},
-        {"@type":"ListItem","position":15,"name":"Mármol Blanco Decorativo","url":"https://www.viverosterra.com/marmol-blanco-tampico"},
-        {"@type":"ListItem","position":16,"name":"Piedra de Río / Bola","url":"https://www.viverosterra.com/piedra-bola-rio-tampico"}
-      ]
-    },
-    {
-      "@type":"FAQPage",
-      "mainEntity":[
-        {"@type":"Question","name":"¿Tienen entrega a domicilio de plantas y materiales en Tampico?","acceptedAnswer":{"@type":"Answer","text":"Sí. Viveros Terra entrega plantas, pasto en rollo y materiales a domicilio en Tampico, Ciudad Madero y Altamira. Para pedidos grandes coordinamos logística a toda la zona Huasteca. Cotiza por WhatsApp al 833 326 8008."}},
-        {"@type":"Question","name":"¿Cuánto cuesta el pasto San Agustín en Tampico?","acceptedAnswer":{"@type":"Answer","text":"El pasto San Agustín en rollo cuesta desde $85 por metro cuadrado (solo el pasto, sin entrega ni instalación). Con instalación profesional cotizamos según el tamaño del jardín y el estado del terreno. Cotización gratis sin compromiso."}},
-        {"@type":"Question","name":"¿Puedo ir a comprar directamente al vivero?","acceptedAnswer":{"@type":"Answer","text":"Sí. Nuestro vivero está en Av. Álvaro Obregón 601, Col. Unidad Nacional, Ciudad Madero (frente al Walmart). Horario: Lunes a Viernes 9am–6pm, Sábado 9am–2pm. Te recomendamos llamar antes al 833 326 8008 para confirmar disponibilidad."}},
-        {"@type":"Question","name":"¿Venden al mayoreo para constructoras?","acceptedAnswer":{"@type":"Answer","text":"Sí. Ofrecemos precios preferenciales por volumen para constructoras, arquitectos, fraccionamientos, hoteles y gobierno. Factura CFDI disponible. Entrega por etapas según avance de obra. Cotiza tu proyecto al 833 326 8008."}},
-        {"@type":"Question","name":"¿Qué plantas recomiendan para el calor de Tampico?","acceptedAnswer":{"@type":"Answer","text":"Para el clima cálido-húmedo de Tampico recomendamos palmas tropicales (del viajero, areca, real, coco), Ficus elastica, plantas ornamentales de sol como heliconias y gingers, y para interior el pothos, sansevieria y aglaonema. El pasto San Agustín es ideal para jardines con algo de sombra."}}
-      ]
-    },
-    {
-      "@type":"BreadcrumbList",
-      "itemListElement":[
-        {"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.viverosterra.com"},
-        {"@type":"ListItem","position":2,"name":"Catálogo","item":"https://www.viverosterra.com/catalogo"}
-      ]
-    }
-  ]
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--tc);color:var(--ts);min-height:100vh}
+
+/* HERO */
+.hero{background:var(--td);padding:2rem 1.5rem 0;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:rgba(141,198,63,.07);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;background:rgba(141,198,63,.05);border-radius:50%}
+.hlogo{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:.75rem;position:relative;z-index:1}
+.hicon{width:48px;height:48px;background:var(--tl);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.htitle{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:-.5px;line-height:1}
+.hsub{font-size:11px;color:var(--tl);font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-top:3px}
+.hdesc{font-size:13px;color:rgba(255,255,255,.6);margin-top:.6rem;line-height:1.6;position:relative;z-index:1}
+.hstats{display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem;margin-top:1.25rem;padding:1.25rem 0 1.5rem;border-top:1px solid rgba(255,255,255,.1);position:relative;z-index:1}
+.stat-n{font-size:20px;font-weight:700;color:var(--tl);line-height:1;font-family:'Playfair Display',serif}
+.stat-l{font-size:10px;color:rgba(255,255,255,.45);margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+
+/* TABS */
+.tabs{background:var(--td);display:flex;justify-content:center;flex-wrap:wrap;gap:5px;padding:.75rem 1rem}
+.tab{padding:7px 17px;border:none;border-radius:var(--r50);font-size:12px;font-weight:600;cursor:pointer;transition:all .18s;background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);font-family:'DM Sans',sans-serif}
+.tab:hover{background:rgba(255,255,255,.18);color:rgba(255,255,255,.95)}
+.tab.active{background:var(--tl);color:var(--td)}
+
+/* SEARCH */
+.sbar{padding:1rem 1.25rem .5rem;max-width:540px;margin:0 auto}
+.siw{position:relative}
+.si{width:100%;padding:10px 14px 10px 40px;border:1.5px solid var(--tcd);border-radius:var(--r50);font-size:13px;background:var(--tw);color:var(--ts);outline:none;transition:border-color .2s;font-family:'DM Sans',sans-serif}
+.si:focus{border-color:var(--tl)}
+.si::placeholder{color:#aaa}
+.sico{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--tm);pointer-events:none}
+.cnt{text-align:center;font-size:11px;color:var(--tm);padding:.2rem 0 .6rem}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:14px;padding:0 1.25rem 1.5rem;max-width:1000px;margin:0 auto}
+
+/* CARD */
+.card{background:var(--tw);border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,.07);transition:transform .2s,box-shadow .2s}
+.card:not(.exp):hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(27,77,46,.12)}
+.card.exp{grid-column:1/-1}
+.cimg{background:var(--tc);height:130px;position:relative;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.card.exp .cimg{height:220px;cursor:default}
+.cimg img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:opacity .3s}
+.cimg img.loaded{opacity:1}
+.cimg img:not(.loaded){opacity:0}
+.emoji{font-size:46px;user-select:none;z-index:1;transition:opacity .2s}
+.cimg img.loaded + .emoji{opacity:0;pointer-events:none}
+.badges{position:absolute;top:7px;left:7px;display:flex;flex-direction:column;gap:3px;z-index:3}
+.badge{font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:var(--r50);letter-spacing:.4px;text-transform:uppercase}
+.bb{background:var(--td);color:#fff}
+.bi{background:#1565C0;color:#fff}
+.bv{background:#E65100;color:#fff}
+.cbody{padding:10px 11px 12px}
+.cname{font-size:12.5px;font-weight:700;color:var(--td);line-height:1.3;margin-bottom:3px;cursor:pointer}
+.csc{font-size:9.5px;color:var(--tm);font-style:italic;margin-bottom:6px}
+.sizes{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px}
+.sz{background:var(--tc);color:var(--td);font-size:9px;font-weight:600;padding:2px 7px;border-radius:var(--r50)}
+.btns{display:flex;flex-direction:column;gap:4px}
+.btn-main{width:100%;padding:7px;background:var(--td);color:#fff;border:none;border-radius:var(--r8);font-size:10.5px;font-weight:600;cursor:pointer;transition:background .2s;font-family:'DM Sans',sans-serif}
+.btn-main:hover{background:#26693e}
+.btn-sec{width:100%;padding:6px;background:transparent;color:var(--tm);border:1px solid var(--tcd);border-radius:var(--r8);font-size:10px;cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif}
+.btn-sec:hover{background:var(--tc);color:var(--td)}
+
+/* FICHA EXPANDIDA */
+.ficha{display:none;padding:0 14px 18px;border-top:1px solid rgba(0,0,0,.06);margin-top:4px}
+.card.exp .ficha{display:block}
+.ficons{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 10px}
+.fi{display:flex;align-items:center;gap:5px;background:var(--tc);padding:5px 10px;border-radius:var(--r50);font-size:11px;font-weight:600;color:var(--td)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:10px}
+.fitem{background:var(--tc);border-radius:var(--r8);padding:9px 11px}
+.flabel{font-size:9px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
+.fval{font-size:12px;font-weight:600;color:var(--td)}
+.fdesc{font-size:11.5px;color:#2d5a2d;line-height:1.7;margin-bottom:12px;padding:10px 12px;background:#EEF7E6;border-radius:var(--r8);border-left:3px solid var(--tl)}
+.fsizes{margin-bottom:12px}
+.sztag{display:inline-block;background:#E8F5E9;color:var(--td);font-size:10px;font-weight:600;padding:3px 9px;border-radius:var(--r50);margin:2px}
+.szspec{display:inline-block;background:#FFF3E0;color:#8a4a00;font-size:10px;font-weight:600;padding:3px 9px;border-radius:var(--r50);margin:2px;border:1px dashed #E65100}
+.factions{display:flex;gap:8px;flex-wrap:wrap}
+.fa-wa{flex:1;min-width:130px;padding:9px;background:var(--td);color:#fff;border:none;border-radius:var(--r8);font-size:11.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.fa-wa:hover{background:#26693e}
+.fa-esp{flex:1;min-width:130px;padding:9px;background:var(--tw);color:var(--td);border:1.5px solid var(--td);border-radius:var(--r8);font-size:11.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+.fa-esp:hover{background:var(--tc)}
+.fa-close{padding:9px 16px;background:rgba(0,0,0,.06);color:#666;border:none;border-radius:var(--r8);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* SOLICITAR */
+.solsec{background:var(--tw);margin:.75rem 1.25rem;border-radius:14px;padding:1.25rem;max-width:1000px;margin-left:auto;margin-right:auto;border:1.5px dashed var(--tl)}
+.solsec h3{font-family:'Playfair Display',serif;color:var(--td);font-size:14px;font-weight:700;margin-bottom:.4rem}
+.solsec p{font-size:11.5px;color:var(--tm);margin-bottom:.75rem;line-height:1.5}
+.solrow{display:flex;gap:8px;flex-wrap:wrap}
+.solinput{flex:1;min-width:150px;padding:9px 13px;border:1.5px solid var(--tcd);border-radius:var(--r8);font-size:12.5px;background:var(--tw);color:var(--ts);outline:none;font-family:'DM Sans',sans-serif}
+.solinput:focus{border-color:var(--tl)}
+.solbtn{padding:9px 20px;background:var(--tl);color:var(--td);border:none;border-radius:var(--r8);font-size:12.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.solbtn:hover{background:var(--tl2)}
+
+/* PASTO */
+.pastosec{background:var(--td);margin:.75rem 1.25rem;border-radius:14px;padding:1.25rem;max-width:1000px;margin-left:auto;margin-right:auto}
+.pastosec h3{font-family:'Playfair Display',serif;color:var(--tl);font-size:15px;font-weight:700;margin-bottom:.85rem}
+.pastorow{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.pcard{background:rgba(255,255,255,.09);border-radius:10px;padding:11px 13px;border:1px solid rgba(255,255,255,.1)}
+.pcard h4{font-size:12px;font-weight:700;color:#fff;margin-bottom:4px}
+.pcard p{font-size:10.5px;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:8px}
+.pcard button{width:100%;padding:6px;background:var(--tl);color:var(--td);border:none;border-radius:6px;font-size:10.5px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+.pcard button:hover{background:var(--tl2)}
+.tierrasec{background:var(--tw);margin:.75rem 1.25rem;border-radius:14px;padding:1.25rem;max-width:1000px;margin-left:auto;margin-right:auto;border:1px solid rgba(0,0,0,.07)}
+.tierrasec h3{font-family:'Playfair Display',serif;color:var(--td);font-size:15px;font-weight:700;margin-bottom:.85rem}
+.tierrarow{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:10px}
+.tcard{background:var(--tc);border-radius:10px;padding:10px 12px}
+.tcard h4{font-size:11.5px;font-weight:700;color:var(--td);margin-bottom:3px}
+.tcard p{font-size:10px;color:var(--tm);line-height:1.4}
+.tstats{display:flex;gap:8px;flex-wrap:wrap;margin-top:.85rem}
+.tstat{flex:1;min-width:120px;background:var(--tc);border-radius:10px;padding:9px 12px}
+.tstat-n{font-size:12px;font-weight:700;color:var(--td)}
+.tstat-l{font-size:10px;color:var(--tm);margin-top:2px}
+
+/* FAB */
+.wafab{position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(37,211,102,.45);border:none;z-index:999;transition:transform .2s}
+.wafab:hover{transform:scale(1.1)}
+
+/* FOOTER */
+footer{background:var(--td);color:rgba(255,255,255,.5);text-align:center;padding:1.5rem 1rem;font-size:11px;line-height:2;margin-top:.75rem}
+.footer-brand{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:.25rem}
+.footer-lime{color:var(--tl)}
+
+/* EMPTY */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--tm);grid-column:1/-1;font-size:13px}
+.empty-icon{font-size:36px;margin-bottom:.5rem}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+  .htitle{font-size:22px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;padding:0 .85rem 1.25rem}
+  .hstats{gap:1rem}
 }
-</script>
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-<symbol id="ic-whatsapp" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
-<symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 11a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.98 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></symbol>
-<symbol id="ic-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
-<symbol id="ic-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></symbol>
-<symbol id="ic-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></symbol>
-<symbol id="ic-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
-<symbol id="ic-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></symbol>
-<symbol id="ic-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></symbol>
-<symbol id="ic-facebook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
-<symbol id="ic-youtube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor"/></symbol>
-<symbol id="ic-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.77a4.85 4.85 0 01-1.01-.08z"/></symbol>
-</svg>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RMZCVJ734M"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RMZCVJ734M');</script>
+
+/* =================== COTIZADOR =================== */
+/* Botón + en cada card */
+.btn-add{position:absolute;top:7px;right:7px;width:30px;height:30px;background:var(--tl);border:none;border-radius:50%;color:var(--td);font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:4;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:transform .15s,background .15s;line-height:1}
+.btn-add:hover{transform:scale(1.12);background:var(--tl2)}
+.btn-add.added{background:var(--td);color:var(--tl)}
+
+/* FAB carrito */
+.cartfab{position:fixed;bottom:80px;right:20px;width:52px;height:52px;background:var(--td);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(27,77,46,.4);border:none;z-index:998;transition:transform .2s}
+.cartfab:hover{transform:scale(1.08)}
+.cartfab{display:none}.cartfab.visible{display:flex!important}
+.cartbadge{position:absolute;top:-4px;right:-4px;background:var(--tl);color:var(--td);font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+
+/* Modal tamaño/cantidad */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:var(--tw);border-radius:20px 20px 0 0;padding:1.5rem;width:100%;max-width:480px;transform:translateY(30px);transition:transform .25s;max-height:90vh;overflow-y:auto}
+.modal-overlay.open .modal-box{transform:translateY(0)}
+.modal-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--td);margin-bottom:.25rem}
+.modal-sc{font-size:11px;color:var(--tm);font-style:italic;margin-bottom:1.1rem}
+.modal-label{font-size:11px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem;display:block}
+.modal-select{width:100%;padding:10px 12px;border:1.5px solid var(--tcd);border-radius:var(--r8);font-size:13px;background:var(--tw);color:var(--ts);outline:none;margin-bottom:.5rem;font-family:'DM Sans',sans-serif;cursor:pointer}
+.modal-select:focus{border-color:var(--tl)}
+.otro-size-row{display:none;margin-bottom:1rem}
+.otro-size-row.visible{display:block}
+.otro-size-input{width:100%;padding:9px 12px;border:1.5px solid var(--tl);border-radius:var(--r8);font-size:13px;background:var(--tw);color:var(--ts);outline:none;font-family:'DM Sans',sans-serif}
+.otro-size-input:focus{border-color:var(--tl2)}
+.qty-row{display:flex;align-items:center;gap:12px;margin-bottom:1.25rem;margin-top:.75rem}
+.qty-btn{width:44px;height:44px;border:1.5px solid var(--tcd);border-radius:var(--r8);background:var(--tw);font-size:22px;font-weight:700;color:var(--td);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
+.qty-btn:hover{background:var(--tc)}
+.qty-input{flex:1;text-align:center;padding:10px 4px;border:1.5px solid var(--tcd);border-radius:var(--r8);font-size:22px;font-weight:700;color:var(--td);outline:none;font-family:'DM Sans',sans-serif}
+.qty-input:focus{border-color:var(--tl)}
+.qty-label{font-size:12px;color:var(--tm);white-space:nowrap}
+.modal-btns{display:flex;gap:8px}
+.modal-btn-add{flex:1;padding:12px;background:var(--td);color:#fff;border:none;border-radius:var(--r8);font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.modal-btn-add:hover{background:#26693e}
+.modal-btn-cancel{padding:12px 16px;background:var(--tc);color:var(--tm);border:none;border-radius:var(--r8);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* Panel carrito */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1001;opacity:0;pointer-events:none;transition:opacity .2s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-panel{position:fixed;bottom:0;left:0;right:0;background:var(--tw);border-radius:20px 20px 0 0;z-index:1002;transform:translateY(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);max-height:88vh;display:flex;flex-direction:column}
+.cart-panel.open{transform:translateY(0)}
+.cart-header{padding:1.25rem 1.25rem .75rem;border-bottom:1px solid var(--tcd);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.cart-htitle{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--td)}
+.cart-hcount{font-size:11px;color:var(--tm);margin-top:2px}
+.cart-close{width:32px;height:32px;background:var(--tc);border:none;border-radius:50%;cursor:pointer;font-size:16px;color:var(--tm);display:flex;align-items:center;justify-content:center}
+.cart-body{flex:1;overflow-y:auto;padding:.75rem 1.25rem}
+.cart-empty{text-align:center;padding:2rem;color:var(--tm);font-size:13px}
+.cart-item{display:flex;align-items:center;gap:10px;padding:.65rem 0;border-bottom:1px solid #f0ebe0}
+.cart-item:last-child{border-bottom:none}
+.cart-item-emoji{font-size:22px;width:36px;text-align:center;flex-shrink:0}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-size:12.5px;font-weight:700;color:var(--td);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-sz{font-size:10.5px;color:var(--tm);margin-top:1px}
+.cart-item-qty{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.cart-qty-btn{width:26px;height:26px;border:1px solid var(--tcd);border-radius:6px;background:var(--tw);font-size:14px;font-weight:700;color:var(--td);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cart-qty-btn:hover{background:var(--tc)}
+.cart-qty-n{font-size:13px;font-weight:700;color:var(--td);min-width:20px;text-align:center}
+.cart-del{width:26px;height:26px;border:none;background:none;color:#ccc;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cart-del:hover{color:#e53935}
+.cart-footer{padding:1rem 1.25rem 1.5rem;border-top:1px solid var(--tcd);flex-shrink:0}
+.cart-summary{display:flex;justify-content:space-between;margin-bottom:.85rem;font-size:11.5px;color:var(--tm)}
+.cart-summary span{font-weight:700;color:var(--td)}
+.cart-wa-btn{width:100%;padding:13px;background:#25D366;color:#fff;border:none;border-radius:var(--r8);font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
+.cart-wa-btn:hover{background:#1ebe5a}
+.cart-clear{width:100%;padding:8px;background:none;border:none;color:#bbb;font-size:11px;cursor:pointer;margin-top:.5rem;font-family:'DM Sans',sans-serif}
+.cart-clear:hover{color:#e53935}
+
+</style>
 </head>
-<body class="text-gray-900">
+<body>
 
-<!-- WhatsApp Float -->
-<a href="https://wa.me/528333268008?text=Hola%2C%20vi%20el%20catálogo%20y%20quiero%20cotizar" target="_blank" rel="noopener"
-   class="wa-float flex items-center gap-2 bg-wa text-white px-4 py-3 rounded-full font-semibold text-sm shadow-xl hover:bg-green-500 transition-colors" aria-label="Cotizar por WhatsApp">
-  <svg class="w-5 h-5 flex-shrink-0"><use href="#ic-whatsapp"/></svg>
-  <span class="hidden sm:inline">Cotizar ahora</span>
-</a>
-
-<style>
-/* ── NAVBAR BLANCO ──────────────────────────────────────────── */
-.terra-nav {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: #ffffff;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  border-bottom: 1px solid #e8e8e8;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-.terra-nav__inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  height: 64px;
-}
-/* LOGO */
-.terra-nav__logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  flex-shrink: 0;
-  margin-right: 32px;
-}
-.terra-nav__logo img {
-  height: 38px;
-  width: auto;
-  display: block;
-}
-/* LINKS PRIMARIOS */
-.terra-nav__links {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  flex: 1;
-}
-.terra-nav__links li { position: relative; }
-
-.terra-nav__links a,
-.terra-nav__links button {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 14px;
-  color: #2d2d2d;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 400;
-  border-radius: 6px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s, color 0.15s;
-}
-.terra-nav__links a:hover,
-.terra-nav__links button:hover {
-  background: #f3f4f3;
-  color: #1a5c1a;
-}
-.terra-nav__links a.is-active {
-  color: #1a5c1a;
-  font-weight: 500;
-  background: #edf7ed;
-}
-/* Flecha dropdown */
-.terra-nav__chevron {
-  width: 10px;
-  height: 10px;
-  flex-shrink: 0;
-  transition: transform 0.2s;
-}
-.terra-nav__drop-trigger[aria-expanded="true"] .terra-nav__chevron {
-  transform: rotate(180deg);
-}
-
-/* ── DROPDOWN BLANCO ─────────────────────────────────────────── */
-.terra-nav__dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  width: 580px;
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 12px;
-  display: none;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-}
-.terra-nav__dropdown.is-open { display: grid; }
-
-.terra-nav__drop-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.15s;
-}
-.terra-nav__drop-item:hover { background: #f3f8f3; }
-
-.terra-nav__drop-icon {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  border-radius: 6px;
-  background: #edf7ed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  line-height: 1;
-}
-.terra-nav__drop-text strong {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: #1a1a1a;
-  margin-bottom: 2px;
-}
-.terra-nav__drop-text span {
-  font-size: 12px;
-  color: #777;
-  line-height: 1.4;
-}
-
-/* ── DERECHA ─────────────────────────────────────────────────── */
-.terra-nav__right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: auto;
-  flex-shrink: 0;
-}
-.terra-nav__tel {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #444;
-  font-size: 13px;
-  text-decoration: none;
-  padding: 6px 10px;
-  border-radius: 6px;
-  transition: background 0.15s;
-  white-space: nowrap;
-}
-.terra-nav__tel:hover { background: #f3f4f3; color: #1a5c1a; }
-.terra-nav__tel svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
-
-/* CTA verde WhatsApp */
-.terra-nav__cta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 18px;
-  background: #25d366;
-  color: #fff !important;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.15s, transform 0.1s;
-}
-.terra-nav__cta:hover { background: #1db954; transform: translateY(-1px); }
-.terra-nav__cta:active { transform: translateY(0); }
-.terra-nav__cta svg { width: 16px; height: 16px; fill: #fff; flex-shrink: 0; }
-
-/* ── HAMBURGER ───────────────────────────────────────────────── */
-.terra-nav__hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 36px;
-  height: 36px;
-  padding: 6px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  border-radius: 6px;
-  margin-left: auto;
-}
-.terra-nav__hamburger:hover { background: #f3f4f3; }
-.terra-nav__hamburger span {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: #333;
-  border-radius: 2px;
-  transition: transform 0.2s, opacity 0.2s;
-}
-.terra-nav__hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.terra-nav__hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.terra-nav__hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* ── DRAWER MOBILE ───────────────────────────────────────────── */
-.terra-nav__drawer {
-  display: none;
-  flex-direction: column;
-  background: #fff;
-  padding: 8px 16px 20px;
-  border-top: 1px solid #eee;
-}
-.terra-nav__drawer.is-open { display: flex; }
-
-.terra-nav__drawer a,
-.terra-nav__drawer button {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 8px;
-  color: #2d2d2d;
-  font-size: 15px;
-  text-decoration: none;
-  border: none;
-  background: none;
-  cursor: pointer;
-  border-bottom: 1px solid #f0f0f0;
-  width: 100%;
-  text-align: left;
-}
-.terra-nav__drawer a.is-active { color: #1a5c1a; font-weight: 500; }
-
-.terra-nav__drawer-sub {
-  display: none;
-  flex-direction: column;
-  padding-left: 20px;
-}
-.terra-nav__drawer-sub.is-open { display: flex; }
-.terra-nav__drawer-sub a { font-size: 14px; padding: 9px 8px; color: #555; }
-
-.terra-nav__drawer-cta {
-  margin-top: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 13px 20px;
-  background: #25d366;
-  color: #fff !important;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-}
-
-/* ── RESPONSIVE ──────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .terra-nav__links, .terra-nav__tel, .terra-nav__cta { display: none; }
-  .terra-nav__hamburger { display: flex; }
-  .terra-nav__logo { margin-right: 0; }
-}
-</style>
-
-<nav class="terra-nav" data-page="/catalogo">
-  <div class="terra-nav__inner">
-
-    <!-- LOGO -->
-    <a href="/" class="terra-nav__logo" aria-label="Viveros Terra — Inicio">
-      <img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" />
-    </a>
-
-    <!-- LINKS DESKTOP -->
-    <ul class="terra-nav__links">
-
-      <!-- SERVICIOS con dropdown -->
-      <li>
-        <button class="terra-nav__drop-trigger" aria-expanded="false" aria-controls="dropdown-servicios">
-          Servicios
-          <svg class="terra-nav__chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <div class="terra-nav__dropdown" id="dropdown-servicios" role="menu">
-          <a class="terra-nav__drop-item" href="/pasto-en-rollo-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">🌿</span>
-            <span class="terra-nav__drop-text"><strong>Pasto en Rollo San Agustín</strong><span>Instalación desde $85/m² · Mayoreo</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/pasto-sintetico-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">♻️</span>
-            <span class="terra-nav__drop-text"><strong>Pasto Sintético</strong><span>Verde todo el año, sin mantenimiento</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/plantas-palmas-arboles-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">🌴</span>
-            <span class="terra-nav__drop-text"><strong>Plantas, Palmas y Árboles</strong><span>+118 especies tropicales del vivero</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/diseno-jardines-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">🏡</span>
-            <span class="terra-nav__drop-text"><strong>Diseño de Jardines</strong><span>Plan Terra desde $3,000</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/mantenimiento-jardines-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">✂️</span>
-            <span class="terra-nav__drop-text"><strong>Mantenimiento</strong><span>Desde $750/mes · Residencial e industrial</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/sistema-riego-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">💧</span>
-            <span class="terra-nav__drop-text"><strong>Sistema de Riego</strong><span>Automatizado · Ahorra hasta 40% agua</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/tierra-negra-vegetal-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">🪴</span>
-            <span class="terra-nav__drop-text"><strong>Tierra Negra y Sustratos</strong><span>Costal desde $90 · Camión volteo</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/tezontle-rojo-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">🪨</span>
-            <span class="terra-nav__drop-text"><strong>Piedras y Mármol</strong><span>Tezontle, mármol blanco, piedra bola</span></span>
-          </a>
-        </div>
-      </li>
-
-      <li><a href="/catalogo">Catálogo</a></li>
-      <li><a href="/blog">Blog</a></li>
-
-    </ul>
-
-    <!-- DERECHA: TEL + CTA -->
-    <div class="terra-nav__right">
-      <a href="tel:8333268008" class="terra-nav__tel" aria-label="Llamar a Viveros Terra">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
-        833 326 8008
-      </a>
-      <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20una%20cotización%20de%20Viveros%20Terra" class="terra-nav__cta" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Cotizar por WhatsApp
-      </a>
-    </div>
-
-    <!-- HAMBURGER -->
-    <button class="terra-nav__hamburger" aria-expanded="false" aria-controls="terra-nav-drawer" aria-label="Abrir menú">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-
-  <!-- DRAWER MOBILE -->
-  <div class="terra-nav__drawer" id="terra-nav-drawer">
-    <button class="terra-nav__drawer-sub-toggle" aria-expanded="false">
-      🌿 Servicios
-      <svg class="terra-nav__chevron" style="margin-left:auto;width:12px;height:12px;" viewBox="0 0 10 6" fill="none">
-        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<header class="hero">
+  <div class="hlogo">
+    <div class="hicon">
+      <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+        <path d="M14 4C14 4 8 10 8 16a6 6 0 0012 0C20 10 14 4 14 4z" fill="#1B4D2E"/>
+        <path d="M14 12v10M10 16c2-1 4 0 4 0M18 14c-2 1-4 0-4 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
-    </button>
-    <div class="terra-nav__drawer-sub" id="drawer-sub-servicios">
-      <a href="/pasto-en-rollo-tampico">Pasto en Rollo San Agustín</a>
-      <a href="/pasto-sintetico-tampico">Pasto Sintético</a>
-      <a href="/plantas-palmas-arboles-tampico">Plantas, Palmas y Árboles</a>
-      <a href="/diseno-jardines-tampico">Diseño de Jardines</a>
-      <a href="/mantenimiento-jardines-tampico">Mantenimiento</a>
-      <a href="/sistema-riego-tampico">Sistema de Riego</a>
-      <a href="/tierra-negra-vegetal-tampico">Tierra Negra y Sustratos</a>
-      <a href="/tezontle-rojo-tampico">Piedras y Mármol</a>
     </div>
-    <a href="/catalogo">📋 Catálogo</a>
-    <a href="/blog">📝 Blog</a>
-    <a href="tel:8333268008">📞 833 326 8008</a>
-    <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20una%20cotización%20de%20Viveros%20Terra" class="terra-nav__drawer-cta" target="_blank" rel="noopener noreferrer">
-      💬 Cotizar por WhatsApp
-    </a>
+    <div>
+      <div class="htitle">VIVEROS TERRA</div>
+      <div class="hsub">Catálogo 2025</div>
+    </div>
   </div>
+  <p class="hdesc">Plantas, árboles y palmas para Tampico, Madero y Altamira</p>
+  <div class="hstats">
+    <div><div class="stat-n" id="totalCount">155+</div><div class="stat-l">Variedades</div></div>
+    <div><div class="stat-n">+900</div><div class="stat-l">Clientes</div></div>
+    <div><div class="stat-n">200k m²</div><div class="stat-l">Pasto inst.</div></div>
+    <div><div class="stat-n">10+ años</div><div class="stat-l">Experiencia</div></div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Categorías">
+  <button class="tab active" onclick="setTab('todos',this)">Todos</button>
+  <button class="tab" onclick="setTab('arboles',this)">🌳 Árboles</button>
+  <button class="tab" onclick="setTab('palmas',this)">🌴 Palmas</button>
+  <button class="tab" onclick="setTab('plantas',this)">🪴 Plantas</button>
+  <button class="tab" onclick="setTab('pasto',this)">🌿 Pasto &amp; Tierra</button>
 </nav>
 
-<script>
-(function() {
-  var nav = document.querySelector('.terra-nav');
-  if (!nav) return;
-  var currentPage = nav.dataset.page || window.location.pathname;
-  nav.querySelectorAll('a[href]').forEach(function(link) {
-    var href = link.getAttribute('href');
-    if (href && href !== '/' && currentPage.startsWith(href)) link.classList.add('is-active');
-    if (href === '/' && currentPage === '/') link.classList.add('is-active');
-  });
-  var trigger = nav.querySelector('.terra-nav__drop-trigger');
-  var dropdown = document.getElementById('dropdown-servicios');
-  if (trigger && dropdown) {
-    trigger.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var open = trigger.getAttribute('aria-expanded') === 'true';
-      trigger.setAttribute('aria-expanded', String(!open));
-      dropdown.classList.toggle('is-open', !open);
-    });
-    document.addEventListener('click', function(e) {
-      if (!nav.contains(e.target)) {
-        trigger.setAttribute('aria-expanded', 'false');
-        dropdown.classList.remove('is-open');
-      }
-    });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        trigger.setAttribute('aria-expanded', 'false');
-        dropdown.classList.remove('is-open');
-      }
-    });
-  }
-  var hamburger = nav.querySelector('.terra-nav__hamburger');
-  var drawer = document.getElementById('terra-nav-drawer');
-  if (hamburger && drawer) {
-    hamburger.addEventListener('click', function() {
-      var open = hamburger.getAttribute('aria-expanded') === 'true';
-      hamburger.setAttribute('aria-expanded', String(!open));
-      drawer.classList.toggle('is-open', !open);
-    });
-  }
-  var subToggle = nav.querySelector('.terra-nav__drawer-sub-toggle');
-  var subMenu = document.getElementById('drawer-sub-servicios');
-  if (subToggle && subMenu) {
-    subToggle.addEventListener('click', function() {
-      var open = subToggle.getAttribute('aria-expanded') === 'true';
-      subToggle.setAttribute('aria-expanded', String(!open));
-      subMenu.classList.toggle('is-open', !open);
-      var ch = subToggle.querySelector('.terra-nav__chevron');
-      if (ch) ch.style.transform = open ? '' : 'rotate(180deg)';
-    });
-  }
-})();
-</script>
+<div class="sbar" id="searchWrap">
+  <div class="siw">
+    <svg class="sico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M15 15l-3.5-3.5"/></svg>
+    <input class="si" id="si" type="search" placeholder="Buscar planta, árbol, palma o tipo..." oninput="doFilter()" aria-label="Buscar en catálogo"/>
+  </div>
+</div>
+<p class="cnt" id="cnt" aria-live="polite"></p>
+<main class="grid" id="grid" aria-label="Catálogo de plantas"></main>
 
-<!-- HERO -->
-<section class="bg-dark pt-8 pb-16">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <div class="reveal">
-      <span class="inline-block bg-accent/20 text-accent font-semibold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">Viveros Terra · Ciudad Madero</span>
-      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white leading-tight mb-4">
-        Catálogo de Plantas, Pasto<br class="hidden sm:block"> y Materiales en Tampico
-      </h1>
-      <p class="text-white/60 text-lg max-w-2xl mx-auto mb-8">
-        Más de 150 variedades disponibles en vivero. Entrega a domicilio en Tampico, Ciudad Madero y Altamira. Cotización gratis por WhatsApp en menos de 2 horas.
-      </p>
-      <div class="flex flex-wrap justify-center gap-4">
-        <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 text-white text-sm font-medium">
-          <span class="w-2 h-2 bg-accent rounded-full"></span>+150 variedades
-        </div>
-        <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 text-white text-sm font-medium">
-          <span class="w-2 h-2 bg-accent rounded-full"></span>Entrega a domicilio
-        </div>
-        <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 text-white text-sm font-medium">
-          <span class="w-2 h-2 bg-accent rounded-full"></span>Vivero productor directo
-        </div>
-      </div>
+<section class="solsec" id="solsec" aria-label="Solicitar variedad especial">
+  <h3>🔍 ¿No encontraste lo que buscas?</h3>
+  <p>Dinos qué planta, árbol, tamaño o medida necesitas y te cotizamos. Manejamos muchas más variedades.</p>
+  <div class="solrow">
+    <input class="solinput" id="solinput" type="text" placeholder="Ej: Palmera Phoenix 4m, Bambú negro..."/>
+    <button class="solbtn" onclick="solEsp()">Solicitar cotización →</button>
+  </div>
+</section>
+
+<section id="pastoSection" style="display:none" aria-label="Pasto y materiales">
+  <div class="pastosec">
+    <h3>🌿 Pasto en Rollo Natural</h3>
+    <div class="pastorow">
+      <div class="pcard"><h4>San Agustín</h4><p>El más popular para Tampico. Tolerante al calor, lluvia y humedad. Residencial y comercial.</p><button onclick="cotizar('Pasto San Agustín en rollo')">Cotizar por m²</button></div>
+      <div class="pcard"><h4>Japonés</h4><p>Textura fina y uniforme. Bajo mantenimiento. Jardines ornamentales.</p><button onclick="cotizar('Pasto Japonés en rollo')">Cotizar por m²</button></div>
+      <div class="pcard"><h4>Bermuda</h4><p>Alta resistencia al tráfico. Áreas deportivas, parques e industrias.</p><button onclick="cotizar('Pasto Bermuda en rollo')">Cotizar por m²</button></div>
+      <div class="pcard"><h4>Pasto Sintético</h4><p>Sin riego ni mantenimiento. Terrazas, canchas y áreas secas. Garantía incluida.</p><button onclick="cotizar('Instalación pasto sintético')">Cotizar</button></div>
+    </div>
+  </div>
+  <div class="tierrasec">
+    <h3>🪨 Materiales &amp; Tierra</h3>
+    <div class="tierrarow">
+      <div class="tcard"><h4>Tierra Negra</h4><p>Sustrato premium para jardines y trasplantes. Por m³.</p></div>
+      <div class="tcard"><h4>Bola de Río</h4><p>Piedra natural decorativa para senderos y jardines.</p></div>
+      <div class="tcard"><h4>Tezontle</h4><p>Piedra volcánica para macetas y drenaje.</p></div>
+      <div class="tcard"><h4>Mármol</h4><p>Grava de mármol para áreas de descanso.</p></div>
+      <div class="tcard"><h4>Laja</h4><p>Perfecta para senderos y áreas naturales.</p></div>
+      <div class="tcard"><h4>Macetas</h4><p>Macetones decorativos y mobiliario exterior.</p></div>
+    </div>
+    <div class="tstats">
+      <div class="tstat"><div class="tstat-n">+200,000 m²</div><div class="tstat-l">de pasto instalado en la región</div></div>
+      <div class="tstat"><div class="tstat-n">+1,500 instalaciones</div><div class="tstat-l">de pasto en rollo</div></div>
+      <div class="tstat"><div class="tstat-n">Ahorro 40% agua</div><div class="tstat-l">con riego automatizado</div></div>
+    </div>
+  </div>
+  <div class="solsec" style="margin:.75rem 1.25rem">
+    <h3>¿Necesitas pasto o material especial?</h3>
+    <div class="solrow">
+      <input class="solinput" id="solpasto" type="text" placeholder="Ej: 300m² San Agustín con instalación..."/>
+      <button class="solbtn" onclick="solPasto()">Solicitar →</button>
     </div>
   </div>
 </section>
 
-<!-- FILTROS -->
-<div class="bg-white border-b border-gray-200 sticky top-16 z-40 shadow-sm">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex gap-2 overflow-x-auto py-3" role="tablist" aria-label="Filtrar catálogo por categoría" id="filter-bar">
-      <button class="filter-btn active flex-shrink-0 px-5 py-2 rounded-full text-sm font-semibold border border-gray-200 bg-primary text-white transition-all" data-cat="todo" role="tab" aria-selected="true">
-        Todos los productos
-      </button>
-      <button class="filter-btn flex-shrink-0 px-5 py-2 rounded-full text-sm font-semibold border border-gray-200 bg-white text-gray-700 hover:border-primary hover:text-primary transition-all" data-cat="pasto" role="tab" aria-selected="false">
-        🌿 Pasto
-      </button>
-      <button class="filter-btn flex-shrink-0 px-5 py-2 rounded-full text-sm font-semibold border border-gray-200 bg-white text-gray-700 hover:border-primary hover:text-primary transition-all" data-cat="plantas" role="tab" aria-selected="false">
-        🌴 Plantas &amp; Palmas
-      </button>
-      <button class="filter-btn flex-shrink-0 px-5 py-2 rounded-full text-sm font-semibold border border-gray-200 bg-white text-gray-700 hover:border-primary hover:text-primary transition-all" data-cat="materiales" role="tab" aria-selected="false">
-        🪨 Materiales
-      </button>
+<footer>
+  <div class="footer-brand">Viveros <span class="footer-lime">Terra</span></div>
+  Av. Álvaro Obregón 601 Col. Ampliación Unidad Nacional · Ciudad Madero, Tamaulipas<br>
+  <span class="footer-lime">833 326 8008</span> · viverosterra@hotmail.com · www.viverosterra.com
+</footer>
+
+<button class="wafab" onclick="openWA()" aria-label="Contactar por WhatsApp">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</button>
+
+<script>
+// Función para construir URL de imagen via API proxy
+function img(id){ return '/api/img?id=' + id; }
+
+const plants = [
+  // ÁRBOLES
+  {cat:'arboles',name:'Olivo Negro',sc:'Bucida Buceras',sz:['1 m','2-3 m','4-5 m'],b:['bb'],i:'🌳',img:'1TR82jlLbrXUPt6f9gZoFcrH5GkhbQbSb',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 15 m',flor:'No',mant:'Bajo',tipo:'Árbol grande banqueta',desc:'Árbol ornamental resistente, ideal para banquetas y espacios amplios. Muy tolerante al calor y sal marina. Excelente para dar sombra y delimitar espacios en Tampico.'},
+  {cat:'arboles',name:'Encino Siempreverde',sc:'Quercus Virginiana',sz:['1 m','1-2 m','2-3 m','3-4 m'],b:['bb'],i:'🌳',img:'1L1L4nhFnA1VKlVNnboRHoWv455DFFAOq',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 20 m',flor:'No',mant:'Bajo',tipo:'Árbol grande banqueta',desc:'Roble siempreverde de gran porte. Muy longevo y resistente. Excelente para banquetas, parques y jardines que necesitan sombra densa permanente.'},
+  {cat:'arboles',name:'Crespón Astronómica',sc:'Lagerstroemia Indica',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌸',img:'1eTgwu_mJpK3v1ZHjuTR1lm3t5F68sqXS',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 7 m',flor:'Sí — rosa/lila/blanca',mant:'Bajo',tipo:'Árbol florido banqueta',desc:'Árbol de floración espectacular en verano. Sus racimos de flores cubren toda la copa. Muy popular en jardines residenciales y avenidas por su espectacular belleza.'},
+  {cat:'arboles',name:'Lluvia de Oro',sc:'Cassia Fistula',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌼',img:'1CIZhdd22WzC5E3IWT_ZakMjKVQcXrCiL',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 8 m',flor:'Sí — amarilla espectacular',mant:'Bajo',tipo:'Árbol florido',desc:'Uno de los árboles de flor más llamativos. Sus racimos de flores amarillas intensas cubren el árbol entero en primavera. Perfecto para jardines y banquetas.'},
+  {cat:'arboles',name:'Flamboyán Tabachín',sc:'Delonix Regia',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌺',img:'1aSLqV6wIrI5GjRUoKH1WWfrA9LVjNhLC',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 12 m',flor:'Sí — roja/naranja',mant:'Bajo',tipo:'Árbol grande',desc:'El árbol más llamativo del trópico. Sus flores rojo-naranja brillante lo convierten en el protagonista de cualquier jardín. Crece rápido y da excelente sombra.'},
+  {cat:'arboles',name:'Neem',sc:'Azadirachta indica',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌿',img:'1FavAREwVmwV-ePnTOILuldS15VbjNkbj',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 20 m',flor:'Sí (blanca pequeña)',mant:'Muy bajo',tipo:'Árbol grande banqueta',desc:'Árbol de rápido crecimiento y follaje denso. Muy resistente al calor y la sequía. Ideal para banquetas y camellones. Propiedades naturales contra insectos.'},
+  {cat:'arboles',name:'Jacaranda',sc:'Jacaranda Mimisfolia',sz:['1 m','1-2 m','2-3 m'],b:[],i:'💜',img:'1Hdh5Ykn1csYcbPUTzQxOfv--alaLfvBV',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 15 m',flor:'Sí — morada espectacular',mant:'Bajo',tipo:'Árbol grande',desc:'Uno de los árboles más bellos del mundo. En temporada de floración se cubre de racimos morados que crean un espectáculo visual único. Ideal para jardines amplios.'},
+  {cat:'arboles',name:'Palo de Rosa Guayacán',sc:'Tabubeia Rosea',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌸',img:'1xHPQxJZ7fh_tLWQJuMzJcPsmgKYvK0pZ',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 30 m',flor:'Sí — rosa brillante',mant:'Bajo',tipo:'Árbol grande',desc:'Árbol de floración masiva color rosa. Cuando florece, sus ramas se cubren completamente antes de que salgan las hojas, creando un efecto visual de gran impacto.'},
+  {cat:'arboles',name:'Fresno',sc:'Fraxinus sp.',sz:['1 m','1-2 m','2-3 m','4-5 m'],b:['bb'],i:'🍃',img:'1JB3WqvJYHkO86fjCo5zLFKhJatLecFxu',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 20 m',flor:'No',mant:'Medio',tipo:'Árbol grande banqueta',desc:'Árbol de follaje frondoso ideal para sombra. Crece rápido y tiene buena adaptación al clima de la región. Muy usado en banquetas, camellones y jardines amplios.'},
+  {cat:'arboles',name:'Sauce Llorón',sc:'Salix babylonica',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌿',img:'1ybrFPWRG8p9lBgmdFTEfbY5maVl0hSHK',luz:'☀️ Sol / 🌤 Media Sombra',agua:'Abundante',altura:'Hasta 20 m',flor:'No',mant:'Medio',tipo:'Árbol grande banqueta',desc:'Árbol de silueta inconfundible con ramas colgantes elegantes. Requiere riego abundante. Perfecto cerca de fuentes de agua y jardines con sistema de riego.'},
+  {cat:'arboles',name:'Magnolia',sc:'Magnolia grandiflora',sz:['1 m','1-2 m','2-3 m','4-5 m'],b:['bb'],i:'🌸',img:'1gUOjcdFsPvdL0K7cTpv_7q_dWdRAle2E',luz:'☀️ Sol / 🌤 Media Sombra',agua:'Regular',altura:'Hasta 25 m',flor:'Sí — blanca grande fragante',mant:'Medio',tipo:'Árbol grande banqueta',desc:'Árbol de gran porte con flores blancas de aroma intenso. Muy apreciado en jardines formales y residencias de alto nivel. Una de las especies más elegantes.'},
+  {cat:'arboles',name:'Liquidambar',sc:'Liquidambar styraciflua',sz:['1 m','1-2 m','2-3 m','4-5 m'],b:['bb'],i:'🍂',img:'1g0KJoVEpEBYUCU9liUhib6mwbSjPYTrg',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 25 m',flor:'No',mant:'Bajo',tipo:'Árbol grande banqueta',desc:'Árbol de hojas estrelladas que cambian de color en otoño. Sus colores rojos, naranjas y dorados son espectaculares. Excelente para banquetas y parques.'},
+  {cat:'arboles',name:'Níspero',sc:'Eriobotrya japonica',sz:['1 m','1-2 m','2-3 m','3-4 m'],b:['bb'],i:'🍑',img:'1kN1j8I5ttfhBWgKgA-2H2FttCs4QzKW1',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 10 m',flor:'Sí — blanca fragante',mant:'Bajo',tipo:'Árbol frutal ornamental',desc:'Árbol frutal muy ornamental con frutos comestibles. Sus hojas grandes y brillantes son muy decorativas. Excelente para jardines que quieren fruto y sombra.'},
+  {cat:'arboles',name:'Eucalipto',sc:'Eucalyptus sp.',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🍃',img:'1AEPUs8_RX60NicSnC_C1GbhwHpyPn8Bk',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 30 m',flor:'Sí (pequeña)',mant:'Muy bajo',tipo:'Árbol rápido crecimiento',desc:'Árbol de crecimiento muy rápido. Su aroma mentolado es muy agradable. Excelente para cortinas rompevientos y proyectos que necesitan sombra rápida.'},
+  {cat:'arboles',name:'Parota Orejon',sc:'Enterolobium cyclocarpum',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌳',img:'1oCDAXja-z-1EG8ocItcR2l5PwEliKsmV',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 40 m',flor:'Sí (pequeña)',mant:'Bajo',tipo:'Árbol gigante',desc:'Uno de los árboles más grandes de México. Copa muy amplia que da sombra abundante. Muy resistente al calor y sequía. Ideal para proyectos de gran escala.'},
+  {cat:'arboles',name:'Acacia Negra',sc:'Acacia melanoxylon',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌿',img:'1mRiIS7Gv2eQhK2kNAqfLYhfIqYXR1w89',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 15 m',flor:'Sí — amarilla',mant:'Muy bajo',tipo:'Árbol banqueta',desc:'Árbol de rápido crecimiento y bajo mantenimiento. Sus flores amarillas son muy ornamentales. Excelente para banquetas y camellones. Muy resistente al calor.'},
+  {cat:'arboles',name:'Ficus Benjamin',sc:'Ficus benjamina',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🍃',img:'1pqmt1VfOkeKrpoETiYFwsXwA58WHEjdu',luz:'☀️ Sol / 🌤 Media Sombra',agua:'Moderado',altura:'Hasta 15 m',flor:'No',mant:'Medio',tipo:'Árbol ornamental',desc:'Árbol muy popular para jardines y exteriores. Su follaje brillante y copa densa lo hacen muy ornamental. Excelente para crear privacidad y sombra.'},
+  {cat:'arboles',name:'Tronadora',sc:'Tecoma Stans',sz:['1-2 m','2-3 m'],b:[],i:'🌻',img:'19ecEa8ReXUZzeiEShv16SWlrsThQFyO8',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 8 m',flor:'Sí — amarilla abundante',mant:'Muy bajo',tipo:'Árbol florido',desc:'Árbol de flores amarillas trompeta muy llamativas. Florece casi todo el año. Muy resistente al calor y sequía. Árbol nacional de Trinidad y Tobago.'},
+  {cat:'arboles',name:'Huizache',sc:'Acacia farnesiana',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌼',img:'1mkGux-kfluVbLcBWXSqYCUlHLnBacO-D',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 8 m',flor:'Sí — amarilla fragante',mant:'Muy bajo',tipo:'Árbol xérico',desc:'Árbol nativo muy resistente. Sus flores amarillas son intensamente fragantes. Perfecta para jardines xéricos y proyectos de reforestación con plantas nativas.'},
+  {cat:'arboles',name:'Sabino Ahuehuete',sc:'Taxodium mucronatum',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌲',img:'15x9FXXh32_oJ1Yy0DRdEUjb2eDXLBTfu',luz:'☀️ Pleno Sol',agua:'Abundante',altura:'Hasta 40 m',flor:'No',mant:'Bajo',tipo:'Árbol patrimonial',desc:'El árbol nacional de México. Muy longevo, puede vivir miles de años. Su follaje caduco crea efectos visuales únicos. Perfecto cerca del agua.'},
+  {cat:'arboles',name:'Polyalthia',sc:'Polyalthia longifolia',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌲',img:'1Lqal7lZ1jiIHERml2bIUmy0aGzziWc98',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 15 m',flor:'Sí (discreta)',mant:'Bajo',tipo:'Árbol columnar banqueta',desc:'Árbol de porte columnar muy elegante. Sus hojas onduladas son muy ornamentales. Excelente para banquetas, ya que crece hacia arriba sin invadir espacio lateral.'},
+  {cat:'arboles',name:'Flor de Mayo',sc:'Plumeria sp.',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌼',img:'1O813sCMGAr6p_C0PLC9s1BZpKb1cGAaO',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 8 m',flor:'Sí — muy fragante',mant:'Bajo',tipo:'Árbol florido banqueta',desc:'El árbol más fragante del trópico. Sus flores de cinco pétalos en blanco, rosa y amarillo son icónicas. Muy resistente al calor y la sequía.'},
+  {cat:'arboles',name:'Hule',sc:'Ficus Elastica',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌿',img:'1gUEZLF50_KVvRNT4NoVBW4hdI6w592W4',luz:'☀️ Sol / 🌤 Media Sombra',agua:'Moderado',altura:'Hasta 30 m',flor:'No',mant:'Bajo',tipo:'Árbol interior/exterior',desc:'Árbol de hojas grandes brillantes muy decorativas. Disponible en verde, variegado y púrpura. Uno de los árboles más versátiles para interior y exterior.'},
+  {cat:'arboles',name:'Orquídea Pata de Vaca',sc:'Bahuinia sp.',sz:['1 m','1-2 m','2-3 m'],b:['bb'],i:'🌸',img:'17r2f7WY8RvJfFCN53aLpeFuHAdPrN1CA',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 10 m',flor:'Sí — rosa/morada',mant:'Bajo',tipo:'Árbol florido banqueta',desc:'Árbol de flores similares a orquídeas muy llamativas. Sus hojas en forma de pezuña de vaca son únicas. Una de las floaciones más elegantes de la región.'},
+  {cat:'arboles',name:'Ceiba',sc:'Ceiba pentandra',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌲',img:'1KXi4c_bYqC95mDjz0iNDNZiAcnhC9hJZ',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 70 m',flor:'Sí — blanca',mant:'Bajo',tipo:'Árbol gigante',desc:'Árbol sagrado de la cultura maya. Uno de los árboles más grandes del mundo. Su tronco con contrafuertes es espectacular. Para proyectos de gran escala.'},
+
+  // PALMAS
+  {cat:'palmas',name:'Coco Plumoso',sc:'Syagrus romanzoffiana',sz:['1-2 m','2-3 m','3-4 m','+5 m'],b:[],i:'🌴',img:'1VQ2urkzIqBFO4rZeKHQpe-c3X9TViVWJ',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 15 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Palma elegante de plumas arqueadas. Muy resistente al viento y al calor tropical. Excelente para jardines residenciales y proyectos paisajísticos de impacto.'},
+  {cat:'palmas',name:'Palma Cola de Zorra',sc:'Wodyetia bifurcata',sz:['1-2 m','2-3 m','3-4 m','+5 m'],b:[],i:'🌴',img:'1kIwetkOcVkm7Wb7xvVaEeMcvAdl_nDMO',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 10 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Una de las palmas más elegantes del mercado. Su follaje denso en forma de cola de zorro la hace muy llamativa. Ideal para entradas de casas, hoteles y fraccionamientos.'},
+  {cat:'palmas',name:'Palma Real',sc:'Roystonea regia',sz:['1-2 m','2-3 m','3-4 m','+5 m'],b:[],i:'🌴',img:'1xlji_TnPZ_Gn0nouFx8oMhEnsifD_R10',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 30 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'La palma más majestuosa. Su tronco gris plateado y follaje erguido le da un porte regio incomparable. Muy usada en avenidas, hoteles y proyectos de gran escala.'},
+  {cat:'palmas',name:'Palma Areca',sc:'Dypsis lutescens',sz:['1-2 m','2-3 m','3-4 m'],b:['bi'],i:'🪴',img:'1f9yY6hRqr0lf47QeunWBgNR_RXqZHHZM',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 8 m',flor:'Sí',mant:'Medio',tipo:'Palma interior/exterior',desc:'La palma de interior más popular del mundo. Sus tallos múltiples y follaje plumoso crean una atmósfera tropical. Excelente purificadora de aire para interiores.'},
+  {cat:'palmas',name:'Palma Washingtona',sc:'Washingtonia robusta',sz:['1 m','1-2 m','2-3 m','+4 m'],b:[],i:'🌴',img:'12Q_2nhBba8CGei_eHrUAUSZognx9OP6O',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 30 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Palma de gran altura con faldilla de hojas secas característica. Muy resistente al calor y la sequía. Icónica en avenidas y espacios industriales o comerciales.'},
+  {cat:'palmas',name:'Palma Cica Revoluta',sc:'Cycas revoluta',sz:['-0.60 m','0.60 m','1 m'],b:[],i:'🌿',img:'1Pp66DaLg1hg0YvVA6ZUxpT8hkgmCcdKJ',luz:'☀️ Sol / 🌤 Media Sombra',agua:'Poco',altura:'Hasta 3 m',flor:'No',mant:'Muy bajo',tipo:'Cica / Fósil viviente',desc:'Una de las plantas más antiguas del planeta. Su forma simétrica perfecta y hojas arqueadas brillantes la hacen ideal para jardines formales y entradas.'},
+  {cat:'palmas',name:'Palma Kerpis',sc:'Chamaedorea sp.',sz:['1-2 m','2-3 m','3-4 m'],b:[],i:'🪴',img:'1rD9tgujODXJ03znMkru4eB1wvMuardSJ',luz:'🌤 Media Sombra',agua:'Moderado',altura:'Hasta 5 m',flor:'Sí',mant:'Bajo',tipo:'Palma sombra',desc:'Palma de porte elegante y crecimiento lento. Muy decorativa en jardines con sombra. Sus tallos esbeltos y follaje plumoso la hacen muy apreciada.'},
+  {cat:'palmas',name:'Palma Bismarkia',sc:'Bismarckia nobilis',sz:['1 m','1-2 m','3-4 m'],b:[],i:'🌴',img:'1ZXrrCE0wKFFnRef4q_r28E9XozUhkG1m',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 25 m',flor:'Sí',mant:'Muy bajo',tipo:'Palma',desc:'Palma de hojas color plateado-azulado única en el mundo. Su color metálico la hace completamente diferente a cualquier otra. Un punto focal incomparable en jardines de diseño.'},
+  {cat:'palmas',name:'Palma Cola de Pescado',sc:'Caryota sp.',sz:['1-2 m','2-3 m','3-4 m'],b:[],i:'🌿',img:'1DkGR-wrPQ47YYaIsg9ZoI2Z82mi79--G',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 25 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Palma de hojas con forma de cola de pez única. Sus folíolos irregulares le dan una textura muy especial. Muy decorativa en jardines tropicales y exteriores.'},
+  {cat:'palmas',name:'Palma Mascareña',sc:'Hyophorbe lagenicaulis',sz:['1-2 m','+2 m'],b:[],i:'🌴',img:'1wqbhMQ0luL52V5e4uffu8DujrQvC3rdE',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 9 m',flor:'Sí',mant:'Bajo',tipo:'Palma botella',desc:'La palma botella. Su tronco hinchado en el centro es completamente único. Muy lenta en crecimiento, lo que la hace muy valiosa como pieza de colección.'},
+  {cat:'palmas',name:'Palma Triangular',sc:'Dypsis decaryi',sz:['1-2 m','2-3 m','3-4 m'],b:[],i:'🌴',img:'1kLvHe-AawLvdRWOaI4kD1wSDT6GX4RLQ',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 8 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Palma única cuyas hojas surgen de tres lados formando un triángulo perfecto. Un diseño arquitectónico muy codiciado en jardines de alto nivel y resorts.'},
+  {cat:'palmas',name:'Palma Cocotera',sc:'Cocos nucifera',sz:['1 m','2-3 m','+4 m'],b:[],i:'🌴',img:'1Sri_rLN0YlZh9rYQDt1xyPfOrGikxX_j',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 30 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'La palma tropical por excelencia. Evoca playa y paraíso. Muy resistente al viento y la salinidad costera. Perfecta para casas de playa y jardines costeros de Tampico.'},
+  {cat:'palmas',name:'Palma Estrella',sc:'Rhapis excelsa',sz:['1 m','1-2 m'],b:['bi'],i:'🪴',img:'1rAAH0YxLrAgu_1W_67BEZzF8_UDaibce',luz:'🌤 Media Sombra',agua:'Moderado',altura:'Hasta 4 m',flor:'Sí',mant:'Bajo',tipo:'Palma interior',desc:'Palma de interior con múltiples tallos esbeltos y hojas en abanico. Muy apreciada en decoración de interiores por su elegancia y resistencia a la sombra.'},
+  {cat:'palmas',name:'Palma Seifrixi Bambú',sc:'Chamaedorea seifrizii',sz:['1 m','2 m'],b:['bi'],i:'🪴',img:'1-FRocM765ANJ2RYgxf7KKoKpno23TwwO',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 4 m',flor:'Sí',mant:'Bajo',tipo:'Palma interior',desc:'Palma de tallos delgados similares al bambú. Excelente para interiores. Muy resistente a la poca luz y el aire acondicionado. Popular en oficinas y lobbies.'},
+  {cat:'palmas',name:'Palma Licuala',sc:'Licuala grandis',sz:['1 m','1-2 m'],b:['bi'],i:'🪴',img:'12Hz-U6IuzPzzS3jfQGdE_Jeahm6Tc28A',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 3 m',flor:'Sí',mant:'Medio',tipo:'Palma interior exótica',desc:'Palma de hojas redondas plisadas completamente únicas. Una de las palmas más exóticas y codiciadas. Su hoja circular es un diseño de la naturaleza sin igual.'},
+  {cat:'palmas',name:'Palma Datilera',sc:'Phoenix dactylifera',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌴',img:'17ysEJFyKHctatMsAWwbbDZXlaqJldueQ',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 25 m',flor:'Sí',mant:'Bajo',tipo:'Palma',desc:'Palma icónica del desierto con gran resistencia al calor extremo. Sus penachos arqueados son muy decorativos. Excelente para proyectos con look mediterráneo.'},
+  {cat:'palmas',name:'Palma Rubelina',sc:'Phoenix roebelenii',sz:['-1 m','1-2 m','2-3 m'],b:[],i:'🌴',img:'1EJPLtM5-mPO2BmQrrrfNAK6Q4KtsDVA6',luz:'☀️ Sol / 🌤 Media Sombra',agua:'Moderado',altura:'Hasta 4 m',flor:'Sí',mant:'Bajo',tipo:'Palma pequeña',desc:'Versión miniatura de la palma datilera. Sus hojas arqueadas finísimas son muy ornamentales. Perfecta para jardines pequeños, macetones y espacios reducidos.'},
+  {cat:'palmas',name:'Palma Viajera Ravenala',sc:'Ravenala madagascariensis',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌿',img:'157tCw_yF6zs2npPx4BmisT-vMu7-Hca0',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 10 m',flor:'Sí — blanca',mant:'Bajo',tipo:'Palma-Árbol',desc:'La palma del viajero. Sus hojas en abanico bidimensional perfecto son únicas. Planta arquitectónica de gran impacto visual para jardines de diseño.'},
+  {cat:'palmas',name:'Palma de Madagascar',sc:'Pachypodium lamerei',sz:['1 m','2 m'],b:[],i:'🌵',img:'1mJ8k8jw6szm9wQgpb9Bnb8ls2qVNB62V',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 8 m',flor:'Sí — blanca',mant:'Muy bajo',tipo:'Suculenta árbol',desc:'Tronco espinoso plateado con corona de hojas largas. Parece una palma del desierto. Muy resistente. Una pieza única y llamativa para jardines de colección.'},
+
+  // PLANTAS
+  {cat:'plantas',name:'Ave de Paraíso',sc:'Strelitzia reginae',sz:['30 cm','60 cm','80 cm'],b:['bv'],i:'🌺',img:'1AP3FbBUp3js1lZnSHmw8QPFemXzBkXww',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 1.5 m',flor:'Sí — naranja/morada',mant:'Bajo',tipo:'Planta tropical',desc:'Una de las flores más elegantes del mundo. Su forma imita la cabeza de un ave tropical. Muy resistente y de larga duración. Ideal para jardines modernos y minimalistas.'},
+  {cat:'plantas',name:'Monstera Piñanona',sc:'Monstera deliciosa',sz:['30 cm','60 cm','80 cm'],b:['bv'],i:'🍃',img:'1C4zUYrj3Iv1S5BAjzrpsDfzMGqxQ69oR',luz:'🌤 Media Sombra',agua:'Moderado',altura:'Hasta 4 m',flor:'Rara',mant:'Bajo',tipo:'Planta tropical',desc:'La planta tropical de moda. Sus hojas grandes con perforaciones naturales son un ícono del diseño moderno. Perfecta para interiores luminosos y jardines sombreados.'},
+  {cat:'plantas',name:'Sansiviera',sc:'Sansevieria trifasciata',sz:['60-70 cm'],b:['bv'],i:'🌿',img:'1IeuS5ZJlowycNcexuJBaevU6wa1FTavo',luz:'🌤 Media Sombra / ☀️ Sol',agua:'Muy poco',altura:'Hasta 1.2 m',flor:'Rara (fragante)',mant:'Muy bajo',tipo:'Interior resistente',desc:'Casi indestructible. Purifica el aire de toxinas y funciona en interiores con poca luz. Perfecta para oficinas, lobbies y espacios comerciales con mínimo mantenimiento.'},
+  {cat:'plantas',name:'Bambú Tarro',sc:'Bambusa vulgaris',sz:['Sencillo 3-4 m','Doble 1.8 m','+4 m'],b:['bv'],i:'🌿',img:'1uXtiicBu9i7QBMdl8IcoPSb0833BYkHo',luz:'☀️ Sol / 🌤 Media',agua:'Regular',altura:'Hasta 20 m',flor:'Rara',mant:'Medio',tipo:'Gramínea gigante',desc:'El bambú más popular para cercos vivos. Crece muy rápido. Sus cañas lisas son perfectas para privacidad y barreras acústicas naturales. Un clásico del paisajismo.'},
+  {cat:'plantas',name:'Palma ZZ Plant',sc:'Zamioculcas zamiifolia',sz:['30 cm','50 cm','70 cm'],b:['bv','bi'],i:'🪴',img:'1GnD6p6bAy5FH_BIIFDMkgb4VPu49uw2O',luz:'🌑 Sombra / 🌤 Media',agua:'Muy poco',altura:'Hasta 1 m',flor:'Rara',mant:'Muy bajo',tipo:'Interior resistente',desc:'La planta perfecta para interiores oscuros. Funciona con muy poca luz natural. Extremadamente resistente a la falta de riego. Ideal para oficinas y baños.'},
+  {cat:'plantas',name:'Agapando',sc:'Agapanthus africanus',sz:['30-40 cm'],b:[],i:'💜',img:'1kpeqUB0wgCFWVtMYGjnmsk05Xx74nD-7',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 60 cm',flor:'Sí — azul/morada',mant:'Bajo',tipo:'Planta bulbosa',desc:'Flores en racimos azul-morado muy vistosas. Floración de primavera-verano. Excelente para bordes y jardines que buscan color prolongado.'},
+  {cat:'plantas',name:'Bugambilea Mini Morada',sc:'Bougainvillea sp.',sz:['25-30 cm','50-60 cm','1 m'],b:[],i:'💜',img:'1sZD_bR56XTn6OtkUq-BKVEmCDsM9i0LK',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 3 m',flor:'Sí — morada intensa',mant:'Bajo',tipo:'Arbusto trepador',desc:'Versión compacta de bugambilea en morado intenso. Florece casi todo el año con pleno sol y muy poco riego. Perfecta para macetones, bardas bajas y jardines pequeños.'},
+  {cat:'plantas',name:'Bugambilea Envarada',sc:'Bougainvillea sp.',sz:['0.80 m','1 m'],b:[],i:'🌸',img:'1PQHRsGnbn6G5-0s93wNV9B8iLp_AHf5Y',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Trepadora hasta 12 m',flor:'Sí — roja/naranja/lila',mant:'Bajo',tipo:'Trepadora envarada',desc:'Bugambilea ya formada en vara. Lista para plantar con efecto inmediato. Florece casi todo el año. La reina de las plantas de exterior en clima cálido.'},
+  {cat:'plantas',name:'Plumbago',sc:'Plumbago auriculata',sz:['40 cm','80 cm'],b:['bv'],i:'💙',img:'1OY2LnExTjU39Bhbw5V0Oy5BP-RL5G7wR',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 2 m',flor:'Sí — azul celeste',mant:'Bajo',tipo:'Arbusto florido',desc:'Arbusto de flores azul celeste que florece casi todo el año. Su color es raro y muy codiciado en jardines. Ideal para setos bajos con contraste de color.'},
+  {cat:'plantas',name:'Agave Atenuata',sc:'Agave attenuata',sz:['30 cm','80 cm-1 m'],b:[],i:'🌵',img:'1_ymnFLK8cBiSjI0ggLcFd4wFVZxnZmGR',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 1.5 m',flor:'Sí (1 vez al madurar)',mant:'Muy bajo',tipo:'Suculenta / Agave',desc:'El agave sin espinas. Sus hojas suaves y arqueadas lo hacen seguro para jardines familiares. Muy resistente al calor. Forma rosetas perfectas muy decorativas.'},
+  {cat:'plantas',name:'Árbol de la Abundancia',sc:'Pachira aquatica',sz:['20-30 cm'],b:[],i:'🌿',img:'1G536Zq546RnMWRc8h_dyCGkU6J2OfZvE',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 18 m',flor:'Sí',mant:'Bajo',tipo:'Interior / Exterior',desc:'Símbolo de buena suerte y prosperidad. Su tronco trenzado y follaje exuberante lo hacen muy decorativo. Muy popular en oficinas, lobbies y espacios corporativos.'},
+  {cat:'plantas',name:'Aralia Golden',sc:'Schefflera arboricola var.',sz:['20-25 cm','80 cm'],b:[],i:'🌿',img:'1gxwIwcw243Gfso-EVVUd15QPj1xHbN--',luz:'☀️ Sol / 🌤 Media',agua:'Moderado',altura:'Hasta 4 m',flor:'No',mant:'Bajo',tipo:'Arbusto',desc:'Follaje multicolor en tonos verdes y dorados muy decorativo. Muy resistente y fácil de mantener. Perfecta para exteriores e interiores luminosos.'},
+  {cat:'plantas',name:'Aralia Elegantísima',sc:'Schefflera elegantissima',sz:['1 m','1.5 m'],b:[],i:'🌿',img:'1pghtMQSQ4O0-_aJUafx9_M3m8b6GHBxb',luz:'🌤 Media Sombra',agua:'Moderado',altura:'Hasta 3 m',flor:'No',mant:'Bajo',tipo:'Arbusto interior',desc:'Hojas delgadas y elegantes en tonos oscuros. Muy apreciada en diseño de interiores. Su porte esbelto la hace perfecta para espacios modernos y minimalistas.'},
+  {cat:'plantas',name:'Azalea',sc:'Rhododendron sp.',sz:['0.25 m','1 m'],b:[],i:'🌺',img:'1ctIMQEz71IvaQ9km70o6Kx3vqA67OFh4',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 2 m',flor:'Sí — múltiples colores',mant:'Medio',tipo:'Arbusto florido',desc:'Una de las plantas de flor más espectaculares. En floración se cubre completamente. Disponible en rosa, rojo, blanco y lila. Muy vistosa en jardines.'},
+  {cat:'plantas',name:'Adelfa Enana',sc:'Nerium oleander nana',sz:['30-50 cm'],b:[],i:'🌺',img:'1em_Wx4Rxh_35trX0XMzlyAsCyYF5Xsj2',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 1 m',flor:'Sí — rosa/roja',mant:'Muy bajo',tipo:'Arbusto florido',desc:'Versión compacta de la adelfa. Muy resistente al calor y la sequía. Florece casi todo el año con muy poco mantenimiento. Ideal para bordes y jardines.'},
+  {cat:'plantas',name:'Adenium Rosa del Desierto',sc:'Adenium obesum',sz:['20-30 cm','50-70 cm'],b:[],i:'🌸',img:'1HVOWle5lFxezfSlsKJHwBJrhr5Fgfr7X',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 80 cm',flor:'Sí — rosa espectacular',mant:'Muy bajo',tipo:'Suculenta florida',desc:'Planta de flores rosadas intensas sobre tronco carnoso muy llamativo. Requiere muy poca agua. Excelente como planta de colección y jardines de diseño contemporáneo.'},
+  {cat:'plantas',name:'Beucarnea Soyate',sc:'Beaucarnea recurvata',sz:['20-30 cm','1 m','+1 m'],b:[],i:'🌴',img:'1nbuXOmnGL0QYOkUBH-Q_nM1_ptydvn-k',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 9 m',flor:'Rara',mant:'Muy bajo',tipo:'Árbol suculento',desc:'El pata de elefante. Su tronco hinchado almacena agua. Follaje largo y ondulado muy ornamental. Muy resistente a la sequía. Codiciado en jardines modernos.'},
+  {cat:'plantas',name:'Box Arrayán Bola',sc:'Buxus sempervirens',sz:['30-40 cm','50-60 cm','70-80 cm'],b:['bv'],i:'🟢',img:'1WAN-77xq-lxXIRakKSIhm4MVG9YscJUH',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Formado según tamaño',flor:'No',mant:'Medio',tipo:'Topiario',desc:'Arbusto formado en esfera perfecta. Da un toque formal y elegante a entradas y jardines de diseño. Disponible en varios tamaños listo para plantar.'},
+  {cat:'plantas',name:'Cactus Órgano',sc:'Stenocereus sp.',sz:['80 cm-1 m','+1 m'],b:[],i:'🌵',img:'1Tqwp_2SYARAYJ5LY9KJDOOyLOr4ipbqt',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 10 m',flor:'Sí (nocturna)',mant:'Muy bajo',tipo:'Cactus columnar',desc:'Cactus columnar imponente. Requiere casi nada de agua. Da un carácter muy especial a jardines desérticos y xeroscape modernos. Casi inmortal.'},
+  {cat:'plantas',name:'Casuarina',sc:'Casuarina equisetifolia',sz:['50-60 cm','+1 m'],b:[],i:'🌲',img:'1YEUyJ4xIYG8murecTZatUD9jogKUZMHn',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 35 m',flor:'No',mant:'Muy bajo',tipo:'Árbol costero',desc:'Árbol de follaje muy fino y plumoso. Muy resistente a la sal marina y el viento costero. Ideal para jardines cerca del mar y cortinas rompevientos.'},
+  {cat:'plantas',name:'Cipres Italiano',sc:'Cupressus sempervirens',sz:['60 cm','1.20 m','1.8 m','+2 m'],b:['bv'],i:'🌲',img:'1dXREZpp2iPK_lXZaJy2RYafpuzaqqQIY',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 35 m',flor:'No',mant:'Muy bajo',tipo:'Conífera columnar',desc:'El árbol columnar más elegante. Su forma perfectamente vertical le da un look mediterráneo incomparable. Ideal para enmarcar entradas y delimitar propiedades.'},
+  {cat:'plantas',name:'Citronella',sc:'Cymbopogon nardus',sz:['20-30 cm'],b:[],i:'🌿',img:'1oIvS48sngxOG6zatv6vUHXVK_tPlM6K4',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 1.8 m',flor:'Rara',mant:'Bajo',tipo:'Aromática / Repelente',desc:'Planta repelente de mosquitos natural. Su aroma cítrico intenso aleja insectos. Perfecta para terrazas y áreas de convivencia al aire libre en Tampico.'},
+  {cat:'plantas',name:'Cola de Caballo',sc:'Equisetum hyemale',sz:['60-80 cm'],b:[],i:'🌿',img:'1AkAma3foJsSDReMa3rwmjPDFc0wxxNDv',luz:'☀️ Sol / 🌤 Media',agua:'Abundante',altura:'Hasta 1.5 m',flor:'No',mant:'Bajo',tipo:'Ribereña / Acuática',desc:'Planta de tallos segmentados muy ornamental. Perfecta cerca de fuentes. Le da un toque asiático y minimalista a cualquier jardín o área de agua.'},
+  {cat:'plantas',name:'Copa de Oro',sc:'Solandra maxima',sz:['40-60 cm','80 cm'],b:['bv'],i:'🌻',img:'1bwGQOIoz2jnxdSe3rEVHy3JhYXSpxXj4',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Trepadora hasta 15 m',flor:'Sí — amarilla gigante',mant:'Bajo',tipo:'Trepadora',desc:'Flores amarillas de gran tamaño muy llamativas. Una de las trepadoras más impresionantes del trópico. Perfecta para cubrir muros y pérgolas.'},
+  {cat:'plantas',name:'Croto Petra',sc:'Codiaeum variegatum',sz:['25 cm','60-70 cm'],b:[],i:'🍂',img:'1Wg2HzkOME_lMfSEbODYp0P9EAiX0ir08',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 3 m',flor:'No',mant:'Bajo',tipo:'Arbusto colorido',desc:'Hojas multicolor en rojo, amarillo, naranja y verde. Una de las plantas más coloridas del jardín tropical. Perfecta para dar contraste y vida a jardines.'},
+  {cat:'plantas',name:'Croto Tornillo',sc:'Codiaeum sp.',sz:['30-50 cm'],b:['bv'],i:'🍂',img:'1rjDtGotBSxyjuCFZKLxbpPTMIYY4nqM-',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 2 m',flor:'No',mant:'Bajo',tipo:'Arbusto colorido',desc:'Variedad de croto con hojas en espiral muy llamativas. Sus colores brillantes hacen de este arbusto un punto focal irresistible en cualquier jardín.'},
+  {cat:'plantas',name:'Cuna de Moisés',sc:'Spathiphyllum sp.',sz:['30 cm'],b:[],i:'🤍',img:'17RFLZsuCbeXlBECOlsvW873mNT_w5u9j',luz:'🌑 Sombra / 🌤 Media',agua:'Regular',altura:'Hasta 50 cm',flor:'Sí — blanca elegante',mant:'Bajo',tipo:'Interior / Sombra',desc:'Planta de interior con elegantes flores blancas. Una de las mejores purificadoras de aire. Muy popular en oficinas, consultorios y hogares.'},
+  {cat:'plantas',name:'Duranta Cubana',sc:'Duranta erecta',sz:['25-30 cm','40-60 cm'],b:['bv'],i:'🟢',img:'1DaHl79oILg8OBCpYUSTVNAHAP1DH_IQl',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 6 m',flor:'Sí — lila pequeña',mant:'Bajo',tipo:'Arbusto / Seto',desc:'Uno de los mejores arbustos para setos vivos. Muy resistente al calor. Crece rápido y se puede podar fácilmente para mantener formas. Un clásico de Tampico.'},
+  {cat:'plantas',name:'Duranta Golden',sc:'Duranta erecta var.',sz:['30 cm','40-60 cm'],b:[],i:'🌿',img:'1P4T0n7LhQ7E2MXcDpRwFNnIxi93ol5oL',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 4 m',flor:'Sí',mant:'Bajo',tipo:'Arbusto colorido',desc:'Variedad dorada de la duranta. Follaje amarillo-dorado brillante contrasta perfectamente con plantas verdes. Muy popular en paisajismo moderno.'},
+  {cat:'plantas',name:'Duranta Zafiro',sc:'Duranta erecta',sz:['60-70 cm'],b:['bv'],i:'🌸',img:'1Msm_jCbZFEASib-6oWPrktjCVlJdpkye',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 4 m',flor:'Sí — lila/morada',mant:'Bajo',tipo:'Arbusto florido',desc:'La más vendida por su floración continua y resistencia. Flores lila-moradas muy abundantes. Excelente para setos con color todo el año.'},
+  {cat:'plantas',name:'Esparrago Springery',sc:'Asparagus densiflorus',sz:['20 cm'],b:[],i:'🌿',img:'1iXJstx1vlsfXNpX6gsQwi1rnvzUjR2zt',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 60 cm colgante',flor:'Sí (pequeña)',mant:'Bajo',tipo:'Colgante / Interior',desc:'Follaje muy fino y plumoso ideal para macetas colgantes y espacios sombreados. Su textura suave contrasta perfectamente con hojas más grandes.'},
+  {cat:'plantas',name:'Esparrago Meyeri',sc:'Asparagus meyeri',sz:['20 cm','30-40 cm'],b:[],i:'🌿',img:'131sDbYulpLdMr646jxYTvFH4xk29Z45n',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 60 cm',flor:'Sí (pequeña)',mant:'Bajo',tipo:'Interior / Exterior',desc:'Tallos erectos muy densos como plumas verdes. Más compacto que el springery. Ideal para composiciones en maceta y jardines sombreados.'},
+  {cat:'plantas',name:'Eugenia',sc:'Syzygium sp.',sz:['20-30 cm','50-60 cm'],b:[],i:'🌿',img:'1Wwrf6sUIk3n1BSqGgarVqaF_2NqPzLe-',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 15 m',flor:'Sí (pequeña)',mant:'Bajo',tipo:'Árbol / Seto',desc:'Excelente para setos y topiarios. Follaje denso muy fácil de podar. Sus brotes nuevos rojizos son muy decorativos. Muy usado en jardinería formal.'},
+  {cat:'plantas',name:'Ficus Lyrata Pandurata',sc:'Ficus lyrata',sz:['25-30 cm','60 cm','+1 m'],b:['bv'],i:'🍃',img:'1BJ7asY8_nkVrQzkFXE_qGe0YyflktpD1',luz:'🌤 Media Sombra',agua:'Moderado',altura:'Hasta 12 m',flor:'No',mant:'Bajo',tipo:'Árbol interior',desc:'La planta de diseño de interiores más popular del mundo. Sus hojas gigantes en forma de violín son únicas. Imprescindible en espacios modernos y oficinas de lujo.'},
+  {cat:'plantas',name:'Floripondio',sc:'Brugmansia sp.',sz:['60 cm-1 m'],b:[],i:'🌼',img:'1FB3HEjFyWqyipYuxSyjZIvz3OL28FXWm',luz:'☀️ Sol / 🌤 Media',agua:'Regular',altura:'Hasta 5 m',flor:'Sí — trompeta gigante',mant:'Medio',tipo:'Árbol/Arbusto',desc:'Flores en trompeta gigante colgante con aroma nocturno intenso. Una de las plantas más impresionantes del jardín tropical. Blanco, amarillo y rosa.'},
+  {cat:'plantas',name:'Fornio Phormium',sc:'Phormium tenax',sz:['80 cm-1 m'],b:[],i:'🌿',img:'1KYRExkM1w94O6sRBhuUdZTfAbFYyDH5R',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 3 m',flor:'Sí',mant:'Bajo',tipo:'Planta arquitectónica',desc:'Hojas largas y erectas como espadas. Efecto arquitectónico y moderno inigualable. Disponible en verde, rojo y variegado. Perfecta para jardines contemporáneos.'},
+  {cat:'plantas',name:'Helecho Boston',sc:'Nephrolepis exaltata',sz:['20-30 cm'],b:[],i:'🌿',img:'1uAvjLr5K9TAiHVIJBmdwxHUsfPelf7_p',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 90 cm',flor:'No',mant:'Medio',tipo:'Helecho colgante',desc:'El helecho más popular del mundo. Sus frondas largas y arqueadas son perfectas para macetas colgantes. Excelente purificador de aire. Muy fresco visualmente.'},
+  {cat:'plantas',name:'Helecho Macho',sc:'Dryopteris sp.',sz:['20 cm','30-40 cm'],b:['bv'],i:'🌿',img:'1NmDqxKUb00U8gHAk2HLxEEtvwqZFXpU3',luz:'🌤 Media / 🌑 Sombra',agua:'Regular',altura:'Hasta 1 m',flor:'No',mant:'Bajo',tipo:'Helecho',desc:'Helecho grande y robusto. Muy resistente. Perfecto para jardines sombreados y áreas húmedas. Sus hojas arqueadas crean un efecto de selva tropical.'},
+  {cat:'plantas',name:'Helecho Peine',sc:'Blechnum sp.',sz:['40-50 cm'],b:[],i:'🌿',img:'1WmFt1SVxVYx6uNEcqXkh8GbKO0Dd_kel',luz:'🌑 Sombra',agua:'Regular',altura:'Hasta 60 cm',flor:'No',mant:'Bajo',tipo:'Helecho sombra',desc:'Helecho de frondas rígidas muy decorativas. Sus nuevas frondas de color rojizo-bronce son llamativas. Ideal para jardines tropicales sombreados.'},
+  {cat:'plantas',name:'Hoja Elegante Alocasia',sc:'Alocasia macrorrhiza',sz:['70 cm','1 m','+1 m'],b:[],i:'🍃',img:'1yo8jlcB5sLYsHk_OCrEOOUWZiOsVi28h',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 4 m',flor:'Rara',mant:'Medio',tipo:'Tropical gigante',desc:'Hojas gigantes en forma de oreja de elefante. Crea un efecto tropical dramático inmediato. Muy valorada en jardines de diseño y exteriores contemporáneos.'},
+  {cat:'plantas',name:'Ixora Karla',sc:'Ixora javanica',sz:['30-40 cm'],b:['bv'],i:'🌺',img:'13PLyS4DeHVOA0gu12D_4sRZ3PAilnrPM',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 2 m',flor:'Sí — naranja/roja',mant:'Bajo',tipo:'Arbusto florido',desc:'Arbusto de floración continua en tonos naranja-rojo. Sus flores en racimos compactos se mantienen casi todo el año. Perfecta para setos con color.'},
+  {cat:'plantas',name:'Jazmín',sc:'Jasminum sp.',sz:['25-40 cm'],b:[],i:'🤍',img:'1jKlhI0E5sd6zE6081E0Zx_pRgB7b5H3v',luz:'☀️ Sol / 🌤 Media',agua:'Regular',altura:'Trepadora hasta 6 m',flor:'Sí — blanca fragante',mant:'Bajo',tipo:'Trepadora fragante',desc:'Una de las plantas más fragantes. Su aroma es inconfundible y muy agradable. Perfecta para pérgolas y jardines donde se quiere perfume natural.'},
+  {cat:'plantas',name:'Kalanchoe',sc:'Kalanchoe blossfeldiana',sz:['20 cm'],b:['bv'],i:'🌺',img:'1m7Khtf6sVlmB0bOs42RIE5AYNkL2CSVJ',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 45 cm',flor:'Sí — múltiples colores',mant:'Muy bajo',tipo:'Suculenta florida',desc:'Planta suculenta de flores muy vistosas en amarillo, naranja, rosa y rojo. Larga duración de floración. Perfecta para macetones en terrazas.'},
+  {cat:'plantas',name:'Limonaria',sc:'Murraya paniculata',sz:['30-50 cm'],b:[],i:'🌿',img:'1n7VYd3siJj8Otrv4xOb5Utmv4oK6Q0yZ',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 7 m',flor:'Sí — blanca muy fragante',mant:'Bajo',tipo:'Árbol / Seto',desc:'Uno de los arbustos más perfumados. Sus flores blancas tienen un aroma a azahar intenso. Excelente para setos aromáticos y jardines sensoriales.'},
+  {cat:'plantas',name:'Papiro Egipcio',sc:'Cyperus papyrus',sz:['1.20-1.5 m'],b:[],i:'🌿',img:'1ZvI5ANdoJ8qRMc28kLcvAh5Bc9ywvCu6',luz:'☀️ Sol / 🌤 Media',agua:'Abundante',altura:'Hasta 3 m',flor:'Sí',mant:'Bajo',tipo:'Acuática / Ribereña',desc:'La planta del papel del antiguo Egipto. Sus tallos triangulares terminan en plumeros muy decorativos. Perfecta cerca de fuentes y jardines húmedos.'},
+  {cat:'plantas',name:'Papiro Estrella',sc:'Cyperus alternifolius',sz:['80 cm'],b:[],i:'🌿',img:'1FShWEJlNhGHi7K9J-iB7F0f2MKyA4bhF',luz:'☀️ Sol / 🌤 Media',agua:'Abundante',altura:'Hasta 1.5 m',flor:'Sí',mant:'Bajo',tipo:'Acuática / Ribereña',desc:'Versión compacta del papiro. Sus hojas en estrella son muy ornamentales. Ideal para fuentes y bordes de jardines húmedos.'},
+  {cat:'plantas',name:'Pasto Dianela',sc:'Dianella tasmanica',sz:['30 cm'],b:[],i:'🌿',img:'1HpFCEwmOlA_rXoZZwsVtiDLvoPvfm1gp',luz:'☀️ Sol / 🌤 Media',agua:'Poco',altura:'Hasta 1 m',flor:'Sí — azul',mant:'Muy bajo',tipo:'Gramínea ornamental',desc:'Gramínea ornamental moderna. Muy usada en paisajismo contemporáneo. Excelente cubresuelos y planta de borde de bajo mantenimiento.'},
+  {cat:'plantas',name:'Pasto Liriope',sc:'Liriope muscari',sz:['25 cm'],b:[],i:'🌿',img:'1HbGR8_NXgA8Xl6Ku6PfIL4wrCVLMalBZ',luz:'🌤 Media / 🌑 Sombra',agua:'Poco',altura:'Hasta 40 cm',flor:'Sí — morada',mant:'Muy bajo',tipo:'Cubresuelos',desc:'El mejor cubresuelos para sombra. Muy resistente y de bajo mantenimiento. Sus flores moradas en espigas son muy ornamentales. Ideal bajo árboles.'},
+  {cat:'plantas',name:'Philodendro Xanadu',sc:'Thaumatophyllum xanadu',sz:['30 cm','60 cm'],b:[],i:'🍃',img:'1DxPrCUUi0gqifdpP2L8GsB7g03yXvSJd',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 1.5 m',flor:'Rara',mant:'Bajo',tipo:'Tropical',desc:'Hojas grandes profundamente recortadas muy decorativas. Una de las plantas tropicales más valoradas en diseño de interiores y jardines contemporáneos.'},
+  {cat:'plantas',name:'Sansiviera Variegada',sc:'Sansevieria trifasciata',sz:['60-70 cm'],b:['bv'],i:'🌿',img:'1IeuS5ZJlowycNcexuJBaevU6wa1FTavo',luz:'🌤 Media Sombra',agua:'Muy poco',altura:'Hasta 1.2 m',flor:'Rara',mant:'Muy bajo',tipo:'Interior resistente',desc:'Variedad variegada con bordes amarillos. Casi indestructible. Purifica el aire y tolera cualquier condición de interior.'},
+  {cat:'plantas',name:'Uva de Playa',sc:'Coccoloba uvifera',sz:['80 cm-1 m'],b:[],i:'🍃',img:'14Xq1BSGA0MJF1VIZx3D8NNIBWBbywNpu',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 15 m',flor:'Sí',mant:'Muy bajo',tipo:'Árbol costero',desc:'Árbol costero de hojas redondas grandes y brillantes. Muy resistente a la sal y el viento. Ideal para jardines en zona costera de Tampico.'},
+  {cat:'plantas',name:'Wudelia Rastrera',sc:'Wedelia trilobata',sz:['20-25 cm'],b:[],i:'🌼',img:'1MbNqUWWXlah_79CoinEswxFJWJteXvGg',luz:'☀️ Sol / 🌤 Media',agua:'Poco',altura:'Rastrera 15 cm',flor:'Sí — amarilla',mant:'Muy bajo',tipo:'Cubresuelos',desc:'Cubresuelos de flores amarillas que florece casi todo el año. Crece muy rápido. Perfecta para taludes, bordes y jardines de bajo mantenimiento.'},
+  {cat:'plantas',name:'Mussaenda',sc:'Mussaenda sp.',sz:['50 cm','80 cm'],b:[],i:'🌸',img:'1nETDOzwNVZTgVoPRjaS_W4Dz73dhZ6Fn',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 4 m',flor:'Sí — muy llamativa',mant:'Medio',tipo:'Arbusto florido',desc:'Arbusto de gran impacto visual con brácteas brillantes en rosa, rojo y blanco. Floración prolongada. Una de las plantas más llamativas del jardín tropical.'},
+  {cat:'plantas',name:'Floripondio',sc:'Brugmansia sp.',sz:['60 cm-1 m'],b:[],i:'🌼',img:'1FB3FyWqyipYuxSyjZIvz3OL28FXWm',luz:'☀️ Sol / 🌤 Media',agua:'Regular',altura:'Hasta 5 m',flor:'Sí — trompeta gigante',mant:'Medio',tipo:'Árbol/Arbusto',desc:'Flores en trompeta gigante con aroma nocturno. Blanco, amarillo y rosa disponible.'},
+
+  // PLANTAS NUEVAS
+  {cat:'palmas',name:'Palma Cica Circinalis',sc:'Cycas circinalis',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌿',img:'1uw1fBpfrnXp3iRjTfNqvZeYxjMYE51Vx',luz:'☀️ Sol / 🌤 Media Sombra',agua:'Poco',altura:'Hasta 6 m',flor:'No',mant:'Muy bajo',tipo:'Cica',desc:'Prima de la Cica Revoluta, de porte más erguido y elegante. Sus hojas arqueadas brillantes la hacen ideal para jardines formales. Resistente y de muy bajo mantenimiento.'},
+  {cat:'palmas',name:'Palma Cartón',sc:'Zamia furfuracea',sz:['30 cm','60 cm','1 m'],b:[],i:'🌿',img:'1h5O3MpxTQ8dwDpdihfKsbeOgZ7qC3W-M',luz:'☀️ Sol / 🌤 Media Sombra',agua:'Poco',altura:'Hasta 1.2 m',flor:'No',mant:'Muy bajo',tipo:'Zamia / Cica',desc:'Planta de hojas rígidas color verde azulado muy ornamental. Extremadamente resistente a la sequía y al calor. Perfecta para jardines de bajo mantenimiento.'},
+  {cat:'plantas',name:'Arbusto de Playa',sc:'Scaevola taccada',sz:['40-60 cm','80 cm-1 m'],b:[],i:'🌿',img:'1Uyuaff-bdm665Ck426fa0HH3r9LPTLlh',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 2 m',flor:'Sí — blanca',mant:'Muy bajo',tipo:'Arbusto costero',desc:'Arbusto nativo de zonas costeras. Muy resistente a la sal marina, el viento y el calor. Excelente para jardines cerca del mar en Tampico. Florece casi todo el año.'},
+  {cat:'plantas',name:'Aralia Shaflera',sc:'Schefflera arboricola',sz:['30 cm','60 cm','1 m','1.5 m'],b:[],i:'🌿',img:'13TbartQTxY8Z7BfkDzzhvGYwvQPToSuT',luz:'☀️ Sol / 🌤 Media',agua:'Moderado',altura:'Hasta 4 m',flor:'No',mant:'Bajo',tipo:'Arbusto',desc:'Aralia de hojas compuestas muy decorativas. Disponible como árbol de tallos múltiples. Muy resistente y adaptable a interior y exterior. Popular en oficinas y hogares.'},
+  {cat:'plantas',name:'Box Arrayán Pino',sc:'Buxus sempervirens',sz:['30-50 cm','60-80 cm'],b:['bv'],i:'🌲',img:'1udwupYiTe0d_3WB4zR6uklycOlyueIUi',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Formado según tamaño',flor:'No',mant:'Medio',tipo:'Topiario columnar',desc:'Arbusto formado en columna o cono tipo pino. Da un toque formal y mediterráneo a entradas y jardines. Disponible en varios tamaños listo para plantar.'},
+  {cat:'plantas',name:'Aspidistra',sc:'Aspidistra elatior',sz:['30-40 cm','50-70 cm'],b:['bi'],i:'🍃',img:'1abciYCcuVNWTV92LIsdmMzFIEFG3Wbnm',luz:'🌑 Sombra / 🌤 Media',agua:'Poco',altura:'Hasta 60 cm',flor:'Rara',mant:'Muy bajo',tipo:'Interior sombra',desc:'La planta más resistente para interiores oscuros. Sobrevive con muy poca luz y agua. Hojas largas brillantes muy decorativas. Ideal para pasillos, baños y oficinas.'},
+  {cat:'plantas',name:'Tradescantia Barquilla Morada',sc:'Tradescantia spathacea',sz:['20-30 cm','40 cm'],b:[],i:'🟣',img:'1xz150FKLjdQtQZge37YUqiD0kCNumzsu',luz:'☀️ Sol / 🌤 Media',agua:'Moderado',altura:'Hasta 40 cm',flor:'Sí — blanca pequeña',mant:'Bajo',tipo:'Planta ornamental',desc:'Hojas bicolor verde por arriba y morado intenso por abajo. Muy llamativa en bordes y macetones. Una de las plantas de follaje más vistosas para exteriores.'},
+  {cat:'plantas',name:'Heliconia Baby Enana',sc:'Heliconia sp.',sz:['40-60 cm','80 cm-1 m'],b:[],i:'🌺',img:'1I0y6eStyk1RVyolv8WJL4Mq3q7kS2l19',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 1.5 m',flor:'Sí — colorida tropical',mant:'Bajo',tipo:'Tropical florida',desc:'Versión compacta de la heliconia tropical. Sus flores de colores brillantes son muy llamativas. Perfecta para jardines tropicales y macetones de gran tamaño.'},
+  {cat:'plantas',name:'Laurel de la India Formado',sc:'Ficus microcarpa',sz:['40-60 cm','80 cm-1.5 m','+2 m'],b:['bv'],i:'🌳',img:'1yO3frSlCRK5EfSBueH7_UFE56o6vnL4b',luz:'☀️ Sol / 🌤 Media',agua:'Moderado',altura:'Hasta 15 m',flor:'No',mant:'Bajo',tipo:'Árbol topiario',desc:'Laurel de la India ya formado y podado. Ideal para entradas y jardines formales. Su follaje denso y brillante lo hace muy ornamental. Disponible en bola, columna y árbol.'},
+  {cat:'plantas',name:'Clavo Enano Pittosporum',sc:'Pittosporum tobira',sz:['30-40 cm','50-70 cm'],b:[],i:'🌿',img:'1ivXVDRRd1iv-pZw3-gr4-deZL0ABTQLd',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 3 m',flor:'Sí — blanca fragante',mant:'Muy bajo',tipo:'Arbusto seto',desc:'Arbusto compacto de hojas brillantes y flores blancas con aroma a azahar. Muy resistente al calor y sequía. Excelente para setos y jardines de bajo mantenimiento.'},
+  {cat:'plantas',name:'Lirio Persa',sc:'Iris sp.',sz:['30-40 cm'],b:[],i:'💜',img:'1EG0myJU-ngzppq82T-O8rN3iwzS1Plmu',luz:'☀️ Pleno Sol',agua:'Moderado',altura:'Hasta 80 cm',flor:'Sí — morada/lila',mant:'Bajo',tipo:'Bulbosa florida',desc:'Flores de gran elegancia en tonos morados y lila. De larga duración y muy ornamental. Perfecta para bordes de jardín y macetones que buscan color refinado.'},
+  {cat:'plantas',name:'Dracena Compacta',sc:'Dracaena deremensis',sz:['30-40 cm','60-80 cm','1 m'],b:['bi'],i:'🌿',img:'1i1i2FNi_9tVVGSdbpun6Iidbg9TwOfrv',luz:'🌤 Media Sombra',agua:'Poco',altura:'Hasta 2 m',flor:'Rara',mant:'Muy bajo',tipo:'Interior resistente',desc:'Dracena de crecimiento muy lento y hojas densas color verde oscuro. Muy popular en interiores. Excelente purificadora de aire. Tolera muy poca luz y agua.'},
+  {cat:'plantas',name:'Galatea Amoena',sc:'Calathea amoena',sz:['20-30 cm','40-50 cm'],b:['bi'],i:'🍃',img:'1UjESgWHHQNGtzQtw3qnJlZFE1Rc7iqs7',luz:'🌤 Media Sombra',agua:'Regular',altura:'Hasta 50 cm',flor:'No',mant:'Medio',tipo:'Interior tropical',desc:'Planta de hojas con patrones exóticos en verde y crema. Sus hojas se abren de día y se cierran de noche. Muy apreciada en decoración de interiores modernos.'},
+  {cat:'plantas',name:'Eleagnus',sc:'Elaeagnus pungens',sz:['40-60 cm','80 cm-1 m'],b:[],i:'🌿',img:'1sdu-rL3XG1rbigjcF9PX8N6yKZjcaDpC',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 4 m',flor:'Sí — pequeña fragante',mant:'Muy bajo',tipo:'Arbusto seto',desc:'Arbusto de hojas plateadas brillantes muy decorativo. Resistente al calor, sequía y vientos. Excelente para setos mixtos y jardines de bajo mantenimiento.'},
+  {cat:'plantas',name:'Dracena Marginata',sc:'Dracaena marginata',sz:['40-60 cm','80 cm-1 m','+1.5 m'],b:['bi'],i:'🌿',img:'1QcRkzm1iRQvShiMzlGlj8hjqnPB1pY1V',luz:'☀️ Sol / 🌤 Media',agua:'Poco',altura:'Hasta 5 m',flor:'Rara',mant:'Muy bajo',tipo:'Interior / Exterior',desc:'Árbol de interior con troncos esbeltos y hojas con bordes rojos característicos. Muy popular en diseño de interiores modernos. Tolera condiciones difíciles.'},
+  {cat:'plantas',name:'Lápiz Tirucalli',sc:'Euphorbia tirucalli',sz:['30-50 cm','80 cm-1 m'],b:[],i:'🌵',img:'1PKzpiEaoqaQ9_RPXL9sMK6bnaqM0BFJC',luz:'☀️ Pleno Sol',agua:'Muy poco',altura:'Hasta 10 m',flor:'No',mant:'Muy bajo',tipo:'Suculenta árbol',desc:'Suculenta de tallos cilíndricos como lápices de color verde brillante. Sin hojas, solo tallos. Muy resistente a la sequía. Da un efecto moderno y escultórico único.'},
+  {cat:'plantas',name:'Moneda Enredadera',sc:'Dichondra argentea',sz:['10-20 cm colgante'],b:[],i:'🟡',img:'13CLoB6ExRQc-hhXkh7g2EoelrZicsaoC',luz:'☀️ Sol / 🌤 Media',agua:'Moderado',altura:'Colgante hasta 60 cm',flor:'No',mant:'Bajo',tipo:'Colgante / Cubresuelos',desc:'Enredadera colgante de hojas redondas color verde plateado similar a monedas. Perfecta para macetas colgantes y bordes de jardín. Efecto muy decorativo.'},
+  {cat:'plantas',name:'Petunia Silvestre',sc:'Ruellia simplex',sz:['20-30 cm','40-50 cm'],b:[],i:'💜',img:'124xVn7sBoe2YZ0dfxqLIgja94gt2uAxP',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 60 cm',flor:'Sí — morada continua',mant:'Muy bajo',tipo:'Cubresuelos florida',desc:'Floración casi todo el año en morado intenso. Crece y se multiplica sola. Excelente cubresuelos para jardines tropicales. Muy resistente al calor de Tampico.'},
+  {cat:'plantas',name:'Podocarpus Japanese Yew',sc:'Podocarpus macrophyllus',sz:['50-80 cm','1-1.5 m','+2 m'],b:['bv'],i:'🌲',img:'1T265TQXc9GMbozMLezEREO0-EKwoEYkB',luz:'☀️ Sol / 🌤 Media',agua:'Moderado',altura:'Hasta 20 m',flor:'No',mant:'Bajo',tipo:'Conífera tropical',desc:'Conífera de hojas largas brillantes muy ornamental. Excelente para topiarios, setos formales y jardines japoneses. Una de las coníferas más elegantes para clima cálido.'},
+  {cat:'plantas',name:'Clorofito Listón',sc:'Chlorophytum comosum',sz:['20-30 cm','40 cm colgante'],b:['bi'],i:'🌿',img:'1LFzD4F1wfpi1au082xJ6oI6DEIvERAOk',luz:'🌤 Media Sombra',agua:'Moderado',altura:'Hasta 40 cm colgante',flor:'Sí — pequeña blanca',mant:'Muy bajo',tipo:'Interior / Colgante',desc:'Planta colgante con hojas verdes y blancas rayadas. Purificadora de aire muy eficiente. Produce pequeñas plantas bebé colgantes muy decorativas. Clásica e indestructible.'},
+];
+
+let tab='todos', q='', expId=null;
+
+function setTab(t,el){
+  tab=t; q=''; document.getElementById('si').value='';
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  const isPasto=t==='pasto';
+  document.getElementById('pastoSection').style.display=isPasto?'block':'none';
+  document.getElementById('grid').style.display=isPasto?'none':'grid';
+  document.getElementById('cnt').style.display=isPasto?'none':'block';
+  document.getElementById('searchWrap').style.display=isPasto?'none':'block';
+  document.getElementById('solsec').style.display=isPasto?'none':'block';
+  expId=null; render();
+}
+
+function doFilter(){q=document.getElementById('si').value.toLowerCase();expId=null;render();}
+
+function toggleExp(id,e){
+  if(e){e.stopPropagation();}
+  expId=expId===id?null:id;render();
+  if(expId===id){
+    setTimeout(()=>{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+  }
+}
+
+function render(){
+  const g=document.getElementById('grid');
+  const c=document.getElementById('cnt');
+  if(tab==='pasto')return;
+  const f=plants.filter(p=>{
+    const mt=tab==='todos'||p.cat===tab;
+    const ms=!q||p.name.toLowerCase().includes(q)||p.sc.toLowerCase().includes(q)||p.tipo.toLowerCase().includes(q)||p.luz.toLowerCase().includes(q);
+    return mt&&ms;
+  });
+  f.sort((a,b)=>a.name.localeCompare(b.name,'es'));
+  document.getElementById('totalCount').textContent=plants.length+'+';
+  c.textContent=f.length+' variedades encontradas';
+  if(!f.length){
+    g.innerHTML='<div class="empty"><div class="empty-icon">🌱</div>Sin resultados para "'+q+'"<br><small style="display:block;margin-top:.5rem">Usa el formulario de abajo para solicitar lo que buscas</small></div>';
+    return;
+  }
+  g.innerHTML=f.map(p=>{
+    const id='c_'+p.name.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_]/g,'');
+    const isExp=expId===id;
+    const bd=p.b.map(x=>{
+      if(x==='bb')return'<span class="badge bb">Banqueta</span>';
+      if(x==='bi')return'<span class="badge bi">Interior</span>';
+      if(x==='bv')return'<span class="badge bv">+ Vendido</span>';
+      return'';
+    }).join('');
+    const imgHtml=p.img
+      ? `<img src="/api/img?id=${p.img}" alt="${p.name}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.display='none'"/><span class="emoji">${p.i}</span>`
+      : `<span class="emoji">${p.i}</span>`;
+    const szCats=p.sz.map(s=>'<span class="sz">'+s+'</span>').join('');
+    const szTags=p.sz.map(s=>'<span class="sztag">'+s+'</span>').join('');
+    const ficha=isExp?`
+    <div class="ficha">
+      <div class="ficons">
+        <span class="fi">${p.luz}</span>
+        <span class="fi">💧 ${p.agua}</span>
+        <span class="fi">📏 ${p.altura}</span>
+        <span class="fi">🌸 Flor: ${p.flor}</span>
+        <span class="fi">🔧 Mant: ${p.mant}</span>
+      </div>
+      <div class="fgrid">
+        <div class="fitem"><div class="flabel">Clasificación</div><div class="fval">${p.tipo}</div></div>
+        <div class="fitem"><div class="flabel">Nombre científico</div><div class="fval" style="font-style:italic;font-size:11px">${p.sc}</div></div>
+        <div class="fitem"><div class="flabel">Agua requerida</div><div class="fval">${p.agua}</div></div>
+        <div class="fitem"><div class="flabel">Altura adulta</div><div class="fval">${p.altura}</div></div>
+      </div>
+      <div class="fdesc">${p.desc}</div>
+      <div class="fsizes">
+        <div class="flabel" style="margin-bottom:5px">Tamaños disponibles:</div>
+        ${szTags}
+        <span class="szspec">+ Otras medidas disponibles</span>
+      </div>
+      <div class="factions">
+        <button class="fa-wa" onclick="cotizar('${p.name.replace(/'/g,"\\'")}')">📲 Cotizar por WhatsApp</button>
+        <button class="fa-esp" onclick="solMedida('${p.name.replace(/'/g,"\\'")}')">📐 Medida especial</button>
+        <button class="fa-close" onclick="toggleExp('${id}',event)">✕ Cerrar</button>
+      </div>
+    </div>`:'';
+    return`<article class="card${isExp?' exp':''}" id="${id}" role="article">
+      <div class="cimg" onclick="toggleExp('${id}',event)" role="button" tabindex="0" aria-label="Ver ficha de ${p.name}">
+        ${imgHtml}
+        ${bd?'<div class="badges">'+bd+'</div>':''}
+        <button class="btn-add" onclick="addToCart(event,'${p.name.replace(/'/g,'&#39;')}')">+</button>
+      </div>
+      <div class="cbody">
+        <h3 class="cname" onclick="toggleExp('${id}',event)">${p.name}</h3>
+        <p class="csc">${p.sc}</p>
+        ${!isExp?`<div class="sizes">${szCats}</div><div class="btns"><button class="btn-sec" onclick="toggleExp('${id}',event)">Ver ficha técnica ↓</button><button class="btn-main" onclick="cotizar('${p.name.replace(/'/g,"\\'")}')">Cotizar ahora</button></div>`:''}
+      </div>
+      ${ficha}
+    </article>`;
+  }).join('');
+}
+
+function cotizar(n){
+  const m=encodeURIComponent('Hola Viveros Terra 🌿\n\nMe interesa cotizar: *'+n+'*\n¿Pueden darme precio y disponibilidad por tamaño?');
+  window.open('https://wa.me/528333268008?text='+m,'_blank');
+}
+function solMedida(n){
+  const m=encodeURIComponent('Hola Viveros Terra 🌿\n\nBusco *'+n+'* en una medida o tamaño especial.\n¿Pueden conseguirla o cotizarme?');
+  window.open('https://wa.me/528333268008?text='+m,'_blank');
+}
+function solEsp(){
+  const v=document.getElementById('solinput').value.trim();
+  if(!v)return;
+  const m=encodeURIComponent('Hola Viveros Terra 🌿\n\nBusco: *'+v+'*\nNo lo encontré en el catálogo. ¿Lo manejan o pueden cotizarme?');
+  window.open('https://wa.me/528333268008?text='+m,'_blank');
+}
+function solPasto(){
+  const v=document.getElementById('solpasto').value.trim();
+  if(!v)return;
+  const m=encodeURIComponent('Hola Viveros Terra 🌿\n\nMe interesa cotizar: *'+v+'*\n¿Pueden asesorarme?');
+  window.open('https://wa.me/528333268008?text='+m,'_blank');
+}
+function openWA(){
+  window.open('https://wa.me/528333268008?text='+encodeURIComponent('Hola Viveros Terra 🌿\n\nVi su catálogo y quisiera asesoría para mi jardín.'),'_blank');
+}
+
+render();
+
+// =================== COTIZADOR ===================
+let cart = []; // [{name, sc, emoji, sz, qty}]
+let pendingPlant = null;
+
+function addToCart(e, name) {
+  e.stopPropagation();
+  const plant = plants.find(p => p.name === name);
+  if(plant) openAddModal(plant, e);
+}
+
+function openAddModal(plant, e) {
+  if(e) e.stopPropagation();
+  pendingPlant = plant;
+  document.getElementById('modalTitle').textContent = plant.name;
+  document.getElementById('modalSc').textContent = plant.sc;
+  const sel = document.getElementById('modalSize');
+  sel.innerHTML = plant.sz.map(s => `<option value="${s}">${s}</option>`).join('') + '<option value="__otro__">📐 Otro tamaño / Medida especial</option>';
+  // Si ya está en carrito, preseleccionar el mismo tamaño
+  const existing = cart.find(i => i.name === plant.name);
+  if(existing) sel.value = existing.sz;
+  document.getElementById('modalQty').value = existing ? existing.qty : 1;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('modalSize').focus();
+}
+
+function closeModal(e) {
+  if(e && e.target !== document.getElementById('modalOverlay')) return;
+  document.getElementById('modalOverlay').classList.remove('open');
+  pendingPlant = null;
+}
+
+function onSizeChange(sel) {
+  const row = document.getElementById('otroSizeRow');
+  row.classList.toggle('visible', sel.value === '__otro__');
+  if(sel.value === '__otro__') {
+    setTimeout(()=>document.getElementById('otroSizeInput').focus(), 50);
+  }
+}
+
+function changeQty(delta) {
+  const inp = document.getElementById('modalQty');
+  const val = Math.max(1, Math.min(9999, (parseInt(inp.value)||1) + delta));
+  inp.value = val;
+}
+
+function confirmAdd() {
+  if(!pendingPlant) return;
+  const selVal = document.getElementById('modalSize').value;
+  const sz = selVal === '__otro__'
+    ? (document.getElementById('otroSizeInput').value.trim() || 'Medida especial')
+    : selVal;
+  const qty = Math.max(1, parseInt(document.getElementById('modalQty').value)||1);
+  // Si ya existe misma planta+tamaño, actualizar cantidad
+  const idx = cart.findIndex(i => i.name === pendingPlant.name && i.sz === sz);
+  if(idx >= 0) {
+    cart[idx].qty = qty;
+  } else {
+    cart.push({ name: pendingPlant.name, sc: pendingPlant.sc, emoji: pendingPlant.i, sz, qty });
+  }
+  document.getElementById('modalOverlay').classList.remove('open');
+  pendingPlant = null;
+  updateCartUI();
+  // Feedback visual en la card
+  const btn = document.querySelector(`[data-plant="${CSS.escape(cart[cart.length-1]?.name || '')}"]`);
+  if(btn) btn.classList.add('added');
+}
+
+function updateCartUI() {
+  const total = cart.reduce((s,i) => s+i.qty, 0);
+  const fab = document.getElementById('cartFab');
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = cart.length;
+  fab.classList.toggle('visible', cart.length > 0);
+  document.getElementById('cartHCount').textContent = cart.length > 0
+    ? `${cart.length} variedad${cart.length>1?'es':''} · ${total} unidad${total>1?'es':''}`
+    : '';
+}
+
+function openCart() {
+  renderCartBody();
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartPanel').classList.add('open');
+}
+
+function closeCart(e) {
+  if(e && e.target !== document.getElementById('cartOverlay')) return;
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartPanel').classList.remove('open');
+}
+
+function renderCartBody() {
+  const body = document.getElementById('cartBody');
+  const footer = document.getElementById('cartFooter');
+  if(cart.length === 0) {
+    body.innerHTML = '<div class="cart-empty">Tu lista está vacía.<br><small>Toca el <strong>+</strong> en cualquier planta para agregarla.</small></div>';
+    footer.style.display = 'none';
+    document.getElementById('cartHCount').textContent = '';
+    return;
+  }
+  const total = cart.reduce((s,i) => s+i.qty, 0);
+  body.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item">
+      <div class="cart-item-emoji">${item.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-sz">${item.sz}</div>
+      </div>
+      <div class="cart-item-qty">
+        <button class="cart-qty-btn" onclick="cartChangeQty(${idx},-1)" aria-label="Reducir">−</button>
+        <span class="cart-qty-n">${item.qty}</span>
+        <button class="cart-qty-btn" onclick="cartChangeQty(${idx},1)" aria-label="Aumentar">+</button>
+      </div>
+      <button class="cart-del" onclick="removeItem(${idx})" aria-label="Eliminar">✕</button>
+    </div>
+  `).join('');
+  footer.style.display = 'block';
+  document.getElementById('cartSummaryText').textContent = `${cart.length} variedad${cart.length>1?'es':''}`;
+  document.getElementById('cartSummaryUnits').textContent = `${total} unidad${total>1?'es':''}`;
+  document.getElementById('cartHCount').textContent = `${cart.length} variedad${cart.length>1?'es':''} · ${total} unidad${total>1?'es':''}`;
+}
+
+function cartChangeQty(idx, delta) {
+  cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+  updateCartUI();
+  renderCartBody();
+}
+
+function removeItem(idx) {
+  cart.splice(idx, 1);
+  updateCartUI();
+  renderCartBody();
+}
+
+function clearCart() {
+  if(!confirm('¿Vaciar toda la lista?')) return;
+  cart = [];
+  updateCartUI();
+  renderCartBody();
+  // Quitar clase added de todos los botones
+  document.querySelectorAll('.btn-add.added').forEach(b => b.classList.remove('added'));
+}
+
+function sendWA() {
+  if(cart.length === 0) return;
+  const lines = cart.map(i => `• ${i.name} (${i.sz}) × ${i.qty}`).join('\n');
+  const total = cart.reduce((s,i) => s+i.qty, 0);
+  const msg = `Hola Viveros Terra 🌿\n\nQuisiera cotizar lo siguiente:\n\n${lines}\n\nTotal: ${cart.length} variedad${cart.length>1?'es':''}, ${total} unidad${total>1?'es':''}\n\n¿Pueden darme precio y disponibilidad?`;
+  window.open('https://wa.me/528333268008?text=' + encodeURIComponent(msg), '_blank');
+}
+
+</script>
+
+<!-- MODAL AGREGAR AL CARRITO -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-sc" id="modalSc"></div>
+    <label class="modal-label" for="modalSize">Tamaño disponible</label>
+    <select class="modal-select" id="modalSize" onchange="onSizeChange(this)"></select>
+    <div class="otro-size-row" id="otroSizeRow">
+      <input class="otro-size-input" id="otroSizeInput" type="text" placeholder="Ej: 5 metros, 3.5m, medida especial..."/>
+    </div>
+    <label class="modal-label">¿Cuántas unidades necesitas?</label>
+    <div class="qty-row">
+      <button class="qty-btn" onclick="changeQty(-1)" aria-label="Reducir cantidad">−</button>
+      <input class="qty-input" id="modalQty" type="number" min="1" max="9999" value="1" aria-label="Cantidad"/>
+      <button class="qty-btn" onclick="changeQty(1)" aria-label="Aumentar cantidad">+</button>
+      <span class="qty-label">piezas</span>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="modal-btn-add" onclick="confirmAdd()">✅ Agregar a lista</button>
     </div>
   </div>
 </div>
 
-<!-- GRID DE PRODUCTOS -->
-<section class="py-16 bg-bgwarm">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="mb-10 reveal" id="grid-intro">
-      <p class="text-sm font-semibold text-primary uppercase tracking-widest mb-2">Disponible en vivero</p>
-      <h2 class="text-3xl font-display font-bold text-gray-900">Todo lo que necesitas para tu jardín</h2>
-      <p class="text-gray-500 mt-2">Usa los filtros para encontrar lo que buscas. Cada producto tiene su propio link directo a WhatsApp.</p>
+<!-- FAB CARRITO -->
+<button class="cartfab" id="cartFab" onclick="openCart()" aria-label="Ver lista de cotización">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+  <div class="cartbadge" id="cartBadge">0</div>
+</button>
+
+<!-- PANEL CARRITO -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart(event)"></div>
+<div class="cart-panel" id="cartPanel" role="dialog" aria-modal="true" aria-label="Lista de cotización">
+  <div class="cart-header">
+    <div>
+      <div class="cart-htitle">🌿 Mi Lista de Cotización</div>
+      <div class="cart-hcount" id="cartHCount"></div>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="catalog-grid">
-
-      <!-- PASTO -->
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-primary transition-all reveal" data-cat="pasto">
-        <div class="img-card h-48"><img src="/img/pasto-en-rollo-san-agustin-tampico.jpg" alt="Pasto San Agustín en rollo disponible en Viveros Terra Tampico" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-primary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌿 Pasto</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Pasto San Agustín en Rollo</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Fresco de corte semanal, directo del campo. Resiste el calor costero de Tampico y tolera media sombra. Garantía de arraigo en 21 días con instalación.</p>
-          <p class="text-primary font-bold text-base mb-4">Desde $85/m²</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20pasto%20San%20Agust%C3%ADn%20en%20rollo%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar San Agustín
-          </a>
-          <a href="/pasto-en-rollo-tampico" class="block text-center text-xs text-primary hover:underline mt-2">Ver detalles y precios →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-primary transition-all reveal" data-cat="pasto">
-        <div class="img-card h-48"><img src="/img/pasto-en-rollo-san-agustin-tampico.jpg" alt="Pasto Japonés en rollo en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-primary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌿 Pasto</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Pasto Japonés en Rollo</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Textura fina y densa. Ideal para jardines residenciales de alta estética en Tampico y zona Huasteca. Requiere buena iluminación.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según disponibilidad</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20pasto%20Japon%C3%A9s%20en%20rollo%20para%20mi%20jard%C3%ADn" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Pasto Japonés
-          </a>
-          <a href="/pasto-en-rollo-tampico" class="block text-center text-xs text-primary hover:underline mt-2">Ver detalles →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-primary transition-all reveal" data-cat="pasto">
-        <div class="img-card h-48"><img src="/img/pasto-sintetico-tampico-instalacion.png" alt="Pasto sintético instalado en jardín en Tampico por Viveros Terra" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-primary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌿 Pasto</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Pasto Sintético</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Sin riego, sin cortes, sin fertilización. Ideal para terrazas, canchas y zonas de alto tráfico en Tampico, Madero y Altamira.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar por m²</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20pasto%20sint%C3%A9tico%20para%20mi%20espacio%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Pasto Sintético
-          </a>
-          <a href="/pasto-sintetico-tampico" class="block text-center text-xs text-primary hover:underline mt-2">Ver opciones →</a>
-        </div>
-      </article>
-
-      <!-- PLANTAS & PALMAS -->
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma del Viajero disponible en Viveros Terra Tampico" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Palma del Viajero</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Espectacular palmera tropical con abanico característico. Crece con fuerza en el clima cálido-húmedo de Tampico. Disponible en varios tamaños.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según tamaño</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20del%20viajero%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Palma del Viajero
-          </a>
-          <a href="/palmas-tropicales-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver guía completa →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma Areca en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Palma Areca</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Elegante y de rápido crecimiento. Perfecta para crear privacidad en jardines y terrazas en Tampico. Tolera bien la humedad de la Huasteca.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según tamaño</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20areca%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Palma Areca
-          </a>
-          <a href="/palmas-para-jardin-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver guía de palmas →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma Real en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Palma Real</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Imponente palma de tronco plateado. Referencia tropical de los jardines del sur de Tamaulipas. Alta resistencia al calor y al viento costero.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según tamaño</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20real%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Palma Real
-          </a>
-          <a href="/plantas-palmas-arboles-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver todas las palmas →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma Coco en venta en Viveros Terra Tampico" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Palma Coco</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">El ícono del trópico. Resistente al calor y la brisa marina del Golfo. Ideal para jardines costeros en Tampico, Madero y Altamira.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según tamaño</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20coco%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Palma Coco
-          </a>
-          <a href="/plantas-palmas-arboles-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver todas las palmas →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-ornamentales-tampico-viveros-terra.png" alt="Ficus Elastica en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Ficus Elastica</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Árbol ornamental de hojas grandes y brillantes. Perfecto para interiores luminosos o jardines tropicales en Tampico. Bajo mantenimiento.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20ficus%20elastica%20para%20mi%20espacio%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Ficus Elastica
-          </a>
-          <a href="/plantas-palmas-arboles-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver más plantas →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-ornamentales-tampico-viveros-terra.png" alt="Plantas ornamentales tropicales para jardines en Tampico" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Plantas Ornamentales</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Más de 80 variedades adaptadas al clima cálido-húmedo de Tampico. Heliconias, gingers, bromelias y más para jardines tropicales.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar por variedad</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20plantas%20ornamentales%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Plantas
-          </a>
-          <a href="/plantas-para-jardin-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver guía de plantas →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-ornamentales-tampico-viveros-terra.png" alt="Plantas de interior para casas en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Plantas de Interior</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Especies seleccionadas para el calor de Tampico: pothos, sansevieria, aglaonema, spathiphyllum y más. Bajo mantenimiento, alta resistencia.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar por variedad</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20plantas%20de%20interior%20para%20mi%20casa%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Plantas Interior
-          </a>
-          <a href="/plantas-de-interior-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver guía plantas interior →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/jardineria-profesional-tampico-empresa.png" alt="Árboles para jardín y banqueta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Árboles para Jardín y Banqueta</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Tabachín, fresno, trueno, primavera y más. Especies que no levantan el pavimento y toleran el calor de Tamaulipas.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según especie</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20%C3%A1rboles%20para%20jard%C3%ADn%20o%20banqueta%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Árboles
-          </a>
-          <a href="/arboles-para-banqueta-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver guía de árboles →</a>
-        </div>
-      </article>
-
-      <!-- MATERIALES -->
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-amber-600 transition-all reveal" data-cat="materiales">
-        <div class="img-card h-48"><img src="/img/tierra-negra-jardin-tampico.png" alt="Tierra negra vegetal en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-amber-800 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🪨 Materiales</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Tierra Negra Vegetal</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Tierra de alta calidad para preparación de jardines, nivelación y relleno. Ideal para el establecimiento de pasto San Agustín en Tampico.</p>
-          <p class="text-primary font-bold text-sm mb-4">$90/costal · $1,500/m³</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20tierra%20negra%20vegetal%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Tierra Negra
-          </a>
-          <a href="/tierra-negra-vegetal-tampico" class="block text-center text-xs text-amber-800 hover:underline mt-2">Ver precios y camiones →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-amber-600 transition-all reveal" data-cat="materiales">
-        <div class="img-card h-48"><img src="/img/tierra-negra-jardin-tampico.png" alt="Tierra negra para maceta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-amber-800 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🪨 Materiales</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Tierra Negra para Maceta</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Sustrato enriquecido para macetas y contenedores. Formulado para retener humedad y favorecer el drenaje en el clima tropical de Tampico.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar por costal</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20tierra%20negra%20para%20maceta%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Tierra para Maceta
-          </a>
-          <a href="/tierra-negra-vegetal-tampico" class="block text-center text-xs text-amber-800 hover:underline mt-2">Ver más sustratos →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-amber-600 transition-all reveal" data-cat="materiales">
-        <div class="img-card h-48"><img src="/img/tezontle-rojo-jardin-tampico-sendero.jpg" alt="Tezontle rojo para jardines y senderos en Tampico" loading="lazy" width="600" height="400" style="object-position:center"></div>
-        <div class="p-5">
-          <span class="inline-block bg-amber-800 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🪨 Materiales</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Tezontle Rojo</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Piedra volcánica roja para senderos, macizos y drenaje de jardines. 8 usos distintos para transformar cualquier espacio exterior en Tampico.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar por costal o camión</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20tezontle%20rojo%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Tezontle Rojo
-          </a>
-          <a href="/tezontle-rojo-tampico" class="block text-center text-xs text-amber-800 hover:underline mt-2">Ver usos y precios →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-amber-600 transition-all reveal" data-cat="materiales">
-        <div class="img-card h-48"><img src="/img/piedra-marmol-blanca-decorativa-jardin-tampico.webp" alt="Mármol blanco decorativo para jardines en Tampico" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-amber-800 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🪨 Materiales</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Mármol Blanco Decorativo</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Piedra de mármol blanco triturada para senderos, fuentes y bordes de jardín. Da un aspecto elegante y sofisticado a cualquier espacio exterior.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20m%C3%A1rmol%20blanco%20decorativo%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Mármol Blanco
-          </a>
-          <a href="/marmol-blanco-tampico" class="block text-center text-xs text-amber-800 hover:underline mt-2">Ver opciones →</a>
-        </div>
-      </article>
-
-      <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-amber-600 transition-all reveal" data-cat="materiales">
-        <div class="img-card h-48"><img src="/img/piedra-marmol-blanca-decorativa-jardin-tampico.webp" alt="Piedra de río y piedra bola para jardines en Tampico" loading="lazy" width="600" height="400"></div>
-        <div class="p-5">
-          <span class="inline-block bg-amber-800 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🪨 Materiales</span>
-          <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Piedra de Río / Bola</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Piedra natural redondeada para senderos, fuentes, estanques y decoración de jardines. Disponible en varios tamaños para proyectos en Tampico.</p>
-          <p class="text-gray-400 font-medium text-sm mb-4">Cotizar</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20piedra%20de%20r%C3%ADo%20o%20bola%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
-            <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Piedra de Río
-          </a>
-          <a href="/piedra-bola-rio-tampico" class="block text-center text-xs text-amber-800 hover:underline mt-2">Ver opciones →</a>
-        </div>
-      </article>
-
-    </div><!-- /catalog-grid -->
+    <button class="cart-close" onclick="closeCart()" aria-label="Cerrar">✕</button>
   </div>
-</section>
-
-<!-- FAQ -->
-<section class="py-16 bg-white">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-10 reveal">
-      <h2 class="text-3xl font-display font-bold text-gray-900">Preguntas frecuentes</h2>
-      <p class="text-gray-500 mt-2">Sobre disponibilidad, precios, entrega y más</p>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-summary">
+      <span id="cartSummaryText"></span>
+      <span id="cartSummaryUnits"></span>
     </div>
-    <div class="space-y-3 reveal">
-      <div class="border border-gray-200 rounded-2xl overflow-hidden">
-        <button class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
-          ¿Tienen entrega a domicilio de plantas y materiales en Tampico?
-          <svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform"><use href="#ic-chevron-down"/></svg>
-        </button>
-        <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed">
-          <div class="pb-4">Sí. Viveros Terra entrega plantas, pasto en rollo y materiales a domicilio en Tampico, Ciudad Madero y Altamira. Para pedidos grandes coordinamos logística a toda la zona Huasteca. Cotiza por WhatsApp al 833 326 8008.</div>
-        </div>
-      </div>
-      <div class="border border-gray-200 rounded-2xl overflow-hidden">
-        <button class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
-          ¿Cuánto cuesta el pasto San Agustín en Tampico?
-          <svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform"><use href="#ic-chevron-down"/></svg>
-        </button>
-        <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed">
-          <div class="pb-4">El pasto San Agustín en rollo cuesta desde $85 por metro cuadrado (solo el pasto, sin entrega ni instalación). Con instalación profesional cotizamos según el tamaño del jardín y el estado del terreno. Cotización gratis sin compromiso.</div>
-        </div>
-      </div>
-      <div class="border border-gray-200 rounded-2xl overflow-hidden">
-        <button class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
-          ¿Puedo ir a comprar directamente al vivero?
-          <svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform"><use href="#ic-chevron-down"/></svg>
-        </button>
-        <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed">
-          <div class="pb-4">Sí. Nuestro vivero está en Av. Álvaro Obregón 601, Col. Unidad Nacional, Ciudad Madero (frente al Walmart). Horario: Lunes a Viernes 9am–6pm, Sábado 9am–2pm. Te recomendamos llamar antes al 833 326 8008 para confirmar disponibilidad de la variedad que buscas.</div>
-        </div>
-      </div>
-      <div class="border border-gray-200 rounded-2xl overflow-hidden">
-        <button class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
-          ¿Venden al mayoreo para constructoras?
-          <svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform"><use href="#ic-chevron-down"/></svg>
-        </button>
-        <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed">
-          <div class="pb-4">Sí. Ofrecemos precios preferenciales por volumen para constructoras, arquitectos, fraccionamientos, hoteles y gobierno. Factura CFDI disponible. Entrega por etapas según avance de obra. Cotiza tu proyecto al 833 326 8008.</div>
-        </div>
-      </div>
-      <div class="border border-gray-200 rounded-2xl overflow-hidden">
-        <button class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
-          ¿Qué plantas recomiendan para el calor de Tampico?
-          <svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform"><use href="#ic-chevron-down"/></svg>
-        </button>
-        <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed">
-          <div class="pb-4">Para el clima cálido-húmedo de Tampico recomendamos palmas tropicales (del viajero, areca, real, coco), Ficus elastica, plantas ornamentales de sol como heliconias y gingers, y para interior el pothos, sansevieria y aglaonema. El pasto San Agustín es ideal para jardines con algo de sombra.</div>
-        </div>
-      </div>
-    </div>
+    <button class="cart-wa-btn" onclick="sendWA()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enviar cotización por WhatsApp
+    </button>
+    <button class="cart-clear" onclick="clearCart()">🗑 Vaciar lista</button>
   </div>
-</section>
+</div>
 
-<!-- CTA FINAL -->
-<section class="py-16 bg-dark">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
-    <h2 class="text-3xl sm:text-4xl font-display font-bold text-white mb-4">¿No encuentras lo que buscas?</h2>
-    <p class="text-white/60 text-lg mb-8 max-w-xl mx-auto">Nuestro catálogo en vivero es más amplio. Escríbenos y te decimos si lo tenemos disponible hoy.</p>
-    <a href="https://wa.me/528333268008?text=Hola%2C%20vi%20el%20cat%C3%A1logo%20y%20quiero%20saber%20si%20tienen%20disponible%20algo%20espec%C3%ADfico" target="_blank" rel="noopener"
-       class="inline-flex items-center gap-3 bg-wa text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-400 transition-colors shadow-xl">
-      <svg class="w-6 h-6"><use href="#ic-whatsapp"/></svg>Consultar disponibilidad
-    </a>
-    <p class="text-white/40 text-sm mt-4">Respondemos en menos de 2 horas · Lun–Vie 9am–6pm · Sáb 9am–2pm</p>
-  </div>
-</section>
-
-<footer class="bg-dark text-white border-t border-white/10">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-      <div class="space-y-4">
-        <img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-dark" loading="lazy">
-        <p class="text-white/50 text-sm leading-relaxed">Viveros Terra: líder en jardinería profesional en Tampico, Madero y Altamira, Tamaulipas. Más de 20 años de experiencia.</p>
-        <div class="flex gap-2.5">
-          <a href="https://www.instagram.com/viverosterramx" target="_blank" rel="noopener" aria-label="Instagram" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-instagram"/></svg></a>
-          <a href="https://www.facebook.com/viverosterra/" target="_blank" rel="noopener" aria-label="Facebook" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-facebook"/></svg></a>
-          <a href="https://www.youtube.com/@viverosterramx" target="_blank" rel="noopener" aria-label="YouTube" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-youtube"/></svg></a>
-          <a href="http://www.tiktok.com/@viverosterra" target="_blank" rel="noopener" aria-label="TikTok" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-fuchsia-700 transition-colors"><svg class="w-4 h-4"><use href="#ic-tiktok"/></svg></a>
-        </div>
-      </div>
-      <div>
-        <h4 class="font-bold text-white mb-5">Servicios</h4>
-        <ul class="space-y-2.5 text-white/50 text-sm">
-          <li><a href="/pasto-en-rollo-tampico" class="hover:text-accent transition-colors">Pasto en Rollo San Agustín</a></li>
-          <li><a href="/diseno-jardines-tampico" class="hover:text-accent transition-colors">Diseño de Jardines</a></li>
-          <li><a href="/sistema-riego-tampico" class="hover:text-accent transition-colors">Sistema de Riego</a></li>
-          <li><a href="/mantenimiento-jardines-tampico" class="hover:text-accent transition-colors">Mantenimiento</a></li>
-          <li><a href="/catalogo" class="text-accent font-medium">Catálogo de Plantas ←</a></li>
-          <li><a href="/blog" class="hover:text-accent transition-colors">Blog de Jardinería</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="font-bold text-white mb-5">Zonas de servicio</h4>
-        <ul class="space-y-2 text-white/50 text-sm">
-          <li>Tampico, Tamaulipas</li><li>Ciudad Madero</li><li>Altamira</li>
-          <li>Pánuco, Veracruz</li><li>Ciudad Victoria</li><li>Zona Huasteca</li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="font-bold text-white mb-5">Contacto</h4>
-        <ul class="space-y-3 text-white/50 text-sm">
-          <li><a href="https://wa.me/528333268008" target="_blank" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg class="w-4 h-4 text-wa flex-shrink-0"><use href="#ic-whatsapp"/></svg>833 326 8008</a></li>
-          <li><a href="tel:8333268008" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg class="w-4 h-4 flex-shrink-0"><use href="#ic-phone"/></svg>833 326 8008</a></li>
-          <li><a href="mailto:viverosterra@hotmail.com" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg class="w-4 h-4 flex-shrink-0"><use href="#ic-mail"/></svg>viverosterra@hotmail.com</a></li>
-          <li class="flex items-start gap-2.5"><svg class="w-4 h-4 flex-shrink-0 mt-0.5"><use href="#ic-pin"/></svg>Av. Álvaro Obregón 601, Cd. Madero</li>
-          <li class="flex items-center gap-2.5"><svg class="w-4 h-4 flex-shrink-0"><use href="#ic-clock"/></svg>Lun–Vie 9am–6pm · Sáb 9am–2pm</li>
-        </ul>
-      </div>
-    </div>
-    <div class="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/30 text-xs">
-      <p>© 2026 Viveros Terra · Tampico, Tamaulipas, México · Jardinería · Pasto · Paisajismo</p>
-      <a href="/" class="hover:text-white/50 transition-colors">← Volver al inicio</a>
-    </div>
-  </div>
-</footer>
-
-<script>
-(function(){
-  var btns=document.querySelectorAll('.filter-btn');
-  var cards=document.querySelectorAll('.catalog-card');
-  btns.forEach(function(btn){
-    btn.addEventListener('click',function(){
-      btns.forEach(function(b){b.classList.remove('active');b.setAttribute('aria-selected','false');});
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected','true');
-      var cat=btn.dataset.cat;
-      cards.forEach(function(card){
-        if(cat==='todo'||card.dataset.cat===cat){card.style.display='';}
-        else{card.style.display='none';}
-      });
-    });
-  });
-})();
-
-document.querySelectorAll('.faq-btn').forEach(function(btn){
-  btn.addEventListener('click',function(){
-    var ans=btn.nextElementSibling;
-    var icon=btn.querySelector('.faq-icon');
-    var open=ans.classList.contains('open');
-    document.querySelectorAll('.faq-answer').forEach(function(a){a.classList.remove('open');});
-    document.querySelectorAll('.faq-icon').forEach(function(i){i.style.transform='';});
-    document.querySelectorAll('.faq-btn').forEach(function(b){b.setAttribute('aria-expanded','false');});
-    if(!open){ans.classList.add('open');icon.style.transform='rotate(180deg)';btn.setAttribute('aria-expanded','true');}
-  });
-});
-
-var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.reveal').forEach(function(el){var r=el.getBoundingClientRect();if(r.top<window.innerHeight-40){el.classList.add('visible');}else{obs.observe(el);}});
-setTimeout(function(){document.querySelectorAll('.reveal:not(.visible)').forEach(function(el){el.classList.add('visible');});},900);
-</script>
 </body>
 </html>
