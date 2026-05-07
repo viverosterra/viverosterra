@@ -129,6 +129,36 @@ textarea{resize:vertical;min-height:80px}
   .wizard-step span.label{display:none}
   .timer-badge{display:none}
 }
+
+.terra-nav__dropdown {
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 720px;
+}
+.terra-nav__drop-col {
+  display: flex;
+  flex-direction: column;
+}
+.terra-nav__drop-section {
+  margin-top: 14px;
+}
+.terra-nav__drop-section:first-child {
+  margin-top: 0;
+}
+.terra-nav__drop-header {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #1B5E20;
+  padding: 6px 12px 6px;
+  border-bottom: 1px solid #e8f0e8;
+  margin-bottom: 4px;
+}
+@media (max-width: 900px) {
+  .terra-nav__dropdown { width: 100%; grid-template-columns: 1fr; }
+}
+
 </style>
 </head>
 <body>

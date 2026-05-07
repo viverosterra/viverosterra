@@ -45,6 +45,36 @@ h1,h2,h3,h4{font-family:"Playfair Display",serif}
 .toc-link:hover,.toc-link.active{border-color:#1B5E20;color:#1B5E20;background:#F0F7F0}
 @media(min-width:1024px){.layout-grid{display:grid;grid-template-columns:1fr 280px;gap:3rem;align-items:start}}
 .sticky-sidebar{position:sticky;top:5rem}
+
+.terra-nav__dropdown {
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 720px;
+}
+.terra-nav__drop-col {
+  display: flex;
+  flex-direction: column;
+}
+.terra-nav__drop-section {
+  margin-top: 14px;
+}
+.terra-nav__drop-section:first-child {
+  margin-top: 0;
+}
+.terra-nav__drop-header {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #1B5E20;
+  padding: 6px 12px 6px;
+  border-bottom: 1px solid #e8f0e8;
+  margin-bottom: 4px;
+}
+@media (max-width: 900px) {
+  .terra-nav__dropdown { width: 100%; grid-template-columns: 1fr; }
+}
+
 </style>
 <script type="application/ld+json">{
   "@context": "https://schema.org",
