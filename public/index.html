@@ -1496,6 +1496,7 @@
   /* ── Scroll reveal ── */
   const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0,rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.reveal').forEach(el=>{const r=el.getBoundingClientRect();if(r.top<window.innerHeight-40){el.classList.add('visible');}else{obs.observe(el);}});
+  setTimeout(()=>{document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible'));},900);
 
   /* ── Active nav ── */
   const secs=document.querySelectorAll('section[id]'),navLinks=document.querySelectorAll('header a[href^="#"]');
