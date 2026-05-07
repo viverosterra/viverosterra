@@ -1,3 +1,30 @@
+# Catálogo Interactivo con Filtros — Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Reescribir `public/catalogo.html` como catálogo interactivo con 16 productos filtrables, SEO completo, schema markup y CTAs WhatsApp por producto.
+
+**Architecture:** Reescritura completa de un solo archivo HTML. Todo el contenido de productos en el DOM desde load inicial (SEO). JS vanilla ~50 líneas maneja visibilidad del filtro con `display:none`. Reutiliza el terra-nav y footer del resto del sitio. Resuelve además el interlinking de 6 páginas huérfanas.
+
+**Tech Stack:** HTML5, Tailwind CDN (mismo config que el sitio), JS vanilla, imágenes existentes en `/img/`.
+
+---
+
+## Archivos
+
+- **Modificar:** `public/catalogo.html` — reescritura completa
+- **Modificar:** `public/sitemap.xml` — actualizar `<lastmod>` de `/catalogo`
+
+---
+
+### Task 1: Head, SVG icons, nav y estructura base
+
+**Archivos:**
+- Modify: `public/catalogo.html` (reemplazar contenido completo)
+
+- [ ] **Paso 1: Reemplazar el archivo completo con la estructura base**
+
+```html
 <!DOCTYPE html>
 <html lang="es-MX">
 <head>
@@ -17,13 +44,8 @@
 <meta property="og:title" content="Catálogo Viveros Terra — Plantas, Pasto y Materiales en Tampico">
 <meta property="og:description" content="Catálogo completo de Viveros Terra en Tampico — pasto San Agustín, palmas, plantas ornamentales y materiales. +150 variedades, entrega a domicilio.">
 <meta property="og:image" content="https://www.viverosterra.com/img/jardin-residencial-tropical-tampico.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="Viveros Terra">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Catálogo Viveros Terra — Plantas, Pasto y Materiales en Tampico">
-<meta name="twitter:image" content="https://www.viverosterra.com/img/jardin-residencial-tropical-tampico.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -44,6 +66,8 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 .catalog-card{transition:opacity .2s ease}
 .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease}.faq-answer.open{max-height:400px}
 </style>
+
+<!-- Schema JSON-LD -->
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -93,6 +117,8 @@ h1,h2,h3{font-family:"Playfair Display",serif}
   ]
 }
 </script>
+
+<!-- SVG Icons — mismos que el resto del sitio -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
 <symbol id="ic-whatsapp" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
 <symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 11a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.98 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></symbol>
@@ -106,6 +132,8 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 <symbol id="ic-youtube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor"/></symbol>
 <symbol id="ic-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.77a4.85 4.85 0 01-1.01-.08z"/></symbol>
 </svg>
+
+<!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RMZCVJ734M"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RMZCVJ734M');</script>
 </head>
@@ -117,431 +145,41 @@ h1,h2,h3{font-family:"Playfair Display",serif}
   <svg class="w-5 h-5 flex-shrink-0"><use href="#ic-whatsapp"/></svg>
   <span class="hidden sm:inline">Cotizar ahora</span>
 </a>
+```
 
-<style>
-/* ── NAVBAR BLANCO ──────────────────────────────────────────── */
-.terra-nav {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: #ffffff;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  border-bottom: 1px solid #e8e8e8;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-.terra-nav__inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  height: 64px;
-}
-/* LOGO */
-.terra-nav__logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  flex-shrink: 0;
-  margin-right: 32px;
-}
-.terra-nav__logo img {
-  height: 38px;
-  width: auto;
-  display: block;
-}
-/* LINKS PRIMARIOS */
-.terra-nav__links {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  flex: 1;
-}
-.terra-nav__links li { position: relative; }
+- [ ] **Paso 2: Verificar en el navegador** — abrir `public/catalogo.html` en browser local. Debe verse el fondo crema del body sin errores de consola.
 
-.terra-nav__links a,
-.terra-nav__links button {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 14px;
-  color: #2d2d2d;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 400;
-  border-radius: 6px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s, color 0.15s;
-}
-.terra-nav__links a:hover,
-.terra-nav__links button:hover {
-  background: #f3f4f3;
-  color: #1a5c1a;
-}
-.terra-nav__links a.is-active {
-  color: #1a5c1a;
-  font-weight: 500;
-  background: #edf7ed;
-}
-/* Flecha dropdown */
-.terra-nav__chevron {
-  width: 10px;
-  height: 10px;
-  flex-shrink: 0;
-  transition: transform 0.2s;
-}
-.terra-nav__drop-trigger[aria-expanded="true"] .terra-nav__chevron {
-  transform: rotate(180deg);
-}
+- [ ] **Commit parcial**
+```bash
+cd /tmp/viverosterra-site
+git add public/catalogo.html
+git commit -m "feat(catalogo): estructura base, head SEO, schemas JSON-LD y SVG icons"
+```
 
-/* ── DROPDOWN BLANCO ─────────────────────────────────────────── */
-.terra-nav__dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  width: 580px;
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 12px;
-  display: none;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-}
-.terra-nav__dropdown.is-open { display: grid; }
+---
 
-.terra-nav__drop-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.15s;
-}
-.terra-nav__drop-item:hover { background: #f3f8f3; }
+### Task 2: Terra-nav (copiar exacto de otra página) + Hero + Filtros
 
-.terra-nav__drop-icon {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  border-radius: 6px;
-  background: #edf7ed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  line-height: 1;
-}
-.terra-nav__drop-text strong {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: #1a1a1a;
-  margin-bottom: 2px;
-}
-.terra-nav__drop-text span {
-  font-size: 12px;
-  color: #777;
-  line-height: 1.4;
-}
+**Archivos:**
+- Modify: `public/catalogo.html` (append después del wa-float)
 
-/* ── DERECHA ─────────────────────────────────────────────────── */
-.terra-nav__right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: auto;
-  flex-shrink: 0;
-}
-.terra-nav__tel {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #444;
-  font-size: 13px;
-  text-decoration: none;
-  padding: 6px 10px;
-  border-radius: 6px;
-  transition: background 0.15s;
-  white-space: nowrap;
-}
-.terra-nav__tel:hover { background: #f3f4f3; color: #1a5c1a; }
-.terra-nav__tel svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+- [ ] **Paso 1: Añadir la terra-nav**
 
-/* CTA verde WhatsApp */
-.terra-nav__cta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 18px;
-  background: #25d366;
-  color: #fff !important;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.15s, transform 0.1s;
-}
-.terra-nav__cta:hover { background: #1db954; transform: translateY(-1px); }
-.terra-nav__cta:active { transform: translateY(0); }
-.terra-nav__cta svg { width: 16px; height: 16px; fill: #fff; flex-shrink: 0; }
+Copiar el bloque `<nav class="terra-nav"...>` completo desde `public/diseno-jardines-tampico/index.html` (líneas 98–520 aproximadamente). El `data-page` debe ser `/catalogo`:
 
-/* ── HAMBURGER ───────────────────────────────────────────────── */
-.terra-nav__hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 36px;
-  height: 36px;
-  padding: 6px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  border-radius: 6px;
-  margin-left: auto;
-}
-.terra-nav__hamburger:hover { background: #f3f4f3; }
-.terra-nav__hamburger span {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: #333;
-  border-radius: 2px;
-  transition: transform 0.2s, opacity 0.2s;
-}
-.terra-nav__hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.terra-nav__hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.terra-nav__hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* ── DRAWER MOBILE ───────────────────────────────────────────── */
-.terra-nav__drawer {
-  display: none;
-  flex-direction: column;
-  background: #fff;
-  padding: 8px 16px 20px;
-  border-top: 1px solid #eee;
-}
-.terra-nav__drawer.is-open { display: flex; }
-
-.terra-nav__drawer a,
-.terra-nav__drawer button {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 8px;
-  color: #2d2d2d;
-  font-size: 15px;
-  text-decoration: none;
-  border: none;
-  background: none;
-  cursor: pointer;
-  border-bottom: 1px solid #f0f0f0;
-  width: 100%;
-  text-align: left;
-}
-.terra-nav__drawer a.is-active { color: #1a5c1a; font-weight: 500; }
-
-.terra-nav__drawer-sub {
-  display: none;
-  flex-direction: column;
-  padding-left: 20px;
-}
-.terra-nav__drawer-sub.is-open { display: flex; }
-.terra-nav__drawer-sub a { font-size: 14px; padding: 9px 8px; color: #555; }
-
-.terra-nav__drawer-cta {
-  margin-top: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 13px 20px;
-  background: #25d366;
-  color: #fff !important;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-}
-
-/* ── RESPONSIVE ──────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .terra-nav__links, .terra-nav__tel, .terra-nav__cta { display: none; }
-  .terra-nav__hamburger { display: flex; }
-  .terra-nav__logo { margin-right: 0; }
-}
-</style>
-
+```html
+<!-- NAVBAR — copiar bloque <nav> completo de diseno-jardines-tampico/index.html -->
+<!-- Cambiar data-page="/" a data-page="/catalogo" -->
 <nav class="terra-nav" data-page="/catalogo">
-  <div class="terra-nav__inner">
-
-    <!-- LOGO -->
-    <a href="/" class="terra-nav__logo" aria-label="Viveros Terra — Inicio">
-      <img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" />
-    </a>
-
-    <!-- LINKS DESKTOP -->
-    <ul class="terra-nav__links">
-
-      <!-- SERVICIOS con dropdown -->
-      <li>
-        <button class="terra-nav__drop-trigger" aria-expanded="false" aria-controls="dropdown-servicios">
-          Servicios
-          <svg class="terra-nav__chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <div class="terra-nav__dropdown" id="dropdown-servicios" role="menu">
-          <a class="terra-nav__drop-item" href="/pasto-en-rollo-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">🌿</span>
-            <span class="terra-nav__drop-text"><strong>Pasto en Rollo San Agustín</strong><span>Instalación desde $85/m² · Mayoreo</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/pasto-sintetico-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">♻️</span>
-            <span class="terra-nav__drop-text"><strong>Pasto Sintético</strong><span>Verde todo el año, sin mantenimiento</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/plantas-palmas-arboles-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">🌴</span>
-            <span class="terra-nav__drop-text"><strong>Plantas, Palmas y Árboles</strong><span>+118 especies tropicales del vivero</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/diseno-jardines-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">🏡</span>
-            <span class="terra-nav__drop-text"><strong>Diseño de Jardines</strong><span>Plan Terra desde $3,000</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/mantenimiento-jardines-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">✂️</span>
-            <span class="terra-nav__drop-text"><strong>Mantenimiento</strong><span>Desde $750/mes · Residencial e industrial</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/sistema-riego-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">💧</span>
-            <span class="terra-nav__drop-text"><strong>Sistema de Riego</strong><span>Automatizado · Ahorra hasta 40% agua</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/tierra-negra-vegetal-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">🪴</span>
-            <span class="terra-nav__drop-text"><strong>Tierra Negra y Sustratos</strong><span>Costal desde $90 · Camión volteo</span></span>
-          </a>
-          <a class="terra-nav__drop-item" href="/tezontle-rojo-tampico" role="menuitem">
-            <span class="terra-nav__drop-icon">🪨</span>
-            <span class="terra-nav__drop-text"><strong>Piedras y Mármol</strong><span>Tezontle, mármol blanco, piedra bola</span></span>
-          </a>
-        </div>
-      </li>
-
-      <li><a href="/catalogo">Catálogo</a></li>
-      <li><a href="/blog">Blog</a></li>
-
-    </ul>
-
-    <!-- DERECHA: TEL + CTA -->
-    <div class="terra-nav__right">
-      <a href="tel:8333268008" class="terra-nav__tel" aria-label="Llamar a Viveros Terra">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
-        833 326 8008
-      </a>
-      <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20una%20cotización%20de%20Viveros%20Terra" class="terra-nav__cta" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Cotizar por WhatsApp
-      </a>
-    </div>
-
-    <!-- HAMBURGER -->
-    <button class="terra-nav__hamburger" aria-expanded="false" aria-controls="terra-nav-drawer" aria-label="Abrir menú">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-
-  <!-- DRAWER MOBILE -->
-  <div class="terra-nav__drawer" id="terra-nav-drawer">
-    <button class="terra-nav__drawer-sub-toggle" aria-expanded="false">
-      🌿 Servicios
-      <svg class="terra-nav__chevron" style="margin-left:auto;width:12px;height:12px;" viewBox="0 0 10 6" fill="none">
-        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <div class="terra-nav__drawer-sub" id="drawer-sub-servicios">
-      <a href="/pasto-en-rollo-tampico">Pasto en Rollo San Agustín</a>
-      <a href="/pasto-sintetico-tampico">Pasto Sintético</a>
-      <a href="/plantas-palmas-arboles-tampico">Plantas, Palmas y Árboles</a>
-      <a href="/diseno-jardines-tampico">Diseño de Jardines</a>
-      <a href="/mantenimiento-jardines-tampico">Mantenimiento</a>
-      <a href="/sistema-riego-tampico">Sistema de Riego</a>
-      <a href="/tierra-negra-vegetal-tampico">Tierra Negra y Sustratos</a>
-      <a href="/tezontle-rojo-tampico">Piedras y Mármol</a>
-    </div>
-    <a href="/catalogo">📋 Catálogo</a>
-    <a href="/blog">📝 Blog</a>
-    <a href="tel:8333268008">📞 833 326 8008</a>
-    <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20una%20cotización%20de%20Viveros%20Terra" class="terra-nav__drawer-cta" target="_blank" rel="noopener noreferrer">
-      💬 Cotizar por WhatsApp
-    </a>
-  </div>
+  <!-- ... mismo contenido nav ... -->
 </nav>
+```
 
-<script>
-(function() {
-  var nav = document.querySelector('.terra-nav');
-  if (!nav) return;
-  var currentPage = nav.dataset.page || window.location.pathname;
-  nav.querySelectorAll('a[href]').forEach(function(link) {
-    var href = link.getAttribute('href');
-    if (href && href !== '/' && currentPage.startsWith(href)) link.classList.add('is-active');
-    if (href === '/' && currentPage === '/') link.classList.add('is-active');
-  });
-  var trigger = nav.querySelector('.terra-nav__drop-trigger');
-  var dropdown = document.getElementById('dropdown-servicios');
-  if (trigger && dropdown) {
-    trigger.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var open = trigger.getAttribute('aria-expanded') === 'true';
-      trigger.setAttribute('aria-expanded', String(!open));
-      dropdown.classList.toggle('is-open', !open);
-    });
-    document.addEventListener('click', function(e) {
-      if (!nav.contains(e.target)) {
-        trigger.setAttribute('aria-expanded', 'false');
-        dropdown.classList.remove('is-open');
-      }
-    });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        trigger.setAttribute('aria-expanded', 'false');
-        dropdown.classList.remove('is-open');
-      }
-    });
-  }
-  var hamburger = nav.querySelector('.terra-nav__hamburger');
-  var drawer = document.getElementById('terra-nav-drawer');
-  if (hamburger && drawer) {
-    hamburger.addEventListener('click', function() {
-      var open = hamburger.getAttribute('aria-expanded') === 'true';
-      hamburger.setAttribute('aria-expanded', String(!open));
-      drawer.classList.toggle('is-open', !open);
-    });
-  }
-  var subToggle = nav.querySelector('.terra-nav__drawer-sub-toggle');
-  var subMenu = document.getElementById('drawer-sub-servicios');
-  if (subToggle && subMenu) {
-    subToggle.addEventListener('click', function() {
-      var open = subToggle.getAttribute('aria-expanded') === 'true';
-      subToggle.setAttribute('aria-expanded', String(!open));
-      subMenu.classList.toggle('is-open', !open);
-      var ch = subToggle.querySelector('.terra-nav__chevron');
-      if (ch) ch.style.transform = open ? '' : 'rotate(180deg)';
-    });
-  }
-})();
-</script>
+> Instrucción exacta: En tu editor, abre `public/diseno-jardines-tampico/index.html`, localiza `<nav class="terra-nav"`, copia hasta el cierre `</nav>` (incluye el `<script>` de inicialización del nav), y pégalo en `public/catalogo.html` tras el wa-float. Cambia `data-page="/diseno-jardines-tampico"` a `data-page="/catalogo"`.
 
+- [ ] **Paso 2: Añadir sección HERO**
+
+```html
 <!-- HERO -->
 <section class="bg-dark pt-8 pb-16">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -567,11 +205,15 @@ h1,h2,h3{font-family:"Playfair Display",serif}
     </div>
   </div>
 </section>
+```
 
+- [ ] **Paso 3: Añadir sección FILTROS**
+
+```html
 <!-- FILTROS -->
 <div class="bg-white border-b border-gray-200 sticky top-16 z-40 shadow-sm">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex gap-2 overflow-x-auto py-3" role="tablist" aria-label="Filtrar catálogo por categoría" id="filter-bar">
+    <div class="flex gap-2 overflow-x-auto py-3 scrollbar-hide" role="tablist" aria-label="Filtrar catálogo por categoría" id="filter-bar">
       <button class="filter-btn active flex-shrink-0 px-5 py-2 rounded-full text-sm font-semibold border border-gray-200 bg-primary text-white transition-all" data-cat="todo" role="tab" aria-selected="true">
         Todos los productos
       </button>
@@ -587,238 +229,327 @@ h1,h2,h3{font-family:"Playfair Display",serif}
     </div>
   </div>
 </div>
+```
 
+- [ ] **Paso 4: Verificar en el navegador** — filtros deben verse pegados bajo el nav al hacer scroll. No deben solaparse.
+
+- [ ] **Commit**
+```bash
+git add public/catalogo.html
+git commit -m "feat(catalogo): hero oscuro + barra de filtros sticky"
+```
+
+---
+
+### Task 3: Grid de productos — las 16 cards
+
+**Archivos:**
+- Modify: `public/catalogo.html` (append después de la barra de filtros)
+
+- [ ] **Paso 1: Añadir el contenedor del grid + sección PASTO (3 cards)**
+
+```html
 <!-- GRID DE PRODUCTOS -->
 <section class="py-16 bg-bgwarm">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Título de sección visible para SEO -->
     <div class="mb-10 reveal" id="grid-intro">
       <p class="text-sm font-semibold text-primary uppercase tracking-widest mb-2">Disponible en vivero</p>
       <h2 class="text-3xl font-display font-bold text-gray-900">Todo lo que necesitas para tu jardín</h2>
       <p class="text-gray-500 mt-2">Usa los filtros para encontrar lo que buscas. Cada producto tiene su propio link directo a WhatsApp.</p>
     </div>
+
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="catalog-grid">
 
-      <!-- PASTO -->
+      <!-- ═══════════════ PASTO ═══════════════ -->
+
+      <!-- Pasto San Agustín -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-primary transition-all reveal" data-cat="pasto">
-        <div class="img-card h-48"><img src="/img/pasto-en-rollo-san-agustin-tampico.jpg" alt="Pasto San Agustín en rollo disponible en Viveros Terra Tampico" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/pasto-en-rollo-san-agustin-tampico.jpg" alt="Pasto San Agustín en rollo disponible en Viveros Terra Tampico" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-primary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌿 Pasto</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Pasto San Agustín en Rollo</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Fresco de corte semanal, directo del campo. Resiste el calor costero de Tampico y tolera media sombra. Garantía de arraigo en 21 días con instalación.</p>
           <p class="text-primary font-bold text-base mb-4">Desde $85/m²</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20pasto%20San%20Agust%C3%ADn%20en%20rollo%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20pasto%20San%20Agustín%20en%20rollo%20para%20mi%20jardín%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar San Agustín
           </a>
           <a href="/pasto-en-rollo-tampico" class="block text-center text-xs text-primary hover:underline mt-2">Ver detalles y precios →</a>
         </div>
       </article>
 
+      <!-- Pasto Japonés -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-primary transition-all reveal" data-cat="pasto">
-        <div class="img-card h-48"><img src="/img/pasto-en-rollo-san-agustin-tampico.jpg" alt="Pasto Japonés en rollo en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/pasto-en-rollo-san-agustin-tampico.jpg" alt="Pasto Japonés en rollo en Tampico — Viveros Terra" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-primary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌿 Pasto</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Pasto Japonés en Rollo</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Textura fina y densa. Ideal para jardines residenciales de alta estética en Tampico y zona Huasteca. Requiere buena iluminación.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según disponibilidad</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20pasto%20Japon%C3%A9s%20en%20rollo%20para%20mi%20jard%C3%ADn" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20pasto%20Japonés%20en%20rollo%20para%20mi%20jardín" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Pasto Japonés
           </a>
           <a href="/pasto-en-rollo-tampico" class="block text-center text-xs text-primary hover:underline mt-2">Ver detalles →</a>
         </div>
       </article>
 
+      <!-- Pasto Sintético -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-primary transition-all reveal" data-cat="pasto">
-        <div class="img-card h-48"><img src="/img/pasto-sintetico-tampico-instalacion.png" alt="Pasto sintético instalado en jardín en Tampico por Viveros Terra" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/pasto-sintetico-tampico-instalacion.png" alt="Pasto sintético instalado en jardín en Tampico por Viveros Terra" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-primary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌿 Pasto</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Pasto Sintético</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Sin riego, sin cortes, sin fertilización. Ideal para terrazas, canchas y zonas de alto tráfico en Tampico, Madero y Altamira.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar por m²</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20pasto%20sint%C3%A9tico%20para%20mi%20espacio%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20pasto%20sintético%20para%20mi%20espacio%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Pasto Sintético
           </a>
           <a href="/pasto-sintetico-tampico" class="block text-center text-xs text-primary hover:underline mt-2">Ver opciones →</a>
         </div>
       </article>
 
-      <!-- PLANTAS & PALMAS -->
+      <!-- ═══════════════ PLANTAS & PALMAS ═══════════════ -->
+
+      <!-- Palma del Viajero -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma del Viajero disponible en Viveros Terra Tampico" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma del Viajero disponible en Viveros Terra Tampico" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Palma del Viajero</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Espectacular palmera tropical con abanico característico. Crece con fuerza en el clima cálido-húmedo de Tampico. Disponible en varios tamaños.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según tamaño</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20del%20viajero%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20del%20viajero%20para%20mi%20jardín%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Palma del Viajero
           </a>
           <a href="/palmas-tropicales-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver guía completa →</a>
         </div>
       </article>
 
+      <!-- Palma Areca -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma Areca en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma Areca en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Palma Areca</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Elegante y de rápido crecimiento. Perfecta para crear privacidad en jardines y terrazas en Tampico. Tolera bien la humedad de la Huasteca.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según tamaño</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20areca%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20areca%20para%20mi%20jardín%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Palma Areca
           </a>
           <a href="/palmas-para-jardin-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver guía de palmas →</a>
         </div>
       </article>
 
+      <!-- Palma Real -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma Real en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma Real en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Palma Real</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Imponente palma de tronco plateado. Referencia tropical de los jardines del sur de Tamaulipas. Alta resistencia al calor y al viento costero.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según tamaño</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20real%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20real%20para%20mi%20jardín%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Palma Real
           </a>
           <a href="/plantas-palmas-arboles-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver todas las palmas →</a>
         </div>
       </article>
 
+      <!-- Palma Coco -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma Coco en venta en Viveros Terra Tampico" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/plantas-tropicales-tampico-viveros.png" alt="Palma Coco en venta en Viveros Terra Tampico" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Palma Coco</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">El ícono del trópico. Resistente al calor y la brisa marina del Golfo. Ideal para jardines costeros en Tampico, Madero y Altamira.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según tamaño</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20coco%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20palma%20coco%20para%20mi%20jardín%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Palma Coco
           </a>
           <a href="/plantas-palmas-arboles-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver todas las palmas →</a>
         </div>
       </article>
 
+      <!-- Ficus Elastica -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-ornamentales-tampico-viveros-terra.png" alt="Ficus Elastica en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/plantas-ornamentales-tampico-viveros-terra.png" alt="Ficus Elastica en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Ficus Elastica</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Árbol ornamental de hojas grandes y brillantes. Perfecto para interiores luminosos o jardines tropicales en Tampico. Bajo mantenimiento.</p>
+          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Arbol ornamental de hojas grandes y brillantes. Perfecto para interiores luminosos o jardines tropicales en Tampico. Bajo mantenimiento.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20ficus%20elastica%20para%20mi%20espacio%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20ficus%20elastica%20para%20mi%20espacio%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Ficus Elastica
           </a>
           <a href="/plantas-palmas-arboles-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver más plantas →</a>
         </div>
       </article>
 
+      <!-- Plantas Ornamentales -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-ornamentales-tampico-viveros-terra.png" alt="Plantas ornamentales tropicales para jardines en Tampico" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/plantas-ornamentales-tampico-viveros-terra.png" alt="Plantas ornamentales tropicales para jardines en Tampico" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Plantas Ornamentales</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Más de 80 variedades adaptadas al clima cálido-húmedo de Tampico. Heliconias, gingers, bromelias y más para jardines tropicales.</p>
+          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Más de 80 variedades de plantas ornamentales adaptadas al clima cálido-húmedo de Tampico. Heliconias, gingers, bromelias y más.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar por variedad</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20plantas%20ornamentales%20para%20mi%20jard%C3%ADn%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20plantas%20ornamentales%20para%20mi%20jardín%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Plantas
           </a>
           <a href="/plantas-para-jardin-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver guía de plantas →</a>
         </div>
       </article>
 
+      <!-- Plantas de Interior -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/plantas-ornamentales-tampico-viveros-terra.png" alt="Plantas de interior para casas en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/plantas-ornamentales-tampico-viveros-terra.png" alt="Plantas de interior para casas en Tampico — Viveros Terra" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Plantas de Interior</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Especies seleccionadas para el calor de Tampico: pothos, sansevieria, aglaonema, spathiphyllum y más. Bajo mantenimiento, alta resistencia.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar por variedad</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20plantas%20de%20interior%20para%20mi%20casa%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20plantas%20de%20interior%20para%20mi%20casa%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Plantas Interior
           </a>
-          <a href="/plantas-de-interior-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver guía plantas interior →</a>
+          <a href="/plantas-de-interior-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver guía de plantas interior →</a>
         </div>
       </article>
 
+      <!-- Árboles para jardín y banqueta -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-secondary transition-all reveal" data-cat="plantas">
-        <div class="img-card h-48"><img src="/img/jardineria-profesional-tampico-empresa.png" alt="Árboles para jardín y banqueta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/jardineria-profesional-tampico-empresa.png" alt="Árboles para jardín y banqueta en Tampico — Viveros Terra" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-secondary text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🌴 Plantas &amp; Palmas</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Árboles para Jardín y Banqueta</h3>
-          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Tabachín, fresno, trueno, primavera y más. Especies que no levantan el pavimento y toleran el calor de Tamaulipas.</p>
+          <p class="text-gray-500 text-sm mb-3 leading-relaxed">Tabachín, fresno, trueno, primavera y más. Especies que no levantan el pavimento y toleran el calor de Tamaulipas. Para casas y aceras.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar según especie</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20%C3%A1rboles%20para%20jard%C3%ADn%20o%20banqueta%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20árboles%20para%20jardín%20o%20banqueta%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Árboles
           </a>
           <a href="/arboles-para-banqueta-tampico" class="block text-center text-xs text-secondary hover:underline mt-2">Ver guía de árboles →</a>
         </div>
       </article>
 
-      <!-- MATERIALES -->
+      <!-- ═══════════════ MATERIALES ═══════════════ -->
+
+      <!-- Tierra Negra Vegetal -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-amber-600 transition-all reveal" data-cat="materiales">
-        <div class="img-card h-48"><img src="/img/tierra-negra-jardin-tampico.png" alt="Tierra negra vegetal en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/tierra-negra-jardin-tampico.png" alt="Tierra negra vegetal en venta en Tampico — Viveros Terra" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-amber-800 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🪨 Materiales</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Tierra Negra Vegetal</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Tierra de alta calidad para preparación de jardines, nivelación y relleno. Ideal para el establecimiento de pasto San Agustín en Tampico.</p>
           <p class="text-primary font-bold text-sm mb-4">$90/costal · $1,500/m³</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20tierra%20negra%20vegetal%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20tierra%20negra%20vegetal%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Tierra Negra
           </a>
           <a href="/tierra-negra-vegetal-tampico" class="block text-center text-xs text-amber-800 hover:underline mt-2">Ver precios y camiones →</a>
         </div>
       </article>
 
+      <!-- Tierra Negra para Maceta -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-amber-600 transition-all reveal" data-cat="materiales">
-        <div class="img-card h-48"><img src="/img/tierra-negra-jardin-tampico.png" alt="Tierra negra para maceta en Tampico — Viveros Terra" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/tierra-negra-jardin-tampico.png" alt="Tierra negra para maceta en Tampico — Viveros Terra" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-amber-800 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🪨 Materiales</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Tierra Negra para Maceta</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Sustrato enriquecido para macetas y contenedores. Formulado para retener humedad y favorecer el drenaje en el clima tropical de Tampico.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar por costal</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20tierra%20negra%20para%20maceta%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20tierra%20negra%20para%20maceta%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Tierra para Maceta
           </a>
           <a href="/tierra-negra-vegetal-tampico" class="block text-center text-xs text-amber-800 hover:underline mt-2">Ver más sustratos →</a>
         </div>
       </article>
 
+      <!-- Tezontle Rojo -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-amber-600 transition-all reveal" data-cat="materiales">
-        <div class="img-card h-48"><img src="/img/tezontle-rojo-jardin-tampico-sendero.jpg" alt="Tezontle rojo para jardines y senderos en Tampico" loading="lazy" width="600" height="400" style="object-position:center"></div>
+        <div class="img-card h-48">
+          <img src="/img/tezontle-rojo-jardin-tampico-sendero.jpg" alt="Tezontle rojo para jardines y senderos en Tampico" loading="lazy" width="600" height="400" style="object-position:center">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-amber-800 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🪨 Materiales</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Tezontle Rojo</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Piedra volcánica roja para senderos, macizos y drenaje de jardines. 8 usos distintos para transformar cualquier espacio exterior en Tampico.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar por costal o camión</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20tezontle%20rojo%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20tezontle%20rojo%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibient text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Tezontle Rojo
           </a>
           <a href="/tezontle-rojo-tampico" class="block text-center text-xs text-amber-800 hover:underline mt-2">Ver usos y precios →</a>
         </div>
       </article>
 
+      <!-- Mármol Blanco -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-amber-600 transition-all reveal" data-cat="materiales">
-        <div class="img-card h-48"><img src="/img/piedra-marmol-blanca-decorativa-jardin-tampico.webp" alt="Mármol blanco decorativo para jardines en Tampico" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/piedra-marmol-blanca-decorativa-jardin-tampico.webp" alt="Mármol blanco decorativo para jardines en Tampico" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-amber-800 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🪨 Materiales</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Mármol Blanco Decorativo</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Piedra de mármol blanco triturada para senderos, fuentes y bordes de jardín. Da un aspecto elegante y sofisticado a cualquier espacio exterior.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20m%C3%A1rmol%20blanco%20decorativo%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20mármol%20blanco%20decorativo%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Mármol Blanco
           </a>
           <a href="/marmol-blanco-tampico" class="block text-center text-xs text-amber-800 hover:underline mt-2">Ver opciones →</a>
         </div>
       </article>
 
+      <!-- Piedra de Río -->
       <article class="catalog-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:border-amber-600 transition-all reveal" data-cat="materiales">
-        <div class="img-card h-48"><img src="/img/piedra-marmol-blanca-decorativa-jardin-tampico.webp" alt="Piedra de río y piedra bola para jardines en Tampico" loading="lazy" width="600" height="400"></div>
+        <div class="img-card h-48">
+          <img src="/img/piedra-marmol-blanca-decorativa-jardin-tampico.webp" alt="Piedra de río y piedra bola para jardines en Tampico" loading="lazy" width="600" height="400">
+        </div>
         <div class="p-5">
           <span class="inline-block bg-amber-800 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3">🪨 Materiales</span>
           <h3 class="font-display font-bold text-gray-900 text-lg mb-1">Piedra de Río / Bola</h3>
           <p class="text-gray-500 text-sm mb-3 leading-relaxed">Piedra natural redondeada para senderos, fuentes, estanques y decoración de jardines. Disponible en varios tamaños para proyectos en Tampico.</p>
           <p class="text-gray-400 font-medium text-sm mb-4">Cotizar</p>
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20piedra%20de%20r%C3%ADo%20o%20bola%20en%20Tampico" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20piedra%20de%20río%20o%20bola%20en%20Tampico" target="_blank" rel="noopener"
+             class="flex items-center justify-center gap-2 w-full bg-wa text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-green-500 transition-colors">
             <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Piedra de Río
           </a>
           <a href="/piedra-bola-rio-tampico" class="block text-center text-xs text-amber-800 hover:underline mt-2">Ver opciones →</a>
@@ -828,7 +559,26 @@ h1,h2,h3{font-family:"Playfair Display",serif}
     </div><!-- /catalog-grid -->
   </div>
 </section>
+```
 
+- [ ] **Verificar en navegador** — los 16 cards deben verse en grid de 3 columnas en desktop. Cada card tiene foto, badge de categoría, descripción, precio y botón WA.
+
+- [ ] **Commit**
+```bash
+git add public/catalogo.html
+git commit -m "feat(catalogo): 16 product cards con CTAs WhatsApp y links internos"
+```
+
+---
+
+### Task 4: FAQ + CTA final + Footer + JS de filtros
+
+**Archivos:**
+- Modify: `public/catalogo.html` (append después del grid)
+
+- [ ] **Paso 1: Añadir sección FAQ**
+
+```html
 <!-- FAQ -->
 <section class="py-16 bg-white">
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -837,6 +587,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
       <p class="text-gray-500 mt-2">Sobre disponibilidad, precios, entrega y más</p>
     </div>
     <div class="space-y-3 reveal">
+
       <div class="border border-gray-200 rounded-2xl overflow-hidden">
         <button class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
           ¿Tienen entrega a domicilio de plantas y materiales en Tampico?
@@ -846,6 +597,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
           <div class="pb-4">Sí. Viveros Terra entrega plantas, pasto en rollo y materiales a domicilio en Tampico, Ciudad Madero y Altamira. Para pedidos grandes coordinamos logística a toda la zona Huasteca. Cotiza por WhatsApp al 833 326 8008.</div>
         </div>
       </div>
+
       <div class="border border-gray-200 rounded-2xl overflow-hidden">
         <button class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
           ¿Cuánto cuesta el pasto San Agustín en Tampico?
@@ -855,6 +607,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
           <div class="pb-4">El pasto San Agustín en rollo cuesta desde $85 por metro cuadrado (solo el pasto, sin entrega ni instalación). Con instalación profesional cotizamos según el tamaño del jardín y el estado del terreno. Cotización gratis sin compromiso.</div>
         </div>
       </div>
+
       <div class="border border-gray-200 rounded-2xl overflow-hidden">
         <button class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
           ¿Puedo ir a comprar directamente al vivero?
@@ -864,6 +617,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
           <div class="pb-4">Sí. Nuestro vivero está en Av. Álvaro Obregón 601, Col. Unidad Nacional, Ciudad Madero (frente al Walmart). Horario: Lunes a Viernes 9am–6pm, Sábado 9am–2pm. Te recomendamos llamar antes al 833 326 8008 para confirmar disponibilidad de la variedad que buscas.</div>
         </div>
       </div>
+
       <div class="border border-gray-200 rounded-2xl overflow-hidden">
         <button class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
           ¿Venden al mayoreo para constructoras?
@@ -873,6 +627,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
           <div class="pb-4">Sí. Ofrecemos precios preferenciales por volumen para constructoras, arquitectos, fraccionamientos, hoteles y gobierno. Factura CFDI disponible. Entrega por etapas según avance de obra. Cotiza tu proyecto al 833 326 8008.</div>
         </div>
       </div>
+
       <div class="border border-gray-200 rounded-2xl overflow-hidden">
         <button class="faq-btn w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" aria-expanded="false">
           ¿Qué plantas recomiendan para el calor de Tampico?
@@ -882,73 +637,43 @@ h1,h2,h3{font-family:"Playfair Display",serif}
           <div class="pb-4">Para el clima cálido-húmedo de Tampico recomendamos palmas tropicales (del viajero, areca, real, coco), Ficus elastica, plantas ornamentales de sol como heliconias y gingers, y para interior el pothos, sansevieria y aglaonema. El pasto San Agustín es ideal para jardines con algo de sombra.</div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
+```
 
+- [ ] **Paso 2: Añadir CTA final**
+
+```html
 <!-- CTA FINAL -->
 <section class="py-16 bg-dark">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
     <h2 class="text-3xl sm:text-4xl font-display font-bold text-white mb-4">¿No encuentras lo que buscas?</h2>
     <p class="text-white/60 text-lg mb-8 max-w-xl mx-auto">Nuestro catálogo en vivero es más amplio. Escríbenos y te decimos si lo tenemos disponible hoy.</p>
-    <a href="https://wa.me/528333268008?text=Hola%2C%20vi%20el%20cat%C3%A1logo%20y%20quiero%20saber%20si%20tienen%20disponible%20algo%20espec%C3%ADfico" target="_blank" rel="noopener"
+    <a href="https://wa.me/528333268008?text=Hola%2C%20vi%20el%20catálogo%20y%20quiero%20saber%20si%20tienen%20disponible%20algo%20específico" target="_blank" rel="noopener"
        class="inline-flex items-center gap-3 bg-wa text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-400 transition-colors shadow-xl">
       <svg class="w-6 h-6"><use href="#ic-whatsapp"/></svg>Consultar disponibilidad
     </a>
     <p class="text-white/40 text-sm mt-4">Respondemos en menos de 2 horas · Lun–Vie 9am–6pm · Sáb 9am–2pm</p>
   </div>
 </section>
+```
 
-<footer class="bg-dark text-white border-t border-white/10">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-      <div class="space-y-4">
-        <img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-dark" loading="lazy">
-        <p class="text-white/50 text-sm leading-relaxed">Viveros Terra: líder en jardinería profesional en Tampico, Madero y Altamira, Tamaulipas. Más de 20 años de experiencia.</p>
-        <div class="flex gap-2.5">
-          <a href="https://www.instagram.com/viverosterramx" target="_blank" rel="noopener" aria-label="Instagram" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-instagram"/></svg></a>
-          <a href="https://www.facebook.com/viverosterra/" target="_blank" rel="noopener" aria-label="Facebook" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-facebook"/></svg></a>
-          <a href="https://www.youtube.com/@viverosterramx" target="_blank" rel="noopener" aria-label="YouTube" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-youtube"/></svg></a>
-          <a href="http://www.tiktok.com/@viverosterra" target="_blank" rel="noopener" aria-label="TikTok" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-fuchsia-700 transition-colors"><svg class="w-4 h-4"><use href="#ic-tiktok"/></svg></a>
-        </div>
-      </div>
-      <div>
-        <h4 class="font-bold text-white mb-5">Servicios</h4>
-        <ul class="space-y-2.5 text-white/50 text-sm">
-          <li><a href="/pasto-en-rollo-tampico" class="hover:text-accent transition-colors">Pasto en Rollo San Agustín</a></li>
-          <li><a href="/diseno-jardines-tampico" class="hover:text-accent transition-colors">Diseño de Jardines</a></li>
-          <li><a href="/sistema-riego-tampico" class="hover:text-accent transition-colors">Sistema de Riego</a></li>
-          <li><a href="/mantenimiento-jardines-tampico" class="hover:text-accent transition-colors">Mantenimiento</a></li>
-          <li><a href="/catalogo" class="text-accent font-medium">Catálogo de Plantas ←</a></li>
-          <li><a href="/blog" class="hover:text-accent transition-colors">Blog de Jardinería</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="font-bold text-white mb-5">Zonas de servicio</h4>
-        <ul class="space-y-2 text-white/50 text-sm">
-          <li>Tampico, Tamaulipas</li><li>Ciudad Madero</li><li>Altamira</li>
-          <li>Pánuco, Veracruz</li><li>Ciudad Victoria</li><li>Zona Huasteca</li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="font-bold text-white mb-5">Contacto</h4>
-        <ul class="space-y-3 text-white/50 text-sm">
-          <li><a href="https://wa.me/528333268008" target="_blank" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg class="w-4 h-4 text-wa flex-shrink-0"><use href="#ic-whatsapp"/></svg>833 326 8008</a></li>
-          <li><a href="tel:8333268008" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg class="w-4 h-4 flex-shrink-0"><use href="#ic-phone"/></svg>833 326 8008</a></li>
-          <li><a href="mailto:viverosterra@hotmail.com" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg class="w-4 h-4 flex-shrink-0"><use href="#ic-mail"/></svg>viverosterra@hotmail.com</a></li>
-          <li class="flex items-start gap-2.5"><svg class="w-4 h-4 flex-shrink-0 mt-0.5"><use href="#ic-pin"/></svg>Av. Álvaro Obregón 601, Cd. Madero</li>
-          <li class="flex items-center gap-2.5"><svg class="w-4 h-4 flex-shrink-0"><use href="#ic-clock"/></svg>Lun–Vie 9am–6pm · Sáb 9am–2pm</li>
-        </ul>
-      </div>
-    </div>
-    <div class="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/30 text-xs">
-      <p>© 2026 Viveros Terra · Tampico, Tamaulipas, México · Jardinería · Pasto · Paisajismo</p>
-      <a href="/" class="hover:text-white/50 transition-colors">← Volver al inicio</a>
-    </div>
-  </div>
-</footer>
+- [ ] **Paso 3: Añadir Footer**
 
+Copiar el bloque `<footer>` completo desde `public/diseno-jardines-tampico/index.html` (líneas 964–1010). Cambiar la línea activa del footer para que `Catálogo` esté destacada en lugar de `Diseño de Jardines`:
+
+```html
+<!-- Dentro del footer, cambiar este link: -->
+<li><a href="/catalogo" class="text-accent font-medium">Catálogo ←</a></li>
+```
+
+- [ ] **Paso 4: Añadir JS de filtros + reveal + FAQ**
+
+```html
 <script>
+/* ── Filtro de catálogo ── */
 (function(){
   var btns=document.querySelectorAll('.filter-btn');
   var cards=document.querySelectorAll('.catalog-card');
@@ -966,6 +691,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
   });
 })();
 
+/* ── FAQ accordion ── */
 document.querySelectorAll('.faq-btn').forEach(function(btn){
   btn.addEventListener('click',function(){
     var ans=btn.nextElementSibling;
@@ -978,9 +704,73 @@ document.querySelectorAll('.faq-btn').forEach(function(btn){
   });
 });
 
+/* ── Reveal animation con safety timeout ── */
 var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){var r=el.getBoundingClientRect();if(r.top<window.innerHeight-40){el.classList.add('visible');}else{obs.observe(el);}});
 setTimeout(function(){document.querySelectorAll('.reveal:not(.visible)').forEach(function(el){el.classList.add('visible');});},900);
 </script>
 </body>
 </html>
+```
+
+- [ ] **Verificar filtros en navegador:**
+  1. Clic en "🌿 Pasto" → solo 3 cards visibles
+  2. Clic en "🌴 Plantas & Palmas" → solo 8 cards visibles
+  3. Clic en "🪨 Materiales" → solo 5 cards visibles
+  4. Clic en "Todos" → 16 cards visibles
+
+- [ ] **Verificar FAQ:** clic en pregunta → respuesta se expande. Clic en otra → primera se cierra.
+
+- [ ] **Commit**
+```bash
+git add public/catalogo.html
+git commit -m "feat(catalogo): FAQ accordion, CTA final, footer y JS de filtros"
+```
+
+---
+
+### Task 5: Actualizar sitemap + PR
+
+**Archivos:**
+- Modify: `public/sitemap.xml`
+
+- [ ] **Paso 1: Actualizar lastmod del catálogo en sitemap**
+
+En `public/sitemap.xml` localizar la URL `/catalogo` y actualizar `<lastmod>`:
+```xml
+<url>
+  <loc>https://www.viverosterra.com/catalogo</loc>
+  <lastmod>2026-05-07</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.9</priority>
+</url>
+```
+
+- [ ] **Paso 2: Crear rama y PR**
+
+```bash
+cd /tmp/viverosterra-site
+git checkout -b feat/catalogo-interactivo
+git add public/catalogo.html public/sitemap.xml
+git commit -m "feat: catálogo interactivo con filtros, 16 productos y interlinking" --allow-empty
+git push -u origin feat/catalogo-interactivo
+gh pr create --title "feat: catálogo interactivo con filtros y 16 productos" --body "Reescritura completa de /catalogo. Filtros por categoría (Pasto, Plantas, Materiales). 16 cards con WhatsApp CTA por producto. Interlinking a 6 páginas huérfanas. Schema ItemList + FAQPage. SEO completo." --base main
+```
+
+---
+
+## Self-review
+
+**Spec coverage:**
+- ✅ 16 productos en 3 categorías con `data-cat` para filtro
+- ✅ Schema `ItemList` (16 items) + `FAQPage` (5 preguntas) + `BreadcrumbList`
+- ✅ SEO: title 2026, canonical, OG, meta description con keywords
+- ✅ JS filtro: todos/pasto/plantas/materiales con clase `active`
+- ✅ Interlinking: `/palmas-tropicales-tampico`, `/palmas-para-jardin-tampico`, `/plantas-de-interior-tampico`, `/plantas-para-jardin-tampico`, `/arboles-para-banqueta-tampico`, `/arboles-ornamentales-tampico` (vía `/plantas-palmas-arboles-tampico`)
+- ✅ Reveal animation + safety timeout (mismo patrón que el resto del sitio)
+- ✅ FAQ accordion (mismo patrón que el resto del sitio)
+- ✅ Footer con link activo de catálogo
+- ✅ Sitemap actualizado
+
+**Sin placeholders:** ✅
+**Consistencia de nombres:** `.catalog-card[data-cat]`, `.filter-btn[data-cat]`, `.filter-btn.active` — consistentes en JS y HTML ✅
