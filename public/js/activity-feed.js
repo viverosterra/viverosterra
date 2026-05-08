@@ -35,14 +35,15 @@
       '/checkout'
     ],
     // Horario por día de la semana: 0=domingo, 6=sábado
+    // Cubre horario de oficina + tarde-noche (la gente busca ideas en la noche)
     schedule: {
-      0: { start: 10, end: 13, intervalMultiplier: 1.6 }, // domingo (más lento)
-      1: { start: 9,  end: 19, intervalMultiplier: 1.0 }, // lunes
-      2: { start: 9,  end: 19, intervalMultiplier: 1.0 },
-      3: { start: 9,  end: 19, intervalMultiplier: 1.0 },
-      4: { start: 9,  end: 19, intervalMultiplier: 1.0 },
-      5: { start: 9,  end: 19, intervalMultiplier: 1.0 }, // viernes
-      6: { start: 9,  end: 14, intervalMultiplier: 1.0 }  // sábado (corto)
+      0: { start: 10, end: 22, intervalMultiplier: 1.5 }, // domingo (más lento)
+      1: { start: 9,  end: 23, intervalMultiplier: 1.0 }, // lunes
+      2: { start: 9,  end: 23, intervalMultiplier: 1.0 },
+      3: { start: 9,  end: 23, intervalMultiplier: 1.0 },
+      4: { start: 9,  end: 23, intervalMultiplier: 1.0 },
+      5: { start: 9,  end: 23, intervalMultiplier: 1.0 }, // viernes
+      6: { start: 9,  end: 22, intervalMultiplier: 1.0 }  // sábado
     }
   };
 
