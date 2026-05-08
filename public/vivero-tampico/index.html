@@ -808,5 +808,6 @@ const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.t
 document.querySelectorAll('.reveal').forEach(el=>{const r=el.getBoundingClientRect();if(r.top<window.innerHeight-40){el.classList.add('visible');}else{obs.observe(el);}});
 setTimeout(()=>{document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible'));},900);
 </script>
+<script src="/js/activity-feed.js" defer></script>
 </body>
 </html>
