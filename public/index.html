@@ -707,74 +707,365 @@
 </script>
 
 
-<!-- HERO con imagen real de fondo -->
-<section id="inicio" class="relative text-white overflow-hidden min-h-[85vh] flex items-center">
-  <div class="absolute inset-0">
-    <img src="img/jardineria-areas-verdes-tampico.png"
-         alt="Jardinería profesional y áreas verdes en Tampico por Viveros Terra"
-         class="w-full h-full object-cover object-center"
-         loading="eager" fetchpriority="high">
-    <div class="hero-overlay absolute inset-0"></div>
+<!-- ════════════════════════════════════════════════════════════
+     HERO V2 — Luminous Premium · Pure CSS (no Tailwind)
+     ════════════════════════════════════════════════════════════ -->
+<style>
+  .vt-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #FAFAF7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #1F3D2B;
+  }
+  .vt-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .vt-hero__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    display: block;
+  }
+  .vt-hero__bg-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        92deg,
+        rgba(255,255,253,0.96) 0%,
+        rgba(255,255,253,0.86) 28%,
+        rgba(255,255,253,0.55) 50%,
+        rgba(255,255,253,0.30) 72%,
+        rgba(255,255,253,0.18) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255,255,253,0.20) 0%,
+        rgba(255,255,253,0.00) 30%,
+        rgba(255,255,253,0.00) 70%,
+        rgba(255,255,253,0.45) 100%
+      );
+  }
+  .vt-hero__container {
+    position: relative;
+    z-index: 1;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 88px 40px 96px;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 72px;
+    align-items: center;
+    min-height: 720px;
+  }
+  .vt-hero__left {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    max-width: 620px;
+  }
+  /* Badges */
+  .vt-hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .vt-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid #E2E8E3;
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #2F3F35;
+    box-shadow: 0 1px 2px rgba(15, 31, 20, 0.04), 0 4px 16px rgba(15, 31, 20, 0.04);
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
+  .vt-hero__badge svg {
+    width: 14px;
+    height: 14px;
+    color: #2E7D32;
+    flex-shrink: 0;
+  }
+  .vt-hero__badge--accent {
+    border-color: rgba(85, 185, 106, 0.35);
+    background: rgba(240, 250, 242, 0.92);
+  }
+  /* Title */
+  .vt-hero__title {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-weight: 700;
+    font-size: clamp(44px, 6.2vw, 78px);
+    line-height: 0.98;
+    letter-spacing: -0.018em;
+    color: #1F3D2B;
+    margin: 0;
+  }
+  .vt-hero__title-accent {
+    display: inline-block;
+    font-style: italic;
+    font-weight: 700;
+    color: #55B96A;
+    margin-top: 6px;
+  }
+  /* Subtitle */
+  .vt-hero__subtitle {
+    font-size: clamp(16px, 1.35vw, 21px);
+    line-height: 1.55;
+    color: #2F3F35;
+    margin: 0;
+    max-width: 540px;
+    font-weight: 400;
+  }
+  /* CTAs */
+  .vt-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .vt-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 30px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: -0.005em;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .vt-hero__cta svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+  .vt-hero__cta--primary {
+    background: #45C463;
+    color: #fff;
+    box-shadow: 0 8px 22px rgba(69, 196, 99, 0.32), 0 1px 3px rgba(15, 31, 20, 0.06);
+  }
+  .vt-hero__cta--primary:hover {
+    background: #3FB85B;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(69, 196, 99, 0.42), 0 2px 6px rgba(15, 31, 20, 0.08);
+  }
+  .vt-hero__cta--secondary {
+    background: rgba(255, 255, 255, 0.96);
+    color: #1F3D2B;
+    border: 1px solid #E2E8E3;
+    box-shadow: 0 4px 16px rgba(15, 31, 20, 0.06), 0 1px 3px rgba(15, 31, 20, 0.04);
+  }
+  .vt-hero__cta--secondary:hover {
+    background: #fff;
+    border-color: #C9D5CC;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(15, 31, 20, 0.10);
+  }
+  .vt-hero__caption {
+    font-size: 13px;
+    color: #5A6B5E;
+    margin: 2px 0 0;
+    letter-spacing: -0.005em;
+  }
+  /* Right: metric cards */
+  .vt-hero__metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .vt-hero__metric {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 24px;
+    padding: 26px 28px 24px;
+    box-shadow:
+      0 1px 2px rgba(15, 31, 20, 0.04),
+      0 8px 28px rgba(15, 31, 20, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .vt-hero__metric:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 1px 2px rgba(15, 31, 20, 0.04),
+      0 14px 36px rgba(15, 31, 20, 0.12);
+  }
+  .vt-hero__metric-icon {
+    width: 32px;
+    height: 32px;
+    color: #55B96A;
+    margin-bottom: 16px;
+    stroke-width: 1.6;
+  }
+  .vt-hero__metric-num {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: clamp(32px, 2.8vw, 42px);
+    font-weight: 700;
+    color: #1F3D2B;
+    line-height: 1;
+    letter-spacing: -0.018em;
+  }
+  .vt-hero__metric-label {
+    font-size: 13.5px;
+    color: #5A6B5E;
+    margin-top: 8px;
+    line-height: 1.4;
+    font-weight: 400;
+  }
+  /* MOBILE & TABLET */
+  @media (max-width: 980px) {
+    .vt-hero__bg-overlay {
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,255,253,0.96) 0%,
+          rgba(255,255,253,0.85) 35%,
+          rgba(255,255,253,0.72) 65%,
+          rgba(255,255,253,0.92) 100%
+        );
+    }
+    .vt-hero__container {
+      grid-template-columns: 1fr;
+      gap: 36px;
+      padding: 56px 20px 64px;
+      min-height: auto;
+    }
+    .vt-hero__left { gap: 22px; }
+    .vt-hero__title { font-size: clamp(38px, 9vw, 52px); line-height: 1.0; }
+    .vt-hero__subtitle { font-size: 16px; }
+    .vt-hero__badges {
+      gap: 8px;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      margin: 0 -20px;
+      padding: 4px 20px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .vt-hero__badges::-webkit-scrollbar { display: none; }
+    .vt-hero__badge { flex-shrink: 0; font-size: 12.5px; padding: 8px 14px; }
+    .vt-hero__ctas { flex-direction: column; gap: 12px; }
+    .vt-hero__cta { width: 100%; padding: 15px 24px; font-size: 15.5px; }
+    .vt-hero__metrics { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .vt-hero__metric { padding: 20px 18px 18px; border-radius: 20px; }
+    .vt-hero__metric-icon { width: 26px; height: 26px; margin-bottom: 12px; }
+    .vt-hero__metric-num { font-size: 30px; }
+    .vt-hero__metric-label { font-size: 12.5px; margin-top: 6px; }
+  }
+  @media (max-width: 480px) {
+    .vt-hero__title { font-size: clamp(36px, 11vw, 48px); }
+    .vt-hero__metric { padding: 16px 14px; }
+    .vt-hero__metric-num { font-size: 26px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vt-hero__cta, .vt-hero__metric { transition: none; }
+    .vt-hero__cta:hover, .vt-hero__metric:hover { transform: none; }
+  }
+</style>
+
+<section id="inicio" class="vt-hero" aria-label="Hero principal Viveros Terra">
+  <div class="vt-hero__bg" aria-hidden="true">
+    <img src="/img/jardin-residencial-pasto-san-agustin-tampico.jpg"
+         alt=""
+         class="vt-hero__bg-img"
+         loading="eager"
+         fetchpriority="high"
+         width="1920" height="1080">
+    <div class="vt-hero__bg-overlay"></div>
   </div>
-  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-    <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-      <div class="space-y-6">
-        <div class="flex flex-wrap gap-2">
-          <span class="inline-flex items-center gap-1.5 bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20">
-            <svg class="w-3.5 h-3.5 text-accent"><use href="#ic-award"/></svg>20 años de experiencia
-          </span>
-          <span class="inline-flex items-center gap-1.5 bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20">
-            <svg class="w-3.5 h-3.5 text-accent"><use href="#ic-star"/></svg>4.6 ★ · 24 reseñas
-          </span>
-          <span class="inline-flex items-center gap-1.5 bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20">
-            <svg class="w-3.5 h-3.5 text-accent"><use href="#ic-bolt"/></svg>Respuesta en 2 horas
-          </span>
-          <span class="inline-flex items-center gap-1.5 bg-accent/30 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-accent/40">
-            Pasto desde $85/m² · Mantenimiento $750/mes
-          </span>
-        </div>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight">
-          El jardín que siempre quisiste,<br><span class="text-accent">en Tampico.</span>
-        </h1>
-        <p class="text-lg sm:text-xl text-white/85 leading-relaxed max-w-xl">
-          Pasto San Agustín en rollo, diseño de jardines, sistemas de riego y mantenimiento profesional. La empresa líder en jardinería del sur de Tamaulipas.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4">
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20una%20cotización%20de%20jardinería" target="_blank" rel="noopener"
-             class="inline-flex items-center justify-center gap-2 bg-wa text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-400 transition-colors shadow-xl">
-            <svg class="w-5 h-5 flex-shrink-0"><use href="#ic-whatsapp"/></svg>Cotización Gratis
-          </a>
-          <a href="tel:8333268008"
-             class="inline-flex items-center justify-center gap-2 bg-white/15 text-white border border-white/30 px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/25 transition-colors backdrop-blur-sm">
-            <svg class="w-5 h-5 flex-shrink-0"><use href="#ic-phone"/></svg>833 326 8008
-          </a>
-        </div>
-        <p class="text-white/55 text-sm">Sin compromiso · Respondemos hoy mismo · Lun–Sáb 9am–6pm</p>
+
+  <div class="vt-hero__container">
+    <!-- IZQUIERDA: texto -->
+    <div class="vt-hero__left">
+      <!-- Badges -->
+      <div class="vt-hero__badges" role="list">
+        <span class="vt-hero__badge" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.1L7 22l5-3 5 3-1.56-7.9"/></svg>
+          20 años de experiencia
+        </span>
+        <span class="vt-hero__badge" role="listitem">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          4.6 ★ · 24 reseñas
+        </span>
+        <span class="vt-hero__badge" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Respuesta en 2 horas
+        </span>
+        <span class="vt-hero__badge vt-hero__badge--accent" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 4 13c0-5 7-11 7-11s7 6 7 11a7 7 0 0 1-7 7z"/><path d="M11 20v-9"/></svg>
+          Pasto desde $85/m² · Mantenimiento $750/mes
+        </span>
       </div>
-      <div class="grid grid-cols-2 gap-4">
-        <div class="stat-card rounded-2xl p-6 text-center">
-          <div class="text-4xl font-display font-bold text-accent">+1,500</div>
-          <div class="text-white/65 text-sm mt-1">Instalaciones de pasto</div>
-        </div>
-        <div class="stat-card rounded-2xl p-6 text-center">
-          <div class="text-4xl font-display font-bold text-accent">+900</div>
-          <div class="text-white/65 text-sm mt-1">Clientes satisfechos</div>
-        </div>
-        <div class="stat-card rounded-2xl p-6 text-center">
-          <div class="text-4xl font-display font-bold text-accent">500k+</div>
-          <div class="text-white/65 text-sm mt-1">m² de pasto instalado</div>
-        </div>
-        <div class="stat-card rounded-2xl p-6 text-center">
-          <div class="text-4xl font-display font-bold text-accent">20</div>
-          <div class="text-white/65 text-sm mt-1">Años en la región</div>
-        </div>
+
+      <!-- Título -->
+      <h1 class="vt-hero__title">
+        El jardín que siempre quisiste,<br>
+        <span class="vt-hero__title-accent">en Tampico.</span>
+      </h1>
+
+      <!-- Subtítulo -->
+      <p class="vt-hero__subtitle">
+        Pasto San Agustín en rollo, diseño de jardines, sistemas de riego y mantenimiento profesional. La empresa líder en jardinería del sur de Tamaulipas.
+      </p>
+
+      <!-- CTAs -->
+      <div class="vt-hero__ctas">
+        <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20una%20cotización%20de%20jardinería"
+           target="_blank" rel="noopener"
+           class="vt-hero__cta vt-hero__cta--primary"
+           aria-label="Cotización Gratis por WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>
+          Cotización Gratis
+        </a>
+        <a href="tel:8333268008" class="vt-hero__cta vt-hero__cta--secondary" aria-label="Llamar al 833 326 8008">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 11a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.98 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+          833 326 8008
+        </a>
+      </div>
+
+      <p class="vt-hero__caption">Sin compromiso · Respondemos hoy mismo · Lun–Sáb 9am–6pm</p>
+    </div>
+
+    <!-- DERECHA: tarjetas de métricas -->
+    <div class="vt-hero__metrics" role="list" aria-label="Estadísticas de Viveros Terra">
+      <div class="vt-hero__metric" role="listitem">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 4 13c0-5 7-11 7-11s7 6 7 11a7 7 0 0 1-7 7z"/><path d="M11 20v-9"/></svg>
+        <div class="vt-hero__metric-num">+1,500</div>
+        <div class="vt-hero__metric-label">Instalaciones de pasto</div>
+      </div>
+      <div class="vt-hero__metric" role="listitem">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <div class="vt-hero__metric-num">+900</div>
+        <div class="vt-hero__metric-label">Clientes satisfechos</div>
+      </div>
+      <div class="vt-hero__metric" role="listitem">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+        <div class="vt-hero__metric-num">500k+</div>
+        <div class="vt-hero__metric-label">m² de pasto instalado</div>
+      </div>
+      <div class="vt-hero__metric" role="listitem">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.1L7 22l5-3 5 3-1.56-7.9"/></svg>
+        <div class="vt-hero__metric-num">20</div>
+        <div class="vt-hero__metric-label">Años en la región</div>
       </div>
     </div>
-  </div>
-  <div class="absolute bottom-0 w-full overflow-hidden leading-none z-10">
-    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" class="fill-bgwarm w-full">
-      <path d="M0,40 C360,0 1080,80 1440,40 L1440,60 L0,60 Z"/>
-    </svg>
   </div>
 </section>
 
