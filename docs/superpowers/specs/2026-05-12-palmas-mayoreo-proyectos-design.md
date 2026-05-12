@@ -125,7 +125,12 @@ H1: Palmas al Mayoreo para Proyectos · Tamaulipas, Veracruz y SLP
 
 ---
 
-## Arquitectura de contenido (12 secciones)
+## Arquitectura de contenido (13 secciones · v2)
+
+> **Cambios v2 (re-análisis marketing-psychology + competencia):**
+> 1. Hero ahora integra micro-prueba social numérica + 3 badges de tipo de cliente (activa autoridad + prueba social en 2s).
+> 2. Nueva sección 4 "Para quién es esto" — habla a las 3 personas (Arquitecto · Gobierno · Gerente de obra) con su miedo dominante y CTA secundario por bloque.
+> 3. Calculadora MOVIDA antes de Proyectos (efecto IKEA: compromiso → confirmación). Nuevo orden: Hero → Trust → Trinidad → Para Quién → Especies → Calculadora → Proyectos → Cobertura → Documentación → Paquetes → Lead Magnet → FAQ → CTA Final.
 
 ### 1. HERO (LIGHT)
 
@@ -140,6 +145,8 @@ H1: Palmas al Mayoreo para Proyectos · Tamaulipas, Veracruz y SLP
 - **CTAs duales:**
   - Primario verde `#45C463`: "Cotizar mi proyecto" → scroll a sección 12 formulario
   - Secundario blanco con borde: "Descargar guía de especies (PDF)" → sección 10 lead magnet
+- **Microdato hero (banda inline bajo CTAs):** "47 proyectos · 3 estados · desde 2008"
+- **Audience tags (chips sobre badges):** `🏨 Hoteles` `🏛️ Gobierno` `🏘️ Fraccionadoras` — activa pertenencia inmediata
 - **Microdato:** "+80 proyectos B2B en 36 meses"
 
 ### 2. TRUST BAR (DARK)
@@ -161,7 +168,21 @@ Subcopy: "Productor verificado de palmas para sector hotelero, gobierno e indust
 | 🚛 | Logística regional | Cobertura Tamaulipas, Veracruz y SLP. Transportes propios y red de fleteros confiables. |
 | 📋 | Documentación B2B | CFDI 4.0, certificado fitosanitario, factura emitida el día del pago, garantía escrita. |
 
-### 4. ESPECIES B2B (DARK) — spec sheet magazine
+### 4. PARA QUIÉN ES ESTO (LIGHT) — 3 personas
+
+- **H2:** "Hecho para 3 tipos de comprador"
+- **Subhead:** "Cada proyecto exige documentación, plazos y ejemplares distintos. Te llevamos al apartado que te resuelve."
+- **3 cards horizontales (stack vertical en mobile):**
+
+| Persona | Miedo dominante | Mensaje | CTA secundario |
+|---------|----------------|---------|----------------|
+| 👷 **Arquitecto / paisajista** | "Que el ejemplar llegue distinto al render" | Ejemplares calibrados con altura de tronco y diámetro de copa verificados. Ficha técnica + foto del ejemplar antes de envío. | Ver fichas técnicas → ancla #especies |
+| 🏛️ **Comprador de gobierno / obra pública** | "Que el proveedor no facture o no cumpla plazos" | CFDI 4.0 el día del pago, padrón de proveedores, acta entrega-recepción, garantía escrita 60 días. | Ver documentación → ancla #documentacion |
+| 🏨 **Gerente de obra hotelera / fraccionadora** | "Que retrase la fecha de entrega del proyecto" | Entrega en obra con maniobra incluida. 2-5 días zona conurbada, lead time comprometido por escrito. | Ver cobertura → ancla #cobertura |
+
+- **Lógica visual:** Cada card lleva una micro-foto del rol (planos · oficio gobierno · obra) y borde lateral acento `#55B96A` que se ilumina en hover.
+
+### 5. ESPECIES B2B (DARK) — spec sheet magazine
 
 - **H2:** "12 palmas para proyectos · spec sheet"
 - **Layout:** Rows tipo revista. Cada especie con:
@@ -188,7 +209,21 @@ Subcopy: "Productor verificado de palmas para sector hotelero, gobierno e indust
 | 11 | Palma Cola de Zorra | Wodyetia bifurcata | $1,200 | 2-4 sem |
 | 12 | Palma Triángulo | Dypsis decaryi | $2,400 | 4-6 sem |
 
-### 5. PROYECTOS (LIGHT) — portfolio editorial
+### 6. CALCULADORA INTERACTIVA (LIGHT) — efecto IKEA primero
+
+> Nota v2: Esta sección se movió ANTES de Proyectos. Mecánica conductual: el comprador "construye" su pedido antes de ver social proof; los proyectos funcionan como **confirmación de decisión** en vez de información nueva. Cambio de fondo a LIGHT para mantener el ritmo editorial alternado tras la sección DARK de especies.
+
+- **H2:** "Calcula tu proyecto en 30 segundos"
+- **3 campos (form inline editorial, no tarjeta cerrada):**
+  1. Tipo de proyecto (dropdown: Hotel · Fraccionamiento · Industrial · Gobierno · Otro)
+  2. Tamaño aproximado (m² o número de palmas)
+  3. Ciudad destino (texto libre)
+- **CTA:** "Obtener estimado por WhatsApp"
+- **Mecánica:** JS construye URL WhatsApp con mensaje pre-llenado: "Hola, quiero estimado para [tipo] de [tamaño] en [ciudad]"
+- **No genera precio inmediato** — captura lead pre-calificado para que ventas responda rápido
+- **Micro-conversión instrumentada:** evento `calc_completed` antes del click WhatsApp
+
+### 7. PROYECTOS (DARK) — portfolio editorial confirmatorio
 
 - **H2:** "Algunos proyectos recientes"
 - **Grid 3×2 = 6 proyectos** (combinación B+C):
@@ -203,18 +238,7 @@ Subcopy: "Productor verificado de palmas para sector hotelero, gobierno e indust
 5. "Hotel frente al mar Tampico · 35 palmas Coco · 2024"
 6. "Campus corporativo Tampico · 120 plantas + 15 palmas"
 
-### 6. CALCULADORA INTERACTIVA (DARK)
-
-- **H2:** "Calcula tu proyecto en 30 segundos"
-- **3 campos:**
-  1. Tipo de proyecto (dropdown: Hotel · Fraccionamiento · Industrial · Gobierno · Otro)
-  2. Tamaño aproximado (m² o número de palmas)
-  3. Ciudad destino (texto libre)
-- **CTA:** "Obtener estimado por WhatsApp"
-- **Mecánica:** JS construye URL WhatsApp con mensaje pre-llenado: "Hola, quiero estimado para [tipo] de [tamaño] en [ciudad]"
-- **No genera precio inmediato** — captura lead pre-calificado para que ventas responda rápido
-
-### 7. COBERTURA GEOGRÁFICA (LIGHT)
+### 8. COBERTURA GEOGRÁFICA (LIGHT)
 
 - **H2:** "Enviamos palmas a toda la región"
 - **Mapa SVG simple de México** con zonas verdes (color `#55B96A`) marcadas:
@@ -231,7 +255,7 @@ Subcopy: "Productor verificado de palmas para sector hotelero, gobierno e indust
 | Veracruz/SLP | 5-10 días |
 | Otros estados | a coordinar |
 
-### 8. DOCUMENTACIÓN B2B (DARK)
+### 9. DOCUMENTACIÓN B2B (DARK)
 
 - **H2:** "Documentación completa para tu compra empresarial"
 - **4 cards con íconos:**
@@ -240,7 +264,7 @@ Subcopy: "Productor verificado de palmas para sector hotelero, gobierno e indust
   - 🛡️ **Garantía escrita:** 60 días de arraigo, reposición incluida
   - 🏛️ **Documentación licitaciones:** Padrón de proveedores, fianzas
 
-### 9. PAQUETES PRE-ARMADOS (LIGHT)
+### 10. PAQUETES PRE-ARMADOS (LIGHT)
 
 - **H2:** "Paquetes diseñados por tipo de proyecto"
 - **4 cards:**
@@ -251,7 +275,7 @@ Subcopy: "Productor verificado de palmas para sector hotelero, gobierno e indust
 | Desde $90,000 | Desde $150,000 | Desde $180,000 | Cotización personalizada |
 | Ver detalle → | Ver detalle → | Ver detalle → | Ver detalle → |
 
-### 10. LEAD MAGNET (DARK)
+### 11. LEAD MAGNET (DARK)
 
 - **H2:** "Guía gratuita: 12 palmas para proyectos arquitectónicos"
 - **Layout split 60/40:**
@@ -261,7 +285,7 @@ Subcopy: "Productor verificado de palmas para sector hotelero, gobierno e indust
 - **Subcopy:** "Más de 200 arquitectos y compradores la han descargado este año"
 - **PDF inicialmente:** placeholder en `/pdf/guia-palmas-arquitectos.pdf` (genera contenido real después)
 
-### 11. FAQ (LIGHT)
+### 12. FAQ (LIGHT)
 
 - **H2:** "Preguntas frecuentes de compradores B2B"
 - **8 preguntas con schema FAQPage:**
@@ -274,7 +298,7 @@ Subcopy: "Productor verificado de palmas para sector hotelero, gobierno e indust
   7. ¿Pueden hacer instalación llave en mano?
   8. ¿Trabajan con compras de gobierno?
 
-### 12. CTA FINAL (DARK)
+### 13. CTA FINAL (DARK)
 
 - **Layout 70/30:**
   - Izq: H2 grande "Cotiza tu proyecto" + 3 razones (Productor directo · Documentación completa · Respuesta en 4h)
