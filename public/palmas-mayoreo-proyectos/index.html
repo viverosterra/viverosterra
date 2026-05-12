@@ -58,7 +58,299 @@
     .calc-summary-grad{background:linear-gradient(160deg,#1B5E20 0%,#0D2B0E 100%)}
     .price-tag{font-family:'Playfair Display',serif;font-weight:700;color:#FAFAF7;font-size:26px;line-height:1}
     @media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none}.service-card,.pq-card{transition:none}.service-card:hover,.pq-card:hover{transform:none}}
-  </style>
+  
+  /* ===== TERRA NAV CSS ===== */
+/* ── NAVBAR BLANCO ──────────────────────────────────────────── */
+.terra-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #ffffff;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.terra-nav__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+/* LOGO */
+.terra-nav__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-right: 32px;
+}
+.terra-nav__logo img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+/* LINKS PRIMARIOS */
+.terra-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+.terra-nav__links li { position: relative; }
+
+.terra-nav__links a,
+.terra-nav__links button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  color: #2d2d2d;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.terra-nav__links a:hover,
+.terra-nav__links button:hover {
+  background: #f3f4f3;
+  color: #1a5c1a;
+}
+.terra-nav__links a.is-active {
+  color: #1a5c1a;
+  font-weight: 500;
+  background: #edf7ed;
+}
+/* Flecha dropdown */
+.terra-nav__chevron {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.terra-nav__drop-trigger[aria-expanded="true"] .terra-nav__chevron {
+  transform: rotate(180deg);
+}
+
+/* ── DROPDOWN BLANCO ─────────────────────────────────────────── */
+.terra-nav__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 580px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 12px;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+.terra-nav__dropdown.is-open { display: grid; }
+
+.terra-nav__drop-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.terra-nav__drop-item:hover { background: #f3f8f3; }
+
+.terra-nav__drop-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #edf7ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+}
+.terra-nav__drop-text strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+.terra-nav__drop-text span {
+  font-size: 12px;
+  color: #777;
+  line-height: 1.4;
+}
+
+/* ── DERECHA ─────────────────────────────────────────────────── */
+.terra-nav__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.terra-nav__tel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #444;
+  font-size: 13px;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.terra-nav__tel:hover { background: #f3f4f3; color: #1a5c1a; }
+.terra-nav__tel svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+
+/* CTA verde WhatsApp */
+.terra-nav__cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: #25d366;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, transform 0.1s;
+}
+.terra-nav__cta:hover { background: #1db954; transform: translateY(-1px); }
+.terra-nav__cta:active { transform: translateY(0); }
+.terra-nav__cta svg { width: 16px; height: 16px; fill: #fff; flex-shrink: 0; }
+.terra-nav__dropdown {
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 720px;
+}
+.terra-nav__drop-col {
+  display: flex;
+  flex-direction: column;
+}
+.terra-nav__drop-section {
+  margin-top: 14px;
+}
+.terra-nav__drop-section:first-child {
+  margin-top: 0;
+}
+.terra-nav__drop-header {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #1B5E20;
+  padding: 6px 12px 6px;
+  border-bottom: 1px solid #e8f0e8;
+  margin-bottom: 4px;
+}
+@media (max-width: 900px) {
+  .terra-nav__dropdown { width: 100%; grid-template-columns: 1fr; }
+}
+
+
+/* ── HAMBURGER ───────────────────────────────────────────────── */
+.terra-nav__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-left: auto;
+}
+.terra-nav__hamburger:hover { background: #f3f4f3; }
+.terra-nav__hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #333;
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.terra-nav__hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.terra-nav__hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.terra-nav__hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── DRAWER MOBILE ───────────────────────────────────────────── */
+.terra-nav__drawer {
+  display: none;
+  flex-direction: column;
+  background: #fff;
+  padding: 8px 16px 20px;
+  border-top: 1px solid #eee;
+}
+.terra-nav__drawer.is-open { display: flex; }
+
+.terra-nav__drawer a,
+.terra-nav__drawer button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 8px;
+  color: #2d2d2d;
+  font-size: 15px;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  width: 100%;
+  text-align: left;
+}
+.terra-nav__drawer a.is-active { color: #1a5c1a; font-weight: 500; }
+
+.terra-nav__drawer-sub {
+  display: none;
+  flex-direction: column;
+  padding-left: 20px;
+}
+.terra-nav__drawer-sub.is-open { display: flex; }
+.terra-nav__drawer-sub a { font-size: 14px; padding: 9px 8px; color: #555; }
+
+.terra-nav__drawer-cta {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  background: #25d366;
+  color: #fff !important;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .terra-nav__links, .terra-nav__tel, .terra-nav__cta { display: none; }
+  .terra-nav__hamburger { display: flex; }
+  .terra-nav__logo { margin-right: 0; }
+}
+</style>
 
 <!-- SVG sprite (subset) -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -1259,5 +1551,61 @@
   })();
 </script>
 
+<script>
+/* ===== TERRA NAV JS ===== */
+(function() {
+  var nav = document.querySelector('.terra-nav');
+  if (!nav) return;
+  var currentPage = nav.dataset.page || window.location.pathname;
+  nav.querySelectorAll('a[href]').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (href && href !== '/' && currentPage.startsWith(href)) link.classList.add('is-active');
+    if (href === '/' && currentPage === '/') link.classList.add('is-active');
+  });
+  var trigger = nav.querySelector('.terra-nav__drop-trigger');
+  var dropdown = document.getElementById('dropdown-servicios');
+  if (trigger && dropdown) {
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var open = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', String(!open));
+      dropdown.classList.toggle('is-open', !open);
+    });
+    document.addEventListener('click', function(e) {
+      if (!nav.contains(e.target)) {
+        trigger.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('is-open');
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        trigger.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('is-open');
+      }
+    });
+  }
+  var hamburger = nav.querySelector('.terra-nav__hamburger');
+  var drawer = document.getElementById('terra-nav-drawer');
+  if (hamburger && drawer) {
+    hamburger.addEventListener('click', function() {
+      var open = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', String(!open));
+      drawer.classList.toggle('is-open', !open);
+    });
+  }
+  nav.querySelectorAll('.terra-nav__drawer-sub-toggle').forEach(function(subToggle) {
+    var targetId = subToggle.getAttribute('data-target');
+    var subMenu = document.getElementById(targetId);
+    if (!subMenu) return;
+    subToggle.addEventListener('click', function() {
+      var open = subToggle.getAttribute('aria-expanded') === 'true';
+      subToggle.setAttribute('aria-expanded', String(!open));
+      subMenu.classList.toggle('is-open', !open);
+      var ch = subToggle.querySelector('.terra-nav__chevron');
+      if (ch) ch.style.transform = open ? '' : 'rotate(180deg)';
+    });
+  });
+})();
+</script>
 </body>
 </html>
