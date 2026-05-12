@@ -635,12 +635,12 @@
           <span class="step-num">01</span>
           <div class="flex-1">
             <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-2">Tipo de proyecto</label>
-            <select class="w-full border-0 border-b border-gray-200 focus:border-accent text-lg py-2 outline-none bg-transparent">
-              <option>Hotel boutique</option>
-              <option>Fraccionamiento residencial</option>
-              <option>Parque industrial</option>
-              <option>Obra de gobierno / municipal</option>
-              <option>Otro</option>
+            <select id="calc-tipo" class="w-full border-0 border-b border-gray-200 focus:border-accent text-lg py-2 outline-none bg-transparent">
+              <option value="Hotel boutique">Hotel boutique</option>
+              <option value="Fraccionamiento residencial">Fraccionamiento residencial</option>
+              <option value="Parque industrial">Parque industrial</option>
+              <option value="Obra de gobierno / municipal">Obra de gobierno / municipal</option>
+              <option value="Otro">Otro</option>
             </select>
           </div>
         </div>
@@ -648,14 +648,14 @@
           <span class="step-num">02</span>
           <div class="flex-1">
             <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-2">Tamaño aproximado</label>
-            <input type="text" placeholder="Ej: 80 palmas o 5,000 m²" class="w-full border-0 border-b border-gray-200 focus:border-accent text-lg py-2 outline-none bg-transparent">
+            <input id="calc-tamano" type="text" placeholder="Ej: 80 palmas o 5,000 m²" class="w-full border-0 border-b border-gray-200 focus:border-accent text-lg py-2 outline-none bg-transparent">
           </div>
         </div>
         <div class="bg-white rounded-2xl border border-gray-100 p-6 flex gap-5 items-start service-card">
           <span class="step-num">03</span>
           <div class="flex-1">
             <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-2">Ciudad destino</label>
-            <input type="text" placeholder="Ej: Tuxpan, Veracruz" class="w-full border-0 border-b border-gray-200 focus:border-accent text-lg py-2 outline-none bg-transparent">
+            <input id="calc-ciudad" type="text" placeholder="Ej: Tuxpan, Veracruz" class="w-full border-0 border-b border-gray-200 focus:border-accent text-lg py-2 outline-none bg-transparent">
           </div>
         </div>
       </div>
@@ -666,13 +666,13 @@
         <h3 class="text-3xl font-bold mb-6 leading-tight">Tu proyecto pre-armado</h3>
         <div class="space-y-3 mb-6">
           <div class="flex justify-between items-baseline pb-3 border-b border-white/10">
-            <span class="text-sm text-white/70">Tipo</span><b class="text-lg">Hotel boutique</b>
+            <span class="text-sm text-white/70">Tipo</span><b id="sum-tipo" class="text-lg">Hotel boutique</b>
           </div>
           <div class="flex justify-between items-baseline pb-3 border-b border-white/10">
-            <span class="text-sm text-white/70">Tamaño</span><b class="text-lg">80 palmas</b>
+            <span class="text-sm text-white/70">Tamaño</span><b id="sum-tamano" class="text-lg">80 palmas</b>
           </div>
           <div class="flex justify-between items-baseline pb-3 border-b border-white/10">
-            <span class="text-sm text-white/70">Destino</span><b class="text-lg">Tuxpan, Ver.</b>
+            <span class="text-sm text-white/70">Destino</span><b id="sum-ciudad" class="text-lg">Tuxpan, Ver.</b>
           </div>
           <div class="flex justify-between items-baseline pb-3 border-b border-white/10">
             <span class="text-sm text-white/70">Lead time</span><b class="text-lg">3–6 sem</b>
@@ -681,7 +681,7 @@
             <span class="text-sm text-white/70">Rango referencia</span><b class="text-xl text-accent" style="font-family:'Playfair Display',serif">$180K–$260K</b>
           </div>
         </div>
-        <a href="#" class="bg-wa hover:bg-accent transition-all w-full inline-flex items-center justify-center gap-2 text-white font-bold px-7 py-4 rounded-2xl shadow-lg">
+        <a id="calc-cta" href="#" class="bg-wa hover:bg-accent transition-all w-full inline-flex items-center justify-center gap-2 text-white font-bold px-7 py-4 rounded-2xl shadow-lg">
           <svg class="ic"><use href="#ic-whatsapp"/></svg> Obtener estimado por WhatsApp
         </a>
         <p class="text-xs text-white/55 mt-4 leading-relaxed">Cotización exacta requiere validar especies + maniobra en obra. Respondemos en menos de 4h hábiles.</p>
@@ -1081,7 +1081,38 @@
 
 
 <script>
-  document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+  // Reveal animation
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('visible')), {threshold:0, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible')), 900);
+
+  // Calculadora → WhatsApp
+  (function(){
+    const PHONE = '528333268008'; // +52 833 326 8008
+    const tipo = document.getElementById('calc-tipo');
+    const tam  = document.getElementById('calc-tamano');
+    const ciu  = document.getElementById('calc-ciudad');
+    const sT = document.getElementById('sum-tipo');
+    const sM = document.getElementById('sum-tamano');
+    const sC = document.getElementById('sum-ciudad');
+    const cta = document.getElementById('calc-cta');
+
+    function updateSummary(){
+      if (sT) sT.textContent = tipo.value || '—';
+      if (sM) sM.textContent = tam.value.trim() || '—';
+      if (sC) sC.textContent = ciu.value.trim() || '—';
+    }
+    function buildLink(){
+      const msg = `Hola Viveros Terra, quiero un estimado para mi proyecto B2B:\n\n• Tipo: ${tipo.value}\n• Tamaño: ${tam.value || 'por definir'}\n• Ciudad destino: ${ciu.value || 'por definir'}\n\nVengo de la página de Palmas Mayoreo Proyectos.`;
+      return `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+    }
+    [tipo, tam, ciu].forEach(el => el && el.addEventListener('input', updateSummary));
+    if (cta) cta.addEventListener('click', function(ev){
+      ev.preventDefault();
+      window.open(buildLink(), '_blank', 'noopener');
+    });
+    updateSummary();
+  })();
 </script>
 
 </body>
