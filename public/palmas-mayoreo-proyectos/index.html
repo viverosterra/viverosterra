@@ -59,6 +59,70 @@
     .price-tag{font-family:'Playfair Display',serif;font-weight:700;color:#FAFAF7;font-size:26px;line-height:1}
     @media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none}.service-card,.pq-card{transition:none}.service-card:hover,.pq-card:hover{transform:none}}
   
+
+  /* ===== GRID CLASES FALTANTES (no estan en tailwind.css compilado) ===== */
+  .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+  .grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}
+  .col-span-1{grid-column:span 1/span 1}
+  .col-span-3{grid-column:span 3/span 3}
+  .col-span-5{grid-column:span 5/span 5}
+  .col-span-6{grid-column:span 6/span 6}
+  .col-span-7{grid-column:span 7/span 7}
+  .col-span-8{grid-column:span 8/span 8}
+  .col-span-12{grid-column:span 12/span 12}
+  @media(min-width:640px){
+    .sm\:col-span-1{grid-column:span 1/span 1}
+    .sm\:col-span-2{grid-column:span 2/span 2}
+    .sm\:col-span-3{grid-column:span 3/span 3}
+    .sm\:col-span-4{grid-column:span 4/span 4}
+    .sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  }
+  @media(min-width:768px){
+    .md\:col-span-2{grid-column:span 2/span 2}
+    .md\:col-span-3{grid-column:span 3/span 3}
+    .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .md\:grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+  }
+  @media(min-width:1024px){
+    .lg\:col-span-2{grid-column:span 2/span 2}
+    .lg\:col-span-3{grid-column:span 3/span 3}
+    .lg\:col-span-5{grid-column:span 5/span 5}
+    .lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .lg\:grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+  }
+
+
+  /* ===== SPEC SHEET LAYOUT CORREGIDO ===== */
+  .spec-row{display:grid;grid-template-columns:80px 1fr 1fr auto auto;gap:20px;align-items:center;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.1);transition:background .2s}
+  .spec-row:hover{background:rgba(255,255,255,0.03)}
+  .spec-img-wrap{width:80px;height:80px;flex-shrink:0;border-radius:10px;overflow:hidden}
+  .spec-img-wrap img{width:100%;height:100%;object-fit:cover;opacity:.85}
+  @media(max-width:768px){
+    .spec-row{grid-template-columns:64px 1fr;gap:12px}
+    .spec-specs,.spec-lead{display:none}
+    .spec-price{grid-column:2}
+  }
+
+
+  .spec-name-cell{min-width:0}
+  .spec-name-cell h3{font-size:20px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .spec-name-cell p{font-size:12px;font-style:italic;color:rgba(255,255,255,0.55);margin-top:2px}
+  .spec-specs{min-width:0}
+  .spec-lead{white-space:nowrap}
+  .spec-cta{text-align:right;white-space:nowrap}
+
+
+  /* ===== CLASES FALTANTES ADICIONALES ===== */
+  .max-w-7xl{max-width:80rem}
+  @media(min-width:1024px){
+    .lg\:px-8{padding-left:2rem;padding-right:2rem}
+  }
+
   /* ===== TERRA NAV CSS ===== */
 /* ── NAVBAR BLANCO ──────────────────────────────────────────── */
 .terra-nav {
@@ -787,219 +851,211 @@
     <div class="space-y-4">
 
       <!-- Row 1 -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2">
-          <div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap">
             <img src="https://images.unsplash.com/photo-1500336624523-d727130c3328?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80">
           </div>
-        </div>
-        <div class="col-span-12 sm:col-span-3">
+        <div class="spec-name-cell">
           <h3 class="text-2xl font-bold mb-1">Palma Washingtonia</h3>
           <p class="text-sm italic text-white/55">Washingtonia robusta</p>
         </div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>4–18 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>2–4 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Cálido</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Bajo</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2">
+        <div class="spec-lead">
           <div class="text-xs uppercase tracking-wider text-white/55">Desde</div>
           <div class="price-tag">$1,800</div>
         </div>
-        <div class="col-span-6 sm:col-span-1 text-right">
+        <div class="spec-cta">
           <a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white transition">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a>
         </div>
       </div>
 
       <!-- Row 2 -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2">
-          <div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap">
             <img src="https://images.unsplash.com/photo-1572883454114-1cf0031ede2a?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80">
           </div>
-        </div>
-        <div class="col-span-12 sm:col-span-3">
+        <div class="spec-name-cell">
           <h3 class="text-2xl font-bold mb-1">Palma Real</h3>
           <p class="text-sm italic text-white/55">Roystonea regia</p>
         </div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>6–25 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>4–8 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Tropical</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Medio</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2">
+        <div class="spec-lead">
           <div class="text-xs uppercase tracking-wider text-white/55">Desde</div>
           <div class="price-tag">$4,200</div>
         </div>
-        <div class="col-span-6 sm:col-span-1 text-right">
+        <div class="spec-cta">
           <a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white transition">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a>
         </div>
       </div>
 
       <!-- Row 3 -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2">
-          <div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap">
             <img src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80">
           </div>
-        </div>
-        <div class="col-span-12 sm:col-span-3">
+        <div class="spec-name-cell">
           <h3 class="text-2xl font-bold mb-1">Palma Areca</h3>
           <p class="text-sm italic text-white/55">Dypsis lutescens</p>
         </div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>1.5–5 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>2–3 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Tropical</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Bajo</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2">
+        <div class="spec-lead">
           <div class="text-xs uppercase tracking-wider text-white/55">Desde</div>
           <div class="price-tag">$850</div>
         </div>
-        <div class="col-span-6 sm:col-span-1 text-right">
+        <div class="spec-cta">
           <a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white transition">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a>
         </div>
       </div>
 
       <!-- Row 4 -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2">
-          <div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap">
             <img src="https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80">
           </div>
-        </div>
-        <div class="col-span-12 sm:col-span-3">
+        <div class="spec-name-cell">
           <h3 class="text-2xl font-bold mb-1">Palma del Viajero</h3>
           <p class="text-sm italic text-white/55">Ravenala madagascariensis</p>
         </div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>3–10 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>3–5 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Húmedo</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Medio</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2">
+        <div class="spec-lead">
           <div class="text-xs uppercase tracking-wider text-white/55">Desde</div>
           <div class="price-tag">$1,500</div>
         </div>
-        <div class="col-span-6 sm:col-span-1 text-right">
+        <div class="spec-cta">
           <a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white transition">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a>
         </div>
       </div>
 
       <!-- Row 5: Coco Plumoso -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2"><div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark"><img src="https://images.unsplash.com/photo-1502945015378-0e284ca1a5be?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div></div>
-        <div class="col-span-12 sm:col-span-3"><h3 class="text-2xl font-bold mb-1">Coco Plumoso</h3><p class="text-sm italic text-white/55">Syagrus romanzoffiana</p></div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap"><img src="https://images.unsplash.com/photo-1502945015378-0e284ca1a5be?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div>
+        <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Coco Plumoso</h3><p class="text-sm italic text-white/55">Syagrus romanzoffiana</p></div>
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>5–15 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>3–6 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Cálido</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Bajo</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$2,400</div></div>
-        <div class="col-span-6 sm:col-span-1 text-right"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
+        <div class="spec-lead"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$2,400</div></div>
+        <div class="spec-cta"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
       </div>
 
       <!-- Row 6: Palma Kerpis -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2"><div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark"><img src="https://images.unsplash.com/photo-1604004555489-723a93d6ce74?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div></div>
-        <div class="col-span-12 sm:col-span-3"><h3 class="text-2xl font-bold mb-1">Palma Kerpis</h3><p class="text-sm italic text-white/55">Hyophorbe lagenicaulis</p></div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap"><img src="https://images.unsplash.com/photo-1604004555489-723a93d6ce74?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div>
+        <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Palma Kerpis</h3><p class="text-sm italic text-white/55">Hyophorbe lagenicaulis</p></div>
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>2–5 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>3–5 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Tropical</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Bajo</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$2,000</div></div>
-        <div class="col-span-6 sm:col-span-1 text-right"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
+        <div class="spec-lead"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$2,000</div></div>
+        <div class="spec-cta"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
       </div>
 
       <!-- Row 7: Cycas Revoluta -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2"><div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark"><img src="https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div></div>
-        <div class="col-span-12 sm:col-span-3"><h3 class="text-2xl font-bold mb-1">Cycas Revoluta</h3><p class="text-sm italic text-white/55">Cycas revoluta</p></div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap"><img src="https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div>
+        <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Cycas Revoluta</h3><p class="text-sm italic text-white/55">Cycas revoluta</p></div>
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>1–3 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>2–4 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Versátil</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Muy bajo</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$1,600</div></div>
-        <div class="col-span-6 sm:col-span-1 text-right"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
+        <div class="spec-lead"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$1,600</div></div>
+        <div class="spec-cta"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
       </div>
 
       <!-- Row 8: Bambú Tarro -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2"><div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark"><img src="https://images.unsplash.com/photo-1611371805429-8b5c1b2c34ba?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div></div>
-        <div class="col-span-12 sm:col-span-3"><h3 class="text-2xl font-bold mb-1">Bambú Tarro</h3><p class="text-sm italic text-white/55">Bambusa vulgaris</p></div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap"><img src="https://images.unsplash.com/photo-1611371805429-8b5c1b2c34ba?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div>
+        <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Bambú Tarro</h3><p class="text-sm italic text-white/55">Bambusa vulgaris</p></div>
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>5–20 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>3–5 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Húmedo</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Medio</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$2,800</div></div>
-        <div class="col-span-6 sm:col-span-1 text-right"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
+        <div class="spec-lead"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$2,800</div></div>
+        <div class="spec-cta"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
       </div>
 
       <!-- Row 9: Yucca Rostrata -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2"><div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark"><img src="https://images.unsplash.com/photo-1604762524889-3e2fcc145683?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div></div>
-        <div class="col-span-12 sm:col-span-3"><h3 class="text-2xl font-bold mb-1">Yucca Rostrata</h3><p class="text-sm italic text-white/55">Yucca rostrata</p></div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap"><img src="https://images.unsplash.com/photo-1604762524889-3e2fcc145683?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div>
+        <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Yucca Rostrata</h3><p class="text-sm italic text-white/55">Yucca rostrata</p></div>
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>2–4 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>4–6 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Árido</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Muy bajo</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$3,200</div></div>
-        <div class="col-span-6 sm:col-span-1 text-right"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
+        <div class="spec-lead"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$3,200</div></div>
+        <div class="spec-cta"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
       </div>
 
       <!-- Row 10: Palma Bambú -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2"><div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark"><img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div></div>
-        <div class="col-span-12 sm:col-span-3"><h3 class="text-2xl font-bold mb-1">Palma Bambú</h3><p class="text-sm italic text-white/55">Chamaedorea seifrizii</p></div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap"><img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div>
+        <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Palma Bambú</h3><p class="text-sm italic text-white/55">Chamaedorea seifrizii</p></div>
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>2–3 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>3–5 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Sombra</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Bajo</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$2,200</div></div>
-        <div class="col-span-6 sm:col-span-1 text-right"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
+        <div class="spec-lead"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$2,200</div></div>
+        <div class="spec-cta"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
       </div>
 
       <!-- Row 11: Cola de Zorra -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2"><div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark"><img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div></div>
-        <div class="col-span-12 sm:col-span-3"><h3 class="text-2xl font-bold mb-1">Palma Cola de Zorra</h3><p class="text-sm italic text-white/55">Wodyetia bifurcata</p></div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap"><img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div>
+        <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Palma Cola de Zorra</h3><p class="text-sm italic text-white/55">Wodyetia bifurcata</p></div>
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>4–10 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>2–4 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Tropical</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Bajo</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$1,200</div></div>
-        <div class="col-span-6 sm:col-span-1 text-right"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
+        <div class="spec-lead"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$1,200</div></div>
+        <div class="spec-cta"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
       </div>
 
       <!-- Row 12: Palma Triángulo -->
-      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
-        <div class="col-span-12 sm:col-span-2"><div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark"><img src="https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div></div>
-        <div class="col-span-12 sm:col-span-3"><h3 class="text-2xl font-bold mb-1">Palma Triángulo</h3><p class="text-sm italic text-white/55">Dypsis decaryi</p></div>
-        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+      <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
+        <div class="spec-img-wrap"><img src="https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80"></div>
+        <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Palma Triángulo</h3><p class="text-sm italic text-white/55">Dypsis decaryi</p></div>
+        <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>3–8 m</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>4–6 sem</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Tropical</b></div>
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Bajo</b></div>
         </div>
-        <div class="col-span-6 sm:col-span-2"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$2,400</div></div>
-        <div class="col-span-6 sm:col-span-1 text-right"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
+        <div class="spec-lead"><div class="text-xs uppercase tracking-wider text-white/55">Desde</div><div class="price-tag">$2,400</div></div>
+        <div class="spec-cta"><a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a></div>
       </div>
 
     </div>
@@ -1217,7 +1273,7 @@
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">Documentación completa para tu <span class="text-accent italic">compra empresarial</span>.</h2>
       <p class="text-lg text-white/75">Todo lo que necesita compras, finanzas, gobierno y supervisión de obra para liberar el pago sin fricción.</p>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-5">
       <div class="bg-white/5 rounded-2xl p-6 border border-white/10 service-card">
         <div class="w-12 h-12 rounded-xl bg-accent/15 text-accent flex items-center justify-center mb-4"><svg class="w-6 h-6"><use href="#ic-doc"/></svg></div>
         <h3 class="text-lg font-bold mb-2">CFDI 4.0</h3>
@@ -1250,7 +1306,7 @@
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-dark mb-4 leading-tight">Empieza con un <span class="text-primary italic">paquete pre-armado</span> y ajustamos a tu obra.</h2>
       <p class="text-lg text-gray-700">Configuraciones validadas con +80 proyectos. Cada paquete es punto de partida — la cotización final se ajusta a tu plano.</p>
     </div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="grid md:grid-cols-4 gap-5">
       <div class="bg-white rounded-2xl p-6 border border-gray-100 service-card flex flex-col">
         <div class="text-3xl mb-3">🏨</div>
         <h3 class="text-xl font-bold text-dark mb-2">Hotel Boutique</h3>
