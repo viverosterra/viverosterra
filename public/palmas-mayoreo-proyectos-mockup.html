@@ -1,306 +1,314 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="es-MX">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mockup · Palmas Mayoreo Proyectos · Viveros Terra</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/tailwind.css">
 <style>
-  :root{
-    --light:#FAFAF7;
-    --light-2:#F1EFE9;
-    --dark:#0D2B0E;
-    --dark-2:#163A18;
-    --ink:#1F3D2B;
-    --ink-soft:#3C4A40;
-    --line:#2A3A2D;
-    --line-soft:#D9D5CB;
-    --acc:#55B96A;
-    --acc-hover:#45C463;
-    --critical:#FFC857;
-    --serif:'Playfair Display', Georgia, serif;
-    --sans:'Inter', system-ui, sans-serif;
-    --mono:'JetBrains Mono', ui-monospace, monospace;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:var(--sans);color:var(--ink);background:var(--light);line-height:1.55;-webkit-font-smoothing:antialiased}
-  .container{max-width:1240px;margin:0 auto;padding:0 32px}
-  @media(max-width:768px){.container{padding:0 20px}}
-  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--acc);font-weight:500}
-  .light{background:var(--light);color:var(--ink)}
-  .dark{background:var(--dark);color:#fff}
-  .dark .eyebrow{color:var(--critical)}
-  section{padding:120px 0;position:relative}
-  @media(max-width:768px){section{padding:72px 0}}
-
-  /* ===== HERO ===== */
-  .hero{padding:0;min-height:92vh;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(180deg,#F4F0E6 0%,#FAFAF7 100%)}
-  .hero-grid{display:grid;grid-template-columns:6fr 6fr;gap:64px;align-items:center;width:100%}
-  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:32px}}
-  .hero-content{padding:80px 0}
-  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(40px,5.4vw,76px);line-height:1.02;letter-spacing:-0.02em;color:var(--ink);margin-bottom:24px}
-  .hero h1 em{font-style:italic;color:var(--acc);font-weight:500}
-  .hero-sub{font-size:clamp(16px,1.2vw,19px);color:var(--ink-soft);max-width:560px;margin-bottom:32px;line-height:1.6}
-  .audience-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
-  .chip{font-family:var(--mono);font-size:11px;letter-spacing:0.06em;padding:8px 14px;border:1px solid var(--line-soft);border-radius:999px;color:var(--ink);background:rgba(255,255,255,0.5);backdrop-filter:blur(8px)}
-  .chip span{margin-right:6px}
-  .hero-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
-  .btn{font-family:var(--sans);font-weight:500;font-size:15px;padding:16px 28px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s ease;cursor:pointer;border:none}
-  .btn-primary{background:var(--acc);color:#fff;box-shadow:0 6px 24px -8px rgba(85,185,106,0.5)}
-  .btn-primary:hover{background:var(--acc-hover);transform:translateY(-1px)}
-  .btn-secondary{background:transparent;color:var(--ink);border:1px solid var(--ink)}
-  .btn-secondary:hover{background:var(--ink);color:#fff}
-  .micro-proof{display:flex;gap:32px;padding-top:24px;border-top:1px solid var(--line-soft);font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
-  .micro-proof b{color:var(--ink);font-weight:600;font-size:18px;font-family:var(--sans);display:block;letter-spacing:-0.01em}
-  .hero-visual{position:relative;height:88vh;min-height:560px;background:linear-gradient(180deg,#1F3D2B 0%,#0D2B0E 100%);overflow:hidden;border-radius:2px}
-  .hero-visual::after{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1597211833712-5e41faa202ea?w=1200&q=80') center/cover;opacity:0.85;mix-blend-mode:luminosity}
-  .hero-visual::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,43,14,0.1) 0%,rgba(13,43,14,0.6) 100%);z-index:2}
-  .hero-tag{position:absolute;bottom:32px;left:32px;z-index:3;color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;border-left:2px solid var(--critical);padding-left:12px}
-  .hero-tag b{display:block;font-family:var(--serif);font-size:22px;font-weight:500;text-transform:none;letter-spacing:-0.01em;margin-top:6px}
-  .badges{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px}
-  @media(max-width:600px){.badges{grid-template-columns:repeat(2,1fr)}}
-  .badge{padding:14px;border:1px solid var(--line-soft);border-radius:4px;font-size:12px;color:var(--ink);background:rgba(255,255,255,0.5)}
-  .badge b{display:block;font-family:var(--mono);color:var(--acc);font-size:10px;letter-spacing:0.1em;margin-bottom:4px}
-
-  /* ===== TRUST BAR ===== */
-  .trust{background:var(--dark);color:#fff;padding:48px 0;border-top:1px solid var(--line)}
-  .trust-row{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;align-items:end}
-  @media(max-width:900px){.trust-row{grid-template-columns:repeat(2,1fr);gap:32px}}
-  .trust-item{border-left:1px solid rgba(255,255,255,0.15);padding-left:16px}
-  .trust-item .n{font-family:var(--serif);font-size:clamp(36px,4vw,52px);font-weight:400;line-height:1;letter-spacing:-0.02em}
-  .trust-item .l{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-top:8px}
-
-  /* ===== PARA QUIÉN ===== */
-  .para-quien h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,3.6vw,52px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;max-width:760px}
-  .para-quien h2 em{font-style:italic;color:var(--acc)}
-  .para-quien-sub{font-size:17px;color:var(--ink-soft);max-width:640px;margin-bottom:64px}
-  .pq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-  @media(max-width:900px){.pq-grid{grid-template-columns:1fr}}
-  .pq-card{padding:36px 28px;border:1px solid var(--line-soft);border-left:3px solid var(--line-soft);background:#fff;border-radius:2px;transition:all .25s ease;position:relative}
-  .pq-card:hover{border-left-color:var(--acc);transform:translateY(-2px);box-shadow:0 12px 40px -16px rgba(13,43,14,0.18)}
-  .pq-icon{width:48px;height:48px;background:var(--light-2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:20px}
-  .pq-role{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
-  .pq-title{font-family:var(--serif);font-size:24px;font-weight:500;margin-bottom:16px;line-height:1.2}
-  .pq-fear{font-style:italic;color:var(--ink-soft);font-size:14px;border-left:2px solid var(--critical);padding-left:12px;margin-bottom:16px}
-  .pq-msg{font-size:14px;color:var(--ink);line-height:1.6;margin-bottom:20px}
-  .pq-link{font-family:var(--mono);font-size:12px;color:var(--acc);text-decoration:none;letter-spacing:0.04em;display:inline-flex;align-items:center;gap:6px}
-  .pq-link:hover{gap:10px}
-
-  /* ===== ESPECIES SPEC SHEET ===== */
-  .especies{background:var(--dark);color:#fff}
-  .especies h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,3.6vw,52px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;max-width:760px}
-  .especies h2 em{font-style:italic;color:var(--critical)}
-  .especies-sub{font-size:16px;color:rgba(255,255,255,0.65);max-width:600px;margin-bottom:56px}
-  .spec-row{display:grid;grid-template-columns:120px 1.5fr 2fr 1fr 1fr;gap:24px;align-items:center;padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.1);transition:background .2s ease}
-  .spec-row:hover{background:rgba(255,255,255,0.02)}
-  @media(max-width:900px){.spec-row{grid-template-columns:80px 1fr;gap:16px;padding:20px 0}.spec-row .specs,.spec-row .lead{display:none}.spec-row .price{grid-column:2}}
-  .spec-img{width:100%;aspect-ratio:1;background:linear-gradient(135deg,#1F3D2B,#0D2B0E);border-radius:2px;position:relative;overflow:hidden}
-  .spec-img::after{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&q=80') center/cover;opacity:0.8}
-  .spec-name{font-family:var(--serif);font-size:22px;font-weight:500;line-height:1.15}
-  .spec-name small{display:block;font-family:var(--sans);font-style:italic;font-size:12px;font-weight:400;color:rgba(255,255,255,0.55);margin-top:4px}
-  .specs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.6)}
-  .specs div{display:flex;justify-content:space-between;border-bottom:1px dotted rgba(255,255,255,0.12);padding-bottom:4px}
-  .specs b{color:#fff;font-weight:500}
-  .price{font-family:var(--mono);font-size:13px;color:rgba(255,255,255,0.6)}
-  .price b{display:block;font-family:var(--sans);font-size:22px;font-weight:600;color:var(--critical);letter-spacing:-0.01em;margin-top:2px}
-  .lead{text-align:right}
-  .btn-spec{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;padding:10px 14px;background:transparent;color:var(--critical);border:1px solid rgba(255,200,87,0.4);border-radius:2px;text-decoration:none;text-transform:uppercase;transition:all .2s}
-  .btn-spec:hover{background:var(--critical);color:var(--dark);border-color:var(--critical)}
-
-  /* ===== CALCULADORA ===== */
-  .calc h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,3.6vw,52px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px}
-  .calc h2 em{font-style:italic;color:var(--acc)}
-  .calc-sub{font-size:16px;color:var(--ink-soft);max-width:560px;margin-bottom:48px}
-  .calc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-  @media(max-width:900px){.calc-wrap{grid-template-columns:1fr;gap:32px}}
-  .calc-form{display:flex;flex-direction:column;gap:24px}
-  .calc-step{padding:24px;border:1px solid var(--line-soft);background:#fff;border-radius:2px;display:flex;gap:20px;align-items:flex-start}
-  .calc-step .num{font-family:var(--mono);font-size:12px;color:var(--acc);letter-spacing:0.1em;min-width:24px}
-  .calc-step .field{flex:1}
-  .calc-step label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
-  .calc-step select,.calc-step input{width:100%;border:none;border-bottom:1px solid var(--line-soft);padding:8px 0;font-family:var(--sans);font-size:16px;color:var(--ink);background:transparent;outline:none;transition:border-color .2s}
-  .calc-step select:focus,.calc-step input:focus{border-bottom-color:var(--acc)}
-  .calc-summary{padding:36px;background:linear-gradient(160deg,#1F3D2B,#0D2B0E);color:#fff;border-radius:2px;position:sticky;top:32px}
-  .calc-summary .eyebrow{color:var(--critical);margin-bottom:12px}
-  .calc-summary h3{font-family:var(--serif);font-size:26px;font-weight:500;margin-bottom:24px;line-height:1.2}
-  .summary-row{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-family:var(--mono);font-size:13px;color:rgba(255,255,255,0.65)}
-  .summary-row b{color:var(--critical);font-family:var(--sans);font-size:16px;font-weight:500}
-  .calc-cta{margin-top:24px;width:100%;justify-content:center;background:var(--critical);color:var(--dark);font-weight:600}
-  .calc-cta:hover{background:#fff}
-  .calc-note{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.5);margin-top:16px;line-height:1.5}
-
-  /* Footer mockup */
-  footer{padding:48px 0;background:var(--dark-2);color:rgba(255,255,255,0.55);font-family:var(--mono);font-size:12px;text-align:center;border-top:1px solid var(--line)}
-  footer b{color:var(--critical)}
+  body{font-family:'Inter',sans-serif;background:#FAFAF7;color:#0D2B0E}
+  h1,h2,h3{font-family:'Playfair Display',serif}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .service-card{transition:transform .3s ease,box-shadow .3s ease}
+  .service-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(27,94,32,.15)}
+  .hero-overlay{background:linear-gradient(135deg,rgba(13,43,14,.92) 0%,rgba(27,94,32,.78) 60%,rgba(46,125,50,.58) 100%)}
+  .stat-card{background:rgba(255,255,255,.10);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15)}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);font-size:13px;color:#fff;backdrop-filter:blur(8px)}
+  .ic{width:18px;height:18px;flex-shrink:0}
+  .spec-row{transition:background .2s ease}
+  .spec-row:hover{background:rgba(102,187,106,.06)}
+  .pq-card{border-left:3px solid #E0E5DF;transition:all .3s ease}
+  .pq-card:hover{border-left-color:#66BB6A;transform:translateY(-4px);box-shadow:0 20px 40px rgba(27,94,32,.12)}
+  .step-num{font-family:'Playfair Display',serif;font-size:42px;line-height:1;color:#66BB6A;font-weight:700}
+  .calc-summary-grad{background:linear-gradient(160deg,#1B5E20 0%,#0D2B0E 100%)}
+  .price-tag{font-family:'Playfair Display',serif;font-weight:700;color:#FAFAF7;font-size:26px;line-height:1}
+  .audience-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#F0F7F0;border:1px solid #C8E0CB;color:#1B5E20;font-size:13px;font-weight:500}
+  .reveal-now{opacity:1;transform:none}
 </style>
+
+<!-- SVG sprite (subset) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ic-palm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V10"/><path d="M12 10c0 0-4-5-2-8 2-3 6 0 2 8"/><path d="M12 10c0 0 4-5 2-8-2-3-6 0-2 8"/><path d="M8 21h8"/></symbol>
+  <symbol id="ic-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
+  <symbol id="ic-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="ic-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></symbol>
+  <symbol id="ic-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="8" height="18"/><rect x="14" y="8" width="8" height="13"/><path d="M6 7h.01M6 11h.01M6 15h.01M18 11h.01M18 15h.01"/></symbol>
+  <symbol id="ic-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="ic-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></symbol>
+  <symbol id="ic-whatsapp" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+</svg>
 </head>
+
 <body>
 
 <!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <div class="hero-content">
-        <div class="eyebrow" style="margin-bottom:24px">Mayoreo · Proyectos B2B regionales</div>
-        <h1>Palmas para tu proyecto,<br><em>donde sea</em> que estés en la región.</h1>
-        <p class="hero-sub">Productor directo en el sur de Tamaulipas. Envíos a hoteles, fraccionamientos, gobierno e industria en <b>Tamaulipas, Veracruz y SLP</b> — con CFDI 4.0, certificado fitosanitario y garantía de arraigo escrita.</p>
-        <div class="audience-chips">
-          <span class="chip"><span>🏨</span>Hoteles</span>
-          <span class="chip"><span>🏛️</span>Gobierno</span>
-          <span class="chip"><span>🏘️</span>Fraccionadoras</span>
-          <span class="chip"><span>🏭</span>Industria</span>
-        </div>
-        <div class="badges">
-          <div class="badge"><b>STOCK</b>+15 especies disponibles</div>
-          <div class="badge"><b>COBERTURA</b>3 estados</div>
-          <div class="badge"><b>DOCS</b>CFDI · Fitosanitario</div>
-          <div class="badge"><b>GARANTÍA</b>60 días arraigo</div>
-        </div>
-        <div class="hero-cta-row">
-          <a href="#calc" class="btn btn-primary">Cotizar mi proyecto →</a>
-          <a href="#lead" class="btn btn-secondary">Descargar guía PDF</a>
-        </div>
-        <div class="micro-proof">
-          <div><b>47</b>Proyectos B2B</div>
-          <div><b>3</b>Estados activos</div>
-          <div><b>2008</b>Productor desde</div>
-        </div>
+<section class="relative bg-dark min-h-[88vh] flex items-end pb-0">
+  <img src="https://images.unsplash.com/photo-1597211833712-5e41faa202ea?w=1800&q=80" alt="" class="absolute inset-0 w-full h-full object-cover opacity-50">
+  <div class="absolute inset-0 hero-overlay"></div>
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-28 text-white w-full">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/20 border border-accent/40 text-accent text-xs font-semibold uppercase tracking-wider mb-6">
+      <svg class="ic"><use href="#ic-palm"/></svg> Mayoreo · Proyectos B2B
+    </div>
+    <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight mb-6 max-w-4xl">
+      Palmas para tu proyecto,<br><span class="text-accent">donde sea</span> que estés en la región.
+    </h1>
+    <p class="text-lg sm:text-xl text-white/90 max-w-2xl mb-6 leading-relaxed">
+      Productor directo en el sur de Tamaulipas. Envíos a hoteles, fraccionamientos, gobierno e industria en <b class="text-white">Tamaulipas, Veracruz y SLP</b> — con CFDI 4.0, certificado fitosanitario y garantía de arraigo escrita.
+    </p>
+    <div class="flex flex-wrap gap-2 mb-8">
+      <span class="chip">🏨 Hoteles</span>
+      <span class="chip">🏛️ Gobierno</span>
+      <span class="chip">🏘️ Fraccionadoras</span>
+      <span class="chip">🏭 Industria</span>
+    </div>
+    <!-- Stat badges -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8 max-w-3xl">
+      <div class="stat-card rounded-2xl p-4">
+        <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-1">Stock</div>
+        <div class="text-sm text-white/90">+15 especies</div>
       </div>
-      <div class="hero-visual">
-        <div class="hero-tag">Caso reciente<b>Hotel boutique<br>Altamira · 50 palmas</b></div>
+      <div class="stat-card rounded-2xl p-4">
+        <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-1">Cobertura</div>
+        <div class="text-sm text-white/90">3 estados</div>
       </div>
+      <div class="stat-card rounded-2xl p-4">
+        <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-1">Docs</div>
+        <div class="text-sm text-white/90">CFDI · Fito</div>
+      </div>
+      <div class="stat-card rounded-2xl p-4">
+        <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-1">Garantía</div>
+        <div class="text-sm text-white/90">60 días arraigo</div>
+      </div>
+    </div>
+    <!-- CTAs -->
+    <div class="flex flex-wrap gap-3 mb-6">
+      <a href="#calc" class="inline-flex items-center gap-2 bg-accent hover:bg-wa text-white font-semibold px-7 py-4 rounded-2xl shadow-lg transition-all">
+        Cotizar mi proyecto <svg class="ic"><use href="#ic-arrow-right"/></svg>
+      </a>
+      <a href="#lead" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-7 py-4 rounded-2xl transition-all backdrop-blur-sm">
+        Descargar guía PDF
+      </a>
+    </div>
+    <!-- Micro proof -->
+    <div class="flex flex-wrap gap-6 pt-6 border-t border-white/15 text-sm text-white/70">
+      <div><b class="text-white text-xl font-semibold block">47</b>Proyectos B2B</div>
+      <div><b class="text-white text-xl font-semibold block">3</b>Estados activos</div>
+      <div><b class="text-white text-xl font-semibold block">2008</b>Productor desde</div>
+      <div><b class="text-white text-xl font-semibold block">+500K m²</b>Entregados</div>
     </div>
   </div>
 </section>
 
 <!-- ============ TRUST BAR ============ -->
-<div class="trust">
-  <div class="container">
-    <div class="trust-row">
-      <div class="trust-item"><div class="n">20</div><div class="l">Años produciendo</div></div>
-      <div class="trust-item"><div class="n">500K<span style="font-size:0.5em">m²</span></div><div class="l">Entregados</div></div>
-      <div class="trust-item"><div class="n">80<span style="font-size:0.5em">+</span></div><div class="l">Proyectos B2B · 36 meses</div></div>
-      <div class="trust-item"><div class="n">3</div><div class="l">Estados cobertura</div></div>
-      <div class="trust-item"><div class="n">15<span style="font-size:0.5em">+</span></div><div class="l">Especies en stock</div></div>
+<section class="py-12 bg-primary text-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
+      <div><div class="text-4xl md:text-5xl font-bold mb-1" style="font-family:'Playfair Display',serif">20</div><div class="text-xs uppercase tracking-wider text-white/70">Años produciendo</div></div>
+      <div><div class="text-4xl md:text-5xl font-bold mb-1" style="font-family:'Playfair Display',serif">500K<span class="text-2xl">m²</span></div><div class="text-xs uppercase tracking-wider text-white/70">Entregados</div></div>
+      <div><div class="text-4xl md:text-5xl font-bold mb-1" style="font-family:'Playfair Display',serif">80<span class="text-2xl">+</span></div><div class="text-xs uppercase tracking-wider text-white/70">Proyectos B2B</div></div>
+      <div><div class="text-4xl md:text-5xl font-bold mb-1" style="font-family:'Playfair Display',serif">3</div><div class="text-xs uppercase tracking-wider text-white/70">Estados</div></div>
+      <div><div class="text-4xl md:text-5xl font-bold mb-1" style="font-family:'Playfair Display',serif">15<span class="text-2xl">+</span></div><div class="text-xs uppercase tracking-wider text-white/70">Especies</div></div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ============ PARA QUIÉN ES ESTO ============ -->
-<section class="para-quien light">
-  <div class="container">
-    <div class="eyebrow" style="margin-bottom:20px">Sección 4 · Tres personas</div>
-    <h2>Hecho para <em>tres tipos</em> de comprador.</h2>
-    <p class="para-quien-sub">Cada proyecto exige documentación, plazos y ejemplares distintos. Te llevamos directo al apartado que resuelve tu caso.</p>
-    <div class="pq-grid">
-      <div class="pq-card">
-        <div class="pq-icon">👷</div>
-        <div class="pq-role">01 · Arquitecto / paisajista</div>
-        <div class="pq-title">Que el ejemplar llegue idéntico al render.</div>
-        <p class="pq-fear">"Necesito altura de tronco verificada, no la altura total con copa."</p>
-        <p class="pq-msg">Ejemplares calibrados con altura de tronco y diámetro de copa medidos antes de envío. Ficha técnica + foto del ejemplar específico que se entrega.</p>
-        <a href="#especies" class="pq-link">Ver fichas técnicas →</a>
+<!-- ============ PARA QUIÉN ============ -->
+<section class="py-20 bg-bgwarm">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="max-w-3xl mb-12">
+      <div class="text-sm uppercase tracking-wider text-accent font-semibold mb-3">Sección 4 · Tres personas</div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-dark mb-4 leading-tight">Hecho para <span class="text-primary italic">tres tipos</span> de comprador.</h2>
+      <p class="text-lg text-gray-700">Cada proyecto exige documentación, plazos y ejemplares distintos. Te llevamos directo al apartado que resuelve tu caso.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Card 1 -->
+      <div class="pq-card service-card bg-white rounded-2xl p-7 border border-gray-100">
+        <div class="w-14 h-14 rounded-2xl bg-bggreen flex items-center justify-center mb-5 text-primary">
+          <svg class="w-7 h-7"><use href="#ic-building"/></svg>
+        </div>
+        <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-2">01 · Arquitecto / paisajista</div>
+        <h3 class="text-xl font-bold text-dark mb-3 leading-snug">Que el ejemplar llegue idéntico al render.</h3>
+        <p class="italic text-sm text-gray-600 border-l-2 border-accent pl-3 mb-4">"Necesito altura de tronco verificada, no la altura total con copa."</p>
+        <p class="text-gray-700 mb-5 leading-relaxed">Ejemplares calibrados con altura de tronco y diámetro de copa medidos antes de envío. Ficha técnica + foto del ejemplar específico que se entrega.</p>
+        <a href="#especies" class="inline-flex items-center gap-2 text-primary font-semibold hover:text-accent transition-colors">Ver fichas técnicas <svg class="ic"><use href="#ic-arrow-right"/></svg></a>
       </div>
-      <div class="pq-card">
-        <div class="pq-icon">🏛️</div>
-        <div class="pq-role">02 · Gobierno / obra pública</div>
-        <div class="pq-title">Cumplir auditoría sin retrasos administrativos.</div>
-        <p class="pq-fear">"Necesito factura, padrón, acta entrega y garantía escrita."</p>
-        <p class="pq-msg">CFDI 4.0 emitida el día del pago, alta en padrón de proveedores, acta de entrega-recepción y garantía de arraigo de 60 días por escrito.</p>
-        <a href="#documentacion" class="pq-link">Ver documentación →</a>
+      <!-- Card 2 -->
+      <div class="pq-card service-card bg-white rounded-2xl p-7 border border-gray-100">
+        <div class="w-14 h-14 rounded-2xl bg-bggreen flex items-center justify-center mb-5 text-primary">
+          <svg class="w-7 h-7"><use href="#ic-doc"/></svg>
+        </div>
+        <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-2">02 · Gobierno / obra pública</div>
+        <h3 class="text-xl font-bold text-dark mb-3 leading-snug">Cumplir auditoría sin retrasos administrativos.</h3>
+        <p class="italic text-sm text-gray-600 border-l-2 border-accent pl-3 mb-4">"Necesito factura, padrón, acta entrega y garantía escrita."</p>
+        <p class="text-gray-700 mb-5 leading-relaxed">CFDI 4.0 emitida el día del pago, alta en padrón de proveedores, acta de entrega-recepción y garantía de arraigo de 60 días por escrito.</p>
+        <a href="#documentacion" class="inline-flex items-center gap-2 text-primary font-semibold hover:text-accent transition-colors">Ver documentación <svg class="ic"><use href="#ic-arrow-right"/></svg></a>
       </div>
-      <div class="pq-card">
-        <div class="pq-icon">🏨</div>
-        <div class="pq-role">03 · Gerente de obra / hotelería</div>
-        <div class="pq-title">No retrasar la fecha de apertura.</div>
-        <p class="pq-fear">"Necesito plazo comprometido y maniobra incluida en obra."</p>
-        <p class="pq-msg">Entregamos en obra con maniobra incluida. 2-5 días en zona conurbada Tampico-Madero-Altamira. Lead time por escrito en cotización.</p>
-        <a href="#cobertura" class="pq-link">Ver cobertura logística →</a>
+      <!-- Card 3 -->
+      <div class="pq-card service-card bg-white rounded-2xl p-7 border border-gray-100">
+        <div class="w-14 h-14 rounded-2xl bg-bggreen flex items-center justify-center mb-5 text-primary">
+          <svg class="w-7 h-7"><use href="#ic-truck"/></svg>
+        </div>
+        <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-2">03 · Gerente de obra / hotelería</div>
+        <h3 class="text-xl font-bold text-dark mb-3 leading-snug">No retrasar la fecha de apertura del proyecto.</h3>
+        <p class="italic text-sm text-gray-600 border-l-2 border-accent pl-3 mb-4">"Necesito plazo comprometido y maniobra incluida en obra."</p>
+        <p class="text-gray-700 mb-5 leading-relaxed">Entregamos en obra con maniobra incluida. 2-5 días en zona conurbada Tampico-Madero-Altamira. Lead time por escrito en cotización.</p>
+        <a href="#cobertura" class="inline-flex items-center gap-2 text-primary font-semibold hover:text-accent transition-colors">Ver cobertura logística <svg class="ic"><use href="#ic-arrow-right"/></svg></a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============ ESPECIES SPEC SHEET ============ -->
-<section class="especies dark" id="especies">
-  <div class="container">
-    <div class="eyebrow" style="margin-bottom:20px">Sección 5 · Catálogo técnico</div>
-    <h2>12 palmas para proyectos · <em>spec sheet</em></h2>
-    <p class="especies-sub">Inventario actualizado. Precios "desde" por volumen ≥50 ejemplares. Cotización exacta con altura y calibre verificados.</p>
-
-    <div class="spec-row">
-      <div class="spec-img"></div>
-      <div class="spec-name">Palma Washingtonia<small>Washingtonia robusta</small></div>
-      <div class="specs">
-        <div><span>Altura</span><b>4–18 m</b></div>
-        <div><span>Lead time</span><b>2–4 sem</b></div>
-        <div><span>Clima</span><b>Cálido seco/húmedo</b></div>
-        <div><span>Mantto</span><b>Bajo</b></div>
-      </div>
-      <div class="price">Desde<b>$1,800</b></div>
-      <div class="lead"><a href="#" class="btn-spec">Cotizar 50+ →</a></div>
+<section class="py-20 bg-dark text-white" id="especies">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="max-w-3xl mb-12">
+      <div class="text-sm uppercase tracking-wider text-accent font-semibold mb-3">Sección 5 · Catálogo técnico</div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">12 palmas para proyectos · <span class="text-accent italic">spec sheet</span></h2>
+      <p class="text-lg text-white/75">Inventario actualizado. Precios "desde" por volumen ≥50 ejemplares. Cotización exacta con altura y calibre verificados.</p>
     </div>
 
-    <div class="spec-row">
-      <div class="spec-img" style="filter:hue-rotate(20deg)"></div>
-      <div class="spec-name">Palma Real<small>Roystonea regia</small></div>
-      <div class="specs">
-        <div><span>Altura</span><b>6–25 m</b></div>
-        <div><span>Lead time</span><b>4–8 sem</b></div>
-        <div><span>Clima</span><b>Tropical cálido</b></div>
-        <div><span>Mantto</span><b>Medio</b></div>
+    <!-- Spec rows -->
+    <div class="space-y-4">
+
+      <!-- Row 1 -->
+      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
+        <div class="col-span-12 sm:col-span-2">
+          <div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark">
+            <img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80">
+          </div>
+        </div>
+        <div class="col-span-12 sm:col-span-3">
+          <h3 class="text-2xl font-bold mb-1">Palma Washingtonia</h3>
+          <p class="text-sm italic text-white/55">Washingtonia robusta</p>
+        </div>
+        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>4–18 m</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>2–4 sem</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Cálido</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Bajo</b></div>
+        </div>
+        <div class="col-span-6 sm:col-span-2">
+          <div class="text-xs uppercase tracking-wider text-white/55">Desde</div>
+          <div class="price-tag">$1,800</div>
+        </div>
+        <div class="col-span-6 sm:col-span-1 text-right">
+          <a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white transition">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a>
+        </div>
       </div>
-      <div class="price">Desde<b>$4,200</b></div>
-      <div class="lead"><a href="#" class="btn-spec">Cotizar 50+ →</a></div>
+
+      <!-- Row 2 -->
+      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
+        <div class="col-span-12 sm:col-span-2">
+          <div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark">
+            <img src="https://images.unsplash.com/photo-1418985991508-e47386d96a71?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80">
+          </div>
+        </div>
+        <div class="col-span-12 sm:col-span-3">
+          <h3 class="text-2xl font-bold mb-1">Palma Real</h3>
+          <p class="text-sm italic text-white/55">Roystonea regia</p>
+        </div>
+        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>6–25 m</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>4–8 sem</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Tropical</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Medio</b></div>
+        </div>
+        <div class="col-span-6 sm:col-span-2">
+          <div class="text-xs uppercase tracking-wider text-white/55">Desde</div>
+          <div class="price-tag">$4,200</div>
+        </div>
+        <div class="col-span-6 sm:col-span-1 text-right">
+          <a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white transition">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
+        <div class="col-span-12 sm:col-span-2">
+          <div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark">
+            <img src="https://images.unsplash.com/photo-1530968033775-2c92736b131e?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80">
+          </div>
+        </div>
+        <div class="col-span-12 sm:col-span-3">
+          <h3 class="text-2xl font-bold mb-1">Palma Areca</h3>
+          <p class="text-sm italic text-white/55">Dypsis lutescens</p>
+        </div>
+        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>1.5–5 m</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>2–3 sem</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Tropical</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Bajo</b></div>
+        </div>
+        <div class="col-span-6 sm:col-span-2">
+          <div class="text-xs uppercase tracking-wider text-white/55">Desde</div>
+          <div class="price-tag">$850</div>
+        </div>
+        <div class="col-span-6 sm:col-span-1 text-right">
+          <a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white transition">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="spec-row bg-white/5 hover:bg-white/8 rounded-2xl border border-white/10 p-5 grid grid-cols-12 gap-4 items-center">
+        <div class="col-span-12 sm:col-span-2">
+          <div class="w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-primary to-dark">
+            <img src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=400&q=80" alt="" class="w-full h-full object-cover opacity-80">
+          </div>
+        </div>
+        <div class="col-span-12 sm:col-span-3">
+          <h3 class="text-2xl font-bold mb-1">Palma del Viajero</h3>
+          <p class="text-sm italic text-white/55">Ravenala madagascariensis</p>
+        </div>
+        <div class="col-span-12 sm:col-span-4 grid grid-cols-2 gap-2 text-sm">
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>3–10 m</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Lead time</span><b>3–5 sem</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Clima</span><b>Húmedo</b></div>
+          <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Mantto</span><b>Medio</b></div>
+        </div>
+        <div class="col-span-6 sm:col-span-2">
+          <div class="text-xs uppercase tracking-wider text-white/55">Desde</div>
+          <div class="price-tag">$1,500</div>
+        </div>
+        <div class="col-span-6 sm:col-span-1 text-right">
+          <a href="#" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:text-white transition">Cotizar <svg class="ic"><use href="#ic-arrow-right"/></svg></a>
+        </div>
+      </div>
+
     </div>
 
-    <div class="spec-row">
-      <div class="spec-img" style="filter:hue-rotate(-15deg)"></div>
-      <div class="spec-name">Palma Areca<small>Dypsis lutescens</small></div>
-      <div class="specs">
-        <div><span>Altura</span><b>1.5–5 m</b></div>
-        <div><span>Lead time</span><b>2–3 sem</b></div>
-        <div><span>Clima</span><b>Tropical cálido</b></div>
-        <div><span>Mantto</span><b>Bajo</b></div>
-      </div>
-      <div class="price">Desde<b>$850</b></div>
-      <div class="lead"><a href="#" class="btn-spec">Cotizar 50+ →</a></div>
+    <div class="text-center mt-10">
+      <a href="#" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-7 py-4 rounded-2xl transition">
+        Ver las 12 especies completas <svg class="ic"><use href="#ic-arrow-right"/></svg>
+      </a>
     </div>
-
-    <div class="spec-row">
-      <div class="spec-img" style="filter:hue-rotate(35deg)"></div>
-      <div class="spec-name">Palma del Viajero<small>Ravenala madagascariensis</small></div>
-      <div class="specs">
-        <div><span>Altura</span><b>3–10 m</b></div>
-        <div><span>Lead time</span><b>3–5 sem</b></div>
-        <div><span>Clima</span><b>Tropical húmedo</b></div>
-        <div><span>Mantto</span><b>Medio</b></div>
-      </div>
-      <div class="price">Desde<b>$1,500</b></div>
-      <div class="lead"><a href="#" class="btn-spec">Cotizar 50+ →</a></div>
-    </div>
-
-    <div style="margin-top:32px;text-align:center"><a href="#" class="btn btn-secondary" style="border-color:rgba(255,255,255,0.2);color:#fff">Ver las 12 especies completas →</a></div>
   </div>
 </section>
 
 <!-- ============ CALCULADORA ============ -->
-<section class="calc light" id="calc">
-  <div class="container">
-    <div class="eyebrow" style="margin-bottom:20px">Sección 6 · Estimado en 30 segundos</div>
-    <h2>Calcula <em>tu proyecto</em> antes de hablar con ventas.</h2>
-    <p class="calc-sub">Construye tu pedido, recibe estimado por WhatsApp. Sin cargo, sin compromiso, sin esperar mail.</p>
-    <div class="calc-wrap">
-      <div class="calc-form">
-        <div class="calc-step">
-          <span class="num">01</span>
-          <div class="field">
-            <label>Tipo de proyecto</label>
-            <select>
+<section class="py-20 bg-bgwarm" id="calc">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="max-w-3xl mb-12">
+      <div class="text-sm uppercase tracking-wider text-accent font-semibold mb-3">Sección 6 · Estimado en 30 segundos</div>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-dark mb-4 leading-tight">Calcula <span class="text-primary italic">tu proyecto</span> antes de hablar con ventas.</h2>
+      <p class="text-lg text-gray-700">Construye tu pedido, recibe estimado por WhatsApp. Sin cargo, sin compromiso, sin esperar mail.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- Form -->
+      <div class="space-y-5">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 flex gap-5 items-start service-card">
+          <span class="step-num">01</span>
+          <div class="flex-1">
+            <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-2">Tipo de proyecto</label>
+            <select class="w-full border-0 border-b border-gray-200 focus:border-accent text-lg py-2 outline-none bg-transparent">
               <option>Hotel boutique</option>
               <option>Fraccionamiento residencial</option>
               <option>Parque industrial</option>
@@ -309,41 +317,62 @@
             </select>
           </div>
         </div>
-        <div class="calc-step">
-          <span class="num">02</span>
-          <div class="field">
-            <label>Tamaño aproximado</label>
-            <input type="text" placeholder="Ej: 80 palmas o 5,000 m²">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 flex gap-5 items-start service-card">
+          <span class="step-num">02</span>
+          <div class="flex-1">
+            <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-2">Tamaño aproximado</label>
+            <input type="text" placeholder="Ej: 80 palmas o 5,000 m²" class="w-full border-0 border-b border-gray-200 focus:border-accent text-lg py-2 outline-none bg-transparent">
           </div>
         </div>
-        <div class="calc-step">
-          <span class="num">03</span>
-          <div class="field">
-            <label>Ciudad destino</label>
-            <input type="text" placeholder="Ej: Tuxpan, Veracruz">
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 flex gap-5 items-start service-card">
+          <span class="step-num">03</span>
+          <div class="flex-1">
+            <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-2">Ciudad destino</label>
+            <input type="text" placeholder="Ej: Tuxpan, Veracruz" class="w-full border-0 border-b border-gray-200 focus:border-accent text-lg py-2 outline-none bg-transparent">
           </div>
         </div>
       </div>
-      <div class="calc-summary">
-        <div class="eyebrow">Resumen</div>
-        <h3>Tu proyecto pre-armado</h3>
-        <div class="summary-row"><span>Tipo</span><b>Hotel boutique</b></div>
-        <div class="summary-row"><span>Tamaño</span><b>80 palmas</b></div>
-        <div class="summary-row"><span>Destino</span><b>Tuxpan, Ver.</b></div>
-        <div class="summary-row"><span>Lead time est.</span><b>3–6 semanas</b></div>
-        <div class="summary-row"><span>Rango referencia</span><b>$180K – $260K</b></div>
-        <a href="#" class="btn calc-cta">Obtener estimado por WhatsApp →</a>
-        <p class="calc-note">Cotización exacta requiere validar especies + maniobra en obra. Respondemos en menos de 4h hábiles.</p>
+
+      <!-- Summary -->
+      <div class="calc-summary-grad rounded-2xl p-8 text-white sticky top-8 self-start">
+        <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-3">Resumen del proyecto</div>
+        <h3 class="text-3xl font-bold mb-6 leading-tight">Tu proyecto pre-armado</h3>
+        <div class="space-y-3 mb-6">
+          <div class="flex justify-between items-baseline pb-3 border-b border-white/10">
+            <span class="text-sm text-white/70">Tipo</span><b class="text-lg">Hotel boutique</b>
+          </div>
+          <div class="flex justify-between items-baseline pb-3 border-b border-white/10">
+            <span class="text-sm text-white/70">Tamaño</span><b class="text-lg">80 palmas</b>
+          </div>
+          <div class="flex justify-between items-baseline pb-3 border-b border-white/10">
+            <span class="text-sm text-white/70">Destino</span><b class="text-lg">Tuxpan, Ver.</b>
+          </div>
+          <div class="flex justify-between items-baseline pb-3 border-b border-white/10">
+            <span class="text-sm text-white/70">Lead time</span><b class="text-lg">3–6 sem</b>
+          </div>
+          <div class="flex justify-between items-baseline pb-3 border-b border-white/10">
+            <span class="text-sm text-white/70">Rango referencia</span><b class="text-xl text-accent" style="font-family:'Playfair Display',serif">$180K–$260K</b>
+          </div>
+        </div>
+        <a href="#" class="bg-wa hover:bg-accent transition-all w-full inline-flex items-center justify-center gap-2 text-white font-bold px-7 py-4 rounded-2xl shadow-lg">
+          <svg class="ic"><use href="#ic-whatsapp"/></svg> Obtener estimado por WhatsApp
+        </a>
+        <p class="text-xs text-white/55 mt-4 leading-relaxed">Cotización exacta requiere validar especies + maniobra en obra. Respondemos en menos de 4h hábiles.</p>
       </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="container">
-    Mockup B+A híbrido · Viveros Terra · Palmas Mayoreo Proyectos · <b>4 secciones críticas</b> · No indexado · Solo para revisión interna
+<!-- Footer mockup tag -->
+<footer class="py-8 bg-dark text-white/55 text-center text-xs border-t border-white/10">
+  <div class="max-w-7xl mx-auto px-6">
+    Mockup B+A híbrido — apegado al sistema visual actual de viverosterra.com · <b class="text-accent">4 secciones críticas</b> · No indexado
   </div>
 </footer>
+
+<script>
+  document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+</script>
 
 </body>
 </html>
