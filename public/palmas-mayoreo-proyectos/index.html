@@ -924,20 +924,20 @@
           <div class="space-y-4 mb-5">
             <div>
               <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-1">Nombre</label>
-              <input type="text" placeholder="Tu nombre" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
+              <input id="lead-nombre" type="text" placeholder="Tu nombre" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
             </div>
             <div>
               <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-1">Email corporativo</label>
-              <input type="email" placeholder="tu@empresa.com" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
+              <input id="lead-email" type="email" placeholder="tu@empresa.com" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
             </div>
             <div>
               <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-1">Tipo de proyecto</label>
-              <select class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
+              <select id="lead-tipo" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
                 <option>Despacho arquitectónico</option><option>Hotelería</option><option>Fraccionadora</option><option>Gobierno</option><option>Industrial</option><option>Otro</option>
               </select>
             </div>
           </div>
-          <a href="#" class="bg-accent hover:bg-primary transition w-full inline-flex items-center justify-center gap-2 text-white font-bold px-6 py-4 rounded-2xl shadow-lg">
+          <a id="lead-cta" href="#" class="bg-accent hover:bg-primary transition w-full inline-flex items-center justify-center gap-2 text-white font-bold px-6 py-4 rounded-2xl shadow-lg">
             <svg class="ic"><use href="#ic-download"/></svg> Descargar guía PDF
           </a>
           <p class="text-xs text-gray-500 mt-3 text-center">Sin spam. Solo el PDF y, si quieres, una llamada de cortesía.</p>
@@ -1036,26 +1036,26 @@
           <div class="grid sm:grid-cols-2 gap-5 mb-5">
             <div>
               <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-1">Nombre completo *</label>
-              <input type="text" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
+              <input id="cta-nombre" type="text" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
             </div>
             <div>
               <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-1">Empresa</label>
-              <input type="text" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
+              <input id="cta-empresa" type="text" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
             </div>
             <div>
               <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-1">Email *</label>
-              <input type="email" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
+              <input id="cta-email" type="email" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
             </div>
             <div>
               <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-1">WhatsApp *</label>
-              <input type="tel" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
+              <input id="cta-tel" type="tel" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent">
             </div>
           </div>
           <div class="mb-5">
             <label class="text-xs uppercase tracking-wider text-gray-500 font-semibold block mb-1">Detalle del proyecto</label>
-            <textarea rows="3" placeholder="Ej: 80 palmas para fraccionamiento residencial en Tuxpan, entrega marzo 2027" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent resize-none"></textarea>
+            <textarea id="cta-detalle" rows="3" placeholder="Ej: 80 palmas para fraccionamiento residencial en Tuxpan, entrega marzo 2027" class="w-full border-0 border-b border-gray-200 focus:border-accent text-base py-2 outline-none bg-transparent resize-none"></textarea>
           </div>
-          <a href="#" class="bg-wa hover:bg-accent transition-all w-full inline-flex items-center justify-center gap-2 text-white font-bold px-6 py-4 rounded-2xl shadow-lg">
+          <a id="cta-submit" href="#" class="bg-wa hover:bg-accent transition-all w-full inline-flex items-center justify-center gap-2 text-white font-bold px-6 py-4 rounded-2xl shadow-lg">
             <svg class="ic"><use href="#ic-whatsapp"/></svg> Enviar y cotizar por WhatsApp
           </a>
           <p class="text-xs text-gray-500 mt-3 text-center">Al enviar aceptas que te contactemos por WhatsApp o email para cotización.</p>
@@ -1112,6 +1112,49 @@
       window.open(buildLink(), '_blank', 'noopener');
     });
     updateSummary();
+  })();
+
+  // CTA Final → WhatsApp
+  (function(){
+    const PHONE = '528333268008';
+    const cta = document.getElementById('cta-submit');
+    if (!cta) return;
+    cta.addEventListener('click', function(ev){
+      ev.preventDefault();
+      const nombre  = document.getElementById('cta-nombre').value.trim();
+      const empresa = document.getElementById('cta-empresa').value.trim();
+      const email   = document.getElementById('cta-email').value.trim();
+      const tel     = document.getElementById('cta-tel').value.trim();
+      const detalle = document.getElementById('cta-detalle').value.trim();
+      if (!nombre || !email || !tel) {
+        alert('Por favor completa nombre, email y WhatsApp.');
+        return;
+      }
+      const msg = `Hola Viveros Terra, cotización para proyecto B2B:\n\n• Nombre: ${nombre}\n• Empresa: ${empresa || '—'}\n• Email: ${email}\n• WhatsApp: ${tel}\n• Detalle: ${detalle || '—'}\n\nVengo de /palmas-mayoreo-proyectos.`;
+      window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+    });
+  })();
+
+  // Lead Magnet → descarga PDF + notifica WhatsApp
+  (function(){
+    const PHONE = '528333268008';
+    const cta = document.getElementById('lead-cta');
+    if (!cta) return;
+    cta.addEventListener('click', function(ev){
+      ev.preventDefault();
+      const nombre = document.getElementById('lead-nombre').value.trim();
+      const email  = document.getElementById('lead-email').value.trim();
+      const tipo   = document.getElementById('lead-tipo').value;
+      if (!nombre || !email) {
+        alert('Por favor escribe tu nombre y email para descargar la guía.');
+        return;
+      }
+      // Notifica al equipo
+      const msg = `Nueva descarga guía 12 palmas:\n• ${nombre}\n• ${email}\n• ${tipo}`;
+      fetch(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, {mode:'no-cors'}).catch(()=>{});
+      // Inicia descarga
+      window.location.href = '/pdf/guia-12-palmas-arquitectos.pdf';
+    });
   })();
 </script>
 
