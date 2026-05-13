@@ -50,6 +50,35 @@ input:focus,select:focus,textarea:focus{box-shadow:0 0 0 2px #25D366}
 .uso-card{transition:all .25s;border:1px solid #e5e7eb}
 .uso-card:hover{border-color:#66BB6A;box-shadow:0 8px 24px rgba(27,94,32,.1);transform:translateY(-2px)}
 .presentacion-badge{background:linear-gradient(135deg,#1B5E20,#2E7D32);color:white;font-size:.7rem;font-weight:700;padding:.2rem .7rem;border-radius:99px;text-transform:uppercase;letter-spacing:.05em}
+/* === vt-hero LIGHT (consistencia con homepage) === */
+.vt-hero{position:relative;isolation:isolate;overflow:hidden;background:#FAFAF7;font-family:'Inter',system-ui,sans-serif;color:#1F3D2B}
+.vt-hero__bg{position:absolute;inset:0;z-index:0}
+.vt-hero__bg-img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
+.vt-hero__bg-overlay{position:absolute;inset:0;background:linear-gradient(92deg,rgba(255,255,253,0.96) 0%,rgba(255,255,253,0.84) 28%,rgba(255,255,253,0.50) 50%,rgba(255,255,253,0.28) 72%,rgba(255,255,253,0.18) 100%),linear-gradient(180deg,rgba(255,255,253,0.18) 0%,rgba(255,255,253,0) 30%,rgba(255,255,253,0) 70%,rgba(255,255,253,0.42) 100%)}
+.vt-hero__container{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:80px 40px 88px;display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center;min-height:680px}
+@media(max-width:980px){.vt-hero__container{grid-template-columns:1fr;padding:60px 24px;gap:40px;min-height:auto}}
+.vt-hero__left{display:flex;flex-direction:column;gap:24px;max-width:600px}
+.vt-hero__badges{display:flex;flex-wrap:wrap;gap:10px}
+.vt-hero__badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid #E2E8E3;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:500;color:#2F3F35;box-shadow:0 1px 2px rgba(15,31,20,.04),0 4px 16px rgba(15,31,20,.04);white-space:nowrap;letter-spacing:-.01em}
+.vt-hero__badge svg{width:14px;height:14px;color:#2E7D32;flex-shrink:0}
+.vt-hero__badge--accent{border-color:rgba(85,185,106,.35);background:rgba(240,250,242,.92)}
+.vt-hero__title{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(40px,5.8vw,72px);line-height:.98;letter-spacing:-.018em;color:#1F3D2B;margin:0}
+.vt-hero__title-accent{display:inline-block;font-style:italic;font-weight:700;color:#55B96A;margin-top:4px}
+.vt-hero__subtitle{font-size:clamp(16px,1.3vw,20px);line-height:1.55;color:#2F3F35;margin:0;max-width:540px}
+.vt-hero__ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:4px}
+.vt-hero__cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 30px;border-radius:999px;font-size:16px;font-weight:600;text-decoration:none;transition:transform .22s ease,box-shadow .22s ease,background .22s ease;white-space:nowrap}
+.vt-hero__cta svg{width:18px;height:18px}
+.vt-hero__cta--primary{background:#45C463;color:#fff;box-shadow:0 8px 22px rgba(69,196,99,.32)}
+.vt-hero__cta--primary:hover{background:#3FB85B;transform:translateY(-2px);box-shadow:0 12px 32px rgba(69,196,99,.42)}
+.vt-hero__cta--secondary{background:rgba(255,255,255,.96);color:#1F3D2B;border:1px solid #E2E8E3;box-shadow:0 4px 16px rgba(15,31,20,.06)}
+.vt-hero__cta--secondary:hover{background:#fff;border-color:#C9D5CC;transform:translateY(-2px);box-shadow:0 10px 28px rgba(15,31,20,.10)}
+.vt-hero__caption{font-size:13px;color:#5A6B5E;margin:2px 0 0}
+.vt-hero__metrics{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.vt-hero__metric{background:rgba(255,255,255,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.65);border-radius:24px;padding:26px 28px 24px;box-shadow:0 1px 2px rgba(15,31,20,.04),0 8px 28px rgba(15,31,20,.08);transition:transform .25s ease,box-shadow .25s ease}
+.vt-hero__metric:hover{transform:translateY(-4px);box-shadow:0 1px 2px rgba(15,31,20,.04),0 14px 36px rgba(15,31,20,.12)}
+.vt-hero__metric-icon{width:32px;height:32px;color:#55B96A;margin-bottom:16px;stroke-width:1.6}
+.vt-hero__metric-num{font-family:'Playfair Display',Georgia,serif;font-size:clamp(32px,3.2vw,44px);font-weight:700;color:#1F3D2B;line-height:1;letter-spacing:-.02em;margin-bottom:6px}
+.vt-hero__metric-label{font-size:13px;color:#5A6B5E;line-height:1.4}
 </style>
 <script type="application/ld+json">{
   "@context":"https://schema.org","@graph":[
@@ -657,49 +686,57 @@ input:focus,select:focus,textarea:focus{box-shadow:0 0 0 2px #25D366}
 </div>
 
 <!-- ═══ HERO ═══ -->
-<section class="relative min-h-screen flex items-center text-white overflow-hidden">
-  <div class="absolute inset-0">
-    <img src="../img/camion-tierra-negra-entrega-tampico.jpg"
-         alt="Camión volteo entregando tierra negra vegetal en jardín de Tampico"
-         class="w-full h-full object-cover object-center" loading="eager" fetchpriority="high">
-    <div class="hero-overlay absolute inset-0"></div>
+<!-- HERO vt-hero LIGHT — consistente con homepage -->
+<section class="vt-hero" aria-label="Tierra Negra Vegetal Tampico">
+  <div class="vt-hero__bg" aria-hidden="true">
+    <img src="/img/jardin-residencial-pasto-san-agustin-tampico.jpg" alt="" class="vt-hero__bg-img" loading="eager" fetchpriority="high" decoding="async" width="1920" height="1080">
+    <div class="vt-hero__bg-overlay"></div>
   </div>
-  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
-    <div class="max-w-2xl">
-      <div class="flex flex-wrap gap-2 mb-6">
-        <span class="bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20">🌱 Sustrato orgánico certificado</span>
-        <span class="bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20">🚛 Entrega a domicilio</span>
-        <span class="bg-accent/40 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-accent/50">Base ideal para pasto San Agustín</span>
+  <div class="vt-hero__container">
+    <div class="vt-hero__left">
+      <div class="vt-hero__badges" role="list">
+        <span class="vt-hero__badge" role="listitem"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Mezcla enriquecida</span>
+        <span class="vt-hero__badge" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Camión volteo disponible</span>
+        <span class="vt-hero__badge" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Entrega rápida</span>
+        <span class="vt-hero__badge vt-hero__badge--accent" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Mayoreo con CFDI</span>
       </div>
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight mb-5">
-        Tierra Negra <span class="text-accent">Vegetal</span><br>en Tampico
+      <h1 class="vt-hero__title">
+        Tierra Negra Vegetal<br>
+        <span class="vt-hero__title-accent">de calidad en Tampico.</span>
       </h1>
-      <p class="text-white/85 text-xl leading-relaxed mb-3 max-w-xl">
-        El sustrato orgánico que transforma el suelo arcilloso de Tamaulipas. Para jardines, pasto en rollo, árboles y proyectos de construcción.
-      </p>
-      <!-- AEO Answer Box -->
-      <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-5 mb-8 max-w-xl">
-        <p class="text-white/60 text-xs font-semibold uppercase tracking-wider mb-2">Respuesta directa</p>
-        <p class="text-white text-sm leading-relaxed">Tierra negra vegetal en Tampico: <strong class="text-accent">costal desde $150</strong> para cantidades pequeñas y <strong class="text-accent">camión volteo 5, 8 y 14 m³</strong> con entrega a domicilio en Tampico, Madero y Altamira. Sin compromiso — respondemos hoy.</p>
-      </div>
-      <div class="flex flex-col sm:flex-row gap-3 mb-4">
-        <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20tierra%20negra%20vegetal%20para%20mi%20proyecto%20en%20Tampico" target="_blank" rel="noopener"
-           class="inline-flex items-center justify-center gap-2 bg-wa text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-400 transition-colors shadow-xl">
-          <svg class="w-5 h-5"><use href="#ic-wa"/></svg>Cotizar tierra negra
+      <p class="vt-hero__subtitle">Mezcla de tierra negra vegetal enriquecida con materia orgánica para jardines, pasto y siembra. Óptima para el clima de Tamaulipas. Venta por costal o camión volteo con entrega a domicilio.</p>
+      <div class="vt-hero__ctas">
+        <a href="https://wa.me/528333268008?text=Hola%2C%20necesito%20tierra%20negra%20vegetal%20en%20Tampico" target="_blank" rel="noopener" class="vt-hero__cta vt-hero__cta--primary">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>Cotizar tierra vegetal
         </a>
-        <a href="tel:8333268008"
-           class="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/30 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/20 transition-colors">
-          <svg class="w-5 h-5"><use href="#ic-phone"/></svg>833 326 8008
+        <a href="tel:8333268008" class="vt-hero__cta vt-hero__cta--secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 11a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.98 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>833 326 8008
         </a>
       </div>
-      <p class="text-white/45 text-sm">Sin compromiso · Respondemos hoy · Lun–Sáb 9am–6pm</p>
+      <p class="vt-hero__caption">Sin compromiso · Respondemos hoy mismo · Lun–Sáb 9am–6pm</p>
     </div>
-  </div>
-  <!-- Wave -->
-  <div class="absolute bottom-0 w-full">
-    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" class="fill-bgwarm w-full">
-      <path d="M0,40 C360,0 1080,80 1440,40 L1440,60 L0,60 Z"/>
-    </svg>
+    <div class="vt-hero__metrics">
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.1L7 22l5-3 5 3-1.56-7.9"/></svg>
+        <div class="vt-hero__metric-num">10+</div>
+        <div class="vt-hero__metric-label">Años vendiendo materiales</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        <div class="vt-hero__metric-num">+800</div>
+        <div class="vt-hero__metric-label">Clientes atendidos</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-5 7-11 7-11s7 6 7 11a7 7 0 0 1-7 7z"/></svg>
+        <div class="vt-hero__metric-num">Costal–camión</div>
+        <div class="vt-hero__metric-label">Todos los volúmenes</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <div class="vt-hero__metric-num">Lun–Sáb</div>
+        <div class="vt-hero__metric-label">9am – 6pm</div>
+      </div>
+    </div>
   </div>
 </section>
 
