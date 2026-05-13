@@ -58,6 +58,11 @@ h2{font-family:'Playfair Display',serif;font-size:clamp(20px,3.5vw,28px);font-we
 .ecard{background:var(--b);border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,.07);transition:all .2s;display:flex;flex-direction:column}
 .ecard:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(27,77,46,.10)}
 .ecard-img{height:100px;background:var(--c);display:flex;align-items:center;justify-content:center;font-size:44px;flex-shrink:0}
+/* Fix tamaño SVG en cards de especies y categorias (override Tailwind si necesario) */
+.ecard-img svg, .ecard-img > svg{width:56px!important;height:56px!important;color:var(--p,#1B5E20)}
+.category-card-icon svg, .cat-card svg, [class*="cat-icon"] svg{width:32px;height:32px}
+.feature-icon svg, .priority-icon svg{width:24px;height:24px}
+.spec-row svg, .ecard-specs svg, [class*="spec"] svg{width:14px;height:14px;flex-shrink:0;vertical-align:text-bottom}
 .ecard-body{padding:.9rem;display:flex;flex-direction:column;flex:1}
 .ecard-name{font-size:13px;font-weight:700;color:var(--v);margin-bottom:2px}
 .ecard-sc{font-size:10px;color:var(--g);font-style:italic;margin-bottom:.5rem}
