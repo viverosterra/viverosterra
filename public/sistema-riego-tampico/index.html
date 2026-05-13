@@ -1131,8 +1131,11 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 </footer>
 
 <script>
+  // Mobile menu (legacy - solo si existen los elementos antiguos)
   const mb=document.getElementById('menu-btn'),mm=document.getElementById('mobile-menu');
-  mb.addEventListener('click',()=>{const o=!mm.classList.contains('hidden');mm.classList.toggle('hidden');mb.setAttribute('aria-expanded',String(!o));});
+  if(mb&&mm){
+    mb.addEventListener('click',()=>{const o=!mm.classList.contains('hidden');mm.classList.toggle('hidden');mb.setAttribute('aria-expanded',String(!o));});
+  }
   document.querySelectorAll('.faq-btn').forEach(b=>{
     b.addEventListener('click',()=>{
       const a=b.nextElementSibling,ic=b.querySelector('.faq-icon'),op=a.classList.contains('open');
