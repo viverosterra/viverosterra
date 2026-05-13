@@ -24,7 +24,7 @@
 <style>
 html{scroll-behavior:smooth}body{font-family:"Inter",sans-serif;background:#FAFAF7}
 h1,h2,h3{font-family:"Playfair Display",serif}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal{opacity:1;transform:none}
 .logo-light{height:44px;width:auto;display:block;mix-blend-mode:multiply}
 .logo-dark{height:44px;width:auto;display:block;filter:brightness(0) invert(1)}
 .wa-float{position:fixed;bottom:24px;right:24px;z-index:100;animation:pulse-wa 2.5s infinite}
@@ -65,7 +65,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 .vt-hero__metric-num{font-family:'Playfair Display',Georgia,serif;font-size:clamp(32px,3.2vw,44px);font-weight:700;color:#1F3D2B;line-height:1;letter-spacing:-.02em;margin-bottom:6px}
 .vt-hero__metric-label{font-size:13px;color:#5A6B5E;line-height:1.4}
 /* Forzar visibilidad de reveals (fallback robusto) */
-@media (prefers-reduced-motion: reduce){.reveal{opacity:1 !important;transform:none !important}}
+
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
