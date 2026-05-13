@@ -27,6 +27,10 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 @keyframes pulse-wa{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.4)}70%{box-shadow:0 0 0 14px rgba(37,211,102,0)}}
 .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease}.faq-answer.open{max-height:400px}
 .img-card{overflow:hidden;border-radius:1rem}.img-card img{transition:transform .4s ease;width:100%;height:100%;object-fit:cover}.img-card:hover img{transform:scale(1.04)}
+.service-card{transition:transform .3s ease,box-shadow .3s ease}.service-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(27,94,32,.15)}
+.step-card{background:#fff;border-radius:1.25rem;padding:1.75rem;border:1px solid #e8f5e9;transition:all .3s}.step-card:hover{border-color:#66BB6A;transform:translateY(-2px)}
+.gallery-img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}.gallery-img:hover{transform:scale(1.05)}
+.counter-num{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(2.5rem,5vw,4rem);color:#1B5E20;line-height:1}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -654,17 +658,17 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 <!-- HERO -->
 <section class="relative text-white overflow-hidden min-h-screen flex items-center">
   <div class="absolute inset-0 z-0">
-    <img src="../img/tecnico-terra-riego-industrial-tampico.avif" alt="Técnico Viveros Terra revisando sistema de riego automático en Tampico" class="w-full h-full object-cover" loading="eager">
-    <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(13,43,14,.92) 0%,rgba(27,94,32,.78) 55%,rgba(46,125,50,.50) 100%)"></div>
+    <img src="/img/riego-tampico-04.jpg" alt="Aspersor fan spray en jardín tropical — Viveros Terra Tampico" class="w-full h-full object-cover" loading="eager" fetchpriority="high" width="1200" height="800">
+    <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(13,43,14,.90) 0%,rgba(27,94,32,.70) 60%,rgba(46,125,50,.55) 100%)"></div>
   </div>
   <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
     <div class="max-w-2xl">
       <div class="flex flex-wrap gap-2 mb-6">
-        <span class="inline-flex items-center gap-1.5 bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20"><svg class="w-3.5 h-3.5 text-accent"><use href="#ic-drop"/></svg>Ahorra hasta 40% de agua</span>
-        <span class="inline-flex items-center gap-1.5 bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20">+200 sistemas instalados</span>
-        <span class="inline-flex items-center gap-1.5 bg-accent/30 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-accent/40">Cotización por proyecto · Sin costo</span>
+        <span class="inline-flex items-center gap-1.5 bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20"><svg class="w-3.5 h-3.5 text-accent"><use href="#ic-drop"/></svg>💧 Ahorra 40% agua</span>
+        <span class="inline-flex items-center gap-1.5 bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20">🔧 +200 instalaciones</span>
+        <span class="inline-flex items-center gap-1.5 bg-accent/30 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-accent/40">⚡ Instalación en 1-2 días</span>
       </div>
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6">
+      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6">
         Sistema de Riego<br><span class="text-accent">Automático</span><br>en Tampico
       </h1>
       <p class="text-white/80 text-lg leading-relaxed mb-8 max-w-xl">
@@ -717,8 +721,8 @@ h1,h2,h3{font-family:"Playfair Display",serif}
       <p class="text-gray-600 max-w-xl mx-auto">Diseñamos el sistema según el tamaño del área, tipo de plantas y presupuesto.</p>
     </div>
     <div class="grid sm:grid-cols-3 gap-6">
-      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal">
-        <div class="img-card h-48"><img src="../img/sistema-riego-jardin-particular-tampico.jpg" alt="Aspersores emergentes en jardín residencial Tampico" loading="lazy"></div>
+      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal service-card">
+        <div class="img-card h-48"><img src="/img/sistema-riego-jardin-particular-tampico.jpg" alt="Aspersores emergentes en jardín residencial Tampico" loading="lazy"></div>
         <div class="p-6">
           <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3"><svg class="w-5 h-5 text-primary"><use href="#ic-drop"/></svg></div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Aspersores Emergentes</h3>
@@ -730,8 +734,8 @@ h1,h2,h3{font-family:"Playfair Display",serif}
           </ul>
         </div>
       </div>
-      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal">
-        <div class="img-card h-48"><img src="../img/instalacion-tuberia-riego-viveros-terra.jpg" alt="Instalación riego por goteo jardín Tampico técnico Terra" loading="lazy"></div>
+      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal service-card">
+        <div class="img-card h-48"><img src="/img/riego-tampico-03.jpg" alt="Sistema de goteo en philodendron — instalación Viveros Terra Tampico" loading="lazy"></div>
         <div class="p-6">
           <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3"><svg class="w-5 h-5 text-primary"><use href="#ic-bolt"/></svg></div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Riego por Goteo</h3>
@@ -743,8 +747,8 @@ h1,h2,h3{font-family:"Playfair Display",serif}
           </ul>
         </div>
       </div>
-      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal">
-        <div class="img-card h-48"><img src="../img/riego-campo-deportivo-tampico.png" alt="Sistema riego campo deportivo áreas industriales Tampico" loading="lazy"></div>
+      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal service-card">
+        <div class="img-card h-48"><img src="/img/riego-campo-deportivo-tampico.png" alt="Sistema riego campo deportivo áreas industriales Tampico" loading="lazy"></div>
         <div class="p-6">
           <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3"><svg class="w-5 h-5 text-primary"><use href="#ic-building"/></svg></div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Industrial y Deportivo</h3>
@@ -766,14 +770,30 @@ h1,h2,h3{font-family:"Playfair Display",serif}
     <div class="text-center mb-14 reveal">
       <span class="text-primary font-semibold text-sm uppercase tracking-wider">Proyectos reales</span>
       <h2 class="text-3xl font-display font-bold text-gray-900 mt-2">Instalaciones en Tampico y la región</h2>
+      <p class="text-gray-600 mt-3 max-w-xl mx-auto">Fotos reales de nuestras instalaciones — aspersores, goteo y microaspersión en jardines residenciales e industriales de la zona.</p>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <div class="img-card h-52 reveal"><img src="../img/tecnico-terra-riego-industrial-tampico.avif" alt="Técnico Terra riego industrial Tampico" loading="lazy"></div>
-      <div class="img-card h-52 reveal"><img src="../img/riego-automatico-jardin-residencial-tampico.png" alt="Riego automático jardín residencial Tampico" loading="lazy"></div>
-      <div class="img-card h-52 reveal"><img src="../img/equipo-terra-instalacion-riego-jardin.png" alt="Equipo Terra instalando riego subterráneo jardín" loading="lazy"></div>
-      <div class="img-card h-52 reveal"><img src="../img/instalacion-riego-tuberias-jardines-tampico.jpg" alt="Instalación tuberías riego jardín Tampico" loading="lazy"></div>
-      <div class="img-card h-52 reveal"><img src="../img/aspersor-riego-tampico-cesped.jpg" alt="Aspersor emergente pasto San Agustín Tampico" loading="lazy"></div>
-      <div class="img-card h-52 reveal"><img src="../img/sistema-riego-viveros-terra-proyecto-tampico.png" alt="Proyecto sistema riego Viveros Terra Tampico" loading="lazy"></div>
+      <div class="img-card rounded-2xl overflow-hidden h-56 reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-01.png" alt="Instalación aspersor jardín tropical Tampico — Viveros Terra" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="img-card rounded-2xl overflow-hidden h-56 reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-02.png" alt="Aspersores en plantas tropicales — sistema de riego Viveros Terra" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="img-card rounded-2xl overflow-hidden h-56 reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-03.jpg" alt="Sistema goteo en philodendron — micro-riego Viveros Terra Tampico" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="img-card rounded-2xl overflow-hidden h-56 reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-04.jpg" alt="Aspersor fan spray en jardín tropical Tampico — instalación profesional" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="img-card rounded-2xl overflow-hidden h-56 reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-05.jpg" alt="Aspersor emergente en pasto San Agustín — Viveros Terra Tampico" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="img-card rounded-2xl overflow-hidden h-56 reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-06.png" alt="Instalación aspersor pasto San Agustín — sistema riego automático Tampico" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="md:col-start-2 img-card rounded-2xl overflow-hidden h-56 reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-07.png" alt="Aspersor alto en philodendron — riego ornamental Viveros Terra Tampico" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
     </div>
   </div>
 </section>
@@ -787,23 +807,23 @@ h1,h2,h3{font-family:"Playfair Display",serif}
       <p class="text-gray-600 max-w-xl mx-auto">De la cotización a tu jardín funcionando, sin sorpresas en el precio.</p>
     </div>
     <div class="space-y-4">
-      <div class="flex gap-5 bg-white rounded-2xl p-6 border border-green-100 reveal">
+      <div class="flex gap-5 step-card reveal">
         <div class="w-10 h-10 bg-primary rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">1</div>
         <div><h3 class="font-display font-bold text-gray-900 text-lg mb-1">Cotización y diagnóstico</h3><p class="text-gray-600 text-sm leading-relaxed">Envíanos fotos y medidas por WhatsApp o agendamos visita. Evaluamos el área, fuente de agua y tipo de plantas para diseñar el sistema correcto.</p></div>
       </div>
-      <div class="flex gap-5 bg-white rounded-2xl p-6 border border-green-100 reveal">
+      <div class="flex gap-5 step-card reveal">
         <div class="w-10 h-10 bg-primary rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">2</div>
         <div><h3 class="font-display font-bold text-gray-900 text-lg mb-1">Diseño del sistema</h3><p class="text-gray-600 text-sm leading-relaxed">Elaboramos plano con distribución de aspersores o goteros, zonas y tipo de programador. Se define el recorrido de tuberías para minimizar obra civil.</p></div>
       </div>
-      <div class="flex gap-5 bg-white rounded-2xl p-6 border border-green-100 reveal">
+      <div class="flex gap-5 step-card reveal">
         <div class="w-10 h-10 bg-primary rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">3</div>
         <div><h3 class="font-display font-bold text-gray-900 text-lg mb-1">Excavación e instalación de tuberías</h3><p class="text-gray-600 text-sm leading-relaxed">Nuestro equipo instala la red de tuberías subterráneas cuidando no dañar raíces ni áreas existentes del jardín.</p></div>
       </div>
-      <div class="flex gap-5 bg-white rounded-2xl p-6 border border-green-100 reveal">
+      <div class="flex gap-5 step-card reveal">
         <div class="w-10 h-10 bg-primary rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">4</div>
         <div><h3 class="font-display font-bold text-gray-900 text-lg mb-1">Instalación de aspersores y programador</h3><p class="text-gray-600 text-sm leading-relaxed">Se colocan aspersores o goteros en posiciones definitivas y se conecta el programador digital que controlará el riego automáticamente.</p></div>
       </div>
-      <div class="flex gap-5 bg-white rounded-2xl p-6 border border-green-100 reveal">
+      <div class="flex gap-5 step-card reveal">
         <div class="w-10 h-10 bg-accent rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">5</div>
         <div><h3 class="font-display font-bold text-gray-900 text-lg mb-1">Prueba, calibración y entrega</h3><p class="text-gray-600 text-sm leading-relaxed">Prueba completa del sistema, ajuste de cobertura y programación de horarios óptimos para el clima de Tampico. Te explicamos cómo operarlo.</p></div>
       </div>
@@ -820,7 +840,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 <section class="py-20 bg-bggreen">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-14 items-center">
-      <div class="img-card h-96 reveal"><img src="../img/instalacion-riego-tuberias-jardines-tampico.jpg" alt="Equipo Viveros Terra instalando tuberías riego subterráneo Tampico" loading="lazy"></div>
+      <div class="img-card h-96 reveal"><img src="/img/instalacion-riego-tuberias-jardines-tampico.jpg" alt="Equipo Viveros Terra instalando tuberías riego subterráneo Tampico" loading="lazy"></div>
       <div class="space-y-6 reveal">
         <span class="text-primary font-semibold text-sm uppercase tracking-wider">Por qué elegir Viveros Terra</span>
         <h2 class="text-3xl sm:text-4xl font-display font-bold text-gray-900">+200 sistemas instalados en la región</h2>
@@ -952,7 +972,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 
 <!-- CTA FINAL CON FORMULARIO WHATSAPP NATIVO -->
 <section class="py-20 bg-dark text-white relative overflow-hidden">
-  <div class="absolute inset-0 opacity-15"><img src="../img/riego-automatico-jardin-residencial-tampico.png" alt="" class="w-full h-full object-cover"></div>
+  <div class="absolute inset-0 opacity-15"><img src="/img/riego-tampico-07.png" alt="" class="w-full h-full object-cover" loading="lazy"></div>
   <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-3xl sm:text-4xl font-display font-bold text-white mb-4 reveal">¿Listo para automatizar el riego de tu jardín?</h2>
     <p class="text-white/65 text-lg mb-8 reveal">Envíanos fotos y medidas aproximadas. Cotización personalizada hoy mismo.</p>
@@ -984,7 +1004,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
       <div class="space-y-4">
-        <div class="flex items-center"><img src="../img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-dark" loading="lazy"></div>
+        <div class="flex items-center"><img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-dark" loading="lazy"></div>
         <p class="text-white/50 text-sm leading-relaxed">Instalación de sistemas de riego automático y servicios de jardinería profesional en Tampico, Madero y Altamira, Tamaulipas.</p>
         <div class="flex gap-2.5">
           <a href="https://www.instagram.com/viverosterramx" target="_blank" rel="noopener" aria-label="Instagram" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-instagram"/></svg></a>
