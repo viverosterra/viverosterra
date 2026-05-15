@@ -851,6 +851,42 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 <div class="text-center text-xs text-gray-500 py-4">
   Última actualización: <time datetime="2026-05-14">14 de mayo, 2026</time> · Viveros Terra
 </div>
+
+<!-- METODO DE PEDIDO ACCESIBLE — requerido por Google Merchant Center -->
+<!-- "All types of users should be able to purchase" — alternativa a WhatsApp -->
+<section class="py-12 bg-bgwarm border-t border-gray-100" id="solicitar-pedido" aria-label="Solicitar pedido">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-3xl border border-green-100 p-6 sm:p-8 shadow-sm">
+      <div class="text-center mb-6">
+        <span class="text-primary font-semibold text-sm uppercase tracking-wider">Solicitar pedido</span>
+        <h2 class="text-xl sm:text-2xl font-display font-bold text-gray-900 mt-2">Escríbenos para cotizar</h2>
+        <p class="text-gray-600 text-sm mt-2">Respondemos en menos de 4 horas hábiles. También puedes llamar al <a href="tel:+528333268008" class="text-primary font-semibold">+52 833 326 8008</a></p>
+      </div>
+      <form id="order-form" action="https://formsubmit.co/viverosterra@gmail.com" method="POST" class="space-y-4">
+        <input type="hidden" name="_subject" value="Pedido desde sitio web - Viveros Terra">
+        <input type="hidden" name="_next" value="https://www.viverosterra.com/?pedido=enviado">
+        <input type="hidden" name="_captcha" value="false">
+        <div>
+          <label for="of-nombre" class="block text-sm font-semibold text-gray-700 mb-1">Nombre *</label>
+          <input type="text" id="of-nombre" name="nombre" required placeholder="Tu nombre" class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+        </div>
+        <div>
+          <label for="of-email" class="block text-sm font-semibold text-gray-700 mb-1">Email *</label>
+          <input type="email" id="of-email" name="email" required placeholder="tu@email.com" class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+        </div>
+        <div>
+          <label for="of-detalle" class="block text-sm font-semibold text-gray-700 mb-1">¿Qué necesitas?</label>
+          <textarea id="of-detalle" name="detalle" rows="3" placeholder="Ejemplo: 80 m² de pasto San Agustín, entrega en Tampico" class="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-none"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-primary hover:bg-green-800 text-white font-bold py-3 px-6 rounded-2xl transition-colors">
+          Enviar solicitud de pedido
+        </button>
+      </form>
+      <p class="text-xs text-gray-500 mt-4 text-center">También disponible por WhatsApp: <a href="https://wa.me/528333268008" target="_blank" rel="noopener" class="text-primary underline">833 326 8008</a></p>
+    </div>
+  </div>
+</section>
+
 <footer class="bg-dark text-white border-t border-white/10">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
