@@ -6,25 +6,66 @@
 <meta name="description" content="Instalación de sistemas de riego automático en Tampico. Ahorra hasta 40% en agua. Aspersión, goteo y microaspersión. Visita técnica sin costo.">
 <link rel="canonical" href="https://www.viverosterra.com/sistema-riego-tampico">
 <meta name="robots" content="index, follow"><meta name="geo.region" content="MX-TAM">
-<link rel="icon" type="image/png" href="../img/logo-viveros-terra-tampico.png">
+<meta name="ai-content-declaration" content="human-authored">
+<meta property="article:author" content="Viveros Terra">
+<meta name="author" content="Viveros Terra · Sistema de Riego Automático Tampico">
+<meta name="keywords" content="sistema de riego automático tampico, riego por aspersión tampico, riego por goteo madero, instalación riego jardín tamaulipas, viveros terra riego, aspersores hunter rain bird tampico">
+  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="512x512" href="/img/favicon-512.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
 <meta property="og:title" content="Sistema de Riego Automático Tampico · Viveros Terra">
 <meta property="og:description" content="Instalación de sistemas de riego automático en Tampico. Ahorra hasta 40% en agua. Visita técnica sin costo.">
 <meta property="og:image" content="https://www.viverosterra.com/img/tecnico-terra-riego-industrial-tampico.avif">
 <meta property="og:locale" content="es_MX">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={theme:{extend:{colors:{primary:"#1B5E20",secondary:"#2E7D32",accent:"#66BB6A",dark:"#0D2B0E",wa:"#25D366",bgwarm:"#FAFAF7",bggreen:"#F0F7F0"},fontFamily:{display:["Playfair Display","serif"]}}}}</script>
+<link rel="stylesheet" href="/css/tailwind.css">
 <style>
 html{scroll-behavior:smooth}body{font-family:"Inter",sans-serif;background:#FAFAF7}
 h1,h2,h3{font-family:"Playfair Display",serif}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal{opacity:1;transform:none}
 .logo-light{height:44px;width:auto;display:block;mix-blend-mode:multiply}
 .logo-dark{height:44px;width:auto;display:block;filter:brightness(0) invert(1)}
 .wa-float{position:fixed;bottom:24px;right:24px;z-index:100;animation:pulse-wa 2.5s infinite}
 @keyframes pulse-wa{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.4)}70%{box-shadow:0 0 0 14px rgba(37,211,102,0)}}
 .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease}.faq-answer.open{max-height:400px}
 .img-card{overflow:hidden;border-radius:1rem}.img-card img{transition:transform .4s ease;width:100%;height:100%;object-fit:cover}.img-card:hover img{transform:scale(1.04)}
+.service-card{transition:transform .3s ease,box-shadow .3s ease}.service-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(27,94,32,.15)}
+.step-card{background:#fff;border-radius:1.25rem;padding:1.75rem;border:1px solid #e8f5e9;transition:all .3s}.step-card:hover{border-color:#66BB6A;transform:translateY(-2px)}
+.gallery-img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}.gallery-img:hover{transform:scale(1.05)}
+.counter-num{font-family:"Playfair Display",serif;font-weight:800;font-size:clamp(2.5rem,5vw,4rem);color:#1B5E20;line-height:1}
+/* === HERO RIEGO — vt-hero LIGHT (consistencia con homepage) === */
+.vt-hero{position:relative;isolation:isolate;overflow:hidden;background:#FAFAF7;font-family:'Inter',system-ui,sans-serif;color:#1F3D2B}
+.vt-hero__bg{position:absolute;inset:0;z-index:0}
+.vt-hero__bg-img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
+.vt-hero__bg-overlay{position:absolute;inset:0;background:linear-gradient(92deg,rgba(255,255,253,0.96) 0%,rgba(255,255,253,0.84) 28%,rgba(255,255,253,0.50) 50%,rgba(255,255,253,0.28) 72%,rgba(255,255,253,0.18) 100%),linear-gradient(180deg,rgba(255,255,253,0.18) 0%,rgba(255,255,253,0) 30%,rgba(255,255,253,0) 70%,rgba(255,255,253,0.42) 100%)}
+.vt-hero__container{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:80px 40px 88px;display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center;min-height:680px}
+@media(max-width:980px){.vt-hero__container{grid-template-columns:1fr;padding:60px 24px;gap:40px;min-height:auto}}
+.vt-hero__left{display:flex;flex-direction:column;gap:24px;max-width:600px}
+.vt-hero__badges{display:flex;flex-wrap:wrap;gap:10px}
+.vt-hero__badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid #E2E8E3;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:500;color:#2F3F35;box-shadow:0 1px 2px rgba(15,31,20,.04),0 4px 16px rgba(15,31,20,.04);white-space:nowrap;letter-spacing:-.01em}
+.vt-hero__badge svg{width:14px;height:14px;color:#2E7D32;flex-shrink:0}
+.vt-hero__badge--accent{border-color:rgba(85,185,106,.35);background:rgba(240,250,242,.92)}
+.vt-hero__title{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(40px,5.8vw,72px);line-height:.98;letter-spacing:-.018em;color:#1F3D2B;margin:0}
+.vt-hero__title-accent{display:inline-block;font-style:italic;font-weight:700;color:#55B96A;margin-top:4px}
+.vt-hero__subtitle{font-size:clamp(16px,1.3vw,20px);line-height:1.55;color:#2F3F35;margin:0;max-width:540px}
+.vt-hero__ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:4px}
+.vt-hero__cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 30px;border-radius:999px;font-size:16px;font-weight:600;text-decoration:none;transition:transform .22s ease,box-shadow .22s ease,background .22s ease;white-space:nowrap}
+.vt-hero__cta svg{width:18px;height:18px}
+.vt-hero__cta--primary{background:#45C463;color:#fff;box-shadow:0 8px 22px rgba(69,196,99,.32)}
+.vt-hero__cta--primary:hover{background:#3FB85B;transform:translateY(-2px);box-shadow:0 12px 32px rgba(69,196,99,.42)}
+.vt-hero__cta--secondary{background:rgba(255,255,255,.96);color:#1F3D2B;border:1px solid #E2E8E3;box-shadow:0 4px 16px rgba(15,31,20,.06)}
+.vt-hero__cta--secondary:hover{background:#fff;border-color:#C9D5CC;transform:translateY(-2px);box-shadow:0 10px 28px rgba(15,31,20,.10)}
+.vt-hero__caption{font-size:13px;color:#5A6B5E;margin:2px 0 0}
+.vt-hero__metrics{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.vt-hero__metric{background:rgba(255,255,255,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.65);border-radius:24px;padding:26px 28px 24px;box-shadow:0 1px 2px rgba(15,31,20,.04),0 8px 28px rgba(15,31,20,.08);transition:transform .25s ease,box-shadow .25s ease}
+.vt-hero__metric:hover{transform:translateY(-4px);box-shadow:0 1px 2px rgba(15,31,20,.04),0 14px 36px rgba(15,31,20,.12)}
+.vt-hero__metric-icon{width:32px;height:32px;color:#55B96A;margin-bottom:16px;stroke-width:1.6}
+.vt-hero__metric-num{font-family:'Playfair Display',Georgia,serif;font-size:clamp(32px,3.2vw,44px);font-weight:700;color:#1F3D2B;line-height:1;letter-spacing:-.02em;margin-bottom:6px}
+.vt-hero__metric-label{font-size:13px;color:#5A6B5E;line-height:1.4}
+/* Forzar visibilidad de reveals (fallback robusto) */
+
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -50,7 +91,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 {"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.viverosterra.com"},
 {"@type":"ListItem","position":2,"name":"Sistema de Riego Tampico","item":"https://www.viverosterra.com/sistema-riego-tampico"}
 ]}
-]}
+,{"@type":"SpeakableSpecification","cssSelector":["h1","h2",".faq-question","[itemprop=name]"]}]}
 </script>
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
 <symbol id="ic-whatsapp" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
@@ -72,6 +113,19 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 <symbol id="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></symbol>
 <symbol id="ic-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></symbol>
 <symbol id="ic-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="ic-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3H3v18h18V3z"/><path d="M7 3v4M11 3v2M15 3v4M19 3v2M3 7h4M3 11h2M3 15h4M3 19h2"/></symbol>
+    <symbol id="ic-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></symbol>
+    <symbol id="ic-notepad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></symbol>
+    <symbol id="ic-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></symbol>
+    <symbol id="ic-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="ic-window" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="21"/></symbol>
+    <symbol id="ic-recycle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="M14 16l-3 3 3 3"/><path d="M8.293 13.596L4.756 7.435a1.785 1.785 0 0 1 .039-1.789 1.83 1.83 0 0 1 1.546-.846H10.5"/><path d="M9.169 5.276l4.41-2.27"/></symbol>
+    <symbol id="ic-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3z"/></symbol>
+    <symbol id="ic-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6c-.3 2.2-1.3 3.9-2.6 5-1.4-3-1.4-5 2.6-5z"/></symbol>
+    <symbol id="ic-flower" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 5V3M19 12h2M12 19v2M5 12H3M16.95 7.05l1.41-1.41M16.95 16.95l1.41 1.41M7.05 16.95l-1.41 1.41M7.05 7.05L5.64 5.64"/></symbol>
+    <symbol id="ic-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L5 12h4l-4 6h5v4h4v-4h5l-4-6h4z"/></symbol>
+    <symbol id="ic-square-foot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v18a2 2 0 0 0 2 2h12"/><path d="M14 18h.01M18 16h.01M14 14h.01M10 22V6a4 4 0 0 1 4-4h4"/></symbol>
+  
 </svg>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sistema de Riego Automático Tampico · Viveros Terra">
@@ -89,70 +143,639 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 <body>
 
 <a href="https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20un%20sistema%20de%20riego%20automático%20en%20Tampico" target="_blank" rel="noopener" class="wa-float flex items-center gap-2 bg-wa text-white px-4 py-3 rounded-full font-semibold text-sm shadow-xl hover:bg-green-500 transition-colors" aria-label="Cotizar riego">
-  <svg class="w-5 h-5 flex-shrink-0"><use href="#ic-whatsapp"/></svg><span class="hidden sm:inline">Cotizar riego</span>
+  <svg viewBox="0 0 24 24" class="w-5 h-5 flex-shrink-0"><use href="#ic-whatsapp"/></svg><span class="hidden sm:inline">Cotizar riego</span>
 </a>
 
-<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
-  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
-      <a href="/" aria-label="Viveros Terra"><img src="../img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-light" loading="eager"></a>
-      <nav class="hidden md:flex items-center gap-2 text-sm text-gray-500" aria-label="Breadcrumb">
-        <a href="/" class="hover:text-primary">Inicio</a><span>/</span>
-        <a href="/#servicios" class="hover:text-primary">Servicios</a><span>/</span>
-        <span class="text-primary font-medium">Sistema de Riego</span>
-      </nav>
-      <div class="hidden md:flex items-center gap-4">
-        <a href="tel:8333268008" class="flex items-center gap-1.5 text-gray-700 hover:text-primary text-sm font-medium"><svg class="w-4 h-4"><use href="#ic-phone"/></svg>833 326 8008</a>
-        <a href="https://wa.me/528333268008?text=Hola%2C%20cotización%20sistema%20riego%20Tampico" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-secondary transition-colors shadow-md">
-          <svg class="w-4 h-4"><use href="#ic-whatsapp"/></svg>Cotizar Gratis
-        </a>
+<!-- NAVBAR VIVEROS TERRA v2.1 — Fondo blanco, dropdown servicios -->
+<!-- data-page se reemplaza automáticamente por el script para marcar el ítem activo -->
+
+<style>
+/* ── NAVBAR BLANCO ──────────────────────────────────────────── */
+.terra-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #ffffff;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.terra-nav__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+/* LOGO */
+.terra-nav__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-right: 32px;
+}
+.terra-nav__logo img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+/* LINKS PRIMARIOS */
+.terra-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+.terra-nav__links li { position: relative; }
+
+.terra-nav__links a,
+.terra-nav__links button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  color: #2d2d2d;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.terra-nav__links a:hover,
+.terra-nav__links button:hover {
+  background: #f3f4f3;
+  color: #1a5c1a;
+}
+.terra-nav__links a.is-active {
+  color: #1a5c1a;
+  font-weight: 500;
+  background: #edf7ed;
+}
+/* Flecha dropdown */
+.terra-nav__chevron {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.terra-nav__drop { position: relative; }
+.terra-nav__drop-trigger[aria-expanded="true"] .terra-nav__chevron {
+  transform: rotate(180deg);
+}
+
+/* ── DROPDOWN BLANCO ─────────────────────────────────────────── */
+.terra-nav__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 760px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 12px;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+.terra-nav__dropdown.is-open { display: grid; }
+
+.terra-nav__drop-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.terra-nav__drop-item:hover { background: #f3f8f3; }
+
+.terra-nav__drop-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #edf7ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+}
+.terra-nav__drop-text strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+.terra-nav__drop-text span {
+  font-size: 12px;
+  color: #777;
+  line-height: 1.4;
+}
+.terra-nav__drop-text { flex: 1; min-width: 0; }
+.terra-nav__drop-text strong { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.terra-nav__drop-text span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── DERECHA ─────────────────────────────────────────────────── */
+.terra-nav__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.terra-nav__tel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #444;
+  font-size: 13px;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.terra-nav__tel:hover { background: #f3f4f3; color: #1a5c1a; }
+.terra-nav__tel svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+
+/* CTA verde WhatsApp */
+.terra-nav__cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: #25d366;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, transform 0.1s;
+}
+.terra-nav__cta:hover { background: #1db954; transform: translateY(-1px); }
+.terra-nav__cta:active { transform: translateY(0); }
+.terra-nav__cta svg { width: 16px; height: 16px; fill: #fff; flex-shrink: 0; }
+.terra-nav__dropdown {
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 760px;
+}
+.terra-nav__drop-col {
+  display: flex;
+  flex-direction: column;
+}
+.terra-nav__drop-section {
+  margin-top: 14px;
+}
+.terra-nav__drop-section:first-child {
+  margin-top: 0;
+}
+.terra-nav__drop-header {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #1B5E20;
+  padding: 6px 12px 6px;
+  border-bottom: 1px solid #e8f0e8;
+  margin-bottom: 4px;
+}
+@media (max-width: 900px) {
+  .terra-nav__dropdown { width: 100%; grid-template-columns: 1fr; }
+}
+
+
+/* ── HAMBURGER ───────────────────────────────────────────────── */
+.terra-nav__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-left: auto;
+}
+.terra-nav__hamburger:hover { background: #f3f4f3; }
+.terra-nav__hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #333;
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.terra-nav__hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.terra-nav__hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.terra-nav__hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── DRAWER MOBILE ───────────────────────────────────────────── */
+.terra-nav__drawer {
+  display: none;
+  flex-direction: column;
+  background: #fff;
+  padding: 8px 16px 20px;
+  border-top: 1px solid #eee;
+}
+.terra-nav__drawer.is-open { display: flex; }
+
+.terra-nav__drawer a,
+.terra-nav__drawer button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 8px;
+  color: #2d2d2d;
+  font-size: 15px;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  width: 100%;
+  text-align: left;
+}
+.terra-nav__drawer a.is-active { color: #1a5c1a; font-weight: 500; }
+
+.terra-nav__drawer-sub {
+  display: none;
+  flex-direction: column;
+  padding-left: 20px;
+}
+.terra-nav__drawer-sub.is-open { display: flex; }
+.terra-nav__drawer-sub a { font-size: 14px; padding: 9px 8px; color: #555; }
+
+.terra-nav__drawer-cta {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  background: #25d366;
+  color: #fff !important;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .terra-nav__links, .terra-nav__tel, .terra-nav__cta { display: none; }
+  .terra-nav__hamburger { display: flex; }
+  .terra-nav__logo { margin-right: 0; }
+}
+</style>
+
+<!-- NAVBAR — data-page se reemplaza por script para cada página -->
+<nav class="terra-nav" data-page="/sistema-riego-tampico">
+  <div class="terra-nav__inner">
+
+    <!-- LOGO -->
+    <a href="/" class="terra-nav__logo" aria-label="Viveros Terra — Inicio">
+      <img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" />
+    </a>
+
+    <!-- LINKS DESKTOP -->
+    <div class="terra-nav__links">
+      <div class="terra-nav__drop">
+        <button class="terra-nav__drop-trigger" aria-expanded="false" aria-haspopup="true">
+          Servicios
+          <svg class="terra-nav__chevron" viewBox="0 0 10 6" fill="none">
+            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="terra-nav__dropdown" id="dropdown-servicios" role="menu">
+          <div class="terra-nav__drop-col">
+            <div class="terra-nav__drop-section">
+              <div class="terra-nav__drop-header">Servicios de Jardinería</div>
+              <a class="terra-nav__drop-item" href="/pasto-en-rollo-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-leaf"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Pasto en Rollo San Agustín</strong><span>Instalación desde $85/m² · Mayoreo</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/pasto-sintetico-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-recycle"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Pasto Sintético</strong><span>Verde todo el año, sin mantenimiento</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/diseno-jardines-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-house"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Diseño de Jardines</strong><span>Plan Terra desde $3,000</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/mantenimiento-jardines-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-scissors"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Mantenimiento</strong><span>Desde $750/mes · Residencial e industrial</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/sistema-riego-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-drop"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Sistema de Riego</strong><span>Automatizado · Ahorra 40% agua</span></span>
+              </a>
+            </div>
+            <div class="terra-nav__drop-section">
+              <div class="terra-nav__drop-header">Plantas y Palmas</div>
+              <a class="terra-nav__drop-item" href="/plantas-palmas-arboles-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-palm"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Catálogo de Plantas</strong><span>+118 especies del vivero</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/palmas-tropicales-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-palm"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Palmas Tropicales</strong><span>Viajero, Areca, Real, Coco y más</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/arboles-para-banqueta-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-tree"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Árboles para Banqueta</strong><span>7 especies que no levantan pavimento</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/plantas-de-interior-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-window"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Plantas de Interior</strong><span>Pothos, Sansevieria, Aglaonema</span></span>
+              </a>
+            </div>
+          </div>
+          <div class="terra-nav__drop-col">
+            <div class="terra-nav__drop-section">
+              <div class="terra-nav__drop-header">Materiales</div>
+              <a class="terra-nav__drop-item" href="/tierra-negra-vegetal-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-sprout"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Tierra Negra y Sustratos</strong><span>Costal $90 · Camión volteo</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/tezontle-rojo-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-leaf"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Tezontle Rojo</strong><span>Costal $200 · Por m³</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/marmol-blanco-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-leaf"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Mármol Blanco</strong><span>Decorativo · Senderos · Bordes</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/piedra-bola-rio-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-stone"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Piedra de Río / Bola</strong><span>Senderos · Estanques · Drenaje</span></span>
+              </a>
+            </div>
+            <div class="terra-nav__drop-section">
+              <div class="terra-nav__drop-header">Por Zona · B2B</div>
+              <a class="terra-nav__drop-item" href="/vivero-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-pin"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Vivero en Tampico</strong><span>+150 variedades en Cd. Madero</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/jardineria-ciudad-madero" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-pin"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Jardinería Ciudad Madero</strong><span>Local · Sin recargo por zona</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/jardineria-altamira" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-pin"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Jardinería Altamira</strong><span>Industrial y residencial</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/mayoreo-pasto-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-building"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Mayoreo Constructoras</strong><span>Precio por volumen · CFDI</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/palmas-mayoreo-proyectos" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-palm"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Palmas Mayoreo Proyectos</strong><span>Hoteles · Gobierno · Industria</span></span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <button id="menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100" aria-label="Menú" aria-expanded="false"><svg class="w-6 h-6 text-gray-700"><use href="#ic-menu"/></svg></button>
+      <a href="/catalogo" class="terra-nav__link">Catálogo</a>
+      <a href="/blog" class="terra-nav__link">Blog</a>
     </div>
-    <div id="mobile-menu" class="hidden md:hidden pb-4 pt-2 border-t border-gray-100 mt-2 space-y-1">
-      <a href="/" class="block py-2.5 px-3 text-gray-700 hover:text-primary hover:bg-bggreen rounded-lg">Inicio</a>
-      <a href="/pasto-en-rollo-tampico" class="block py-2.5 px-3 text-gray-700 hover:text-primary hover:bg-bggreen rounded-lg">Pasto en Rollo</a>
-      <a href="/diseno-jardines-tampico" class="block py-2.5 px-3 text-gray-700 hover:text-primary hover:bg-bggreen rounded-lg">Diseño de Jardines</a>
-      <a href="/mantenimiento-jardines-tampico" class="block py-2.5 px-3 text-gray-700 hover:text-primary hover:bg-bggreen rounded-lg">Mantenimiento</a>
-      <a href="https://wa.me/528333268008?text=Hola%2C%20cotización%20riego" target="_blank" class="flex items-center justify-center gap-2 bg-wa text-white px-5 py-3 rounded-full font-semibold mt-2">
-        <svg class="w-5 h-5"><use href="#ic-whatsapp"/></svg>Cotizar por WhatsApp
+
+    <div class="terra-nav__right">
+      <a href="tel:8333268008" class="terra-nav__tel" aria-label="Llamar a Viveros Terra">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.169c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58L3.654 1.328z"/></svg>
+        833 326 8008
+      </a>
+      <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20una%20cotización%20de%20Viveros%20Terra" class="terra-nav__cta" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Cotizar por WhatsApp
       </a>
     </div>
-  </nav>
-</header>
 
-<!-- HERO -->
-<section class="relative text-white overflow-hidden min-h-screen flex items-center">
-  <div class="absolute inset-0 z-0">
-    <img src="../img/tecnico-terra-riego-industrial-tampico.avif" alt="Técnico Viveros Terra revisando sistema de riego automático en Tampico" class="w-full h-full object-cover" loading="eager">
-    <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(13,43,14,.92) 0%,rgba(27,94,32,.78) 55%,rgba(46,125,50,.50) 100%)"></div>
+    <button class="terra-nav__hamburger" aria-expanded="false" aria-controls="terra-nav-drawer" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-    <div class="max-w-2xl">
-      <div class="flex flex-wrap gap-2 mb-6">
-        <span class="inline-flex items-center gap-1.5 bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20"><svg class="w-3.5 h-3.5 text-accent"><use href="#ic-drop"/></svg>Ahorra hasta 40% de agua</span>
-        <span class="inline-flex items-center gap-1.5 bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20">+200 sistemas instalados</span>
-        <span class="inline-flex items-center gap-1.5 bg-accent/30 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-accent/40">Cotización por proyecto · Sin costo</span>
+
+  <div class="terra-nav__drawer" id="terra-nav-drawer">
+    <button class="terra-nav__drawer-sub-toggle" aria-expanded="false" data-target="drawer-sub-servicios">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-sprout"/></svg> Servicios de Jardinería
+      <svg class="terra-nav__chevron" style="margin-left:auto;width:12px;height:12px;" viewBox="0 0 10 6" fill="none">
+        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="terra-nav__drawer-sub" id="drawer-sub-servicios">
+      <a href="/pasto-en-rollo-tampico">Pasto en Rollo San Agustín</a>
+      <a href="/pasto-sintetico-tampico">Pasto Sintético</a>
+      <a href="/diseno-jardines-tampico">Diseño de Jardines</a>
+      <a href="/mantenimiento-jardines-tampico">Mantenimiento</a>
+      <a href="/sistema-riego-tampico">Sistema de Riego</a>
+    </div>
+    <button class="terra-nav__drawer-sub-toggle" aria-expanded="false" data-target="drawer-sub-plantas">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-palm"/></svg> Plantas y Palmas
+      <svg class="terra-nav__chevron" style="margin-left:auto;width:12px;height:12px;" viewBox="0 0 10 6" fill="none">
+        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="terra-nav__drawer-sub" id="drawer-sub-plantas">
+      <a href="/plantas-palmas-arboles-tampico">Catálogo de Plantas</a>
+      <a href="/palmas-tropicales-tampico">Palmas Tropicales</a>
+      <a href="/arboles-para-banqueta-tampico">Árboles para Banqueta</a>
+      <a href="/plantas-de-interior-tampico">Plantas de Interior</a>
+    </div>
+    <button class="terra-nav__drawer-sub-toggle" aria-expanded="false" data-target="drawer-sub-materiales">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-stone"/></svg> Materiales
+      <svg class="terra-nav__chevron" style="margin-left:auto;width:12px;height:12px;" viewBox="0 0 10 6" fill="none">
+        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="terra-nav__drawer-sub" id="drawer-sub-materiales">
+      <a href="/tierra-negra-vegetal-tampico">Tierra Negra y Sustratos</a>
+      <a href="/tezontle-rojo-tampico">Tezontle Rojo</a>
+      <a href="/marmol-blanco-tampico">Mármol Blanco</a>
+      <a href="/piedra-bola-rio-tampico">Piedra de Río / Bola</a>
+    </div>
+    <button class="terra-nav__drawer-sub-toggle" aria-expanded="false" data-target="drawer-sub-zonas">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-pin"/></svg> Por Zona y Mayoreo
+      <svg class="terra-nav__chevron" style="margin-left:auto;width:12px;height:12px;" viewBox="0 0 10 6" fill="none">
+        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="terra-nav__drawer-sub" id="drawer-sub-zonas">
+      <a href="/vivero-tampico">Vivero en Tampico</a>
+      <a href="/jardineria-ciudad-madero">Jardinería Ciudad Madero</a>
+      <a href="/jardineria-altamira">Jardinería Altamira</a>
+      <a href="/mayoreo-pasto-tampico">Mayoreo Constructoras</a>
+    </div>
+    <a href="/catalogo"><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-clipboard"/></svg> Catálogo</a>
+    <a href="/blog"><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-pencil"/></svg> Blog</a>
+    <a href="tel:8333268008"><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-phone"/></svg> 833 326 8008</a>
+    <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20una%20cotización%20de%20Viveros%20Terra" class="terra-nav__drawer-cta" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-chat"/></svg> Cotizar por WhatsApp
+    </a>
+  </div>
+</nav>
+
+
+<script>
+(function() {
+  var nav = document.querySelector('.terra-nav');
+  if (!nav) return;
+  var currentPage = nav.dataset.page || window.location.pathname;
+  nav.querySelectorAll('a[href]').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (href && href !== '/' && currentPage.startsWith(href)) link.classList.add('is-active');
+    if (href === '/' && currentPage === '/') link.classList.add('is-active');
+  });
+  var trigger = nav.querySelector('.terra-nav__drop-trigger');
+  var dropdown = document.getElementById('dropdown-servicios');
+  if (trigger && dropdown) {
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var open = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', String(!open));
+      dropdown.classList.toggle('is-open', !open);
+    });
+    document.addEventListener('click', function(e) {
+      if (!nav.contains(e.target)) {
+        trigger.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('is-open');
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        trigger.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('is-open');
+      }
+    });
+  }
+  var hamburger = nav.querySelector('.terra-nav__hamburger');
+  var drawer = document.getElementById('terra-nav-drawer');
+  if (hamburger && drawer) {
+    hamburger.addEventListener('click', function() {
+      var open = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', String(!open));
+      drawer.classList.toggle('is-open', !open);
+    });
+  }
+  nav.querySelectorAll('.terra-nav__drawer-sub-toggle').forEach(function(subToggle) {
+    var targetId = subToggle.getAttribute('data-target');
+    var subMenu = document.getElementById(targetId);
+    if (!subMenu) return;
+    subToggle.addEventListener('click', function() {
+      var open = subToggle.getAttribute('aria-expanded') === 'true';
+      subToggle.setAttribute('aria-expanded', String(!open));
+      subMenu.classList.toggle('is-open', !open);
+      var ch = subToggle.querySelector('.terra-nav__chevron');
+      if (ch) ch.style.transform = open ? '' : 'rotate(180deg)';
+    });
+  });
+})();
+</script>
+
+<!-- Catálogo CTA Banner -->
+<div style="background:linear-gradient(90deg,#1B5E20,#2E7D32)" class="text-white py-5">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <svg class="w-5 h-5 text-accent flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <div>
+        <div class="font-semibold text-sm">Catálogo 2025 — 155+ variedades con precios orientativos</div>
+        <div class="text-white/60 text-xs">Agrega lo que te interesa y cotiza todo en un solo WhatsApp</div>
       </div>
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6">
-        Sistema de Riego<br><span class="text-accent">Automático</span><br>en Tampico
+    </div>
+    <a href="/catalogo" class="flex-shrink-0 bg-white text-primary px-6 py-2.5 rounded-full font-bold text-sm hover:bg-green-50 transition-colors whitespace-nowrap">
+      Abrir catálogo →
+    </a>
+  </div>
+</div>
+
+<!-- HERO vt-hero LIGHT (consistencia con homepage) -->
+<section class="vt-hero" aria-label="Sistema de Riego Automático Tampico">
+  <div class="vt-hero__bg" aria-hidden="true">
+    <img src="/img/riego-pro-01.webp" alt="" class="vt-hero__bg-img" loading="eager" fetchpriority="high" decoding="async" width="1920" height="1080">
+    <div class="vt-hero__bg-overlay"></div>
+  </div>
+  <div class="vt-hero__container">
+    <div class="vt-hero__left">
+      <div class="vt-hero__badges" role="list">
+        <span class="vt-hero__badge" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 7 4 10.5 4 14a8 8 0 0 0 16 0c0-3.5-2.48-7-8-12z"/></svg>
+          Ahorra hasta 40% de agua
+        </span>
+        <span class="vt-hero__badge" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          +200 sistemas instalados
+        </span>
+        <span class="vt-hero__badge" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Instalación en 1-2 días
+        </span>
+        <span class="vt-hero__badge vt-hero__badge--accent" role="listitem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Garantía escrita en cada instalación
+        </span>
+      </div>
+      <h1 class="vt-hero__title">
+        Riego inteligente,<br>
+        <span class="vt-hero__title-accent">jardín siempre verde.</span>
       </h1>
-      <p class="text-white/80 text-lg leading-relaxed mb-8 max-w-xl">
-        Instalación profesional de riego por aspersores y goteo para jardines residenciales, comerciales e industriales en Tampico, Madero y Altamira. Tu jardín siempre verde, sin desperdiciar agua ni tiempo.
+      <p class="vt-hero__subtitle">
+        Diseñamos e instalamos sistemas de riego automático por aspersión y goteo para residencias, fraccionamientos, hoteles y proyectos industriales en Tampico, Madero y Altamira.
       </p>
-      <div class="flex flex-col sm:flex-row gap-3 mb-4">
-        <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20un%20sistema%20de%20riego%20automático%20en%20Tampico" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-wa text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-400 transition-colors shadow-xl">
-          <svg class="w-5 h-5"><use href="#ic-whatsapp"/></svg>Quiero cotización gratis
+      <div class="vt-hero__ctas">
+        <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20una%20cotizaci%C3%B3n%20de%20sistema%20de%20riego" target="_blank" rel="noopener" class="vt-hero__cta vt-hero__cta--primary">
+          <svg viewBox="0 0 24 24" fill="currentColor"><use href="#ic-whatsapp"/></svg>
+          Cotización gratis
         </a>
-        <a href="tel:8333268008" class="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/25 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/20 transition-colors">
-          <svg class="w-5 h-5"><use href="#ic-phone"/></svg>833 326 8008
+        <a href="tel:8333268008" class="vt-hero__cta vt-hero__cta--secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-phone"/></svg>
+          833 326 8008
         </a>
       </div>
-      <p class="text-white/45 text-sm">Sin compromiso · Respondemos hoy mismo · Lun–Sáb 9am–6pm</p>
+      <p class="vt-hero__caption">Visita técnica sin costo · Respondemos hoy mismo · Lun–Sáb 9am–6pm</p>
+    </div>
+    <div class="vt-hero__metrics">
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 7 4 10.5 4 14a8 8 0 0 0 16 0c0-3.5-2.48-7-8-12z"/></svg>
+        <div class="vt-hero__metric-num">40%</div>
+        <div class="vt-hero__metric-label">Ahorro promedio de agua</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        <div class="vt-hero__metric-num">+200</div>
+        <div class="vt-hero__metric-label">Sistemas instalados</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <div class="vt-hero__metric-num">1-2</div>
+        <div class="vt-hero__metric-label">Días promedio de instalación</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="vt-hero__metric-num">20</div>
+        <div class="vt-hero__metric-label">Años de experiencia</div>
+      </div>
     </div>
   </div>
 </section>
-
 <!-- DEFINICIÓN AEO — citable por LLMs -->
 <section class="py-14 bg-white border-b border-gray-100">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -178,6 +801,49 @@ h1,h2,h3{font-family:"Playfair Display",serif}
   </div>
 </section>
 
+<!-- COMPARISON: Tipos de Riego — citable por LLMs -->
+<section class="py-14 bg-bgwarm">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-8">
+      <span class="text-primary font-semibold text-sm uppercase tracking-wider">COMPARATIVA</span>
+      <h2 class="text-2xl sm:text-3xl font-display font-bold text-gray-900 mt-3 mb-3">Aspersión vs Goteo vs Microaspersión</h2>
+      <p class="text-gray-700 max-w-2xl mx-auto">Los tres sistemas de riego automático más usados en jardines residenciales y comerciales de Tampico.</p>
+    </div>
+    <div class="overflow-x-auto bg-white rounded-3xl border border-gray-100 shadow-sm">
+      <table class="w-full text-sm sm:text-base">
+        <thead class="bg-bggreen">
+          <tr>
+            <th class="text-left py-4 px-4 sm:px-6 font-display font-bold text-gray-900">Característica</th>
+            <th class="text-left py-4 px-4 sm:px-6 font-display font-bold text-primary">Aspersores Emergentes</th>
+            <th class="text-left py-4 px-4 sm:px-6 font-display font-bold text-gray-700">Riego por Goteo</th>
+            <th class="text-left py-4 px-4 sm:px-6 font-display font-bold text-gray-700">Microaspersión</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr><td class="py-3 px-4 sm:px-6 font-semibold">Ideal para</td><td class="py-3 px-4 sm:px-6">Pasto y áreas grandes</td><td class="py-3 px-4 sm:px-6">Plantas, arriates</td><td class="py-3 px-4 sm:px-6">Camellones</td></tr>
+          <tr class="bg-gray-50"><td class="py-3 px-4 sm:px-6 font-semibold">Cobertura</td><td class="py-3 px-4 sm:px-6">2-15 m radio</td><td class="py-3 px-4 sm:px-6">Punto por punto</td><td class="py-3 px-4 sm:px-6">1-3 m radio</td></tr>
+          <tr><td class="py-3 px-4 sm:px-6 font-semibold">Ahorro vs manual</td><td class="py-3 px-4 sm:px-6">30-40%</td><td class="py-3 px-4 sm:px-6">50-60%</td><td class="py-3 px-4 sm:px-6">40-50%</td></tr>
+          <tr class="bg-gray-50"><td class="py-3 px-4 sm:px-6 font-semibold">Presión requerida</td><td class="py-3 px-4 sm:px-6">2-4 bar</td><td class="py-3 px-4 sm:px-6">1-1.5 bar</td><td class="py-3 px-4 sm:px-6">1.5-2 bar</td></tr>
+          <tr><td class="py-3 px-4 sm:px-6 font-semibold">Visible cuando no opera</td><td class="py-3 px-4 sm:px-6">No (se ocultan)</td><td class="py-3 px-4 sm:px-6">Sí (mangueras)</td><td class="py-3 px-4 sm:px-6">Sí (estacas)</td></tr>
+          <tr class="bg-gray-50"><td class="py-3 px-4 sm:px-6 font-semibold">Marca recomendada</td><td class="py-3 px-4 sm:px-6">Hunter PGP / Rain Bird</td><td class="py-3 px-4 sm:px-6">Netafim / Hunter</td><td class="py-3 px-4 sm:px-6">Toro / Rain Bird</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-gray-700 mt-6 max-w-3xl mx-auto text-center">En jardines mixtos de Tampico (pasto + plantas ornamentales), el sistema combinado de aspersores en zonas de pasto y goteo en arriates es la solución más eficiente, con ahorros de 40-50% de agua frente a riego manual.</p>
+  </div>
+</section>
+
+<!-- BANNER VISUAL FULL-WIDTH — aspersores en acción -->
+<section class="relative overflow-hidden" aria-label="Sistema de riego en operación" style="height:clamp(280px,38vw,520px)">
+  <img src="/img/riego-banner-aspersores.jpg" alt="Sistema de riego automático en operación - múltiples aspersores cubriendo jardín en Tampico" class="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" width="2000" height="714">
+  <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(13,43,14,0) 0%,rgba(13,43,14,0) 60%,rgba(13,43,14,0.55) 100%)"></div>
+  <div class="absolute bottom-0 left-0 right-0 p-8 sm:p-12">
+    <div class="max-w-6xl mx-auto">
+      <p class="text-white/90 text-sm sm:text-base font-medium tracking-wide" style="font-family:'Inter',sans-serif;text-shadow:0 2px 8px rgba(0,0,0,0.4)">Cobertura uniforme · Programación automática · Cero desperdicio</p>
+    </div>
+  </div>
+</section>
+
 <!-- TIPOS DE SISTEMA -->
 <section class="py-20 bg-bgwarm">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -187,42 +853,42 @@ h1,h2,h3{font-family:"Playfair Display",serif}
       <p class="text-gray-600 max-w-xl mx-auto">Diseñamos el sistema según el tamaño del área, tipo de plantas y presupuesto.</p>
     </div>
     <div class="grid sm:grid-cols-3 gap-6">
-      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal">
-        <div class="img-card h-48"><img src="../img/sistema-riego-jardin-particular-tampico.jpg" alt="Aspersores emergentes en jardín residencial Tampico" loading="lazy"></div>
+      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal service-card">
+        <div class="img-card h-48"><img src="/img/riego-pro-03.jpg" alt="Aspersor emergente popup en pasto San Agustín - Viveros Terra Tampico" loading="lazy"></div>
         <div class="p-6">
-          <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3"><svg class="w-5 h-5 text-primary"><use href="#ic-drop"/></svg></div>
+          <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3"><svg viewBox="0 0 24 24" class="w-5 h-5 text-primary"><use href="#ic-drop"/></svg></div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Aspersores Emergentes</h3>
           <p class="text-gray-600 text-sm leading-relaxed mb-4">Ideal para áreas de pasto. Se ocultan en el suelo y emergen al regar, cubriendo de forma uniforme toda el área verde.</p>
           <ul class="space-y-1.5">
-            <li class="flex items-center gap-2 text-sm text-gray-700"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Cobertura uniforme 2 a 15m</li>
-            <li class="flex items-center gap-2 text-sm text-gray-700"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Ideal para pasto San Agustín</li>
-            <li class="flex items-center gap-2 text-sm text-gray-700"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Invisible cuando no opera</li>
+            <li class="flex items-center gap-2 text-sm text-gray-700"><svg viewBox="0 0 24 24" class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Cobertura uniforme 2 a 15m</li>
+            <li class="flex items-center gap-2 text-sm text-gray-700"><svg viewBox="0 0 24 24" class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Ideal para pasto San Agustín</li>
+            <li class="flex items-center gap-2 text-sm text-gray-700"><svg viewBox="0 0 24 24" class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Invisible cuando no opera</li>
           </ul>
         </div>
       </div>
-      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal">
-        <div class="img-card h-48"><img src="../img/instalacion-tuberia-riego-viveros-terra.jpg" alt="Instalación riego por goteo jardín Tampico técnico Terra" loading="lazy"></div>
+      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal service-card">
+        <div class="img-card h-48"><img src="/img/riego-tampico-03.jpg" alt="Sistema de goteo en philodendron — instalación Viveros Terra Tampico" loading="lazy"></div>
         <div class="p-6">
-          <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3"><svg class="w-5 h-5 text-primary"><use href="#ic-bolt"/></svg></div>
+          <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3"><svg viewBox="0 0 24 24" class="w-5 h-5 text-primary"><use href="#ic-bolt"/></svg></div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Riego por Goteo</h3>
           <p class="text-gray-600 text-sm leading-relaxed mb-4">Entrega agua directamente a la raíz. Máxima eficiencia para plantas ornamentales, árboles y camellones.</p>
           <ul class="space-y-1.5">
-            <li class="flex items-center gap-2 text-sm text-gray-700"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Hasta 60% de ahorro en agua</li>
-            <li class="flex items-center gap-2 text-sm text-gray-700"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Ideal para plantas y arbustos</li>
-            <li class="flex items-center gap-2 text-sm text-gray-700"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Reduce malezas por humedad selectiva</li>
+            <li class="flex items-center gap-2 text-sm text-gray-700"><svg viewBox="0 0 24 24" class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Hasta 60% de ahorro en agua</li>
+            <li class="flex items-center gap-2 text-sm text-gray-700"><svg viewBox="0 0 24 24" class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Ideal para plantas y arbustos</li>
+            <li class="flex items-center gap-2 text-sm text-gray-700"><svg viewBox="0 0 24 24" class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Reduce malezas por humedad selectiva</li>
           </ul>
         </div>
       </div>
-      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal">
-        <div class="img-card h-48"><img src="../img/riego-campo-deportivo-tampico.png" alt="Sistema riego campo deportivo áreas industriales Tampico" loading="lazy"></div>
+      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-green-100 reveal service-card">
+        <div class="img-card h-48"><img src="/img/riego-pro-05.jpg" alt="Técnico Viveros Terra inspeccionando sistema de riego industrial Tampico" loading="lazy"></div>
         <div class="p-6">
-          <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3"><svg class="w-5 h-5 text-primary"><use href="#ic-building"/></svg></div>
+          <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3"><svg viewBox="0 0 24 24" class="w-5 h-5 text-primary"><use href="#ic-building"/></svg></div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Industrial y Deportivo</h3>
           <p class="text-gray-600 text-sm leading-relaxed mb-4">Sistemas de alta cobertura para parques industriales, canchas, escuelas y áreas verdes de gran extensión.</p>
           <ul class="space-y-1.5">
-            <li class="flex items-center gap-2 text-sm text-gray-700"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Aspersores de largo alcance</li>
-            <li class="flex items-center gap-2 text-sm text-gray-700"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Controladores multiprogramas</li>
-            <li class="flex items-center gap-2 text-sm text-gray-700"><svg class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>500 m² hasta campos completos</li>
+            <li class="flex items-center gap-2 text-sm text-gray-700"><svg viewBox="0 0 24 24" class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Aspersores de largo alcance</li>
+            <li class="flex items-center gap-2 text-sm text-gray-700"><svg viewBox="0 0 24 24" class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>Controladores multiprogramas</li>
+            <li class="flex items-center gap-2 text-sm text-gray-700"><svg viewBox="0 0 24 24" class="w-4 h-4 text-accent flex-shrink-0"><use href="#ic-check"/></svg>500 m² hasta campos completos</li>
           </ul>
         </div>
       </div>
@@ -236,18 +902,82 @@ h1,h2,h3{font-family:"Playfair Display",serif}
     <div class="text-center mb-14 reveal">
       <span class="text-primary font-semibold text-sm uppercase tracking-wider">Proyectos reales</span>
       <h2 class="text-3xl font-display font-bold text-gray-900 mt-2">Instalaciones en Tampico y la región</h2>
+      <p class="text-gray-600 mt-3 max-w-xl mx-auto">Fotos reales de nuestras instalaciones — aspersores, goteo y microaspersión en jardines residenciales e industriales de la zona.</p>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <div class="img-card h-52 reveal"><img src="../img/tecnico-terra-riego-industrial-tampico.avif" alt="Técnico Terra riego industrial Tampico" loading="lazy"></div>
-      <div class="img-card h-52 reveal"><img src="../img/riego-automatico-jardin-residencial-tampico.png" alt="Riego automático jardín residencial Tampico" loading="lazy"></div>
-      <div class="img-card h-52 reveal"><img src="../img/equipo-terra-instalacion-riego-jardin.png" alt="Equipo Terra instalando riego subterráneo jardín" loading="lazy"></div>
-      <div class="img-card h-52 reveal"><img src="../img/instalacion-riego-tuberias-jardines-tampico.jpg" alt="Instalación tuberías riego jardín Tampico" loading="lazy"></div>
-      <div class="img-card h-52 reveal"><img src="../img/aspersor-riego-tampico-cesped.jpg" alt="Aspersor emergente pasto San Agustín Tampico" loading="lazy"></div>
-      <div class="img-card h-52 reveal"><img src="../img/sistema-riego-viveros-terra-proyecto-tampico.png" alt="Proyecto sistema riego Viveros Terra Tampico" loading="lazy"></div>
+      <div class="img-card rounded-2xl overflow-hidden reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-01.png" alt="Instalación aspersor jardín tropical Tampico — Viveros Terra" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="img-card rounded-2xl overflow-hidden reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-02.png" alt="Aspersores en plantas tropicales — sistema de riego Viveros Terra" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="img-card rounded-2xl overflow-hidden reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-03.jpg" alt="Sistema goteo en philodendron — micro-riego Viveros Terra Tampico" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="img-card rounded-2xl overflow-hidden reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-04.jpg" alt="Aspersor fan spray en jardín tropical Tampico — instalación profesional" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="img-card rounded-2xl overflow-hidden reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-05.jpg" alt="Aspersor emergente en pasto San Agustín — Viveros Terra Tampico" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="img-card rounded-2xl overflow-hidden reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-06.png" alt="Instalación aspersor pasto San Agustín — sistema riego automático Tampico" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
+      <div class="md:col-start-2 img-card rounded-2xl overflow-hidden reveal" style="aspect-ratio:4/3">
+        <img src="/img/riego-tampico-07.png" alt="Aspersor alto en philodendron — riego ornamental Viveros Terra Tampico" class="gallery-img" loading="lazy" width="600" height="450">
+      </div>
     </div>
   </div>
 </section>
 
+
+<!-- HOWTO BLOCK — voice search + AI snippets -->
+<section class="py-14 bg-white" id="como-instalar">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <span class="text-primary font-semibold text-sm uppercase tracking-wider">PROCESO</span>
+      <h2 class="text-2xl sm:text-3xl font-display font-bold text-gray-900 mt-3 mb-3">Cómo instalar un sistema de riego automático en 5 pasos</h2>
+      <p class="text-gray-700 max-w-2xl mx-auto">El proceso que sigue el equipo técnico de Viveros Terra para instalar tu sistema de riego sin sorpresas.</p>
+    </div>
+    <ol class="space-y-4">
+      <li class="flex gap-4 bg-bgwarm rounded-2xl p-5 sm:p-6">
+        <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center flex-shrink-0">1</div>
+        <div>
+          <h3 class="font-display font-bold text-gray-900 mb-1">Cotización y visita técnica</h3>
+          <p class="text-gray-700">Nos envías fotos y medidas del área por WhatsApp, o agendamos visita sin costo. Evaluamos el área, la fuente de agua disponible y el tipo de plantas para diseñar el sistema correcto.</p>
+        </div>
+      </li>
+      <li class="flex gap-4 bg-bgwarm rounded-2xl p-5 sm:p-6">
+        <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center flex-shrink-0">2</div>
+        <div>
+          <h3 class="font-display font-bold text-gray-900 mb-1">Diseño del sistema</h3>
+          <p class="text-gray-700">Elaboramos plano con distribución de aspersores o goteros, número de zonas y tipo de programador. Se define el recorrido de tuberías para minimizar obra civil.</p>
+        </div>
+      </li>
+      <li class="flex gap-4 bg-bgwarm rounded-2xl p-5 sm:p-6">
+        <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center flex-shrink-0">3</div>
+        <div>
+          <h3 class="font-display font-bold text-gray-900 mb-1">Instalación de tuberías</h3>
+          <p class="text-gray-700">Nuestro equipo instala la red de tuberías subterráneas cuidando no dañar raíces ni áreas existentes del jardín. Las conexiones quedan selladas y sin riesgo de fugas.</p>
+        </div>
+      </li>
+      <li class="flex gap-4 bg-bgwarm rounded-2xl p-5 sm:p-6">
+        <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center flex-shrink-0">4</div>
+        <div>
+          <h3 class="font-display font-bold text-gray-900 mb-1">Aspersores y programador</h3>
+          <p class="text-gray-700">Se colocan aspersores o goteros en posiciones definitivas y se conecta el programador digital que controlará el riego automáticamente según los horarios que programes.</p>
+        </div>
+      </li>
+      <li class="flex gap-4 bg-bgwarm rounded-2xl p-5 sm:p-6">
+        <div class="w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center flex-shrink-0">5</div>
+        <div>
+          <h3 class="font-display font-bold text-gray-900 mb-1">Prueba y calibración</h3>
+          <p class="text-gray-700">Prueba completa del sistema, ajuste de cobertura y programación de horarios óptimos para el clima de Tampico. Te explicamos cómo operarlo y ajustarlo en temporada de lluvias.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
 <!-- PROCESO -->
 <section class="py-20 bg-bgwarm">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -257,30 +987,30 @@ h1,h2,h3{font-family:"Playfair Display",serif}
       <p class="text-gray-600 max-w-xl mx-auto">De la cotización a tu jardín funcionando, sin sorpresas en el precio.</p>
     </div>
     <div class="space-y-4">
-      <div class="flex gap-5 bg-white rounded-2xl p-6 border border-green-100 reveal">
+      <div class="flex gap-5 step-card reveal">
         <div class="w-10 h-10 bg-primary rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">1</div>
         <div><h3 class="font-display font-bold text-gray-900 text-lg mb-1">Cotización y diagnóstico</h3><p class="text-gray-600 text-sm leading-relaxed">Envíanos fotos y medidas por WhatsApp o agendamos visita. Evaluamos el área, fuente de agua y tipo de plantas para diseñar el sistema correcto.</p></div>
       </div>
-      <div class="flex gap-5 bg-white rounded-2xl p-6 border border-green-100 reveal">
+      <div class="flex gap-5 step-card reveal">
         <div class="w-10 h-10 bg-primary rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">2</div>
         <div><h3 class="font-display font-bold text-gray-900 text-lg mb-1">Diseño del sistema</h3><p class="text-gray-600 text-sm leading-relaxed">Elaboramos plano con distribución de aspersores o goteros, zonas y tipo de programador. Se define el recorrido de tuberías para minimizar obra civil.</p></div>
       </div>
-      <div class="flex gap-5 bg-white rounded-2xl p-6 border border-green-100 reveal">
+      <div class="flex gap-5 step-card reveal">
         <div class="w-10 h-10 bg-primary rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">3</div>
         <div><h3 class="font-display font-bold text-gray-900 text-lg mb-1">Excavación e instalación de tuberías</h3><p class="text-gray-600 text-sm leading-relaxed">Nuestro equipo instala la red de tuberías subterráneas cuidando no dañar raíces ni áreas existentes del jardín.</p></div>
       </div>
-      <div class="flex gap-5 bg-white rounded-2xl p-6 border border-green-100 reveal">
+      <div class="flex gap-5 step-card reveal">
         <div class="w-10 h-10 bg-primary rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">4</div>
         <div><h3 class="font-display font-bold text-gray-900 text-lg mb-1">Instalación de aspersores y programador</h3><p class="text-gray-600 text-sm leading-relaxed">Se colocan aspersores o goteros en posiciones definitivas y se conecta el programador digital que controlará el riego automáticamente.</p></div>
       </div>
-      <div class="flex gap-5 bg-white rounded-2xl p-6 border border-green-100 reveal">
+      <div class="flex gap-5 step-card reveal">
         <div class="w-10 h-10 bg-accent rounded-xl text-white flex items-center justify-center font-bold text-lg flex-shrink-0">5</div>
         <div><h3 class="font-display font-bold text-gray-900 text-lg mb-1">Prueba, calibración y entrega</h3><p class="text-gray-600 text-sm leading-relaxed">Prueba completa del sistema, ajuste de cobertura y programación de horarios óptimos para el clima de Tampico. Te explicamos cómo operarlo.</p></div>
       </div>
     </div>
     <div class="mt-10 text-center reveal">
       <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20sistema%20de%20riego%20automático" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-wa text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-green-400 transition-colors shadow-xl">
-        <svg class="w-5 h-5"><use href="#ic-whatsapp"/></svg>Empezar mi cotización
+        <svg viewBox="0 0 24 24" class="w-5 h-5"><use href="#ic-whatsapp"/></svg>Empezar mi cotización
       </a>
     </div>
   </div>
@@ -290,25 +1020,25 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 <section class="py-20 bg-bggreen">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-14 items-center">
-      <div class="img-card h-96 reveal"><img src="../img/instalacion-riego-tuberias-jardines-tampico.jpg" alt="Equipo Viveros Terra instalando tuberías riego subterráneo Tampico" loading="lazy"></div>
+      <div class="img-card h-96 reveal"><img src="/img/riego-pro-02.jpg" alt="Equipo Viveros Terra instalando sistema de riego subterráneo - técnicos certificados Tampico" loading="lazy"></div>
       <div class="space-y-6 reveal">
         <span class="text-primary font-semibold text-sm uppercase tracking-wider">Por qué elegir Viveros Terra</span>
         <h2 class="text-3xl sm:text-4xl font-display font-bold text-gray-900">+200 sistemas instalados en la región</h2>
         <div class="space-y-4">
           <div class="flex gap-4 items-start">
-            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 border border-green-100"><svg class="w-5 h-5 text-primary"><use href="#ic-shield"/></svg></div>
+            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 border border-green-100"><svg viewBox="0 0 24 24" class="w-5 h-5 text-primary"><use href="#ic-shield"/></svg></div>
             <div><div class="font-semibold text-gray-900 mb-1">Garantía en materiales e instalación</div><div class="text-gray-600 text-sm">Trabajamos con Hunter, Rain Bird y Toro. Fugas o fallas en instalación se atienden sin costo adicional.</div></div>
           </div>
           <div class="flex gap-4 items-start">
-            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 border border-green-100"><svg class="w-5 h-5 text-primary"><use href="#ic-clock"/></svg></div>
+            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 border border-green-100"><svg viewBox="0 0 24 24" class="w-5 h-5 text-primary"><use href="#ic-clock"/></svg></div>
             <div><div class="font-semibold text-gray-900 mb-1">Instalación en 1 a 2 días</div><div class="text-gray-600 text-sm">Sistemas residenciales hasta 200 m² se instalan en un día. Proyectos mayores según extensión y complejidad.</div></div>
           </div>
           <div class="flex gap-4 items-start">
-            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 border border-green-100"><svg class="w-5 h-5 text-primary"><use href="#ic-drop"/></svg></div>
+            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 border border-green-100"><svg viewBox="0 0 24 24" class="w-5 h-5 text-primary"><use href="#ic-drop"/></svg></div>
             <div><div class="font-semibold text-gray-900 mb-1">Diseño adaptado al clima de Tampico</div><div class="text-gray-600 text-sm">Programamos en horarios de baja evaporación, considerando lluvias de temporada para optimizar el consumo.</div></div>
           </div>
           <div class="flex gap-4 items-start">
-            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 border border-green-100"><svg class="w-5 h-5 text-primary"><use href="#ic-building"/></svg></div>
+            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 border border-green-100"><svg viewBox="0 0 24 24" class="w-5 h-5 text-primary"><use href="#ic-building"/></svg></div>
             <div><div class="font-semibold text-gray-900 mb-1">Residencial, comercial e industrial</div><div class="text-gray-600 text-sm">Desde jardines de casa hasta parques industriales y canchas deportivas en toda la zona conurbada.</div></div>
           </div>
         </div>
@@ -327,7 +1057,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
     <div class="grid sm:grid-cols-2 gap-6">
       <div class="bg-white rounded-3xl p-7 border border-green-100 shadow-sm reveal">
         <div class="flex gap-0.5 mb-4">
-          <svg class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg>
+          <svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg>
         </div>
         <p class="text-gray-700 text-sm leading-relaxed mb-5">"Tenía el jardín seco porque se me olvidaba regar. Terra instaló el sistema en un día, me programaron los horarios y ahora siempre está perfecto. Mi recibo de agua bajó casi a la mitad."</p>
         <div class="flex items-center gap-3">
@@ -337,7 +1067,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
       </div>
       <div class="bg-white rounded-3xl p-7 border border-green-100 shadow-sm reveal">
         <div class="flex gap-0.5 mb-4">
-          <svg class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg>
+          <svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg><svg viewBox="0 0 24 24" class="w-4 h-4 text-yellow-400"><use href="#ic-star"/></svg>
         </div>
         <p class="text-gray-700 text-sm leading-relaxed mb-5">"Instalaron el sistema de riego en las áreas verdes de nuestra planta industrial en Altamira. Llegaron a tiempo, el diseño es eficiente y el equipo de calidad. 100% recomendados."</p>
         <div class="flex items-center gap-3">
@@ -358,35 +1088,35 @@ h1,h2,h3{font-family:"Playfair Display",serif}
     </div>
     <div class="space-y-3">
       <div class="bg-white rounded-2xl overflow-hidden border border-green-100 reveal">
-        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Cuánto cuesta instalar un sistema de riego automático en Tampico?<svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
+        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Cuánto cuesta instalar un sistema de riego automático en Tampico?<svg viewBox="0 0 24 24" class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
         <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed"><div class="pb-5">El costo varía según el tamaño del área, tipo de sistema, número de zonas y complejidad. Viveros Terra realiza cotizaciones personalizadas sin costo. Envíanos fotos de tu jardín con medidas aproximadas por WhatsApp al 833 326 8008 y te respondemos hoy mismo.</div></div>
       </div>
       <div class="bg-white rounded-2xl overflow-hidden border border-green-100 reveal">
-        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Cuánta agua ahorra un sistema de riego automático?<svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
+        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Cuánta agua ahorra un sistema de riego automático?<svg viewBox="0 0 24 24" class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
         <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed"><div class="pb-5">Un sistema bien diseñado ahorra entre 30% y 50% de agua respecto al riego manual, según datos de la FAO. El ahorro se logra programando el riego en madrugada (menor evaporación), evitando excesos, y calibrando cada zona según el tipo de planta y estación del año.</div></div>
       </div>
       <div class="bg-white rounded-2xl overflow-hidden border border-green-100 reveal">
-        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Qué tipo de riego es mejor para jardines en Tampico?<svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
+        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Qué tipo de riego es mejor para jardines en Tampico?<svg viewBox="0 0 24 24" class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
         <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed"><div class="pb-5">Para pasto San Agustín, los aspersores emergentes son ideales por su cobertura uniforme. Para plantas ornamentales, arbustos y camellones, el riego por goteo es superior ya que entrega agua directo a la raíz y reduce evaporación. En jardines mixtos, Viveros Terra diseña sistemas combinados.</div></div>
       </div>
       <div class="bg-white rounded-2xl overflow-hidden border border-green-100 reveal">
-        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Cuánto tiempo tarda la instalación?<svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
+        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Cuánto tiempo tarda la instalación?<svg viewBox="0 0 24 24" class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
         <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed"><div class="pb-5">Un sistema residencial estándar hasta 200 m² se instala en 1 a 2 días hábiles. Proyectos mayores como áreas industriales o campos deportivos pueden requerir 3 a 7 días según extensión. El jardín queda funcional al terminar la instalación.</div></div>
       </div>
       <div class="bg-white rounded-2xl overflow-hidden border border-green-100 reveal">
-        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Funciona con la presión de agua de la red municipal?<svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
+        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Funciona con la presión de agua de la red municipal?<svg viewBox="0 0 24 24" class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
         <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed"><div class="pb-5">Sí. La mayoría de sistemas residenciales funcionan con presión estándar de red (1.5 a 4 bar). En casos de presión baja se puede incluir una pequeña bomba de presión en el diseño sin afectar significativamente el costo total.</div></div>
       </div>
       <div class="bg-white rounded-2xl overflow-hidden border border-green-100 reveal">
-        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Dan garantía en la instalación?<svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
+        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Dan garantía en la instalación?<svg viewBox="0 0 24 24" class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
         <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed"><div class="pb-5">Sí. Viveros Terra garantiza la instalación y los materiales. Fugas o fallas por causas de instalación se atienden sin costo adicional. También ofrecemos mantenimiento preventivo y correctivo del sistema una vez instalado.</div></div>
       </div>
       <div class="bg-white rounded-2xl overflow-hidden border border-green-100 reveal">
-        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Instalan riego para canchas e industria en Tampico?<svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
+        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Instalan riego para canchas e industria en Tampico?<svg viewBox="0 0 24 24" class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
         <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed"><div class="pb-5">Sí. Tenemos experiencia en canchas de fútbol, áreas deportivas, parques industriales, escuelas y áreas verdes de gobierno en Tampico, Altamira y Madero. Contamos con aspersores de largo alcance para grandes extensiones.</div></div>
       </div>
       <div class="bg-white rounded-2xl overflow-hidden border border-green-100 reveal">
-        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Qué marcas de aspersores y programadores instalan?<svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
+        <button class="faq-btn w-full text-left px-6 py-5 flex items-center justify-between font-semibold text-gray-900 hover:text-primary transition-colors" aria-expanded="false">¿Qué marcas de aspersores y programadores instalan?<svg viewBox="0 0 24 24" class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-300"><use href="#ic-chevron-down"/></svg></button>
         <div class="faq-answer px-6 text-gray-600 text-sm leading-relaxed"><div class="pb-5">Instalamos materiales Hunter, Rain Bird y Toro, seleccionando el equipo más adecuado según presupuesto y necesidades del proyecto. Son los estándares de la industria con repuestos disponibles en México.</div></div>
       </div>
     </div>
@@ -399,22 +1129,22 @@ h1,h2,h3{font-family:"Playfair Display",serif}
     <div class="text-center mb-10 reveal"><h2 class="text-2xl font-display font-bold text-gray-900">Otros servicios de Viveros Terra</h2></div>
     <div class="grid sm:grid-cols-3 gap-5">
       <a href="/pasto-en-rollo-tampico" class="group bg-white rounded-2xl p-6 border border-green-100 hover:border-primary hover:shadow-md transition-all reveal">
-        <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3 group-hover:bg-primary transition-colors"><svg class="w-5 h-5 text-primary group-hover:text-white transition-colors"><use href="#ic-leaf"/></svg></div>
+        <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3 group-hover:bg-primary transition-colors"><svg viewBox="0 0 24 24" class="w-5 h-5 text-primary group-hover:text-white transition-colors"><use href="#ic-leaf"/></svg></div>
         <h3 class="font-bold text-gray-900 mb-1">Pasto en Rollo</h3>
         <p class="text-gray-500 text-sm">San Agustín desde $85/m² · Entrega e instalación en Tampico</p>
-        <span class="text-primary text-sm font-semibold mt-3 inline-flex items-center gap-1">Ver más <svg class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
+        <span class="text-primary text-sm font-semibold mt-3 inline-flex items-center gap-1">Ver más <svg viewBox="0 0 24 24" class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
       </a>
       <a href="/diseno-jardines-tampico" class="group bg-white rounded-2xl p-6 border border-green-100 hover:border-primary hover:shadow-md transition-all reveal">
-        <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3 group-hover:bg-primary transition-colors"><svg class="w-5 h-5 text-primary group-hover:text-white transition-colors"><use href="#ic-leaf"/></svg></div>
+        <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3 group-hover:bg-primary transition-colors"><svg viewBox="0 0 24 24" class="w-5 h-5 text-primary group-hover:text-white transition-colors"><use href="#ic-leaf"/></svg></div>
         <h3 class="font-bold text-gray-900 mb-1">Diseño de Jardines</h3>
         <p class="text-gray-500 text-sm">Plan Terra desde $3,000 · Propuesta visual incluida</p>
-        <span class="text-primary text-sm font-semibold mt-3 inline-flex items-center gap-1">Ver más <svg class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
+        <span class="text-primary text-sm font-semibold mt-3 inline-flex items-center gap-1">Ver más <svg viewBox="0 0 24 24" class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
       </a>
       <a href="/mantenimiento-jardines-tampico" class="group bg-white rounded-2xl p-6 border border-green-100 hover:border-primary hover:shadow-md transition-all reveal">
-        <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3 group-hover:bg-primary transition-colors"><svg class="w-5 h-5 text-primary group-hover:text-white transition-colors"><use href="#ic-leaf"/></svg></div>
+        <div class="w-10 h-10 bg-bggreen rounded-xl flex items-center justify-center mb-3 group-hover:bg-primary transition-colors"><svg viewBox="0 0 24 24" class="w-5 h-5 text-primary group-hover:text-white transition-colors"><use href="#ic-leaf"/></svg></div>
         <h3 class="font-bold text-gray-900 mb-1">Mantenimiento</h3>
         <p class="text-gray-500 text-sm">Desde $750/mes · Poda, fertilización y cuidados</p>
-        <span class="text-primary text-sm font-semibold mt-3 inline-flex items-center gap-1">Ver más <svg class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
+        <span class="text-primary text-sm font-semibold mt-3 inline-flex items-center gap-1">Ver más <svg viewBox="0 0 24 24" class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg></span>
       </a>
     </div>
   </div>
@@ -422,7 +1152,7 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 
 <!-- CTA FINAL CON FORMULARIO WHATSAPP NATIVO -->
 <section class="py-20 bg-dark text-white relative overflow-hidden">
-  <div class="absolute inset-0 opacity-15"><img src="../img/riego-automatico-jardin-residencial-tampico.png" alt="" class="w-full h-full object-cover"></div>
+  <div class="absolute inset-0 opacity-20"><img src="/img/riego-pro-04.jpg" alt="" class="w-full h-full object-cover" loading="lazy"></div>
   <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-3xl sm:text-4xl font-display font-bold text-white mb-4 reveal">¿Listo para automatizar el riego de tu jardín?</h2>
     <p class="text-white/65 text-lg mb-8 reveal">Envíanos fotos y medidas aproximadas. Cotización personalizada hoy mismo.</p>
@@ -442,25 +1172,44 @@ h1,h2,h3{font-family:"Playfair Display",serif}
         <textarea id="r-detalle" placeholder="m² aproximados, colonia, descripción..." rows="2" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 text-sm focus:outline-none focus:ring-2 focus:ring-wa resize-none"></textarea>
       </div>
       <button onclick="sendRW()" class="w-full bg-wa text-white py-4 rounded-xl font-bold text-lg hover:bg-green-400 transition-colors flex items-center justify-center gap-2">
-        <svg class="w-5 h-5"><use href="#ic-whatsapp"/></svg>Enviar por WhatsApp
+        <svg viewBox="0 0 24 24" class="w-5 h-5"><use href="#ic-whatsapp"/></svg>Enviar por WhatsApp
       </button>
       <p class="text-white/35 text-xs text-center mt-3">Sin compromiso · Respuesta hoy · Lun–Sáb</p>
     </div>
   </div>
 </section>
 
+
+<!-- AUTHOR BIO — E-E-A-T signal -->
+<section class="py-10 bg-bggreen">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-3xl border border-green-100 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+      <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-primary text-white flex items-center justify-center flex-shrink-0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:48px;height:48px"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.1L7 22l5-3 5 3-1.56-7.9"/></svg>
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-wider text-primary font-semibold mb-1">Escrito por el equipo técnico de</p>
+        <h3 class="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-2">Viveros Terra · Tampico</h3>
+        <p class="text-gray-700 leading-relaxed">Empresa fundada en 2006 en Ciudad Madero, Tamaulipas. +20 años cultivando pasto San Agustín, palmas tropicales y árboles ornamentales adaptados al clima del Golfo. +900 clientes residenciales y +200 proyectos B2B en Tamaulipas, Veracruz norte y SLP. Productor directo · CFDI 4.0 · Certificación SENASICA.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="text-center text-xs text-gray-500 py-4">
+  Última actualización: <time datetime="2026-05-14">14 de mayo, 2026</time> · Viveros Terra
+</div>
 <!-- FOOTER -->
 <footer class="bg-dark text-white border-t border-white/10">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
       <div class="space-y-4">
-        <div class="flex items-center"><img src="../img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-dark" loading="lazy"></div>
+        <div class="flex items-center"><img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-dark" loading="lazy"></div>
         <p class="text-white/50 text-sm leading-relaxed">Instalación de sistemas de riego automático y servicios de jardinería profesional en Tampico, Madero y Altamira, Tamaulipas.</p>
         <div class="flex gap-2.5">
-          <a href="https://www.instagram.com/viverosterramx" target="_blank" rel="noopener" aria-label="Instagram" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-instagram"/></svg></a>
-          <a href="https://www.facebook.com/viverosterra/" target="_blank" rel="noopener" aria-label="Facebook" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-facebook"/></svg></a>
-          <a href="https://www.youtube.com/@viverosterramx" target="_blank" rel="noopener" aria-label="YouTube" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"><svg class="w-4 h-4"><use href="#ic-youtube"/></svg></a>
-          <a href="http://www.tiktok.com/@viverosterra" target="_blank" rel="noopener" aria-label="TikTok" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-fuchsia-700 transition-colors"><svg class="w-4 h-4"><use href="#ic-tiktok"/></svg></a>
+          <a href="https://www.instagram.com/viverosterramx" target="_blank" rel="noopener" aria-label="Instagram" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors"><svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-instagram"/></svg></a>
+          <a href="https://www.facebook.com/viverosterra/" target="_blank" rel="noopener" aria-label="Facebook" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors"><svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-facebook"/></svg></a>
+          <a href="https://www.youtube.com/@viverosterramx" target="_blank" rel="noopener" aria-label="YouTube" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-red-600 transition-colors"><svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-youtube"/></svg></a>
+          <a href="http://www.tiktok.com/@viverosterra" target="_blank" rel="noopener" aria-label="TikTok" class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-fuchsia-700 transition-colors"><svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-tiktok"/></svg></a>
         </div>
       </div>
       <div>
@@ -493,11 +1242,11 @@ h1,h2,h3{font-family:"Playfair Display",serif}
       <div>
         <h4 class="font-bold text-white mb-5">Contacto</h4>
         <ul class="space-y-3 text-white/50 text-sm">
-          <li><a href="https://wa.me/528333268008" target="_blank" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg class="w-4 h-4 text-wa flex-shrink-0"><use href="#ic-whatsapp"/></svg>833 326 8008</a></li>
-          <li><a href="tel:8333268008" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg class="w-4 h-4 flex-shrink-0"><use href="#ic-phone"/></svg>833 326 8008</a></li>
-          <li><a href="mailto:viverosterra@hotmail.com" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg class="w-4 h-4 flex-shrink-0"><use href="#ic-mail"/></svg>viverosterra@hotmail.com</a></li>
-          <li class="flex items-start gap-2.5"><svg class="w-4 h-4 flex-shrink-0 mt-0.5"><use href="#ic-pin"/></svg>Av. Álvaro Obregón 601, Cd. Madero (Frente Walmart)</li>
-          <li class="flex items-center gap-2.5"><svg class="w-4 h-4 flex-shrink-0"><use href="#ic-clock"/></svg>Lun–Vie 9am–6pm · Sáb 9am–2pm</li>
+          <li><a href="https://wa.me/528333268008" target="_blank" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg viewBox="0 0 24 24" class="w-4 h-4 text-wa flex-shrink-0"><use href="#ic-whatsapp"/></svg>833 326 8008</a></li>
+          <li><a href="tel:8333268008" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg viewBox="0 0 24 24" class="w-4 h-4 flex-shrink-0"><use href="#ic-phone"/></svg>833 326 8008</a></li>
+          <li><a href="mailto:viverosterra@hotmail.com" class="flex items-center gap-2.5 hover:text-accent transition-colors"><svg viewBox="0 0 24 24" class="w-4 h-4 flex-shrink-0"><use href="#ic-mail"/></svg>viverosterra@hotmail.com</a></li>
+          <li class="flex items-start gap-2.5"><svg viewBox="0 0 24 24" class="w-4 h-4 flex-shrink-0 mt-0.5"><use href="#ic-pin"/></svg>Av. Álvaro Obregón 601, Cd. Madero (Frente Walmart)</li>
+          <li class="flex items-center gap-2.5"><svg viewBox="0 0 24 24" class="w-4 h-4 flex-shrink-0"><use href="#ic-clock"/></svg>Lun–Vie 9am–6pm · Sáb 9am–2pm</li>
         </ul>
       </div>
     </div>
@@ -509,8 +1258,11 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 </footer>
 
 <script>
+  // Mobile menu (legacy - solo si existen los elementos antiguos)
   const mb=document.getElementById('menu-btn'),mm=document.getElementById('mobile-menu');
-  mb.addEventListener('click',()=>{const o=!mm.classList.contains('hidden');mm.classList.toggle('hidden');mb.setAttribute('aria-expanded',String(!o));});
+  if(mb&&mm){
+    mb.addEventListener('click',()=>{const o=!mm.classList.contains('hidden');mm.classList.toggle('hidden');mb.setAttribute('aria-expanded',String(!o));});
+  }
   document.querySelectorAll('.faq-btn').forEach(b=>{
     b.addEventListener('click',()=>{
       const a=b.nextElementSibling,ic=b.querySelector('.faq-icon'),op=a.classList.contains('open');
@@ -520,8 +1272,9 @@ h1,h2,h3{font-family:"Playfair Display",serif}
       if(!op){a.classList.add('open');ic.style.transform='rotate(180deg)';b.setAttribute('aria-expanded','true');}
     });
   });
-  const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}});},{threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);}});},{threshold:0,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>{const r=el.getBoundingClientRect();if(r.top<window.innerHeight-40){el.classList.add('visible');}else{obs.observe(el);}});
+  setTimeout(()=>{document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible'));},900);
   function sendRW(){
     const n=(document.getElementById('r-nombre').value||'').trim();
     const t=(document.getElementById('r-tipo').value||'').trim();
@@ -534,5 +1287,6 @@ h1,h2,h3{font-family:"Playfair Display",serif}
     window.open('https://wa.me/528333268008?text='+encodeURIComponent(m),'_blank','noopener');
   }
 </script>
+<script src="/js/activity-feed.js" defer></script>
 </body>
 </html>

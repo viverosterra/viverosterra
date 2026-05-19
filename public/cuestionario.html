@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuestionario de Proyecto — Viveros Terra</title>
+  <meta name="robots" content="index, follow">
+  <meta name="ai-content-declaration" content="human-authored">
+  <meta name="author" content="Viveros Terra — Tampico, Tamaulipas">
+  <meta name="last-modified" content="2026-05-14">
+  <meta property="article:author" content="Viveros Terra">
+  <meta name="article:publisher" content="https://www.viverosterra.com">
+  <meta name="keywords" content="cuestionario jardín tampico, diseño jardín personalizado, cotización jardín tampico, asesoría jardinería tampico">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#eef2eb;color:#1a1a1a;min-height:100vh}
+
+/* HERO HEADER */
+.hero{background:linear-gradient(135deg,#1a3a1f 0%,#2d5a34 60%,#3b6d11 100%);padding:3rem 2rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239abf82' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(154,191,130,0.15);border:1px solid rgba(154,191,130,0.3);border-radius:20px;padding:5px 14px;font-size:12px;color:#9abf82;margin-bottom:16px;position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:400;color:#d4edba;margin-bottom:10px;position:relative}
+.hero-sub{font-size:15px;color:#9abf82;max-width:480px;margin:0 auto 20px;line-height:1.6;position:relative}
+.hero-promise{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;position:relative}
+.hero-promise span{font-size:12px;color:#7abf4a;display:flex;align-items:center;gap:5px}
+.hero-promise span::before{content:'<svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-check"/></svg>';background:#3b6d11;color:#d4edba;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0}
+.timer-badge{position:absolute;top:16px;right:16px;background:rgba(0,0,0,0.25);border-radius:20px;padding:4px 12px;font-size:12px;color:#9abf82;display:flex;align-items:center;gap:5px}
+
+/* WIZARD NAV */
+.wizard-nav{background:#fff;border-bottom:1px solid #e0e8da;padding:0 2rem;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.wizard-nav::-webkit-scrollbar{display:none}
+.wizard-step{flex:1;min-width:100px;padding:14px 8px;text-align:center;font-size:12px;font-weight:500;color:#aaa;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s;white-space:nowrap;position:relative}
+.wizard-step.active{color:#1a3a1f;border-bottom-color:#3b6d11}
+.wizard-step.done{color:#3b6d11}
+.wizard-step .step-num{width:22px;height:22px;border-radius:50%;background:#eef2eb;color:#aaa;font-size:11px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:4px;margin-right:0;font-weight:600}
+.wizard-step.active .step-num{background:#1a3a1f;color:#d4edba}
+.wizard-step.done .step-num{background:#3b6d11;color:#fff}
+.wizard-step-inner{display:flex;flex-direction:column;align-items:center;gap:3px}
+
+/* PROGRESS */
+.progress-wrap{background:#e0e8da;height:3px}
+.progress-bar{height:100%;background:linear-gradient(90deg,#3b6d11,#7abf4a);transition:width 0.5s ease;width:0%}
+
+/* PAGES */
+.page-wrap{max-width:720px;margin:0 auto;padding:0 0 3rem}
+.form-page{display:none;animation:fadeIn 0.3s ease}
+.form-page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.vt-body{background:#fff;border:1px solid #e0e8da;border-top:none}
+.vt-section{padding:2rem 2.5rem;border-bottom:1px solid #eef2eb}
+.vt-section:last-of-type{border-bottom:none}
+
+.section-label{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.section-num{width:28px;height:28px;border-radius:50%;background:#1a3a1f;color:#9abf82;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.section-title{font-size:13px;font-weight:600;color:#1a3a1f;letter-spacing:0.8px;text-transform:uppercase}
+.section-hint{font-size:13px;color:#888;margin-bottom:1.5rem;padding-left:38px;line-height:1.5}
+
+.field-row{display:grid;gap:14px;margin-bottom:14px}
+.field-row.cols2{grid-template-columns:1fr 1fr}
+.field-row.cols3{grid-template-columns:1fr 1fr 1fr}
+.field{display:flex;flex-direction:column;gap:6px;position:relative}
+label.fl{font-size:12px;color:#555;font-weight:500}
+label.fl .req{color:#e04a4a}
+.field-hint{font-size:11px;color:#9abf82;margin-top:2px;font-style:italic}
+
+input[type=text],input[type=tel],input[type=email],input[type=number],select,textarea{
+  font-family:'DM Sans',sans-serif;font-size:14px;border:1.5px solid #d4dfd0;border-radius:8px;
+  padding:10px 12px;background:#fafffe;color:#1a1a1a;outline:none;transition:all 0.2s;width:100%
+}
+input:focus,select:focus,textarea:focus{border-color:#3b6d11;background:#fff;box-shadow:0 0 0 3px rgba(59,109,17,0.08)}
+input.valid{border-color:#3b6d11;background:#f8fdf5}
+textarea{resize:vertical;min-height:80px}
+
+/* PILLS */
+.radio-group,.check-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.radio-pill,.check-pill{display:flex;align-items:center;gap:6px;background:#f4f7f2;border:1.5px solid #d4dfd0;border-radius:20px;padding:8px 16px;font-size:13px;cursor:pointer;color:#444;transition:all 0.15s;user-select:none}
+.radio-pill input,.check-pill input{accent-color:#2d6e35;width:14px;height:14px}
+.radio-pill:has(input:checked),.check-pill:has(input:checked){background:#eaf3de;border-color:#3b6d11;color:#1a3a1f;font-weight:500}
+.radio-pill:hover,.check-pill:hover{border-color:#7abf4a;background:#f0f7ea}
+
+/* AREA TOTAL */
+.area-total{background:linear-gradient(135deg,#eaf3de,#f0f7ea);border:1.5px solid #3b6d11;border-radius:8px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.area-total span{font-size:13px;color:#3b6d11;font-weight:500}
+.area-total strong{font-size:20px;color:#1a3a1f;font-weight:600}
+
+/* COND */
+.cond-block{display:none;padding:14px 16px;background:#f9faf7;border:1.5px solid #d4e8c6;border-radius:8px;margin-top:10px}
+.cond-block.visible{display:block}
+.otro-field{display:none;margin-top:10px}
+.otro-field.visible{display:block}
+
+/* BUDGET */
+.budget-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.budget-card{border:1.5px solid #d4dfd0;border-radius:12px;padding:14px 16px;cursor:pointer;transition:all 0.15s;background:#fafffe}
+.budget-card:has(input:checked){background:linear-gradient(135deg,#eaf3de,#f4f9ef);border-color:#3b6d11;box-shadow:0 2px 8px rgba(59,109,17,0.12)}
+.budget-card input{display:none}
+.budget-card .amount{font-size:15px;font-weight:600;color:#1a1a1a}
+.budget-card .desc{font-size:12px;color:#777;margin-top:4px}
+.budget-card:has(input:checked) .amount{color:#1a3a1f}
+.budget-card:hover{border-color:#7abf4a}
+
+/* PRIORITY */
+.priority-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.priority-card{border:1.5px solid #d4dfd0;border-radius:10px;padding:12px 14px;cursor:pointer;transition:all 0.15s;background:#fafffe;display:flex;align-items:center;gap:10px}
+.priority-card input{display:none}
+.priority-card:has(input:checked){background:#eaf3de;border-color:#3b6d11}
+.priority-card .priority-icon{font-size:20px;flex-shrink:0}
+.priority-card .priority-text{font-size:13px;font-weight:500;color:#444}
+.priority-card:has(input:checked) .priority-text{color:#1a3a1f}
+
+/* NAV BUTTONS */
+.wizard-footer{background:#fff;border-top:1px solid #eef2eb;padding:1.25rem 2.5rem;display:flex;justify-content:space-between;align-items:center;position:sticky;bottom:0;z-index:10}
+.btn-prev{background:transparent;border:1.5px solid #d4dfd0;border-radius:8px;padding:10px 22px;font-family:'DM Sans',sans-serif;font-size:14px;color:#666;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:6px}
+.btn-prev:hover{border-color:#3b6d11;color:#3b6d11}
+.btn-next{background:#1a3a1f;color:#d4edba;border:none;border-radius:8px;padding:11px 28px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+.btn-next:hover{background:#2d5a34;transform:translateY(-1px);box-shadow:0 4px 12px rgba(26,58,31,0.3)}
+.btn-next:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
+.step-counter{font-size:12px;color:#999}
+
+/* SUCCESS */
+.success-screen{display:none;text-align:center;padding:4rem 2rem;background:#fff}
+.success-screen.show{display:block}
+.success-icon-wrap{width:72px;height:72px;background:linear-gradient(135deg,#eaf3de,#c8e6a8);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:32px}
+.success-screen h2{font-family:'Playfair Display',serif;font-size:28px;color:#1a3a1f;font-weight:400;margin-bottom:12px}
+.success-screen p{color:#666;font-size:15px;max-width:380px;margin:0 auto 24px;line-height:1.6}
+.success-whatsapp{display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;border-radius:8px;padding:12px 24px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;text-decoration:none;margin-top:8px;transition:all 0.2s}
+.success-whatsapp:hover{background:#1da951;transform:translateY(-1px)}
+
+@media(max-width:600px){
+  .field-row.cols2,.field-row.cols3{grid-template-columns:1fr}
+  .budget-grid,.priority-grid{grid-template-columns:1fr}
+  .hero{padding:2rem 1.25rem 2rem}
+  .vt-section,.wizard-footer{padding-left:1.25rem;padding-right:1.25rem}
+  .wizard-step span.label{display:none}
+  .timer-badge{display:none}
+}
+
+.terra-nav__dropdown {
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 760px;
+}
+.terra-nav__drop-col {
+  display: flex;
+  flex-direction: column;
+}
+.terra-nav__drop-section {
+  margin-top: 14px;
+}
+.terra-nav__drop-section:first-child {
+  margin-top: 0;
+}
+.terra-nav__drop-header {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #1B5E20;
+  padding: 6px 12px 6px;
+  border-bottom: 1px solid #e8f0e8;
+  margin-bottom: 4px;
+}
+@media (max-width: 900px) {
+  .terra-nav__dropdown { width: 100%; grid-template-columns: 1fr; }
+}
+
+/* === vt-hero LIGHT (consistencia con homepage) === */
+.vt-hero{position:relative;isolation:isolate;overflow:hidden;background:#FAFAF7;font-family:'Inter',system-ui,sans-serif;color:#1F3D2B}
+.vt-hero__bg{position:absolute;inset:0;z-index:0}
+.vt-hero__bg-img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
+.vt-hero__bg-overlay{position:absolute;inset:0;background:linear-gradient(92deg,rgba(255,255,253,0.96) 0%,rgba(255,255,253,0.84) 28%,rgba(255,255,253,0.50) 50%,rgba(255,255,253,0.28) 72%,rgba(255,255,253,0.18) 100%),linear-gradient(180deg,rgba(255,255,253,0.18) 0%,rgba(255,255,253,0) 30%,rgba(255,255,253,0) 70%,rgba(255,255,253,0.42) 100%)}
+.vt-hero__container{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:80px 40px 88px;display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center;min-height:680px}
+@media(max-width:980px){.vt-hero__container{grid-template-columns:1fr;padding:60px 24px;gap:40px;min-height:auto}}
+.vt-hero__left{display:flex;flex-direction:column;gap:24px;max-width:600px}
+.vt-hero__badges{display:flex;flex-wrap:wrap;gap:10px}
+.vt-hero__badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid #E2E8E3;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:500;color:#2F3F35;box-shadow:0 1px 2px rgba(15,31,20,.04),0 4px 16px rgba(15,31,20,.04);white-space:nowrap;letter-spacing:-.01em}
+.vt-hero__badge svg{width:14px;height:14px;color:#2E7D32;flex-shrink:0}
+.vt-hero__badge--accent{border-color:rgba(85,185,106,.35);background:rgba(240,250,242,.92)}
+.vt-hero__title{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(40px,5.8vw,72px);line-height:.98;letter-spacing:-.018em;color:#1F3D2B;margin:0}
+.vt-hero__title-accent{display:inline-block;font-style:italic;font-weight:700;color:#55B96A;margin-top:4px}
+.vt-hero__subtitle{font-size:clamp(16px,1.3vw,20px);line-height:1.55;color:#2F3F35;margin:0;max-width:540px}
+.vt-hero__ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:4px}
+.vt-hero__cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 30px;border-radius:999px;font-size:16px;font-weight:600;text-decoration:none;transition:transform .22s ease,box-shadow .22s ease,background .22s ease;white-space:nowrap}
+.vt-hero__cta svg{width:18px;height:18px}
+.vt-hero__cta--primary{background:#45C463;color:#fff;box-shadow:0 8px 22px rgba(69,196,99,.32)}
+.vt-hero__cta--primary:hover{background:#3FB85B;transform:translateY(-2px);box-shadow:0 12px 32px rgba(69,196,99,.42)}
+.vt-hero__cta--secondary{background:rgba(255,255,255,.96);color:#1F3D2B;border:1px solid #E2E8E3;box-shadow:0 4px 16px rgba(15,31,20,.06)}
+.vt-hero__cta--secondary:hover{background:#fff;border-color:#C9D5CC;transform:translateY(-2px);box-shadow:0 10px 28px rgba(15,31,20,.10)}
+.vt-hero__caption{font-size:13px;color:#5A6B5E;margin:2px 0 0}
+.vt-hero__metrics{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.vt-hero__metric{background:rgba(255,255,255,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.65);border-radius:24px;padding:26px 28px 24px;box-shadow:0 1px 2px rgba(15,31,20,.04),0 8px 28px rgba(15,31,20,.08);transition:transform .25s ease,box-shadow .25s ease}
+.vt-hero__metric:hover{transform:translateY(-4px);box-shadow:0 1px 2px rgba(15,31,20,.04),0 14px 36px rgba(15,31,20,.12)}
+.vt-hero__metric-icon{width:32px;height:32px;color:#55B96A;margin-bottom:16px;stroke-width:1.6}
+.vt-hero__metric-num{font-family:'Playfair Display',Georgia,serif;font-size:clamp(32px,3.2vw,44px);font-weight:700;color:#1F3D2B;line-height:1;letter-spacing:-.02em;margin-bottom:6px}
+.vt-hero__metric-label{font-size:13px;color:#5A6B5E;line-height:1.4}
+</style>
+<style>
+
+/* ── NAVBAR BLANCO ──────────────────────────────────────────── */
+.terra-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #ffffff;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.terra-nav__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+.terra-nav__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-right: 32px;
+}
+.terra-nav__logo img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+.terra-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+.terra-nav__links li { position: relative; }
+.terra-nav__links a,
+.terra-nav__links button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  color: #2d2d2d;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.terra-nav__links a:hover,
+.terra-nav__links button:hover {
+  background: #f3f4f3;
+  color: #1a5c1a;
+}
+.terra-nav__links a.is-active {
+  color: #1a5c1a;
+  font-weight: 500;
+  background: #edf7ed;
+}
+.terra-nav__chevron {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.terra-nav__drop { position: relative; }
+.terra-nav__drop-trigger[aria-expanded="true"] .terra-nav__chevron {
+  transform: rotate(180deg);
+}
+.terra-nav__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 720px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 12px;
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+.terra-nav__dropdown.is-open { display: grid; }
+.terra-nav__drop-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.terra-nav__drop-item:hover { background: #f3f8f3; }
+.terra-nav__drop-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background: #edf7ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+}
+.terra-nav__drop-text strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+.terra-nav__drop-text span {
+  font-size: 12px;
+  color: #777;
+  line-height: 1.4;
+}
+.terra-nav__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.terra-nav__tel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #444;
+  font-size: 13px;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.terra-nav__tel:hover { background: #f3f4f3; color: #1a5c1a; }
+.terra-nav__tel svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+.terra-nav__cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: #25d366;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, transform 0.1s;
+}
+.terra-nav__cta:hover { background: #1db954; transform: translateY(-1px); }
+.terra-nav__cta:active { transform: translateY(0); }
+.terra-nav__cta svg { width: 16px; height: 16px; fill: #fff; flex-shrink: 0; }
+.terra-nav__drop-col {
+  display: flex;
+  flex-direction: column;
+}
+.terra-nav__drop-section {
+  margin-top: 14px;
+}
+.terra-nav__drop-section:first-child {
+  margin-top: 0;
+}
+.terra-nav__drop-header {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #1B5E20;
+  padding: 6px 12px 6px;
+  border-bottom: 1px solid #e8f0e8;
+  margin-bottom: 4px;
+}
+@media (max-width: 900px) {
+  .terra-nav__dropdown { width: 100%; grid-template-columns: 1fr; }
+}
+.terra-nav__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-left: auto;
+}
+.terra-nav__hamburger:hover { background: #f3f4f3; }
+.terra-nav__hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #333;
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.terra-nav__hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.terra-nav__hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.terra-nav__hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.terra-nav__drawer {
+  display: none;
+  flex-direction: column;
+  background: #fff;
+  padding: 8px 16px 20px;
+  border-top: 1px solid #eee;
+}
+.terra-nav__drawer.is-open { display: flex; }
+.terra-nav__drawer a,
+.terra-nav__drawer button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 8px;
+  color: #2d2d2d;
+  font-size: 15px;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  width: 100%;
+  text-align: left;
+}
+.terra-nav__drawer a.is-active { color: #1a5c1a; font-weight: 500; }
+.terra-nav__drawer-sub {
+  display: none;
+  flex-direction: column;
+  padding-left: 20px;
+}
+.terra-nav__drawer-sub.is-open { display: flex; }
+.terra-nav__drawer-sub a { font-size: 14px; padding: 9px 8px; color: #555; }
+.terra-nav__drawer-cta {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  background: #25d366;
+  color: #fff !important;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+}
+@media (max-width: 900px) {
+  .terra-nav__links, .terra-nav__tel, .terra-nav__cta { display: none; }
+  .terra-nav__hamburger { display: flex; }
+  .terra-nav__logo { margin-right: 0; }
+}
+</style>
+
+</head>
+<body>
+<nav class="terra-nav" data-page="/cuestionario">
+  <div class="terra-nav__inner">
+    <a href="/" class="terra-nav__logo" aria-label="Viveros Terra — Inicio">
+      <img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" />
+    </a>
+    <div class="terra-nav__links">
+      <div class="terra-nav__drop">
+        <button class="terra-nav__drop-trigger" aria-expanded="false" aria-haspopup="true">
+          Servicios
+          <svg class="terra-nav__chevron" viewBox="0 0 10 6" fill="none">
+            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="terra-nav__dropdown" id="dropdown-servicios" role="menu">
+          <div class="terra-nav__drop-col">
+            <div class="terra-nav__drop-section">
+              <div class="terra-nav__drop-header">Servicios de Jardinería</div>
+              <a class="terra-nav__drop-item" href="/pasto-en-rollo-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-leaf"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Pasto en Rollo San Agustín</strong><span>Instalación desde $85/m² · Mayoreo</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/pasto-sintetico-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-recycle"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Pasto Sintético</strong><span>Verde todo el año, sin mantenimiento</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/diseno-jardines-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-house"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Diseño de Jardines</strong><span>Plan Terra desde $3,000</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/mantenimiento-jardines-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-scissors"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Mantenimiento</strong><span>Desde $750/mes · Residencial e industrial</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/sistema-riego-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-drop"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Sistema de Riego</strong><span>Automatizado · Ahorra 40% agua</span></span>
+              </a>
+            </div>
+            <div class="terra-nav__drop-section">
+              <div class="terra-nav__drop-header">Plantas y Palmas</div>
+              <a class="terra-nav__drop-item" href="/plantas-palmas-arboles-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-palm"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Catálogo de Plantas</strong><span>+118 especies del vivero</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/palmas-tropicales-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-palm"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Palmas Tropicales</strong><span>Viajero, Areca, Real, Coco y más</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/arboles-para-banqueta-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-tree"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Árboles para Banqueta</strong><span>7 especies que no levantan pavimento</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/plantas-de-interior-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-window"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Plantas de Interior</strong><span>Pothos, Sansevieria, Aglaonema</span></span>
+              </a>
+            </div>
+          </div>
+          <div class="terra-nav__drop-col">
+            <div class="terra-nav__drop-section">
+              <div class="terra-nav__drop-header">Materiales</div>
+              <a class="terra-nav__drop-item" href="/tierra-negra-vegetal-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-sprout"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Tierra Negra y Sustratos</strong><span>Costal $90 · Camión volteo</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/tezontle-rojo-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-leaf"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Tezontle Rojo</strong><span>Costal $200 · Por m³</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/marmol-blanco-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-leaf"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Mármol Blanco</strong><span>Decorativo · Senderos · Bordes</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/piedra-bola-rio-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-stone"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Piedra de Río / Bola</strong><span>Senderos · Estanques · Drenaje</span></span>
+              </a>
+            </div>
+            <div class="terra-nav__drop-section">
+              <div class="terra-nav__drop-header">Por Zona · B2B</div>
+              <a class="terra-nav__drop-item" href="/vivero-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-pin"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Vivero en Tampico</strong><span>+150 variedades en Cd. Madero</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/jardineria-ciudad-madero" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-pin"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Jardinería Ciudad Madero</strong><span>Local · Sin recargo por zona</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/jardineria-altamira" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-pin"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Jardinería Altamira</strong><span>Industrial y residencial</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/mayoreo-pasto-tampico" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-building"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Mayoreo Constructoras</strong><span>Precio por volumen · CFDI</span></span>
+              </a>
+              <a class="terra-nav__drop-item" href="/palmas-mayoreo-proyectos" role="menuitem">
+                <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-palm"/></svg></span>
+                <span class="terra-nav__drop-text"><strong>Palmas Mayoreo Proyectos</strong><span>Hoteles · Gobierno · Industria</span></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="/catalogo" class="terra-nav__link">Catálogo</a>
+      <a href="/blog" class="terra-nav__link">Blog</a>
+    </div>
+    <div class="terra-nav__right">
+      <a href="tel:8333268008" class="terra-nav__tel" aria-label="Llamar a Viveros Terra">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.169c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58L3.654 1.328z"/></svg>
+        833 326 8008
+      </a>
+      <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20una%20cotización%20de%20Viveros%20Terra" class="terra-nav__cta" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Cotizar por WhatsApp
+      </a>
+    </div>
+    <button class="terra-nav__hamburger" aria-expanded="false" aria-controls="terra-nav-drawer" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="terra-nav__drawer" id="terra-nav-drawer">
+    <button class="terra-nav__drawer-sub-toggle" aria-expanded="false" data-target="drawer-sub-servicios">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-sprout"/></svg> Servicios de Jardinería
+      <svg class="terra-nav__chevron" style="margin-left:auto;width:12px;height:12px;" viewBox="0 0 10 6" fill="none">
+        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="terra-nav__drawer-sub" id="drawer-sub-servicios">
+      <a href="/pasto-en-rollo-tampico">Pasto en Rollo San Agustín</a>
+      <a href="/pasto-sintetico-tampico">Pasto Sintético</a>
+      <a href="/diseno-jardines-tampico">Diseño de Jardines</a>
+      <a href="/mantenimiento-jardines-tampico">Mantenimiento</a>
+      <a href="/sistema-riego-tampico">Sistema de Riego</a>
+    </div>
+    <button class="terra-nav__drawer-sub-toggle" aria-expanded="false" data-target="drawer-sub-plantas">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-palm"/></svg> Plantas y Palmas
+      <svg class="terra-nav__chevron" style="margin-left:auto;width:12px;height:12px;" viewBox="0 0 10 6" fill="none">
+        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="terra-nav__drawer-sub" id="drawer-sub-plantas">
+      <a href="/plantas-palmas-arboles-tampico">Catálogo de Plantas</a>
+      <a href="/palmas-tropicales-tampico">Palmas Tropicales</a>
+      <a href="/arboles-para-banqueta-tampico">Árboles para Banqueta</a>
+      <a href="/plantas-de-interior-tampico">Plantas de Interior</a>
+    </div>
+    <button class="terra-nav__drawer-sub-toggle" aria-expanded="false" data-target="drawer-sub-materiales">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-stone"/></svg> Materiales
+      <svg class="terra-nav__chevron" style="margin-left:auto;width:12px;height:12px;" viewBox="0 0 10 6" fill="none">
+        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="terra-nav__drawer-sub" id="drawer-sub-materiales">
+      <a href="/tierra-negra-vegetal-tampico">Tierra Negra y Sustratos</a>
+      <a href="/tezontle-rojo-tampico">Tezontle Rojo</a>
+      <a href="/marmol-blanco-tampico">Mármol Blanco</a>
+      <a href="/piedra-bola-rio-tampico">Piedra de Río / Bola</a>
+    </div>
+    <button class="terra-nav__drawer-sub-toggle" aria-expanded="false" data-target="drawer-sub-zonas">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-pin"/></svg> Por Zona y Mayoreo
+      <svg class="terra-nav__chevron" style="margin-left:auto;width:12px;height:12px;" viewBox="0 0 10 6" fill="none">
+        <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="terra-nav__drawer-sub" id="drawer-sub-zonas">
+      <a href="/vivero-tampico">Vivero en Tampico</a>
+      <a href="/jardineria-ciudad-madero">Jardinería Ciudad Madero</a>
+      <a href="/jardineria-altamira">Jardinería Altamira</a>
+      <a href="/mayoreo-pasto-tampico">Mayoreo Constructoras</a>
+    </div>
+    <a href="/catalogo"><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-clipboard"/></svg> Catálogo</a>
+    <a href="/blog"><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-pencil"/></svg> Blog</a>
+    <a href="tel:8333268008"><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-phone"/></svg> 833 326 8008</a>
+    <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20una%20cotización%20de%20Viveros%20Terra" class="terra-nav__drawer-cta" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-chat"/></svg> Cotizar por WhatsApp
+    </a>
+  </div>
+</nav>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="ic-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-5 7-11 7-11s7 6 7 11a7 7 0 0 1-7 7z"/><path d="M11 20v-9"/></symbol>
+    <symbol id="ic-palm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V10"/><path d="M12 10c0 0-4-5-2-8 2-3 6 0 2 8"/><path d="M12 10c0 0 4-5 2-8-2-3-6 0-2 8"/><path d="M8 21h8"/></symbol>
+    <symbol id="ic-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 7 4 10.5 4 14a8 8 0 0 0 16 0c0-3.5-2.48-7-8-12z"/></symbol>
+    <symbol id="ic-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 11a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.98 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></symbol>
+    <symbol id="ic-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></symbol>
+    <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></symbol>
+    <symbol id="ic-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></symbol>
+    <symbol id="ic-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="ic-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+    <symbol id="ic-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+    <symbol id="ic-wrench" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+    <symbol id="ic-house" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></symbol>
+    <symbol id="ic-scissors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"/></symbol>
+    <symbol id="ic-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
+    <symbol id="ic-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="8" height="18"/><rect x="14" y="8" width="8" height="13"/><path d="M6 7h.01M6 11h.01M6 15h.01M18 11h.01M18 15h.01"/></symbol>
+    <symbol id="ic-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></symbol>
+    <symbol id="ic-stone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l4-10h8l4 10H4z"/><path d="M8 8l2-4h4l2 4"/></symbol>
+    <symbol id="ic-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+    <symbol id="ic-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="ic-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.1L7 22l5-3 5 3-1.56-7.9"/></symbol>
+    <symbol id="ic-whatsapp" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
+    <symbol id="ic-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></symbol>
+    <symbol id="ic-facebook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+    <symbol id="ic-youtube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 1.97C5.12 20 12 20 12 20s6.88 0 8.6-.45a2.78 2.78 0 0 0 1.94-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="ic-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></symbol>
+    <symbol id="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="ic-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></symbol>
+    <symbol id="ic-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9l-7 7-7-7"/></symbol>
+    <symbol id="ic-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3H3v18h18V3z"/><path d="M7 3v4M11 3v2M15 3v4M19 3v2M3 7h4M3 11h2M3 15h4M3 19h2"/></symbol>
+    <symbol id="ic-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></symbol>
+    <symbol id="ic-notepad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></symbol>
+    <symbol id="ic-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></symbol>
+    <symbol id="ic-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="ic-window" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="21"/></symbol>
+    <symbol id="ic-recycle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="M14 16l-3 3 3 3"/><path d="M8.293 13.596L4.756 7.435a1.785 1.785 0 0 1 .039-1.789 1.83 1.83 0 0 1 1.546-.846H10.5"/><path d="M9.169 5.276l4.41-2.27"/></symbol>
+    <symbol id="ic-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3z"/></symbol>
+    <symbol id="ic-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6c-.3 2.2-1.3 3.9-2.6 5-1.4-3-1.4-5 2.6-5z"/></symbol>
+    <symbol id="ic-flower" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 5V3M19 12h2M12 19v2M5 12H3M16.95 7.05l1.41-1.41M16.95 16.95l1.41 1.41M7.05 16.95l-1.41 1.41M7.05 7.05L5.64 5.64"/></symbol>
+    <symbol id="ic-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L5 12h4l-4 6h5v4h4v-4h5l-4-6h4z"/></symbol>
+    <symbol id="ic-square-foot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v18a2 2 0 0 0 2 2h12"/><path d="M14 18h.01M18 16h.01M14 14h.01M10 22V6a4 4 0 0 1 4-4h4"/></symbol>
+  </svg>
+
+
+<!-- HERO -->
+<!-- HERO vt-hero LIGHT — consistente con homepage -->
+<section class="vt-hero" aria-label="Cuestionario de Proyecto de Jardín">
+  <div class="vt-hero__bg" aria-hidden="true">
+    <img src="/img/diseno-jardin-instalacion-plantas-tampico.jpg" alt="" class="vt-hero__bg-img" loading="eager" fetchpriority="high" decoding="async" width="1920" height="1080">
+    <div class="vt-hero__bg-overlay"></div>
+  </div>
+  <div class="vt-hero__container">
+    <div class="vt-hero__left">
+      <div class="vt-hero__badges" role="list">
+        <span class="vt-hero__badge" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Visita técnica incluida</span>
+        <span class="vt-hero__badge" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.1L7 22l5-3 5 3-1.56-7.9"/></svg>Diseño personalizado</span>
+        <span class="vt-hero__badge" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>4-5 minutos</span>
+        <span class="vt-hero__badge vt-hero__badge--accent" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-5 7-11 7-11s7 6 7 11a7 7 0 0 1-7 7z"/><path d="M11 20v-9"/></svg>Respuesta en 24h</span>
+      </div>
+      <h1 class="vt-hero__title">
+        Tu jardín empieza aquí.<br>
+        <span class="vt-hero__title-accent">Cuéntanos tu visión.</span>
+      </h1>
+      <p class="vt-hero__subtitle">Tómate 4 minutos para contarnos qué necesitas. Nuestro diseñador creará una propuesta hecha exactamente para ti y te contactará en menos de 24 horas.</p>
+      <div class="vt-hero__ctas">
+        <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20empezar%20un%20proyecto%20de%20jardín%20en%20Tampico" target="_blank" rel="noopener" class="vt-hero__cta vt-hero__cta--primary">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>Hablar con diseñador
+        </a>
+        <a href="tel:8333268008" class="vt-hero__cta vt-hero__cta--secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 11a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.98 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>833 326 8008
+        </a>
+      </div>
+      <p class="vt-hero__caption">Sin compromiso · Te contactamos en 24h · Lun–Sáb 9am–6pm</p>
+    </div>
+    <div class="vt-hero__metrics">
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.1L7 22l5-3 5 3-1.56-7.9"/></svg>
+        <div class="vt-hero__metric-num">+1,500</div>
+        <div class="vt-hero__metric-label">Instalaciones realizadas</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        <div class="vt-hero__metric-num">+900</div>
+        <div class="vt-hero__metric-label">Clientes satisfechos</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-5 7-11 7-11s7 6 7 11a7 7 0 0 1-7 7z"/></svg>
+        <div class="vt-hero__metric-num">500K+ m²</div>
+        <div class="vt-hero__metric-label">Pasto instalado</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <div class="vt-hero__metric-num">20 años</div>
+        <div class="vt-hero__metric-label">De experiencia</div>
+      </div>
+    </div>
+  </div>
+</section>
+  <div class="hero-badge"><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg> Plan de Diseño Activo</div>
+  <h1>Tu jardín empieza aquí</h1>
+  <p class="hero-sub">Tómate 4 minutos para contarnos tu visión. Nuestro diseñador creará algo hecho exactamente para ti.</p>
+  <div class="hero-promise">
+    <span>Visita técnica incluida</span>
+    <span>Diseño personalizado</span>
+    <span>Te contactamos en 24 hrs</span>
+  </div>
+</div>
+
+<!-- WIZARD NAV -->
+<div class="wizard-nav">
+  <div class="wizard-step active" data-step="1">
+    <div class="wizard-step-inner">
+      <div class="step-num">1</div>
+      <span class="label">Tus datos</span>
+    </div>
+  </div>
+  <div class="wizard-step" data-step="2">
+    <div class="wizard-step-inner">
+      <div class="step-num">2</div>
+      <span class="label">Tu espacio</span>
+    </div>
+  </div>
+  <div class="wizard-step" data-step="3">
+    <div class="wizard-step-inner">
+      <div class="step-num">3</div>
+      <span class="label">Estilo</span>
+    </div>
+  </div>
+  <div class="wizard-step" data-step="4">
+    <div class="wizard-step-inner">
+      <div class="step-num">4</div>
+      <span class="label">Inversión</span>
+    </div>
+  </div>
+  <div class="wizard-step" data-step="5">
+    <div class="wizard-step-inner">
+      <div class="step-num">5</div>
+      <span class="label">Final</span>
+    </div>
+  </div>
+</div>
+<div class="progress-wrap"><div class="progress-bar" id="prog"></div></div>
+
+<div class="page-wrap">
+  <div class="vt-body">
+    <form id="mainForm" action="https://formspree.io/f/xlgaqlzn" method="POST">
+      <input type="hidden" name="_subject" value="Nuevo cuestionario de jardín — Viveros Terra">
+
+      <!-- PAGE 1 -->
+      <div class="form-page active" id="page-1">
+        <div class="vt-section">
+          <div class="section-label"><div class="section-num">1</div><span class="section-title">Cuéntanos de ti</span></div>
+          <p class="section-hint">Para coordinar tu visita técnica y enviarte la propuesta de diseño.</p>
+          <div class="field-row cols2">
+            <div class="field">
+              <label class="fl">Nombre completo <span class="req">*</span></label>
+              <input type="text" name="nombre" id="nombre" placeholder="Ej. María González" required autocomplete="name"/>
+            </div>
+            <div class="field">
+              <label class="fl">WhatsApp <span class="req">*</span></label>
+              <input type="tel" name="whatsapp" id="whatsapp" placeholder="+52 833 000 0000" required autocomplete="tel"/>
+            </div>
+          </div>
+          <div class="field-row cols2">
+            <div class="field">
+              <label class="fl">Correo electrónico</label>
+              <input type="email" name="email" placeholder="correo@ejemplo.com" autocomplete="email"/>
+            </div>
+            <div class="field">
+              <label class="fl">¿Cómo nos conoció?</label>
+              <select name="como_nos_conocio">
+                <option value="">Seleccionar...</option>
+                <option>Página web</option>
+                <option>Instagram / Facebook</option>
+                <option>Referido de un cliente</option>
+                <option>Google</option>
+                <option>Otro</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label class="fl">Colonia / Fraccionamiento</label>
+              <input type="text" name="direccion" placeholder="Ej. Fracc. Las Palmas, Altamira"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 2 -->
+      <div class="form-page" id="page-2">
+        <div class="vt-section">
+          <div class="section-label"><div class="section-num">2</div><span class="section-title">Tu espacio</span></div>
+          <p class="section-hint">No te preocupes si no tienes las medidas exactas — las tomamos en la visita.</p>
+          <div class="field-row">
+            <div class="field">
+              <label class="fl">Tipo de espacio</label>
+              <div class="radio-group">
+                <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Jardín frontal"> Jardín frontal</label>
+                <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Jardín trasero"> Jardín trasero</label>
+                <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Ambos"> Ambos</label>
+                <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Interior / patio"> Interior / patio</label>
+                <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Banqueta"> Banqueta</label>
+                <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Plaza comercial"> Plaza comercial</label>
+                <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Restaurante"> Restaurante</label>
+                <label class="radio-pill"><input type="radio" name="tipo_espacio" value="Otro" id="rb-otro-esp"> Otro</label>
+              </div>
+              <div class="otro-field" id="otro-esp-wrap">
+                <input type="text" name="tipo_espacio_otro" placeholder="Especificar tipo de espacio..."/>
+              </div>
+            </div>
+          </div>
+          <div class="field-row cols3">
+            <div class="field">
+              <label class="fl">Área de pasto (m²)</label>
+              <input type="number" name="area_pasto" id="area_pasto" placeholder="Ej. 60" min="0"/>
+              <span class="field-hint">Aproximado está bien</span>
+            </div>
+            <div class="field">
+              <label class="fl">Área jardinera (m²)</label>
+              <input type="number" name="area_jardinera" id="area_jard" placeholder="Ej. 20" min="0"/>
+            </div>
+            <div class="field">
+              <label class="fl">Área total (m²)</label>
+              <input type="number" name="area_total" id="area_total_input" placeholder="Ej. 80" min="0"/>
+            </div>
+          </div>
+          <div class="area-total" id="area-display" style="display:none">
+            <span>Área total calculada</span>
+            <strong id="area-total-val">0 m²</strong>
+          </div>
+          <div class="field-row cols2" style="margin-top:16px">
+            <div class="field">
+              <label class="fl">¿Tiene riego instalado?</label>
+              <div class="radio-group">
+                <label class="radio-pill"><input type="radio" name="riego_instalado" value="Sí"> Sí</label>
+                <label class="radio-pill"><input type="radio" name="riego_instalado" value="No" class="riego-trigger"> No</label>
+                <label class="radio-pill"><input type="radio" name="riego_instalado" value="Parcial" class="riego-trigger"> Parcial</label>
+              </div>
+              <div class="cond-block" id="cond-riego">
+                <label class="fl" style="margin-bottom:8px">¿Considera instalar riego?</label>
+                <div class="radio-group">
+                  <label class="radio-pill"><input type="radio" name="instalar_riego" value="Sí, de inmediato"> Sí, de inmediato</label>
+                  <label class="radio-pill"><input type="radio" name="instalar_riego" value="En un futuro"> En un futuro</label>
+                  <label class="radio-pill"><input type="radio" name="instalar_riego" value="No"> No</label>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label class="fl">¿Presurizador hidroneumático?</label>
+              <div class="radio-group">
+                <label class="radio-pill"><input type="radio" name="hidroneumatico" value="Sí"> Sí</label>
+                <label class="radio-pill"><input type="radio" name="hidroneumatico" value="No"> No</label>
+                <label class="radio-pill"><input type="radio" name="hidroneumatico" value="No sé"> No sé</label>
+              </div>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label class="fl">Elementos existentes a considerar</label>
+              <textarea name="elementos_existentes" placeholder="Bardas, árboles, construcciones, pendientes del terreno..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 3 -->
+      <div class="form-page" id="page-3">
+        <div class="vt-section">
+          <div class="section-label"><div class="section-num">3</div><span class="section-title">Tu estilo y gustos</span></div>
+          <p class="section-hint">Entre más nos cuentes, más personalizado será tu diseño.</p>
+          <div class="field-row">
+            <div class="field">
+              <label class="fl">¿Cómo usará principalmente el jardín?</label>
+              <div class="check-group">
+                <label class="check-pill"><input type="checkbox" name="uso" value="Convivencia familiar"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-users"/></svg>‍<svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-users"/></svg>‍<svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-users"/></svg> Convivencia</label>
+                <label class="check-pill"><input type="checkbox" name="uso" value="Descanso"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-clipboard"/></svg> Descanso</label>
+                <label class="check-pill"><input type="checkbox" name="uso" value="Juego de niños"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-users"/></svg> Niños</label>
+                <label class="check-pill"><input type="checkbox" name="uso" value="Mascotas"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg> Mascotas</label>
+                <label class="check-pill"><input type="checkbox" name="uso" value="Asados / reuniones"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-bolt"/></svg> Asados</label>
+                <label class="check-pill"><input type="checkbox" name="uso" value="Imagen / fachada"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-sparkle"/></svg> Imagen</label>
+                <label class="check-pill"><input type="checkbox" name="uso" value="Solo estético"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-flower"/></svg> Estético</label>
+              </div>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label class="fl">Estilo que le atrae</label>
+              <div class="check-group">
+                <label class="check-pill"><input type="checkbox" name="estilo" value="Tropical"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-palm"/></svg> Tropical</label>
+                <label class="check-pill"><input type="checkbox" name="estilo" value="Minimalista">  Minimalista</label>
+                <label class="check-pill"><input type="checkbox" name="estilo" value="Mediterráneo"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg> Mediterráneo</label>
+                <label class="check-pill"><input type="checkbox" name="estilo" value="Japonés / zen"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-building"/></svg> Zen</label>
+                <label class="check-pill"><input type="checkbox" name="estilo" value="Colorido"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-flower"/></svg> Colorido</label>
+                <label class="check-pill"><input type="checkbox" name="estilo" value="Natural"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg> Natural</label>
+                <label class="check-pill"><input type="checkbox" name="estilo" value="Sin preferencia"> Sin preferencia</label>
+              </div>
+            </div>
+          </div>
+          <div class="field-row cols2">
+            <div class="field">
+              <label class="fl">¿Prefiere árboles o palmas?</label>
+              <div class="radio-group">
+                <label class="radio-pill"><input type="radio" name="arboles_palmas" value="Árboles"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-tree"/></svg> Árboles</label>
+                <label class="radio-pill"><input type="radio" name="arboles_palmas" value="Palmas"> <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-palm"/></svg> Palmas</label>
+                <label class="radio-pill"><input type="radio" name="arboles_palmas" value="Ambos"> Ambos</label>
+                <label class="radio-pill"><input type="radio" name="arboles_palmas" value="Ninguno"> Ninguno</label>
+              </div>
+            </div>
+            <div class="field">
+              <label class="fl">Nivel de mantenimiento</label>
+              <div class="radio-group">
+                <label class="radio-pill"><input type="radio" name="mantenimiento" value="Bajo mantenimiento"> Fácil</label>
+                <label class="radio-pill"><input type="radio" name="mantenimiento" value="Moderado"> Moderado</label>
+                <label class="radio-pill"><input type="radio" name="mantenimiento" value="Me da igual"> Me da igual</label>
+              </div>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label class="fl">Plantas que le gustan o quiere incluir</label>
+              <textarea name="plantas_preferencia" placeholder="Ej. buganvilias, helechos, palmeras, cactus — cualquier planta que tenga en mente..."></textarea>
+            </div>
+          </div>
+          <div class="field-row cols2">
+            <div class="field">
+              <label class="fl">Elementos o plantas a conservar</label>
+              <textarea name="conservar" placeholder="Árboles existentes, macetas, fuentes, pérgolas..."></textarea>
+            </div>
+            <div class="field">
+              <label class="fl">Fotos de referencia</label>
+              <textarea name="referencias" placeholder="Link de Pinterest / Instagram o descripción de lo que le gustó..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 4 -->
+      <div class="form-page" id="page-4">
+        <div class="vt-section">
+          <div class="section-label"><div class="section-num">4</div><span class="section-title">Inversión estimada</span></div>
+          <p class="section-hint">Esta info es solo para proponer opciones reales — no te compromete a nada.</p>
+          <div class="budget-grid">
+            <label class="budget-card">
+              <input type="radio" name="presupuesto_ejecucion" value="$5,000–$15,000 MXN">
+              <div class="amount">$5,000 – $15,000 MXN</div>
+              <div class="desc">Proyecto básico con plantas y detalles</div>
+            </label>
+            <label class="budget-card">
+              <input type="radio" name="presupuesto_ejecucion" value="$15,000–$40,000 MXN">
+              <div class="amount">$15,000 – $40,000 MXN</div>
+              <div class="desc">Proyecto medio con plantas y piso</div>
+            </label>
+            <label class="budget-card">
+              <input type="radio" name="presupuesto_ejecucion" value="$40,000–$80,000 MXN">
+              <div class="amount">$40,000 – $80,000 MXN</div>
+              <div class="desc">Proyecto completo con instalaciones</div>
+            </label>
+            <label class="budget-card">
+              <input type="radio" name="presupuesto_ejecucion" value="$80,000 MXN+">
+              <div class="amount">$80,000 MXN en adelante</div>
+              <div class="desc">Proyecto ejecutivo / premium</div>
+            </label>
+          </div>
+          <div class="field-row" style="margin-top:20px">
+            <div class="field">
+              <label class="fl">¿Cuándo le gustaría iniciar la ejecución?</label>
+              <div class="radio-group">
+                <label class="radio-pill"><input type="radio" name="fecha_inicio" value="Lo antes posible"> Lo antes posible</label>
+                <label class="radio-pill"><input type="radio" name="fecha_inicio" value="1–3 meses"> 1–3 meses</label>
+                <label class="radio-pill"><input type="radio" name="fecha_inicio" value="3–6 meses"> 3–6 meses</label>
+                <label class="radio-pill"><input type="radio" name="fecha_inicio" value="Más de 6 meses"> Más de 6 meses</label>
+                <label class="radio-pill"><input type="radio" name="fecha_inicio" value="Solo el diseño por ahora"> Solo el diseño</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 5 -->
+      <div class="form-page" id="page-5">
+        <div class="vt-section">
+          <div class="section-label"><div class="section-num">5</div><span class="section-title">¡Ya casi! Una última pregunta</span></div>
+          <p class="section-hint">Esto nos ayuda a priorizar lo que más le importa en el diseño.</p>
+          <div class="field-row">
+            <div class="field">
+              <label class="fl">¿Cuál es su mayor prioridad?</label>
+              <div class="priority-grid">
+                <label class="priority-card"><input type="radio" name="prioridad" value="Que se vea increíble"><span class="priority-icon"><svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true" style="color:#1B5E20"><use href="#ic-sparkle"/></svg></span><span class="priority-text">Que se vea increíble</span></label>
+                <label class="priority-card"><input type="radio" name="prioridad" value="Que sea funcional"><span class="priority-icon"><svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true" style="color:#1B5E20"><use href="#ic-wrench"/></svg></span><span class="priority-text">Que sea funcional</span></label>
+                <label class="priority-card"><input type="radio" name="prioridad" value="Fácil de mantener"><span class="priority-icon"><svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true" style="color:#1B5E20"><use href="#ic-leaf"/></svg></span><span class="priority-text">Fácil de mantener</span></label>
+                <label class="priority-card"><input type="radio" name="prioridad" value="Valor a la propiedad"><span class="priority-icon"><svg viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true" style="color:#1B5E20"><use href="#ic-house"/></svg></span><span class="priority-text">Valor a la propiedad</span></label>
+              </div>
+            </div>
+          </div>
+          <div class="field-row" style="margin-top:8px">
+            <div class="field">
+              <label class="fl">¿Algo más que debamos saber?</label>
+              <textarea name="observaciones" style="min-height:100px" placeholder="Ideas especiales, limitaciones del terreno, preguntas... todo suma para el diseño."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBMIT BUTTON in page 5 wizard footer -->
+        <div class="wizard-footer">
+          <button type="button" class="btn-prev" onclick="goPage(-1)">← Anterior</button>
+          <button type="submit" class="btn-next" id="submit-btn">Enviar cuestionario <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg></button>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon-wrap"><svg viewBox="0 0 24 24" class="w-8 h-8" aria-hidden="true" style="color:#1B5E20"><use href="#ic-check"/></svg></div>
+      <h2>¡Gracias por tu información!</h2>
+      <p>Hemos recibido tu cuestionario. Un diseñador de Viveros Terra se pondrá en contacto contigo en menos de 24 horas para coordinar tu visita técnica.</p>
+      <a href="https://wa.me/528331234567?text=Hola%2C%20acabo%20de%20enviar%20mi%20cuestionario%20de%20diseño%20de%20jardín" class="success-whatsapp" target="_blank">
+        <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-chat"/></svg> También puedes escribirnos por WhatsApp
+      </a>
+    </div>
+
+  </div><!-- vt-body -->
+</div><!-- page-wrap -->
+
+<!-- WIZARD FOOTER (pages 1-4) -->
+<div class="wizard-footer" id="main-footer">
+  <div>
+    <button type="button" class="btn-prev" id="btn-prev" onclick="goPage(-1)" style="display:none">← Anterior</button>
+  </div>
+  <span class="step-counter" id="step-counter">Paso 1 de 5</span>
+  <button type="button" class="btn-next" id="btn-next" onclick="goPage(1)">Siguiente →</button>
+</div>
+
+<script>
+let currentPage = 1;
+const totalPages = 5;
+
+function goPage(dir) {
+  const next = currentPage + dir;
+  if (next < 1 || next > totalPages) return;
+  document.getElementById('page-' + currentPage).classList.remove('active');
+  currentPage = next;
+  document.getElementById('page-' + currentPage).classList.add('active');
+  updateNav();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function updateNav() {
+  // Wizard steps
+  document.querySelectorAll('.wizard-step').forEach((s, i) => {
+    s.classList.remove('active', 'done');
+    if (i + 1 === currentPage) s.classList.add('active');
+    if (i + 1 < currentPage) s.classList.add('done');
+  });
+  // Progress
+  document.getElementById('prog').style.width = ((currentPage / totalPages) * 100) + '%';
+  // Footer
+  const footer = document.getElementById('main-footer');
+  const prevBtn = document.getElementById('btn-prev');
+  const nextBtn = document.getElementById('btn-next');
+  const counter = document.getElementById('step-counter');
+  if (currentPage === totalPages) {
+    footer.style.display = 'none';
+  } else {
+    footer.style.display = 'flex';
+    prevBtn.style.display = currentPage > 1 ? 'flex' : 'none';
+    counter.textContent = 'Paso ' + currentPage + ' de ' + totalPages;
+  }
+}
+
+// Riego conditional
+document.querySelectorAll('.riego-trigger').forEach(r => {
+  r.addEventListener('change', () => document.getElementById('cond-riego').classList.add('visible'));
+});
+const rsi = document.querySelector('input[name="riego_instalado"][value="Sí"]');
+if (rsi) rsi.addEventListener('change', () => document.getElementById('cond-riego').classList.remove('visible'));
+
+// Otro espacio
+document.getElementById('rb-otro-esp').addEventListener('change', function() {
+  document.getElementById('otro-esp-wrap').classList.toggle('visible', this.checked);
+});
+
+// Area calc
+function calcTotal() {
+  const p = parseFloat(document.getElementById('area_pasto').value) || 0;
+  const j = parseFloat(document.getElementById('area_jard').value) || 0;
+  if (p > 0 || j > 0) {
+    const t = Math.round(p + j);
+    document.getElementById('area-display').style.display = 'flex';
+    document.getElementById('area-total-val').textContent = t + ' m²';
+    document.getElementById('area_total_input').value = t;
+  }
+}
+document.getElementById('area_pasto').addEventListener('input', calcTotal);
+document.getElementById('area_jard').addEventListener('input', calcTotal);
+
+// Input validation feedback
+['nombre', 'whatsapp'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('blur', function() {
+    if (this.value.trim().length > 2) this.classList.add('valid');
+    else this.classList.remove('valid');
+  });
+});
+
+// Submit
+document.getElementById('mainForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+  try {
+    const res = await fetch(this.action, { method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' } });
+    if (res.ok) {
+      document.getElementById('mainForm').style.display = 'none';
+      document.getElementById('main-footer').style.display = 'none';
+      document.getElementById('success-screen').classList.add('show');
+      document.getElementById('prog').style.width = '100%';
+    } else {
+      btn.textContent = 'Error — intenta de nuevo';
+      btn.disabled = false;
+    }
+  } catch {
+    btn.textContent = 'Error — intenta de nuevo';
+    btn.disabled = false;
+  }
+});
+
+updateNav();
+</script>
+<script>
+(function() {
+  var nav = document.querySelector('.terra-nav');
+  if (!nav) return;
+  var currentPage = nav.dataset.page || window.location.pathname;
+  nav.querySelectorAll('a[href]').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (href && href !== '/' && currentPage.startsWith(href)) link.classList.add('is-active');
+    if (href === '/' && currentPage === '/') link.classList.add('is-active');
+  });
+  var trigger = nav.querySelector('.terra-nav__drop-trigger');
+  var dropdown = document.getElementById('dropdown-servicios');
+  if (trigger && dropdown) {
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var open = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', String(!open));
+      dropdown.classList.toggle('is-open', !open);
+    });
+    document.addEventListener('click', function(e) {
+      if (!nav.contains(e.target)) {
+        trigger.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('is-open');
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        trigger.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove('is-open');
+      }
+    });
+  }
+  var hamburger = nav.querySelector('.terra-nav__hamburger');
+  var drawer = document.getElementById('terra-nav-drawer');
+  if (hamburger && drawer) {
+    hamburger.addEventListener('click', function() {
+      var open = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', String(!open));
+      drawer.classList.toggle('is-open', !open);
+    });
+  }
+  nav.querySelectorAll('.terra-nav__drawer-sub-toggle').forEach(function(subToggle) {
+    var targetId = subToggle.getAttribute('data-target');
+    var subMenu = document.getElementById(targetId);
+    if (!subMenu) return;
+    subToggle.addEventListener('click', function() {
+      var open = subToggle.getAttribute('aria-expanded') === 'true';
+      subToggle.setAttribute('aria-expanded', String(!open));
+      subMenu.classList.toggle('is-open', !open);
+      var ch = subToggle.querySelector('.terra-nav__chevron');
+      if (ch) ch.style.transform = open ? '' : 'rotate(180deg)';
+    });
+  });
+})();
+</script>
+<div class="text-center text-xs text-gray-500 py-4">
+  Última actualización: <time datetime="2026-05-14">14 de mayo, 2026</time> · Viveros Terra
+</div>
+</body>
+</html>

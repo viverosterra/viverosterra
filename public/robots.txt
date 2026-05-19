@@ -29,3 +29,20 @@ Allow: /
 # Bloquear solo rastreadores de entrenamiento masivo (Common Crawl)
 User-agent: CCBot
 Disallow: /
+
+# Google Shopping — Excluir páginas de SERVICIOS del feed de productos
+# Solo productos tangibles deben aparecer en Google Shopping
+# Referencia: política "Unsupported Shopping content (Services)" de Google Merchant
+User-agent: AdsBot-Google
+Disallow: /diseno-jardines-tampico
+Disallow: /mantenimiento-jardines-tampico
+Disallow: /sistema-riego-tampico
+Disallow: /cuestionario
+Disallow: /protocolo-cuidados-pasto-san-agustin
+
+User-agent: AdsBot-Google-Mobile
+Disallow: /diseno-jardines-tampico
+Disallow: /mantenimiento-jardines-tampico
+Disallow: /sistema-riego-tampico
+Disallow: /cuestionario
+Disallow: /protocolo-cuidados-pasto-san-agustin
