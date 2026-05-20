@@ -122,7 +122,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
 /* === vt-hero LIGHT (consistencia con homepage) === */
 .vt-hero{position:relative;isolation:isolate;overflow:hidden;background:#FAFAF7;font-family:'Inter',system-ui,sans-serif;color:#1F3D2B}
 .vt-hero__bg{position:absolute;inset:0;z-index:0}
-.vt-hero__bg-img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
+.vt-hero__bg-img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
 .vt-hero__bg-overlay{position:absolute;inset:0;background:linear-gradient(92deg,rgba(255,255,253,0.96) 0%,rgba(255,255,253,0.84) 28%,rgba(255,255,253,0.50) 50%,rgba(255,255,253,0.28) 72%,rgba(255,255,253,0.18) 100%),linear-gradient(180deg,rgba(255,255,253,0.18) 0%,rgba(255,255,253,0) 30%,rgba(255,255,253,0) 70%,rgba(255,255,253,0.42) 100%)}
 .vt-hero__container{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:80px 40px 88px;display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center;min-height:680px}
 @media(max-width:980px){.vt-hero__container{grid-template-columns:1fr;padding:60px 24px;gap:40px;min-height:auto}}
@@ -148,6 +148,17 @@ h1,h2,h3{font-family:'Playfair Display',serif}
 .vt-hero__metric-icon{width:32px;height:32px;color:#55B96A;margin-bottom:16px;stroke-width:1.6}
 .vt-hero__metric-num{font-family:'Playfair Display',Georgia,serif;font-size:clamp(32px,3.2vw,44px);font-weight:700;color:#1F3D2B;line-height:1;letter-spacing:-.02em;margin-bottom:6px}
 .vt-hero__metric-label{font-size:13px;color:#5A6B5E;line-height:1.4}
+
+/* Fix imágenes Drive en catálogo — forzar contención */
+.plant-img img, .img-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  max-width: 100% !important;
+}
+.img-card { overflow: hidden; position: relative; }
+
 </style>
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -882,7 +893,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=12Q_2nhBba8CGei_eHrUAUSZognx9OP6O"
                alt="Palma Washingtona para jardín en Tampico" loading="lazy"
-               onload="this.parentElement.classList.add('loaded')" onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-palm"/></svg></div>'" style="position:relative;z-index:2">
+               onload="this.parentElement.classList.add('loaded')" onerror="this.style.opacity='0'" style="position:relative;z-index:2">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -902,7 +913,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=157tCw_yF6zs2npPx4BmisT-vMu7-Hca0"
                alt="Palma del Viajero en jardín de Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -922,7 +933,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1f9yY6hRqr0lf47QeunWBgNR_RXqZHHZM"
                alt="Palma Areca interior y semisombra Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-sprout"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-sprout"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -942,7 +953,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1Pp66DaLg1hg0YvVA6ZUxpT8hkgmCcdKJ"
                alt="Cycas Revoluta bajo mantenimiento Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -961,7 +972,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1rD9tgujODXJ03znMkru4eB1wvMuardSJ"
                alt="Palma Kerpis jardín residencial Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-sprout"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-sprout"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -980,7 +991,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1VQ2urkzIqBFO4rZeKHQpe-c3X9TViVWJ"
                alt="Palma Coco Plumoso jardín amplio Tampico" loading="lazy"
-               onload="this.parentElement.classList.add('loaded')" onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-palm"/></svg></div>'" style="position:relative;z-index:2">
+               onload="this.parentElement.classList.add('loaded')" onerror="this.style.opacity='0'" style="position:relative;z-index:2">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -999,7 +1010,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1-FRocM765ANJ2RYgxf7KKoKpno23TwwO"
                alt="Palma Bambú interior Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-sprout"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-sprout"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -1018,7 +1029,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1kIwetkOcVkm7Wb7xvVaEeMcvAdl_nDMO"
                alt="Palma Cola de Zorra jardín exclusivo Tampico" loading="lazy"
-               onload="this.parentElement.classList.add('loaded')" onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-palm"/></svg></div>'" style="position:relative;z-index:2">
+               onload="this.parentElement.classList.add('loaded')" onerror="this.style.opacity='0'" style="position:relative;z-index:2">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -1042,7 +1053,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1pqmt1VfOkeKrpoETiYFwsXwA58WHEjdu"
                alt="Ficus benjamina sombra jardín Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -1061,7 +1072,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1aSLqV6wIrI5GjRUoKH1WWfrA9LVjNhLC"
                alt="Framboyán árbol tropical de color rojo Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-flower"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-flower"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -1080,7 +1091,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1FavAREwVmwV-ePnTOILuldS15VbjNkbj"
                alt="Árbol Neem sombra rápida Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -1099,7 +1110,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=19ecEa8ReXUZzeiEShv16SWlrsThQFyO8"
                alt="Tabachín árbol ornamental Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-flower"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-flower"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -1135,7 +1146,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1yO3frSlCRK5EfSBueH7_UFE56o6vnL4b"
                alt="Laurel de la India formado Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-tree"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-tree"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -1185,7 +1196,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1AP3FbBUp3js1lZnSHmw8QPFemXzBkXww"
                alt="Ave del Paraíso jardín premium Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-flower"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-flower"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -1204,7 +1215,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1DaHl79oILg8OBCpYUSTVNAHAP1DH_IQl"
                alt="Duranta seto jardín Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'></div>'">
+               onerror="this.style.display='none'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -1223,7 +1234,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1PQHRsGnbn6G5-0s93wNV9B8iLp_AHf5Y"
                alt="Bugambilia jardín Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-flower"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-flower"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -1242,7 +1253,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
         <div class="img-card h-48">
           <img src="/api/img?id=1Wg2HzkOME_lMfSEbODYp0P9EAiX0ir08"
                alt="Croton plantas de color Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg></div>'">
+               onerror="this.style.display='none'"0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg></div>'">
         </div>
         <div class="p-5">
           <div class="flex items-center justify-between mb-2">
@@ -1332,17 +1343,17 @@ h1,h2,h3{font-family:'Playfair Display',serif}
       <div class="reveal">
         <div class="grid grid-cols-2 gap-3">
           <div class="overflow-hidden rounded-2xl h-56 col-span-2">
-            <img src="../img/paisajismo-alberca-plantas-tampico.jpg"
+            <img src="/img/paisajismo-alberca-plantas-tampico.jpg"
                  alt="Jardín con palmas y plantas tropicales junto a alberca en Tampico"
                  class="w-full h-full object-cover" loading="lazy">
           </div>
           <div class="overflow-hidden rounded-2xl h-40">
-            <img src="../img/jardineros-plantando-arbol-tampico.png"
+            <img src="/img/jardineros-plantando-arbol-tampico.png"
                  alt="Instalación de árbol en jardín residencial de Tampico"
                  class="w-full h-full object-cover" loading="lazy">
           </div>
           <div class="overflow-hidden rounded-2xl h-40">
-            <img src="../img/transplante-arboles-industriales-tampico.png"
+            <img src="/img/transplante-arboles-industriales-tampico.png"
                  alt="Trasplante de árboles en proyecto industrial Tampico"
                  class="w-full h-full object-cover" loading="lazy">
           </div>
@@ -1365,7 +1376,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
       <a href="https://wa.me/528333268008?text=Necesito%20asesor%C3%ADa%20para%20plantas%20en%20mi%20jard%C3%ADn%20residencial%20en%20Tampico"
          target="_blank" class="guide-card bg-white rounded-2xl shadow-sm overflow-hidden reveal block hover:shadow-lg transition-all">
         <div class="overflow-hidden h-40">
-          <img src="../img/jardin-residencial-plantas-pasto-tampico.jpg"
+          <img src="/img/jardin-residencial-plantas-pasto-tampico.jpg"
                alt="Jardín residencial Tampico" class="w-full h-full object-cover" loading="lazy">
         </div>
         <div class="p-6">
@@ -1378,7 +1389,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
       <a href="https://wa.me/528333268008?text=Necesito%20plantas%20para%20hotel%20o%20comercio%20en%20Tampico"
          target="_blank" class="guide-card bg-white rounded-2xl shadow-sm overflow-hidden reveal block hover:shadow-lg transition-all">
         <div class="overflow-hidden h-40">
-          <img src="../img/areas-verdes-paisajismo-tampico.png"
+          <img src="/img/areas-verdes-paisajismo-tampico.png"
                alt="Hotel o comercio Tampico" class="w-full h-full object-cover" loading="lazy">
         </div>
         <div class="p-6">
@@ -1391,7 +1402,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
       <a href="https://wa.me/528333268008?text=Necesito%20%C3%A1rboles%20para%20proyecto%20industrial%20o%20banquetas%20en%20Tampico"
          target="_blank" class="guide-card bg-white rounded-2xl shadow-sm overflow-hidden reveal block hover:shadow-lg transition-all">
         <div class="overflow-hidden h-40">
-          <img src="../img/transplante-arboles-industriales-tampico.png"
+          <img src="/img/transplante-arboles-industriales-tampico.png"
                alt="Industria y banquetas Tampico" class="w-full h-full object-cover" loading="lazy">
         </div>
         <div class="p-6">
@@ -1449,32 +1460,32 @@ h1,h2,h3{font-family:'Playfair Display',serif}
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 reveal">
       <div class="overflow-hidden rounded-2xl h-56 col-span-2 md:col-span-1">
-        <img src="../img/paisajismo-alberca-plantas-tampico.jpg" loading="lazy"
+        <img src="/img/paisajismo-alberca-plantas-tampico.jpg" loading="lazy"
              alt="Jardín con palmas junto a alberca residencial en Tampico"
              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
       </div>
       <div class="overflow-hidden rounded-2xl h-56">
-        <img src="../img/diseno-jardin-instalacion-plantas-tampico.jpg" loading="lazy"
+        <img src="/img/diseno-jardin-instalacion-plantas-tampico.jpg" loading="lazy"
              alt="Instalación de plantas por Viveros Terra en Tampico"
              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
       </div>
       <div class="overflow-hidden rounded-2xl h-56">
-        <img src="../img/areas-verdes-paisajismo-tampico.png" loading="lazy"
+        <img src="/img/areas-verdes-paisajismo-tampico.png" loading="lazy"
              alt="Áreas verdes con palmas para empresa en Tampico"
              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
       </div>
       <div class="overflow-hidden rounded-2xl h-56">
-        <img src="../img/jardineros-plantando-arbol-tampico.png" loading="lazy"
+        <img src="/img/jardineros-plantando-arbol-tampico.png" loading="lazy"
              alt="Plantación de árbol ornamental en jardín residencial"
              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
       </div>
       <div class="overflow-hidden rounded-2xl h-56">
-        <img src="../img/transplante-arboles-industriales-tampico.png" loading="lazy"
+        <img src="/img/transplante-arboles-industriales-tampico.png" loading="lazy"
              alt="Trasplante de árboles en parque industrial Altamira"
              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
       </div>
       <div class="overflow-hidden rounded-2xl h-56">
-        <img src="../img/jardin-residencial-plantas-pasto-tampico.jpg" loading="lazy"
+        <img src="/img/jardin-residencial-plantas-pasto-tampico.jpg" loading="lazy"
              alt="Jardín tropical residencial con plantas ornamentales"
              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
       </div>
@@ -1767,7 +1778,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
 <!-- ═══ CTA FINAL ═══ -->
 <section class="py-20 bg-dark text-white relative overflow-hidden">
   <div class="absolute inset-0 opacity-15">
-    <img src="../img/jardin-residencial-tropical-tampico.jpg" alt="" class="w-full h-full object-cover">
+    <img src="/img/jardin-residencial-tropical-tampico.jpg" alt="" class="w-full h-full object-cover">
   </div>
   <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-3xl sm:text-4xl font-display font-bold text-white mb-3 reveal">¿Cuál es tu planta?</h2>
@@ -1814,7 +1825,7 @@ h1,h2,h3{font-family:'Playfair Display',serif}
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
       <div>
-        <img src="../img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-dark mb-4" loading="lazy">
+        <img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" class="logo-dark mb-4" loading="lazy">
         <p class="text-white/50 text-sm leading-relaxed">Plantas, palmas y árboles para jardines en Tampico, Madero y Altamira. Más de 20 años en Tamaulipas.</p>
         <div class="flex gap-2 mt-4">
           <a href="https://www.instagram.com/viverosterramx" target="_blank" class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors" aria-label="Instagram"><svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-instagram"/></svg></a>
