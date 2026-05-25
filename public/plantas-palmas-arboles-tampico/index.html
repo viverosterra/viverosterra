@@ -22,6 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/tailwind.css">
+<link rel="stylesheet" href="/css/catalogo.css">
 
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RMZCVJ734M"></script>
@@ -797,450 +798,133 @@ h1,h2,h3{font-family:'Playfair Display',serif}
   </div>
 </section>
 
-<!-- ═══ CATÁLOGO BANNER STICKY ═══ -->
-<div class="cat-banner text-white py-4 sticky top-16 z-40">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-    <div class="flex items-center gap-3">
-      <svg class="w-5 h-5 text-accent flex-shrink-0"><use href="#ic-book"/></svg>
-      <span class="font-semibold text-sm">Catálogo interactivo 2025 — 155+ variedades con precios · Sistema de cotización online</span>
+<!-- ═══ CATÁLOGO INTERACTIVO ═══ -->
+<section class="py-16" style="background:#FAFAF7">
+  <div style="max-width:1000px;margin:0 auto">
+    <div class="text-center mb-8 reveal" style="padding:0 1.25rem">
+      <span style="color:#1B5E20;font-weight:600;font-size:13px;letter-spacing:2px;text-transform:uppercase">Catálogo completo</span>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.75rem,4vw,2.5rem);font-weight:800;color:#111;margin-top:.5rem;margin-bottom:.5rem">
+        <span id="totalCount">118+</span> Variedades para Tampico
+      </h2>
+      <p style="color:#666;font-size:14px;max-width:480px;margin:0 auto">Filtra por categoría, busca por nombre o tipo. Cotización instantánea por WhatsApp.</p>
     </div>
-    <a href="/catalogo"
-       onclick="gtag('event','clic_catalogo_banner',{'event_category':'engagement','event_label':'plantas_catalogo_sticky'})"
-       class="flex-shrink-0 bg-white text-primary px-5 py-2 rounded-full font-bold text-sm hover:bg-bggreen transition-colors whitespace-nowrap">
-      Abrir catálogo →
-    </a>
+
+    <nav class="tabs" aria-label="Categorías" style="border-radius:12px;margin:0 1.25rem .5rem">
+      <button class="tab active" onclick="setTab('todos',this)">Todos</button>
+      <button class="tab" onclick="setTab('arboles',this)">🌳 Árboles</button>
+      <button class="tab" onclick="setTab('palmas',this)">🌴 Palmas</button>
+      <button class="tab" onclick="setTab('plantas',this)">🪴 Plantas</button>
+      <button class="tab" onclick="setTab('pasto',this)">🌿 Pasto &amp; Tierra</button>
+    </nav>
+
+    <div class="sbar" id="searchWrap">
+      <div class="siw">
+        <svg class="sico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M15 15l-3.5-3.5"/></svg>
+        <input class="si" id="si" type="search" placeholder="Buscar planta, árbol, palma o tipo..." oninput="doFilter()" aria-label="Buscar en catálogo"/>
+      </div>
+    </div>
+    <p class="cnt" id="cnt" aria-live="polite"></p>
+    <main class="cat-grid" id="grid" aria-label="Catálogo de plantas"></main>
+
+    <section class="solsec" id="solsec" aria-label="Solicitar variedad especial">
+      <h3>🔍 ¿No encontraste lo que buscas?</h3>
+      <p>Dinos qué planta, árbol, tamaño o medida necesitas y te cotizamos. Manejamos muchas más variedades.</p>
+      <div class="solrow">
+        <input class="solinput" id="solinput" type="text" placeholder="Ej: Palmera Phoenix 4m, Bambú negro..."/>
+        <button class="solbtn" onclick="solEsp()">Solicitar cotización →</button>
+      </div>
+    </section>
+
+    <section id="pastoSection" style="display:none" aria-label="Pasto y materiales">
+      <div class="pastosec">
+        <h3>🌿 Pasto en Rollo Natural</h3>
+        <div class="pastorow">
+          <div class="pcard"><h4>San Agustín</h4><p>El más popular para Tampico. Tolerante al calor, lluvia y humedad. Residencial y comercial.</p><button onclick="cotizar('Pasto San Agustín en rollo')">Cotizar por m²</button></div>
+          <div class="pcard"><h4>Japonés</h4><p>Textura fina y uniforme. Bajo mantenimiento. Jardines ornamentales.</p><button onclick="cotizar('Pasto Japonés en rollo')">Cotizar por m²</button></div>
+          <div class="pcard"><h4>Bermuda</h4><p>Alta resistencia al tráfico. Áreas deportivas, parques e industrias.</p><button onclick="cotizar('Pasto Bermuda en rollo')">Cotizar por m²</button></div>
+          <div class="pcard"><h4>Pasto Sintético</h4><p>Sin riego ni mantenimiento. Terrazas, canchas y áreas secas. Garantía incluida.</p><button onclick="cotizar('Instalación pasto sintético')">Cotizar</button></div>
+        </div>
+      </div>
+      <div class="tierrasec">
+        <h3>🪨 Materiales &amp; Tierra</h3>
+        <div class="tierrarow">
+          <div class="tcard"><h4>Tierra Negra</h4><p>Sustrato premium para jardines y trasplantes. Por m³.</p></div>
+          <div class="tcard"><h4>Bola de Río</h4><p>Piedra natural decorativa para senderos y jardines.</p></div>
+          <div class="tcard"><h4>Tezontle</h4><p>Piedra volcánica para macetas y drenaje.</p></div>
+          <div class="tcard"><h4>Mármol</h4><p>Grava de mármol para áreas de descanso.</p></div>
+          <div class="tcard"><h4>Laja</h4><p>Perfecta para senderos y áreas naturales.</p></div>
+          <div class="tcard"><h4>Macetas</h4><p>Macetones decorativos y mobiliario exterior.</p></div>
+        </div>
+        <div class="tstats">
+          <div class="tstat"><div class="tstat-n">+200,000 m²</div><div class="tstat-l">de pasto instalado en la región</div></div>
+          <div class="tstat"><div class="tstat-n">+1,500 instalaciones</div><div class="tstat-l">de pasto en rollo</div></div>
+          <div class="tstat"><div class="tstat-n">Ahorro 40% agua</div><div class="tstat-l">con riego automatizado</div></div>
+        </div>
+      </div>
+      <div class="solsec" style="margin:.75rem 1.25rem">
+        <h3>¿Necesitas pasto o material especial?</h3>
+        <div class="solrow">
+          <input class="solinput" id="solpasto" type="text" placeholder="Ej: 300m² San Agustín con instalación..."/>
+          <button class="solbtn" onclick="solPasto()">Solicitar →</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- MODAL AGREGAR AL CARRITO -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-sc" id="modalSc"></div>
+    <label class="modal-label" for="modalSize">Tamaño disponible</label>
+    <select class="modal-select" id="modalSize" onchange="onSizeChange(this)"></select>
+    <div class="otro-size-row" id="otroSizeRow">
+      <input class="otro-size-input" id="otroSizeInput" type="text" placeholder="Ej: 5 metros, 3.5m, medida especial..."/>
+    </div>
+    <label class="modal-label">¿Cuántas unidades necesitas?</label>
+    <div class="qty-row">
+      <button class="qty-btn" onclick="changeQty(-1)" aria-label="Reducir cantidad">−</button>
+      <input class="qty-input" id="modalQty" type="number" min="1" max="9999" value="1" aria-label="Cantidad"/>
+      <button class="qty-btn" onclick="changeQty(1)" aria-label="Aumentar cantidad">+</button>
+      <span class="qty-label">piezas</span>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="modal-btn-add" onclick="confirmAdd()">✅ Agregar a lista</button>
+    </div>
   </div>
 </div>
 
-<!-- ═══ PLANTAS — Tab system con imágenes del catálogo ═══ -->
-<section class="py-20 bg-bgwarm">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12 reveal">
-      <span class="text-primary font-semibold text-sm uppercase tracking-wider">Encuentra tu planta ideal</span>
-      <h2 class="text-3xl sm:text-4xl font-display font-bold text-gray-900 mt-2 mb-4">Palmas, Árboles y Plantas para Tampico</h2>
-      <p class="text-lg text-gray-600 max-w-2xl mx-auto">Variedades seleccionadas para el clima de Tamaulipas. Precios orientativos — cotización exacta por WhatsApp.</p>
+<!-- FAB CARRITO -->
+<button class="cartfab" id="cartFab" onclick="openCart()" aria-label="Ver lista de cotización">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+  <div class="cartbadge" id="cartBadge">0</div>
+</button>
+
+<!-- PANEL CARRITO -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart(event)"></div>
+<div class="cart-panel" id="cartPanel" role="dialog" aria-modal="true" aria-label="Lista de cotización">
+  <div class="cart-header">
+    <div>
+      <div class="cart-htitle">🌿 Mi Lista de Cotización</div>
+      <div class="cart-hcount" id="cartHCount"></div>
     </div>
-
-    <!-- Tabs -->
-    <div class="flex justify-center gap-2 mb-10 flex-wrap reveal">
-      <button onclick="showTab('palmas')" id="tab-palmas"
-              class="tab-pill active px-6 py-2.5 text-sm font-semibold rounded-full hover:border-primary hover:text-primary transition-all">
-        Palmas Tropicales
-      </button>
-      <button onclick="showTab('arboles')" id="tab-arboles"
-              class="tab-pill px-6 py-2.5 text-sm font-semibold rounded-full hover:border-primary hover:text-primary transition-all">
-        Árboles
-      </button>
-      <button onclick="showTab('plantas')" id="tab-plantas"
-              class="tab-pill px-6 py-2.5 text-sm font-semibold rounded-full hover:border-primary hover:text-primary transition-all">
-        Plantas Ornamentales
-      </button>
-    </div>
-
-    <!-- PALMAS — imágenes del catálogo via /api/img -->
-    <div id="content-palmas" class="tab-content active grid sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Palma%20Washingtona%20para%20Tampico"
-         target="_blank" onclick="gtag('event','clic_planta',{'event_category':'conversion','event_label':'palma_washingtona'})"
-         class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=12Q_2nhBba8CGei_eHrUAUSZognx9OP6O"
-               alt="Palma Washingtona para jardín en Tampico" loading="lazy"
-               onload="this.parentElement.classList.add('loaded')" onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🌴</div>'" style="position:relative;z-index:2">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Palma Washingtona</h3>
-            <span class="price-badge">Desde $500</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Altura rápida · Entradas y banquetas · Resistente al viento del Golfo</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Palma%20del%20Viajero%20para%20Tampico"
-         target="_blank" onclick="gtag('event','clic_planta',{'event_category':'conversion','event_label':'palma_viajero'})"
-         class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=157tCw_yF6zs2npPx4BmisT-vMu7-Hca0"
-               alt="Palma del Viajero en jardín de Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🌿</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Palma del Viajero</h3>
-            <span class="price-badge">Desde $500</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Impacto visual inmediato · Hoteles y jardines premium · Abanico icónico</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Palma%20Areca%20para%20Tampico"
-         target="_blank" onclick="gtag('event','clic_planta',{'event_category':'conversion','event_label':'palma_areca'})"
-         class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1f9yY6hRqr0lf47QeunWBgNR_RXqZHHZM"
-               alt="Palma Areca interior y semisombra Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🪴</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Palma Areca</h3>
-            <span class="price-badge">Desde $300</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Interior y semisombra · Oficinas y lobbies · Purifica el aire</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Cycas%20Revoluta%20para%20Tampico"
-         target="_blank" onclick="gtag('event','clic_planta',{'event_category':'conversion','event_label':'cycas_revoluta'})"
-         class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1Pp66DaLg1hg0YvVA6ZUxpT8hkgmCcdKJ"
-               alt="Cycas Revoluta bajo mantenimiento Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🌿</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Cycas Revoluta</h3>
-            <span class="price-badge">Desde $700</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Bajo mantenimiento · Gran longevidad · Jardines formales</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Palma%20Kerpis%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1rD9tgujODXJ03znMkru4eB1wvMuardSJ"
-               alt="Palma Kerpis jardín residencial Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🪴</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Palma Kerpis</h3>
-            <span class="price-badge">Desde $500</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Jardines residenciales · Sombra parcial · Elegante y resistente</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Palma%20Coco%20Plumoso%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1VQ2urkzIqBFO4rZeKHQpe-c3X9TViVWJ"
-               alt="Palma Coco Plumoso jardín amplio Tampico" loading="lazy"
-               onload="this.parentElement.classList.add('loaded')" onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🌴</div>'" style="position:relative;z-index:2">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Palma Coco Plumoso</h3>
-            <span class="price-badge">Desde $500</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Follaje plumoso · Jardines amplios · Imagen premium</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Palma%20Bamb%C3%BA%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1-FRocM765ANJ2RYgxf7KKoKpno23TwwO"
-               alt="Palma Bambú interior Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🪴</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Palma Bambú</h3>
-            <span class="price-badge">Desde $1,000</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Interior y semisombra · Espacios grandes · Efecto tropical</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Palma%20Cola%20de%20Zorra%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1kIwetkOcVkm7Wb7xvVaEeMcvAdl_nDMO"
-               alt="Palma Cola de Zorra jardín exclusivo Tampico" loading="lazy"
-               onload="this.parentElement.classList.add('loaded')" onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🌴</div>'" style="position:relative;z-index:2">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Palma Cola de Zorra</h3>
-            <span class="price-badge">Desde $1,500</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Especie única · Alto impacto visual · Jardines exclusivos</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-    </div>
-
-    <!-- ÁRBOLES -->
-    <div id="content-arboles" class="tab-content grid sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Ficus%20benjamina%20para%20Tampico"
-         target="_blank" onclick="gtag('event','clic_planta',{'event_category':'conversion','event_label':'ficus_benjamina'})"
-         class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1pqmt1VfOkeKrpoETiYFwsXwA58WHEjdu"
-               alt="Ficus benjamina sombra jardín Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🍃</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Ficus benjamina</h3>
-            <span class="price-badge">Desde $200</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Sombra rápida · Setos y jardineras · Muy versátil</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Flamboy%C3%A1n%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1aSLqV6wIrI5GjRUoKH1WWfrA9LVjNhLC"
-               alt="Framboyán árbol tropical de color rojo Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🌺</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Framboyán</h3>
-            <span class="price-badge">Desde $250</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Floración rojo-naranja espectacular · Sombra abundante</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Neem%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1FavAREwVmwV-ePnTOILuldS15VbjNkbj"
-               alt="Árbol Neem sombra rápida Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🌿</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Neem</h3>
-            <span class="price-badge">Desde $300</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Sombra rápida · Muy resistente · Bajo mantenimiento</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Tabachin%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=19ecEa8ReXUZzeiEShv16SWlrsThQFyO8"
-               alt="Tabachín árbol ornamental Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🌻</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Tabachín</h3>
-            <span class="price-badge">Desde $350</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Flores todo el año · Orlas y arriates · Poco mantenimiento</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Trueno%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48 bg-bggreen flex items-center justify-center">
-          <span class="text-6xl">🍃</span>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Trueno</h3>
-            <span class="price-badge">Desde $300</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Banquetas · Setos de privacidad · Fácil mantenimiento</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Laurel%20de%20la%20India%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1yO3frSlCRK5EfSBueH7_UFE56o6vnL4b"
-               alt="Laurel de la India formado Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🌳</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Laurel de la India</h3>
-            <span class="price-badge">Desde $500</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Sombra abundante · Crecimiento rápido · Muy ornamental</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Tulip%C3%A1n%20Africano%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48 bg-bggreen flex items-center justify-center">
-          <span class="text-6xl">🌸</span>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Tulipán Africano</h3>
-            <span class="price-badge">Desde $600</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Color naranja-rojo intenso · Jardines tropicales · Premium</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <!-- Ver más -->
-      <a href="/catalogo" class="service-card bg-bggreen border border-green-100 rounded-2xl p-6 flex flex-col items-center justify-center text-center">
-        <svg class="w-10 h-10 text-primary mb-3"><use href="#ic-book"/></svg>
-        <h3 class="font-display font-bold text-gray-900 mb-2">+20 árboles más</h3>
-        <p class="text-gray-500 text-xs mb-4">Jacaranda, Fresnos, Magnolias, Ceiba, Sauce Llorón y muchos más</p>
-        <span class="inline-flex items-center gap-1 bg-primary text-white px-4 py-2 rounded-full text-xs font-bold">
-          Ver catálogo completo <svg class="w-3.5 h-3.5"><use href="#ic-chevron-right"/></svg>
-        </span>
-      </a>
-    </div>
-
-    <!-- PLANTAS ORNAMENTALES -->
-    <div id="content-plantas" class="tab-content grid sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Ave%20del%20Para%C3%ADso%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1AP3FbBUp3js1lZnSHmw8QPFemXzBkXww"
-               alt="Ave del Paraíso jardín premium Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🌺</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Ave del Paraíso</h3>
-            <span class="price-badge">Cotizar</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Impacto visual máximo · Jardines y hoteles premium</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Duranta%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1DaHl79oILg8OBCpYUSTVNAHAP1DH_IQl"
-               alt="Duranta seto jardín Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🟢</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Duranta Cubana</h3>
-            <span class="price-badge">Cotizar</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Setos vivos · Crece rápido · Muy resistente al calor</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Bugambilia%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1PQHRsGnbn6G5-0s93wNV9B8iLp_AHf5Y"
-               alt="Bugambilia jardín Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🌸</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Bugambilia</h3>
-            <span class="price-badge">Cotizar</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Bardas y enredaderas · Varios colores · Muy poca agua</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="https://wa.me/528333268008?text=Quiero%20cotizar%20Croton%20para%20Tampico"
-         target="_blank" class="service-card bg-white rounded-2xl overflow-hidden shadow-sm block">
-        <div class="img-card h-48">
-          <img src="/api/img?id=1Wg2HzkOME_lMfSEbODYp0P9EAiX0ir08"
-               alt="Croton plantas de color Tampico" loading="lazy"
-               onerror="this.parentElement.innerHTML='<div class=\'emoji-fallback\'>🍂</div>'">
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-display font-bold text-gray-900">Croton</h3>
-            <span class="price-badge">Cotizar</span>
-          </div>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Color intenso · Orlas y arriates · Jardines tropicales</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">
-            Cotizar <svg class="w-4 h-4"><use href="#ic-chevron-right"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <!-- Ver catálogo -->
-      <div class="service-card bg-bggreen border border-green-100 rounded-2xl p-6 flex flex-col items-center justify-center text-center col-span-2 lg:col-span-4">
-        <p class="text-gray-700 font-semibold text-sm mb-1">También manejamos: Helechos, Monstera, Bambú, Sansiviera, Dracena, Ficus Lyrata, Ixora, Jazmín y 80+ variedades más</p>
-        <p class="text-gray-500 text-xs mb-4">Con imágenes reales, descripción técnica y sistema de cotización</p>
-        <a href="/catalogo" class="inline-flex items-center gap-2 bg-primary text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-secondary transition-colors">
-          <svg class="w-4 h-4"><use href="#ic-book"/></svg>Ver las 155+ variedades en el catálogo
-        </a>
-      </div>
-    </div>
-
-    <!-- CTA catálogo -->
-    <div class="mt-12 text-center reveal">
-      <a href="/catalogo"
-         onclick="gtag('event','clic_catalogo_plantas',{'event_category':'engagement','event_label':'plantas_catalogo_cta'})"
-         class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-secondary transition-colors shadow-lg">
-        <svg class="w-5 h-5"><use href="#ic-book"/></svg>Ver catálogo completo — 155+ variedades con precios
-      </a>
-      <p class="text-gray-400 text-sm mt-2">Con fotos reales, fichas técnicas y sistema de cotización online</p>
-    </div>
+    <button class="cart-close" onclick="closeCart()" aria-label="Cerrar">✕</button>
   </div>
-</section>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-summary">
+      <span id="cartSummaryText"></span>
+      <span id="cartSummaryUnits"></span>
+    </div>
+    <button class="cart-wa-btn" onclick="sendWA()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enviar cotización por WhatsApp
+    </button>
+    <button class="cart-clear" onclick="clearCart()">🗑 Vaciar lista</button>
+  </div>
+</div>
 
 <!-- ═══ POR QUÉ VIVEROS TERRA — mismo estilo que homepage ═══ -->
 <section class="py-20 bg-bggreen">
@@ -1824,15 +1508,6 @@ h1,h2,h3{font-family:'Playfair Display',serif}
 const mb=document.getElementById('menu-btn'),mm=document.getElementById('mobile-menu');
 if(mb)mb.addEventListener('click',()=>{mm.classList.toggle('hidden');mb.setAttribute('aria-expanded',!mm.classList.contains('hidden'));});
 
-// Tabs
-function showTab(tab){
-  ['palmas','arboles','plantas'].forEach(t=>{
-    document.getElementById('content-'+t).classList.toggle('active',t===tab);
-    document.getElementById('tab-'+t).classList.toggle('active',t===tab);
-  });
-  gtag('event','tab_plantas',{'event_category':'engagement','event_label':'plantas_tab_'+tab});
-}
-
 // FAQ
 document.querySelectorAll('.faq-btn').forEach(b=>{
   b.addEventListener('click',()=>{
@@ -1862,5 +1537,6 @@ function enviarCTA(){
 </script>
 <script src="/js/activity-feed.js" defer></script>
 <script src="/js/conversion-events.js" defer></script>
+<script src="/js/catalogo-app.js" defer></script>
 </body>
 </html>

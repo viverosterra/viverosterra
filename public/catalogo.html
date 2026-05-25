@@ -51,7 +51,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--tc);color:var(--t
 .cnt{text-align:center;font-size:11px;color:var(--tm);padding:.2rem 0 .6rem}
 
 /* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:14px;padding:0 1.25rem 1.5rem;max-width:1000px;margin:0 auto}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:14px;padding:0 1.25rem 1.5rem;max-width:1000px;margin:0 auto}
 
 /* CARD */
 .card{background:var(--tw);border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,.07);transition:transform .2s,box-shadow .2s}
@@ -230,7 +230,7 @@ a{color:inherit;text-decoration:none}
 /* RESPONSIVE */
 @media(max-width:480px){
   .htitle{font-size:22px}
-  .grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;padding:0 .85rem 1.25rem}
+  .cat-grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;padding:0 .85rem 1.25rem}
   .hstats{gap:1rem}
 }
 
@@ -855,7 +855,7 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 <p class="cnt" id="cnt" aria-live="polite"></p>
-<main class="grid" id="grid" aria-label="Catálogo de plantas"></main>
+<main class="cat-grid" id="grid" aria-label="Catálogo de plantas"></main>
 
 <section class="solsec" id="solsec" aria-label="Solicitar variedad especial">
   <h3>🔍 ¿No encontraste lo que buscas?</h3>
@@ -1082,7 +1082,6 @@ const plants = [
   {cat:'plantas',name:'Uva de Playa',sc:'Coccoloba uvifera',sz:['80 cm-1 m'],b:[],i:'🍃',img:'14Xq1BSGA0MJF1VIZx3D8NNIBWBbywNpu',luz:'☀️ Pleno Sol',agua:'Poco',altura:'Hasta 15 m',flor:'Sí',mant:'Muy bajo',tipo:'Árbol costero',desc:'Árbol costero de hojas redondas grandes y brillantes. Muy resistente a la sal y el viento. Ideal para jardines en zona costera de Tampico.'},
   {cat:'plantas',name:'Wudelia Rastrera',sc:'Wedelia trilobata',sz:['20-25 cm'],b:[],i:'🌼',img:'1MbNqUWWXlah_79CoinEswxFJWJteXvGg',luz:'☀️ Sol / 🌤 Media',agua:'Poco',altura:'Rastrera 15 cm',flor:'Sí — amarilla',mant:'Muy bajo',tipo:'Cubresuelos',desc:'Cubresuelos de flores amarillas que florece casi todo el año. Crece muy rápido. Perfecta para taludes, bordes y jardines de bajo mantenimiento.'},
   {cat:'plantas',name:'Mussaenda',sc:'Mussaenda sp.',sz:['50 cm','80 cm'],b:[],i:'🌸',img:'1nETDOzwNVZTgVoPRjaS_W4Dz73dhZ6Fn',luz:'☀️ Pleno Sol',agua:'Regular',altura:'Hasta 4 m',flor:'Sí — muy llamativa',mant:'Medio',tipo:'Arbusto florido',desc:'Arbusto de gran impacto visual con brácteas brillantes en rosa, rojo y blanco. Floración prolongada. Una de las plantas más llamativas del jardín tropical.'},
-  {cat:'plantas',name:'Floripondio',sc:'Brugmansia sp.',sz:['60 cm-1 m'],b:[],i:'🌼',img:'1FB3FyWqyipYuxSyjZIvz3OL28FXWm',luz:'☀️ Sol / 🌤 Media',agua:'Regular',altura:'Hasta 5 m',flor:'Sí — trompeta gigante',mant:'Medio',tipo:'Árbol/Arbusto',desc:'Flores en trompeta gigante con aroma nocturno. Blanco, amarillo y rosa disponible.'},
 
   // PLANTAS NUEVAS
   {cat:'palmas',name:'Palma Cica Circinalis',sc:'Cycas circinalis',sz:['1 m','1-2 m','2-3 m'],b:[],i:'🌿',img:'1uw1fBpfrnXp3iRjTfNqvZeYxjMYE51Vx',luz:'☀️ Sol / 🌤 Media Sombra',agua:'Poco',altura:'Hasta 6 m',flor:'No',mant:'Muy bajo',tipo:'Cica',desc:'Prima de la Cica Revoluta, de porte más erguido y elegante. Sus hojas arqueadas brillantes la hacen ideal para jardines formales. Resistente y de muy bajo mantenimiento.'},
