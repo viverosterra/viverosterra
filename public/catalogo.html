@@ -1276,7 +1276,7 @@ function render(){
     return mt&&ms;
   });
   f.sort((a,b)=>a.name.localeCompare(b.name,'es'));
-  document.getElementById('totalCount').textContent=plants.length+'+';
+  const _tc=document.getElementById('totalCount'); if(_tc)_tc.textContent=plants.length+'+';
   c.textContent=f.length+' variedades encontradas';
   if(!f.length){
     g.innerHTML='<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24" class="w-9 h-9" aria-hidden="true" style="color:#1B5E20"><use href="#ic-sprout"/></svg></div>Sin resultados para "'+q+'"<br><small style="display:block;margin-top:.5rem">Usa el formulario de abajo para solicitar lo que buscas</small></div>';
