@@ -1117,6 +1117,20 @@
   }
 </style>
 
+
+<!-- BANNER URGENCIA ESTACIONAL — actualizar texto según temporada -->
+<div id="urgencia-banner" role="banner" style="background:linear-gradient(90deg,#1B5E20,#2E7D32);color:#fff;font-family:Inter,system-ui,sans-serif;font-size:13px;font-weight:600;text-align:center;padding:10px 16px;position:relative;z-index:999">
+  <span style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+    <span>⚡ Temporada de lluvias — el mejor momento para instalar pasto.</span>
+    <span style="opacity:.75">Instalaciones esta semana disponibles.</span>
+    <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20agendar%20una%20instalaci%C3%B3n%20esta%20semana" target="_blank" rel="noopener" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:#fff;text-decoration:none;padding:4px 12px;border-radius:999px;font-size:12px;white-space:nowrap">
+      Agendar ahora →
+    </a>
+  </span>
+  <button onclick="document.getElementById('urgencia-banner').style.display='none'" aria-label="Cerrar" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:18px;line-height:1">×</button>
+</div>
+
 <section id="inicio" class="vt-hero" aria-label="Hero principal Viveros Terra">
   <div class="vt-hero__bg" aria-hidden="true">
     <img src="/img/jardin-residencial-pasto-san-agustin-tampico.jpg"
@@ -1181,6 +1195,10 @@
       </div>
 
       <p class="vt-hero__caption">Sin compromiso · Respondemos hoy mismo · Lun–Sáb 9am–6pm</p>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(240,247,240,0.12);border:1px solid rgba(85,185,106,0.3);padding:6px 14px;border-radius:999px;font-size:12px;color:rgba(255,255,255,0.75);margin-top:4px">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#55B96A" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span id="next-visit-text">Próxima visita técnica: <strong style="color:#55B96A">esta semana</strong></span>
+      </div>
     </div>
 
     <!-- DERECHA: tarjetas de métricas -->
@@ -1286,6 +1304,36 @@
       <h2 class="text-3xl sm:text-4xl font-display font-bold text-gray-900 mt-2 mb-4">Todo lo que tu jardín necesita, en un solo lugar</h2>
       <p class="text-lg text-gray-600 max-w-2xl mx-auto">Soluciones integrales para casas, empresas, industria y proyectos de desarrollo en el sur de Tamaulipas y norte de Veracruz.</p>
     </div>
+    
+    <!-- TRACKS de proyecto — Mejora G -->
+    <div class="grid sm:grid-cols-3 gap-4 mb-10 reveal">
+      <a href="#servicios" onclick="event.preventDefault();document.querySelector('.service-card').scrollIntoView({behavior:'smooth'})" class="group flex flex-col items-center text-center p-5 rounded-2xl border-2 border-transparent hover:border-primary bg-white shadow-sm hover:shadow-md transition-all cursor-pointer">
+        <div class="w-12 h-12 bg-bggreen rounded-xl flex items-center justify-center mb-3 group-hover:bg-primary/10 transition-colors">
+          <svg viewBox="0 0 24 24" class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-gray-900 text-sm mb-1">Residencial</h3>
+        <p class="text-gray-500 text-xs">Casa, departamento o jardín privado</p>
+        <span class="mt-2 text-primary font-semibold text-xs">Ver servicios →</span>
+      </a>
+      <a href="/mayoreo-pasto-tampico" class="group flex flex-col items-center text-center p-5 rounded-2xl border-2 border-accent bg-white shadow-sm hover:shadow-md transition-all cursor-pointer">
+        <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-3">
+          <svg viewBox="0 0 24 24" class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="8" height="18"/><rect x="14" y="8" width="8" height="13"/></svg>
+        </div>
+        <div class="inline-block bg-accent text-white text-xs font-bold px-2 py-0.5 rounded-full mb-1">Más solicitado</div>
+        <h3 class="font-display font-bold text-gray-900 text-sm mb-1">Empresa / Comercial</h3>
+        <p class="text-gray-500 text-xs">Oficinas, hoteles, restaurantes</p>
+        <span class="mt-2 text-primary font-semibold text-xs">Ver opciones →</span>
+      </a>
+      <a href="/palmas-mayoreo-proyectos" class="group flex flex-col items-center text-center p-5 rounded-2xl border-2 border-transparent hover:border-primary bg-white shadow-sm hover:shadow-md transition-all cursor-pointer">
+        <div class="w-12 h-12 bg-bggreen rounded-xl flex items-center justify-center mb-3 group-hover:bg-primary/10 transition-colors">
+          <svg viewBox="0 0 24 24" class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-gray-900 text-sm mb-1">Proyecto B2B</h3>
+        <p class="text-gray-500 text-xs">Fraccionamientos, industria, gobierno</p>
+        <span class="mt-2 text-primary font-semibold text-xs">Ver proyectos →</span>
+      </a>
+    </div>
+
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
       <!-- Pasto en rollo -->
@@ -1301,7 +1349,12 @@
           </div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Pasto en Rollo San Agustín</h3>
           <p class="text-gray-500 text-sm leading-relaxed mb-4">Desde <strong class="text-gray-700">$85/m²</strong>. Venta e instalación profesional. Mayoreo para constructoras y proyectos en toda la Huasteca.</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver detalles y precios<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver detalles<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+            <a href="https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20el%20pasto%20San%20Agust%C3%ADn%20en%20rollo.%20%C2%BFCu%C3%A1nto%20cuesta%20instalado%20por%20m%C2%B2%3F" onclick="event.stopPropagation()" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-wa text-white text-xs font-semibold px-3 py-2 rounded-full hover:bg-green-500 transition-colors whitespace-nowrap">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 flex-shrink-0"><use href="#ic-whatsapp"/></svg>Cotizar pasto por m²
+            </a>
+          </div>
         </div>
       </a>
 
@@ -1318,7 +1371,12 @@
           </div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Diseño de Jardines</h3>
           <p class="text-gray-500 text-sm leading-relaxed mb-4"><strong class="text-gray-700">Plan Terra desde $3,000</strong>. 3 niveles: Esencial, Completo y Premium. Se descuenta al contratar el proyecto.</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver los 3 planes<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver detalles<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+            <a href="https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20dise%C3%B1o%20de%20jardines.%20%C2%BFPodr%C3%ADan%20darme%20informaci%C3%B3n%20del%20Plan%20Terra%3F" onclick="event.stopPropagation()" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-wa text-white text-xs font-semibold px-3 py-2 rounded-full hover:bg-green-500 transition-colors whitespace-nowrap">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 flex-shrink-0"><use href="#ic-whatsapp"/></svg>Cotizar diseño
+            </a>
+          </div>
         </div>
       </a>
 
@@ -1335,7 +1393,12 @@
           </div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Sistema de Riego Automatizado</h3>
           <p class="text-gray-500 text-sm leading-relaxed mb-4">Ahorra hasta <strong class="text-gray-700">40% en agua</strong> con riego programado e inteligente. Para jardines residenciales y áreas comerciales.</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver detalles<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver detalles<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+            <a href="https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20instalar%20un%20sistema%20de%20riego%20autom%C3%A1tico.%20%C2%BFPodr%C3%ADan%20cotizarme%3F" onclick="event.stopPropagation()" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-wa text-white text-xs font-semibold px-3 py-2 rounded-full hover:bg-green-500 transition-colors whitespace-nowrap">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 flex-shrink-0"><use href="#ic-whatsapp"/></svg>Cotizar riego
+            </a>
+          </div>
         </div>
       </a>
 
@@ -1352,7 +1415,12 @@
           </div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Mantenimiento Profesional</h3>
           <p class="text-gray-500 text-sm leading-relaxed mb-4">Desde <strong class="text-gray-700">$750/mes</strong>. Poda, fertilización y control de plagas. Frecuencia adaptada a temporada. Residencial, empresarial e industrial.</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver servicios incluidos<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver detalles<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+            <a href="https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20mantenimiento%20mensual%20de%20jard%C3%ADn.%20%C2%BFCu%C3%A1l%20es%20el%20precio%20base%3F" onclick="event.stopPropagation()" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-wa text-white text-xs font-semibold px-3 py-2 rounded-full hover:bg-green-500 transition-colors whitespace-nowrap">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 flex-shrink-0"><use href="#ic-whatsapp"/></svg>Cotizar mantenimiento
+            </a>
+          </div>
         </div>
       </a>
 
@@ -1369,7 +1437,12 @@
           </div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Plantas, Palmas y Árboles</h3>
           <p class="text-gray-500 text-sm leading-relaxed mb-4">Catálogo completo de especies tropicales adaptadas al clima Huasteca. Más de <strong class="text-gray-700">100,000 plantas</strong> entregadas.</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver catálogo<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver detalles<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+            <a href="https://wa.me/528333268008?text=Hola%2C%20me%20interesan%20las%20plantas%2C%20palmas%20y%20%C3%A1rboles%20del%20cat%C3%A1logo.%20%C2%BFPodr%C3%ADan%20asesorarme%3F" onclick="event.stopPropagation()" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-wa text-white text-xs font-semibold px-3 py-2 rounded-full hover:bg-green-500 transition-colors whitespace-nowrap">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 flex-shrink-0"><use href="#ic-whatsapp"/></svg>Ver opciones disponibles
+            </a>
+          </div>
         </div>
       </a>
 
@@ -1386,7 +1459,12 @@
           </div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Pasto Sintético</h3>
           <p class="text-gray-500 text-sm leading-relaxed mb-4">Verde todo el año sin mantenimiento de poda. Ideal para mascotas, niños y zonas con poca luz. Instalación profesional incluida.</p>
-          <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver detalles<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver detalles<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
+            <a href="https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20el%20pasto%20sint%C3%A9tico.%20%C2%BFCu%C3%A1nto%20cuesta%20por%20m%C2%B2%20instalado%3F" onclick="event.stopPropagation()" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-wa text-white text-xs font-semibold px-3 py-2 rounded-full hover:bg-green-500 transition-colors whitespace-nowrap">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 flex-shrink-0"><use href="#ic-whatsapp"/></svg>Cotizar pasto sintético
+            </a>
+          </div>
         </div>
       </a>
 
@@ -2168,5 +2246,29 @@
   }
 </script>
 <script src="/js/activity-feed.js" defer></script>
+
+<script>
+// Widget disponibilidad — actualiza según día de semana
+(function(){
+  const el = document.getElementById('next-visit-text');
+  if(!el) return;
+  const now = new Date();
+  const day = now.getDay(); // 0=dom, 1=lun...5=vie, 6=sab
+  const hour = now.getHours();
+  const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  let msg = '';
+  if(day === 6 || day === 0) {
+    msg = 'Visitas disponibles desde el <strong style="color:#55B96A">Lunes</strong>';
+  } else if(day >= 1 && day <= 5) {
+    const nextDay = day < 5 ? days[day + 1] : 'el próximo Lunes';
+    if(hour < 14) {
+      msg = 'Próxima visita técnica: <strong style="color:#55B96A">hoy o mañana</strong>';
+    } else {
+      msg = 'Próxima visita técnica: <strong style="color:#55B96A">mañana disponible</strong>';
+    }
+  }
+  if(msg) el.innerHTML = msg;
+})();
+</script>
 </body>
 </html>
