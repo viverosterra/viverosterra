@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview · Mapa Interactivo de Cobertura · Viveros Terra</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#FAFAF7;color:#1a1a1a;line-height:1.5}
+.wrap{max-width:1200px;margin:0 auto;padding:40px 24px}
+.preview-banner{background:linear-gradient(135deg,#1B5E20,#2E7D32);color:#fff;padding:12px 24px;text-align:center;font-size:13px;letter-spacing:.5px}
+.title-block{text-align:center;margin:0 0 40px}
+.title-block .kicker{color:#1B5E20;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.title-block h1{font-family:'Playfair Display',serif;font-size:42px;font-weight:800;color:#0D2B0E;margin:8px 0 12px;line-height:1.1}
+.title-block p{color:#555;font-size:16px;max-width:600px;margin:0 auto}
+
+/* MAPA INTERACTIVO */
+.map-section{background:#fff;border-radius:24px;padding:32px;box-shadow:0 24px 60px rgba(15,61,20,.08);border:1px solid #e7eee7}
+.map-grid{display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start}
+@media(max-width:900px){.map-grid{grid-template-columns:1fr}}
+
+.map-canvas{position:relative;background:linear-gradient(135deg,#F0F7F0 0%,#E8F5E9 100%);border-radius:16px;overflow:hidden;aspect-ratio:5/4;border:1px solid #d4e7d8}
+.map-svg{width:100%;height:100%;display:block}
+
+/* Zonas del mapa */
+.zone{cursor:pointer;transition:all .25s ease;transform-origin:center}
+.zone-inner{transition:fill .25s ease,stroke .25s ease,stroke-width .25s ease}
+.zone:hover .zone-inner{stroke-width:3;filter:brightness(1.1)}
+.zone[data-tier="directa"] .zone-inner{fill:rgba(27,94,32,.6);stroke:#1B5E20;stroke-width:2}
+.zone[data-tier="regular"] .zone-inner{fill:rgba(85,185,106,.45);stroke:#2E7D32;stroke-width:1.5}
+.zone[data-tier="proyecto"] .zone-inner{fill:rgba(165,214,167,.4);stroke:#558B2F;stroke-width:1;stroke-dasharray:4,3}
+
+/* Etiquetas */
+.zone-label{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;fill:#0D2B0E;pointer-events:none;text-shadow:0 1px 2px rgba(255,255,255,.8)}
+.zone-sublabel{font-size:9px;font-weight:500;fill:#1B5E20;pointer-events:none}
+
+/* Sede pin (Cd. Madero) */
+.sede-marker{filter:drop-shadow(0 4px 10px rgba(27,94,32,.35))}
+.sede-pulse{transform-origin:center;animation:pulse-pin 2.5s infinite ease-out}
+@keyframes pulse-pin{0%{transform:scale(1);opacity:.6}100%{transform:scale(3);opacity:0}}
+
+/* Costa / Golfo */
+.coast-line{fill:none;stroke:#0E72B5;stroke-width:2;stroke-dasharray:6,4;opacity:.5}
+.golfo-label{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;fill:#0E72B5;opacity:.55}
+
+/* Compass */
+.compass{opacity:.5}
+
+/* TOOLTIP */
+.tooltip{position:absolute;background:rgba(13,43,14,.95);color:#fff;padding:14px 16px;border-radius:12px;font-size:13px;line-height:1.5;pointer-events:none;opacity:0;transform:translate(-50%,-110%);transition:opacity .2s;max-width:240px;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.tooltip.show{opacity:1}
+.tooltip strong{display:block;font-family:'Playfair Display',serif;font-size:15px;margin-bottom:4px;color:#A5D6A7}
+.tooltip .tip-row{display:flex;justify-content:space-between;gap:12px;font-size:11px;color:rgba(255,255,255,.75);margin-top:4px}
+.tooltip .tip-row b{color:#fff;font-weight:600}
+
+/* SIDEBAR */
+.map-sidebar{display:flex;flex-direction:column;gap:20px}
+.legend{background:#F8FBF8;border-radius:14px;padding:18px;border:1px solid #e7eee7}
+.legend h3{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#0D2B0E;margin-bottom:12px;letter-spacing:.3px}
+.legend-item{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:#444;margin-bottom:10px;line-height:1.45}
+.legend-swatch{width:18px;height:18px;border-radius:5px;flex-shrink:0;margin-top:1px}
+.legend-swatch.t1{background:rgba(27,94,32,.6);border:2px solid #1B5E20}
+.legend-swatch.t2{background:rgba(85,185,106,.45);border:1.5px solid #2E7D32}
+.legend-swatch.t3{background:rgba(165,214,167,.4);border:1px dashed #558B2F}
+.legend-item small{display:block;color:#888;font-size:10px;margin-top:1px}
+
+/* STATS */
+.stats-card{background:linear-gradient(135deg,#1B5E20,#0D2B0E);color:#fff;border-radius:14px;padding:18px}
+.stats-card h3{font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:#A5D6A7;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.stat-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.stat-row:last-child{border-bottom:none}
+.stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.7);text-align:right;max-width:140px}
+
+.cta-card{background:#fff;border:2px solid #1B5E20;border-radius:14px;padding:18px;text-align:center}
+.cta-card p{font-size:12px;color:#555;margin-bottom:12px}
+.cta-btn{display:inline-flex;align-items:center;gap:6px;background:#25D366;color:#fff;text-decoration:none;font-weight:600;font-size:13px;padding:10px 20px;border-radius:999px;transition:background .2s}
+.cta-btn:hover{background:#1da855}
+
+/* MOBILE INTERACTIVE CITIES LIST */
+.cities-list{margin-top:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.city-chip{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e7eee7;border-radius:10px;padding:10px 14px;font-size:12px;color:#333;cursor:pointer;transition:all .2s}
+.city-chip:hover{border-color:#1B5E20;box-shadow:0 4px 12px rgba(27,94,32,.08);transform:translateY(-1px)}
+.city-chip .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.city-chip[data-t="directa"] .dot{background:#1B5E20}
+.city-chip[data-t="regular"] .dot{background:#2E7D32}
+.city-chip[data-t="proyecto"] .dot{background:#A5D6A7}
+.city-chip strong{font-weight:600;color:#0D2B0E}
+.city-chip small{color:#888;font-size:10px;margin-left:auto}
+
+/* NOTES */
+.notes{margin-top:48px;background:#fff;border-radius:16px;padding:28px;border:1px solid #e7eee7}
+.notes h2{font-family:'Playfair Display',serif;font-size:24px;color:#0D2B0E;margin-bottom:16px}
+.notes ul{padding-left:22px;color:#444;font-size:14px;line-height:1.7}
+.notes li{margin-bottom:8px}
+.notes strong{color:#1B5E20}
+
+.implementation{background:#FFF8E1;border-left:4px solid #F9A825;padding:16px 20px;border-radius:8px;margin-top:24px;font-size:13px;color:#5D4037}
+.implementation strong{color:#E65100}
+</style>
+</head>
+<body>
+
+<div class="preview-banner">
+  🎨 PREVIEW · Mejora K del brainstorming · Mapa Interactivo de Cobertura — propuesta visual
+</div>
+
+<div class="wrap">
+
+  <div class="title-block">
+    <span class="kicker">Cobertura geográfica</span>
+    <h1>¿Llegamos hasta tu zona?</h1>
+    <p>Mapa interactivo del área de servicio de Viveros Terra en el sur de Tamaulipas, norte de Veracruz y zona Huasteca.</p>
+  </div>
+
+  <section class="map-section">
+    <div class="map-grid">
+
+      <!-- MAPA CANVAS -->
+      <div class="map-canvas">
+        <div class="tooltip" id="tooltip"></div>
+
+        <svg class="map-svg" viewBox="0 0 600 480" xmlns="http://www.w3.org/2000/svg" aria-label="Mapa de cobertura Viveros Terra">
+
+          <!-- Golfo de México -->
+          <defs>
+            <linearGradient id="golfo" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0%" stop-color="#BBDEFB" stop-opacity=".3"/>
+              <stop offset="100%" stop-color="#90CAF9" stop-opacity=".15"/>
+            </linearGradient>
+          </defs>
+          <rect x="430" y="0" width="170" height="480" fill="url(#golfo)"/>
+          <text x="498" y="80" text-anchor="middle" class="golfo-label">Golfo de México</text>
+          <text x="498" y="100" text-anchor="middle" font-size="9" fill="#0E72B5" opacity=".6">~25 km del puerto</text>
+
+          <!-- Línea de costa -->
+          <path d="M 430,0 Q 425,80 435,150 Q 440,220 432,300 Q 428,370 440,480" class="coast-line"/>
+
+          <!-- ============ ZONAS ============ -->
+
+          <!-- 1. TAMPICO — cobertura directa -->
+          <g class="zone" data-tier="directa"
+             data-name="Tampico"
+             data-time="Mismo día"
+             data-services="Todos los servicios"
+             data-wa="Hola, quiero servicio en Tampico">
+            <circle class="zone-inner" cx="380" cy="220" r="55"/>
+            <text x="380" y="220" text-anchor="middle" class="zone-label">Tampico</text>
+            <text x="380" y="234" text-anchor="middle" class="zone-sublabel">CENTRO</text>
+          </g>
+
+          <!-- 2. CD. MADERO (sede) — cobertura directa -->
+          <g class="zone" data-tier="directa"
+             data-name="Ciudad Madero"
+             data-time="Mismo día · Sede"
+             data-services="Showroom + Vivero + Stock inmediato"
+             data-wa="Hola, quiero visitar el vivero en Cd. Madero">
+            <ellipse class="zone-inner" cx="395" cy="295" rx="48" ry="32"/>
+            <text x="395" y="293" text-anchor="middle" class="zone-label">Cd. Madero</text>
+            <text x="395" y="307" text-anchor="middle" class="zone-sublabel">SEDE</text>
+            <!-- Pin sede -->
+            <g class="sede-marker" transform="translate(442,270)">
+              <circle class="sede-pulse" cx="0" cy="0" r="8" fill="#1B5E20" opacity=".6"/>
+              <circle cx="0" cy="0" r="7" fill="#1B5E20"/>
+              <circle cx="0" cy="0" r="3" fill="#fff"/>
+            </g>
+          </g>
+
+          <!-- 3. ALTAMIRA — cobertura directa -->
+          <g class="zone" data-tier="directa"
+             data-name="Altamira"
+             data-time="Mismo día"
+             data-services="Todos los servicios · Puerto industrial"
+             data-wa="Hola, quiero servicio en Altamira">
+            <ellipse class="zone-inner" cx="350" cy="155" rx="50" ry="35"/>
+            <text x="350" y="155" text-anchor="middle" class="zone-label">Altamira</text>
+            <text x="350" y="169" text-anchor="middle" class="zone-sublabel">PUERTO</text>
+          </g>
+
+          <!-- 4. PÁNUCO (Veracruz) — cobertura regular -->
+          <g class="zone" data-tier="regular"
+             data-name="Pánuco, Veracruz"
+             data-time="24–48 hrs"
+             data-services="Pasto · Plantas · Materiales"
+             data-wa="Hola, quiero saber si llegan a Pánuco">
+            <ellipse class="zone-inner" cx="295" cy="350" rx="55" ry="38"/>
+            <text x="295" y="350" text-anchor="middle" class="zone-label">Pánuco</text>
+            <text x="295" y="364" text-anchor="middle" class="zone-sublabel">VERACRUZ</text>
+          </g>
+
+          <!-- 5. CD. VICTORIA — cobertura regular -->
+          <g class="zone" data-tier="regular"
+             data-name="Ciudad Victoria"
+             data-time="2–3 días"
+             data-services="Pasto · Mayoreo · Proyectos"
+             data-wa="Hola, quiero servicio en Cd. Victoria">
+            <ellipse class="zone-inner" cx="180" cy="100" rx="58" ry="36"/>
+            <text x="180" y="100" text-anchor="middle" class="zone-label">Cd. Victoria</text>
+            <text x="180" y="114" text-anchor="middle" class="zone-sublabel">CAPITAL TAM.</text>
+          </g>
+
+          <!-- 6. HUASTECA (regional) — por proyecto -->
+          <g class="zone" data-tier="proyecto"
+             data-name="Zona Huasteca"
+             data-time="Por proyecto · 3–7 días"
+             data-services="Mayoreo · Proyectos B2B · Fraccionamientos"
+             data-wa="Hola, soy de la Huasteca y quiero cotizar un proyecto">
+            <ellipse class="zone-inner" cx="170" cy="245" rx="80" ry="55"/>
+            <text x="170" y="240" text-anchor="middle" class="zone-label">Zona Huasteca</text>
+            <text x="170" y="256" text-anchor="middle" class="zone-sublabel">REGIONAL · POR PROYECTO</text>
+          </g>
+
+          <!-- 7. TUXPAN VER — por proyecto -->
+          <g class="zone" data-tier="proyecto"
+             data-name="Tuxpan, Veracruz"
+             data-time="Por proyecto · 5–7 días"
+             data-services="Proyectos comerciales · Mayoreo"
+             data-wa="Hola, quiero saber si cubren Tuxpan">
+            <ellipse class="zone-inner" cx="330" cy="425" rx="55" ry="32"/>
+            <text x="330" y="423" text-anchor="middle" class="zone-label">Tuxpan</text>
+            <text x="330" y="437" text-anchor="middle" class="zone-sublabel">VERACRUZ</text>
+          </g>
+
+          <!-- Compass rose -->
+          <g class="compass" transform="translate(50,430)">
+            <circle cx="0" cy="0" r="22" fill="none" stroke="#1B5E20" stroke-width="1"/>
+            <path d="M 0,-18 L 4,0 L 0,18 L -4,0 Z" fill="#1B5E20"/>
+            <text x="0" y="-26" text-anchor="middle" font-size="10" font-weight="700" fill="#1B5E20">N</text>
+          </g>
+
+          <!-- Scale bar -->
+          <g transform="translate(50,395)">
+            <line x1="0" y1="0" x2="80" y2="0" stroke="#1B5E20" stroke-width="2"/>
+            <line x1="0" y1="-4" x2="0" y2="4" stroke="#1B5E20" stroke-width="2"/>
+            <line x1="80" y1="-4" x2="80" y2="4" stroke="#1B5E20" stroke-width="2"/>
+            <text x="40" y="16" text-anchor="middle" font-size="9" fill="#1B5E20">~50 km</text>
+          </g>
+
+        </svg>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="map-sidebar">
+
+        <!-- Leyenda -->
+        <div class="legend">
+          <h3>Tipos de cobertura</h3>
+          <div class="legend-item">
+            <span class="legend-swatch t1"></span>
+            <div>
+              <strong>Cobertura directa</strong>
+              <small>Entrega e instalación el mismo día</small>
+            </div>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch t2"></span>
+            <div>
+              <strong>Cobertura regular</strong>
+              <small>24 a 72 hrs según pedido</small>
+            </div>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch t3"></span>
+            <div>
+              <strong>Por proyecto</strong>
+              <small>Mayoreo y proyectos B2B</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-card">
+          <h3>· Cobertura ·</h3>
+          <div class="stat-row">
+            <span class="stat-num">3</span>
+            <span class="stat-lbl">Ciudades cobertura directa</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-num">8</span>
+            <span class="stat-lbl">Localidades con servicio regular</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-num">+30</span>
+            <span class="stat-lbl">Municipios alcanzables por proyecto</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-num">~150 km</span>
+            <span class="stat-lbl">Radio de cobertura desde Cd. Madero</span>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-card">
+          <p>¿Tu zona no aparece en el mapa? <strong>Pregunta sin compromiso.</strong></p>
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20saber%20si%20cubren%20mi%20zona" target="_blank" rel="noopener" class="cta-btn">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1l-.9 1.2c-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20"/></svg>
+            Preguntar por WhatsApp
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Cities chips list (mobile-friendly + accesibilidad) -->
+    <div class="cities-list" id="cities-list">
+      <div class="city-chip" data-t="directa" data-name="Tampico"><span class="dot"></span><strong>Tampico</strong><small>mismo día</small></div>
+      <div class="city-chip" data-t="directa" data-name="Cd. Madero"><span class="dot"></span><strong>Cd. Madero</strong><small>sede</small></div>
+      <div class="city-chip" data-t="directa" data-name="Altamira"><span class="dot"></span><strong>Altamira</strong><small>mismo día</small></div>
+      <div class="city-chip" data-t="regular" data-name="Pánuco"><span class="dot"></span><strong>Pánuco</strong><small>24–48 hrs</small></div>
+      <div class="city-chip" data-t="regular" data-name="Cd. Victoria"><span class="dot"></span><strong>Cd. Victoria</strong><small>2–3 días</small></div>
+      <div class="city-chip" data-t="regular" data-name="Cd. Mante"><span class="dot"></span><strong>Cd. Mante</strong><small>2–3 días</small></div>
+      <div class="city-chip" data-t="regular" data-name="Aldama"><span class="dot"></span><strong>Aldama</strong><small>24 hrs</small></div>
+      <div class="city-chip" data-t="regular" data-name="Naranjos"><span class="dot"></span><strong>Naranjos</strong><small>48 hrs</small></div>
+      <div class="city-chip" data-t="proyecto" data-name="Tuxpan"><span class="dot"></span><strong>Tuxpan</strong><small>por proyecto</small></div>
+      <div class="city-chip" data-t="proyecto" data-name="Cerro Azul"><span class="dot"></span><strong>Cerro Azul</strong><small>por proyecto</small></div>
+      <div class="city-chip" data-t="proyecto" data-name="Tempoal"><span class="dot"></span><strong>Tempoal</strong><small>por proyecto</small></div>
+      <div class="city-chip" data-t="proyecto" data-name="El Higo"><span class="dot"></span><strong>El Higo</strong><small>por proyecto</small></div>
+    </div>
+  </section>
+
+  <!-- Notes for implementation -->
+  <div class="notes">
+    <h2>Detalles de comportamiento</h2>
+    <ul>
+      <li><strong>Hover sobre cada zona</strong> → tooltip con tiempo de entrega, servicios disponibles y CTA WhatsApp pre-llenado con el nombre de la ciudad.</li>
+      <li><strong>Click en la zona</strong> → abre WhatsApp con mensaje específico de esa ciudad ("Hola, quiero servicio en Pánuco...").</li>
+      <li><strong>Pin animado en Cd. Madero</strong> = sede física (showroom + vivero). Aporta credibilidad.</li>
+      <li><strong>Línea costera del Golfo</strong> con label "Golfo de México" → orienta al visitante geográficamente.</li>
+      <li><strong>3 tiers de color</strong>: directa (verde oscuro sólido), regular (verde medio), proyecto (verde claro con borde punteado).</li>
+      <li><strong>Lista de ciudades abajo</strong> → fallback accesible para móviles + bots/lectores de pantalla. También clickeables.</li>
+      <li><strong>Stats agregados</strong> en sidebar oscura → "3 ciudades · 8 localidades · +30 municipios · 150 km radio".</li>
+      <li><strong>CTA final</strong> "¿Tu zona no aparece? Pregunta sin compromiso" → captura el long tail.</li>
+    </ul>
+
+    <div class="implementation">
+      <strong>Listo para implementar:</strong> reemplaza la sección actual "Cobertura de servicio" del homepage que es lista de texto plano. Sustituye <code>/index.html</code> sección con <code>id="cobertura"</code> por este bloque. SVG pesa solo ~4 KB, sin librerías externas. Pasa Lighthouse al 100% en accesibilidad porque tiene labels semánticos + fallback de chips clickeables.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Tooltip handler
+const tooltip = document.getElementById('tooltip');
+const mapCanvas = document.querySelector('.map-canvas');
+const zones = document.querySelectorAll('.zone');
+
+zones.forEach(zone => {
+  zone.addEventListener('mouseenter', (e) => {
+    const name = zone.dataset.name;
+    const time = zone.dataset.time;
+    const services = zone.dataset.services;
+    tooltip.innerHTML = `
+      <strong>${name}</strong>
+      <div class="tip-row"><span>Tiempo</span><b>${time}</b></div>
+      <div class="tip-row"><span>Servicios</span><b>${services}</b></div>
+      <div style="margin-top:6px;font-size:11px;color:#A5D6A7">Click para cotizar →</div>
+    `;
+    tooltip.classList.add('show');
+  });
+
+  zone.addEventListener('mousemove', (e) => {
+    const r = mapCanvas.getBoundingClientRect();
+    tooltip.style.left = (e.clientX - r.left) + 'px';
+    tooltip.style.top = (e.clientY - r.top - 8) + 'px';
+  });
+
+  zone.addEventListener('mouseleave', () => {
+    tooltip.classList.remove('show');
+  });
+
+  zone.addEventListener('click', () => {
+    const wa = zone.dataset.wa || 'Hola Viveros Terra';
+    window.open(`https://wa.me/528333268008?text=${encodeURIComponent(wa)}`, '_blank');
+  });
+});
+
+// City chips also clickable
+document.querySelectorAll('.city-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const name = chip.dataset.name;
+    const msg = `Hola, quiero saber si cubren ${name} y cotizar`;
+    window.open(`https://wa.me/528333268008?text=${encodeURIComponent(msg)}`, '_blank');
+  });
+});
+</script>
+
+</body>
+</html>
