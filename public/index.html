@@ -1376,6 +1376,201 @@
   </div>
 </section>
 
+
+<!-- COTIZADOR INSTANTÁNEO m² + Email lead capture -->
+<section id="cotizador-instantaneo" class="py-20" style="background:linear-gradient(135deg,#0D2B0E 0%,#1B5E20 100%);color:#fff;position:relative;overflow:hidden">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10 reveal">
+      <span style="display:inline-block;background:rgba(165,214,167,0.18);color:#A5D6A7;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:999px;margin-bottom:14px">Cotizador instantáneo</span>
+      <h2 class="text-3xl sm:text-4xl font-display font-bold text-white mt-1 mb-3">¿Cuánto cuesta tu jardín?</h2>
+      <p class="text-white/70 max-w-xl mx-auto text-base">Calcula tu estimado en 10 segundos. Sin formularios largos, sin compromiso.</p>
+    </div>
+
+    <div class="reveal" style="background:#fff;color:#1a1a1a;border-radius:24px;padding:36px;box-shadow:0 24px 60px rgba(0,0,0,0.25);max-width:780px;margin:0 auto">
+
+      <!-- Step 1: m² -->
+      <div style="margin-bottom:24px">
+        <label style="display:block;font-size:13px;font-weight:600;color:#0D2B0E;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">1. ¿Cuántos m² tiene tu área verde?</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px">
+          <div>
+            <label style="font-size:11px;color:#666">Largo (metros)</label>
+            <input type="number" id="cot-largo" placeholder="ej. 10" min="1" max="200" style="width:100%;padding:12px 14px;border:2px solid #d4e7d8;border-radius:10px;font-size:16px;font-weight:600;color:#0D2B0E;outline:none;transition:border-color .2s" onfocus="this.style.borderColor='#1B5E20'" onblur="this.style.borderColor='#d4e7d8'" oninput="recalcCot()">
+          </div>
+          <div>
+            <label style="font-size:11px;color:#666">Ancho (metros)</label>
+            <input type="number" id="cot-ancho" placeholder="ej. 8" min="1" max="200" style="width:100%;padding:12px 14px;border:2px solid #d4e7d8;border-radius:10px;font-size:16px;font-weight:600;color:#0D2B0E;outline:none;transition:border-color .2s" onfocus="this.style.borderColor='#1B5E20'" onblur="this.style.borderColor='#d4e7d8'" oninput="recalcCot()">
+          </div>
+        </div>
+        <div style="font-size:11px;color:#666">O escribe directamente los m²: <input type="number" id="cot-m2-direct" placeholder="m²" min="1" max="50000" style="width:100px;padding:4px 8px;border:1px solid #d4e7d8;border-radius:6px;font-size:13px" oninput="recalcCotDirect()"></div>
+      </div>
+
+      <!-- Step 2: Servicio -->
+      <div style="margin-bottom:24px">
+        <label style="display:block;font-size:13px;font-weight:600;color:#0D2B0E;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">2. ¿Qué servicio te interesa?</label>
+        <div class="cot-services-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+          <button type="button" class="cot-svc-btn" data-svc="pasto" data-min="85" data-max="120" data-unit="m²" onclick="selectCotSvc(this)" style="padding:14px;border:2px solid #d4e7d8;background:#fff;border-radius:12px;cursor:pointer;text-align:left;transition:all .2s">
+            <strong style="display:block;color:#0D2B0E;font-size:14px;font-family:'Playfair Display',serif">Instalación de pasto</strong>
+            <small style="color:#666;font-size:11px">San Agustín · desde $85/m² instalado</small>
+          </button>
+          <button type="button" class="cot-svc-btn" data-svc="mantenimiento" data-min="6" data-max="12" data-unit="m²/mes" onclick="selectCotSvc(this)" style="padding:14px;border:2px solid #d4e7d8;background:#fff;border-radius:12px;cursor:pointer;text-align:left;transition:all .2s">
+            <strong style="display:block;color:#0D2B0E;font-size:14px;font-family:'Playfair Display',serif">Mantenimiento mensual</strong>
+            <small style="color:#666;font-size:11px">Poda + fertilización · desde $750/mes</small>
+          </button>
+          <button type="button" class="cot-svc-btn" data-svc="diseno" data-min="120" data-max="350" data-unit="m² proyecto" onclick="selectCotSvc(this)" style="padding:14px;border:2px solid #d4e7d8;background:#fff;border-radius:12px;cursor:pointer;text-align:left;transition:all .2s">
+            <strong style="display:block;color:#0D2B0E;font-size:14px;font-family:'Playfair Display',serif">Diseño + instalación</strong>
+            <small style="color:#666;font-size:11px">Plan Terra Completo · paisajismo</small>
+          </button>
+          <button type="button" class="cot-svc-btn" data-svc="riego" data-min="180" data-max="320" data-unit="m²" onclick="selectCotSvc(this)" style="padding:14px;border:2px solid #d4e7d8;background:#fff;border-radius:12px;cursor:pointer;text-align:left;transition:all .2s">
+            <strong style="display:block;color:#0D2B0E;font-size:14px;font-family:'Playfair Display',serif">Sistema de riego</strong>
+            <small style="color:#666;font-size:11px">Automatizado WiFi · ahorra 40% agua</small>
+          </button>
+          <button type="button" class="cot-svc-btn" data-svc="sintetico" data-min="385" data-max="650" data-unit="m²" onclick="selectCotSvc(this)" style="padding:14px;border:2px solid #d4e7d8;background:#fff;border-radius:12px;cursor:pointer;text-align:left;transition:all .2s">
+            <strong style="display:block;color:#0D2B0E;font-size:14px;font-family:'Playfair Display',serif">Pasto sintético</strong>
+            <small style="color:#666;font-size:11px">Toscana premium · instalado</small>
+          </button>
+          <button type="button" class="cot-svc-btn" data-svc="completo" data-min="450" data-max="900" data-unit="m² integral" onclick="selectCotSvc(this)" style="padding:14px;border:2px solid #d4e7d8;background:#fff;border-radius:12px;cursor:pointer;text-align:left;transition:all .2s">
+            <strong style="display:block;color:#0D2B0E;font-size:14px;font-family:'Playfair Display',serif">Proyecto integral</strong>
+            <small style="color:#666;font-size:11px">Pasto + plantas + riego + mantenimiento</small>
+          </button>
+        </div>
+      </div>
+
+      <!-- Resultado -->
+      <div id="cot-result" style="display:none;background:linear-gradient(135deg,#F0F7F0,#E8F5E9);border-radius:14px;padding:24px;margin-bottom:20px;border-left:4px solid #1B5E20">
+        <div style="font-size:11px;color:#1B5E20;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Estimado para tu jardín</div>
+        <div style="font-family:'Playfair Display',serif;font-size:34px;font-weight:800;color:#0D2B0E;margin-bottom:4px" id="cot-price">$0 – $0 MXN</div>
+        <div style="font-size:13px;color:#444;line-height:1.6" id="cot-detail">Detalle del cálculo aparecerá aquí</div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(27,94,32,0.15);font-size:11px;color:#666;font-style:italic">⚠️ Estimado de referencia. Precio final depende de visita técnica gratuita.</div>
+      </div>
+
+      <!-- Email capture + WhatsApp CTA -->
+      <div id="cot-actions" style="display:none">
+        <p style="font-size:13px;color:#444;margin-bottom:14px;text-align:center"><strong>¿Te enviamos esta cotización por correo?</strong> Sin spam, solo el detalle.</p>
+        <form id="cot-form" action="https://formsubmit.co/viverosterra@hotmail.com" method="POST" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+          <input type="hidden" name="_subject" value="Nuevo lead — Cotizador instantáneo">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://www.viverosterra.com/gracias">
+          <input type="hidden" name="m2" id="cot-hidden-m2">
+          <input type="hidden" name="servicio" id="cot-hidden-svc">
+          <input type="hidden" name="estimado" id="cot-hidden-price">
+          <input type="email" name="email" placeholder="tu@correo.com" required style="flex:1;min-width:200px;padding:12px 14px;border:2px solid #d4e7d8;border-radius:10px;font-size:14px;outline:none">
+          <input type="tel" name="whatsapp" placeholder="WhatsApp (opcional)" style="flex:1;min-width:160px;padding:12px 14px;border:2px solid #d4e7d8;border-radius:10px;font-size:14px;outline:none">
+          <button type="submit" style="background:#1B5E20;color:#fff;border:none;padding:12px 24px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Enviar cotización
+          </button>
+        </form>
+
+        <div style="display:flex;align-items:center;gap:10px;margin:18px 0">
+          <div style="flex:1;height:1px;background:#e7eee7"></div>
+          <span style="font-size:11px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:1px">o</span>
+          <div style="flex:1;height:1px;background:#e7eee7"></div>
+        </div>
+
+        <a id="cot-wa-btn" href="#" target="_blank" rel="noopener" style="background:#25D366;color:#fff;text-decoration:none;padding:16px 24px;border-radius:12px;font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1l-.9 1.2c-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20"/></svg>
+          Cotizar exacto por WhatsApp (con visita técnica gratuita)
+        </a>
+      </div>
+
+    </div>
+
+    <p style="text-align:center;color:rgba(255,255,255,0.6);font-size:12px;margin-top:20px"><strong style="color:#A5D6A7">Más de 1,500 clientes</strong> han calculado su jardín con nosotros · Sin compromiso · Sin spam</p>
+  </div>
+</section>
+
+<script>
+let cotState = {m2: 0, svc: null, svcName: '', svcMin: 0, svcMax: 0, svcUnit: ''};
+
+function recalcCot() {
+  const l = parseFloat(document.getElementById('cot-largo').value) || 0;
+  const a = parseFloat(document.getElementById('cot-ancho').value) || 0;
+  cotState.m2 = Math.round(l * a);
+  document.getElementById('cot-m2-direct').value = cotState.m2 || '';
+  updateCotResult();
+}
+
+function recalcCotDirect() {
+  const direct = parseFloat(document.getElementById('cot-m2-direct').value) || 0;
+  cotState.m2 = Math.round(direct);
+  if(direct > 0) {
+    document.getElementById('cot-largo').value = '';
+    document.getElementById('cot-ancho').value = '';
+  }
+  updateCotResult();
+}
+
+function selectCotSvc(btn) {
+  document.querySelectorAll('.cot-svc-btn').forEach(b => {
+    b.style.borderColor = '#d4e7d8';
+    b.style.background = '#fff';
+  });
+  btn.style.borderColor = '#1B5E20';
+  btn.style.background = '#F0F7F0';
+  cotState.svc = btn.dataset.svc;
+  cotState.svcName = btn.querySelector('strong').textContent;
+  cotState.svcMin = parseFloat(btn.dataset.min);
+  cotState.svcMax = parseFloat(btn.dataset.max);
+  cotState.svcUnit = btn.dataset.unit;
+  updateCotResult();
+}
+
+function fmt(n) { return n.toLocaleString('es-MX', {maximumFractionDigits: 0}); }
+
+function updateCotResult() {
+  if(!cotState.m2 || !cotState.svc) {
+    document.getElementById('cot-result').style.display = 'none';
+    document.getElementById('cot-actions').style.display = 'none';
+    return;
+  }
+  const min = cotState.m2 * cotState.svcMin;
+  const max = cotState.m2 * cotState.svcMax;
+  let detail = '';
+
+  if(cotState.svc === 'pasto') {
+    detail = `${cotState.m2} m² × $${cotState.svcMin}–$${cotState.svcMax}/m² instalado. Incluye preparación de suelo y arraigo de 30 días.`;
+  } else if(cotState.svc === 'mantenimiento') {
+    const minM = Math.max(750, min);
+    const maxM = Math.max(1200, max);
+    document.getElementById('cot-price').textContent = `$${fmt(minM)} – $${fmt(maxM)} / mes`;
+    document.getElementById('cot-detail').textContent = `${cotState.m2} m² con visita mensual: poda, fertilización y control de plagas. Cuota mínima $750/mes.`;
+    document.getElementById('cot-result').style.display = 'block';
+    document.getElementById('cot-actions').style.display = 'block';
+    updateHidden(minM, maxM);
+    return;
+  } else if(cotState.svc === 'diseno') {
+    const minD = Math.max(3000, min);
+    const maxD = Math.max(8000, max);
+    document.getElementById('cot-price').textContent = `$${fmt(minD)} – $${fmt(maxD)} MXN`;
+    document.getElementById('cot-detail').textContent = `Plan Terra Completo para ${cotState.m2} m². Incluye visita, render 3D, lista de materiales y supervisión. Diseño se descuenta al contratar la obra.`;
+    document.getElementById('cot-result').style.display = 'block';
+    document.getElementById('cot-actions').style.display = 'block';
+    updateHidden(minD, maxD);
+    return;
+  } else if(cotState.svc === 'riego') {
+    detail = `${cotState.m2} m² con aspersores + goteo + controlador WiFi. Recupera inversión en ~18 meses por ahorro de agua.`;
+  } else if(cotState.svc === 'sintetico') {
+    detail = `${cotState.m2} m² de Toscana 18 o 28 instalado. Sin mantenimiento, vida útil 8–12 años.`;
+  } else if(cotState.svc === 'completo') {
+    detail = `Proyecto integral en ${cotState.m2} m²: pasto + plantas + riego + 1er año de mantenimiento. Plan llave en mano.`;
+  }
+  document.getElementById('cot-price').textContent = `$${fmt(min)} – $${fmt(max)} MXN`;
+  document.getElementById('cot-detail').textContent = detail;
+  document.getElementById('cot-result').style.display = 'block';
+  document.getElementById('cot-actions').style.display = 'block';
+  updateHidden(min, max);
+}
+
+function updateHidden(min, max) {
+  document.getElementById('cot-hidden-m2').value = cotState.m2 + ' m²';
+  document.getElementById('cot-hidden-svc').value = cotState.svcName;
+  document.getElementById('cot-hidden-price').value = `$${fmt(min)} – $${fmt(max)} MXN`;
+  const waMsg = `Hola Viveros Terra! Calculé en su cotizador:%0A%0A• Servicio: ${cotState.svcName}%0A• Área: ${cotState.m2} m²%0A• Estimado: $${fmt(min)}–$${fmt(max)} MXN%0A%0A¿Podemos agendar visita técnica?`;
+  document.getElementById('cot-wa-btn').href = `https://wa.me/528333268008?text=${waMsg}`;
+}
+</script>
+
 <!-- SERVICIOS con imágenes reales -->
 <section id="servicios" class="py-20 bg-bgwarm">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
