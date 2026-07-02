@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 
+# LLMs — resumen estructurado para asistentes de IA
+# https://www.viverosterra.com/llms.txt
+
 # Sitemap
 Sitemap: https://www.viverosterra.com/sitemap.xml
 
