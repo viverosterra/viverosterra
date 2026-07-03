@@ -971,6 +971,38 @@
     color: #1F3D2B;
     margin: 0;
   }
+  /* ── LOAD SEQUENCE CINEMATOGRÁFICO (Mejora 5) ── */
+  .vt-hero__title .line{display:block;overflow:hidden;padding-bottom:.04em}
+  .vt-hero__title .line > span{display:inline-block;transform:translateY(115%);opacity:0;animation:heroLineUp .95s var(--ease-lux) forwards}
+  .vt-hero__title .line:nth-child(1) > span{animation-delay:.15s}
+  .vt-hero__title .line:nth-child(2) > span{animation-delay:.32s}
+  @keyframes heroLineUp{to{transform:translateY(0);opacity:1}}
+  /* Entrada escalonada de los elementos del hero izquierdo */
+  .vt-hero__subtitle,.vt-hero__ctas,.hero-credenciales,.hero-repse-link,.vt-hero__caption{
+    opacity:0;animation:heroFadeUp .8s var(--ease-lux) forwards;
+  }
+  .vt-hero__subtitle{animation-delay:.5s}
+  .vt-hero__ctas{animation-delay:.62s}
+  .hero-credenciales{animation-delay:.74s}
+  .hero-repse-link{animation-delay:.82s}
+  .vt-hero__caption{animation-delay:.9s}
+  @keyframes heroFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  /* Ken-burns lento en la imagen de fondo */
+  .vt-hero__bg-img{animation:kenBurns 9s var(--ease-lux) forwards}
+  @keyframes kenBurns{from{transform:scale(1.08)}to{transform:scale(1)}}
+  /* Cascada de las métricas (bento) */
+  .vt-hero__metric{opacity:0;animation:metricIn .75s var(--ease-lux) forwards}
+  .vt-hero__metric:nth-child(1){animation-delay:.6s}
+  .vt-hero__metric:nth-child(2){animation-delay:.72s}
+  .vt-hero__metric:nth-child(3){animation-delay:.84s}
+  .vt-hero__metric:nth-child(4){animation-delay:.96s}
+  @keyframes metricIn{from{opacity:0;transform:translateY(30px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+  @media (prefers-reduced-motion:reduce){
+    .vt-hero__title .line > span,.vt-hero__subtitle,.vt-hero__ctas,.hero-credenciales,
+    .hero-repse-link,.vt-hero__caption,.vt-hero__bg-img,.vt-hero__metric{
+      animation:none!important;opacity:1!important;transform:none!important;
+    }
+  }
   .vt-hero__title-accent {
     display: inline-block;
     font-style: italic;
@@ -1047,6 +1079,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 18px;
+  }
+  /* Bento: columna derecha escalonada (asimetría editorial) */
+  @media (min-width: 981px) {
+    .vt-hero__metric:nth-child(2),
+    .vt-hero__metric:nth-child(4) { margin-top: 32px; }
   }
   .vt-hero__metric {
     background: rgba(255, 255, 255, 0.9);
@@ -1275,8 +1312,8 @@
     <div class="vt-hero__left">
       <!-- Título -->
       <h1 class="vt-hero__title">
-        Jardinería Profesional en Tampico —<br>
-        <span class="vt-hero__title-accent">Diseñamos el Jardín de tus Sueños.</span>
+        <span class="line"><span>Jardinería Profesional en Tampico —</span></span>
+        <span class="line"><span class="vt-hero__title-accent">Diseñamos el Jardín de tus Sueños.</span></span>
       </h1>
 
       <!-- Subtítulo -->

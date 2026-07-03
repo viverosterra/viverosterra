@@ -94,8 +94,24 @@ section.bg-bggreen > *{position:relative;z-index:1}
 /* Blog prose images */
 .prose img{border-radius:var(--r-md);box-shadow:var(--elev-2)}
 
-/* ── Tipografía editorial: eyebrows con tracking amplio ── */
+/* ── TIPOGRAFÍA EDITORIAL (Mejora 2) ── */
+/* Eyebrows con tracking amplio */
 .eyebrow,[class*="uppercase"][class*="tracking"]{letter-spacing:.16em}
+/* Ritmo de lectura: párrafos de contenido más aireados */
+.prose p,.content p,.direct-answer p,section.content li{line-height:1.75}
+/* Números editoriales — cualquier stat grande en Playfair con tracking negativo */
+.stat-num,.vt-hero__metric-num,[class*="text-3xl"][class*="font-display"],[class*="text-4xl"][class*="font-display"]{
+  font-family:'Playfair Display',Georgia,serif;letter-spacing:-.02em;font-variant-numeric:lining-nums tabular-nums;
+}
+/* Quote / frase editorial destacada (opt-in con .editorial-quote) */
+.editorial-quote{
+  font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;
+  font-size:clamp(22px,2.6vw,32px);line-height:1.3;color:var(--green-800);
+  letter-spacing:-.01em;max-width:22ch;
+}
+/* Kicker/eyebrow estilizado reutilizable */
+.eyebrow{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.2em;color:var(--green-600)}
 
 /* ── Accesibilidad: reduced motion ── */
 @media (prefers-reduced-motion:reduce){
