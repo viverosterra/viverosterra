@@ -1,0 +1,104 @@
+/* ═══════════════════════════════════════════════════════════════
+   VIVEROS TERRA — Sistema de Diseño "Editorial Botánico de Lujo"
+   Tokens · Atmósfera · Elevación · Tratamiento de imágenes
+   Compartido en todo el sitio. Cargar en <head> tras las fuentes.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root{
+  /* Verdes de marca */
+  --green-900:#0D2B0E; --green-800:#123718; --green-700:#1B5E20;
+  --green-600:#256a2b; --green-500:#2E7D32; --green-400:#55B96A;
+  --green-300:#8fd39b; --green-100:#d4e7d8;
+  /* Neutros cálidos */
+  --cream:#FAFAF7; --sand:#F0F7F0; --sand-2:#edf7ed;
+  --ink:#1F3D2B; --ink-soft:#3a4a3f; --ink-muted:#6b7d6f;
+  --wa:#25D366;
+  /* Elevación (4 planos) */
+  --elev-1:0 1px 3px rgba(15,61,20,.06);
+  --elev-2:0 4px 16px rgba(15,61,20,.08),0 1px 3px rgba(15,61,20,.04);
+  --elev-3:0 12px 32px rgba(15,61,20,.12),0 2px 8px rgba(15,61,20,.06);
+  --elev-4:0 24px 60px rgba(15,61,20,.16),0 8px 24px rgba(15,61,20,.08);
+  /* Bordes suaves */
+  --border-soft:1px solid rgba(27,94,32,.08);
+  --border-mid:1px solid rgba(27,94,32,.14);
+  /* Movimiento */
+  --ease-lux:cubic-bezier(0.16,1,0.3,1);
+  --dur-fast:200ms; --dur:320ms; --dur-slow:600ms;
+  /* Radios */
+  --r-sm:10px; --r-md:16px; --r-lg:24px; --r-xl:32px;
+}
+
+/* ── ATMÓSFERA: grano sutil global ── */
+body{position:relative}
+body::before{
+  content:'';position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+body > *{position:relative;z-index:2}
+
+/* ── Micro-detalles de acabado ── */
+::selection{background:var(--green-300);color:var(--green-900)}
+:focus-visible{outline:2px solid var(--green-500);outline-offset:3px;border-radius:4px}
+::-webkit-scrollbar{width:12px}
+::-webkit-scrollbar-track{background:var(--sand)}
+::-webkit-scrollbar-thumb{background:var(--green-300);border-radius:8px;border:3px solid var(--sand)}
+::-webkit-scrollbar-thumb:hover{background:var(--green-400)}
+
+/* ── ATMÓSFERA: gradientes de malla en secciones ── */
+section.bg-bgwarm,section.bg-white,section.content,.hero{position:relative}
+section.bg-bgwarm::before,section.bg-white::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(60% 50% at 85% 0%,rgba(85,185,106,.06),transparent 70%),
+    radial-gradient(50% 40% at 5% 100%,rgba(27,94,32,.04),transparent 70%);
+}
+section.bg-bgwarm > *,section.bg-white > *{position:relative;z-index:1}
+section.bg-bggreen::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(70% 60% at 90% 10%,rgba(85,185,106,.1),transparent 65%);
+}
+section.bg-bggreen > *{position:relative;z-index:1}
+
+/* ── TRATAMIENTO PREMIUM DE IMÁGENES ──
+   Cubre ambas convenciones: .img-card (servicios) y .hero-img/.case-study (colonias) */
+.img-card{position:relative;overflow:hidden;border-radius:var(--r-md)}
+.img-card::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:linear-gradient(to top,rgba(13,43,14,.28) 0%,rgba(13,43,14,.04) 35%,transparent 60%);
+  opacity:.9;transition:opacity var(--dur) var(--ease-lux);
+}
+.service-card:hover .img-card::after{opacity:.55}
+.img-card img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform var(--dur-slow) var(--ease-lux),filter var(--dur) var(--ease-lux);
+  filter:saturate(1.02);
+}
+.service-card:hover .img-card img{transform:scale(1.06)}
+
+/* Colony pages: hero-img + case-study images get depth + subtle zoom on hover */
+.hero-img{box-shadow:var(--elev-4)!important}
+.hero-img img,.case-study img{transition:transform var(--dur-slow) var(--ease-lux);filter:saturate(1.02)}
+.case-study:hover img{transform:scale(1.03)}
+
+/* ── SISTEMA DE ELEVACIÓN aplicado a cards ── */
+.service-card{box-shadow:var(--elev-2);transition:transform var(--dur) var(--ease-lux),box-shadow var(--dur) var(--ease-lux)}
+.service-card:hover{transform:translateY(-6px);box-shadow:var(--elev-4);border-color:rgba(27,94,32,.2)!important}
+.vt-hero__metric{box-shadow:var(--elev-3)!important;transition:transform var(--dur) var(--ease-lux),box-shadow var(--dur) var(--ease-lux)}
+.vt-hero__metric:hover{transform:translateY(-5px);box-shadow:var(--elev-4)!important}
+/* Colony cards */
+.info-card{transition:box-shadow var(--dur) var(--ease-lux),transform var(--dur) var(--ease-lux)}
+.info-card:hover{box-shadow:var(--elev-2);transform:translateY(-2px)}
+.other-zone{box-shadow:var(--elev-1)}
+.other-zone:hover{box-shadow:var(--elev-3)}
+/* Blog prose images */
+.prose img{border-radius:var(--r-md);box-shadow:var(--elev-2)}
+
+/* ── Tipografía editorial: eyebrows con tracking amplio ── */
+.eyebrow,[class*="uppercase"][class*="tracking"]{letter-spacing:.16em}
+
+/* ── Accesibilidad: reduced motion ── */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .img-card img,.service-card:hover .img-card img,.case-study:hover img{transform:none!important}
+}
