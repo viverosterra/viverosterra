@@ -150,6 +150,13 @@ section.bg-bggreen > *{position:relative;z-index:1}
 .vt-hero__metric:nth-child(4){animation-delay:.81s}
 .vt-hero__metric:nth-child(n+5){animation-delay:.9s}
 
+/* ── Dropdown del navbar: íconos siempre visibles y uniformes ── */
+/* Los íconos de trazo simple (hoja, gota) se veían tenues vs los densos
+   (palma, árbol). Grosor y tamaño uniformes para que todos lean fuerte. */
+.terra-nav__drop-icon{background:#e1f0e2!important}
+.terra-nav__drop-icon svg{width:19px!important;height:19px!important;color:#1B5E20!important;stroke:#1B5E20!important;stroke-width:2!important}
+.terra-nav__drop-icon svg use{stroke-width:2}
+
 /* ── Dropdown del navbar: texto siempre dentro del menú ── */
 /* Descripciones envuelven en vez de truncarse; el título mantiene 1 línea */
 .terra-nav .terra-nav__drop-text{min-width:0}
