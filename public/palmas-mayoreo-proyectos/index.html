@@ -105,21 +105,30 @@
 
 
   /* ===== SPEC SHEET LAYOUT CORREGIDO ===== */
-  .spec-row{display:grid;grid-template-columns:80px 200px 1fr 110px 100px;gap:20px;align-items:center;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.1);transition:background .2s}
-  .spec-row:hover{background:rgba(255,255,255,0.03)}
-  .spec-img-wrap{width:80px;height:80px;flex-shrink:0;border-radius:10px;overflow:hidden}
-  .spec-img-wrap img{width:100%;height:100%;object-fit:cover;opacity:.85}
-  @media(max-width:768px){
-    .spec-row{grid-template-columns:64px 1fr;gap:12px}
-    .spec-specs,.spec-lead{display:none}
-    .spec-price{grid-column:2}
+  .spec-row{display:grid;grid-template-columns:72px 220px 440px 1fr 108px;gap:24px;align-items:center;padding:18px 22px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.1);border-radius:16px;background:rgba(255,255,255,0.04);transition:background .2s,border-color .2s}
+  .spec-row:hover{background:rgba(102,187,106,0.07);border-color:rgba(102,187,106,0.28)}
+  .spec-img-wrap{width:72px;height:72px;flex-shrink:0;border-radius:12px;overflow:hidden}
+  .spec-img-wrap img{width:100%;height:100%;object-fit:cover;opacity:1}
+  @media(max-width:900px){
+    .spec-row{grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:14px 16px}
+    .spec-specs{display:none}
+    .spec-lead{grid-column:3;text-align:right}
+    .spec-cta{grid-column:2/4;text-align:left;margin-top:4px}
   }
-
+  @media(max-width:520px){
+    .spec-row{grid-template-columns:56px 1fr}
+    .spec-lead{grid-column:2;text-align:left;margin-top:6px}
+    .spec-cta{grid-column:2;margin-top:8px}
+  }
 
   .spec-name-cell{min-width:0}
   .spec-name-cell h3{font-family:"Playfair Display",serif;font-size:19px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .spec-name-cell p{font-size:12px;font-style:italic;color:rgba(255,255,255,0.55);margin-top:2px}
-  .spec-specs{min-width:0}
+  /* Specs: 2x2 compacto, label:valor juntos (no dispersos) */
+  .spec-specs{min-width:0;display:grid !important;grid-template-columns:1fr 1fr;gap:8px 24px}
+  .spec-specs > div{display:flex;align-items:baseline;gap:8px;justify-content:flex-start !important;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:4px}
+  .spec-specs > div span{color:rgba(255,255,255,0.5);font-size:12px;min-width:62px}
+  .spec-specs > div b{color:#fff;font-size:13px;font-weight:600}
   .spec-lead{white-space:nowrap;text-align:right}
   .spec-cta{text-align:right;white-space:nowrap}
 
@@ -931,7 +940,7 @@
 
       <!-- Row 1 -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-palma-washingtonia-tampico.webp" alt="Palma Washingtonia en vivero Viveros Terra Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-palma-washingtonia-tampico.webp" alt="Palma Washingtonia en vivero Viveros Terra Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell">
           <h3 class="text-2xl font-bold mb-1">Palma Washingtonia</h3>
           <p class="text-sm italic text-white/55">Washingtonia robusta</p>
@@ -953,7 +962,7 @@
 
       <!-- Row 2 -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-palma-real-tampico.webp" alt="Palma Real (Roystonea) en vivero Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-palma-real-tampico.webp" alt="Palma Real (Roystonea) en vivero Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell">
           <h3 class="text-2xl font-bold mb-1">Palma Real</h3>
           <p class="text-sm italic text-white/55">Roystonea regia</p>
@@ -975,7 +984,7 @@
 
       <!-- Row 3 -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-palma-areca-tampico.webp" alt="Palma Areca en vivero Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-palma-areca-tampico.webp" alt="Palma Areca en vivero Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell">
           <h3 class="text-2xl font-bold mb-1">Palma Areca</h3>
           <p class="text-sm italic text-white/55">Dypsis lutescens</p>
@@ -997,7 +1006,7 @@
 
       <!-- Row 4 -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-palma-viajera-tampico.webp" alt="Palma del Viajero (Ravenala) en vivero Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-palma-viajera-tampico.webp" alt="Palma del Viajero (Ravenala) en vivero Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell">
           <h3 class="text-2xl font-bold mb-1">Palma del Viajero</h3>
           <p class="text-sm italic text-white/55">Ravenala madagascariensis</p>
@@ -1019,7 +1028,7 @@
 
       <!-- Row 5: Coco Plumoso -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-coco-plumoso-tampico.webp" alt="Palma Coco Plumoso (Syagrus) mayoreo Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-coco-plumoso-tampico.webp" alt="Palma Coco Plumoso (Syagrus) mayoreo Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Coco Plumoso</h3><p class="text-sm italic text-white/55">Syagrus romanzoffiana</p></div>
         <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>5–15 m</b></div>
@@ -1033,7 +1042,7 @@
 
       <!-- Row 6: Palma Kerpis -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-palma-kerpis-tampico.webp" alt="Palma Kerpis (Hyophorbe) en vivero Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-palma-kerpis-tampico.webp" alt="Palma Kerpis (Hyophorbe) en vivero Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Palma Kerpis</h3><p class="text-sm italic text-white/55">Hyophorbe lagenicaulis</p></div>
         <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>2–5 m</b></div>
@@ -1047,7 +1056,7 @@
 
       <!-- Row 7: Cycas Revoluta -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-cycas-revoluta-tampico.webp" alt="Cycas Revoluta en vivero Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-cycas-revoluta-tampico.webp" alt="Cycas Revoluta en vivero Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Cycas Revoluta</h3><p class="text-sm italic text-white/55">Cycas revoluta</p></div>
         <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>1–3 m</b></div>
@@ -1061,7 +1070,7 @@
 
       <!-- Row 8: Bambú Tarro -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-bambu-tarro-tampico.webp" alt="Bambú Tarro (Bambusa vulgaris) en vivero Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-bambu-tarro-tampico.webp" alt="Bambú Tarro (Bambusa vulgaris) en vivero Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Bambú Tarro</h3><p class="text-sm italic text-white/55">Bambusa vulgaris</p></div>
         <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>5–20 m</b></div>
@@ -1075,7 +1084,7 @@
 
       <!-- Row 9: Yucca Rostrata -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-yucca-tampico.webp" alt="Yucca en vivero Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-yucca-tampico.webp" alt="Yucca en vivero Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Yucca Rostrata</h3><p class="text-sm italic text-white/55">Yucca rostrata</p></div>
         <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>2–4 m</b></div>
@@ -1089,7 +1098,7 @@
 
       <!-- Row 10: Palma Bambú -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-palma-bambu-chamaedorea-tampico.webp" alt="Palma Bambú (Chamaedorea seifrizii) Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-palma-bambu-chamaedorea-tampico.webp" alt="Palma Bambú (Chamaedorea seifrizii) Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Palma Bambú</h3><p class="text-sm italic text-white/55">Chamaedorea seifrizii</p></div>
         <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>2–3 m</b></div>
@@ -1103,7 +1112,7 @@
 
       <!-- Row 11: Cola de Zorra -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-palma-cola-zorra-tampico.webp" alt="Palma Cola de Zorra (Wodyetia) en vivero Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-palma-cola-zorra-tampico.webp" alt="Palma Cola de Zorra (Wodyetia) en vivero Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Palma Cola de Zorra</h3><p class="text-sm italic text-white/55">Wodyetia bifurcata</p></div>
         <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>4–10 m</b></div>
@@ -1117,7 +1126,7 @@
 
       <!-- Row 12: Palma Triángulo -->
       <div class="spec-row bg-white/5 rounded-2xl border border-white/10 p-5">
-        <div class="spec-img-wrap"><img src="/img/especie-palma-triangulo-tampico.webp" alt="Palma Triángulo (Dypsis decaryi) en vivero Tampico" loading="lazy" decoding="async"></div></div>
+        <div class="spec-img-wrap"><img src="/img/especie-palma-triangulo-tampico.webp" alt="Palma Triángulo (Dypsis decaryi) en vivero Tampico" loading="lazy" decoding="async"></div>
         <div class="spec-name-cell"><h3 class="text-2xl font-bold mb-1">Palma Triángulo</h3><p class="text-sm italic text-white/55">Dypsis decaryi</p></div>
         <div class="spec-specs grid grid-cols-2 gap-2 text-sm">
           <div class="flex justify-between border-b border-white/10 pb-1"><span class="text-white/55">Altura</span><b>3–8 m</b></div>
