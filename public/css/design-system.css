@@ -150,6 +150,15 @@ section.bg-bggreen > *{position:relative;z-index:1}
 .vt-hero__metric:nth-child(4){animation-delay:.81s}
 .vt-hero__metric:nth-child(n+5){animation-delay:.9s}
 
+/* ── Dropdown del navbar: texto siempre dentro del menú ── */
+/* Descripciones envuelven en vez de truncarse; el título mantiene 1 línea */
+.terra-nav .terra-nav__drop-text{min-width:0}
+.terra-nav .terra-nav__drop-text span{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;line-height:1.35}
+.terra-nav .terra-nav__drop-text strong{overflow:hidden;text-overflow:ellipsis}
+.terra-nav .terra-nav__drop-item{align-items:flex-start}
+/* Nunca exceder el viewport en anchos intermedios */
+.terra-nav__dropdown{max-width:calc(100vw - 32px);box-sizing:border-box}
+
 /* ── Accesibilidad: reduced motion ── */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
