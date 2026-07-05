@@ -41,6 +41,34 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 .price-tag{font-family:"Playfair Display",serif;font-weight:800}
 .badge-stock{animation:blink-stock 2s ease-in-out infinite}
 @keyframes blink-stock{0%,100%{opacity:1}50%{opacity:.7}}
+.vt-hero{position:relative;isolation:isolate;overflow:hidden;background:#FAFAF7;font-family:'Inter',system-ui,sans-serif;color:#1F3D2B}
+.vt-hero__bg{position:absolute;inset:0;z-index:0}
+.vt-hero__bg-img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block}
+.vt-hero__bg-overlay{position:absolute;inset:0;background:linear-gradient(92deg,rgba(255,255,253,0.96) 0%,rgba(255,255,253,0.84) 28%,rgba(255,255,253,0.50) 50%,rgba(255,255,253,0.28) 72%,rgba(255,255,253,0.18) 100%),linear-gradient(180deg,rgba(255,255,253,0.18) 0%,rgba(255,255,253,0) 30%,rgba(255,255,253,0) 70%,rgba(255,255,253,0.42) 100%)}
+.vt-hero__container{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:80px 40px 88px;display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center;min-height:680px}
+@media(max-width:980px){.vt-hero__container{grid-template-columns:1fr;padding:60px 24px;gap:40px;min-height:auto}}
+.vt-hero__left{display:flex;flex-direction:column;gap:24px;max-width:600px}
+.vt-hero__badges{display:flex;flex-wrap:wrap;gap:10px}
+.vt-hero__badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid #E2E8E3;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:500;color:#2F3F35;box-shadow:0 1px 2px rgba(15,31,20,.04),0 4px 16px rgba(15,31,20,.04);white-space:nowrap;letter-spacing:-.01em}
+.vt-hero__badge svg{width:14px;height:14px;color:#2E7D32;flex-shrink:0}
+.vt-hero__badge--accent{border-color:rgba(85,185,106,.35);background:rgba(240,250,242,.92)}
+.vt-hero__title{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:clamp(40px,5.8vw,72px);line-height:.98;letter-spacing:-.018em;color:#1F3D2B;margin:0}
+.vt-hero__title-accent{display:inline-block;font-style:italic;font-weight:700;color:#55B96A;margin-top:4px}
+.vt-hero__subtitle{font-size:clamp(16px,1.3vw,20px);line-height:1.55;color:#2F3F35;margin:0;max-width:540px}
+.vt-hero__ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:4px}
+.vt-hero__cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 30px;border-radius:999px;font-size:16px;font-weight:600;text-decoration:none;transition:transform .22s ease,box-shadow .22s ease,background .22s ease;white-space:nowrap}
+.vt-hero__cta svg{width:18px;height:18px}
+.vt-hero__cta--primary{background:#45C463;color:#fff;box-shadow:0 8px 22px rgba(69,196,99,.32)}
+.vt-hero__cta--primary:hover{background:#3FB85B;transform:translateY(-2px);box-shadow:0 12px 32px rgba(69,196,99,.42)}
+.vt-hero__cta--secondary{background:rgba(255,255,255,.96);color:#1F3D2B;border:1px solid #E2E8E3;box-shadow:0 4px 16px rgba(15,31,20,.06)}
+.vt-hero__cta--secondary:hover{background:#fff;border-color:#C9D5CC;transform:translateY(-2px);box-shadow:0 10px 28px rgba(15,31,20,.10)}
+.vt-hero__caption{font-size:13px;color:#5A6B5E;margin:2px 0 0}
+.vt-hero__metrics{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.vt-hero__metric{background:rgba(255,255,255,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.65);border-radius:24px;padding:26px 28px 24px;box-shadow:0 1px 2px rgba(15,31,20,.04),0 8px 28px rgba(15,31,20,.08);transition:transform .25s ease,box-shadow .25s ease}
+.vt-hero__metric:hover{transform:translateY(-4px);box-shadow:0 1px 2px rgba(15,31,20,.04),0 14px 36px rgba(15,31,20,.12)}
+.vt-hero__metric-icon{width:32px;height:32px;color:#55B96A;margin-bottom:16px;stroke-width:1.6}
+.vt-hero__metric-num{font-family:'Playfair Display',Georgia,serif;font-size:clamp(32px,3.2vw,44px);font-weight:700;color:#1F3D2B;line-height:1;letter-spacing:-.02em;margin-bottom:6px}
+.vt-hero__metric-label{font-size:13px;color:#5A6B5E;line-height:1.4}
 </style>
 
 <!-- Schema JSON-LD multi-graph: Product + AggregateOffer + FAQPage + BreadcrumbList + ItemList -->
@@ -163,100 +191,59 @@ h1,h2,h3{font-family:"Playfair Display",serif}
   </nav>
 </header>
 
-<!-- ===== SECCIÓN 1 — HERO (editorial premium) ===== -->
-<section class="vps-hero" aria-label="Venta de pasto sintético en Tampico">
-  <div class="vps-hero__bg" aria-hidden="true">
-    <img src="/img/pasto-sintetico-proyecto-04.webp" alt="" class="vps-hero__img" style="object-position:center 55%" loading="eager" fetchpriority="high" width="1280" height="720">
-    <div class="vps-hero__overlay"></div>
+<!-- ===== SECCIÓN 1 — HERO (patrón vt-hero, coherente con el sitio) ===== -->
+<section class="vt-hero" aria-label="Venta de pasto sintético en Tampico">
+  <div class="vt-hero__bg" aria-hidden="true">
+    <img src="/img/pasto-sintetico-proyecto-04.webp" alt="" class="vt-hero__bg-img" loading="eager" fetchpriority="high" decoding="async" width="1920" height="1080">
+    <div class="vt-hero__bg-overlay"></div>
   </div>
-
-  <div class="vps-hero__inner">
-    <div class="vps-hero__content">
-      <!-- Badge de stock -->
-      <div class="vps-hero__badge badge-stock">
-        <svg width="15" height="15" viewBox="0 0 24 24"><use href="#ic-bolt"/></svg>
-        STOCK DISPONIBLE EN TAMPICO
+  <div class="vt-hero__container">
+    <div class="vt-hero__left">
+      <div class="vt-hero__badges" role="list">
+        <span class="vt-hero__badge badge-stock" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Stock disponible en Tampico</span>
+        <span class="vt-hero__badge" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>Factura CFDI 4.0</span>
+        <span class="vt-hero__badge" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/></svg>Showroom Cd. Madero</span>
+        <span class="vt-hero__badge vt-hero__badge--accent" role="listitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Material desde $149/m²</span>
       </div>
-
-      <h1 class="vps-hero__title">
-        Venta de Pasto Sintético<br>en Tampico.
-        <span class="vps-hero__accent">Listo para llevar.</span>
+      <h1 class="vt-hero__title">
+        Venta de Pasto Sintético en Tampico<br>
+        <span class="vt-hero__title-accent">material de calidad, listo para llevar.</span>
       </h1>
-
-      <p class="vps-hero__sub">
-        Compra por metro o por rollo completo. Stock inmediato en modelos Toscana con <strong>factura CFDI 4.0</strong> — mínimo 2 m², rollos de 2 m de ancho.
-      </p>
-
-      <!-- Ancla de precio + CTAs -->
-      <div class="vps-hero__actions">
-        <div class="vps-hero__price">
-          <span class="vps-hero__price-label">Desde</span>
-          <span class="vps-hero__price-num">$149<small>/m²</small></span>
-          <span class="vps-hero__price-note">material Toscana 18</span>
-        </div>
-        <div class="vps-hero__ctas">
-          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20venta%20de%20pasto%20sint%C3%A9tico" target="_blank" rel="noopener" class="vps-cta vps-cta--wa">
-            <svg width="20" height="20" viewBox="0 0 24 24"><use href="#ic-whatsapp"/></svg>Cotizar por WhatsApp
-          </a>
-          <a href="#precios" class="vps-cta vps-cta--ghost">Ver precios y modelos →</a>
-        </div>
+      <p class="vt-hero__subtitle">Compra por metro o por rollo completo. Stock inmediato en modelos Toscana con factura CFDI 4.0. Mínimo 2 m², rollos de 2 m de ancho. Distribuidor autorizado.</p>
+      <div class="vt-hero__ctas">
+        <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20venta%20de%20pasto%20sint%C3%A9tico" target="_blank" rel="noopener" class="vt-hero__cta vt-hero__cta--primary">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>Cotizar por WhatsApp
+        </a>
+        <a href="#precios" class="vt-hero__cta vt-hero__cta--secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Ver precios y modelos
+        </a>
       </div>
-
-      <!-- Trust chips glass -->
-      <div class="vps-hero__trust">
-        <span><svg width="14" height="14" viewBox="0 0 24 24"><use href="#ic-check"/></svg>Stock inmediato</span>
-        <span><svg width="14" height="14" viewBox="0 0 24 24"><use href="#ic-check"/></svg>Factura CFDI 4.0</span>
-        <span><svg width="14" height="14" viewBox="0 0 24 24"><use href="#ic-check"/></svg>Showroom Cd. Madero</span>
-        <span><svg width="14" height="14" viewBox="0 0 24 24"><use href="#ic-check"/></svg>Distribuidor autorizado</span>
+      <p class="vt-hero__caption">Sin compromiso · Respondemos hoy mismo · Lun–Sáb 9am–6pm</p>
+    </div>
+    <div class="vt-hero__metrics">
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <div class="vt-hero__metric-num">$149<span style="font-size:.55em">/m²</span></div>
+        <div class="vt-hero__metric-label">Desde · Toscana 18</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        <div class="vt-hero__metric-num">2</div>
+        <div class="vt-hero__metric-label">Modelos en stock (18/28 mm)</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <div class="vt-hero__metric-num">8–12 años</div>
+        <div class="vt-hero__metric-label">Vida útil del material</div>
+      </div>
+      <div class="vt-hero__metric">
+        <svg class="vt-hero__metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <div class="vt-hero__metric-num">2 m</div>
+        <div class="vt-hero__metric-label">Ancho de rollo · entrega o recoge</div>
       </div>
     </div>
   </div>
 </section>
-
-<style>
-  .vps-hero{position:relative;overflow:hidden;isolation:isolate;background:#0D2B0E}
-  .vps-hero__bg{position:absolute;inset:0;z-index:-1}
-  .vps-hero__img{width:100%;height:100%;object-fit:cover;animation:kenBurnsDS 10s var(--ease-lux,cubic-bezier(.16,1,.3,1)) forwards}
-  .vps-hero__overlay{position:absolute;inset:0;
-    background:linear-gradient(100deg,rgba(13,43,14,.95) 0%,rgba(13,43,14,.85) 38%,rgba(13,43,14,.5) 66%,rgba(13,43,14,.12) 100%),
-               linear-gradient(0deg,rgba(13,43,14,.5) 0%,transparent 42%)}
-  .vps-hero__inner{max-width:1152px;margin:0 auto;padding:clamp(56px,9vh,104px) 24px}
-  .vps-hero__content{max-width:620px}
-  .vps-hero__badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);
-    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.28);
-    color:#fff;padding:8px 16px;border-radius:999px;font-size:12.5px;font-weight:700;letter-spacing:.04em;margin-bottom:22px}
-  .vps-hero__badge svg{stroke:#8fd39b;fill:none;stroke-width:2.2}
-  .vps-hero__title{font-family:'Playfair Display',Georgia,serif;color:#fff;font-weight:800;
-    font-size:clamp(34px,5vw,58px);line-height:1.05;letter-spacing:-.02em;margin:0 0 18px}
-  .vps-hero__accent{color:#8fd39b;font-style:italic;font-weight:700}
-  .vps-hero__sub{color:rgba(255,255,255,.85);font-size:clamp(16px,1.35vw,19px);line-height:1.6;max-width:540px;margin:0 0 28px}
-  .vps-hero__sub strong{color:#fff}
-  .vps-hero__actions{display:flex;flex-wrap:wrap;align-items:center;gap:22px;margin-bottom:26px}
-  .vps-hero__price{background:rgba(255,255,255,.97);border-radius:16px;padding:14px 22px;
-    box-shadow:0 12px 32px rgba(0,0,0,.28);text-align:left;flex-shrink:0}
-  .vps-hero__price-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:1.6px;color:#1B5E20;font-weight:700}
-  .vps-hero__price-num{display:block;font-family:'Playfair Display',Georgia,serif;font-weight:800;font-size:36px;color:#0D2B0E;line-height:1;margin:2px 0}
-  .vps-hero__price-num small{font-size:17px;color:#666;font-weight:600}
-  .vps-hero__price-note{display:block;font-size:11px;color:#888;margin-top:2px}
-  .vps-hero__ctas{display:flex;flex-direction:column;gap:10px}
-  .vps-cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 26px;border-radius:14px;font-weight:700;font-size:15px;text-decoration:none;transition:transform .25s var(--ease-lux,cubic-bezier(.16,1,.3,1)),box-shadow .25s,background .25s}
-  .vps-cta svg{fill:currentColor}
-  .vps-cta--wa{background:#25D366;color:#fff;box-shadow:0 8px 22px rgba(37,211,102,.35)}
-  .vps-cta--wa:hover{background:#1db954;transform:translateY(-2px);box-shadow:0 12px 28px rgba(37,211,102,.45)}
-  .vps-cta--ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px)}
-  .vps-cta--ghost:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
-  .vps-hero__trust{display:flex;flex-wrap:wrap;gap:10px}
-  .vps-hero__trust span{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);
-    border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.9);font-size:12.5px;font-weight:500;
-    padding:6px 13px;border-radius:999px;backdrop-filter:blur(6px)}
-  .vps-hero__trust svg{stroke:#8fd39b;fill:none;stroke-width:2.5}
-  @media(max-width:520px){
-    .vps-hero__actions{gap:16px}
-    .vps-hero__ctas{width:100%}
-    .vps-cta{width:100%}
-  }
-  @media(prefers-reduced-motion:reduce){.vps-hero__img{animation:none}}
-</style>
 
 <!-- RESPUESTA DIRECTA (AEO transaccional) -->
 <section class="py-10 bg-white border-b border-gray-100" aria-label="Respuesta directa">
