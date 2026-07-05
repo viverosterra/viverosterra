@@ -53,12 +53,15 @@ section.bg-bgwarm::before,section.bg-white::before{
     radial-gradient(60% 50% at 85% 0%,rgba(85,185,106,.06),transparent 70%),
     radial-gradient(50% 40% at 5% 100%,rgba(27,94,32,.04),transparent 70%);
 }
-section.bg-bgwarm > *,section.bg-white > *{position:relative;z-index:1}
+/* Eleva el contenido sobre el gradiente ::before, SIN clobbing de hijos ya
+   posicionados (heros con imagen de fondo absolute/fixed) */
+section.bg-bgwarm > *:not(.absolute):not(.fixed),
+section.bg-white > *:not(.absolute):not(.fixed){position:relative;z-index:1}
 section.bg-bggreen::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
   background:radial-gradient(70% 60% at 90% 10%,rgba(85,185,106,.1),transparent 65%);
 }
-section.bg-bggreen > *{position:relative;z-index:1}
+section.bg-bggreen > *:not(.absolute):not(.fixed){position:relative;z-index:1}
 
 /* ── TRATAMIENTO PREMIUM DE IMÁGENES ──
    Cubre ambas convenciones: .img-card (servicios) y .hero-img/.case-study (colonias) */

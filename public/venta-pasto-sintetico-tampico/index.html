@@ -163,47 +163,100 @@ h1,h2,h3{font-family:"Playfair Display",serif}
   </nav>
 </header>
 
-<!-- ===== SECCIÓN 1 — HERO ===== -->
-<section class="relative bg-bgwarm overflow-hidden" aria-label="Venta de pasto sintético en Tampico">
-  <div class="absolute inset-0 z-0">
-    <img src="/img/pasto-sintetico-proyecto-01.webp" alt="" class="w-full h-full object-cover" style="object-position:center 60%" loading="eager" fetchpriority="high" aria-hidden="true">
-    <div class="absolute inset-0" style="background:linear-gradient(92deg,rgba(255,255,252,0.97) 0%,rgba(255,255,252,0.90) 35%,rgba(255,255,252,0.55) 60%,rgba(255,255,252,0.20) 100%),linear-gradient(180deg,rgba(255,255,252,0.12) 0%,rgba(255,255,252,0) 40%,rgba(255,255,252,0.5) 100%)"></div>
+<!-- ===== SECCIÓN 1 — HERO (editorial premium) ===== -->
+<section class="vps-hero" aria-label="Venta de pasto sintético en Tampico">
+  <div class="vps-hero__bg" aria-hidden="true">
+    <img src="/img/pasto-sintetico-proyecto-04.webp" alt="" class="vps-hero__img" style="object-position:center 55%" loading="eager" fetchpriority="high" width="1280" height="720">
+    <div class="vps-hero__overlay"></div>
   </div>
-  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-    <div class="max-w-2xl">
+
+  <div class="vps-hero__inner">
+    <div class="vps-hero__content">
       <!-- Badge de stock -->
-      <div class="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-primary px-4 py-2 rounded-full text-sm font-bold mb-6 badge-stock">
-        <svg class="w-4 h-4 text-green-600"><use href="#ic-bolt"/></svg>
+      <div class="vps-hero__badge badge-stock">
+        <svg width="15" height="15" viewBox="0 0 24 24"><use href="#ic-bolt"/></svg>
         STOCK DISPONIBLE EN TAMPICO
       </div>
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-gray-900 leading-tight mb-6">
-        Venta de Pasto Sintético en Tampico.
-        <span class="text-primary italic">Material de calidad, listo para llevar.</span>
+
+      <h1 class="vps-hero__title">
+        Venta de Pasto Sintético<br>en Tampico.
+        <span class="vps-hero__accent">Listo para llevar.</span>
       </h1>
-      <p class="text-lg sm:text-xl text-gray-700 mb-8 leading-relaxed max-w-xl">
-        Compra por metro o por rollo completo. Stock inmediato en modelos Toscana. Distribuidor autorizado con <strong>factura CFDI 4.0</strong> disponible.
+
+      <p class="vps-hero__sub">
+        Compra por metro o por rollo completo. Stock inmediato en modelos Toscana con <strong>factura CFDI 4.0</strong> — mínimo 2 m², rollos de 2 m de ancho.
       </p>
-      <!-- Trust strip -->
-      <div class="flex flex-wrap gap-3 mb-8 text-sm text-gray-600">
-        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-primary"><use href="#ic-check"/></svg>Stock inmediato</span>
-        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-primary"><use href="#ic-check"/></svg>Factura disponible</span>
-        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-primary"><use href="#ic-check"/></svg>Showroom Cd. Madero</span>
-        <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-primary"><use href="#ic-check"/></svg>Distribuidor autorizado</span>
+
+      <!-- Ancla de precio + CTAs -->
+      <div class="vps-hero__actions">
+        <div class="vps-hero__price">
+          <span class="vps-hero__price-label">Desde</span>
+          <span class="vps-hero__price-num">$149<small>/m²</small></span>
+          <span class="vps-hero__price-note">material Toscana 18</span>
+        </div>
+        <div class="vps-hero__ctas">
+          <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20venta%20de%20pasto%20sint%C3%A9tico" target="_blank" rel="noopener" class="vps-cta vps-cta--wa">
+            <svg width="20" height="20" viewBox="0 0 24 24"><use href="#ic-whatsapp"/></svg>Cotizar por WhatsApp
+          </a>
+          <a href="#precios" class="vps-cta vps-cta--ghost">Ver precios y modelos →</a>
+        </div>
       </div>
-      <!-- CTAs -->
-      <div class="flex flex-col sm:flex-row gap-3">
-        <a href="https://wa.me/528333268008?text=Hola%2C%20quiero%20cotizar%20venta%20de%20pasto%20sint%C3%A9tico" target="_blank" rel="noopener"
-           class="inline-flex items-center justify-center gap-2 bg-wa text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:bg-green-500 transition-all hover:-translate-y-0.5">
-          <svg class="w-5 h-5"><use href="#ic-whatsapp"/></svg>Cotizar por WhatsApp
-        </a>
-        <a href="#precios" class="inline-flex items-center justify-center gap-2 border-2 border-primary text-primary bg-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-primary hover:text-white transition-all hover:-translate-y-0.5">
-          <svg class="w-5 h-5"><use href="#ic-arrow-right"/></svg>Ver precios
-        </a>
+
+      <!-- Trust chips glass -->
+      <div class="vps-hero__trust">
+        <span><svg width="14" height="14" viewBox="0 0 24 24"><use href="#ic-check"/></svg>Stock inmediato</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24"><use href="#ic-check"/></svg>Factura CFDI 4.0</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24"><use href="#ic-check"/></svg>Showroom Cd. Madero</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24"><use href="#ic-check"/></svg>Distribuidor autorizado</span>
       </div>
-      <p class="text-sm text-gray-500 mt-4">Mínimo 2 m² · Rollos de 2m de ancho · Precio varía por volumen</p>
     </div>
   </div>
 </section>
+
+<style>
+  .vps-hero{position:relative;overflow:hidden;isolation:isolate;background:#0D2B0E}
+  .vps-hero__bg{position:absolute;inset:0;z-index:-1}
+  .vps-hero__img{width:100%;height:100%;object-fit:cover;animation:kenBurnsDS 10s var(--ease-lux,cubic-bezier(.16,1,.3,1)) forwards}
+  .vps-hero__overlay{position:absolute;inset:0;
+    background:linear-gradient(100deg,rgba(13,43,14,.95) 0%,rgba(13,43,14,.85) 38%,rgba(13,43,14,.5) 66%,rgba(13,43,14,.12) 100%),
+               linear-gradient(0deg,rgba(13,43,14,.5) 0%,transparent 42%)}
+  .vps-hero__inner{max-width:1152px;margin:0 auto;padding:clamp(56px,9vh,104px) 24px}
+  .vps-hero__content{max-width:620px}
+  .vps-hero__badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.28);
+    color:#fff;padding:8px 16px;border-radius:999px;font-size:12.5px;font-weight:700;letter-spacing:.04em;margin-bottom:22px}
+  .vps-hero__badge svg{stroke:#8fd39b;fill:none;stroke-width:2.2}
+  .vps-hero__title{font-family:'Playfair Display',Georgia,serif;color:#fff;font-weight:800;
+    font-size:clamp(34px,5vw,58px);line-height:1.05;letter-spacing:-.02em;margin:0 0 18px}
+  .vps-hero__accent{color:#8fd39b;font-style:italic;font-weight:700}
+  .vps-hero__sub{color:rgba(255,255,255,.85);font-size:clamp(16px,1.35vw,19px);line-height:1.6;max-width:540px;margin:0 0 28px}
+  .vps-hero__sub strong{color:#fff}
+  .vps-hero__actions{display:flex;flex-wrap:wrap;align-items:center;gap:22px;margin-bottom:26px}
+  .vps-hero__price{background:rgba(255,255,255,.97);border-radius:16px;padding:14px 22px;
+    box-shadow:0 12px 32px rgba(0,0,0,.28);text-align:left;flex-shrink:0}
+  .vps-hero__price-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:1.6px;color:#1B5E20;font-weight:700}
+  .vps-hero__price-num{display:block;font-family:'Playfair Display',Georgia,serif;font-weight:800;font-size:36px;color:#0D2B0E;line-height:1;margin:2px 0}
+  .vps-hero__price-num small{font-size:17px;color:#666;font-weight:600}
+  .vps-hero__price-note{display:block;font-size:11px;color:#888;margin-top:2px}
+  .vps-hero__ctas{display:flex;flex-direction:column;gap:10px}
+  .vps-cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 26px;border-radius:14px;font-weight:700;font-size:15px;text-decoration:none;transition:transform .25s var(--ease-lux,cubic-bezier(.16,1,.3,1)),box-shadow .25s,background .25s}
+  .vps-cta svg{fill:currentColor}
+  .vps-cta--wa{background:#25D366;color:#fff;box-shadow:0 8px 22px rgba(37,211,102,.35)}
+  .vps-cta--wa:hover{background:#1db954;transform:translateY(-2px);box-shadow:0 12px 28px rgba(37,211,102,.45)}
+  .vps-cta--ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px)}
+  .vps-cta--ghost:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+  .vps-hero__trust{display:flex;flex-wrap:wrap;gap:10px}
+  .vps-hero__trust span{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.9);font-size:12.5px;font-weight:500;
+    padding:6px 13px;border-radius:999px;backdrop-filter:blur(6px)}
+  .vps-hero__trust svg{stroke:#8fd39b;fill:none;stroke-width:2.5}
+  @media(max-width:520px){
+    .vps-hero__actions{gap:16px}
+    .vps-hero__ctas{width:100%}
+    .vps-cta{width:100%}
+  }
+  @media(prefers-reduced-motion:reduce){.vps-hero__img{animation:none}}
+</style>
 
 <!-- RESPUESTA DIRECTA (AEO transaccional) -->
 <section class="py-10 bg-white border-b border-gray-100" aria-label="Respuesta directa">
