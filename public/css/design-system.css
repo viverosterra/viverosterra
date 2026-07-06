@@ -175,3 +175,35 @@ section.bg-bggreen > *:not(.absolute):not(.fixed){position:relative;z-index:1}
   .img-card img,.service-card:hover .img-card img,.case-study:hover img{transform:none!important}
   .vt-hero__bg-img,.hero-img img,.vt-hero__metric{animation:none!important;opacity:1!important;transform:none!important}
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   OPTIMIZACIÓN MÓVIL (≤640px) — 80% del tráfico
+   Ritmo vertical compacto · touch targets ≥44px · métricas 2×2
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width:640px){
+  /* 1) Comprimir el ritmo vertical: menos scroll para llegar al contenido */
+  .py-20{padding-top:44px!important;padding-bottom:44px!important}
+  .py-16{padding-top:38px!important;padding-bottom:38px!important}
+  .py-14{padding-top:32px!important;padding-bottom:32px!important}
+  .py-10{padding-top:28px!important;padding-bottom:28px!important}
+  /* Márgenes de títulos de sección más apretados */
+  .mb-14{margin-bottom:32px!important}
+  .mb-12{margin-bottom:28px!important}
+  .mb-10{margin-bottom:24px!important}
+
+  /* 2) Touch targets ≥44px en elementos interactivos tipo botón/chip */
+  .service-card a[class*="bg-wa"],
+  .service-card button[class*="bg-wa"],
+  a.other-zone,
+  .vps-cta,
+  .cta-nav,
+  .terra-nav__cta{min-height:44px;display:inline-flex;align-items:center}
+  /* Chips de zona / colonia: altura cómoda para el pulgar */
+  a.other-zone{padding-top:12px;padding-bottom:12px}
+  .colonia-links a{min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center}
+
+  /* 3) Métricas del hero (vt-hero) más compactas → hero más corto */
+  .vt-hero__metric{padding:16px 16px 14px!important;border-radius:16px!important}
+  .vt-hero__metric-icon{width:26px!important;height:26px!important;margin-bottom:8px!important}
+  .vt-hero__metrics{gap:10px!important}
+}
