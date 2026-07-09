@@ -1,8 +1,29 @@
 // api/img.js - Proxy de imágenes desde Google Drive
 export default async function handler(req, res) {
-  const { id } = req.query;
+  const { id, w } = req.query;
   if (!id || !/^[\w-]+$/.test(id)) {
     return res.status(400).json({ error: 'ID inválido' });
+  }
+
+  // Si piden un ancho específico, servir el thumbnail redimensionado de Google
+  // (mucho más ligero que el archivo original de Drive)
+  const width = /^\d{2,4}$/.test(w || '') ? w : null;
+  if (width) {
+    try {
+      const thumbUrl = `https://lh3.googleusercontent.com/d/${id}=w${width}`;
+      const rt = await fetch(thumbUrl);
+      if (rt.ok) {
+        const ct = rt.headers.get('content-type') || 'image/jpeg';
+        if (ct.startsWith('image/')) {
+          const buf = await rt.arrayBuffer();
+          res.setHeader('Content-Type', ct);
+          res.setHeader('Cache-Control', 'public, max-age=86400, s-maxage=86400');
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          return res.send(Buffer.from(buf));
+        }
+      }
+    } catch {}
+    // si el thumbnail falla, continúa al flujo normal (imagen completa)
   }
 
   try {

@@ -340,6 +340,15 @@ a{color:inherit;text-decoration:none}
 .vt-hero__metric-label{font-size:13px;color:#5A6B5E;line-height:1.4}
 
 /* ═══ PLANTDEX + FILTROS + COLECCIONES (Ideas 1·2·3) ═══ */
+/* Pulido visual: fallback botánico en áreas de imagen */
+.cimg{background:linear-gradient(135deg,#EAF4E4 0%,#F8F6EE 100%)}
+.emoji svg{width:44px!important;height:44px!important;color:#A8C5AA;vertical-align:middle!important}
+.ccard-img{background:linear-gradient(135deg,#EAF4E4 0%,#F8F6EE 100%);position:relative}
+.ccard-img img{position:absolute;inset:0;z-index:1}
+.ccard-img .emoji{z-index:0}
+.ccard-img .emoji svg{width:30px!important;height:30px!important;color:#A8C5AA}
+/* Pill de flor con punto del color real */
+.flor-dot{display:inline-block;width:9px;height:9px;border-radius:50%;border:1px solid rgba(0,0,0,.12);flex-shrink:0}
 /* Idea 1 — Stat block visual en cada card */
 .statblock{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin:1px 0 7px;padding:7px 8px;background:var(--tc);border-radius:9px}
 .stat{display:flex;flex-direction:column;gap:3px;align-items:flex-start;min-width:0}
@@ -1183,7 +1192,7 @@ a{color:inherit;text-decoration:none}
 
 <script>
 // Función para construir URL de imagen via API proxy
-function img(id){ return '/api/img?id=' + id; }
+function img(id,w){ return '/api/img?id=' + id + (w?'&w='+w:''); }
 
 const plants = [
   // ÁRBOLES
@@ -1361,9 +1370,10 @@ function render(){
       if(x==='bv')return'<span class="badge bv">+ Vendido</span>';
       return'';
     }).join('');
+    const icon=p.i||DEFAULT_ICON;
     const imgHtml=p.img
-      ? `<img src="/api/img?id=${p.img}" alt="${p.name}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.display='none'"/><span class="emoji">${p.i}</span>`
-      : `<span class="emoji">${p.i}</span>`;
+      ? `<img src="${img(p.img,400)}" alt="${p.name}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.display='none'"/><span class="emoji">${icon}</span>`
+      : `<span class="emoji">${icon}</span>`;
     const szCats=p.sz.map(s=>'<span class="sz">'+s+'</span>').join('');
     const szTags=p.sz.map(s=>'<span class="sztag">'+s+'</span>').join('');
     const ficha=isExp?`
@@ -1410,6 +1420,14 @@ function render(){
 }
 
 /* ═══════════ Ideas 1·2·3 — Plantdex · Filtros · Colecciones ═══════════ */
+const DEFAULT_ICON='<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-sprout"/></svg>';
+const FLOR_COLORS=[[/amarill|oro/,'#E8B93B'],[/rosa/,'#E87BA8'],[/roj/,'#D8524A'],[/morad|lila|violeta/,'#9B6BC7'],[/azul/,'#5B8DEF'],[/blanc/,'#FDFDFB'],[/naranja/,'#E8862F'],[/crema|marfil/,'#EFE3C0']];
+function florDots(f){
+  const s=(f||'').toLowerCase();
+  const dots=FLOR_COLORS.filter(([re])=>re.test(s)).slice(0,3)
+    .map(([,c])=>`<span class="flor-dot" style="background:${c}"></span>`).join('');
+  return dots||`<span class="flor-dot" style="background:#E8B93B"></span>`;
+}
 function stripTags(s){return (s||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().toLowerCase();}
 function pAttr(p){
   const luz=stripTags(p.luz);
@@ -1437,7 +1455,7 @@ function statHTML(p){
   const alt=altM?altM[1].replace(/\s+/g,' '):'Variable';
   const florWord=a.flor==='conflor'?(p.flor.replace(/^s[ií]\s*[—\-–(:]*\s*/i,'').split(/[\s,(]/)[0]):'';
   const pill=a.flor==='conflor'
-    ? `<div class="flor-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-flower"/></svg> Flor ${florWord}</div>`
+    ? `<div class="flor-pill">${florDots(p.flor)} Flor ${florWord}</div>`
     : `<div class="flor-pill mant"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-leaf"/></svg> Mant. ${(p.mant||'').toLowerCase()}</div>`;
   return `<div class="statblock">
     <div class="stat"><span class="stat-l">Luz</span><span class="meter">${meterHTML(luzLv,'ic-sun')}</span></div>
@@ -1533,14 +1551,16 @@ function renderCollections(){
   if(!show){box.innerHTML='';box.style.display='none';return;}
   box.style.display='block';
   box.innerHTML=COLLECTIONS.map(col=>{
-    const items=plants.filter(col.test).slice(0,12);
+    const all=plants.filter(col.test);
+    const items=all.slice(0,12);
     if(items.length<3)return '';
     return `<div class="collection">
       <div class="collection-h"><span class="collection-t">${col.t}</span>
-      <button class="collection-more" onclick="applyCollection('${col.key}')">Ver todas →</button></div>
+      <button class="collection-more" onclick="applyCollection('${col.key}')">Ver las ${all.length} →</button></div>
       <div class="crow">${items.map(p=>{
-        const img=p.img?`<img src="/api/img?id=${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'">`:`<span class="emoji">${p.i||'🌱'}</span>`;
-        return `<div class="ccard" onclick="jumpTo('${p.name.replace(/'/g,"\\'")}')"><div class="ccard-img">${img}</div><div class="ccard-n">${p.name}</div></div>`;
+        const icon=`<span class="emoji">${p.i||DEFAULT_ICON}</span>`;
+        const imgTag=p.img?`<img src="${img(p.img,200)}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'">`:'';
+        return `<div class="ccard" onclick="jumpTo('${p.name.replace(/'/g,"\\'")}')"><div class="ccard-img">${icon}${imgTag}</div><div class="ccard-n">${p.name}</div></div>`;
       }).join('')}</div>
     </div>`;
   }).join('');
