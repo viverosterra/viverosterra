@@ -349,6 +349,23 @@ a{color:inherit;text-decoration:none}
 .ccard-img .emoji svg{width:30px!important;height:30px!important;color:#A8C5AA}
 /* Pill de flor con punto del color real */
 .flor-dot{display:inline-block;width:9px;height:9px;border-radius:50%;border:1px solid rgba(0,0,0,.12);flex-shrink:0}
+/* Shimmer skeleton mientras carga la foto */
+@keyframes vt-shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.cimg.loading::before,.ccard-img.loading::before{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(100deg,transparent 25%,rgba(255,255,255,.65) 50%,transparent 75%);animation:vt-shimmer 1.4s ease-in-out infinite}
+/* Toolbar sticky bajo el navbar */
+.toolbar{position:sticky;top:var(--navh,64px);z-index:500;background:rgba(250,250,247,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding-top:.55rem;padding-bottom:.55rem}
+/* Ficha expandida: stat-block grande */
+.statblock--lg{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px;margin:12px 0 10px}
+.statblock--lg .stat{background:var(--tc);border-radius:10px;padding:9px 12px;gap:5px}
+.statblock--lg .stat-l{font-size:8.5px}
+.statblock--lg .meter .mdot{width:15px;height:15px}
+.statblock--lg .stat-v{font-size:13px}
+.statblock--lg .flor-pill{margin:0;align-self:flex-start}
+/* Tap feedback (móvil) */
+.fchip:active,.tbtn:active,.sort-item:active{transform:scale(.96)}
+.ccard:active{transform:scale(.97)}
+.btn-main:active,.btn-sec:active,.fa-wa:active,.fa-esp:active,.sheet-apply:active,.collection-more:active{transform:scale(.98)}
+.fchip,.tbtn,.ccard,.btn-main,.btn-sec,.fa-wa,.fa-esp,.sheet-apply,.sort-item,.collection-more{transition:transform .12s ease,background .18s,color .18s,border-color .18s,box-shadow .18s}
 /* Idea 1 — Stat block visual en cada card */
 .statblock{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin:1px 0 7px;padding:7px 8px;background:var(--tc);border-radius:9px}
 .stat{display:flex;flex-direction:column;gap:3px;align-items:flex-start;min-width:0}
@@ -1372,24 +1389,16 @@ function render(){
     }).join('');
     const icon=p.i||DEFAULT_ICON;
     const imgHtml=p.img
-      ? `<img src="${img(p.img,400)}" alt="${p.name}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.display='none'"/><span class="emoji">${icon}</span>`
+      ? `<img src="${img(p.img,400)}" alt="${p.name}" loading="lazy" onload="this.classList.add('loaded');this.parentElement.classList.remove('loading')" onerror="this.style.display='none';this.parentElement.classList.remove('loading')"/><span class="emoji">${icon}</span>`
       : `<span class="emoji">${icon}</span>`;
     const szCats=p.sz.map(s=>'<span class="sz">'+s+'</span>').join('');
     const szTags=p.sz.map(s=>'<span class="sztag">'+s+'</span>').join('');
     const ficha=isExp?`
     <div class="ficha">
-      <div class="ficons">
-        <span class="fi">${p.luz}</span>
-        <span class="fi"><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-drop"/></svg> ${p.agua}</span>
-        <span class="fi"><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-ruler"/></svg> ${p.altura}</span>
-        <span class="fi"><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-flower"/></svg> Flor: ${p.flor}</span>
-        <span class="fi"><svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-wrench"/></svg> Mant: ${p.mant}</span>
-      </div>
+      ${fichaStats(p)}
       <div class="fgrid">
         <div class="fitem"><div class="flabel">Clasificación</div><div class="fval">${p.tipo}</div></div>
         <div class="fitem"><div class="flabel">Nombre científico</div><div class="fval" style="font-style:italic;font-size:11px">${p.sc}</div></div>
-        <div class="fitem"><div class="flabel">Agua requerida</div><div class="fval">${p.agua}</div></div>
-        <div class="fitem"><div class="flabel">Altura adulta</div><div class="fval">${p.altura}</div></div>
       </div>
       <div class="fdesc">${p.desc}</div>
       <div class="fsizes">
@@ -1404,7 +1413,7 @@ function render(){
       </div>
     </div>`:'';
     return`<article class="card${isExp?' exp':''}" id="${id}" role="article">
-      <div class="cimg" onclick="toggleExp('${id}',event)" role="button" tabindex="0" aria-label="Ver ficha de ${p.name}">
+      <div class="cimg${p.img?' loading':''}" onclick="toggleExp('${id}',event)" role="button" tabindex="0" aria-label="Ver ficha de ${p.name}">
         ${imgHtml}
         ${bd?'<div class="badges">'+bd+'</div>':''}
         <button class="btn-add" onclick="addToCart(event,'${p.name.replace(/'/g,'&#39;')}')">+</button>
@@ -1462,6 +1471,24 @@ function statHTML(p){
     <div class="stat"><span class="stat-l">Riego</span><span class="meter">${meterHTML(agLv,'ic-drop')}</span></div>
     <div class="stat"><span class="stat-l">Altura</span><span class="stat-v">${alt}</span></div>
   </div>${pill}`;
+}
+function fichaStats(p){
+  const a=pAttr(p);
+  const luzLv=a.L.has('sol')?3:a.L.has('media')?2:1;
+  const agLv=a.R==='abundante'?3:a.R==='moderado'?2:1;
+  const altM=(p.altura||'').match(/(\d[\d.,]*\s*(?:m|cm))/i);
+  const alt=altM?altM[1].replace(/\s+/g,' '):'Variable';
+  const florWord=a.flor==='conflor'?(p.flor.replace(/^s[ií]\s*[—\-–(:]*\s*/i,'').split(/[\s,(]/)[0]):'';
+  const flor=a.flor==='conflor'
+    ? `<div class="stat"><span class="stat-l">Floración</span><div class="flor-pill">${florDots(p.flor)} ${florWord||'Sí'}</div></div>`
+    : `<div class="stat"><span class="stat-l">Floración</span><span class="stat-v" style="color:var(--tm)">No</span></div>`;
+  return `<div class="statblock--lg">
+    <div class="stat"><span class="stat-l">Luz</span><span class="meter">${meterHTML(luzLv,'ic-sun')}</span></div>
+    <div class="stat"><span class="stat-l">Riego</span><span class="meter">${meterHTML(agLv,'ic-drop')}</span></div>
+    <div class="stat"><span class="stat-l">Altura adulta</span><span class="stat-v">${alt}</span></div>
+    ${flor}
+    <div class="stat"><span class="stat-l">Mantenimiento</span><span class="stat-v">${p.mant||'—'}</span></div>
+  </div>`;
 }
 const FILTERS=[
   {key:'luz',label:'Luz',opts:[['sol','Sol'],['media','Media sombra'],['sombra','Sombra']]},
@@ -1559,8 +1586,8 @@ function renderCollections(){
       <button class="collection-more" onclick="applyCollection('${col.key}')">Ver las ${all.length} →</button></div>
       <div class="crow">${items.map(p=>{
         const icon=`<span class="emoji">${p.i||DEFAULT_ICON}</span>`;
-        const imgTag=p.img?`<img src="${img(p.img,200)}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'">`:'';
-        return `<div class="ccard" onclick="jumpTo('${p.name.replace(/'/g,"\\'")}')"><div class="ccard-img">${icon}${imgTag}</div><div class="ccard-n">${p.name}</div></div>`;
+        const imgTag=p.img?`<img src="${img(p.img,200)}" alt="" loading="lazy" onload="this.parentElement.classList.remove('loading')" onerror="this.style.display='none';this.parentElement.classList.remove('loading')">`:'';
+        return `<div class="ccard" onclick="jumpTo('${p.name.replace(/'/g,"\\'")}')"><div class="ccard-img${p.img?' loading':''}">${icon}${imgTag}</div><div class="ccard-n">${p.name}</div></div>`;
       }).join('')}</div>
     </div>`;
   }).join('');
@@ -1603,6 +1630,12 @@ function openWA(){
 }
 
 render();
+// offset del toolbar sticky = altura real del navbar
+try{
+  const _nav=document.querySelector('.terra-nav');
+  const _setNavH=()=>{if(_nav)document.documentElement.style.setProperty('--navh',_nav.offsetHeight+'px');};
+  _setNavH();window.addEventListener('resize',_setNavH,{passive:true});
+}catch(e){}
 
 // =================== COTIZADOR ===================
 let cart = []; // [{name, sc, emoji, sz, qty}]
