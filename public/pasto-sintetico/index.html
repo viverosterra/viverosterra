@@ -198,7 +198,51 @@ h1,h2,h3{font-family:"Playfair Display",serif}
   </div>
 </section>
 
-<!-- COTIZADOR -->
+<!-- ===== COTIZADOR HÍBRIDO ===== -->
+<section id="cotizador" class="py-16 sm:py-20 bg-white border-b border-gray-100" aria-label="Cotizador de pasto sintético con envío">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-8 reveal">
+      <span class="text-primary font-semibold text-sm uppercase tracking-wider">Cotiza en 10 segundos</span>
+      <h2 class="text-3xl sm:text-4xl font-display font-bold text-gray-900 mt-2 mb-3">Calcula tu pedido con envío</h2>
+      <p class="text-gray-600">Elige modelo, metros y tu estado. Te damos el total estimado al instante.</p>
+    </div>
+    <div class="bg-bgwarm rounded-3xl border border-gray-200 shadow-sm p-5 sm:p-8 reveal">
+      <!-- Paso 1: modelo -->
+      <label class="block text-sm font-semibold text-gray-700 mb-2">1 · Modelo de pasto</label>
+      <select id="selModelo" onchange="calcular()" class="w-full mb-5 px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"></select>
+      <!-- Paso 2: m2 -->
+      <label class="block text-sm font-semibold text-gray-700 mb-2">2 · ¿Cuántos m² necesitas? <span class="font-normal text-gray-400">(mínimo nacional 25 m²)</span></label>
+      <div class="flex items-center gap-2 mb-2">
+        <input id="inpM2" type="number" min="25" step="1" value="50" oninput="calcular()" class="flex-1 px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 text-lg font-semibold focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none">
+        <span class="text-gray-500 font-medium">m²</span>
+      </div>
+      <div class="flex gap-2 mb-5">
+        <button type="button" onclick="setM2(25)" class="preset flex-1 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold text-gray-700 hover:border-primary hover:text-primary transition-colors">25 m²</button>
+        <button type="button" onclick="setM2(50)" class="preset flex-1 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold text-gray-700 hover:border-primary hover:text-primary transition-colors">50 m² (1 rollo)</button>
+        <button type="button" onclick="setM2(100)" class="preset flex-1 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold text-gray-700 hover:border-primary hover:text-primary transition-colors">100 m²</button>
+      </div>
+      <!-- Paso 3: estado -->
+      <label class="block text-sm font-semibold text-gray-700 mb-2">3 · Estado de envío</label>
+      <select id="selEstado" onchange="calcular()" class="w-full mb-6 px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"></select>
+      <!-- Resultado -->
+      <div id="resultado" class="bg-white rounded-2xl border-2 border-primary/15 p-5 mb-4"></div>
+      <p class="text-xs text-gray-500 leading-relaxed mb-5 flex items-start gap-1.5">
+        <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        El envío mostrado es un <strong>estimado</strong>. El costo exacto se confirma por WhatsApp con tu dirección y código postal. Los precios de material incluyen IVA.
+      </p>
+      <!-- CTAs -->
+      <div class="grid sm:grid-cols-2 gap-3">
+        <a id="ctaWA" href="#" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 bg-wa text-white py-4 rounded-xl font-bold hover:bg-green-500 transition-colors shadow-md">
+          <svg class="w-5 h-5"><use href="#ic-whatsapp"/></svg>Pedir por WhatsApp
+        </a>
+        <a id="ctaPago" href="#" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 bg-primary text-white py-4 rounded-xl font-bold hover:bg-secondary transition-colors shadow-md">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>Solicitar link de pago
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== CATÁLOGO 9 MODELOS ===== -->
 <section id="modelos" class="py-20 bg-bgwarm" aria-label="Los 9 modelos de pasto sintético residencial">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -356,6 +400,67 @@ function selectModelo(id){
   document.getElementById('cotizador')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
 renderModelos();
+
+// ===== COTIZADOR HÍBRIDO =====
+const ZONAS={A:{tarifa:900,nombre:'Centro y Occidente'},B:{tarifa:1150,nombre:'Norte y Sur'},C:{tarifa:1400,nombre:'Sureste y Fronteras'}};
+const ESTADO_ZONA={
+ 'Aguascalientes':'A','CDMX':'A','Colima':'A','Estado de México':'A','Guanajuato':'A','Hidalgo':'A','Jalisco':'A','Michoacán':'A','Morelos':'A','Nayarit':'A','Puebla':'A','Querétaro':'A','San Luis Potosí':'A','Tlaxcala':'A','Zacatecas':'A',
+ 'Coahuila':'B','Durango':'B','Guerrero':'B','Nuevo León':'B','Oaxaca':'B','Sinaloa':'B','Tamaulipas':'B','Veracruz':'B',
+ 'Baja California':'C','Baja California Sur':'C','Campeche':'C','Chiapas':'C','Chihuahua':'C','Quintana Roo':'C','Sonora':'C','Tabasco':'C','Yucatán':'C',
+};
+const WA='528333268008';
+const selModelo=document.getElementById('selModelo');
+const inpM2=document.getElementById('inpM2');
+const selEstado=document.getElementById('selEstado');
+if(selModelo){
+  selModelo.innerHTML=MODELOS.map(m=>`<option value="${m.id}">${m.nombre} — $${m.rollo}/m² en rollo${m.masVendido?' ★':''}</option>`).join('');
+  selModelo.value='toscana28';
+}
+if(selEstado){
+  const estados=Object.keys(ESTADO_ZONA).sort((a,b)=>a.localeCompare(b,'es'));
+  selEstado.innerHTML='<option value="" disabled selected>Selecciona tu estado…</option>'+estados.map(e=>`<option value="${e}">${e}</option>`).join('');
+}
+function precioM2(m,m2){return m2>=50?m.rollo:(m2>=10?m.t2:m.t1);}
+function setM2(n){if(inpM2){inpM2.value=n;calcular();}}
+function money(n){return '$'+Math.round(n).toLocaleString('es-MX');}
+function calcular(){
+  if(!selModelo||!inpM2||!selEstado)return;
+  const m=MODELOS.find(x=>x.id===selModelo.value);
+  let m2=Math.max(25,parseInt(inpM2.value)||25);
+  const est=selEstado.value;
+  const box=document.getElementById('resultado');
+  const pm2=precioM2(m,m2), material=pm2*m2, rollos=Math.ceil(m2/50);
+  if(!est||!ESTADO_ZONA[est]){
+    box.innerHTML=`<div class="flex items-baseline justify-between"><span class="text-gray-600 text-sm">Material (${m2} m² · ${money(pm2)}/m²)</span><span class="font-bold text-gray-900">${money(material)}</span></div>
+      <div class="text-sm text-gray-400 mt-2">Selecciona tu estado para calcular el envío estimado ↑</div>`;
+    updateCTAs(m,m2,est,material,null,null);
+    return;
+  }
+  const z=ESTADO_ZONA[est];
+  const envio=m2>=100?0:ZONAS[z].tarifa*rollos;
+  const total=material+envio;
+  const ahorro=(m.t1-pm2)*m2;
+  const envioLinea=envio===0?'<span class="font-bold text-accent">GRATIS 🎉</span>':`<span class="font-bold text-gray-900">${money(envio)}</span>`;
+  const tamNota=est==='Tamaulipas'?`<div class="mt-3 text-xs bg-bggreen text-primary rounded-lg px-3 py-2">📍 Estás en nuestra zona. Visita el <a href="/venta-pasto-sintetico-tampico" class="underline font-semibold">showroom en Tampico</a> y compra desde 2 m² sin flete.</div>`:'';
+  box.innerHTML=`
+    <div class="flex items-baseline justify-between mb-1"><span class="text-gray-600 text-sm">Material (${m2} m² · ${money(pm2)}/m²)</span><span class="font-semibold text-gray-900">${money(material)}</span></div>
+    <div class="flex items-baseline justify-between mb-1"><span class="text-gray-600 text-sm">Envío estimado (${rollos} rollo${rollos>1?'s':''} · ${ZONAS[z].nombre})</span>${envioLinea}</div>
+    <div class="border-t border-gray-100 mt-2 pt-2 flex items-baseline justify-between"><span class="font-semibold text-gray-900">Total estimado</span><span class="price-tag text-2xl text-primary">${money(total)}</span></div>
+    ${ahorro>0?`<div class="mt-1 text-xs text-accent font-semibold">Ahorras ${money(ahorro)} vs. comprar por corte suelto</div>`:''}
+    ${tamNota}`;
+  updateCTAs(m,m2,est,material,envio,total);
+}
+function updateCTAs(m,m2,est,material,envio,total){
+  const destino=est||'(mi estado)';
+  const envioTxt=envio==null?'por confirmar':(envio===0?'GRATIS (+100 m²)':money(envio));
+  const totalTxt=total==null?'por confirmar':money(total);
+  const msg=`Hola, quiero cotizar pasto sintético con envío:\n• Modelo: ${m.nombre} (${m.mm} mm)\n• Cantidad: ${m2} m²\n• Destino: ${destino}\n• Total estimado: ${totalTxt} (material ${money(material)} + envío est. ${envioTxt})\n¿Me confirman costo de envío con mi C.P. y disponibilidad?`;
+  const wa=document.getElementById('ctaWA'), pago=document.getElementById('ctaPago');
+  if(wa)wa.href=`https://wa.me/${WA}?text=`+encodeURIComponent(msg);
+  if(pago)pago.href=`https://wa.me/${WA}?text=`+encodeURIComponent(msg+`\nQuiero pagar con link de pago 💳`);
+}
+window.calcular=calcular;
+calcular();
 
 // Menú móvil
 const mb=document.getElementById('menu-btn'),mm=document.getElementById('mobile-menu');
