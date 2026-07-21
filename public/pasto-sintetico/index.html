@@ -447,15 +447,15 @@ h1,h2,h3{font-family:"Playfair Display",serif}
 <script>
 // ===== DATOS CANÓNICOS — 9 modelos residenciales (precios IVA incl. $/m²) =====
 const MODELOS=[
- {id:'aruba10', img:'aruba-10.jpg',  nombre:'Aruba 10',   mm:10, peso:1000, gar:5, t1:189, t2:159, rollo:139, stock:false, tag:'Decorativo · balcones y terrazas', ideal:'Espacios decorativos, terrazas pequeñas, balcones y áreas de bajo tránsito', icons:['mascotas','fuego','antibacterial','bajopeso']},
- {id:'toscana18', img:'toscana-18.jpg',nombre:'Toscana 18', mm:18, peso:1000, gar:5, t1:199, t2:169, rollo:149, stock:true,  tag:'Económico · el mejor precio', ideal:'Áreas decorativas, jardines pequeños, uso residencial ligero', icons:['mascotas','fuego','antibacterial','bajopeso']},
- {id:'toscana28', img:'toscana-28.jpg',nombre:'Toscana 28', mm:28, peso:1100, gar:5, t1:279, t2:229, rollo:199, stock:true, masVendido:true, tag:'Premium residencial · MÁS VENDIDO', ideal:'Jardines residenciales, terrazas, áreas de convivencia familiares', icons:['durabilidad','mascotas','ninos','transito','suavidad','fuego']},
- {id:'capri20', img:'capri-20.jpg',  nombre:'Capri 20',   mm:20, peso:1580, gar:8, t1:279, t2:239, rollo:209, stock:false, tag:'Alta densidad comercial', ideal:'Espacios comerciales, áreas de alto tránsito, jardines de uso intenso', icons:['durabilidad','mascotas','ninos','transito','suavidad','fuego']},
- {id:'irlanda25', img:'irlanda-25.jpg',nombre:'Irlanda 25', mm:25, peso:1400, gar:8, t1:279, t2:239, rollo:209, stock:false, tag:'Alto tránsito · niños y mascotas', ideal:'Jardines residenciales de alto tránsito con niños y mascotas', icons:['durabilidad','mascotas','ninos','transito','suavidad','fuego']},
- {id:'viena30', img:'viena-30.jpg',  nombre:'Viena 30',   mm:30, peso:1800, gar:8, t1:339, t2:279, rollo:249, stock:false, tag:'Premium natural', ideal:'Jardines premium residenciales con acabado natural realista', icons:['durabilidad','ninos','suavidad','fuego','antibacterial']},
- {id:'japones35', img:'japones-35.jpg',nombre:'Japonés 35', mm:35, peso:1800, gar:8, t1:359, t2:299, rollo:269, stock:false, tag:'Lujo · máximo realismo', ideal:'Jardines de lujo con máximo realismo estético', icons:['durabilidad','ninos','suavidad','fuego','antibacterial']},
- {id:'monaco35', img:'monaco-35.jpg', nombre:'Mónaco 35',  mm:35, peso:2100, gar:8, t1:399, t2:339, rollo:299, stock:false, tag:'Premium exclusivo · hoteles', ideal:'Residencias premium, hoteles boutique, espacios de alto valor', icons:['durabilidad','ninos','suavidad','fuego','antibacterial']},
- {id:'bali35', img:'bali-35.jpg',   nombre:'Bali 35',    mm:35, peso:2100, gar:8, t1:399, t2:339, rollo:299, stock:false, tag:'Tropical premium', ideal:'Jardines exclusivos con acabado tropical premium', icons:['durabilidad','ninos','suavidad','fuego','antibacterial']},
+ {id:'aruba10', slug:'aruba-10', img:'aruba-10.jpg',  nombre:'Aruba 10',   mm:10, peso:1000, gar:5, t1:189, t2:159, rollo:139, stock:false, tag:'Decorativo · balcones y terrazas', ideal:'Espacios decorativos, terrazas pequeñas, balcones y áreas de bajo tránsito', icons:['mascotas','fuego','antibacterial','bajopeso']},
+ {id:'toscana18', slug:'toscana-18', img:'toscana-18.jpg',nombre:'Toscana 18', mm:18, peso:1000, gar:5, t1:199, t2:169, rollo:149, stock:true,  tag:'Económico · el mejor precio', ideal:'Áreas decorativas, jardines pequeños, uso residencial ligero', icons:['mascotas','fuego','antibacterial','bajopeso']},
+ {id:'toscana28', slug:'toscana-28', img:'toscana-28.jpg',nombre:'Toscana 28', mm:28, peso:1100, gar:5, t1:279, t2:229, rollo:199, stock:true, masVendido:true, tag:'Premium residencial · MÁS VENDIDO', ideal:'Jardines residenciales, terrazas, áreas de convivencia familiares', icons:['durabilidad','mascotas','ninos','transito','suavidad','fuego']},
+ {id:'capri20', slug:'capri-20', img:'capri-20.jpg',  nombre:'Capri 20',   mm:20, peso:1580, gar:8, t1:279, t2:239, rollo:209, stock:false, tag:'Alta densidad comercial', ideal:'Espacios comerciales, áreas de alto tránsito, jardines de uso intenso', icons:['durabilidad','mascotas','ninos','transito','suavidad','fuego']},
+ {id:'irlanda25', slug:'irlanda-25', img:'irlanda-25.jpg',nombre:'Irlanda 25', mm:25, peso:1400, gar:8, t1:279, t2:239, rollo:209, stock:false, tag:'Alto tránsito · niños y mascotas', ideal:'Jardines residenciales de alto tránsito con niños y mascotas', icons:['durabilidad','mascotas','ninos','transito','suavidad','fuego']},
+ {id:'viena30', slug:'viena-30', img:'viena-30.jpg',  nombre:'Viena 30',   mm:30, peso:1800, gar:8, t1:339, t2:279, rollo:249, stock:false, tag:'Premium natural', ideal:'Jardines premium residenciales con acabado natural realista', icons:['durabilidad','ninos','suavidad','fuego','antibacterial']},
+ {id:'japones35', slug:'japones-35', img:'japones-35.jpg',nombre:'Japonés 35', mm:35, peso:1800, gar:8, t1:359, t2:299, rollo:269, stock:false, tag:'Lujo · máximo realismo', ideal:'Jardines de lujo con máximo realismo estético', icons:['durabilidad','ninos','suavidad','fuego','antibacterial']},
+ {id:'monaco35', slug:'monaco-35', img:'monaco-35.jpg', nombre:'Mónaco 35',  mm:35, peso:2100, gar:8, t1:399, t2:339, rollo:299, stock:false, tag:'Premium exclusivo · hoteles', ideal:'Residencias premium, hoteles boutique, espacios de alto valor', icons:['durabilidad','ninos','suavidad','fuego','antibacterial']},
+ {id:'bali35', slug:'bali-35', img:'bali-35.jpg',   nombre:'Bali 35',    mm:35, peso:2100, gar:8, t1:399, t2:339, rollo:299, stock:false, tag:'Tropical premium', ideal:'Jardines exclusivos con acabado tropical premium', icons:['durabilidad','ninos','suavidad','fuego','antibacterial']},
 ];
 const ICONS={durabilidad:['💪','Durable'],mascotas:['🐾','Mascotas'],ninos:['👶','Niños'],transito:['👟','Alto tránsito'],suavidad:['☁️','Suave'],fuego:['🔥','Anti-fuego'],antibacterial:['🛡️','Antibacterial'],bajopeso:['🍃','Ligero']};
 
@@ -473,7 +473,7 @@ function renderModelos(){
         <img src="/img/pasto-sintetico/${m.img}" alt="Pasto sintético ${m.nombre} de ${m.mm} mm y ${m.peso} g/m² — ${m.tag.replace(/·/g,'-')}" width="800" height="800" loading="lazy" decoding="async" class="w-full h-full object-cover">
       </div>
       <div class="p-5 pb-0 flex items-start justify-between gap-2">
-        <div><h3 class="text-xl font-display font-bold text-gray-900">${m.nombre}</h3>
+        <div><h3 class="text-xl font-display font-bold text-gray-900"><a href="/pasto-sintetico/${m.slug}" class="hover:text-primary transition-colors">${m.nombre}</a></h3>
         <p class="text-xs text-gray-500 mt-0.5">${m.tag}</p></div>
         <div class="flex flex-col gap-1 items-end shrink-0">${masV}${badge}</div>
       </div>
@@ -489,7 +489,7 @@ function renderModelos(){
         <div class="flex items-baseline gap-1"><span class="text-xs text-gray-500">desde</span><span class="price-tag text-3xl text-primary">$${m.rollo}</span><span class="text-sm text-gray-500">/m² en rollo</span></div>
         <p class="text-xs text-gray-400 mt-0.5">o $${m.t2}/m² comprando de 10 a 49 m²</p>
       </div>
-      <div class="p-5 pt-3"><button onclick="selectModelo('${m.id}')" class="w-full bg-primary text-white py-3 rounded-xl font-semibold text-sm hover:bg-secondary transition-colors">Cotizar este modelo →</button></div>
+      <div class="p-5 pt-3 flex flex-col gap-2"><button onclick="selectModelo('${m.id}')" class="w-full bg-primary text-white py-3 rounded-xl font-semibold text-sm hover:bg-secondary transition-colors">Cotizar este modelo →</button><a href="/pasto-sintetico/${m.slug}" class="w-full text-center border border-gray-200 text-primary py-2.5 rounded-xl font-semibold text-sm hover:border-primary transition-colors">Ver ficha técnica</a></div>
     </article>`;
   }).join('');
 }
@@ -559,6 +559,11 @@ function updateCTAs(m,m2,est,material,envio,total){
   if(pago)pago.href=`https://wa.me/${WA}?text=`+encodeURIComponent(msg+`\nQuiero pagar con link de pago 💳`);
 }
 window.calcular=calcular;
+// Preselección desde fichas de modelo: /pasto-sintetico?modelo=toscana28#cotizador
+try{
+  const _pm=new URLSearchParams(location.search).get('modelo');
+  if(_pm&&MODELOS.some(x=>x.id===_pm)&&selModelo){selModelo.value=_pm;}
+}catch(e){}
 calcular();
 
 // Menú móvil
