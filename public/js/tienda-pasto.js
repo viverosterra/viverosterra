@@ -247,28 +247,55 @@
     });
   }
 
-  /* ---------- Product page ---------- */
-  function readModel() {
-    const el = $('#vt-model');
-    if (!el) return null;
+  /* ---------- Product data ---------- */
+  function isValidModel(m) {
+    return m && ['slug', 'nombre', 'img'].every((k) => typeof m[k] === 'string') &&
+      ['t1', 't2', 'rollo'].every((k) => Number.isFinite(m[k]));
+  }
+
+  function readModels() {
+    const many = $('#vt-models');
+    const one = $('#vt-model');
+    const el = many || one;
+    if (!el) return [];
     try {
-      const m = JSON.parse(el.textContent);
-      const ok = ['slug', 'nombre', 'img'].every((k) => typeof m[k] === 'string') &&
-        ['t1', 't2', 'rollo'].every((k) => Number.isFinite(m[k]));
-      if (!ok) throw new Error('faltan campos');
-      return m;
+      const parsed = JSON.parse(el.textContent);
+      const list = Array.isArray(parsed) ? parsed : [parsed];
+      const valid = list.filter(isValidModel);
+      if (valid.length !== list.length) throw new Error('hay modelos con campos faltantes');
+      return valid;
     } catch (err) {
-      console.error('[tienda] Datos del modelo inválidos:', err.message);
-      return null;
+      console.error('[tienda] Datos de modelos inválidos:', err.message);
+      return [];
     }
   }
 
-  function initProduct(model) {
+  const normalizeSlug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+  function addItem(model, m2) {
+    const qty = clampM2(m2);
+    writeStore(upsertItem(memoryState, {
+      slug: model.slug, nombre: model.nombre, img: model.img, t1: model.t1, t2: model.t2, rollo: model.rollo, m2: qty,
+    }));
+    showToast(`${model.nombre} · ${qty} m² en tu cotización`);
+    track('add_to_cart', { item_id: model.slug, quantity: qty });
+  }
+
+  /* ---------- Quote module (ficha y hub) ---------- */
+  function initQuote(models) {
     const inp = $('#m2');
     const sel = $('#estado');
-    if (!inp || !sel) return;
+    if (!inp || !sel || models.length === 0) return null;
+    const modelSel = $('#modelo');
     fillEstados(sel);
     if (memoryState.estado) sel.value = memoryState.estado;
+
+    if (modelSel) {
+      const wanted = normalizeSlug(new URLSearchParams(location.search).get('modelo'));
+      const match = models.find((m) => normalizeSlug(m.slug) === wanted);
+      if (match) modelSel.value = match.slug;
+    }
+    const current = () => (modelSel ? models.find((m) => m.slug === modelSel.value) : null) || models[0];
 
     const setM2 = (n) => { inp.value = String(clampM2(n)); update(); };
     $('#m2-minus').addEventListener('click', () => setM2((parseInt(inp.value, 10) || MIN_NACIONAL_M2) - 5));
@@ -277,18 +304,25 @@
     inp.addEventListener('input', update);
     inp.addEventListener('change', () => setM2(parseInt(inp.value, 10)));
     sel.addEventListener('change', () => { writeStore({ ...memoryState, estado: sel.value }); update(); });
+    if (modelSel) modelSel.addEventListener('change', update);
 
-    $('#cta-add').addEventListener('click', () => {
-      const m2 = clampM2(parseInt(inp.value, 10));
-      writeStore(upsertItem(memoryState, { slug: model.slug, nombre: model.nombre, img: model.img, t1: model.t1, t2: model.t2, rollo: model.rollo, m2 }));
-      showToast(`${model.nombre} · ${m2} m² en tu cotización`);
-      track('add_to_cart', { item_id: model.slug, quantity: m2 });
-    });
+    $('#cta-add').addEventListener('click', () => addItem(current(), parseInt(inp.value, 10)));
     $$('[data-cta-wa]').forEach((a) => a.addEventListener('click', () => {
-      track('generate_lead', { method: 'whatsapp_ficha', item_id: model.slug, quantity: parseInt(inp.value, 10) || 0 });
+      track('generate_lead', { method: 'whatsapp_cotizador', item_id: current().slug, quantity: parseInt(inp.value, 10) || 0 });
     }));
 
+    function renderModelPrices(model) {
+      const price = $('#buy-price');
+      if (price) price.textContent = money(model.rollo);
+      [['rollo', model.rollo], ['t2', model.t2], ['t1', model.t1]].forEach(([k, v]) => {
+        const cell = $(`#tier-${k}`);
+        if (cell) cell.textContent = `${money(v)}/m²`;
+      });
+    }
+
     function update() {
+      const model = current();
+      renderModelPrices(model);
       const m2 = parseInt(inp.value, 10);
       const estado = sel.value;
       $$('[data-m2]').forEach((c) => c.setAttribute('aria-pressed', String(parseInt(c.dataset.m2, 10) === m2)));
@@ -323,10 +357,9 @@
         ? `≈ ${money(q.landed)} por m² puesto en tu domicilio` : '';
 
       const faltan = ROLLO_M2 - m2;
-      const hint = !error && m2 >= TIER2_MIN_M2 && faltan > 0
+      $('#q-hint').textContent = !error && m2 >= TIER2_MIN_M2 && faltan > 0
         ? `Con ${faltan} m² más llegas a rollo completo y pagas ${money(model.rollo)}/m² en lugar de ${money(model.t2)}/m². El envío cuesta lo mismo.`
         : '';
-      $('#q-hint').textContent = hint;
 
       const msg = [
         `Hola, quiero cotizar el pasto sintético ${model.nombre}.`,
@@ -339,6 +372,13 @@
     }
 
     update();
+    return {
+      selectModel(slug) {
+        if (!modelSel || !models.some((m) => m.slug === slug)) return;
+        modelSel.value = slug;
+        update();
+      },
+    };
   }
 
   /* ---------- Gallery ---------- */
@@ -385,7 +425,16 @@
     initToast();
     initGallery();
     initBuybar();
-    const model = readModel();
-    if (model) initProduct(model);
+    const models = readModels();
+    const quote = initQuote(models);
+    window.VTTienda = Object.freeze({
+      models,
+      addItem: (slug, m2) => {
+        const model = models.find((m) => m.slug === slug);
+        if (model) addItem(model, m2);
+      },
+      selectModel: (slug) => { if (quote) quote.selectModel(slug); },
+    });
+    document.dispatchEvent(new CustomEvent('vt:ready'));
   });
 })();
