@@ -208,11 +208,11 @@ def photos_section(m):
     if installed:
         idx, cap = installed[0]
         main_src, main_alt, main_cap = f"{GAL}/{m['slug']}-{idx}.webp", f"Pasto sintético {m['nombre']} instalado: {cap.lower()}", f"{cap}. {m['nombre']} instalado."
-        title, label = "Así se ve <em>instalado</em>", "Instalado"
+        title, label = f"{esc(m['nombre'])} <em>instalado</em>", "Instalado"
     else:
         textura = [i for i, k, _c in m["gallery"] if k == "textura"][0]
         main_src, main_alt, main_cap = f"{GAL}/{m['slug']}-{textura}.webp", f"Acercamiento a la fibra del pasto sintético {m['nombre']}", "Detalle de la fibra, sin retoque."
-        title, label = "Así se ve <em>de cerca</em>", "De cerca"
+        title, label = f"{esc(m['nombre'])} <em>de cerca</em>", "De cerca"
     body = f"""
         <div class="installed">
           <figure class="installed__main">
@@ -271,8 +271,7 @@ def build_ficha(m):
 
       <div class="pdp__info">
         <p class="eyebrow"><span>N.º {m['n']:02d} / 09 · {esc(m['tag'])}</span>{stock}</p>
-        <p class="pdp__kicker">Pasto sintético</p>
-        <h1 class="pdp__title" id="titulo">{esc(m['nombre'])}{badge}</h1>
+        <h1 class="pdp__title" id="titulo"><span class="pdp__kicker">Pasto sintético</span> <span class="pdp__name">{esc(m['nombre'])} {badge}</span></h1>
         <p class="pdp__lede">{esc(m['lede'])}</p>
 
         {specstrip_html(m)}
@@ -287,18 +286,18 @@ def build_ficha(m):
   {section_open(1, "En resumen", "resumen", f"Para quién es el <em>{esc(m['nombre'])}</em>")}
         <p class="summary">{m['resumen']}</p>
         {fit_html(m)}{SECTION_CLOSE}
-  {section_open(2, "Ficha técnica", "ficha", "Los datos de fábrica, <em>sin letra chica</em>", tint=True, section_id="ficha-tecnica")}
+  {section_open(2, "Ficha técnica", "ficha", f"Ficha técnica del <em>{esc(m['nombre'])}</em>", tint=True, section_id="ficha-tecnica")}
         {spec_sheet_html(m)}{SECTION_CLOSE}
   {section_open(3, photos_label, "fotos", photos_title)}{photos_body}{SECTION_CLOSE}
-  {section_open(4, "Compáralo", "compara", "Sus vecinos <em>en la colección</em>", tint=True)}
+  {section_open(4, "Compáralo", "compara", f"Compara el {esc(m['nombre'])} <em>con modelos similares</em>", tint=True)}
         {compare_html(m)}{SECTION_CLOSE}
-  {section_open(5, "Tu pedido", "pedido", "Cómo compras, <em>paso a paso</em>")}
+  {section_open(5, "Tu pedido", "pedido", f"Cómo comprar el <em>{esc(m['nombre'])}</em>")}
         {steps_list()}{SECTION_CLOSE}
-  {section_open(6, "Preguntas", "preguntas", "Lo que más nos <em>preguntan</em>", tint=True)}
+  {section_open(6, "Preguntas", "preguntas", f"Preguntas sobre el <em>{esc(m['nombre'])}</em>", tint=True)}
         {faq_html(faqs)}{SECTION_CLOSE}
   <section class="closing" aria-labelledby="cierre">
     <div class="wrap">
-      <h2 id="cierre">Tu jardín listo <em>esta misma semana</em></h2>
+      <h2 id="cierre">Cotiza tu {esc(m['nombre'])} <em>con envío a tu estado</em></h2>
       <p>Mándanos tus metros y tu estado. Te respondemos con el precio final y la fecha de entrega.</p>
       <div class="closing__actions">
         <a class="btn btn--light" data-cta-wa href="https://wa.me/{WA_NUMBER}" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Cotizar {esc(m['nombre'])}</a>

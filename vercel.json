@@ -759,6 +759,16 @@
       "source": "/post/viveros-terra-tampico",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/venta-pasto-sintetico-tampico",
+      "destination": "/pasto-sintetico-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/venta-pasto-sintetico-tampico/",
+      "destination": "/pasto-sintetico-tampico",
+      "permanent": true
     }
   ],
   "cleanUrls": true,

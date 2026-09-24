@@ -78,7 +78,7 @@ HEADER = """<header class="site-header">
       <a href="/pasto-sintetico#modelos">Los 9 modelos</a>
       <a href="/pasto-sintetico#elegir">¿Cuál me conviene?</a>
       <a href="/pasto-sintetico#como-funciona">Cómo comprar</a>
-      <a href="/venta-pasto-sintetico-tampico">Showroom Tampico</a>
+      <a href="/pasto-sintetico-tampico">Tampico</a>
       <a href="/">Viveros Terra</a>
     </nav>
     <button class="quote-btn" type="button" data-open-cot aria-haspopup="dialog">
@@ -112,7 +112,7 @@ def footer():
       <div>
         <h3>Viveros Terra</h3>
         <ul>
-          <li><a href="/pasto-sintetico-tampico">Instalación en Tampico</a></li>
+          <li><a href="/pasto-sintetico-tampico">Pasto sintético en Tampico</a></li>
           <li><a href="/pasto-en-rollo-tampico">Pasto natural en rollo</a></li>
           <li><a href="/plantas-palmas-arboles-tampico">Plantas y palmas</a></li>
           <li><a href="/diseno-jardines-tampico">Diseño de jardines</a></li>

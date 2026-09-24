@@ -7,6 +7,7 @@ from pathlib import Path
 from data import MODELOS
 from ficha import build_ficha
 from hub import build_hub
+from local import build_local
 
 ROOT = Path(__file__).resolve().parents[2] / "public" / "pasto-sintetico"
 
@@ -19,6 +20,7 @@ def write(path, html):
 
 def main():
     write(ROOT / "index.html", build_hub())
+    write(ROOT.parent / "pasto-sintetico-tampico" / "index.html", build_local())
     for m in MODELOS:
         write(ROOT / m["slug"] / "index.html", build_ficha(m))
 

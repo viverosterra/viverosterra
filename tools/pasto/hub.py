@@ -223,8 +223,8 @@ def local_band_html():
       <h2 id="local">¿Estás en Tampico, <em>Madero o Altamira?</em></h2>
       <p>Visita el showroom en Cd. Madero. Vendemos desde 2 m² sin flete e instalamos llave en mano con garantía.</p>
       <div class="closing__actions">
-        <a class="btn btn--light" href="/venta-pasto-sintetico-tampico">Ver venta en Tampico</a>
-        <a class="btn btn--ghost" href="/pasto-sintetico-tampico">Instalación profesional</a>
+        <a class="btn btn--light" href="/pasto-sintetico-tampico">Venta e instalación en Tampico</a>
+        <a class="btn btn--ghost" href="/pasto-sintetico-tampico#showroom">Cómo llegar al showroom</a>
       </div>
     </div>
   </section>"""
@@ -267,21 +267,21 @@ def build_hub():
   </div>
   {hero_html()}
 
-  {section_open(1, "Colección", "modelos-titulo", "Los 9 modelos, <em>de 10 a 35 mm</em>", section_id="modelos")}
+  {section_open(1, "Colección", "modelos-titulo", "Modelos de pasto sintético <em>de 10 a 35 mm</em>", section_id="modelos")}
         {catalog_html()}{SECTION_CLOSE}
-  {section_open(2, "Elegir", "elegir-titulo", "¿Cuál te <em>conviene?</em>", tint=True, section_id="elegir")}
+  {section_open(2, "Elegir", "elegir-titulo", "¿Qué pasto sintético <em>te conviene?</em>", tint=True, section_id="elegir")}
         {quiz_html()}{SECTION_CLOSE}
-  {section_open(3, "Comparativa", "comparativa-titulo", "Toda la colección <em>de un vistazo</em>", section_id="comparativa")}
+  {section_open(3, "Comparativa", "comparativa-titulo", "Comparativa de modelos <em>por altura, peso y precio</em>", section_id="comparativa")}
         {compare_table_html()}{SECTION_CLOSE}
-  {section_open(4, "Cotizador", "cotizador-titulo", "Calcula tu pedido <em>con envío</em>", tint=True, section_id="cotizador")}
+  {section_open(4, "Cotizador", "cotizador-titulo", "Precio del pasto sintético <em>con envío a tu estado</em>", tint=True, section_id="cotizador")}
         {cotizador_html()}{SECTION_CLOSE}
-  {section_open(5, "Obras", "obras-titulo", "Así se ve <em>instalado</em>", section_id="obras")}
+  {section_open(5, "Obras", "obras-titulo", "Pasto sintético instalado <em>en casas reales</em>", section_id="obras")}
         {obras_html()}{SECTION_CLOSE}
-  {section_open(6, "Tu pedido", "como-funciona-titulo", "De la cotización <em>a tu puerta</em>", tint=True, section_id="como-funciona")}
+  {section_open(6, "Tu pedido", "como-funciona-titulo", "Cómo comprar pasto sintético <em>en línea</em>", tint=True, section_id="como-funciona")}
         {steps_list()}{SECTION_CLOSE}
-  {section_open(7, "Instálalo tú", "diy-titulo", "Es más fácil <em>de lo que crees</em>", section_id="instalacion")}
+  {section_open(7, "Instálalo tú", "diy-titulo", "Cómo instalar pasto sintético <em>tú mismo</em>", section_id="instalacion")}
         {diy_html()}{SECTION_CLOSE}
-  {section_open(8, "Preguntas", "faq-titulo", "Lo que más nos <em>preguntan</em>", tint=True, section_id="preguntas")}
+  {section_open(8, "Preguntas", "faq-titulo", "Preguntas frecuentes <em>sobre pasto sintético</em>", tint=True, section_id="preguntas")}
         {faq_html(faqs)}{SECTION_CLOSE}
   {local_band_html()}
 </main>
