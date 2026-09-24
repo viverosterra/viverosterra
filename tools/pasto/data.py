@@ -84,18 +84,18 @@ def _basic_specs(*, altura, peso, color, garantia):
 MODELOS = [
     {
         "slug": "aruba-10", "id": "aruba10", "nombre": "Aruba 10", "n": 1,
-        "mm": 10, "peso": "1,050", "peso_num": 1050, "garantia": None,
+        "mm": 10, "peso": "1,050", "peso_num": 1050, "garantia": "3 a 5",
         "color": "Verde olivo", "tag": "Decorativo", "stock": False,
         "t1": 189, "t2": 159, "rollo": 139,
         "usos": ["terraza", "precio"],
         "scores": {"precio": 5, "realismo": 1, "resistencia": 2, "ligero": 2},
         "ideal": "Balcones, terrazas y muros",
         "lede": "Un tapete verde de 10 mm para balcones, terrazas y muros. Ligero y fácil de colocar.",
-        "resumen": "El Aruba 10 es un pasto sintético tipo tapete de <strong>10 mm</strong> y <strong>1,050 g/m²</strong> en verde olivo. Es el modelo más bajo y ligero de la colección, pensado para decorar balcones, terrazas, muros y áreas de poco paso. Cuesta <strong>desde $139/m²</strong> en rollo de 50 m² y llega a todo México en 3 a 5 días hábiles.",
+        "resumen": "El Aruba 10 es un pasto sintético tipo tapete de <strong>10 mm</strong> y <strong>1,050 g/m²</strong> en verde olivo, con <strong>garantía de 3 a 5 años</strong>. Es el modelo más bajo y ligero de la colección, pensado para decorar balcones, terrazas, muros y áreas de poco paso. Cuesta <strong>desde $139/m²</strong> en rollo de 50 m² y llega a todo México en 3 a 5 días hábiles.",
         "fit_si": ["Balcones y terrazas de departamento", "Muros verdes y jardineras", "Eventos, stands y locales", "Áreas de poco paso"],
         "fit_no": ["Jardines de uso diario: mejor Toscana 18", "Perros grandes: mejor Irlanda 25"],
-        "specstrip": [("Altura", "10", "mm"), ("Peso total", "1,050", "g/m²"), ("Color", "Olivo", ""), ("Rollo", "2×25", "m")],
-        "specs": _basic_specs(altura=10, peso="1,050", color="Verde olivo", garantia=None),
+        "specstrip": [("Altura", "10", "mm"), ("Peso total", "1,050", "g/m²"), ("Color", "Olivo", ""), ("Garantía", "3–5", "años")],
+        "specs": _basic_specs(altura=10, peso="1,050", color="Verde olivo", garantia="3 a 5"),
         "specs_note": "Para este modelo publicamos los datos principales del fabricante. Si necesitas otro dato técnico, pregúntanos por WhatsApp.",
         "gallery": [(1, "rollo", "Rollo y textura"), (2, "textura", "Detalle de la fibra"), (3, "textura", "Vista general")],
         "faq_extra": [

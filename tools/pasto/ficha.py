@@ -169,7 +169,7 @@ def compare_html(m):
     for x in sorted([m] + neighbors(m), key=lambda z: z["n"]):
         current = x is m
         tag = "Estás viendo" if current else x["tag"]
-        gar = f"{x['garantia']} años" if x["garantia"] else "Consultar"
+        gar = f"{str(x['garantia']).replace(' a ', '–')} años" if x["garantia"] else "Consultar"
         inner = f"""<img src="{GAL}/{x['slug']}-2-sm.webp" width="420" height="560" alt="Textura del pasto sintético {esc(x['nombre'])}" loading="lazy">
             <span class="compare__tag">{esc(tag)}</span>
             <h3 class="compare__name">{esc(x['nombre'])}</h3>

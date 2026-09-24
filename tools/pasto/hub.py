@@ -86,7 +86,7 @@ def hero_html():
 
 
 def card_html(m):
-    gar = f"{m['garantia']} años" if m["garantia"] else "Consultar"
+    gar = f"{str(m['garantia']).replace(' a ', '–')} años" if m["garantia"] else "Consultar"
     url = f"/pasto-sintetico/{m['slug']}"
     stock = '<span class="spec-card__stock">En existencia</span>' if m["stock"] else ""
     return f"""          <article class="spec-card" data-usos="{' '.join(m['usos'])}" id="m-{m['slug']}">
@@ -141,7 +141,7 @@ def quiz_html():
 def compare_table_html():
     rows = []
     for m in MODELOS:
-        gar = f"{m['garantia']} años" if m["garantia"] else "Consultar"
+        gar = f"{str(m['garantia']).replace(' a ', '–')} años" if m["garantia"] else "Consultar"
         rows.append(f"""            <tr><th scope="row"><a href="/pasto-sintetico/{m['slug']}">{esc(m['nombre'])}</a><span>{esc(m['tag'])}</span></th><td>{m['mm']} mm</td><td>{m['peso']}</td><td>{gar}</td><td><strong>${m['rollo']}</strong></td><td>{esc(m['ideal'])}</td></tr>""")
     return f"""<div class="table-scroll" tabindex="0" role="region" aria-label="Comparativa de los 9 modelos">
           <table class="compare-table num">
