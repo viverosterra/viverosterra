@@ -221,7 +221,7 @@ def local_band_html():
     return """<section class="closing" id="tampico" aria-labelledby="local">
     <div class="wrap">
       <h2 id="local">¿Estás en Tampico, <em>Madero o Altamira?</em></h2>
-      <p>Visita el showroom en Cd. Madero. Vendemos desde 2 m² sin flete e instalamos llave en mano con garantía.</p>
+      <p>Visita el showroom en Cd. Madero. Vendemos desde 2 m² sin flete e instalamos en Tampico, Madero y Altamira.</p>
       <div class="closing__actions">
         <a class="btn btn--light" href="/pasto-sintetico-tampico">Venta e instalación en Tampico</a>
         <a class="btn btn--ghost" href="/pasto-sintetico-tampico#showroom">Cómo llegar al showroom</a>

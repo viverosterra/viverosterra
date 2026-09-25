@@ -24,9 +24,9 @@ FAQS = [
      "existencia para llevar el mismo día, y los otros 7 modelos sobre pedido. Atendemos de lunes a viernes de 9 a 18 h "
      "y sábado de 9 a 14 h."),
     ("¿Cuánto cuesta instalar pasto sintético en Tampico?",
-     f"La instalación llave en mano cuesta desde ${INSTALADO_MIN}/m² y hasta ${INSTALADO_MAX}/m² en modelos premium. "
-     "Incluye material, retiro de lo existente, base compactada con capa drenante, colocación y acabados. El precio "
-     "final depende del modelo y del estado del terreno."),
+     f"La instalación cuesta desde ${INSTALADO_MIN}/m² y hasta ${INSTALADO_MAX}/m² en modelos premium. Incluye el "
+     "material, la colocación, las uniones, las orillas y el cepillado. Si tu espacio necesita retiro de lo existente, "
+     "nivelación o base drenante, lo revisamos en la visita y te lo cotizamos aparte antes de empezar."),
     ("¿Cuánto cuesta el pasto sintético por m² en Tampico?",
      f"Solo el material cuesta desde ${MIN_RETAIL}/m² en rollo completo. Toscana 18 va de $149/m² en rollo a $199/m² "
      "en cortes de 2 a 9 m². Toscana 28 va de $199/m² a $279/m². Los precios incluyen IVA."),
@@ -34,7 +34,7 @@ FAQS = [
      "En el showroom vendemos desde 2 m². El rollo mide 2 m de ancho, así que los cortes van de 2 en 2 m²."),
     ("¿Puedo recogerlo el mismo día?",
      "Sí, si es Toscana 18 o Toscana 28. Te recomendamos confirmar existencia por WhatsApp antes de pasar. Los demás "
-     "modelos llegan en 5 a 7 días hábiles con 50% de anticipo."),
+     "modelos llegan en 3 a 5 días hábiles. Los pedimos en cuanto confirmas tu pedido con el pago."),
     ("¿Hacen envío dentro de Tampico, Madero y Altamira?",
      "Sí. El envío local cuesta desde $250 según el volumen y la zona. Te lo cotizamos por WhatsApp."),
     ("¿Qué pasto sintético conviene para el clima de Tampico?",
@@ -50,7 +50,7 @@ FAQS = [
 
 INSTALL_STEPS = [
     ("Visita y medición", "Medimos el área, revisamos el terreno y te recomendamos el modelo según el uso."),
-    ("Preparación del terreno", "Retiramos lo existente, compactamos y ponemos una capa de grava fina para que drene."),
+    ("Preparación del terreno", "Si hace falta, retiramos lo existente, nivelamos y ponemos grava fina para que drene. Se cotiza aparte según tu espacio."),
     ("Colocación", "Extendemos el rollo, cortamos al perímetro y unimos los tramos con cinta y adhesivo."),
     ("Orillas y acabados", "Fijamos las orillas para que no se levanten y cuidamos los bordes con andadores y jardineras."),
     ("Cepillado y entrega", "Cepillamos la fibra para que quede de pie, limpiamos y te entregamos el área lista."),
@@ -77,10 +77,10 @@ def hero_html():
         <p class="eyebrow"><span>Tampico · Madero · Altamira</span><span class="stock">{esc(stock_names)} en existencia</span></p>
         <h1 class="hub-hero__title" id="titulo">Pasto sintético en Tampico <em>venta e instalación</em></h1>
         <p class="pdp__lede">Llévate el material desde nuestro showroom en Cd. Madero o déjanos la instalación completa.</p>
-        <p class="summary summary--hero">Viveros Terra vende e instala pasto sintético en Tampico, Ciudad Madero y Altamira desde 2006. El showroom está en {esc(ADDRESS)}. El material cuesta desde <strong>${MIN_RETAIL}/m²</strong> y la instalación llave en mano desde <strong>${INSTALADO_MIN}/m²</strong>.</p>
+        <p class="summary summary--hero">Viveros Terra vende e instala pasto sintético en Tampico, Ciudad Madero y Altamira desde 2006. El showroom está en {esc(ADDRESS)}. El material cuesta desde <strong>${MIN_RETAIL}/m²</strong> y la instalación desde <strong>${INSTALADO_MIN}/m²</strong>, con material y colocación incluidos.</p>
         <dl class="specstrip">
           <div><dt>Material, IVA incluido</dt><dd class="num"><small>desde</small> ${MIN_RETAIL}<small>/m²</small></dd></div>
-          <div><dt>Instalado, llave en mano</dt><dd class="num"><small>desde</small> ${INSTALADO_MIN}<small>/m²</small></dd></div>
+          <div><dt>Instalado, con material</dt><dd class="num"><small>desde</small> ${INSTALADO_MIN}<small>/m²</small></dd></div>
           <div><dt>Compra mínima</dt><dd class="num">2<small>m²</small></dd></div>
           <div><dt>En la región</dt><dd class="num">20<small>años</small></dd></div>
         </dl>
@@ -115,13 +115,13 @@ def options_html():
           <article class="option option--main">
             <p class="option__label">Opción 2</p>
             <h3>Nosotros lo instalamos</h3>
-            <p class="option__price num">desde <strong>${INSTALADO_MIN}</strong>/m²</p>
+            <p class="option__price num">desde <strong>${INSTALADO_MIN}</strong>/m² <span>material y colocación</span></p>
             <ul class="fit">
               <li>Visita y cotización sin compromiso</li>
-              <li>Retiro, base compactada y drenaje</li>
-              <li>Colocación, orillas y cepillado</li>
+              <li>Colocación, uniones, orillas y cepillado</li>
               <li>Material con garantía de fábrica</li>
             </ul>
+            <p class="option__note">Cada terreno es distinto. Si el tuyo necesita retiro, nivelación o base drenante, lo vemos en la visita y te lo cotizamos aparte, antes de empezar y sin sorpresas.</p>
             <a class="btn btn--primary" href="{install}" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Cotizar instalación</a>
           </article>
         </div>"""
@@ -130,9 +130,9 @@ def options_html():
 def price_table_html():
     rows = []
     for m in MODELOS:
-        avail = '<span class="tag-stock">Para llevar hoy</span>' if m["stock"] else '<span class="tag-order">5 a 7 días</span>'
+        avail = '<span class="tag-stock">Para llevar hoy</span>' if m["stock"] else '<span class="tag-order">3 a 5 días</span>'
         rows.append(f"""            <tr><th scope="row"><a href="/pasto-sintetico/{m['slug']}">{esc(m['nombre'])}</a><span>{m['mm']} mm</span>{avail}</th><td>${m['t1']}</td><td>${m['t2']}</td><td><strong>${m['rollo']}</strong></td></tr>""")
-    return f"""<p class="section__intro">Precio por m² del material, con IVA. Entre más metros, menor precio. Instalación llave en mano de ${INSTALADO_MIN} a ${INSTALADO_MAX}/m² según modelo y terreno.</p>
+    return f"""<p class="section__intro">Precio por m² del material, con IVA. Entre más metros, menor precio. Instalación con material y colocación de ${INSTALADO_MIN} a ${INSTALADO_MAX}/m² según el modelo.</p>
         <div class="table-scroll" tabindex="0" role="region" aria-label="Precios de pasto sintético en Tampico">
           <table class="compare-table compare-table--compact num">
             <thead><tr><th scope="col">Modelo</th><th scope="col">2 a 9 m²</th><th scope="col">10 a 49 m²</th><th scope="col">Rollo 50 m²</th></tr></thead>
@@ -141,7 +141,7 @@ def price_table_html():
             </tbody>
           </table>
         </div>
-        <p class="spec-note">Los modelos sobre pedido llegan en 5 a 7 días hábiles con 50% de anticipo. Precios vigentes en 2026.</p>"""
+        <p class="spec-note">Si el modelo no está en el showroom, llega en 3 a 5 días hábiles. Lo enviamos en cuanto confirmas tu pedido con el pago. Precios vigentes en 2026.</p>"""
 
 
 def install_html():
