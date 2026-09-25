@@ -671,7 +671,7 @@
               <div class="terra-nav__drop-header">Servicios de Jardinería</div>
               <a class="terra-nav__drop-item" href="/pasto-en-rollo-tampico" role="menuitem">
                 <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-leaf"/></svg></span>
-                <span class="terra-nav__drop-text"><strong>Pasto en Rollo San Agustín</strong><span>Instalación desde $85/m² · Mayoreo</span></span>
+                <span class="terra-nav__drop-text"><strong>Pasto en Rollo San Agustín</strong><span>Pasto desde $85/m² · Instalado desde $120/m²</span></span>
               </a>
               <a class="terra-nav__drop-item" href="/pasto-sintetico-tampico" role="menuitem">
                 <span class="terra-nav__drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:18px;height:18px;color:#1B5E20"><use href="#ic-recycle"/></svg></span>
@@ -1606,9 +1606,9 @@
       <div style="margin-bottom:24px">
         <label style="display:block;font-size:13px;font-weight:600;color:#0D2B0E;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">2. ¿Qué servicio te interesa?</label>
         <div class="cot-services-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
-          <button type="button" class="cot-svc-btn" data-svc="pasto" data-min="85" data-max="120" data-unit="m²" onclick="selectCotSvc(this)" style="padding:14px;border:2px solid #d4e7d8;background:#fff;border-radius:12px;cursor:pointer;text-align:left;transition:all .2s">
+          <button type="button" class="cot-svc-btn" data-svc="pasto" data-min="120" data-max="120" data-unit="m²" onclick="selectCotSvc(this)" style="padding:14px;border:2px solid #d4e7d8;background:#fff;border-radius:12px;cursor:pointer;text-align:left;transition:all .2s">
             <strong style="display:block;color:#0D2B0E;font-size:14px;font-family:'Playfair Display',serif">Instalación de pasto</strong>
-            <small style="color:#666;font-size:11px">San Agustín · desde $85/m² instalado</small>
+            <small style="color:#666;font-size:11px">San Agustín · desde $120/m² instalado</small>
           </button>
           <button type="button" class="cot-svc-btn" data-svc="mantenimiento" data-min="6" data-max="12" data-unit="m²/mes" onclick="selectCotSvc(this)" style="padding:14px;border:2px solid #d4e7d8;background:#fff;border-radius:12px;cursor:pointer;text-align:left;transition:all .2s">
             <strong style="display:block;color:#0D2B0E;font-size:14px;font-family:'Playfair Display',serif">Mantenimiento mensual</strong>
@@ -1727,7 +1727,12 @@ function updateCotResult() {
   let detail = '';
 
   if(cotState.svc === 'pasto') {
-    detail = `${cotState.m2} m² × $${cotState.svcMin}–$${cotState.svcMax}/m² instalado. Incluye preparación de suelo y arraigo de 30 días.`;
+    document.getElementById('cot-price').textContent = `desde $${fmt(min)} MXN`;
+    document.getElementById('cot-detail').textContent = `${cotState.m2} m² × desde $${cotState.svcMin}/m² instalado. El total depende de la preparación del terreno; te lo confirmamos en la visita.`;
+    document.getElementById('cot-result').style.display = 'block';
+    document.getElementById('cot-actions').style.display = 'block';
+    updateHidden(min, max);
+    return;
   } else if(cotState.svc === 'mantenimiento') {
     const minM = Math.max(750, min);
     const maxM = Math.max(1200, max);
@@ -1821,7 +1826,7 @@ function updateHidden(min, max) {
             <svg viewBox="0 0 24 24" class="w-5 h-5 text-primary"><use href="#ic-leaf"/></svg>
           </div>
           <h3 class="text-lg font-display font-bold text-gray-900 mb-2">Pasto en Rollo San Agustín</h3>
-          <p class="text-gray-500 text-sm leading-relaxed mb-4">Desde <strong class="text-gray-700">$85/m²</strong>. Venta e instalación profesional. Mayoreo para constructoras y proyectos en toda la Huasteca.</p>
+          <p class="text-gray-500 text-sm leading-relaxed mb-4">Pasto desde <strong class="text-gray-700">$85/m²</strong> e instalado desde <strong class="text-gray-700">$120/m²</strong>. Venta e instalación profesional. Mayoreo para constructoras y proyectos en toda la Huasteca.</p>
           <div class="flex items-center justify-between gap-2 flex-wrap">
             <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm">Ver detalles<svg viewBox="0 0 24 24" class="w-4 h-4"><use href="#ic-chevron-right"/></svg></span>
             <button type="button" onclick="event.stopPropagation();event.preventDefault();window.open('https://wa.me/528333268008?text=Hola%2C%20me%20interesa%20el%20pasto%20San%20Agust%C3%ADn%20en%20rollo.%20%C2%BFCu%C3%A1nto%20cuesta%20instalado%20por%20m%C2%B2%3F','_blank','noopener')" class="inline-flex items-center gap-1.5 bg-wa text-white text-xs font-semibold px-3 py-2 rounded-full hover:bg-green-500 transition-colors whitespace-nowrap">
