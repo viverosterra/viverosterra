@@ -22,8 +22,8 @@ PASTO = [
      "Rollo fresco, cortado para tu pedido. Recoges en el vivero o te lo llevamos."),
     ("Pasto San Agustín instalado", "/pasto-en-rollo-tampico", f"desde ${PASTO_INSTALADO}/m²",
      "Preparación básica del suelo, instalación y garantía de arraigo de 15 a 20 días."),
-    ("Mayoreo para constructoras y fraccionamientos", "/mayoreo-pasto-tampico", "por volumen",
-     "Desde 500 m², con entregas por etapas según el avance de la obra y factura."),
+    ("Mayoreo para constructoras y fraccionamientos", "/mayoreo-pasto-tampico", "desde $60/m²",
+     "Pedidos de 500 m² o más, con entregas por etapas según el avance de la obra y factura."),
 ]
 SERVICIOS = [
     ("Mantenimiento de jardín", "/mantenimiento-jardines-tampico", f"desde ${MANTENIMIENTO:,}/mes",
@@ -53,7 +53,7 @@ PLANTAS = [
 FAQS = [
     ("¿Cuánto cuesta el pasto en rollo en Tampico?",
      f"El pasto San Agustín cuesta ${PASTO_M2}/m² solo el pasto y desde ${PASTO_INSTALADO}/m² instalado, con preparación "
-     "básica del suelo y garantía de arraigo de 15 a 20 días. Para obras de más de 500 m² hay precio de mayoreo."),
+     "básica del suelo y garantía de arraigo de 15 a 20 días. En pedidos de 500 m² o más, el mayoreo cuesta desde $60/m²."),
     ("¿Los precios incluyen IVA?",
      "Sí. Todos los precios de esta página incluyen IVA. Damos factura CFDI 4.0 a persona física o moral y tenemos "
      "registro REPSE 773725 para contratos con empresas."),
@@ -212,6 +212,7 @@ def schema(faqs):
         "itemListElement": [
             offer("Pasto San Agustín en rollo, solo el pasto", PASTO_M2, "/pasto-en-rollo-tampico", "m²"),
             offer("Pasto San Agustín instalado", PASTO_INSTALADO, "/pasto-en-rollo-tampico", "m²"),
+            offer("Pasto San Agustín al mayoreo, desde 500 m²", 60, "/mayoreo-pasto-tampico", "m²"),
             offer("Mantenimiento de jardín mensual", MANTENIMIENTO, "/mantenimiento-jardines-tampico", "mes"),
             offer("Diseño de jardín, Plan Terra Esencial", 3000, "/diseno-jardines-tampico"),
             offer("Diseño de jardín, Plan Terra Completo", 6500, "/diseno-jardines-tampico"),
