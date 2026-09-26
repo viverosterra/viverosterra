@@ -72,7 +72,7 @@
     },
     {
       "source": "/copia-de-tierra-negra",
-      "destination": "/tierra-negra-tampico",
+      "destination": "/tierra-negra-vegetal-tampico",
       "permanent": true
     },
     {
@@ -447,12 +447,12 @@
     },
     {
       "source": "/post/beneficios-ecol%C3%B3gicos-de-la-tierra-negra-vegetal",
-      "destination": "/tierra-negra-tampico",
+      "destination": "/tierra-negra-vegetal-tampico",
       "permanent": true
     },
     {
       "source": "/post/beneficios-ecolÃ³gicos-de-la-tierra-negra-vegetal",
-      "destination": "/tierra-negra-tampico",
+      "destination": "/tierra-negra-vegetal-tampico",
       "permanent": true
     },
     {

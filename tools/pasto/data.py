@@ -10,7 +10,7 @@ SITE = "https://www.viverosterra.com"
 WA_NUMBER = "528333268008"
 PHONE_DISPLAY = "833 326 8008"
 UPDATED = "septiembre 2026"
-ASSET_VERSION = "20260923"
+ASSET_VERSION = "20260926"
 
 ZONAS = {"A": 900, "B": 1150, "C": 1400}
 
