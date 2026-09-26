@@ -22,7 +22,7 @@ PAGES = {
         title="Pasto San Agustín en rollo,", accent="instalado en un día",
         price_pre="Instalado desde", price="$120", price_unit="/m²", price_alt="· $85/m² solo el pasto",
         lede="Pasto natural cortado para tu pedido en Tampico, Madero y Altamira. El instalado incluye preparación básica del suelo, nivelación y garantía de arraigo.",
-        facts=[("15 a 20 días", "Garantía de arraigo con riego diario"), ("$60/m²", "Mayoreo desde 500 m²"), ("1 día", "Instalación de un jardín residencial")],
+        facts=[("15 a 20 días", "Garantía de arraigo con riego diario"), ("Desde $60/m²", "Mayoreo en pedidos de 500 m² o más"), ("1 día", "Instalación de un jardín residencial")],
         img="/img/instalacion-pasto-rollo-san-agustin-tampico.webp", img_pos="center 40%",
         alt="Instalación de pasto San Agustín en rollo en un jardín de Tampico", caption="Instalación de pasto San Agustín en Tampico.",
         wa=guided("Hola, quiero cotizar pasto San Agustín en rollo.", "Colonia", "Metros aprox.", "Solo el pasto o instalado"),
