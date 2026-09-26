@@ -10,9 +10,19 @@ SITE = "https://www.viverosterra.com"
 WA_NUMBER = "528333268008"
 PHONE_DISPLAY = "833 326 8008"
 UPDATED = "septiembre 2026"
-ASSET_VERSION = "20260926"
+ASSET_VERSION = "20260926b"
 
 ZONAS = {"A": 900, "B": 1150, "C": 1400}
+# Igual que ESTADO_ZONA en public/js/tienda-pasto.js: si cambias una zona, cambia las dos.
+ZONA_ESTADOS = {
+    "A": ("Centro y Occidente", ["Aguascalientes", "CDMX", "Colima", "Estado de México", "Guanajuato", "Hidalgo",
+                                  "Jalisco", "Michoacán", "Morelos", "Nayarit", "Puebla", "Querétaro",
+                                  "San Luis Potosí", "Tlaxcala", "Zacatecas"]),
+    "B": ("Norte, Golfo y Sur", ["Coahuila", "Durango", "Guerrero", "Nuevo León", "Oaxaca", "Sinaloa",
+                                  "Tamaulipas", "Veracruz"]),
+    "C": ("Sureste y fronteras", ["Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua",
+                                   "Quintana Roo", "Sonora", "Tabasco", "Yucatán"]),
+}
 
 COMMON_TREATMENTS = "UV, antibacterial, retardante al fuego"
 

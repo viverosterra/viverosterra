@@ -3,7 +3,7 @@ import json
 
 from common import (GAL, SECTION_CLOSE, breadcrumb_schema, buybar, drawer_and_toast, esc, faq_html, faq_schema,
                     footer, head, jsonld, product_schema, section_open, steps_list, strip_tags)
-from data import MODELOS, OBRAS, SITE, USO_FILTERS, WA_NUMBER
+from data import ZONA_ESTADOS, ZONAS, MODELOS, OBRAS, SITE, USO_FILTERS, WA_NUMBER
 from ficha import NOTE_FLETE, calc_html, quote_html, tiers_html
 
 DEFAULT = next(m for m in MODELOS if m["slug"] == "toscana-28")
@@ -193,7 +193,26 @@ def cotizador_html():
               <li>El flete exacto se confirma con tu dirección</li>
             </ul>
           </aside>
-        </div>"""
+        </div>
+{envio_table_html()}"""
+
+
+def envio_table_html():
+    rows = "\n".join(
+        f"""            <tr><th scope="row">Zona {z}<span>{esc(nombre)}</span></th><td>{esc(", ".join(estados))}</td><td><strong>${ZONAS[z]:,}</strong></td><td>${ZONAS[z] * 2:,}</td></tr>"""
+        for z, (nombre, estados) in ZONA_ESTADOS.items()
+    )
+    return f"""        <h3 class="aside-gap" id="envio">Costo de envío por estado</h3>
+        <p class="section__intro">El envío se cobra por rollo de 50 m². Un pedido de 25 a 50 m² viaja en 1 rollo; de 51 a 100 m², en 2. En Tampico, Madero y Altamira puedes recoger en el showroom sin flete.</p>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Costo de envío de pasto sintético por estado">
+          <table class="compare-table compare-table--compact compare-table--envio num">
+            <thead><tr><th scope="col">Zona</th><th scope="col">Estados</th><th scope="col">1 rollo</th><th scope="col">2 rollos</th></tr></thead>
+            <tbody>
+{rows}
+            </tbody>
+          </table>
+        </div>
+        <p class="spec-note">Precios de flete con IVA. Te confirmamos el costo exacto con tu código postal antes de pagar.</p>"""
 
 
 def obras_html():
