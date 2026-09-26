@@ -378,6 +378,8 @@ a.compare__card:hover { border-color: var(--ink); box-shadow: 0 16px 30px -24px 
 .site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .site-footer a { text-decoration: none; }
 .site-footer a:hover { color: #fff; text-decoration: underline; }
+.site-footer p a { text-decoration: underline; text-underline-offset: 3px; }
+.showroom__data dd a { text-decoration: underline; text-underline-offset: 3px; }
 .site-footer__legal { margin-top: 32px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.12); font-size: var(--text-xs); color: #8C9287; }
 
 /* ---------- Sticky buy bar (mobile) ---------- */

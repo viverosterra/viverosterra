@@ -11,8 +11,9 @@ from ficha import NOTE_FLETE, calc_html, quote_html, tiers_html
 
 URL = f"{SITE}/pasto-sintetico-tampico"
 BUSINESS_ID = f"{SITE}/#negocio"
-ADDRESS = "Av. Álvaro Obregón 601, Cd. Madero, frente a Walmart"
-MAPS = "https://maps.google.com/?q=Av+%C3%81lvaro+Obreg%C3%B3n+601+Ciudad+Madero+Tamaulipas"
+ADDRESS = "Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional, 89510 Cd. Madero, frente a Walmart"
+MAPS = "https://maps.app.goo.gl/xC4XGL2WeucAjGwAA"
+APPLE_MAPS = "https://maps.apple.com/?daddr=22.2777575,-97.8433341&q=Viveros%20Terra"
 INSTALADO_MIN, INSTALADO_MAX = 385, 650
 MIN_RETAIL = min(m["rollo"] for m in MODELOS)
 STOCK = [m for m in MODELOS if m["stock"]]
@@ -20,7 +21,7 @@ DEFAULT = next(m for m in MODELOS if m["slug"] == "toscana-28")
 
 FAQS = [
     ("¿Dónde comprar pasto sintético en Tampico?",
-     "En Viveros Terra, en Av. Álvaro Obregón 601, Cd. Madero, frente a Walmart. Tenemos Toscana 18 y Toscana 28 en "
+     "En Viveros Terra, en Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional, Cd. Madero, frente a Walmart. Tenemos Toscana 18 y Toscana 28 en "
      "existencia para llevar el mismo día, y los otros 7 modelos sobre pedido. Atendemos de lunes a viernes de 9 a 18 h "
      "y sábado de 9 a 14 h."),
     ("¿Cuánto cuesta instalar pasto sintético en Tampico?",
@@ -77,12 +78,12 @@ def hero_html():
         <p class="eyebrow"><span>Tampico · Madero · Altamira</span><span class="stock">{esc(stock_names)} en existencia</span></p>
         <h1 class="hub-hero__title" id="titulo">Pasto sintético en Tampico <em>venta e instalación</em></h1>
         <p class="pdp__lede">Llévate el material desde nuestro showroom en Cd. Madero o déjanos la instalación completa.</p>
-        <p class="summary summary--hero">Viveros Terra vende e instala pasto sintético en Tampico, Ciudad Madero y Altamira desde 2006. El showroom está en {esc(ADDRESS)}. El material cuesta desde <strong>${MIN_RETAIL}/m²</strong> y la instalación desde <strong>${INSTALADO_MIN}/m²</strong>, con material y colocación incluidos.</p>
+        <p class="summary summary--hero">Viveros Terra vende e instala pasto sintético en Tampico, Ciudad Madero y Altamira desde 2007. El showroom está en {esc(ADDRESS)}. El material cuesta desde <strong>${MIN_RETAIL}/m²</strong> y la instalación desde <strong>${INSTALADO_MIN}/m²</strong>, con material y colocación incluidos.</p>
         <dl class="specstrip">
           <div><dt>Material, IVA incluido</dt><dd class="num"><small>desde</small> ${MIN_RETAIL}<small>/m²</small></dd></div>
           <div><dt>Instalado, con material</dt><dd class="num"><small>desde</small> ${INSTALADO_MIN}<small>/m²</small></dd></div>
           <div><dt>Compra mínima</dt><dd class="num">2<small>m²</small></dd></div>
-          <div><dt>En la región</dt><dd class="num">20<small>años</small></dd></div>
+          <div><dt>En la región</dt><dd class="num"><small>desde</small> 2007</dd></div>
         </dl>
       </div>
       <figure class="hub-hero__media">
@@ -216,13 +217,14 @@ def obras_html():
 def showroom_html():
     return f"""<div class="showroom">
           <dl class="showroom__data">
-            <div><dt>Dirección</dt><dd>{esc(ADDRESS)}, Tamaulipas</dd></div>
+            <div><dt>Dirección</dt><dd><a href="{MAPS}" target="_blank" rel="noopener">{esc(ADDRESS)}, Tamps.</a></dd></div>
             <div><dt>Horario</dt><dd>Lunes a viernes de 9 a 18 h. Sábado de 9 a 14 h.</dd></div>
             <div><dt>Instalación</dt><dd>Tampico, Ciudad Madero y Altamira</dd></div>
             <div><dt>Envío del material</dt><dd>Local desde $250. Nacional en 3 a 5 días hábiles.</dd></div>
           </dl>
           <div class="showroom__actions">
-            <a class="btn btn--primary" href="{MAPS}" target="_blank" rel="noopener">Cómo llegar</a>
+            <a class="btn btn--primary" href="{MAPS}" target="_blank" rel="noopener">Cómo llegar con Google Maps</a>
+            <a class="btn btn--ghost" href="{esc(APPLE_MAPS)}" target="_blank" rel="noopener">Abrir en Apple Maps</a>
             <a class="btn btn--ghost" href="tel:+528333268008">Llamar 833 326 8008</a>
           </div>
         </div>"""
@@ -238,10 +240,10 @@ def schema(faqs):
     }
     business = {
         "@type": ["LocalBusiness", "Store"], "@id": BUSINESS_ID, "name": "Viveros Terra", "url": SITE,
-        "telephone": f"+{WA_NUMBER}", "priceRange": "$$",
-        "address": {"@type": "PostalAddress", "streetAddress": "Av. Álvaro Obregón 601, Col. Ampliación Unidad Nacional",
+        "telephone": f"+{WA_NUMBER}", "priceRange": "$$", "foundingDate": "2007-12-12",
+        "address": {"@type": "PostalAddress", "streetAddress": "Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional",
                     "addressLocality": "Ciudad Madero", "addressRegion": "Tamaulipas", "postalCode": "89510", "addressCountry": "MX"},
-        "geo": {"@type": "GeoCoordinates", "latitude": 22.2722, "longitude": -97.8679},
+        "geo": {"@type": "GeoCoordinates", "latitude": 22.2777575, "longitude": -97.8433341},
         "hasMap": MAPS,
         "knowsAbout": ["Pasto sintético", "Instalación de pasto sintético", "Pasto en rollo", "Jardinería"],
         "makesOffer": [{"@type": "Offer", "itemOffered": {"@id": f"{SITE}/pasto-sintetico/{m['slug']}#producto"}} for m in MODELOS]
