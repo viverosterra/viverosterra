@@ -45,7 +45,7 @@ MATERIALES = [
     ("Piedra bola de río", "/piedra-bola-rio-tampico", "por medida", "Chica, mediana y grande, en costal o camión."),
 ]
 PLANTAS = [
-    ("Palmas", "/palmas-para-jardin-tampico", "desde $850", "Areca, coco plumoso, real, washingtonia, del viajero y más. El precio sube con la altura."),
+    ("Palmas", "/palmas-tropicales-tampico", "desde $250", "Areca y coco plumoso desde $250 y palma real desde $500 en tamaño chico. El precio sube con la altura."),
     ("Árboles", "/arboles-ornamentales-tampico", "por tamaño", "Framboyán, jacaranda, olivo negro, crespón, guayacán y más."),
     ("Plantas de jardín e interior", "/plantas-para-jardin-tampico", "por tamaño", "Más de 200 variedades en el vivero."),
 ]
@@ -221,7 +221,7 @@ def schema(faqs):
             offer("Tierra negra vegetal, costal", 90, "/tierra-negra-vegetal-tampico"),
             offer("Tezontle rojo, costal", 200, "/tezontle-rojo-tampico"),
             offer("Mármol blanco, saco", 250, "/marmol-blanco-tampico"),
-            offer("Palmas", 850, "/palmas-para-jardin-tampico"),
+            offer("Palmas, tamaño chico", 250, "/palmas-tropicales-tampico"),
         ],
     }
     page = {"@type": "WebPage", "@id": URL, "url": URL, "name": "Precios de jardinería en Tampico 2026",

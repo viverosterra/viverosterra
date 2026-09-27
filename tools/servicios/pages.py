@@ -2,7 +2,7 @@
 
 Precios y datos: ver la memoria de datos oficiales (pasto $85 / $120, mayoreo $60 desde 500 m²,
 mantenimiento desde $750/mes, diseño $3,000 / $6,500 / desde $18,000, riego $180 a $320/m²,
-palmas desde $850, garantía de plantas 30 días con riego y cuidado indicados).
+palmas desde $250 (areca y coco plumoso) y real desde $500 en tamaño chico, garantía de plantas 30 días con riego y cuidado indicados).
 """
 
 
@@ -68,7 +68,7 @@ PAGES = {
     ),
     "vivero-tampico": dict(
         title="Vivero en Tampico", accent="y Ciudad Madero, desde 2007",
-        price_pre="Palmas desde", price="$850", price_unit="", price_alt="· pasto $85/m² · plantas por tamaño",
+        price_pre="Palmas desde", price="$250", price_unit="", price_alt="· pasto $85/m² · plantas por tamaño",
         lede='Pasto, plantas, palmas, árboles y materiales para jardín en Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional, Cd. Madero, frente a Walmart.',
         facts=[VARIEDADES, DESDE_2007, GARANTIA_PLANTAS],
         img="/img/arboles-tampico-viveros-terra.webp",
@@ -78,7 +78,7 @@ PAGES = {
     ),
     "plantas-palmas-arboles-tampico": dict(
         title="Plantas, palmas y árboles", accent="de nuestro vivero en Tampico",
-        price_pre="Palmas desde", price="$850", price_unit="", price_alt="· plantas y árboles por tamaño",
+        price_pre="Palmas desde", price="$250", price_unit="", price_alt="· plantas y árboles por tamaño",
         lede="Más de 200 variedades cultivadas para el clima del Golfo. Te las llevamos y, si quieres, las sembramos con garantía de arraigo.",
         facts=[VARIEDADES, GARANTIA_PLANTAS, ("Entrega", "Tampico, Madero y Altamira")],
         img="/img/arboles-tampico-viveros-terra.webp",
@@ -106,28 +106,19 @@ PAGES = {
         wa=guided("Hola, quiero plantas de interior.", "Casa u oficina", "Luz del lugar (mucha o poca)", "Colonia"),
         secondary=("/catalogo", "Ver catálogo"),
     ),
-    "palmas-para-jardin-tampico": dict(
-        title="Palmas para jardín", accent="adaptadas a Tampico",
-        price_pre="Desde", price="$850", price_unit="", price_alt="· el precio sube con la altura",
-        lede="Areca, coco plumoso, real, washingtonia, del viajero y más. Te las llevamos y las sembramos con garantía de arraigo.",
-        facts=[GARANTIA_PLANTAS, ("Entrega y siembra", "Tampico, Madero y Altamira"), VARIEDADES],
+    "palmas-tropicales-tampico": dict(
+        title="Palmas para jardín en Tampico,", accent="tropicales y exóticas",
+        price_pre="Desde", price="$250", price_unit="", price_alt="en tamaño chico; el precio sube con la altura",
+        lede="Areca y coco plumoso desde $250 y palma real desde $500 en su tamaño más chico. También washingtonia, del viajero, bismarckia y exóticas. Te las llevamos y las sembramos con garantía de arraigo.",
+        facts=[GARANTIA_PLANTAS, ("$500", "Palma real desde, tamaño chico"), ("Entrega y siembra", "Tampico, Madero y Altamira")],
         img="/img/palma-real-jardin-residencial-tampico.webp", img_pos="center 30%",
         alt="Palma real sembrada en un jardín residencial de Tampico", caption="Palma real en un jardín de Tampico.",
         wa=guided("Hola, quiero cotizar palmas.", "Palma que me interesa", "Altura aprox.", "Colonia de entrega"),
     ),
-    "palmas-tropicales-tampico": dict(
-        title="Palmas tropicales", accent="para el clima del Golfo",
-        price_pre="Desde", price="$850", price_unit="", price_alt="· el precio sube con la altura",
-        lede="Areca, del viajero, real, coco y bismarckia cultivadas en vivero. Entrega y siembra en Tampico, Madero y Altamira.",
-        facts=[GARANTIA_PLANTAS, ("1.5 a 25 m", "Altura adulta según la especie"), VARIEDADES],
-        img="/img/palma-real-jardin-residencial-tampico.webp", img_pos="center 30%",
-        alt="Palma tropical en un jardín residencial de Tampico", caption="Palma tropical en un jardín de Tampico.",
-        wa=guided("Hola, quiero cotizar palmas tropicales.", "Palma que me interesa", "Altura aprox.", "Colonia de entrega"),
-    ),
     "palmas-mayoreo-proyectos": dict(
         eyebrow="Constructoras · Hoteles · Gobierno",
         title="Palmas al mayoreo", accent="para proyectos en Tampico",
-        price_pre="Desde", price="$850", price_unit=" por palma", price_alt="· precio por volumen",
+        price_pre="Precio", price="por volumen", price_unit="", price_alt="· según especie, altura y cantidad",
         lede="Suministro de palmas y árboles para constructoras, desarrolladoras, hoteles y gobierno en Tamaulipas, Veracruz y San Luis Potosí.",
         facts=[("CFDI 4.0", "Factura y certificado fitosanitario"), ("3 estados", "Tamaulipas, Veracruz y SLP"), ("30 días", "Garantía de arraigo en siembra propia")],
         img="/img/palmas-reales-mayoreo-vivero-tampico.webp", img_pos="center 35%",

@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/palmas-para-jardin-tampico",
+      "destination": "/palmas-tropicales-tampico",
+      "permanent": true
+    },
+    {
       "source": "/tierra-negra-tampico",
       "destination": "/tierra-negra-vegetal-tampico",
       "permanent": true
