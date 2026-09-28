@@ -1,6 +1,81 @@
 {
   "redirects": [
     {
+      "source": "/jardineria-loma-de-rosales-madero",
+      "destination": "/jardineria-lomas-de-rosales-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-loma-bonita-tampico",
+      "destination": "/jardineria-lomas-de-rosales-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-altavista-tampico",
+      "destination": "/jardineria-aguila-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-petrolera-tampico",
+      "destination": "/jardineria-aguila-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-petrolera-madero",
+      "destination": "/jardineria-aguila-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-zona-conurbada-tampico",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-miramar-madero",
+      "destination": "/jardineria-ciudad-madero",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-1-mayo-madero",
+      "destination": "/jardineria-ciudad-madero",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-las-anclas-madero",
+      "destination": "/jardineria-ciudad-madero",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-praderas-bahia-madero",
+      "destination": "/jardineria-ciudad-madero",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-altamira-centro",
+      "destination": "/jardineria-altamira",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-bicentenario-altamira",
+      "destination": "/jardineria-altamira",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-floresta-tampico",
+      "destination": "/jardineria-altamira",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-puerto-industrial-altamira",
+      "destination": "/mantenimiento-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/jardineria-fraccionamientos-residenciales-tampico",
+      "destination": "/mantenimiento-jardines-tampico",
+      "permanent": true
+    },
+    {
       "source": "/palmas-para-jardin-tampico",
       "destination": "/palmas-tropicales-tampico",
       "permanent": true

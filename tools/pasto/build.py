@@ -9,6 +9,7 @@ from ficha import build_ficha
 from hub import build_hub
 from local import build_local
 from precios import build_precios
+from zonas import ZONAS, build_zona
 
 ROOT = Path(__file__).resolve().parents[2] / "public" / "pasto-sintetico"
 
@@ -23,6 +24,8 @@ def main():
     write(ROOT / "index.html", build_hub())
     write(ROOT.parent / "pasto-sintetico-tampico" / "index.html", build_local())
     write(ROOT.parent / "precios" / "index.html", build_precios())
+    for slug, zona in ZONAS.items():
+        write(ROOT.parent / slug / "index.html", build_zona(slug, zona))
     for m in MODELOS:
         write(ROOT / m["slug"] / "index.html", build_ficha(m))
 
