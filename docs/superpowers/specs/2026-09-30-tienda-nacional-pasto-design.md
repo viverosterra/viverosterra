@@ -19,6 +19,7 @@ Su función es pre-cotizar y generar leads que se cierran por WhatsApp. No hay c
 | Estilo | El sistema actual: papel, tinta y verde bosque; Geist + Instrument Serif; editorial suizo |
 | Muestras físicas | No se ofrecen (regla del dueño) |
 | Reseñas | Fuera de alcance por ahora |
+| Existencia | Los 9 modelos en existencia para envío nacional; "para llevar hoy" en showroom solo Toscana 18 y 28 |
 | Marcas | Nunca mencionar al proveedor ni competidores por nombre; la comparación es genérica |
 
 ## Estructura
@@ -54,8 +55,9 @@ ciudad) y `tools/pasto/perros.py`. Precios, zonas y fletes siguen en `data.py` (
 2. Franja de confianza: respuesta en menos de 1 h en horario; garantía de fábrica de 3 a 8 años;
    devoluciones en 7 días (enlace a /politicas); factura CFDI 4.0; desde 2007.
 3. Los 9 modelos: tarjeta con foto macro, **regla de altura** (fibra a escala de 10 a 35 mm), precio puesto
-   del estado elegido, filtros por uso y "Agregar a cotización". Etiqueta de existencia desde `data.py`
-   (hoy la portada dice "3 modelos en existencia" fijo, pero los datos marcan 2: se corrige).
+   del estado elegido, filtros por uso y "Agregar a cotización". Los 9 modelos se muestran en existencia en la tienda nacional, fichas y schema
+   (`InStock`; decisión del dueño 2026-09-30). La portada dice "9 modelos en existencia".
+   El campo `stock` de `data.py` solo se usa en /pasto-sintetico-tampico para "para llevar hoy" del showroom.
 4. "¿Cuál te conviene?" (selector existente).
 5. Comparador "¿Viste otro precio?": el cliente escribe total y m² de otra oferta; se muestra su precio por m²
    contra el nuestro puesto en su estado. Sin nombres de competidores.
