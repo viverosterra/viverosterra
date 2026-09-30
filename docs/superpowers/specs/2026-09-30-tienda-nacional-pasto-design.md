@@ -43,7 +43,7 @@ ciudad) y `tools/pasto/perros.py`. Precios, zonas y fletes siguen en `data.py` (
 - Al elegir, se recalcula en toda la página el precio por m² con envío: portada, tarjetas, comparador y cotizador.
 - Fórmula (igual al cotizador): precio de rollo + (flete de la zona × 1 rollo) / 50 m².
   Para 25 a 50 m² viaja 1 rollo; se muestra el caso de rollo completo como "desde".
-- El estado se guarda en `localStorage` (clave `vt-estado-v1`) y se acepta por URL `?estado=<slug>`.
+- El estado se guarda en el store existente `vt-cotizacion-v1` (campo `estado`, el mismo del cotizador) y se acepta por URL `?estado=<slug>`.
   Las páginas de ciudad enlazan a la tienda con su estado.
 - Sin JavaScript, la portada muestra "desde $139/m² + envío desde $900 por rollo" y el selector enlaza a la tabla de envío.
 
