@@ -10,6 +10,7 @@ from data import MODELOS
 from ficha import build_ficha
 from hub import build_hub
 from local import build_local
+from perros import build_perros
 from precios import build_precios
 from zonas import ZONAS, build_zona
 
@@ -32,6 +33,7 @@ def main():
         write(ROOT / m["slug"] / "index.html", build_ficha(m))
     for c in CIUDADES:
         write(ROOT / "envio" / c["slug"] / "index.html", build_ciudad(c))
+    write(ROOT / "perros" / "index.html", build_perros())
 
 
 if __name__ == "__main__":
