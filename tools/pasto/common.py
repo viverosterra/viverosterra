@@ -3,7 +3,7 @@ import json
 from html import escape
 from urllib.parse import quote
 
-from data import ASSET_VERSION, PHONE_DISPLAY, SITE, UPDATED, WA_NUMBER
+from data import ASSET_VERSION, ESTADOS_ORDEN, PHONE_DISPLAY, SITE, UPDATED, WA_NUMBER
 
 GAL = "/img/pasto-sintetico/galeria"
 
@@ -285,3 +285,44 @@ def product_schema(m, *, with_id=True):
 def strip_tags(html_text):
     import re
     return re.sub(r"<[^>]+>", "", html_text)
+
+
+MAX_MM = 35
+
+
+def estado_select_html(select_id, *, selected="", label="Envíalo a"):
+    opts = "\n".join(
+        f'            <option value="{esc(e)}"{" selected" if e == selected else ""}>{esc(e)}</option>' for e in ESTADOS_ORDEN
+    )
+    return f"""<div class="ship-to">
+          <label for="{select_id}" class="ship-to__label">{esc(label)}</label>
+          <select class="ship-to__select" id="{select_id}" data-estado-select>
+            <option value="">Elige tu estado</option>
+{opts}
+          </select>
+        </div>"""
+
+
+def height_rule_html(mm):
+    pct = round(mm / MAX_MM * 100)
+    return (f'<div class="hrule" role="img" aria-label="Altura de fibra: {mm} mm">'
+            f'<span class="hrule__fiber" style="--h:{pct}%"></span>'
+            f'<span class="hrule__scale" aria-hidden="true"><i>35</i><i>25</i><i>15</i><i>0</i></span></div>')
+
+
+TRUST = [
+    ("Respuesta en menos de 1 hora", "Lun a vie 9 a 18 h, sáb 9 a 14 h"),
+    ("Garantía de fábrica", "De 3 a 8 años según el modelo"),
+    ("Devoluciones en 7 días", '<a href="/politicas#devoluciones">Ver política</a>'),
+    ("Factura CFDI 4.0", "Persona física o moral"),
+    ("Desde 2007", "Vivero y showroom en Cd. Madero"),
+]
+
+
+def trust_band_html():
+    items = "\n".join(f"      <li><strong>{esc(t)}</strong><span>{d}</span></li>" for t, d in TRUST)
+    return f"""<section class="trust" aria-label="Por qué comprar con nosotros">
+  <ul class="wrap trust__list">
+{items}
+  </ul>
+</section>"""
