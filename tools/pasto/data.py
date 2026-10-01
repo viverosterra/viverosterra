@@ -12,7 +12,7 @@ SITE = "https://www.viverosterra.com"
 WA_NUMBER = "528333268008"
 PHONE_DISPLAY = "833 326 8008"
 UPDATED = "septiembre 2026"
-ASSET_VERSION = "20260926b"
+ASSET_VERSION = "20260930"
 
 ZONAS = {"A": 900, "B": 1150, "C": 1400}
 # Igual que ESTADO_ZONA en public/js/tienda-pasto.js: si cambias una zona, cambia las dos.
