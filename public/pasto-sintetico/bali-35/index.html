@@ -26,6 +26,8 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RMZCVJ734M"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RMZCVJ734M');</script>
 <script type="application/json" id="vt-model">{"slug": "bali-35", "nombre": "Bali 35", "img": "/img/pasto-sintetico/galeria/bali-35-2-sm.webp", "t1": 399, "t2": 339, "rollo": 299}</script>
+<script src="/js/vt-landed.js?v=20260930" defer></script>
+<script>document.addEventListener("vt:ready",function(){var t=window.VTTienda,L=window.VTLanded;if(!t||!L)return;function p(e){document.querySelectorAll("[data-landed-slug]").forEach(function(el){var m=t.models.find(function(x){return x.slug===el.dataset.landedSlug});var v=m&&e?L.landedM2(m.rollo,e,t.estadoZona,t.zonas):null;el.textContent=v?"$"+v.toLocaleString("es-MX")+"/m² puesto en "+e:"";});}p(t.getEstado());document.addEventListener("vt:estado",function(ev){p(ev.detail.estado||"")});});</script>
 <script src="/js/tienda-pasto.js?v=20260930" defer></script>
 </head>
 <body>
@@ -110,7 +112,7 @@
       </section>
 
       <div class="pdp__info">
-        <p class="eyebrow"><span>N.º 09 / 09 · El más completo</span><span>Envío en 3 a 5 días</span></p>
+        <p class="eyebrow"><span>N.º 09 / 09 · El más completo</span><span class="stock">En existencia</span></p>
         <h1 class="pdp__title" id="titulo"><span class="pdp__kicker">Pasto sintético</span> <span class="pdp__name">Bali 35 </span></h1>
         <p class="pdp__lede">El más completo de la colección: 35 mm, 2,100 g/m² y fibra de 5,500 Dtex.</p>
 
@@ -123,6 +125,7 @@
             <span class="buy__price num">$299</span>
             <span class="buy__unit">/m²</span>
           </div>
+            <p class="buy__landed" data-landed-slug="bali-35" aria-live="polite"></p>
           <p class="buy__terms">Precio por rollo completo de 50 m², IVA incluido. El envío se suma según tu estado.</p>
           <table class="tiers num">
             <caption>Precio por volumen</caption>

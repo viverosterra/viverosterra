@@ -26,6 +26,8 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RMZCVJ734M"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RMZCVJ734M');</script>
 <script type="application/json" id="vt-model">{"slug": "capri-20", "nombre": "Capri 20", "img": "/img/pasto-sintetico/galeria/capri-20-2-sm.webp", "t1": 279, "t2": 239, "rollo": 209}</script>
+<script src="/js/vt-landed.js?v=20260930" defer></script>
+<script>document.addEventListener("vt:ready",function(){var t=window.VTTienda,L=window.VTLanded;if(!t||!L)return;function p(e){document.querySelectorAll("[data-landed-slug]").forEach(function(el){var m=t.models.find(function(x){return x.slug===el.dataset.landedSlug});var v=m&&e?L.landedM2(m.rollo,e,t.estadoZona,t.zonas):null;el.textContent=v?"$"+v.toLocaleString("es-MX")+"/m² puesto en "+e:"";});}p(t.getEstado());document.addEventListener("vt:estado",function(ev){p(ev.detail.estado||"")});});</script>
 <script src="/js/tienda-pasto.js?v=20260930" defer></script>
 </head>
 <body>
@@ -105,7 +107,7 @@
       </section>
 
       <div class="pdp__info">
-        <p class="eyebrow"><span>N.º 03 / 09 · Alta densidad</span><span>Envío en 3 a 5 días</span></p>
+        <p class="eyebrow"><span>N.º 03 / 09 · Alta densidad</span><span class="stock">En existencia</span></p>
         <h1 class="pdp__title" id="titulo"><span class="pdp__kicker">Pasto sintético</span> <span class="pdp__name">Capri 20 </span></h1>
         <p class="pdp__lede">Solo 20 mm, pero con 16,800 puntadas por m². Denso, parejo y fácil de limpiar.</p>
 
@@ -118,6 +120,7 @@
             <span class="buy__price num">$209</span>
             <span class="buy__unit">/m²</span>
           </div>
+            <p class="buy__landed" data-landed-slug="capri-20" aria-live="polite"></p>
           <p class="buy__terms">Precio por rollo completo de 50 m², IVA incluido. El envío se suma según tu estado.</p>
           <table class="tiers num">
             <caption>Precio por volumen</caption>

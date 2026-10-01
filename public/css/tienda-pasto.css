@@ -725,3 +725,7 @@ a.quote-btn { text-decoration: none; }
   .landed.is-updating .landed__price { animation: none; }
   .ship-to__select, .city-card { transition: none; }
 }
+
+/* ---------- Ficha: precio puesto bajo el precio ---------- */
+.buy__landed { margin: 6px 0 0; color: var(--green); font-weight: 600; font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
+.buy__landed:empty { display: none; }

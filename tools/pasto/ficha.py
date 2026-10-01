@@ -3,7 +3,7 @@ import json
 
 from common import (GAL, SECTION_CLOSE, assurances, breadcrumb_schema, buybar, drawer_and_toast, esc,
                     faq_html, faq_schema, footer, head, jsonld, money, product_schema, section_open, steps_list)
-from data import MODELOS, SITE, WA_NUMBER
+from data import ASSET_VERSION, MODELOS, SITE, WA_NUMBER
 
 NOTE_FLETE = "Te confirmamos el flete exacto a tu dirección antes de pagar."
 
@@ -94,6 +94,15 @@ def specstrip_html(m):
     return f'<dl class="specstrip">{cells}</dl>'
 
 
+LANDED_SCRIPTS = (
+    f'<script src="/js/vt-landed.js?v={ASSET_VERSION}" defer></script>\n'
+    '<script>document.addEventListener("vt:ready",function(){var t=window.VTTienda,L=window.VTLanded;if(!t||!L)return;'
+    'function p(e){document.querySelectorAll("[data-landed-slug]").forEach(function(el){var m=t.models.find(function(x){return x.slug===el.dataset.landedSlug});'
+    'var v=m&&e?L.landedM2(m.rollo,e,t.estadoZona,t.zonas):null;el.textContent=v?"$"+v.toLocaleString("es-MX")+"/m² puesto en "+e:"";});}'
+    'p(t.getEstado());document.addEventListener("vt:estado",function(ev){p(ev.detail.estado||"")});});</script>\n'
+)
+
+
 def buy_html(m):
     return f"""<section class="buy" id="comprar" aria-labelledby="precio-titulo">
           <h2 class="visually-hidden" id="precio-titulo">Precio y cotización</h2>
@@ -102,6 +111,7 @@ def buy_html(m):
             <span class="buy__price num">${m['rollo']}</span>
             <span class="buy__unit">/m²</span>
           </div>
+            <p class="buy__landed" data-landed-slug="{m['slug']}" aria-live="polite"></p>
           <p class="buy__terms">Precio por rollo completo de 50 m², IVA incluido. El envío se suma según tu estado.</p>
 {tiers_html(m)}
 {calc_html()}
@@ -247,14 +257,14 @@ def build_ficha(m):
     model_json = json.dumps({"slug": m["slug"], "nombre": m["nombre"], "img": f"{GAL}/{m['slug']}-2-sm.webp",
                              "t1": m["t1"], "t2": m["t2"], "rollo": m["rollo"]}, ensure_ascii=False)
     badge = f'<sup title="Versión {esc(m["badge"].lower())}">{esc(m["badge"])}</sup>' if m.get("badge") else ""
-    stock = '<span class="stock">En existencia</span>' if m["stock"] else '<span>Envío en 3 a 5 días</span>'
+    stock = '<span class="stock">En existencia</span>'
     photos_label, photos_title, photos_body = photos_section(m)
     gar_text = f"Garantía de {m['garantia']} años" if m["garantia"] else "Garantía de fábrica"
 
     parts = [
         head(title=title, description=desc, canonical=url, og_image=f"{SITE}{first}.webp", og_type="product",
              preload_img=f"{first}-sm.webp", preload_srcset=f"{first}-sm.webp 420w, {first}.webp 720w", ld=ld,
-             extra=f'<script type="application/json" id="vt-model">{model_json}</script>\n'),
+             extra=(f'<script type="application/json" id="vt-model">{model_json}</script>\n' + LANDED_SCRIPTS)),
         f"""
 <main>
   <div class="wrap">
