@@ -303,7 +303,11 @@
     $$('[data-m2]').forEach((chip) => chip.addEventListener('click', () => setM2(parseInt(chip.dataset.m2, 10))));
     inp.addEventListener('input', update);
     inp.addEventListener('change', () => setM2(parseInt(inp.value, 10)));
-    sel.addEventListener('change', () => { writeStore({ ...memoryState, estado: sel.value }); update(); });
+    sel.addEventListener('change', () => {
+      writeStore({ ...memoryState, estado: sel.value });
+      update();
+      document.dispatchEvent(new CustomEvent('vt:estado', { detail: { estado: sel.value === PICKUP ? '' : sel.value } }));
+    });
     if (modelSel) modelSel.addEventListener('change', update);
 
     $('#cta-add').addEventListener('click', () => addItem(current(), parseInt(inp.value, 10)));
@@ -429,6 +433,16 @@
     const quote = initQuote(models);
     window.VTTienda = Object.freeze({
       models,
+      zonas: Object.fromEntries(Object.entries(ZONAS).map(([z, v]) => [z, v.tarifa])),
+      estadoZona: ESTADO_ZONA,
+      getEstado: () => (memoryState.estado && memoryState.estado !== PICKUP ? memoryState.estado : ''),
+      setEstado: (estado) => {
+        if (estado && !(estado in ESTADO_ZONA)) return;
+        writeStore({ ...memoryState, estado });
+        const sel = $('#estado');
+        if (sel && sel.value !== estado) { sel.value = estado; sel.dispatchEvent(new Event('change')); }
+        document.dispatchEvent(new CustomEvent('vt:estado', { detail: { estado } }));
+      },
       addItem: (slug, m2) => {
         const model = models.find((m) => m.slug === slug);
         if (model) addItem(model, m2);
