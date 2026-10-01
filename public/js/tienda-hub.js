@@ -122,6 +122,74 @@
     run();
   }
 
+  /* ---------- Precio puesto por estado ---------- */
+  const money = (n) => '$' + Math.round(n).toLocaleString('es-MX');
+
+  function landedFor(t, rollo, estado) {
+    return window.VTLanded ? window.VTLanded.landedM2(rollo, estado, t.estadoZona, t.zonas) : null;
+  }
+
+  function paintLanded(t, estado) {
+    const hero = $('[data-landed-hero]');
+    if (hero) {
+      const rollo = Number(hero.dataset.rollo);
+      const v = estado ? landedFor(t, rollo, estado) : null;
+      $('[data-landed-value]', hero).textContent = money(v || rollo);
+      $('[data-landed-note]', hero).textContent = v
+        ? `puesto en ${estado}, envío incluido · llega en 3 a 5 días hábiles`
+        : '+ envío desde $900 por rollo. Elige tu estado para ver el precio puesto.';
+      hero.classList.remove('is-updating'); void hero.offsetWidth; hero.classList.add('is-updating');
+    }
+    $$('[data-landed-slug]').forEach((el) => {
+      const m = t.models.find((x) => x.slug === el.dataset.landedSlug);
+      const v = m && estado ? landedFor(t, m.rollo, estado) : null;
+      el.textContent = v ? `· ${money(v)}/m² puesto en ${estado}` : '';
+    });
+    const sel = $('#hero-estado');
+    if (sel && sel.value !== estado) sel.value = estado;
+    paintComparador(t, estado);
+  }
+
+  function estadoInicial(t) {
+    const slug = new URLSearchParams(location.search).get('estado');
+    const desdeUrl = slug && window.VTLanded ? window.VTLanded.estadoDesdeSlug(slug, Object.keys(t.estadoZona)) : null;
+    return desdeUrl || t.getEstado();
+  }
+
+  function initLanded(t) {
+    const sel = $('#hero-estado');
+    const inicial = estadoInicial(t);
+    if (inicial && inicial !== t.getEstado()) t.setEstado(inicial);
+    paintLanded(t, inicial);
+    if (sel) sel.addEventListener('change', () => t.setEstado(sel.value));
+    document.addEventListener('vt:estado', (e) => paintLanded(t, e.detail.estado || ''));
+  }
+
+  /* ---------- Comparador ---------- */
+  function paintComparador(t, estado) {
+    const out = $('#cmp-out');
+    if (!out) return;
+    const total = Number($('#cmp-total').value);
+    const m2 = Number($('#cmp-m2').value);
+    if (!(total > 0 && m2 > 0)) {
+      out.textContent = 'Escribe el total y los metros para comparar con nuestro precio puesto en tu estado.';
+      return;
+    }
+    const suyo = total / m2;
+    const barato = t.models.reduce((a, b) => (a.rollo <= b.rollo ? a : b));
+    const nuestro = estado ? landedFor(t, barato.rollo, estado) : null;
+    out.textContent = nuestro
+      ? `Esa oferta sale en ${money(suyo)}/m². Con nosotros, desde ${money(nuestro)}/m² puesto en ${estado} (${barato.nombre}).`
+      : `Esa oferta sale en ${money(suyo)}/m². Elige tu estado arriba para comparar con nuestro precio puesto.`;
+  }
+
+  function initComparador(t) {
+    ['#cmp-total', '#cmp-m2'].forEach((id) => {
+      const el = $(id);
+      if (el) el.addEventListener('input', () => paintComparador(t, t.getEstado()));
+    });
+  }
+
   function start() {
     const api = window.VTTienda;
     initFilters();
@@ -131,6 +199,8 @@
     }
     initCardButtons(api);
     initQuiz(api);
+    initLanded(api);
+    initComparador(api);
   }
 
   if (window.VTTienda) start();
