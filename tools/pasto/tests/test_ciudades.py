@@ -34,3 +34,12 @@ class CiudadesTest(unittest.TestCase):
         texto = str(CIUDADES).lower()
         for palabra in ("oasis", "muestra", "gratis", "pádel", "padel"):
             self.assertNotIn(palabra, texto)
+
+    def test_intro_unica_en_todas(self):
+        intros = [c.get("intro") for c in CIUDADES]
+        self.assertTrue(all(intros))
+        self.assertEqual(len(intros), len(set(intros)))
+
+    def test_razones_de_modelo_unicas(self):
+        razones = [r for c in CIUDADES for _s, r in c["modelos"]]
+        self.assertEqual(len(razones), len(set(razones)))

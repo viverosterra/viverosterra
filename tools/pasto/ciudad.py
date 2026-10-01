@@ -103,9 +103,11 @@ def diy_html():
 
 def schema(c, zona, url, faqs):
     m = barato()
+    desde = landed_m2(m, zona)
     offer = {
-        "@type": "Offer", "name": f"Pasto sintético con envío a {c['nombre_largo']}", "priceCurrency": "MXN",
-        "price": str(m["rollo"]), "availability": "https://schema.org/InStock", "url": url,
+        "@type": "Offer", "priceCurrency": "MXN", "price": str(m["rollo"]),
+        "priceSpecification": {"@type": "UnitPriceSpecification", "price": str(m["rollo"]), "priceCurrency": "MXN", "unitText": "m²"},
+        "availability": "https://schema.org/InStock", "url": url,
         "shippingDetails": {
             "@type": "OfferShippingDetails",
             "shippingRate": {"@type": "MonetaryAmount", "value": str(ZONAS[zona]), "currency": "MXN"},
@@ -114,9 +116,16 @@ def schema(c, zona, url, faqs):
                              "transitTime": {"@type": "QuantitativeValue", "minValue": 3, "maxValue": 5, "unitCode": "DAY"}},
         },
     }
+    product = {
+        "@type": "Product", "name": f"Pasto sintético con envío a {c['nombre_largo']}",
+        "brand": {"@type": "Brand", "name": "Viveros Terra"},
+        "image": [f"{SITE}{GAL}/obra-proyecto-02.webp"],
+        "description": f"Pasto sintético en rollo de 50 m² con envío a {c['nombre_largo']}, desde ${desde}/m² puesto en tu casa.",
+        "offers": offer,
+    }
     return jsonld([
         breadcrumb_schema([("Inicio", SITE), ("Pasto sintético", f"{SITE}/pasto-sintetico"), (f"Envío a {c['nombre']}", url)]),
-        offer, faq_schema(faqs),
+        product, faq_schema(faqs),
     ])
 
 
@@ -148,6 +157,7 @@ def build_ciudad(c):
   {trust_band_html()}
 
   {section_open(1, "Precios", "totales-titulo", f"Cuánto cuesta con envío <em>a {esc(c['nombre'])}</em>", section_id="precios")}
+        <p class="section__intro">{esc(c["intro"])}</p>
         {totales_html(zona)}{SECTION_CLOSE}
   {section_open(2, "Clima", "modelos-titulo", f"El pasto que conviene <em>en {esc(c['nombre'])}</em>", tint=True, section_id="modelos")}
         {modelos_html(c, zona)}{SECTION_CLOSE}

@@ -28,3 +28,14 @@ class CiudadTest(unittest.TestCase):
         html = build_ciudad(MTY)
         for bloque in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S):
             json.loads(bloque)
+
+    def test_schema_tiene_product_con_envio(self):
+        html = build_ciudad(MTY)
+        bloque = re.search(r'<script type="application/ld\+json">(.*?)</script>', html, re.S).group(1)
+        graph = json.loads(bloque)["@graph"]
+        productos = [n for n in graph if n.get("@type") == "Product"]
+        self.assertEqual(len(productos), 1)
+        self.assertIn("shippingDetails", productos[0]["offers"])
+        self.assertTrue(any(n.get("@type") == "FAQPage" for n in graph))
+        self.assertTrue(any(n.get("@type") == "BreadcrumbList" for n in graph))
+        self.assertIn(MTY["intro"][:40], html)
