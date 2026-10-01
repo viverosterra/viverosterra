@@ -6,6 +6,8 @@ Irlanda 25, Viena 30, Bali 35). Aruba 10, Japonés 35 y Mónaco 35 solo
 tienen datos principales publicados. Nunca mencionar al fabricante.
 """
 
+import unicodedata
+
 SITE = "https://www.viverosterra.com"
 WA_NUMBER = "528333268008"
 PHONE_DISPLAY = "833 326 8008"
@@ -23,6 +25,29 @@ ZONA_ESTADOS = {
     "C": ("Sureste y fronteras", ["Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua",
                                    "Quintana Roo", "Sonora", "Tabasco", "Yucatán"]),
 }
+
+ROLLO_M2 = 50
+
+
+def zona_de(estado):
+    """Zona de envío (A, B o C) del estado, o None si no existe."""
+    for zona, (_nombre, estados) in ZONA_ESTADOS.items():
+        if estado in estados:
+            return zona
+    return None
+
+
+def landed_m2(modelo, zona):
+    """Precio por m² puesto en casa: rollo completo + flete de 1 rollo, redondeado."""
+    return round(modelo["rollo"] + ZONAS[zona] / ROLLO_M2)
+
+
+def estado_slug(estado):
+    sin_acentos = unicodedata.normalize("NFKD", estado).encode("ascii", "ignore").decode()
+    return "-".join(sin_acentos.lower().split())
+
+
+ESTADOS_ORDEN = sorted((e for _z, (_n, es) in ZONA_ESTADOS.items() for e in es), key=estado_slug)
 
 COMMON_TREATMENTS = "UV, antibacterial, retardante al fuego"
 
