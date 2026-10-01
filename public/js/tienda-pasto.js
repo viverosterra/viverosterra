@@ -27,6 +27,7 @@
     'Baja California': 'C', 'Baja California Sur': 'C', 'Campeche': 'C', 'Chiapas': 'C', 'Chihuahua': 'C',
     'Quintana Roo': 'C', 'Sonora': 'C', 'Tabasco': 'C', 'Yucatán': 'C',
   };
+  Object.freeze(ESTADO_ZONA);
 
   const money = (n) => '$' + Math.round(n).toLocaleString('es-MX');
   const $ = (sel, root) => (root || document).querySelector(sel);
@@ -229,8 +230,16 @@
     dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
     fillEstados($('#cot-estado'));
     $('#cot-estado').addEventListener('change', (e) => {
-      writeStore({ ...memoryState, estado: e.target.value });
+      const value = e.target.value;
+      writeStore({ ...memoryState, estado: value });
       renderDrawer();
+      const quoteSel = $('#estado');
+      if (quoteSel && quoteSel.value !== value) {
+        quoteSel.value = value;
+        quoteSel.dispatchEvent(new Event('change'));
+      } else {
+        document.dispatchEvent(new CustomEvent('vt:estado', { detail: { estado: value === PICKUP ? '' : value } }));
+      }
     });
     $('#cot-send').addEventListener('click', (e) => {
       if (e.currentTarget.getAttribute('aria-disabled') === 'true') { e.preventDefault(); return; }
@@ -439,9 +448,16 @@
       setEstado: (estado) => {
         if (estado && !(estado in ESTADO_ZONA)) return;
         writeStore({ ...memoryState, estado });
+        const cotSel = $('#cot-estado');
+        if (cotSel) cotSel.value = estado;
+        if (typeof renderDrawer === 'function') renderDrawer();
         const sel = $('#estado');
-        if (sel && sel.value !== estado) { sel.value = estado; sel.dispatchEvent(new Event('change')); }
-        document.dispatchEvent(new CustomEvent('vt:estado', { detail: { estado } }));
+        if (sel && sel.value !== estado) {
+          sel.value = estado;
+          sel.dispatchEvent(new Event('change'));
+        } else {
+          document.dispatchEvent(new CustomEvent('vt:estado', { detail: { estado } }));
+        }
       },
       addItem: (slug, m2) => {
         const model = models.find((m) => m.slug === slug);
