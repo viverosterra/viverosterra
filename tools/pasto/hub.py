@@ -64,7 +64,8 @@ def hero_html():
     <div class="wrap hub-hero__grid">
       <div class="hub-hero__copy">
         <p class="eyebrow"><span>Tienda · Envío a todo México</span><span class="stock">9 modelos en existencia</span></p>
-        <h1 class="hub-hero__title" id="titulo">Pasto sintético con envío a todo México <em>precio puesto en tu puerta</em></h1>
+        <h1 class="hub-hero__title" id="titulo">Pasto sintético <em>con envío a todo México</em></h1>
+        <p class="ship-to__kicker">Precio puesto en tu puerta</p>
         {estado_select_html("hero-estado")}
         <p class="landed" data-landed-hero data-rollo="{barato['rollo']}" aria-live="polite">
           <span class="landed__from">Desde</span>
@@ -78,8 +79,7 @@ def hero_html():
       </div>
       <figure class="hub-hero__media">
         <picture>
-          <source media="(min-width: 1024px)" srcset="{GAL}/obra-residencial-tampico-sm.webp 560w, {GAL}/obra-residencial-tampico.webp 960w" sizes="560px" width="960" height="1440">
-          <img src="{GAL}/obra-proyecto-03-sm.webp" srcset="{GAL}/obra-proyecto-03-sm.webp 560w, {GAL}/obra-proyecto-03.webp 960w" sizes="100vw" width="960" height="1280" alt="Residencia con palmas y jardín de pasto sintético instalado" fetchpriority="high" decoding="async">
+          <img src="{GAL}/obra-proyecto-03-sm.webp" srcset="{GAL}/obra-proyecto-03-sm.webp 560w, {GAL}/obra-proyecto-03.webp 960w" sizes="(min-width: 1024px) 620px, 100vw" width="960" height="1280" alt="Residencia con palmas y jardín de pasto sintético instalado" fetchpriority="high" decoding="async">
         </picture>
         <figcaption>Proyecto real con pasto sintético de nuestra colección.</figcaption>
       </figure>
@@ -99,7 +99,7 @@ def card_html(m):
               <p class="spec-card__tag">{esc(m['tag'])}</p>
               <h3 class="spec-card__name"><a href="{url}">{esc(m['nombre'])}</a></h3>
               {height_rule_html(m['mm'])}
-              <dl class="spec-card__specs num"><div><dt>Altura</dt><dd>{m['mm']} mm</dd></div><div><dt>Peso</dt><dd>{m['peso']} g/m²</dd></div><div><dt>Garantía</dt><dd>{gar}</dd></div></dl>
+              <dl class="spec-card__specs num"><div><dt>Peso</dt><dd>{m['peso']} g/m²</dd></div><div><dt>Garantía</dt><dd>{gar}</dd></div></dl>
               <div class="spec-card__foot">
                 <p class="spec-card__price num">Desde <strong>${m['rollo']}</strong>/m² <span class="spec-card__landed" data-landed-slug="{m['slug']}"></span></p>
                 <button class="spec-card__add" type="button" data-add="{m['slug']}" aria-label="Agregar {esc(m['nombre'])} a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>

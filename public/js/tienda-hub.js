@@ -148,7 +148,7 @@
     $$('[data-landed-slug]').forEach((el) => {
       const m = t.models.find((x) => x.slug === el.dataset.landedSlug);
       const v = m && estado ? landedFor(t, m.rollo, estado) : null;
-      el.textContent = v ? `· ${money(v)}/m² puesto en ${estado}` : '';
+      el.textContent = v ? `${money(v)}/m² puesto en ${estado}` : '';
     });
     const sel = $('#hero-estado');
     if (sel && sel.value !== estado) sel.value = estado;

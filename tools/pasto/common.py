@@ -306,8 +306,8 @@ def estado_select_html(select_id, *, selected="", label="Envíalo a"):
 def height_rule_html(mm):
     pct = round(mm / MAX_MM * 100)
     return (f'<div class="hrule" role="img" aria-label="Altura de fibra: {mm} mm">'
-            f'<span class="hrule__fiber" style="--h:{pct}%"></span>'
-            f'<span class="hrule__scale" aria-hidden="true"><i>35</i><i>25</i><i>15</i><i>0</i></span></div>')
+            f'<span class="hrule__track"><span class="hrule__fill" style="--w:{pct}%"></span></span>'
+            f'<span class="hrule__val num">{mm}<small>mm</small></span></div>')
 
 
 TRUST = [

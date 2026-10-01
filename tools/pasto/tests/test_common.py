@@ -16,9 +16,10 @@ class CommonTest(unittest.TestCase):
 
     def test_regla_escala(self):
         html = height_rule_html(35)
-        self.assertIn('style="--h:100%"', html)
+        self.assertIn('style="--w:100%"', html)
         self.assertIn('aria-label="Altura de fibra: 35 mm"', html)
-        self.assertIn('style="--h:29%"', height_rule_html(10))
+        self.assertIn('style="--w:29%"', height_rule_html(10))
+        self.assertIn('aria-label="Altura de fibra: 10 mm"', height_rule_html(10))
 
     def test_franja_confianza(self):
         html = trust_band_html()

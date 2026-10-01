@@ -75,9 +75,9 @@ def modelos_html(c, zona):
     for slug, razon in c["modelos"]:
         m = modelo(slug)
         cards.append(f"""          <article class="city-model">
-            {height_rule_html(m["mm"])}
             <div>
-              <h3><a href="/pasto-sintetico/{m["slug"]}">{esc(m["nombre"])}</a> <span class="num">{m["mm"]} mm</span></h3>
+              <h3><a href="/pasto-sintetico/{m["slug"]}">{esc(m["nombre"])}</a></h3>
+              {height_rule_html(m["mm"])}
               <p>{esc(razon)}</p>
               <p class="city-model__price num">Desde <strong>${landed_m2(m, zona)}</strong>/m² puesto en {esc(c["nombre"])}</p>
             </div>
