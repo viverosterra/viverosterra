@@ -4,6 +4,8 @@ Uso: python3 tools/pasto/build.py   (desde la raíz del repo)
 """
 from pathlib import Path
 
+from ciudad import build_ciudad
+from ciudades import CIUDADES
 from data import MODELOS
 from ficha import build_ficha
 from hub import build_hub
@@ -28,6 +30,8 @@ def main():
         write(ROOT.parent / slug / "index.html", build_zona(slug, zona))
     for m in MODELOS:
         write(ROOT / m["slug"] / "index.html", build_ficha(m))
+    for c in CIUDADES:
+        write(ROOT / "envio" / c["slug"] / "index.html", build_ciudad(c))
 
 
 if __name__ == "__main__":
