@@ -7,10 +7,9 @@ from common import (GAL, SECTION_CLOSE, breadcrumb_schema, buybar, drawer_and_to
 from data import COMMON_TREATMENTS, MODELOS, SITE
 
 URL = f"{SITE}/pasto-sintetico/perros"
-# Imagen de obra real: 960x540 (la versión -sm mide 560x315).
-IMG = f"{GAL}/obra-proyecto-04"
-IMG_W, IMG_H = 960, 540
-DESDE = min(m["rollo"] for m in MODELOS)
+# Imagen de obra vertical real: 960x1280 (la versión -sm mide 560x747).
+IMG = f"{GAL}/obra-proyecto-02"
+IMG_W, IMG_H = 960, 1280
 
 RECOMENDADOS = [
     ("irlanda-25", "Fibra más resistente de la colección: aguanta pisoteo y juego diario."),
@@ -19,7 +18,7 @@ RECOMENDADOS = [
 ]
 
 CRITERIOS = [
-    ("Fibra resistente y no muy alta", "De 18 a 25 mm es lo más práctico: se limpia fácil y la fibra se recupera con el paso de las patas."),
+    ("Fibra resistente y no muy alta", "De 18 a 25 mm es lo más práctico: se limpia fácil y aguanta el paso diario."),
     ("Base perforada que drene", "La orina tiene que pasar al suelo. Instálalo sobre grava fina compactada, no sobre piso liso sin desnivel."),
     ("Limpieza sencilla", "Levanta los desechos sólidos y enjuaga con manguera. Para el olor, usa un limpiador enzimático para mascotas."),
 ]
@@ -27,14 +26,18 @@ CRITERIOS = [
 FAQS = [
     ("¿El pasto sintético se calienta con el sol?", "Sí, como cualquier superficie exterior al sol. Enjuágalo con manguera en las horas de más calor y deja una zona de sombra para tu perro."),
     ("¿Mi perro lo puede rasguñar o romper?", "Un perro que escarba puede levantar las orillas si no están bien fijadas. Fija el perímetro con clavos o adhesivo como indica la guía de instalación."),
-    ("¿El pasto sintético huele a orina?", "Si la base no drena o no se enjuaga, sí. Con grava que drene, enjuague frecuente y un limpiador enzimático no se queda el olor."),
+    ("¿El pasto sintético huele a orina?", "Si la base no drena o no se enjuaga, sí. Con grava que drene, enjuague frecuente y un limpiador enzimático se controla el olor."),
     ("¿Cómo se lava el pasto sintético con perros?", "Levanta los desechos, enjuaga con manguera una o dos veces por semana y cepilla la fibra de vez en cuando para que quede de pie."),
-    ("¿Es seguro para mascotas?", f"Todos nuestros modelos tienen de fábrica estos tratamientos: {COMMON_TREATMENTS}."),
+    ("¿Qué tratamientos tiene el pasto?", f"Todos nuestros modelos tienen de fábrica estos tratamientos: {COMMON_TREATMENTS}."),
 ]
 
 
 def modelo(slug):
     return next(m for m in MODELOS if m["slug"] == slug)
+
+
+MAS_BARATO = min((modelo(slug) for slug, _r in RECOMENDADOS), key=lambda m: m["rollo"])
+DESDE = MAS_BARATO["rollo"]
 
 
 def recomendados_html():
@@ -57,8 +60,17 @@ def criterios_html():
     return f'<ol class="steps">\n{items}\n        </ol>'
 
 
+GUIA_INSTALACION = "guía de instalación"
+
+
+def a_html(texto):
+    """Escapa la respuesta y enlaza la guía de instalación (el texto plano del schema no lleva HTML)."""
+    return esc(texto).replace(
+        GUIA_INSTALACION, f'<a href="/blog/como-instalar-pasto-sintetico">{GUIA_INSTALACION}</a>')
+
+
 def build_perros():
-    faqs = [(q, a, esc(a)) for q, a in FAQS]
+    faqs = [(q, a, a_html(a)) for q, a in FAQS]
     ld = jsonld([breadcrumb_schema([("Inicio", SITE), ("Pasto sintético", f"{SITE}/pasto-sintetico"), ("Para perros", URL)]),
                  faq_schema(faqs)])
     base = head(
@@ -84,14 +96,14 @@ def build_perros():
       <div class="hub-hero__copy">
         <p class="eyebrow"><span>Mascotas · Envío a todo México</span></p>
         <h1 class="hub-hero__title" id="titulo">Pasto sintético para perros <em>que drena y se limpia fácil</em></h1>
-        <p class="summary summary--hero">Para perros conviene un pasto de 18 a 25 mm con fibra resistente, instalado sobre grava que drene. Se limpia con manguera y un limpiador enzimático. Desde <strong>${DESDE}/m²</strong> con Toscana 18.</p>
+        <p class="summary summary--hero">Para perros conviene un pasto de 18 a 25 mm con fibra resistente, instalado sobre grava que drene. Se limpia con manguera y un limpiador enzimático. Desde <strong>${DESDE}/m²</strong> con {esc(MAS_BARATO["nombre"])}.</p>
         <div class="hub-hero__actions">
           <a class="btn btn--primary" href="/pasto-sintetico#modelos">Ver precios con envío</a>
           <a class="btn btn--ghost" href="{wa("Hola, quiero pasto sintético para mis perros. Metros aprox.: ")}" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
         </div>
       </div>
       <figure class="hub-hero__media">
-        <img src="{IMG}-sm.webp" srcset="{IMG}-sm.webp 560w, {IMG}.webp 960w" sizes="(min-width: 1024px) 560px, 100vw" width="{IMG_W}" height="{IMG_H}" alt="Patio con pasto sintético de nuestra colección" fetchpriority="high" decoding="async">
+        <img src="{IMG}-sm.webp" srcset="{IMG}-sm.webp 560w, {IMG}.webp 960w" sizes="(min-width: 1024px) 620px, 100vw" width="{IMG_W}" height="{IMG_H}" alt="Patio con pasto sintético de nuestra colección" fetchpriority="high" decoding="async">
         <figcaption>Pasto sintético de nuestra colección instalado.</figcaption>
       </figure>
     </div>
@@ -103,6 +115,7 @@ def build_perros():
   {section_open(2, "Modelos", "modelos-titulo", "Tres modelos <em>para mascotas</em>", tint=True, section_id="modelos")}
         {recomendados_html()}{SECTION_CLOSE}
   {section_open(3, "Preguntas", "faq-titulo", "Preguntas frecuentes <em>con perros</em>", section_id="preguntas")}
-        {faq_html(faqs)}{SECTION_CLOSE}
+        {faq_html(faqs)}
+        <p><a href="/blog/pasto-sintetico-para-perros">Lee la guía completa: pasto sintético para perros</a></p>{SECTION_CLOSE}
 </main>
 """, footer(), buybar("Pasto para perros", f"Desde ${DESDE}/m²"), drawer_and_toast()])
