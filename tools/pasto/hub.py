@@ -1,9 +1,11 @@
 """Plantilla del hub /pasto-sintetico: catálogo de la tienda."""
 import json
 
-from common import (GAL, SECTION_CLOSE, breadcrumb_schema, buybar, drawer_and_toast, esc, faq_html, faq_schema,
-                    footer, head, jsonld, product_schema, section_open, steps_list, strip_tags)
-from data import ZONA_ESTADOS, ZONAS, MODELOS, OBRAS, SITE, USO_FILTERS, WA_NUMBER
+from ciudades import CIUDADES
+from common import (GAL, SECTION_CLOSE, breadcrumb_schema, buybar, drawer_and_toast, esc, estado_select_html, faq_html,
+                    faq_schema, footer, head, height_rule_html, jsonld, product_schema, section_open, steps_list,
+                    strip_tags, trust_band_html)
+from data import ASSET_VERSION, ZONA_ESTADOS, ZONAS, MODELOS, OBRAS, SITE, USO_FILTERS, WA_NUMBER, landed_m2, zona_de
 from ficha import NOTE_FLETE, calc_html, quote_html, tiers_html
 
 DEFAULT = next(m for m in MODELOS if m["slug"] == "toscana-28")
@@ -57,20 +59,20 @@ def faqs_with_html():
 
 
 def hero_html():
+    barato = min(MODELOS, key=lambda m: m["rollo"])
     return f"""<section class="hub-hero" aria-labelledby="titulo">
     <div class="wrap hub-hero__grid">
       <div class="hub-hero__copy">
-        <p class="eyebrow"><span>Tienda · Envío a todo México</span><span class="stock">3 modelos en existencia</span></p>
-        <h1 class="hub-hero__title" id="titulo">Pasto sintético <em>con envío a todo México</em></h1>
-        <p class="pdp__lede">Nueve modelos residenciales de 10 a 35 mm. Precio por rollo, factura y entrega en 3 a 5 días.</p>
-        <dl class="specstrip">
-          <div><dt>Modelos</dt><dd class="num">9</dd></div>
-          <div><dt>En rollo, IVA incluido</dt><dd class="num"><small>desde</small> $139<small>/m²</small></dd></div>
-          <div><dt>Entrega</dt><dd class="num">3–5<small>días</small></dd></div>
-          <div><dt>Factura</dt><dd class="num">CFDI<small>4.0</small></dd></div>
-        </dl>
+        <p class="eyebrow"><span>Tienda · Envío a todo México</span><span class="stock">9 modelos en existencia</span></p>
+        <h1 class="hub-hero__title" id="titulo">Pasto sintético con envío a todo México <em>precio puesto en tu puerta</em></h1>
+        {estado_select_html("hero-estado")}
+        <p class="landed" data-landed-hero data-rollo="{barato['rollo']}" aria-live="polite">
+          <span class="landed__from">Desde</span>
+          <strong class="landed__price num" data-landed-value>${barato['rollo']}</strong><span class="landed__unit">/m²</span>
+          <span class="landed__note" data-landed-note>+ envío desde $900 por rollo. Elige tu estado para ver el precio puesto.</span>
+        </p>
         <div class="hub-hero__actions">
-          <a class="btn btn--primary" href="#modelos">Ver los modelos</a>
+          <a class="btn btn--primary" href="#modelos">Ver modelos con este precio</a>
           <a class="btn btn--ghost" href="#cotizador">Calcular mi pedido</a>
         </div>
       </div>
@@ -88,18 +90,18 @@ def hero_html():
 def card_html(m):
     gar = f"{str(m['garantia']).replace(' a ', '–')} años" if m["garantia"] else "Consultar"
     url = f"/pasto-sintetico/{m['slug']}"
-    stock = '<span class="spec-card__stock">En existencia</span>' if m["stock"] else ""
     return f"""          <article class="spec-card" data-usos="{' '.join(m['usos'])}" id="m-{m['slug']}">
             <a class="spec-card__media" href="{url}" tabindex="-1" aria-hidden="true">
               <img src="{GAL}/{m['slug']}-2-sm.webp" width="420" height="560" alt="" loading="lazy" decoding="async">
               <span class="spec-card__n num">{m['n']:02d}</span>
             </a>
             <div class="spec-card__body">
-              <p class="spec-card__tag">{esc(m['tag'])}{stock}</p>
+              <p class="spec-card__tag">{esc(m['tag'])}</p>
               <h3 class="spec-card__name"><a href="{url}">{esc(m['nombre'])}</a></h3>
+              {height_rule_html(m['mm'])}
               <dl class="spec-card__specs num"><div><dt>Altura</dt><dd>{m['mm']} mm</dd></div><div><dt>Peso</dt><dd>{m['peso']} g/m²</dd></div><div><dt>Garantía</dt><dd>{gar}</dd></div></dl>
               <div class="spec-card__foot">
-                <p class="spec-card__price num">Desde <strong>${m['rollo']}</strong>/m²</p>
+                <p class="spec-card__price num">Desde <strong>${m['rollo']}</strong>/m² <span class="spec-card__landed" data-landed-slug="{m['slug']}"></span></p>
                 <button class="spec-card__add" type="button" data-add="{m['slug']}" aria-label="Agregar {esc(m['nombre'])} a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>
@@ -236,6 +238,29 @@ def diy_html():
         <a class="compare__more" href="/blog/como-instalar-pasto-sintetico">Ver la guía completa paso a paso</a>"""
 
 
+def ciudades_html():
+    barato = min(MODELOS, key=lambda m: m["rollo"])
+    cards = "\n".join(
+        f'          <a class="city-card" href="/pasto-sintetico/envio/{c["slug"]}"><strong>{esc(c["nombre"])}</strong>'
+        f'<span class="num">desde ${landed_m2(barato, zona_de(c["estado"]))}/m² puesto</span><span>3 a 5 días hábiles</span></a>'
+        for c in CIUDADES
+    )
+    return f"""<p class="section__intro">Precio puesto con el modelo más económico, envío incluido. Enviamos a los 32 estados; estas son las ciudades con guía propia.</p>
+        <div class="city-grid">
+{cards}
+        </div>
+        <p class="spec-note">¿Tienes perros? Lee <a href="/pasto-sintetico/perros">qué pasto sintético conviene para mascotas</a>.</p>"""
+
+
+def comparador_html():
+    return """<p class="section__intro">Muchas ofertas anuncian "envío gratis", pero el envío ya viene en el precio. Compara el precio por m² final.</p>
+        <form class="comparador" id="comparador" novalidate>
+          <div class="field"><label for="cmp-total">Total de la otra oferta, con envío</label><input class="select" id="cmp-total" type="number" inputmode="decimal" min="1" placeholder="Ej. 14899"></div>
+          <div class="field"><label for="cmp-m2">Metros cuadrados que incluye</label><input class="select" id="cmp-m2" type="number" inputmode="numeric" min="1" placeholder="Ej. 50"></div>
+          <p class="comparador__out" id="cmp-out" aria-live="polite">Escribe el total y los metros para comparar con nuestro precio puesto en tu estado.</p>
+        </form>"""
+
+
 def local_band_html():
     return """<section class="closing" id="tampico" aria-labelledby="local">
     <div class="wrap">
@@ -273,7 +298,7 @@ def build_hub():
              description="Pasto sintético con envío a todo México desde $139/m². 9 modelos residenciales de 10 a 35 mm, factura CFDI 4.0 y entrega en 3 a 5 días hábiles.",
              canonical=url, og_image=f"{SITE}{hero_img}.webp", og_type="website",
              preload_img=f"{GAL}/obra-proyecto-03-sm.webp", preload_srcset=f"{GAL}/obra-proyecto-03-sm.webp 560w, {GAL}/obra-proyecto-03.webp 960w", ld=ld,
-             extra=f'<script type="application/json" id="vt-models">{models_json}</script>\n<script src="/js/tienda-hub.js?v=' + "20260923" + '" defer></script>\n'),
+             extra=f'<script type="application/json" id="vt-models">{models_json}</script>\n<script src="/js/vt-landed.js?v={ASSET_VERSION}" defer></script>\n<script src="/js/tienda-hub.js?v={ASSET_VERSION}" defer></script>\n'),
         f"""
 <main>
   <div class="wrap">
@@ -285,22 +310,27 @@ def build_hub():
     </nav>
   </div>
   {hero_html()}
+  {trust_band_html()}
 
   {section_open(1, "Colección", "modelos-titulo", "Modelos de pasto sintético <em>de 10 a 35 mm</em>", section_id="modelos")}
         {catalog_html()}{SECTION_CLOSE}
   {section_open(2, "Elegir", "elegir-titulo", "¿Qué pasto sintético <em>te conviene?</em>", tint=True, section_id="elegir")}
         {quiz_html()}{SECTION_CLOSE}
-  {section_open(3, "Comparativa", "comparativa-titulo", "Comparativa de modelos <em>por altura, peso y precio</em>", section_id="comparativa")}
-        {compare_table_html()}{SECTION_CLOSE}
+  {section_open(3, "Comparar", "comparar-titulo", "¿Viste otro precio? <em>Compáralo aquí</em>", section_id="comparar")}
+        {comparador_html()}{SECTION_CLOSE}
   {section_open(4, "Cotizador", "cotizador-titulo", "Precio del pasto sintético <em>con envío a tu estado</em>", tint=True, section_id="cotizador")}
         {cotizador_html()}{SECTION_CLOSE}
-  {section_open(5, "Obras", "obras-titulo", "Pasto sintético instalado <em>en casas reales</em>", section_id="obras")}
+  {section_open(5, "Ciudades", "ciudades-titulo", "Envíos a tu ciudad <em>con precio puesto</em>", section_id="ciudades")}
+        {ciudades_html()}{SECTION_CLOSE}
+  {section_open(6, "Comparativa", "comparativa-titulo", "Comparativa de modelos <em>por altura, peso y precio</em>", tint=True, section_id="comparativa")}
+        {compare_table_html()}{SECTION_CLOSE}
+  {section_open(7, "Obras", "obras-titulo", "Pasto sintético instalado <em>en casas reales</em>", section_id="obras")}
         {obras_html()}{SECTION_CLOSE}
-  {section_open(6, "Tu pedido", "como-funciona-titulo", "Cómo comprar pasto sintético <em>en línea</em>", tint=True, section_id="como-funciona")}
+  {section_open(8, "Tu pedido", "como-funciona-titulo", "Cómo comprar pasto sintético <em>en línea</em>", tint=True, section_id="como-funciona")}
         {steps_list()}{SECTION_CLOSE}
-  {section_open(7, "Instálalo tú", "diy-titulo", "Cómo instalar pasto sintético <em>tú mismo</em>", section_id="instalacion")}
+  {section_open(9, "Instálalo tú", "diy-titulo", "Cómo instalar pasto sintético <em>tú mismo</em>", section_id="instalacion")}
         {diy_html()}{SECTION_CLOSE}
-  {section_open(8, "Preguntas", "faq-titulo", "Preguntas frecuentes <em>sobre pasto sintético</em>", tint=True, section_id="preguntas")}
+  {section_open(10, "Preguntas", "faq-titulo", "Preguntas frecuentes <em>sobre pasto sintético</em>", tint=True, section_id="preguntas")}
         {faq_html(faqs)}{SECTION_CLOSE}
   {local_band_html()}
 </main>

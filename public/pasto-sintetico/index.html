@@ -26,7 +26,8 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RMZCVJ734M"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RMZCVJ734M');</script>
 <script type="application/json" id="vt-models">[{"slug": "aruba-10", "id": "aruba10", "nombre": "Aruba 10", "img": "/img/pasto-sintetico/galeria/aruba-10-2-sm.webp", "t1": 189, "t2": 159, "rollo": 139, "scores": {"precio": 5, "realismo": 1, "resistencia": 2, "ligero": 2}, "tag": "Decorativo", "mm": 10}, {"slug": "toscana-18", "id": "toscana18", "nombre": "Toscana 18", "img": "/img/pasto-sintetico/galeria/toscana-18-2-sm.webp", "t1": 199, "t2": 169, "rollo": 149, "scores": {"precio": 5, "realismo": 2, "resistencia": 2, "ligero": 1}, "tag": "El más económico", "mm": 18}, {"slug": "capri-20", "id": "capri20", "nombre": "Capri 20", "img": "/img/pasto-sintetico/galeria/capri-20-2-sm.webp", "t1": 279, "t2": 239, "rollo": 209, "scores": {"precio": 3, "realismo": 3, "resistencia": 4, "ligero": 0}, "tag": "Alta densidad", "mm": 20}, {"slug": "irlanda-25", "id": "irlanda25", "nombre": "Irlanda 25", "img": "/img/pasto-sintetico/galeria/irlanda-25-2-sm.webp", "t1": 279, "t2": 239, "rollo": 209, "scores": {"precio": 3, "realismo": 3, "resistencia": 5, "ligero": 0}, "tag": "Fibra más resistente", "mm": 25}, {"slug": "toscana-28", "id": "toscana28", "nombre": "Toscana 28", "img": "/img/pasto-sintetico/galeria/toscana-28-2-sm.webp", "t1": 279, "t2": 229, "rollo": 199, "scores": {"precio": 4, "realismo": 4, "resistencia": 3, "ligero": 0}, "tag": "El más vendido", "mm": 28}, {"slug": "viena-30", "id": "viena30", "nombre": "Viena 30", "img": "/img/pasto-sintetico/galeria/viena-30-2-sm.webp", "t1": 339, "t2": 279, "rollo": 249, "scores": {"precio": 2, "realismo": 4, "resistencia": 4, "ligero": 0}, "tag": "Natural premium", "mm": 30}, {"slug": "japones-35", "id": "japones35", "nombre": "Japonés 35", "img": "/img/pasto-sintetico/galeria/japones-35-2-sm.webp", "t1": 359, "t2": 299, "rollo": 269, "scores": {"precio": 2, "realismo": 5, "resistencia": 4, "ligero": 0}, "tag": "Verde natural", "mm": 35}, {"slug": "monaco-35", "id": "monaco35", "nombre": "Mónaco 35", "img": "/img/pasto-sintetico/galeria/monaco-35-2-sm.webp", "t1": 399, "t2": 339, "rollo": 299, "scores": {"precio": 1, "realismo": 5, "resistencia": 5, "ligero": 0}, "tag": "Verde brillante", "mm": 35}, {"slug": "bali-35", "id": "bali35", "nombre": "Bali 35", "img": "/img/pasto-sintetico/galeria/bali-35-2-sm.webp", "t1": 399, "t2": 339, "rollo": 299, "scores": {"precio": 1, "realismo": 5, "resistencia": 5, "ligero": 0}, "tag": "El más completo", "mm": 35}]</script>
-<script src="/js/tienda-hub.js?v=20260923" defer></script>
+<script src="/js/vt-landed.js?v=20260926b" defer></script>
+<script src="/js/tienda-hub.js?v=20260926b" defer></script>
 <script src="/js/tienda-pasto.js?v=20260926b" defer></script>
 </head>
 <body>
@@ -71,17 +72,53 @@
   <section class="hub-hero" aria-labelledby="titulo">
     <div class="wrap hub-hero__grid">
       <div class="hub-hero__copy">
-        <p class="eyebrow"><span>Tienda · Envío a todo México</span><span class="stock">3 modelos en existencia</span></p>
-        <h1 class="hub-hero__title" id="titulo">Pasto sintético <em>con envío a todo México</em></h1>
-        <p class="pdp__lede">Nueve modelos residenciales de 10 a 35 mm. Precio por rollo, factura y entrega en 3 a 5 días.</p>
-        <dl class="specstrip">
-          <div><dt>Modelos</dt><dd class="num">9</dd></div>
-          <div><dt>En rollo, IVA incluido</dt><dd class="num"><small>desde</small> $139<small>/m²</small></dd></div>
-          <div><dt>Entrega</dt><dd class="num">3–5<small>días</small></dd></div>
-          <div><dt>Factura</dt><dd class="num">CFDI<small>4.0</small></dd></div>
-        </dl>
+        <p class="eyebrow"><span>Tienda · Envío a todo México</span><span class="stock">9 modelos en existencia</span></p>
+        <h1 class="hub-hero__title" id="titulo">Pasto sintético con envío a todo México <em>precio puesto en tu puerta</em></h1>
+        <div class="ship-to">
+          <label for="hero-estado" class="ship-to__label">Envíalo a</label>
+          <select class="ship-to__select" id="hero-estado" data-estado-select>
+            <option value="">Elige tu estado</option>
+            <option value="Aguascalientes">Aguascalientes</option>
+            <option value="Baja California">Baja California</option>
+            <option value="Baja California Sur">Baja California Sur</option>
+            <option value="Campeche">Campeche</option>
+            <option value="CDMX">CDMX</option>
+            <option value="Chiapas">Chiapas</option>
+            <option value="Chihuahua">Chihuahua</option>
+            <option value="Coahuila">Coahuila</option>
+            <option value="Colima">Colima</option>
+            <option value="Durango">Durango</option>
+            <option value="Estado de México">Estado de México</option>
+            <option value="Guanajuato">Guanajuato</option>
+            <option value="Guerrero">Guerrero</option>
+            <option value="Hidalgo">Hidalgo</option>
+            <option value="Jalisco">Jalisco</option>
+            <option value="Michoacán">Michoacán</option>
+            <option value="Morelos">Morelos</option>
+            <option value="Nayarit">Nayarit</option>
+            <option value="Nuevo León">Nuevo León</option>
+            <option value="Oaxaca">Oaxaca</option>
+            <option value="Puebla">Puebla</option>
+            <option value="Querétaro">Querétaro</option>
+            <option value="Quintana Roo">Quintana Roo</option>
+            <option value="San Luis Potosí">San Luis Potosí</option>
+            <option value="Sinaloa">Sinaloa</option>
+            <option value="Sonora">Sonora</option>
+            <option value="Tabasco">Tabasco</option>
+            <option value="Tamaulipas">Tamaulipas</option>
+            <option value="Tlaxcala">Tlaxcala</option>
+            <option value="Veracruz">Veracruz</option>
+            <option value="Yucatán">Yucatán</option>
+            <option value="Zacatecas">Zacatecas</option>
+          </select>
+        </div>
+        <p class="landed" data-landed-hero data-rollo="139" aria-live="polite">
+          <span class="landed__from">Desde</span>
+          <strong class="landed__price num" data-landed-value>$139</strong><span class="landed__unit">/m²</span>
+          <span class="landed__note" data-landed-note>+ envío desde $900 por rollo. Elige tu estado para ver el precio puesto.</span>
+        </p>
         <div class="hub-hero__actions">
-          <a class="btn btn--primary" href="#modelos">Ver los modelos</a>
+          <a class="btn btn--primary" href="#modelos">Ver modelos con este precio</a>
           <a class="btn btn--ghost" href="#cotizador">Calcular mi pedido</a>
         </div>
       </div>
@@ -94,6 +131,15 @@
       </figure>
     </div>
   </section>
+  <section class="trust" aria-label="Por qué comprar con nosotros">
+  <ul class="wrap trust__list">
+      <li><strong>Respuesta en menos de 1 hora</strong><span>Lun a vie 9 a 18 h, sáb 9 a 14 h</span></li>
+      <li><strong>Garantía de fábrica</strong><span>De 3 a 8 años según el modelo</span></li>
+      <li><strong>Devoluciones en 7 días</strong><span><a href="/politicas#devoluciones">Ver política</a></span></li>
+      <li><strong>Factura CFDI 4.0</strong><span>Persona física o moral</span></li>
+      <li><strong>Desde 2007</strong><span>Vivero y showroom en Cd. Madero</span></li>
+  </ul>
+</section>
 
   <section class="section" id="modelos" aria-labelledby="modelos-titulo">
     <div class="wrap section__grid">
@@ -119,9 +165,10 @@
             <div class="spec-card__body">
               <p class="spec-card__tag">Decorativo</p>
               <h3 class="spec-card__name"><a href="/pasto-sintetico/aruba-10">Aruba 10</a></h3>
+              <div class="hrule" role="img" aria-label="Altura de fibra: 10 mm"><span class="hrule__fiber" style="--h:29%"></span><span class="hrule__scale" aria-hidden="true"><i>35</i><i>25</i><i>15</i><i>0</i></span></div>
               <dl class="spec-card__specs num"><div><dt>Altura</dt><dd>10 mm</dd></div><div><dt>Peso</dt><dd>1,050 g/m²</dd></div><div><dt>Garantía</dt><dd>3–5 años</dd></div></dl>
               <div class="spec-card__foot">
-                <p class="spec-card__price num">Desde <strong>$139</strong>/m²</p>
+                <p class="spec-card__price num">Desde <strong>$139</strong>/m² <span class="spec-card__landed" data-landed-slug="aruba-10"></span></p>
                 <button class="spec-card__add" type="button" data-add="aruba-10" aria-label="Agregar Aruba 10 a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>
@@ -132,11 +179,12 @@
               <span class="spec-card__n num">02</span>
             </a>
             <div class="spec-card__body">
-              <p class="spec-card__tag">El más económico<span class="spec-card__stock">En existencia</span></p>
+              <p class="spec-card__tag">El más económico</p>
               <h3 class="spec-card__name"><a href="/pasto-sintetico/toscana-18">Toscana 18</a></h3>
+              <div class="hrule" role="img" aria-label="Altura de fibra: 18 mm"><span class="hrule__fiber" style="--h:51%"></span><span class="hrule__scale" aria-hidden="true"><i>35</i><i>25</i><i>15</i><i>0</i></span></div>
               <dl class="spec-card__specs num"><div><dt>Altura</dt><dd>18 mm</dd></div><div><dt>Peso</dt><dd>950 g/m²</dd></div><div><dt>Garantía</dt><dd>5 años</dd></div></dl>
               <div class="spec-card__foot">
-                <p class="spec-card__price num">Desde <strong>$149</strong>/m²</p>
+                <p class="spec-card__price num">Desde <strong>$149</strong>/m² <span class="spec-card__landed" data-landed-slug="toscana-18"></span></p>
                 <button class="spec-card__add" type="button" data-add="toscana-18" aria-label="Agregar Toscana 18 a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>
@@ -149,9 +197,10 @@
             <div class="spec-card__body">
               <p class="spec-card__tag">Alta densidad</p>
               <h3 class="spec-card__name"><a href="/pasto-sintetico/capri-20">Capri 20</a></h3>
+              <div class="hrule" role="img" aria-label="Altura de fibra: 20 mm"><span class="hrule__fiber" style="--h:57%"></span><span class="hrule__scale" aria-hidden="true"><i>35</i><i>25</i><i>15</i><i>0</i></span></div>
               <dl class="spec-card__specs num"><div><dt>Altura</dt><dd>20 mm</dd></div><div><dt>Peso</dt><dd>1,580 g/m²</dd></div><div><dt>Garantía</dt><dd>8 años</dd></div></dl>
               <div class="spec-card__foot">
-                <p class="spec-card__price num">Desde <strong>$209</strong>/m²</p>
+                <p class="spec-card__price num">Desde <strong>$209</strong>/m² <span class="spec-card__landed" data-landed-slug="capri-20"></span></p>
                 <button class="spec-card__add" type="button" data-add="capri-20" aria-label="Agregar Capri 20 a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>
@@ -164,9 +213,10 @@
             <div class="spec-card__body">
               <p class="spec-card__tag">Fibra más resistente</p>
               <h3 class="spec-card__name"><a href="/pasto-sintetico/irlanda-25">Irlanda 25</a></h3>
+              <div class="hrule" role="img" aria-label="Altura de fibra: 25 mm"><span class="hrule__fiber" style="--h:71%"></span><span class="hrule__scale" aria-hidden="true"><i>35</i><i>25</i><i>15</i><i>0</i></span></div>
               <dl class="spec-card__specs num"><div><dt>Altura</dt><dd>25 mm</dd></div><div><dt>Peso</dt><dd>1,400 g/m²</dd></div><div><dt>Garantía</dt><dd>8 años</dd></div></dl>
               <div class="spec-card__foot">
-                <p class="spec-card__price num">Desde <strong>$209</strong>/m²</p>
+                <p class="spec-card__price num">Desde <strong>$209</strong>/m² <span class="spec-card__landed" data-landed-slug="irlanda-25"></span></p>
                 <button class="spec-card__add" type="button" data-add="irlanda-25" aria-label="Agregar Irlanda 25 a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>
@@ -177,11 +227,12 @@
               <span class="spec-card__n num">05</span>
             </a>
             <div class="spec-card__body">
-              <p class="spec-card__tag">El más vendido<span class="spec-card__stock">En existencia</span></p>
+              <p class="spec-card__tag">El más vendido</p>
               <h3 class="spec-card__name"><a href="/pasto-sintetico/toscana-28">Toscana 28</a></h3>
+              <div class="hrule" role="img" aria-label="Altura de fibra: 28 mm"><span class="hrule__fiber" style="--h:80%"></span><span class="hrule__scale" aria-hidden="true"><i>35</i><i>25</i><i>15</i><i>0</i></span></div>
               <dl class="spec-card__specs num"><div><dt>Altura</dt><dd>28 mm</dd></div><div><dt>Peso</dt><dd>1,380 g/m²</dd></div><div><dt>Garantía</dt><dd>5 años</dd></div></dl>
               <div class="spec-card__foot">
-                <p class="spec-card__price num">Desde <strong>$199</strong>/m²</p>
+                <p class="spec-card__price num">Desde <strong>$199</strong>/m² <span class="spec-card__landed" data-landed-slug="toscana-28"></span></p>
                 <button class="spec-card__add" type="button" data-add="toscana-28" aria-label="Agregar Toscana 28 a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>
@@ -194,9 +245,10 @@
             <div class="spec-card__body">
               <p class="spec-card__tag">Natural premium</p>
               <h3 class="spec-card__name"><a href="/pasto-sintetico/viena-30">Viena 30</a></h3>
+              <div class="hrule" role="img" aria-label="Altura de fibra: 30 mm"><span class="hrule__fiber" style="--h:86%"></span><span class="hrule__scale" aria-hidden="true"><i>35</i><i>25</i><i>15</i><i>0</i></span></div>
               <dl class="spec-card__specs num"><div><dt>Altura</dt><dd>30 mm</dd></div><div><dt>Peso</dt><dd>1,800 g/m²</dd></div><div><dt>Garantía</dt><dd>8 años</dd></div></dl>
               <div class="spec-card__foot">
-                <p class="spec-card__price num">Desde <strong>$249</strong>/m²</p>
+                <p class="spec-card__price num">Desde <strong>$249</strong>/m² <span class="spec-card__landed" data-landed-slug="viena-30"></span></p>
                 <button class="spec-card__add" type="button" data-add="viena-30" aria-label="Agregar Viena 30 a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>
@@ -209,9 +261,10 @@
             <div class="spec-card__body">
               <p class="spec-card__tag">Verde natural</p>
               <h3 class="spec-card__name"><a href="/pasto-sintetico/japones-35">Japonés 35</a></h3>
+              <div class="hrule" role="img" aria-label="Altura de fibra: 35 mm"><span class="hrule__fiber" style="--h:100%"></span><span class="hrule__scale" aria-hidden="true"><i>35</i><i>25</i><i>15</i><i>0</i></span></div>
               <dl class="spec-card__specs num"><div><dt>Altura</dt><dd>35 mm</dd></div><div><dt>Peso</dt><dd>1,740 g/m²</dd></div><div><dt>Garantía</dt><dd>8 años</dd></div></dl>
               <div class="spec-card__foot">
-                <p class="spec-card__price num">Desde <strong>$269</strong>/m²</p>
+                <p class="spec-card__price num">Desde <strong>$269</strong>/m² <span class="spec-card__landed" data-landed-slug="japones-35"></span></p>
                 <button class="spec-card__add" type="button" data-add="japones-35" aria-label="Agregar Japonés 35 a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>
@@ -224,9 +277,10 @@
             <div class="spec-card__body">
               <p class="spec-card__tag">Verde brillante</p>
               <h3 class="spec-card__name"><a href="/pasto-sintetico/monaco-35">Mónaco 35</a></h3>
+              <div class="hrule" role="img" aria-label="Altura de fibra: 35 mm"><span class="hrule__fiber" style="--h:100%"></span><span class="hrule__scale" aria-hidden="true"><i>35</i><i>25</i><i>15</i><i>0</i></span></div>
               <dl class="spec-card__specs num"><div><dt>Altura</dt><dd>35 mm</dd></div><div><dt>Peso</dt><dd>2,100 g/m²</dd></div><div><dt>Garantía</dt><dd>8 años</dd></div></dl>
               <div class="spec-card__foot">
-                <p class="spec-card__price num">Desde <strong>$299</strong>/m²</p>
+                <p class="spec-card__price num">Desde <strong>$299</strong>/m² <span class="spec-card__landed" data-landed-slug="monaco-35"></span></p>
                 <button class="spec-card__add" type="button" data-add="monaco-35" aria-label="Agregar Mónaco 35 a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>
@@ -239,9 +293,10 @@
             <div class="spec-card__body">
               <p class="spec-card__tag">El más completo</p>
               <h3 class="spec-card__name"><a href="/pasto-sintetico/bali-35">Bali 35</a></h3>
+              <div class="hrule" role="img" aria-label="Altura de fibra: 35 mm"><span class="hrule__fiber" style="--h:100%"></span><span class="hrule__scale" aria-hidden="true"><i>35</i><i>25</i><i>15</i><i>0</i></span></div>
               <dl class="spec-card__specs num"><div><dt>Altura</dt><dd>35 mm</dd></div><div><dt>Peso</dt><dd>2,100 g/m²</dd></div><div><dt>Garantía</dt><dd>8 años</dd></div></dl>
               <div class="spec-card__foot">
-                <p class="spec-card__price num">Desde <strong>$299</strong>/m²</p>
+                <p class="spec-card__price num">Desde <strong>$299</strong>/m² <span class="spec-card__landed" data-landed-slug="bali-35"></span></p>
                 <button class="spec-card__add" type="button" data-add="bali-35" aria-label="Agregar Bali 35 a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>
@@ -280,28 +335,17 @@
     </div>
   </section>
 
-  <section class="section" id="comparativa" aria-labelledby="comparativa-titulo">
+  <section class="section" id="comparar" aria-labelledby="comparar-titulo">
     <div class="wrap section__grid">
-      <p class="section__label"><b>03</b>Comparativa</p>
+      <p class="section__label"><b>03</b>Comparar</p>
       <div>
-        <h2 id="comparativa-titulo">Comparativa de modelos <em>por altura, peso y precio</em></h2>
-        <div class="table-scroll" tabindex="0" role="region" aria-label="Comparativa de los 9 modelos">
-          <table class="compare-table num">
-            <thead><tr><th scope="col">Modelo</th><th scope="col">Altura</th><th scope="col">Peso g/m²</th><th scope="col">Garantía</th><th scope="col">Rollo /m²</th><th scope="col">Ideal para</th></tr></thead>
-            <tbody>
-            <tr><th scope="row"><a href="/pasto-sintetico/aruba-10">Aruba 10</a><span>Decorativo</span></th><td>10 mm</td><td>1,050</td><td>3–5 años</td><td><strong>$139</strong></td><td>Balcones, terrazas y muros</td></tr>
-            <tr><th scope="row"><a href="/pasto-sintetico/toscana-18">Toscana 18</a><span>El más económico</span></th><td>18 mm</td><td>950</td><td>5 años</td><td><strong>$149</strong></td><td>Jardines chicos y uso ligero</td></tr>
-            <tr><th scope="row"><a href="/pasto-sintetico/capri-20">Capri 20</a><span>Alta densidad</span></th><td>20 mm</td><td>1,580</td><td>8 años</td><td><strong>$209</strong></td><td>Uso diario con look corto y parejo</td></tr>
-            <tr><th scope="row"><a href="/pasto-sintetico/irlanda-25">Irlanda 25</a><span>Fibra más resistente</span></th><td>25 mm</td><td>1,400</td><td>8 años</td><td><strong>$209</strong></td><td>Niños, perros y pisoteo diario</td></tr>
-            <tr><th scope="row"><a href="/pasto-sintetico/toscana-28">Toscana 28</a><span>El más vendido</span></th><td>28 mm</td><td>1,380</td><td>5 años</td><td><strong>$199</strong></td><td>Jardines familiares</td></tr>
-            <tr><th scope="row"><a href="/pasto-sintetico/viena-30">Viena 30</a><span>Natural premium</span></th><td>30 mm</td><td>1,800</td><td>8 años</td><td><strong>$249</strong></td><td>Jardines premium de uso familiar</td></tr>
-            <tr><th scope="row"><a href="/pasto-sintetico/japones-35">Japonés 35</a><span>Verde natural</span></th><td>35 mm</td><td>1,740</td><td>8 años</td><td><strong>$269</strong></td><td>Jardines de aspecto natural</td></tr>
-            <tr><th scope="row"><a href="/pasto-sintetico/monaco-35">Mónaco 35</a><span>Verde brillante</span></th><td>35 mm</td><td>2,100</td><td>8 años</td><td><strong>$299</strong></td><td>Residencias y espacios de lujo</td></tr>
-            <tr><th scope="row"><a href="/pasto-sintetico/bali-35">Bali 35</a><span>El más completo</span></th><td>35 mm</td><td>2,100</td><td>8 años</td><td><strong>$299</strong></td><td>Jardines exclusivos</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="spec-note">Rollos de 2 m de ancho, 50 m² por rollo. Precios por rollo completo con IVA incluido. El envío se suma según tu estado.</p>
+        <h2 id="comparar-titulo">¿Viste otro precio? <em>Compáralo aquí</em></h2>
+        <p class="section__intro">Muchas ofertas anuncian "envío gratis", pero el envío ya viene en el precio. Compara el precio por m² final.</p>
+        <form class="comparador" id="comparador" novalidate>
+          <div class="field"><label for="cmp-total">Total de la otra oferta, con envío</label><input class="select" id="cmp-total" type="number" inputmode="decimal" min="1" placeholder="Ej. 14899"></div>
+          <div class="field"><label for="cmp-m2">Metros cuadrados que incluye</label><input class="select" id="cmp-m2" type="number" inputmode="numeric" min="1" placeholder="Ej. 50"></div>
+          <p class="comparador__out" id="cmp-out" aria-live="polite">Escribe el total y los metros para comparar con nuestro precio puesto en tu estado.</p>
+        </form>
       </div>
     </div>
   </section>
@@ -406,9 +450,59 @@
     </div>
   </section>
 
+  <section class="section" id="ciudades" aria-labelledby="ciudades-titulo">
+    <div class="wrap section__grid">
+      <p class="section__label"><b>05</b>Ciudades</p>
+      <div>
+        <h2 id="ciudades-titulo">Envíos a tu ciudad <em>con precio puesto</em></h2>
+        <p class="section__intro">Precio puesto con el modelo más económico, envío incluido. Enviamos a los 32 estados; estas son las ciudades con guía propia.</p>
+        <div class="city-grid">
+          <a class="city-card" href="/pasto-sintetico/envio/cdmx"><strong>CDMX</strong><span class="num">desde $157/m² puesto</span><span>3 a 5 días hábiles</span></a>
+          <a class="city-card" href="/pasto-sintetico/envio/guadalajara"><strong>Guadalajara</strong><span class="num">desde $157/m² puesto</span><span>3 a 5 días hábiles</span></a>
+          <a class="city-card" href="/pasto-sintetico/envio/queretaro"><strong>Querétaro</strong><span class="num">desde $157/m² puesto</span><span>3 a 5 días hábiles</span></a>
+          <a class="city-card" href="/pasto-sintetico/envio/san-luis-potosi"><strong>San Luis Potosí</strong><span class="num">desde $157/m² puesto</span><span>3 a 5 días hábiles</span></a>
+          <a class="city-card" href="/pasto-sintetico/envio/leon"><strong>León</strong><span class="num">desde $157/m² puesto</span><span>3 a 5 días hábiles</span></a>
+          <a class="city-card" href="/pasto-sintetico/envio/puebla"><strong>Puebla</strong><span class="num">desde $157/m² puesto</span><span>3 a 5 días hábiles</span></a>
+          <a class="city-card" href="/pasto-sintetico/envio/monterrey"><strong>Monterrey</strong><span class="num">desde $162/m² puesto</span><span>3 a 5 días hábiles</span></a>
+          <a class="city-card" href="/pasto-sintetico/envio/veracruz"><strong>Veracruz</strong><span class="num">desde $162/m² puesto</span><span>3 a 5 días hábiles</span></a>
+          <a class="city-card" href="/pasto-sintetico/envio/merida"><strong>Mérida</strong><span class="num">desde $167/m² puesto</span><span>3 a 5 días hábiles</span></a>
+          <a class="city-card" href="/pasto-sintetico/envio/cancun"><strong>Cancún</strong><span class="num">desde $167/m² puesto</span><span>3 a 5 días hábiles</span></a>
+          <a class="city-card" href="/pasto-sintetico/envio/villahermosa"><strong>Villahermosa</strong><span class="num">desde $167/m² puesto</span><span>3 a 5 días hábiles</span></a>
+        </div>
+        <p class="spec-note">¿Tienes perros? Lee <a href="/pasto-sintetico/perros">qué pasto sintético conviene para mascotas</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint" id="comparativa" aria-labelledby="comparativa-titulo">
+    <div class="wrap section__grid">
+      <p class="section__label"><b>06</b>Comparativa</p>
+      <div>
+        <h2 id="comparativa-titulo">Comparativa de modelos <em>por altura, peso y precio</em></h2>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Comparativa de los 9 modelos">
+          <table class="compare-table num">
+            <thead><tr><th scope="col">Modelo</th><th scope="col">Altura</th><th scope="col">Peso g/m²</th><th scope="col">Garantía</th><th scope="col">Rollo /m²</th><th scope="col">Ideal para</th></tr></thead>
+            <tbody>
+            <tr><th scope="row"><a href="/pasto-sintetico/aruba-10">Aruba 10</a><span>Decorativo</span></th><td>10 mm</td><td>1,050</td><td>3–5 años</td><td><strong>$139</strong></td><td>Balcones, terrazas y muros</td></tr>
+            <tr><th scope="row"><a href="/pasto-sintetico/toscana-18">Toscana 18</a><span>El más económico</span></th><td>18 mm</td><td>950</td><td>5 años</td><td><strong>$149</strong></td><td>Jardines chicos y uso ligero</td></tr>
+            <tr><th scope="row"><a href="/pasto-sintetico/capri-20">Capri 20</a><span>Alta densidad</span></th><td>20 mm</td><td>1,580</td><td>8 años</td><td><strong>$209</strong></td><td>Uso diario con look corto y parejo</td></tr>
+            <tr><th scope="row"><a href="/pasto-sintetico/irlanda-25">Irlanda 25</a><span>Fibra más resistente</span></th><td>25 mm</td><td>1,400</td><td>8 años</td><td><strong>$209</strong></td><td>Niños, perros y pisoteo diario</td></tr>
+            <tr><th scope="row"><a href="/pasto-sintetico/toscana-28">Toscana 28</a><span>El más vendido</span></th><td>28 mm</td><td>1,380</td><td>5 años</td><td><strong>$199</strong></td><td>Jardines familiares</td></tr>
+            <tr><th scope="row"><a href="/pasto-sintetico/viena-30">Viena 30</a><span>Natural premium</span></th><td>30 mm</td><td>1,800</td><td>8 años</td><td><strong>$249</strong></td><td>Jardines premium de uso familiar</td></tr>
+            <tr><th scope="row"><a href="/pasto-sintetico/japones-35">Japonés 35</a><span>Verde natural</span></th><td>35 mm</td><td>1,740</td><td>8 años</td><td><strong>$269</strong></td><td>Jardines de aspecto natural</td></tr>
+            <tr><th scope="row"><a href="/pasto-sintetico/monaco-35">Mónaco 35</a><span>Verde brillante</span></th><td>35 mm</td><td>2,100</td><td>8 años</td><td><strong>$299</strong></td><td>Residencias y espacios de lujo</td></tr>
+            <tr><th scope="row"><a href="/pasto-sintetico/bali-35">Bali 35</a><span>El más completo</span></th><td>35 mm</td><td>2,100</td><td>8 años</td><td><strong>$299</strong></td><td>Jardines exclusivos</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="spec-note">Rollos de 2 m de ancho, 50 m² por rollo. Precios por rollo completo con IVA incluido. El envío se suma según tu estado.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="obras" aria-labelledby="obras-titulo">
     <div class="wrap section__grid">
-      <p class="section__label"><b>05</b>Obras</p>
+      <p class="section__label"><b>07</b>Obras</p>
       <div>
         <h2 id="obras-titulo">Pasto sintético instalado <em>en casas reales</em></h2>
         <div class="obras">
@@ -439,7 +533,7 @@
 
   <section class="section section--tint" id="como-funciona" aria-labelledby="como-funciona-titulo">
     <div class="wrap section__grid">
-      <p class="section__label"><b>06</b>Tu pedido</p>
+      <p class="section__label"><b>08</b>Tu pedido</p>
       <div>
         <h2 id="como-funciona-titulo">Cómo comprar pasto sintético <em>en línea</em></h2>
         <ol class="steps">
@@ -454,7 +548,7 @@
 
   <section class="section" id="instalacion" aria-labelledby="diy-titulo">
     <div class="wrap section__grid">
-      <p class="section__label"><b>07</b>Instálalo tú</p>
+      <p class="section__label"><b>09</b>Instálalo tú</p>
       <div>
         <h2 id="diy-titulo">Cómo instalar pasto sintético <em>tú mismo</em></h2>
         <p class="section__intro">Un jardín de 25 a 50 m² se instala en un día. Estos son los cinco pasos básicos.</p>
@@ -472,7 +566,7 @@
 
   <section class="section section--tint" id="preguntas" aria-labelledby="faq-titulo">
     <div class="wrap section__grid">
-      <p class="section__label"><b>08</b>Preguntas</p>
+      <p class="section__label"><b>10</b>Preguntas</p>
       <div>
         <h2 id="faq-titulo">Preguntas frecuentes <em>sobre pasto sintético</em></h2>
         <div class="faq">
