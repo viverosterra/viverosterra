@@ -6,12 +6,13 @@ from pathlib import Path
 
 from ciudad import build_ciudad
 from ciudades import CIUDADES
-from data import MODELOS
+from data import MODELOS, SITE
 from ficha import build_ficha
 from hub import build_hub
 from local import build_local
 from perros import build_perros
 from precios import build_precios
+from sitemap import upsert
 from zonas import ZONAS, build_zona
 
 ROOT = Path(__file__).resolve().parents[2] / "public" / "pasto-sintetico"
@@ -34,6 +35,9 @@ def main():
     for c in CIUDADES:
         write(ROOT / "envio" / c["slug"] / "index.html", build_ciudad(c))
     write(ROOT / "perros" / "index.html", build_perros())
+    upsert([f"{SITE}/pasto-sintetico", f"{SITE}/pasto-sintetico/perros"]
+           + [f"{SITE}/pasto-sintetico/envio/{c['slug']}" for c in CIUDADES]
+           + [f"{SITE}/pasto-sintetico/{m['slug']}" for m in MODELOS])
 
 
 if __name__ == "__main__":

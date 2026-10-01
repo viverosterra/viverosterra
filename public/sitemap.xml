@@ -3,16 +3,16 @@
   <!-- PÁGINAS PRINCIPALES -->
   <url><loc>https://www.viverosterra.com/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.viverosterra.com/catalogo</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-sintetico</loc><lastmod>2026-09-26</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-sintetico/aruba-10</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-sintetico/toscana-18</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-sintetico/toscana-28</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-sintetico/capri-20</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-sintetico/irlanda-25</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-sintetico/viena-30</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-sintetico/japones-35</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-sintetico/monaco-35</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.viverosterra.com/pasto-sintetico/bali-35</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico</loc><lastmod>2026-10-01</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/aruba-10</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/toscana-18</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/toscana-28</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/capri-20</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/irlanda-25</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/viena-30</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/japones-35</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/monaco-35</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/bali-35</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.viverosterra.com/politicas</loc><lastmod>2026-09-26</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://www.viverosterra.com/blog/como-evitar-encharcamientos-jardin-tampico</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.viverosterra.com/blog/palma-kerpis-howea-forsteriana-tampico</loc><lastmod>2026-09-26</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
@@ -143,4 +143,16 @@
     <loc>https://www.viverosterra.com/protocolo-cuidados-pasto-san-agustin</loc>
     <lastmod>2026-09-29</lastmod>
   </url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/perros</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/envio/cdmx</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/envio/guadalajara</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/envio/queretaro</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/envio/san-luis-potosi</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/envio/leon</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/envio/puebla</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/envio/monterrey</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/envio/veracruz</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/envio/merida</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/envio/cancun</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.viverosterra.com/pasto-sintetico/envio/villahermosa</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
