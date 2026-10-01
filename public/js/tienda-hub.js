@@ -124,6 +124,7 @@
 
   /* ---------- Precio puesto por estado ---------- */
   const money = (n) => '$' + Math.round(n).toLocaleString('es-MX');
+  let firstPaint = true;
 
   function landedFor(t, rollo, estado) {
     return window.VTLanded ? window.VTLanded.landedM2(rollo, estado, t.estadoZona, t.zonas) : null;
@@ -135,11 +136,15 @@
       const rollo = Number(hero.dataset.rollo);
       const v = estado ? landedFor(t, rollo, estado) : null;
       $('[data-landed-value]', hero).textContent = money(v || rollo);
-      $('[data-landed-note]', hero).textContent = v
-        ? `puesto en ${estado}, envío incluido · llega en 3 a 5 días hábiles`
-        : '+ envío desde $900 por rollo. Elige tu estado para ver el precio puesto.';
-      hero.classList.remove('is-updating'); void hero.offsetWidth; hero.classList.add('is-updating');
+      let note = '+ envío desde $900 por rollo. Elige tu estado para ver el precio puesto.';
+      if (v) note = `puesto en ${estado}, envío incluido · llega en 3 a 5 días hábiles`;
+      else if (estado && !window.VTLanded) note = '+ envío desde $900 por rollo. Te confirmamos el flete a tu estado.';
+      $('[data-landed-note]', hero).textContent = note;
+      if (!firstPaint) {
+        hero.classList.remove('is-updating'); void hero.offsetWidth; hero.classList.add('is-updating');
+      }
     }
+    firstPaint = false;
     $$('[data-landed-slug]').forEach((el) => {
       const m = t.models.find((x) => x.slug === el.dataset.landedSlug);
       const v = m && estado ? landedFor(t, m.rollo, estado) : null;
@@ -171,7 +176,8 @@
     if (!out) return;
     const total = Number($('#cmp-total').value);
     const m2 = Number($('#cmp-m2').value);
-    if (!(total > 0 && m2 > 0)) {
+    const valido = Number.isFinite(total) && total > 0 && Number.isFinite(m2) && m2 > 0;
+    if (!t.models || !t.models.length || !valido) {
       out.textContent = 'Escribe el total y los metros para comparar con nuestro precio puesto en tu estado.';
       return;
     }
