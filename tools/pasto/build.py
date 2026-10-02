@@ -7,6 +7,7 @@ from pathlib import Path
 from ciudad import build_ciudad
 from ciudades import CIUDADES
 from data import MODELOS, SITE
+from feed import build_feed
 from ficha import build_ficha
 from hub import build_hub
 from local import build_local
@@ -35,6 +36,7 @@ def main():
     for c in CIUDADES:
         write(ROOT / "envio" / c["slug"] / "index.html", build_ciudad(c))
     write(ROOT / "perros" / "index.html", build_perros())
+    (ROOT.parent / "feed-pasto-sintetico.xml").write_text(build_feed(), encoding="utf-8")
     upsert([f"{SITE}/pasto-sintetico", f"{SITE}/pasto-sintetico/perros"]
            + [f"{SITE}/pasto-sintetico/envio/{c['slug']}" for c in CIUDADES]
            + [f"{SITE}/pasto-sintetico/{m['slug']}" for m in MODELOS])

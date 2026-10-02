@@ -1,179 +1,257 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
 <channel>
-  <title>Viveros Terra — Pasto Sintético</title>
+  <title>Viveros Terra · Pasto sintético</title>
   <link>https://www.viverosterra.com/pasto-sintetico</link>
   <description>Pasto sintético residencial con envío a todo México. 9 modelos desde $139/m², factura CFDI 4.0.</description>
   <item>
     <g:id>VT-PST-ARUBA10</g:id>
-    <g:title>Pasto Sintético Aruba 10 — 10 mm (precio por m²)</g:title>
-    <g:description>Pasto sintético Aruba 10 de 10 mm y 1050 g/m², garantía de 3 a 5 años. Ideal para balcones, terrazas y áreas decorativas de bajo tránsito. Verde todo el año sin riego ni poda. Envío a todo México en 3 a 5 días hábiles, factura CFDI 4.0. Precio por m² en rollo completo (rollo de 2 m de ancho, 50 m²). Mínimo de compra nacional 25 m². Cotiza con envío en https://www.viverosterra.com/pasto-sintetico o WhatsApp 833 326 8008.</g:description>
-    <g:link>https://www.viverosterra.com/pasto-sintetico</g:link>
+    <g:title>Pasto sintético Aruba 10 de 10 mm, precio por m²</g:title>
+    <g:description>El Aruba 10 es un pasto sintético tipo tapete de 10 mm y 1,050 g/m² en verde olivo, con garantía de 3 a 5 años. Es el modelo más bajo y ligero de la colección, pensado para decorar balcones, terrazas, muros y áreas de poco paso. Cuesta desde $139/m² en rollo de 50 m² y llega a todo México en 3 a 5 días hábiles. Precio por m² en rollo de 2 m de ancho; compra mínima nacional de 25 m². El envío se cobra por rollo según el estado. Factura CFDI 4.0.</g:description>
+    <g:link>https://www.viverosterra.com/pasto-sintetico/aruba-10</g:link>
     <g:image_link>https://www.viverosterra.com/img/pasto-sintetico/aruba-10.jpg</g:image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/aruba-10-1.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/aruba-10-2.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/aruba-10-3.webp</g:additional_image_link>
     <g:availability>in_stock</g:availability>
     <g:price>139.00 MXN</g:price>
+    <g:unit_pricing_measure>1 sqm</g:unit_pricing_measure>
+    <g:unit_pricing_base_measure>1 sqm</g:unit_pricing_base_measure>
     <g:brand>Viveros Terra</g:brand>
     <g:condition>new</g:condition>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Pasto Sintético &gt; Aruba 10</g:product_type>
+    <g:color>Verde olivo</g:color>
+    <g:product_type>Pasto sintético &gt; Aruba 10</g:product_type>
     <g:google_product_category>Home &amp; Garden &gt; Lawn &amp; Garden &gt; Gardening</g:google_product_category>
     <g:shipping>
       <g:country>MX</g:country>
-      <g:service>Estándar 3-5 días</g:service>
-      <g:price>900.00 MXN</g:price>
+      <g:service>Paquetería 3 a 5 días hábiles</g:service>
+      <g:price>1400.00 MXN</g:price>
     </g:shipping>
+    <g:min_handling_time>1</g:min_handling_time>
+    <g:max_handling_time>2</g:max_handling_time>
   </item>
   <item>
     <g:id>VT-PST-TOSCANA18</g:id>
-    <g:title>Pasto Sintético Toscana 18 — 18 mm (precio por m²)</g:title>
-    <g:description>Pasto sintético Toscana 18 de 18 mm y 950 g/m², garantía 5 años. Ideal para jardines pequeños y uso residencial ligero. Verde todo el año sin riego ni poda. Envío a todo México en 3 a 5 días hábiles, factura CFDI 4.0. Precio por m² en rollo completo (rollo de 2 m de ancho, 50 m²). Mínimo de compra nacional 25 m². Cotiza con envío en https://www.viverosterra.com/pasto-sintetico o WhatsApp 833 326 8008.</g:description>
-    <g:link>https://www.viverosterra.com/pasto-sintetico</g:link>
+    <g:title>Pasto sintético Toscana 18 de 18 mm, precio por m²</g:title>
+    <g:description>El Toscana 18 es un pasto sintético de 18 mm y 950 g/m² en verde olivo y esmeralda, con garantía de 5 años. Es la forma más económica de tener un jardín verde todo el año en áreas de poco uso. Cuesta desde $149/m² en rollo de 50 m² y llega a todo México en 3 a 5 días hábiles. Precio por m² en rollo de 2 m de ancho; compra mínima nacional de 25 m². El envío se cobra por rollo según el estado. Factura CFDI 4.0.</g:description>
+    <g:link>https://www.viverosterra.com/pasto-sintetico/toscana-18</g:link>
     <g:image_link>https://www.viverosterra.com/img/pasto-sintetico/toscana-18.jpg</g:image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/toscana-18-1.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/toscana-18-2.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/toscana-18-3.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/toscana-18-4.webp</g:additional_image_link>
     <g:availability>in_stock</g:availability>
     <g:price>149.00 MXN</g:price>
+    <g:unit_pricing_measure>1 sqm</g:unit_pricing_measure>
+    <g:unit_pricing_base_measure>1 sqm</g:unit_pricing_base_measure>
     <g:brand>Viveros Terra</g:brand>
     <g:condition>new</g:condition>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Pasto Sintético &gt; Toscana 18</g:product_type>
+    <g:color>Verde olivo y esmeralda</g:color>
+    <g:product_type>Pasto sintético &gt; Toscana 18</g:product_type>
     <g:google_product_category>Home &amp; Garden &gt; Lawn &amp; Garden &gt; Gardening</g:google_product_category>
     <g:shipping>
       <g:country>MX</g:country>
-      <g:service>Estándar 3-5 días</g:service>
-      <g:price>900.00 MXN</g:price>
+      <g:service>Paquetería 3 a 5 días hábiles</g:service>
+      <g:price>1400.00 MXN</g:price>
     </g:shipping>
-  </item>
-  <item>
-    <g:id>VT-PST-TOSCANA28</g:id>
-    <g:title>Pasto Sintético Toscana 28 — 28 mm (precio por m²)</g:title>
-    <g:description>Pasto sintético Toscana 28 reforzado de 28 mm y 1380 g/m², garantía 5 años. Ideal para jardines familiares con niños y mascotas — el más vendido. Verde todo el año sin riego ni poda. Envío a todo México en 3 a 5 días hábiles, factura CFDI 4.0. Precio por m² en rollo completo (rollo de 2 m de ancho, 50 m²). Mínimo de compra nacional 25 m². Cotiza con envío en https://www.viverosterra.com/pasto-sintetico o WhatsApp 833 326 8008.</g:description>
-    <g:link>https://www.viverosterra.com/pasto-sintetico</g:link>
-    <g:image_link>https://www.viverosterra.com/img/pasto-sintetico/toscana-28.jpg</g:image_link>
-    <g:availability>in_stock</g:availability>
-    <g:price>199.00 MXN</g:price>
-    <g:brand>Viveros Terra</g:brand>
-    <g:condition>new</g:condition>
-    <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Pasto Sintético &gt; Toscana 28</g:product_type>
-    <g:google_product_category>Home &amp; Garden &gt; Lawn &amp; Garden &gt; Gardening</g:google_product_category>
-    <g:shipping>
-      <g:country>MX</g:country>
-      <g:service>Estándar 3-5 días</g:service>
-      <g:price>900.00 MXN</g:price>
-    </g:shipping>
+    <g:min_handling_time>1</g:min_handling_time>
+    <g:max_handling_time>2</g:max_handling_time>
   </item>
   <item>
     <g:id>VT-PST-CAPRI20</g:id>
-    <g:title>Pasto Sintético Capri 20 — 20 mm (precio por m²)</g:title>
-    <g:description>Pasto sintético Capri 20 de 20 mm y 1580 g/m², garantía 8 años. Ideal para uso diario, niños y mascotas, con look corto y parejo. Verde todo el año sin riego ni poda. Envío a todo México en 3 a 5 días hábiles, factura CFDI 4.0. Precio por m² en rollo completo (rollo de 2 m de ancho, 50 m²). Mínimo de compra nacional 25 m². Cotiza con envío en https://www.viverosterra.com/pasto-sintetico o WhatsApp 833 326 8008.</g:description>
-    <g:link>https://www.viverosterra.com/pasto-sintetico</g:link>
+    <g:title>Pasto sintético Capri 20 de 20 mm, precio por m²</g:title>
+    <g:description>El Capri 20 es un pasto sintético de 20 mm y 1,580 g/m² en verde lima y esmeralda, con garantía de 8 años. Tiene 16,800 puntadas por m², así que se ve lleno aunque sea bajo, y se barre y limpia con facilidad. Cuesta desde $209/m² en rollo de 50 m² y llega a todo México en 3 a 5 días hábiles. Precio por m² en rollo de 2 m de ancho; compra mínima nacional de 25 m². El envío se cobra por rollo según el estado. Factura CFDI 4.0.</g:description>
+    <g:link>https://www.viverosterra.com/pasto-sintetico/capri-20</g:link>
     <g:image_link>https://www.viverosterra.com/img/pasto-sintetico/capri-20.jpg</g:image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/capri-20-1.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/capri-20-2.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/capri-20-3.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/capri-20-4.webp</g:additional_image_link>
     <g:availability>in_stock</g:availability>
     <g:price>209.00 MXN</g:price>
+    <g:unit_pricing_measure>1 sqm</g:unit_pricing_measure>
+    <g:unit_pricing_base_measure>1 sqm</g:unit_pricing_base_measure>
     <g:brand>Viveros Terra</g:brand>
     <g:condition>new</g:condition>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Pasto Sintético &gt; Capri 20</g:product_type>
+    <g:color>Verde lima y esmeralda</g:color>
+    <g:product_type>Pasto sintético &gt; Capri 20</g:product_type>
     <g:google_product_category>Home &amp; Garden &gt; Lawn &amp; Garden &gt; Gardening</g:google_product_category>
     <g:shipping>
       <g:country>MX</g:country>
-      <g:service>Estándar 3-5 días</g:service>
-      <g:price>900.00 MXN</g:price>
+      <g:service>Paquetería 3 a 5 días hábiles</g:service>
+      <g:price>1400.00 MXN</g:price>
     </g:shipping>
+    <g:min_handling_time>1</g:min_handling_time>
+    <g:max_handling_time>2</g:max_handling_time>
   </item>
   <item>
     <g:id>VT-PST-IRLANDA25</g:id>
-    <g:title>Pasto Sintético Irlanda 25 — 25 mm (precio por m²)</g:title>
-    <g:description>Pasto sintético Irlanda 25 de 25 mm y 1400 g/m², garantía 8 años. Ideal para jardines residenciales de alto tránsito con niños y mascotas. Verde todo el año sin riego ni poda. Envío a todo México en 3 a 5 días hábiles, factura CFDI 4.0. Precio por m² en rollo completo (rollo de 2 m de ancho, 50 m²). Mínimo de compra nacional 25 m². Cotiza con envío en https://www.viverosterra.com/pasto-sintetico o WhatsApp 833 326 8008.</g:description>
-    <g:link>https://www.viverosterra.com/pasto-sintetico</g:link>
+    <g:title>Pasto sintético Irlanda 25 de 25 mm, precio por m²</g:title>
+    <g:description>El Irlanda 25 es un pasto sintético de 25 mm y 1,400 g/m² en verde lima y esmeralda, con garantía de 8 años. Su fibra principal es la más gruesa de la colección, de 0.37 a 0.50 mm, y recupera su forma después del pisoteo. Cuesta desde $209/m² en rollo de 50 m² y llega a todo México en 3 a 5 días hábiles. Precio por m² en rollo de 2 m de ancho; compra mínima nacional de 25 m². El envío se cobra por rollo según el estado. Factura CFDI 4.0.</g:description>
+    <g:link>https://www.viverosterra.com/pasto-sintetico/irlanda-25</g:link>
     <g:image_link>https://www.viverosterra.com/img/pasto-sintetico/irlanda-25.jpg</g:image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/irlanda-25-1.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/irlanda-25-2.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/irlanda-25-3.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/irlanda-25-4.webp</g:additional_image_link>
     <g:availability>in_stock</g:availability>
     <g:price>209.00 MXN</g:price>
+    <g:unit_pricing_measure>1 sqm</g:unit_pricing_measure>
+    <g:unit_pricing_base_measure>1 sqm</g:unit_pricing_base_measure>
     <g:brand>Viveros Terra</g:brand>
     <g:condition>new</g:condition>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Pasto Sintético &gt; Irlanda 25</g:product_type>
+    <g:color>Verde lima y esmeralda</g:color>
+    <g:product_type>Pasto sintético &gt; Irlanda 25</g:product_type>
     <g:google_product_category>Home &amp; Garden &gt; Lawn &amp; Garden &gt; Gardening</g:google_product_category>
     <g:shipping>
       <g:country>MX</g:country>
-      <g:service>Estándar 3-5 días</g:service>
-      <g:price>900.00 MXN</g:price>
+      <g:service>Paquetería 3 a 5 días hábiles</g:service>
+      <g:price>1400.00 MXN</g:price>
     </g:shipping>
+    <g:min_handling_time>1</g:min_handling_time>
+    <g:max_handling_time>2</g:max_handling_time>
+  </item>
+  <item>
+    <g:id>VT-PST-TOSCANA28</g:id>
+    <g:title>Pasto sintético Toscana 28 de 28 mm, precio por m²</g:title>
+    <g:description>El Toscana 28 es un pasto sintético de 28 mm y 1,380 g/m² en verde olivo y esmeralda, con base reforzada y garantía de 5 años. Es la opción más vendida para jardines familiares porque se ve frondoso sin llegar al precio de los modelos de 35 mm. Cuesta desde $199/m² en rollo de 50 m² y llega a todo México en 3 a 5 días hábiles. Precio por m² en rollo de 2 m de ancho; compra mínima nacional de 25 m². El envío se cobra por rollo según el estado. Factura CFDI 4.0.</g:description>
+    <g:link>https://www.viverosterra.com/pasto-sintetico/toscana-28</g:link>
+    <g:image_link>https://www.viverosterra.com/img/pasto-sintetico/toscana-28.jpg</g:image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/toscana-28-1.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/toscana-28-2.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/toscana-28-3.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/toscana-28-4.webp</g:additional_image_link>
+    <g:availability>in_stock</g:availability>
+    <g:price>199.00 MXN</g:price>
+    <g:unit_pricing_measure>1 sqm</g:unit_pricing_measure>
+    <g:unit_pricing_base_measure>1 sqm</g:unit_pricing_base_measure>
+    <g:brand>Viveros Terra</g:brand>
+    <g:condition>new</g:condition>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:color>Verde olivo y esmeralda</g:color>
+    <g:product_type>Pasto sintético &gt; Toscana 28</g:product_type>
+    <g:google_product_category>Home &amp; Garden &gt; Lawn &amp; Garden &gt; Gardening</g:google_product_category>
+    <g:shipping>
+      <g:country>MX</g:country>
+      <g:service>Paquetería 3 a 5 días hábiles</g:service>
+      <g:price>1400.00 MXN</g:price>
+    </g:shipping>
+    <g:min_handling_time>1</g:min_handling_time>
+    <g:max_handling_time>2</g:max_handling_time>
   </item>
   <item>
     <g:id>VT-PST-VIENA30</g:id>
-    <g:title>Pasto Sintético Viena 30 — 30 mm (precio por m²)</g:title>
-    <g:description>Pasto sintético Viena 30 de 30 mm y 1800 g/m², garantía 8 años. Ideal para jardines premium con acabado natural realista. Verde todo el año sin riego ni poda. Envío a todo México en 3 a 5 días hábiles, factura CFDI 4.0. Precio por m² en rollo completo (rollo de 2 m de ancho, 50 m²). Mínimo de compra nacional 25 m². Cotiza con envío en https://www.viverosterra.com/pasto-sintetico o WhatsApp 833 326 8008.</g:description>
-    <g:link>https://www.viverosterra.com/pasto-sintetico</g:link>
+    <g:title>Pasto sintético Viena 30 de 30 mm, precio por m²</g:title>
+    <g:description>El Viena 30 es un pasto sintético de 30 mm y 1,800 g/m² en verde lima y esmeralda, con garantía de 8 años. Combina 16,800 puntadas por m² con fibra de 4,000 Dtex, así que se ve lleno y brillante. Cuesta desde $249/m² en rollo de 50 m² y llega a todo México en 3 a 5 días hábiles. Precio por m² en rollo de 2 m de ancho; compra mínima nacional de 25 m². El envío se cobra por rollo según el estado. Factura CFDI 4.0.</g:description>
+    <g:link>https://www.viverosterra.com/pasto-sintetico/viena-30</g:link>
     <g:image_link>https://www.viverosterra.com/img/pasto-sintetico/viena-30.jpg</g:image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/viena-30-1.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/viena-30-2.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/viena-30-3.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/viena-30-4.webp</g:additional_image_link>
     <g:availability>in_stock</g:availability>
     <g:price>249.00 MXN</g:price>
+    <g:unit_pricing_measure>1 sqm</g:unit_pricing_measure>
+    <g:unit_pricing_base_measure>1 sqm</g:unit_pricing_base_measure>
     <g:brand>Viveros Terra</g:brand>
     <g:condition>new</g:condition>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Pasto Sintético &gt; Viena 30</g:product_type>
+    <g:color>Verde lima y esmeralda</g:color>
+    <g:product_type>Pasto sintético &gt; Viena 30</g:product_type>
     <g:google_product_category>Home &amp; Garden &gt; Lawn &amp; Garden &gt; Gardening</g:google_product_category>
     <g:shipping>
       <g:country>MX</g:country>
-      <g:service>Estándar 3-5 días</g:service>
-      <g:price>900.00 MXN</g:price>
+      <g:service>Paquetería 3 a 5 días hábiles</g:service>
+      <g:price>1400.00 MXN</g:price>
     </g:shipping>
+    <g:min_handling_time>1</g:min_handling_time>
+    <g:max_handling_time>2</g:max_handling_time>
   </item>
   <item>
     <g:id>VT-PST-JAPONES35</g:id>
-    <g:title>Pasto Sintético Japonés 35 — 35 mm (precio por m²)</g:title>
-    <g:description>Pasto sintético Japonés 35 de 35 mm y 1740 g/m², garantía 8 años. Ideal para jardines de lujo con máximo realismo. Verde todo el año sin riego ni poda. Envío a todo México en 3 a 5 días hábiles, factura CFDI 4.0. Precio por m² en rollo completo (rollo de 2 m de ancho, 50 m²). Mínimo de compra nacional 25 m². Cotiza con envío en https://www.viverosterra.com/pasto-sintetico o WhatsApp 833 326 8008.</g:description>
-    <g:link>https://www.viverosterra.com/pasto-sintetico</g:link>
+    <g:title>Pasto sintético Japonés 35 de 35 mm, precio por m²</g:title>
+    <g:description>El Japonés 35 es un pasto sintético de 35 mm y 1,740 g/m² en verde bosque y esmeralda, con garantía de 8 años. Su tono oscuro se parece al pasto natural recién regado, y es el 35 mm más accesible de la colección. Cuesta desde $269/m² en rollo de 50 m² y llega a todo México en 3 a 5 días hábiles. Precio por m² en rollo de 2 m de ancho; compra mínima nacional de 25 m². El envío se cobra por rollo según el estado. Factura CFDI 4.0.</g:description>
+    <g:link>https://www.viverosterra.com/pasto-sintetico/japones-35</g:link>
     <g:image_link>https://www.viverosterra.com/img/pasto-sintetico/japones-35.jpg</g:image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/japones-35-1.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/japones-35-2.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/japones-35-3.webp</g:additional_image_link>
     <g:availability>in_stock</g:availability>
     <g:price>269.00 MXN</g:price>
+    <g:unit_pricing_measure>1 sqm</g:unit_pricing_measure>
+    <g:unit_pricing_base_measure>1 sqm</g:unit_pricing_base_measure>
     <g:brand>Viveros Terra</g:brand>
     <g:condition>new</g:condition>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Pasto Sintético &gt; Japonés 35</g:product_type>
+    <g:color>Verde bosque y esmeralda</g:color>
+    <g:product_type>Pasto sintético &gt; Japonés 35</g:product_type>
     <g:google_product_category>Home &amp; Garden &gt; Lawn &amp; Garden &gt; Gardening</g:google_product_category>
     <g:shipping>
       <g:country>MX</g:country>
-      <g:service>Estándar 3-5 días</g:service>
-      <g:price>900.00 MXN</g:price>
+      <g:service>Paquetería 3 a 5 días hábiles</g:service>
+      <g:price>1400.00 MXN</g:price>
     </g:shipping>
+    <g:min_handling_time>1</g:min_handling_time>
+    <g:max_handling_time>2</g:max_handling_time>
   </item>
   <item>
     <g:id>VT-PST-MONACO35</g:id>
-    <g:title>Pasto Sintético Mónaco 35 — 35 mm (precio por m²)</g:title>
-    <g:description>Pasto sintético Mónaco 35 de 35 mm y 2100 g/m², garantía 8 años. Ideal para residencias premium y hoteles boutique. Verde todo el año sin riego ni poda. Envío a todo México en 3 a 5 días hábiles, factura CFDI 4.0. Precio por m² en rollo completo (rollo de 2 m de ancho, 50 m²). Mínimo de compra nacional 25 m². Cotiza con envío en https://www.viverosterra.com/pasto-sintetico o WhatsApp 833 326 8008.</g:description>
-    <g:link>https://www.viverosterra.com/pasto-sintetico</g:link>
+    <g:title>Pasto sintético Mónaco 35 de 35 mm, precio por m²</g:title>
+    <g:description>El Mónaco 35 es un pasto sintético de 35 mm y 2,100 g/m² en verde esmeralda y lima, con garantía de 8 años. Es de los más pesados de la colección, así que se ve lleno y se siente mullido. Cuesta desde $299/m² en rollo de 50 m² y llega a todo México en 3 a 5 días hábiles. Precio por m² en rollo de 2 m de ancho; compra mínima nacional de 25 m². El envío se cobra por rollo según el estado. Factura CFDI 4.0.</g:description>
+    <g:link>https://www.viverosterra.com/pasto-sintetico/monaco-35</g:link>
     <g:image_link>https://www.viverosterra.com/img/pasto-sintetico/monaco-35.jpg</g:image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/monaco-35-1.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/monaco-35-2.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/monaco-35-3.webp</g:additional_image_link>
     <g:availability>in_stock</g:availability>
     <g:price>299.00 MXN</g:price>
+    <g:unit_pricing_measure>1 sqm</g:unit_pricing_measure>
+    <g:unit_pricing_base_measure>1 sqm</g:unit_pricing_base_measure>
     <g:brand>Viveros Terra</g:brand>
     <g:condition>new</g:condition>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Pasto Sintético &gt; Mónaco 35</g:product_type>
+    <g:color>Verde esmeralda y lima</g:color>
+    <g:product_type>Pasto sintético &gt; Mónaco 35</g:product_type>
     <g:google_product_category>Home &amp; Garden &gt; Lawn &amp; Garden &gt; Gardening</g:google_product_category>
     <g:shipping>
       <g:country>MX</g:country>
-      <g:service>Estándar 3-5 días</g:service>
-      <g:price>900.00 MXN</g:price>
+      <g:service>Paquetería 3 a 5 días hábiles</g:service>
+      <g:price>1400.00 MXN</g:price>
     </g:shipping>
+    <g:min_handling_time>1</g:min_handling_time>
+    <g:max_handling_time>2</g:max_handling_time>
   </item>
   <item>
     <g:id>VT-PST-BALI35</g:id>
-    <g:title>Pasto Sintético Bali 35 — 35 mm (precio por m²)</g:title>
-    <g:description>Pasto sintético Bali 35 de 35 mm y 2100 g/m², garantía 8 años. Ideal para jardines exclusivos con acabado tropical premium. Verde todo el año sin riego ni poda. Envío a todo México en 3 a 5 días hábiles, factura CFDI 4.0. Precio por m² en rollo completo (rollo de 2 m de ancho, 50 m²). Mínimo de compra nacional 25 m². Cotiza con envío en https://www.viverosterra.com/pasto-sintetico o WhatsApp 833 326 8008.</g:description>
-    <g:link>https://www.viverosterra.com/pasto-sintetico</g:link>
+    <g:title>Pasto sintético Bali 35 de 35 mm, precio por m²</g:title>
+    <g:description>El Bali 35 es un pasto sintético de 35 mm y 2,100 g/m² en verde bosque y esmeralda, con garantía de 8 años. Tiene 16,800 puntadas por m² y la fibra de 5,500 Dtex, la más alta de los modelos con ficha publicada. Cuesta desde $299/m² en rollo de 50 m² y llega a todo México en 3 a 5 días hábiles. Precio por m² en rollo de 2 m de ancho; compra mínima nacional de 25 m². El envío se cobra por rollo según el estado. Factura CFDI 4.0.</g:description>
+    <g:link>https://www.viverosterra.com/pasto-sintetico/bali-35</g:link>
     <g:image_link>https://www.viverosterra.com/img/pasto-sintetico/bali-35.jpg</g:image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/bali-35-1.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/bali-35-2.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/bali-35-3.webp</g:additional_image_link>
+    <g:additional_image_link>https://www.viverosterra.com/img/pasto-sintetico/galeria/bali-35-4.webp</g:additional_image_link>
     <g:availability>in_stock</g:availability>
     <g:price>299.00 MXN</g:price>
+    <g:unit_pricing_measure>1 sqm</g:unit_pricing_measure>
+    <g:unit_pricing_base_measure>1 sqm</g:unit_pricing_base_measure>
     <g:brand>Viveros Terra</g:brand>
     <g:condition>new</g:condition>
     <g:identifier_exists>no</g:identifier_exists>
-    <g:product_type>Pasto Sintético &gt; Bali 35</g:product_type>
+    <g:color>Verde bosque y esmeralda</g:color>
+    <g:product_type>Pasto sintético &gt; Bali 35</g:product_type>
     <g:google_product_category>Home &amp; Garden &gt; Lawn &amp; Garden &gt; Gardening</g:google_product_category>
     <g:shipping>
       <g:country>MX</g:country>
-      <g:service>Estándar 3-5 días</g:service>
-      <g:price>900.00 MXN</g:price>
+      <g:service>Paquetería 3 a 5 días hábiles</g:service>
+      <g:price>1400.00 MXN</g:price>
     </g:shipping>
+    <g:min_handling_time>1</g:min_handling_time>
+    <g:max_handling_time>2</g:max_handling_time>
   </item>
 </channel>
 </rss>
