@@ -118,4 +118,4 @@ def build_perros():
         {faq_html(faqs)}
         <p><a href="/blog/pasto-sintetico-para-perros">Lee la guía completa: pasto sintético para perros</a></p>{SECTION_CLOSE}
 </main>
-""", footer(), buybar("Pasto para perros", f"Desde ${DESDE}/m²"), drawer_and_toast()])
+""", footer(), buybar("Pasto para perros", f"Desde ${DESDE}/m²", rollo=DESDE), drawer_and_toast()])

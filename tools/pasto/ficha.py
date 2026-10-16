@@ -318,7 +318,7 @@ def build_ficha(m):
 </main>
 """,
         footer(),
-        buybar(f"{m['nombre']}{' · ' + m['badge'] if m.get('badge') else ''}", f"Desde ${m['rollo']}/m²"),
+        buybar(f"{m['nombre']}{' · ' + m['badge'] if m.get('badge') else ''}", f"Desde ${m['rollo']}/m²", rollo=m["rollo"]),
         drawer_and_toast(),
     ]
     return "".join(parts)

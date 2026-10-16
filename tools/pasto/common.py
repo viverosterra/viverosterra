@@ -128,8 +128,10 @@ def footer():
 """
 
 
-def buybar(name, price_text):
-    return f"""<div class="buybar" id="buybar" data-visible="false">
+def buybar(name, price_text, *, rollo=None):
+    """Barra fija en celular. Con `rollo`, tienda-pasto.js la cambia al precio puesto del estado elegido."""
+    landed = f' data-landed-bar data-rollo="{rollo}"' if rollo else ""
+    return f"""<div class="buybar" id="buybar" data-visible="false"{landed}>
   <div class="buybar__info">
     <div class="buybar__name">{esc(name)}</div>
     <div class="buybar__price num">{esc(price_text)}</div>

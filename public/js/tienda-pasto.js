@@ -416,6 +416,27 @@
     setCurrent(0);
   }
 
+  /* ---------- Barra fija con precio puesto ---------- */
+  function paintBuybarLanded(estado) {
+    const bar = $('#buybar[data-landed-bar]');
+    if (!bar) return;
+    const nameEl = $('.buybar__name', bar);
+    const priceEl = $('.buybar__price', bar);
+    if (!bar.dataset.baseName) {
+      bar.dataset.baseName = nameEl.textContent;
+      bar.dataset.basePrice = priceEl.textContent;
+    }
+    const zona = estado ? ESTADO_ZONA[estado] : null;
+    const rollo = Number(bar.dataset.rollo);
+    if (!zona || !(rollo > 0)) {
+      nameEl.textContent = bar.dataset.baseName;
+      priceEl.textContent = bar.dataset.basePrice;
+      return;
+    }
+    nameEl.textContent = `Puesto en ${estado}`;
+    priceEl.textContent = `Desde ${money(Math.round(rollo + ZONAS[zona].tarifa / ROLLO_M2))}/m² con envío`;
+  }
+
   /* ---------- Sticky buy bar ---------- */
   function initBuybar() {
     const bar = $('#buybar');
@@ -465,6 +486,8 @@
       },
       selectModel: (slug) => { if (quote) quote.selectModel(slug); },
     });
+    paintBuybarLanded(window.VTTienda.getEstado());
+    document.addEventListener('vt:estado', (e) => paintBuybarLanded((e.detail && e.detail.estado) || ''));
     document.dispatchEvent(new CustomEvent('vt:ready'));
   });
 })();

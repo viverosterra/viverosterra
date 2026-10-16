@@ -336,7 +336,7 @@ def build_hub():
 </main>
 """,
         footer(),
-        buybar("Pasto sintético · 9 modelos", "Desde $139/m²"),
+        buybar("Pasto sintético · 9 modelos", f"Desde ${min(m['rollo'] for m in MODELOS)}/m²", rollo=min(m["rollo"] for m in MODELOS)),
         drawer_and_toast(),
     ]
     return "".join(parts).replace('<a class="skip-link" href="#comprar">Ir al cotizador</a>',
