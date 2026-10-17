@@ -15,6 +15,7 @@ PRECIOS = [
     ("Mantenimiento de jardín", "/mantenimiento-jardines-tampico", "desde $750/mes", "Poda, fertilización, control de plagas y revisión del riego."),
     ("Diseño de jardín", "/diseno-jardines-tampico", "desde $3,000", "Plan Esencial; se descuenta si contratas la obra."),
     ("Riego automático", "/sistema-riego-tampico", "$180 a $320/m²", "Aspersión o goteo con programador."),
+    ("Pasto sintético en Tampico", "/pasto-sintetico-tampico", "desde $385/m² instalado", "Venta en showroom desde 2 m² o instalación con material y colocación."),
     ("Palmas", "/palmas-tropicales-tampico", "desde $250", "Areca y coco plumoso en tamaño chico; se cotizan por tamaño y volumen."),
 ]
 
