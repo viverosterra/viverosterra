@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datos de envío · Viveros Terra</title>
+<meta name="description" content="Comparte la dirección de entrega de tu pedido de pasto sintético.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1B5E20">
+<link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#1B5E20;--g2:#0D2B0E;--soft:#F0F7F0;--line:#dfe8df;--muted:#5f6b62;--err:#c62828;--wa:#25D366}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#F0F7F0 0%,#fff 100%);color:#1a1a1a;line-height:1.5;min-height:100vh}
+header{background:#fff;border-bottom:1px solid #e7eee7;padding:16px 0}
+.nav{max-width:640px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Playfair Display',serif;font-weight:800;color:var(--g);font-size:21px;text-decoration:none}
+.nav span{font-size:12.5px;color:var(--muted)}
+main{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+h1{font-family:'Playfair Display',serif;font-size:28px;color:var(--g2);line-height:1.2;margin-bottom:6px}
+.lead{color:var(--muted);font-size:15px;margin-bottom:18px}
+.order{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:18px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.order b{color:var(--g2)} .order small{display:block;color:var(--muted);font-size:12px}
+.order .tot{font-weight:800;color:var(--g);font-size:17px;text-align:right;white-space:nowrap}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px 18px;margin-bottom:16px;box-shadow:0 14px 40px -28px rgba(15,61,20,.35)}
+.card h2{font-family:'Playfair Display',serif;font-size:18px;color:var(--g);margin-bottom:14px}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:#26332a}
+.req{color:var(--err)}
+.f{margin-bottom:13px}
+input,select{width:100%;font:inherit;font-size:16px;padding:12px 13px;border:1.5px solid #cfdccf;border-radius:12px;background:#fff;color:#1a1a1a}
+input:focus,select:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(27,94,32,.12)}
+.bad{border-color:var(--err)!important;background:#fff7f7}
+.msg{font-size:12px;color:var(--err);margin-top:4px;display:none}
+.bad+.msg{display:block}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.row{grid-template-columns:1fr}}
+.toggle{display:flex;gap:10px;align-items:center;font-weight:600;font-size:15px;cursor:pointer;margin:0}
+.toggle input{width:22px;height:22px;accent-color:var(--g);flex:none}
+#fact{margin-top:14px;display:none}
+button{width:100%;border:none;border-radius:999px;background:var(--wa);color:#063b22;font:inherit;font-weight:700;font-size:16px;padding:16px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:9px}
+button:active{transform:scale(.99)}
+.err{background:#fff3f3;border:1px solid #f1c6c6;color:var(--err);border-radius:12px;padding:11px 13px;font-size:13.5px;margin-bottom:12px;display:none}
+.note{font-size:12.5px;color:var(--muted);text-align:center;margin-top:12px}
+.done{display:none;text-align:center;padding:28px 16px}
+.done h2{font-family:'Playfair Display',serif;color:var(--g2);font-size:24px;margin:12px 0 6px}
+.done p{color:var(--muted)}
+.ok{width:64px;height:64px;border-radius:50%;background:var(--wa);display:inline-flex;align-items:center;justify-content:center}
+footer{text-align:center;color:#888;font-size:12.5px;padding:0 20px 28px}
+</style>
+</head>
+<body>
+<header><nav class="nav"><a href="/" class="logo">Viveros Terra</a><span>Datos de envío</span></nav></header>
+<main>
+  <div id="form">
+    <h1 id="hola">Datos para tu envío</h1>
+    <p class="lead">Llénalo en un minuto. Al terminar se abre WhatsApp con tus datos listos para enviárnoslos.</p>
+    <div class="order" id="order" style="display:none"><div><b id="oProd"></b><small id="oFolio"></small></div><div class="tot" id="oTot"></div></div>
+
+    <div class="card">
+      <h2>Dirección de entrega</h2>
+      <div class="f"><label for="calle">Calle y número <span class="req">*</span></label><input id="calle" autocomplete="address-line1" placeholder="Ej. Av. Hidalgo 1234, int. 5"><div class="msg">Escribe la calle y el número.</div></div>
+      <div class="row">
+        <div class="f"><label for="colonia">Colonia <span class="req">*</span></label><input id="colonia" autocomplete="address-level3"><div class="msg">Escribe la colonia.</div></div>
+        <div class="f"><label for="cp">Código postal <span class="req">*</span></label><input id="cp" inputmode="numeric" maxlength="5" autocomplete="postal-code"><div class="msg">Deben ser 5 dígitos.</div></div>
+        <div class="f"><label for="municipio">Municipio <span class="req">*</span></label><input id="municipio" autocomplete="address-level2"><div class="msg">Escribe el municipio.</div></div>
+        <div class="f"><label for="estado">Estado <span class="req">*</span></label><select id="estado" autocomplete="address-level1"></select><div class="msg">Elige el estado.</div></div>
+      </div>
+      <div class="f"><label for="ref">Referencias <span class="req">*</span></label><input id="ref" placeholder="Entre qué calles o un punto de referencia"><div class="msg">Las referencias son obligatorias para la paquetería.</div><div class="hint">Ej. entre Juárez y Morelos, portón negro frente a la farmacia.</div></div>
+    </div>
+
+    <div class="card">
+      <h2>¿Quién recibe?</h2>
+      <div class="f"><label for="recibe">Nombre completo de quien recibe <span class="req">*</span></label><input id="recibe" autocomplete="name"><div class="msg">Escribe nombre y apellidos.</div></div>
+      <div class="f"><label for="tel">Teléfono de contacto <span class="req">*</span></label><input id="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="10 dígitos"><div class="msg">Deben ser 10 dígitos.</div></div>
+    </div>
+
+    <div class="card">
+      <label class="toggle"><input type="checkbox" id="quiere" onchange="document.getElementById('fact').style.display=this.checked?'block':'none'">Requiero factura</label>
+      <div id="fact">
+        <div class="row">
+          <div class="f"><label for="rfc">RFC</label><input id="rfc" maxlength="13" style="text-transform:uppercase"><div class="msg">Revisa el RFC (12 o 13 caracteres).</div></div>
+          <div class="f"><label for="fcp">C.P. fiscal</label><input id="fcp" inputmode="numeric" maxlength="5"><div class="msg">Deben ser 5 dígitos.</div></div>
+        </div>
+        <div class="f"><label for="razon">Nombre o razón social</label><input id="razon"><div class="hint">Tal como aparece en tu constancia de situación fiscal.</div><div class="msg">Escribe el nombre o razón social.</div></div>
+        <div class="f"><label for="regimen">Régimen fiscal</label><select id="regimen">
+          <option value="">Elige tu régimen</option>
+          <option>601 · General de Ley Personas Morales</option>
+          <option>603 · Personas Morales con Fines no Lucrativos</option>
+          <option>605 · Sueldos y Salarios e Ingresos Asimilados a Salarios</option>
+          <option>606 · Arrendamiento</option>
+          <option>612 · Personas Físicas con Actividades Empresariales y Profesionales</option>
+          <option>616 · Sin obligaciones fiscales</option>
+          <option>621 · Incorporación Fiscal</option>
+          <option>625 · Actividades Empresariales a través de Plataformas Tecnológicas</option>
+          <option>626 · Régimen Simplificado de Confianza</option>
+        </select><div class="msg">Elige tu régimen fiscal.</div></div>
+        <div class="f"><label for="uso">Uso de CFDI</label><select id="uso">
+          <option value="">Elige el uso</option>
+          <option>G01 · Adquisición de mercancías</option>
+          <option>G03 · Gastos en general</option>
+          <option>S01 · Sin efectos fiscales</option>
+        </select><div class="msg">Elige el uso de CFDI.</div></div>
+        <div class="f"><label for="correo">Correo para recibir la factura</label><input id="correo" type="email" inputmode="email" autocomplete="email"><div class="msg">Revisa el correo.</div></div>
+      </div>
+    </div>
+
+    <div class="err" id="err">Revisa los campos marcados en rojo.</div>
+    <button onclick="enviar()"><svg width="20" height="20" viewBox="0 0 24 24" fill="#063b22" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.8-.1 1.4z"/></svg>Enviar mis datos por WhatsApp</button>
+    <p class="note">Tus datos solo viajan por WhatsApp a Viveros Terra; esta página no los guarda.</p>
+  </div>
+
+  <div class="card done" id="done">
+    <div class="ok"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <h2>¡Listo!</h2>
+    <p>Solo falta que toques <b>Enviar</b> en WhatsApp. Si no se abrió, <a href="#" id="again">toca aquí</a>.</p>
+  </div>
+</main>
+<footer>Viveros Terra · Vivero y showroom en Cd. Madero desde 2007 · WhatsApp 833 326 8008</footer>
+<script>
+const ESTADOS=["Aguascalientes","Baja California","Baja California Sur","Campeche","Chiapas","Chihuahua","CDMX","Coahuila","Colima","Durango","Estado de México","Guanajuato","Guerrero","Hidalgo","Jalisco","Michoacán","Morelos","Nayarit","Nuevo León","Oaxaca","Puebla","Querétaro","Quintana Roo","San Luis Potosí","Sinaloa","Sonora","Tabasco","Tamaulipas","Tlaxcala","Veracruz","Yucatán","Zacatecas"];
+const $=id=>document.getElementById(id);
+$("estado").innerHTML='<option value="">Elige el estado</option>'+ESTADOS.map(e=>`<option>${e}</option>`).join('');
+const b64e=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+let P={};
+try{const d=new URLSearchParams(location.search).get('d');if(d)P=JSON.parse(decodeURIComponent(escape(atob(d.replace(/-/g,'+').replace(/_/g,'/')))));}catch(e){P={};}
+if(P.n){$("hola").textContent='Hola '+P.n.split(' ')[0]+', ¿a dónde te lo enviamos?';$("recibe").value=P.n;}
+if(P.p){$("order").style.display='';$("oProd").textContent=P.p;$("oFolio").textContent=P.f?'Pedido '+P.f:'';$("oTot").textContent=P.t||'';}
+if(P.s&&ESTADOS.includes(P.s))$("estado").value=P.s;
+if(P.c)$("municipio").value=P.c;
+if(P.z)$("cp").value=P.z;
+const WA=(P.w&&/^\d{10}$/.test(P.w))?P.w:'8333268008';
+const dg=s=>(s||'').replace(/\D/g,'');
+const v=id=>$(id).value.trim();
+function marca(id,ok){$(id).classList.toggle('bad',!ok);return ok;}
+function enviar(){
+  let ok=true;
+  ['calle','colonia','municipio','ref'].forEach(id=>ok=marca(id,v(id).length>=2)&&ok);
+  ok=marca('estado',!!v('estado'))&&ok;
+  ok=marca('cp',dg(v('cp')).length===5)&&ok;
+  ok=marca('recibe',v('recibe').split(/\s+/).length>=2)&&ok;
+  ok=marca('tel',dg(v('tel')).slice(-10).length===10)&&ok;
+  const fx=$("quiere").checked;
+  if(fx){
+    ok=marca('rfc',/^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/.test(v('rfc').toUpperCase()))&&ok;
+    ok=marca('fcp',dg(v('fcp')).length===5)&&ok;
+    ok=marca('razon',v('razon').length>=3)&&ok;
+    ok=marca('regimen',!!v('regimen'))&&ok;ok=marca('uso',!!v('uso'))&&ok;
+    ok=marca('correo',/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('correo')))&&ok;
+  }
+  $("err").style.display=ok?'none':'block';
+  if(!ok){const b=document.querySelector('.bad');if(b){b.scrollIntoView({behavior:'smooth',block:'center'});b.focus();}return;}
+  const e={calle:v('calle'),colonia:v('colonia'),municipio:v('municipio'),estado:v('estado'),cp:dg(v('cp')),ref:v('ref'),recibe:v('recibe'),tel:dg(v('tel')).slice(-10)};
+  const x=fx?{rfc:v('rfc').toUpperCase(),cp:dg(v('fcp')),razon:v('razon'),regimen:v('regimen'),uso:v('uso'),correo:v('correo')}:null;
+  let t=`Hola, aquí están mis datos de envío${P.f?' para el pedido '+P.f:''}:\n\n`;
+  t+=`📍 *Dirección de entrega*\nCalle y número: ${e.calle}\nColonia: ${e.colonia}\nMunicipio: ${e.municipio}\nEstado: ${e.estado}\nCódigo Postal: ${e.cp}\nReferencias: ${e.ref}\n\n`;
+  t+=`📦 *Recibe*\nNombre: ${e.recibe}\nTeléfono: ${e.tel}\n\n`;
+  t+=x?`🧾 *Factura*\nRFC: ${x.rfc}\nRazón social: ${x.razon}\nRégimen: ${x.regimen}\nC.P. fiscal: ${x.cp}\nUso de CFDI: ${x.uso}\nCorreo: ${x.correo}\n\n`:`🧾 Factura: no\n\n`;
+  t+=`#VT1:${b64e({f:P.f||'',e,x})}`;
+  const url=`https://wa.me/52${WA}?text=${encodeURIComponent(t)}`;
+  $("again").href=url;$("form").style.display='none';$("done").style.display='block';window.scrollTo(0,0);
+  location.href=url;
+}
+</script>
+</body>
+</html>
