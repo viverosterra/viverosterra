@@ -29,9 +29,9 @@ Ejemplo (Toscana 28, 50 m², Nuevo León, contado $11,100):
 | Forma de pago | Mensualidad | Total | Diferencia |
 |---|---|---|---|
 | Contado | — | $11,100 | — |
-| 3 mensualidades | ≈ $4,087 | $12,262 | +$1,162 |
-| 6 mensualidades | ≈ $2,125 | $12,752 | +$1,652 |
-| 9 mensualidades | ≈ $1,486 | $13,376 | +$2,276 |
+| 3 mensualidades | ≈ $4,088 | $12,263 | +$1,163 |
+| 6 mensualidades | ≈ $2,126 | $12,753 | +$1,653 |
+| 9 mensualidades | ≈ $1,486 | $13,377 | +$2,277 |
 | 12 mensualidades | ≈ $1,142 | $13,702 | +$2,602 |
 
 ## Reglas de comunicación
@@ -50,8 +50,8 @@ Ejemplo (Toscana 28, 50 m², Nuevo León, contado $11,100):
    Radio cards apiladas (contado preseleccionado), cada una con mensualidad, total y diferencia; los plazos
    que no aplican por monto se muestran deshabilitados con "desde $X". Encima, el tríptico
    "Hoy · Al mes · Total" y la **regla de pagos** (gemela de la regla de altura: una marca por mes, total al final).
-2. **Mensaje de WhatsApp y lista de cotización**: "Forma de pago: 6 mensualidades de ≈ $2,125 con tarjeta de
-   crédito (total $12,752)" o "Forma de pago: contado". En la lista, un selector compacto de plan para todo el pedido.
+2. **Mensaje de WhatsApp y lista de cotización**: "Forma de pago: 6 mensualidades de ≈ $2,126 con tarjeta de
+   crédito (total $12,753)" o "Forma de pago: contado". En la lista, un selector compacto de plan para todo el pedido.
 3. **Barra fija en celular**: segunda línea "o hasta N mensualidades con tarjeta" cuando el monto lo permite.
 4. **Tarjetas de modelo**: una línea discreta "Paga en mensualidades con tarjeta". Sin montos ni insignias.
 5. **Portada de la tienda**: una frase bajo el selector de estado con enlace al cotizador. Sin montos.
