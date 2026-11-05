@@ -44,7 +44,7 @@ Ejemplo (Toscana 28, 50 m², Nuevo León, contado $11,100):
   redondeo. Te confirmamos el total antes de enviarte el link de pago."
 - Línea de franqueza: "Pagando de contado te ahorras $X".
 
-## Dónde aparece (fase 1: tienda nacional de pasto sintético)
+## Dónde aparece (tienda nacional de pasto sintético)
 
 1. **Cotizador del hub y de las 9 fichas**: bloque "¿Cómo prefieres pagar?" entre el total y los botones.
    Radio cards apiladas (contado preseleccionado), cada una con mensualidad, total y diferencia; los plazos
@@ -59,8 +59,23 @@ Ejemplo (Toscana 28, 50 m², Nuevo León, contado $11,100):
    calculada en el build.
 7. **/precios y /politicas#mensualidades**: tabla de plazos con factor, mínimos por monto y condiciones.
 
-Fuera de fase 1: mantenimiento mensual (nunca), compras de menos de $2,000, ventanas emergentes.
-Fase 2 (decisión pendiente del dueño): servicios locales (instalación de pasto natural y sintético, diseño, riego).
+Nunca: mantenimiento mensual, compras de menos de $2,000, ventanas emergentes.
+
+## Dónde aparece (servicios locales en Tampico, Madero y Altamira)
+
+Aprobado por el dueño el 2026-11-04 para pasto natural instalado, pasto sintético instalado, diseño de jardín y riego.
+Estos servicios se cotizan después de medir, así que la mensualidad se muestra sobre un monto que el cliente conoce.
+
+8. **Simulador de mensualidades** (componente reutilizable): campo "Monto de tu cotización" con radio cards de
+   plazos, el mismo tríptico y la misma regla de pagos. Va en las páginas de pasto en rollo, sintético en Tampico,
+   diseño de jardines y riego, después de la sección de precios. Botón "Enviar por WhatsApp" con el plan elegido.
+9. **Portada de cada servicio** (tools/servicios): una línea bajo el precio, "Paga en mensualidades con tarjeta de
+   crédito en cotizaciones desde $2,000". Sin montos.
+10. **Diseño de jardines**: en las tarjetas de los planes de precio fijo, la opción a plazos que aplique por monto
+    (Esencial $3,000 → 3; Completo $6,500 → 3 y 6; Premium desde $18,000 → hasta 12), con total y diferencia.
+11. **Pasto sintético en Tampico** (/pasto-sintetico-tampico): su cotizador usa el mismo bloque del punto 1.
+12. **Mensaje de WhatsApp de la cotización formal**: el equipo incluye la tabla de plazos del monto cotizado
+    (plantilla en el plan).
 
 ## Datos y código
 
