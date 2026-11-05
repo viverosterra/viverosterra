@@ -41,6 +41,9 @@
 .svc-hero__price-alt { flex-basis: 100%; font-size: 14px; color: var(--svc-muted); }
 @media (min-width: 560px) { .svc-hero__price-alt { flex-basis: auto; padding-left: 12px; border-left: 1px solid var(--svc-line); } }
 .svc-hero__lede { margin: 0; font-size: 17px; line-height: 1.55; color: var(--svc-ink-2); max-width: 56ch; }
+.svc-hero__pay { margin: -6px 0 0; font-size: 14px; color: var(--svc-ink-2); }
+.svc-hero__pay a { color: var(--svc-green); font-weight: 600; text-underline-offset: 2px; white-space: nowrap; }
+.svc-hero__pay a:focus-visible { outline: 3px solid var(--svc-focus); outline-offset: 2px; border-radius: 2px; }
 .svc-hero__ctas { display: flex; flex-wrap: wrap; gap: 10px; }
 .svc-hero__cta {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;

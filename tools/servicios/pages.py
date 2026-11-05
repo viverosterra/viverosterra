@@ -26,6 +26,7 @@ PAGES = {
         img="/img/instalacion-pasto-rollo-san-agustin-tampico.webp", img_pos="center 40%",
         alt="Instalación de pasto San Agustín en rollo en un jardín de Tampico", caption="Instalación de pasto San Agustín en Tampico.",
         wa=guided("Hola, quiero cotizar pasto San Agustín en rollo.", "Colonia", "Metros aprox.", "Solo el pasto o instalado"),
+        pago_nota="Paga en mensualidades con tarjeta de crédito en cotizaciones desde $2,000.",
     ),
     "mayoreo-pasto-tampico": dict(
         eyebrow="Constructoras · Fraccionamientos · Industria",
@@ -55,6 +56,7 @@ PAGES = {
         img="/img/diseno-jardines-tampico-proyecto.webp", img_pos="center 55%",
         alt="Jardín residencial diseñado por Viveros Terra en Tampico", caption="Proyecto de diseño de jardín en Tampico.",
         wa=guided("Hola, me interesa el diseño de mi jardín.", "Colonia", "Metros aprox.", "Plan que me interesa"),
+        pago_nota="Paga en mensualidades con tarjeta de crédito en cotizaciones desde $2,000.",
     ),
     "sistema-riego-tampico": dict(
         title="Riego automático", accent="para jardines en Tampico",
@@ -65,6 +67,7 @@ PAGES = {
         alt="Aspersores de riego automático funcionando en un jardín", caption="Sistema de riego por aspersión instalado.",
         wa=guided("Hola, quiero cotizar riego automático.", "Colonia", "Metros aprox. del jardín", "Tengo pasto, plantas o ambos"),
         secondary=("tel:8333268008", "Pedir visita"),
+        pago_nota="Paga en mensualidades con tarjeta de crédito en cotizaciones desde $2,000.",
     ),
     "vivero-tampico": dict(
         title="Vivero en Tampico", accent="y Ciudad Madero, desde 2007",
