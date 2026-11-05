@@ -64,14 +64,83 @@
     return { pm2, material, rollos, zona, envio, isPickup, total: material + envio, landed: (material + envio) / m2 };
   }
 
+  /* ---------- Mensualidades ---------- */
+  function planesPara(contado) {
+    return window.VTMensualidades && contado > 0 ? window.VTMensualidades.planes(contado) : [];
+  }
+
+  function planElegido(contado) {
+    const p = planesPara(contado).find((x) => x.plazo === memoryState.plan && x.disponible);
+    return p || null;
+  }
+
+  function renderPlanRow(row, planes, contado) {
+    const v = Number(row.dataset.plan);
+    const input = $('input', row);
+    const amount = $('[data-plan-amount]', row);
+    const total = $('[data-plan-total]', row);
+    if (v === 0) {
+      amount.textContent = '';
+      total.textContent = money(contado);
+    } else {
+      const p = planes.find((x) => x.plazo === v);
+      const ok = Boolean(p && p.disponible);
+      input.disabled = !ok;
+      row.dataset.disabled = String(!ok);
+      amount.textContent = ok ? `≈ ${money(p.mensualidad)} al mes` : `Desde ${money(window.VTMensualidades.minimoDe(v))}`;
+      total.textContent = ok ? `${money(p.total)} · +${money(p.diferencia)}` : '';
+    }
+    input.checked = v === memoryState.plan;
+  }
+
+  function renderPlans(root, contado) {
+    if (!root) return;
+    const planes = planesPara(contado);
+    root.hidden = planes.length === 0;
+    if (planes.length === 0) return;
+    if (memoryState.plan && !planes.some((x) => x.plazo === memoryState.plan && x.disponible)) {
+      writeStore({ ...memoryState, plan: 0 });
+    }
+    $$('.plan', root).forEach((row) => renderPlanRow(row, planes, contado));
+    const p = planElegido(contado);
+    $('[data-trip-hoy]', root).textContent = p ? '$0' : money(contado);
+    $('[data-trip-mes]', root).textContent = p ? `≈ ${money(p.mensualidad)}` : '—';
+    $('[data-trip-total]', root).textContent = money(p ? p.total : contado);
+    const ahorro = p ? p.diferencia : (planes.filter((x) => x.disponible).pop() || {}).diferencia;
+    $('[data-plan-save]', root).textContent = ahorro ? `Pagando de contado te ahorras ${money(ahorro)}.` : '';
+    const rule = $('.pay-rule', root);
+    if (rule) {
+      const n = p ? p.plazo : 1;
+      rule.replaceChildren(...Array.from({ length: n }, () => document.createElement('i')));
+      rule.dataset.plazo = String(n);
+    }
+  }
+
+  function planLine(contado) {
+    const p = planElegido(contado);
+    return p
+      ? `Forma de pago: ${p.plazo} mensualidades de ≈ ${money(p.mensualidad)} con tarjeta de crédito (total ${money(p.total)}).`
+      : 'Forma de pago: contado.';
+  }
+
+  function initPlanInputs(onChange) {
+    $$('[data-plans] input[type="radio"]').forEach((input) => {
+      input.addEventListener('change', () => {
+        writeStore({ ...memoryState, plan: Number(input.value) });
+        onChange();
+      });
+    });
+  }
+
   /* ---------- Quote list storage ---------- */
   function readStore() {
     try {
       const raw = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
       const items = Array.isArray(raw.items) ? raw.items.filter(isValidItem) : [];
-      return { items, estado: typeof raw.estado === 'string' ? raw.estado : '' };
+      const plan = [0, 3, 6, 9, 12].includes(raw.plan) ? raw.plan : 0;
+      return { items, estado: typeof raw.estado === 'string' ? raw.estado : '', plan };
     } catch (err) {
-      return { items: [], estado: '' };
+      return { items: [], estado: '', plan: 0 };
     }
   }
 
@@ -120,6 +189,7 @@
     });
     if (state.estado) lines.push(estadoLabel(state.estado) + '.');
     if (complete && total > 0) lines.push(`Total estimado en la web: ${money(total)}.`);
+    if (complete && total > 0) lines.push(planLine(total));
     lines.push('¿Me confirman el precio final con envío a mi dirección?');
     return lines.join('\n');
   }
@@ -368,6 +438,10 @@
       $('#q-total-label').textContent = estado && estado !== PICKUP ? 'Total estimado con envío' : 'Total estimado';
       $('#q-landed').textContent = !error && estado && estado !== PICKUP
         ? `≈ ${money(q.landed)} por m² puesto en tu domicilio` : '';
+      const contado = error ? 0 : (estado && estado !== PICKUP ? q.total : q.material);
+      renderPlans($('#q-plans'), contado);
+      lastContado = contado;
+      paintBuybarPlan();
 
       const faltan = ROLLO_M2 - m2;
       $('#q-hint').textContent = !error && m2 >= TIER2_MIN_M2 && faltan > 0
@@ -379,12 +453,14 @@
         Number.isFinite(m2) ? `Necesito ${m2} m².` : '',
         estado ? estadoLabel(estado) + '.' : '¿Me ayudan a calcular el envío a mi ciudad?',
         !error && estado ? `Total estimado en la web: ${money(estado === PICKUP ? q.material : q.total)}.` : '',
+        contado ? planLine(contado) : '',
         '¿Me confirman el precio final?',
       ].filter(Boolean).join('\n');
       $$('[data-cta-wa]').forEach((a) => { a.href = waLink(msg); });
     }
 
     update();
+    initPlanInputs(update);
     return {
       selectModel(slug) {
         if (!modelSel || !models.some((m) => m.slug === slug)) return;
@@ -435,6 +511,21 @@
     }
     nameEl.textContent = `Puesto en ${estado}`;
     priceEl.textContent = `Desde ${money(Math.round(rollo + ZONAS[zona].tarifa / ROLLO_M2))}/m² con envío`;
+  }
+
+  let lastContado = 0;
+  function paintBuybarPlan() {
+    const bar = $('#buybar');
+    const info = bar && $('.buybar__info', bar);
+    if (!info) return;
+    const disp = window.VTMensualidades ? window.VTMensualidades.plazosDisponibles(lastContado) : [];
+    let el = $('.buybar__plan', info);
+    if (!el) {
+      el = document.createElement('div');
+      el.className = 'buybar__plan';
+      info.appendChild(el);
+    }
+    el.textContent = disp.length ? `o hasta ${disp[disp.length - 1]} mensualidades con tarjeta` : '';
   }
 
   /* ---------- Sticky buy bar ---------- */
