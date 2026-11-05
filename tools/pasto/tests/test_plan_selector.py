@@ -19,6 +19,8 @@ class PlanSelectorTest(unittest.TestCase):
             self.assertIn(f'name="q-plan" value="{v}"', html)
         self.assertIn('value="0" checked', html)
         self.assertIn('id="q-plan-trip"', html)
+        self.assertIn('<dt>Contado</dt><dd data-trip-contado>', html)
+        self.assertNotIn('data-trip-hoy', html)
         self.assertIn('id="q-plan-rule"', html)
         self.assertIn('/politicas#mensualidades', html)
 

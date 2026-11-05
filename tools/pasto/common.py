@@ -347,7 +347,7 @@ def plan_selector_html(prefix):
     return f"""<fieldset class="plans" id="{prefix}-plans" data-plans>
           <legend id="{prefix}-plans-legend">¿Cómo prefieres pagar?</legend>
           <dl class="plan-trip num" id="{prefix}-plan-trip" aria-live="polite">
-            <div><dt>Hoy</dt><dd data-trip-hoy>—</dd></div>
+            <div><dt>Contado</dt><dd data-trip-contado>—</dd></div>
             <div><dt>Al mes</dt><dd data-trip-mes>—</dd></div>
             <div><dt>Total</dt><dd data-trip-total>—</dd></div>
           </dl>

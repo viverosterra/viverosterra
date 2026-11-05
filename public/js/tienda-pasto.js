@@ -103,7 +103,7 @@
     }
     $$('.plan', root).forEach((row) => renderPlanRow(row, planes, contado));
     const p = planElegido(contado);
-    $('[data-trip-hoy]', root).textContent = p ? '$0' : money(contado);
+    $('[data-trip-contado]', root).textContent = money(contado);
     $('[data-trip-mes]', root).textContent = p ? `≈ ${money(p.mensualidad)}` : '—';
     $('[data-trip-total]', root).textContent = money(p ? p.total : contado);
     const ahorro = p ? p.diferencia : (planes.filter((x) => x.disponible).pop() || {}).diferencia;
