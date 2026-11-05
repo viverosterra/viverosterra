@@ -218,7 +218,8 @@ def build_zona(slug, z):
                 description=f"{z['lede']} Pasto instalado desde $120/m², mantenimiento desde $750/mes. Visita sin costo.",
                 canonical=url, og_image=f"{SITE}/img/portadas/{img}.webp", og_type="website",
                 preload_img=f"/img/portadas/{img}-sm.webp", preload_srcset=f"/img/portadas/{img}-sm.webp 560w, /img/portadas/{img}.webp {z['img'][1]}w", ld=ld)
-    base = base.split('<script src="/js/tienda-pasto.js')[0] + base.split("defer></script>", 1)[1]
+    base = (base.split('<script src="/js/vt-mensualidades.js')[0]
+            + base.split('<script src="/js/tienda-pasto.js', 1)[1].split("defer></script>", 1)[1])
     base = base.split('<header class="site-header">')[0].replace(
         '<a class="skip-link" href="#comprar">Ir al cotizador</a>', '<a class="skip-link" href="#colonias">Ir al contenido</a>')
     base += HEADER.format(wa=wa(guided(z["corto"])))

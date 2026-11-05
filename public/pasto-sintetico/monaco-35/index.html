@@ -28,6 +28,7 @@
 <script type="application/json" id="vt-model">{"slug": "monaco-35", "nombre": "Mónaco 35", "img": "/img/pasto-sintetico/galeria/monaco-35-2-sm.webp", "t1": 399, "t2": 339, "rollo": 299}</script>
 <script src="/js/vt-landed.js?v=20261016" defer></script>
 <script>document.addEventListener("vt:ready",function(){var t=window.VTTienda,L=window.VTLanded;if(!t||!L)return;function p(e){document.querySelectorAll("[data-landed-slug]").forEach(function(el){var m=t.models.find(function(x){return x.slug===el.dataset.landedSlug});var v=m&&e?L.landedM2(m.rollo,e,t.estadoZona,t.zonas):null;el.textContent=v?"$"+v.toLocaleString("es-MX")+"/m² puesto en "+e:"";});}p(t.getEstado());document.addEventListener("vt:estado",function(ev){p(ev.detail.estado||"")});});</script>
+<script src="/js/vt-mensualidades.js?v=20261016" defer></script>
 <script src="/js/tienda-pasto.js?v=20261016" defer></script>
 </head>
 <body>
@@ -150,6 +151,49 @@
             <p class="quote__landed" id="q-landed"></p>
             <p class="quote__hint" id="q-hint"></p>
             <p class="quote__error" id="q-error" role="alert"></p>
+            <fieldset class="plans" id="q-plans" data-plans>
+          <legend id="q-plans-legend">¿Cómo prefieres pagar?</legend>
+          <dl class="plan-trip num" id="q-plan-trip" aria-live="polite">
+            <div><dt>Hoy</dt><dd data-trip-hoy>—</dd></div>
+            <div><dt>Al mes</dt><dd data-trip-mes>—</dd></div>
+            <div><dt>Total</dt><dd data-trip-total>—</dd></div>
+          </dl>
+          <div class="pay-rule" id="q-plan-rule" aria-hidden="true"></div>
+          <div class="plans__list" role="radiogroup" aria-labelledby="q-plans-legend">
+          <label class="plan" data-plan="0">
+            <input type="radio" name="q-plan" value="0" checked>
+            <span class="plan__name">Contado<small>Transferencia, efectivo o tarjeta en una exhibición</small></span>
+            <span class="plan__amount num" data-plan-amount></span>
+            <span class="plan__total num" data-plan-total></span>
+          </label>
+          <label class="plan" data-plan="3">
+            <input type="radio" name="q-plan" value="3">
+            <span class="plan__name">3 mensualidades<small>Con tarjeta de crédito</small></span>
+            <span class="plan__amount num" data-plan-amount></span>
+            <span class="plan__total num" data-plan-total></span>
+          </label>
+          <label class="plan" data-plan="6">
+            <input type="radio" name="q-plan" value="6">
+            <span class="plan__name">6 mensualidades<small>Con tarjeta de crédito</small></span>
+            <span class="plan__amount num" data-plan-amount></span>
+            <span class="plan__total num" data-plan-total></span>
+          </label>
+          <label class="plan" data-plan="9">
+            <input type="radio" name="q-plan" value="9">
+            <span class="plan__name">9 mensualidades<small>Con tarjeta de crédito</small></span>
+            <span class="plan__amount num" data-plan-amount></span>
+            <span class="plan__total num" data-plan-total></span>
+          </label>
+          <label class="plan" data-plan="12">
+            <input type="radio" name="q-plan" value="12">
+            <span class="plan__name">12 mensualidades<small>Con tarjeta de crédito</small></span>
+            <span class="plan__amount num" data-plan-amount></span>
+            <span class="plan__total num" data-plan-total></span>
+          </label>
+          </div>
+          <p class="plans__save" data-plan-save></p>
+          <p class="plans__note">Precio en mensualidades con tarjeta de crédito. Contado (transferencia, efectivo o tarjeta en una exhibición) es el precio más bajo. Montos aproximados: tu banco debe aceptar el plan. Te confirmamos el total antes de enviarte el link de pago. <a href="/politicas#mensualidades">Condiciones</a></p>
+        </fieldset>
           </div>
           <div class="actions">
             <a class="btn btn--primary" data-cta-wa href="https://wa.me/528333268008" target="_blank" rel="noopener">

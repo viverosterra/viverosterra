@@ -2,7 +2,8 @@
 import json
 
 from common import (GAL, SECTION_CLOSE, assurances, breadcrumb_schema, buybar, drawer_and_toast, esc,
-                    faq_html, faq_schema, footer, head, jsonld, money, product_schema, section_open, steps_list)
+                    faq_html, faq_schema, footer, head, jsonld, money, plan_selector_html, product_schema, section_open,
+                    steps_list)
 from data import ASSET_VERSION, MODELOS, SITE, WA_NUMBER
 
 NOTE_FLETE = "Te confirmamos el flete exacto a tu dirección antes de pagar."
@@ -171,6 +172,7 @@ def quote_html(material, pm2):
             <p class="quote__landed" id="q-landed"></p>
             <p class="quote__hint" id="q-hint"></p>
             <p class="quote__error" id="q-error" role="alert"></p>
+            {plan_selector_html("q")}
           </div>"""
 
 

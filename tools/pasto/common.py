@@ -52,7 +52,8 @@ def head(*, title, description, canonical, og_image, og_type, preload_img, prelo
 <script type="application/ld+json">{ld}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RMZCVJ734M"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-RMZCVJ734M');</script>
-{extra}<script src="/js/tienda-pasto.js?v={ASSET_VERSION}" defer></script>
+{extra}<script src="/js/vt-mensualidades.js?v={ASSET_VERSION}" defer></script>
+<script src="/js/tienda-pasto.js?v={ASSET_VERSION}" defer></script>
 </head>
 <body>
 {SYMBOLS}
@@ -328,3 +329,32 @@ def trust_band_html():
 {items}
   </ul>
 </section>"""
+
+
+def plan_selector_html(prefix):
+    """Forma de pago: contado o mensualidades con tarjeta. tienda-pasto.js llena montos y disponibilidad."""
+    opts = [("0", "Contado", "Transferencia, efectivo o tarjeta en una exhibición")] + [
+        (str(n), f"{n} mensualidades", "Con tarjeta de crédito") for n in (3, 6, 9, 12)
+    ]
+    rows = "\n".join(
+        f'''          <label class="plan" data-plan="{v}">
+            <input type="radio" name="{prefix}-plan" value="{v}"{" checked" if v == "0" else ""}>
+            <span class="plan__name">{esc(name)}<small>{esc(sub)}</small></span>
+            <span class="plan__amount num" data-plan-amount></span>
+            <span class="plan__total num" data-plan-total></span>
+          </label>''' for v, name, sub in opts
+    )
+    return f"""<fieldset class="plans" id="{prefix}-plans" data-plans>
+          <legend id="{prefix}-plans-legend">¿Cómo prefieres pagar?</legend>
+          <dl class="plan-trip num" id="{prefix}-plan-trip" aria-live="polite">
+            <div><dt>Hoy</dt><dd data-trip-hoy>—</dd></div>
+            <div><dt>Al mes</dt><dd data-trip-mes>—</dd></div>
+            <div><dt>Total</dt><dd data-trip-total>—</dd></div>
+          </dl>
+          <div class="pay-rule" id="{prefix}-plan-rule" aria-hidden="true"></div>
+          <div class="plans__list" role="radiogroup" aria-labelledby="{prefix}-plans-legend">
+{rows}
+          </div>
+          <p class="plans__save" data-plan-save></p>
+          <p class="plans__note">Precio en mensualidades con tarjeta de crédito. Contado (transferencia, efectivo o tarjeta en una exhibición) es el precio más bajo. Montos aproximados: tu banco debe aceptar el plan. Te confirmamos el total antes de enviarte el link de pago. <a href="/politicas#mensualidades">Condiciones</a></p>
+        </fieldset>"""

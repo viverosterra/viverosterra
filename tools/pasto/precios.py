@@ -238,7 +238,8 @@ def build_precios():
         canonical=URL, og_image=f"{SITE}{IMG}.webp", og_type="website",
         preload_img=f"{IMG}-sm.webp", preload_srcset=f"{IMG}-sm.webp 560w, {IMG}.webp 960w", ld=schema(faqs),
     )
-    base = (base.split('<script src="/js/tienda-pasto.js')[0] + base.split("defer></script>", 1)[1])
+    base = (base.split('<script src="/js/vt-mensualidades.js')[0]
+            + base.split('<script src="/js/tienda-pasto.js', 1)[1].split("defer></script>", 1)[1])
     base = base.split('<header class="site-header">')[0].replace(
         '<a class="skip-link" href="#comprar">Ir al cotizador</a>', '<a class="skip-link" href="#pasto">Ir a la lista de precios</a>')
     base += HEADER.format(wa=wa("Hola, vi la lista de precios y quiero cotizar"))
