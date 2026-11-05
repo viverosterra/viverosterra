@@ -67,11 +67,11 @@ from mensualidades import PLAZOS, planes, plazos_disponibles
 class MensualidadesTest(unittest.TestCase):
     def test_totales_igual_a_calculadora_clip(self):
         p = {x["plazo"]: x for x in planes(11100)}
-        self.assertEqual(p[3]["total"], 12262)
-        self.assertEqual(p[6]["total"], 12752)
-        self.assertEqual(p[9]["total"], 13376)
+        self.assertEqual(p[3]["total"], 12263)
+        self.assertEqual(p[6]["total"], 12753)
+        self.assertEqual(p[9]["total"], 13377)
         self.assertEqual(p[12]["total"], 13702)
-        self.assertEqual(p[6]["diferencia"], 12752 - 11100)
+        self.assertEqual(p[6]["diferencia"], 12753 - 11100)
         self.assertEqual(p[12]["mensualidad"], 1142)
 
     def test_umbrales(self):
@@ -173,7 +173,7 @@ const assert = require('node:assert');
 const { planes, plazosDisponibles, totalAPlazos } = require('../vt-mensualidades.js');
 
 test('totales iguales a la calculadora de Clip', () => {
-  assert.deepStrictEqual([3, 6, 9, 12].map((p) => totalAPlazos(11100, p)), [12262, 12752, 13376, 13702]);
+  assert.deepStrictEqual([3, 6, 9, 12].map((p) => totalAPlazos(11100, p)), [12263, 12753, 13377, 13702]);
 });
 
 test('umbrales', () => {
@@ -509,7 +509,7 @@ B=$(ls ~/Library/Caches/ms-playwright/chromium_headless_shell-1228/*/chrome-head
 "$B" --headless --disable-gpu --virtual-time-budget=4000 --dump-dom "http://localhost:8920/pasto-sintetico/index.html?estado=nuevo-leon" | grep -o 'data-trip-total="">[^<]*\|data-plan-total="">[^<]*'
 ```
 
-Expected: con Toscana 28 y 50 m² en Nuevo León, contado `$11,100`; las filas de 3 y 6 muestran `$12,262 · +$1,162` y `$12,752 · +$1,652`; 9 y 12 deshabilitadas (contado < $15,000). Matar el servidor.
+Expected: con Toscana 28 y 50 m² en Nuevo León, contado `$11,100`; las filas de 3 y 6 muestran `$12,263 · +$1,163` y `$12,753 · +$1,653`; 9 y 12 deshabilitadas (contado < $15,000). Matar el servidor.
 
 - [ ] **Step 7: Commit**
 
@@ -814,4 +814,4 @@ Expected: `limpio`.
 - [ ] **Step 3: Revisión en navegador** (headless): hub con `?estado=nuevo-leon`, ficha Toscana 28, `/pasto-sintetico-tampico`,
 riego y diseño; sin errores en consola; montos de la tabla de ejemplo; foco de teclado en las filas.
 - [ ] **Step 4: Publicar** — `git pull --rebase && git push`; esperar despliegue y verificar en vivo con dump-dom que el
-cotizador muestra `$12,262 · +$1,162` para 3 mensualidades en el ejemplo.
+cotizador muestra `$12,263 · +$1,163` para 3 mensualidades en el ejemplo.
