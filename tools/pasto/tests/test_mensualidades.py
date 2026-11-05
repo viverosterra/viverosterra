@@ -30,3 +30,22 @@ class MensualidadesTest(unittest.TestCase):
         for x in planes(2500):
             self.assertIsInstance(x["total"], int)
             self.assertGreaterEqual(x["total"] * (1 - (0.036 + {3: .0457, 6: .0757, 9: .1107, 12: .1277}[x["plazo"]]) * 1.16), 2500 - 0.5)
+
+
+import re
+from pathlib import Path
+
+from mensualidades import IVA, TASA_BASE, TASAS, UMBRALES
+
+JS = Path(__file__).resolve().parents[3] / "public" / "js" / "vt-mensualidades.js"
+
+
+class ParidadJSTest(unittest.TestCase):
+    def test_constantes_iguales(self):
+        src = JS.read_text(encoding="utf-8")
+        self.assertIn(f"TASA_BASE = {TASA_BASE}", src)
+        self.assertIn(f"IVA = {IVA}", src)
+        js_tasas = {int(k): float(v) for k, v in re.findall(r"(\d+): (0\.\d+)", src[src.index("TASAS"):src.index("PLAZOS")])}
+        self.assertEqual(js_tasas, TASAS)
+        for minimo, plazos in UMBRALES:
+            self.assertIn(f"[{minimo}, [{', '.join(map(str, plazos))}]]", src)
