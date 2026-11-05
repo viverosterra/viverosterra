@@ -4,6 +4,7 @@ Los precios de pasto sintético salen de data.py; el resto son los datos oficial
 """
 from common import (SECTION_CLOSE, breadcrumb_schema, esc, faq_html, faq_schema, head, jsonld, section_open, wa)
 from data import MODELOS, PHONE_DISPLAY, SITE, UPDATED, WA_NUMBER
+from mensualidades import PLAZOS, minimo_de, total_a_plazos
 
 URL = f"{SITE}/precios"
 BUSINESS_ID = f"{SITE}/#negocio"
@@ -119,6 +120,30 @@ def sintetico_html():
           </table>
         </div>
         <p class="spec-note">Cortes de 2 a 9 m² solo en el showroom. Envío a todo México desde 25 m²; el flete se cobra por rollo según tu estado. <a href="/pasto-sintetico">Ver la tienda</a> · <a href="/pasto-sintetico-tampico">Instalación en Tampico</a></p>"""
+
+
+MUESTRA_PCT = 100000  # contado de referencia para expresar el total a plazos como porcentaje
+
+
+def porcentaje_plazo(plazo):
+    return round((total_a_plazos(MUESTRA_PCT, plazo) / MUESTRA_PCT - 1) * 100, 1)
+
+
+def mensualidades_html():
+    rows = "\n".join(
+        f"""            <tr><th scope="row">{plazo} mensualidades</th><td>${minimo_de(plazo):,}</td><td><strong>+{porcentaje_plazo(plazo):.1f}%</strong></td></tr>"""
+        for plazo in PLAZOS
+    )
+    return f"""<p class="section__intro">El contado (transferencia, efectivo o tarjeta en una sola exhibición) es el precio más bajo. Con tarjeta de crédito puedes pagar en 3, 6, 9 o 12 mensualidades; el total es mayor que el de contado y siempre te lo mostramos antes de enviarte el link de pago.</p>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Mensualidades con tarjeta de crédito">
+          <table class="compare-table compare-table--compact num">
+            <thead><tr><th scope="col">Plazo</th><th scope="col">Desde (contado)</th><th scope="col">Total frente a contado</th></tr></thead>
+            <tbody>
+{rows}
+            </tbody>
+          </table>
+        </div>
+        <p class="spec-note">Aplica a pasto sintético, pasto natural instalado, instalación de pasto sintético, diseño de jardines y sistemas de riego. No aplica a mantenimiento mensual. Tu banco emisor debe aceptar el plan. <a href="/politicas#mensualidades">Ver condiciones</a>.</p>"""
 
 
 def hero_html():
@@ -265,7 +290,9 @@ def build_precios():
         {table_html("Precios de materiales para jardín", MATERIALES, "Recoges en el vivero de Cd. Madero o te lo llevamos en Tampico, Madero y Altamira.")}{SECTION_CLOSE}
   {section_open(5, "Vivero", "plantas-titulo", "Plantas, palmas <em>y árboles</em>", section_id="plantas")}
         {table_html("Precios de plantas y palmas", PLANTAS, 'Arma tu lista en el <a href="/catalogo">catálogo</a> y mándala por WhatsApp. Las plantas y palmas que sembramos tienen 30 días de garantía de arraigo con el riego y cuidado indicados. <a href="/politicas#garantia-plantas">Ver condiciones</a>.')}{SECTION_CLOSE}
-  {section_open(6, "Preguntas", "faq-titulo", "Preguntas sobre <em>precios</em>", tint=True, section_id="preguntas")}
+  {section_open(6, "Formas de pago", "mensualidades-titulo", "Mensualidades <em>con tarjeta</em>", tint=True, section_id="mensualidades")}
+        {mensualidades_html()}{SECTION_CLOSE}
+  {section_open(7, "Preguntas", "faq-titulo", "Preguntas sobre <em>precios</em>", section_id="preguntas")}
         {faq_html(faqs)}{SECTION_CLOSE}
   <section class="closing" aria-labelledby="cierre">
     <div class="wrap">
