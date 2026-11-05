@@ -12,6 +12,8 @@
 
 **Repo:** `/Users/luisgovela/dev/viverosterra` (NO usar la copia en `~/Documents/GitHub`, está en iCloud). Antes de empezar: `git pull --rebase`. Commits en español, conventional, con trailer `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`, `git add` con rutas explícitas, nunca `.DS_Store`.
 
+**Proveedor (obligatorio):** nunca mencionar a "Clip" ni al proveedor de la terminal en nada dentro de `public/` (textos, atributos, comentarios de JS/CSS/HTML). En `tools/` y `docs/` sí se puede. La revisión final incluye `grep -rni clip public/` que debe salir vacío (salvo palabras como "clipboard" o rutas ajenas que no existen hoy).
+
 **Reglas de texto (obligatorias):** nunca "MSI", "meses sin intereses", "sin intereses", "0%", "recargo", "comisión por (pagar con) tarjeta". Usar "mensualidades con tarjeta de crédito", "precio en N mensualidades", "+$X frente a contado", "Pagando de contado te ahorras $X". Contado = transferencia, efectivo o tarjeta en una exhibición.
 
 **Comandos base:**
@@ -198,7 +200,7 @@ Expected: FAIL `Cannot find module '../vt-mensualidades.js'`
 
 ```js
 // public/js/vt-mensualidades.js
-/* Precio en mensualidades con tarjeta de crédito (Clip). Misma fórmula que tools/pasto/mensualidades.py:
+/* Precio en mensualidades con tarjeta de crédito. Misma fórmula que tools/pasto/mensualidades.py:
    la comisión del plazo se suma a la estándar y el IVA va sobre ambas. Sin DOM. */
 (function (root) {
   'use strict';
@@ -768,7 +770,7 @@ Los porcentajes se calculan con `mensualidades.total_a_plazos(100000, n) / 10000
 - [ ] **Step 2: /precios.** En `precios.py`, agregar una sección "Mensualidades con tarjeta" (tabla Plazo · Desde (contado) · Total frente a contado),
 generada desde `mensualidades.UMBRALES`/`total_a_plazos`, con enlace a `/politicas#mensualidades`. Regenerar.
 
-- [ ] **Step 3: llms.txt.** Una línea en "Servicios y precios": "Pago en mensualidades con tarjeta de crédito: 3, 6, 9 o 12 mensualidades vía Clip; el precio en mensualidades es mayor que el de contado (+10.5% a +23.4% según plazo) y se muestra el total antes de pagar. Desde $2,000 (3), $5,000 (6), $15,000 (9 y 12). Condiciones: https://www.viverosterra.com/politicas#mensualidades".
+- [ ] **Step 3: llms.txt.** Una línea en "Servicios y precios": "Pago en mensualidades con tarjeta de crédito: 3, 6, 9 o 12 mensualidades; el precio en mensualidades es mayor que el de contado (+10.5% a +23.4% según plazo) y se muestra el total antes de pagar. Desde $2,000 (3), $5,000 (6), $15,000 (9 y 12). Condiciones: https://www.viverosterra.com/politicas#mensualidades".
 
 - [ ] **Step 4: Plantilla para el equipo** `docs/plantillas/whatsapp-mensualidades.md`:
 
@@ -805,7 +807,7 @@ git commit -m "docs(pagos): condiciones de mensualidades, lista de precios, llms
 - [ ] **Step 2: Palabras prohibidas en todo `public/`** (excluyendo el comparador que cita "envío gratis" de otros):
 
 ```bash
-grep -rniE "meses sin intereses|sin intereses|\bMSI\b|recargo|comisi[oó]n por (pagar con )?tarjeta" public --include=*.html | grep -v "envío gratis" || echo "limpio"
+grep -rniE "meses sin intereses|sin intereses|\bMSI\b|recargo|comisi[oó]n por (pagar con )?tarjeta|\bclip\b" public --include=*.html | grep -v "envío gratis" || echo "limpio"
 ```
 
 Expected: `limpio`.
