@@ -1016,6 +1016,19 @@ h1,h2,h3{font-family:"Playfair Display",serif}
   </div>
 </section>
 
+<!-- simulador -->
+<section class="sim" data-simulador data-servicio="el diseño de mi jardín" aria-labelledby="sim-titulo">
+  <div class="sim__wrap">
+    <p class="sim__eyebrow">Formas de pago</p>
+    <h2 id="sim-titulo">Calcula tus mensualidades con tarjeta</h2>
+    <p class="sim__lede">Escribe el monto de tu cotización y compara contado contra 3, 6, 9 o 12 mensualidades con tarjeta de crédito. Contado (transferencia, efectivo o tarjeta en una exhibición) es el precio más bajo.</p>
+    <label class="sim__field">Monto de tu cotización <input type="number" inputmode="numeric" min="0" step="100" value="6500" data-sim-monto></label>
+    <div class="sim__list" role="radiogroup" aria-label="Forma de pago" data-sim-list></div>
+    <p class="sim__note">Montos aproximados: tu banco debe aceptar el plan. Disponible en cotizaciones desde $2,000. <a href="/politicas#mensualidades">Condiciones</a></p>
+    <a class="sim__cta" data-sim-wa href="https://wa.me/528333268008" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+  </div>
+</section>
+<!-- /simulador -->
 <!-- FAQ -->
 <section class="py-20 bg-bgwarm">
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1228,5 +1241,7 @@ function sendWA(prefix){
 </script>
 <script src="/js/activity-feed.js?v=20260706" defer></script>
 <script src="/js/nav-scroll.js?v=20260706" defer></script>
+<script src="/js/vt-mensualidades.js?v=20261104" defer></script>
+<script src="/js/vt-simulador.js?v=20261104" defer></script>
 </body>
 </html>

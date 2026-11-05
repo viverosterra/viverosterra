@@ -1,5 +1,5 @@
 /* Portada de páginas de servicios y productos (generada por tools/servicios/hero.py) */
-.svc-hero {
+.svc-hero, .sim {
   --svc-ink: #16281D;
   --svc-ink-2: #3E5145;
   --svc-muted: #6B7A70;
@@ -7,6 +7,9 @@
   --svc-green: #1B5E20;
   --svc-wa: #1F9E4D;
   --svc-paper: #F7F6F1;
+  --svc-focus: #7CB342;
+}
+.svc-hero {
   background: var(--svc-paper);
   color: var(--svc-ink);
   font-family: "Inter", system-ui, sans-serif;
@@ -50,7 +53,7 @@
 .svc-hero__cta--wa:hover { background: #17843F; }
 .svc-hero__cta--ghost { border: 1px solid var(--svc-ink); color: var(--svc-ink); flex: 0 1 auto; white-space: nowrap; }
 .svc-hero__cta--ghost:hover { background: var(--svc-ink); color: #fff; }
-.svc-hero__cta:focus-visible { outline: 3px solid #7CB342; outline-offset: 2px; }
+.svc-hero__cta:focus-visible { outline: 3px solid var(--svc-focus); outline-offset: 2px; }
 .svc-hero__cta:active { transform: translateY(1px); }
 .svc-hero__note { margin: -6px 0 0; font-size: 13px; color: var(--svc-muted); }
 .svc-hero__media { margin: 0 -16px; min-width: 0; }
@@ -85,4 +88,74 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .svc-hero__cta { transition: none; }
+}
+
+/* Simulador de mensualidades con tarjeta (generado por tools/servicios/simulador.py) */
+.sim {
+  background: var(--svc-paper); color: var(--svc-ink);
+  font-family: "Inter", system-ui, sans-serif;
+  border-top: 1px solid var(--svc-line); border-bottom: 1px solid var(--svc-line);
+}
+.sim__wrap { max-width: 760px; margin: 0 auto; padding: 48px 16px; }
+.sim__eyebrow {
+  margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--svc-green);
+}
+.sim h2 {
+  margin: 10px 0 12px; font-family: "Playfair Display", Georgia, serif; font-weight: 700;
+  font-size: clamp(28px, 4.6vw, 36px); line-height: 1.1; letter-spacing: -0.01em; color: var(--svc-ink); text-wrap: balance;
+}
+.sim__lede { margin: 0 0 24px; font-size: 16px; line-height: 1.55; color: var(--svc-ink-2); max-width: 60ch; }
+.sim__field { display: grid; gap: 6px; font-size: 14px; font-weight: 600; color: var(--svc-ink); }
+.sim__field input {
+  box-sizing: border-box; width: 100%; max-width: 280px; min-height: 52px; padding: 0 14px;
+  border: 1px solid var(--svc-ink); border-radius: 10px; background: #fff; color: var(--svc-ink);
+  font: 700 20px/1 "Inter", system-ui, sans-serif; font-variant-numeric: tabular-nums;
+}
+.sim__field input:focus-visible { outline: 3px solid var(--svc-focus); outline-offset: 2px; }
+.sim__list { display: grid; gap: 8px; margin: 20px 0 14px; }
+.sim-plan {
+  box-sizing: border-box; display: grid; grid-template-columns: 20px minmax(0, 1fr); column-gap: 12px; row-gap: 2px;
+  align-items: center; min-height: 52px; padding: 12px 14px; min-width: 0;
+  background: #fff; border: 1px solid var(--svc-line); border-radius: 10px; cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+.sim-plan input { grid-row: span 2; width: 18px; height: 18px; margin: 0; accent-color: var(--svc-green); cursor: inherit; }
+.sim-plan input:focus-visible { outline: 3px solid var(--svc-focus); outline-offset: 3px; }
+.sim-plan__name { font-size: 15px; font-weight: 600; color: var(--svc-ink); }
+.sim-plan__amt {
+  grid-column: 2; font-size: 14px; line-height: 1.4; color: var(--svc-ink-2);
+  font-variant-numeric: tabular-nums; overflow-wrap: anywhere;
+}
+.sim-plan__amt strong { font-weight: 700; color: var(--svc-ink); }
+.sim-plan__sep { display: none; }
+.sim-plan__more { display: block; }
+.sim-plan__amt:empty { display: none; }
+.sim-plan:hover:not(.is-disabled) { border-color: var(--svc-ink-2); }
+.sim-plan.is-selected { border: 2px solid var(--svc-green); padding: 11px 13px; background: #F1F6EF; }
+.sim-plan.is-disabled { opacity: 0.5; cursor: not-allowed; }
+.sim__note { margin: 0 0 20px; font-size: 13px; line-height: 1.5; color: var(--svc-muted); }
+.sim__note a { color: var(--svc-green); font-weight: 600; text-underline-offset: 2px; }
+.sim__note a:focus-visible { outline: 3px solid var(--svc-focus); outline-offset: 2px; border-radius: 2px; }
+.sim__cta {
+  box-sizing: border-box; display: flex; align-items: center; justify-content: center; width: 100%;
+  min-height: 52px; padding: 0 24px; border-radius: 10px; background: var(--svc-wa); color: #fff;
+  font-size: 16px; font-weight: 600; text-decoration: none;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+.sim__cta:hover { background: #17843F; }
+.sim__cta:focus-visible { outline: 3px solid var(--svc-focus); outline-offset: 2px; }
+.sim__cta:active { transform: translateY(1px); }
+@media (min-width: 560px) {
+  .sim-plan { grid-template-columns: 20px 9.5rem minmax(0, 1fr); }
+  .sim-plan input { grid-row: auto; }
+  .sim-plan__amt { grid-column: 3; text-align: right; }
+  .sim-plan__sep { display: inline; }
+  .sim-plan__more { display: inline; }
+  .sim__cta { display: inline-flex; width: auto; }
+}
+@media (min-width: 768px) {
+  .sim__wrap { padding-left: 32px; padding-right: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sim-plan, .sim__cta { transition: none; }
 }
