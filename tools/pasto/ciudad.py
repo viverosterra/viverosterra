@@ -1,4 +1,5 @@
 """Página /pasto-sintetico/envio/<slug>: pasto sintético con envío a una ciudad."""
+import mensualidades
 from common import (GAL, SECTION_CLOSE, breadcrumb_schema, buybar, drawer_and_toast, esc, faq_html, faq_schema,
                     footer, head, height_rule_html, jsonld, section_open, trust_band_html, wa)
 from data import MODELOS, SITE, ZONA_ESTADOS, ZONAS, estado_slug, landed_m2, zona_de
@@ -52,22 +53,31 @@ def hero_html(c, zona):
   </section>"""
 
 
-def totales_html(zona):
+def plazo_largo_html(total):
+    disponibles = [p for p in mensualidades.planes(total) if p["disponible"]]
+    if not disponibles:
+        return "—"
+    p = disponibles[-1]
+    return f'{p["plazo"]} × ≈ ${p["mensualidad"]:,}'
+
+
+def totales_html(zona, estado):
     m = barato()
     rows = "\n".join(
-        f'            <tr><th scope="row">{m2} m²</th><td>${total:,}</td><td>${round(total / m2)}/m²</td></tr>'
+        f'            <tr><th scope="row">{m2} m²</th><td>${total:,}</td><td>${round(total / m2)}/m²</td><td>{plazo_largo_html(total)}</td></tr>'
         for m2, total in totales(m, zona)
     )
     return f"""<p class="section__intro">Ejemplo con {esc(m["nombre"])}, el modelo más económico. Material más flete, IVA incluido.</p>
         <div class="table-scroll" tabindex="0" role="region" aria-label="Totales de ejemplo con envío">
           <table class="compare-table compare-table--compact num">
-            <thead><tr><th scope="col">Metros</th><th scope="col">Total con envío</th><th scope="col">Por m²</th></tr></thead>
+            <thead><tr><th scope="col">Metros</th><th scope="col">Total con envío</th><th scope="col">Por m²</th><th scope="col">En mensualidades</th></tr></thead>
             <tbody>
 {rows}
             </tbody>
           </table>
         </div>
-        <p class="spec-note">El flete exacto se confirma con tu código postal antes de pagar.</p>"""
+        <p class="spec-note">El flete exacto se confirma con tu código postal antes de pagar.</p>
+        <p class="spec-note">Mensualidades con tarjeta de crédito; el total en mensualidades es mayor que el de contado. Calcula tu plan en el <a href="/pasto-sintetico?estado={estado_slug(estado)}#cotizador">cotizador</a>.</p>"""
 
 
 def modelos_html(c, zona):
@@ -158,7 +168,7 @@ def build_ciudad(c):
 
   {section_open(1, "Precios", "totales-titulo", f"Cuánto cuesta con envío <em>a {esc(c['nombre'])}</em>", section_id="precios")}
         <p class="section__intro">{esc(c["intro"])}</p>
-        {totales_html(zona)}{SECTION_CLOSE}
+        {totales_html(zona, c["estado"])}{SECTION_CLOSE}
   {section_open(2, "Clima", "modelos-titulo", f"El pasto que conviene <em>en {esc(c['nombre'])}</em>", tint=True, section_id="modelos")}
         {modelos_html(c, zona)}{SECTION_CLOSE}
   {section_open(3, "Envío", "llegada-titulo", "Cómo te llega <em>el pedido</em>", section_id="envio")}

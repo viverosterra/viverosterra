@@ -72,6 +72,7 @@ def hero_html():
           <strong class="landed__price num" data-landed-value>${barato['rollo']}</strong><span class="landed__unit">/m²</span>
           <span class="landed__note" data-landed-note>+ envío desde $900 por rollo. Elige tu estado para ver el precio puesto.</span>
         </p>
+        <p class="spec-note">Paga en mensualidades con tarjeta de crédito. <a href="#cotizador">Calcula tu plan</a></p>
         <div class="hub-hero__actions">
           <a class="btn btn--primary" href="#modelos">Ver modelos con este precio</a>
           <a class="btn btn--ghost" href="#cotizador">Calcular mi pedido</a>
@@ -102,6 +103,7 @@ def card_html(m):
               <dl class="spec-card__specs num"><div><dt>Peso</dt><dd>{m['peso']} g/m²</dd></div><div><dt>Garantía</dt><dd>{gar}</dd></div></dl>
               <div class="spec-card__foot">
                 <p class="spec-card__price num">Desde <strong>${m['rollo']}</strong>/m² <span class="spec-card__landed" data-landed-slug="{m['slug']}"></span></p>
+                <p class="spec-card__pay">Paga en mensualidades con tarjeta</p>
                 <button class="spec-card__add" type="button" data-add="{m['slug']}" aria-label="Agregar {esc(m['nombre'])} a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>
