@@ -1,6 +1,6 @@
 // public/js/vt-mensualidades.js
 /* Precio en mensualidades con tarjeta de crédito. Misma fórmula que tools/pasto/mensualidades.py:
-   la comisión del plazo se suma a la estándar y el IVA va sobre ambas. Sin DOM. */
+   la tasa del plazo se suma a la base y el IVA va sobre ambas. Sin DOM. */
 (function (root) {
   'use strict';
   const TASA_BASE = 0.036;
