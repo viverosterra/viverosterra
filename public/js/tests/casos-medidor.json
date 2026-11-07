@@ -146,6 +146,48 @@
         "plan": "O 12 mensualidades de $5,246 con tarjeta de crédito (total $62,955).",
         "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 30.00 × 20.00 m = 600 m²\nEstimado de la web: $51,000 con IVA\nColonia: ___\nTe mando foto del área."
       }
+    },
+    {
+      "entrada": {
+        "largo": 3,
+        "ancho": 15.5,
+        "modo": "instalado",
+        "colonia": ""
+      },
+      "esperado": {
+        "m2": 46.5,
+        "precio": 120,
+        "desde": true,
+        "total": 5580,
+        "rotulo": "Instalado · desde",
+        "aviso": "",
+        "medida": "3.00 × 15.50 m = 46.5 m²",
+        "monto": "$5,580",
+        "calc": "46.5 m² × desde $120/m², con IVA. Al medir te damos el precio cerrado.",
+        "plan": "O 6 mensualidades de $1,069 con tarjeta de crédito (total $6,411).",
+        "mensaje": "Hola, quiero cotizar pasto San Agustín instalado.\nMedidas: 3.00 × 15.50 m = 46.5 m²\nEstimado de la web: desde $5,580 con IVA\nColonia: ___\nTe mando foto del área."
+      }
+    },
+    {
+      "entrada": {
+        "largo": 21,
+        "ancho": 3,
+        "modo": "solo",
+        "colonia": ""
+      },
+      "esperado": {
+        "m2": 63.0,
+        "precio": 85,
+        "desde": false,
+        "total": 5355,
+        "rotulo": "Solo pasto",
+        "aviso": "",
+        "medida": "21.00 × 3.00 m = 63 m²",
+        "monto": "$5,355",
+        "calc": "63 m² × $85/m², con IVA. La entrega se cotiza según tu colonia.",
+        "plan": "O 6 mensualidades de $1,026 con tarjeta de crédito (total $6,153).",
+        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 21.00 × 3.00 m = 63 m²\nEstimado de la web: $5,355 con IVA\nColonia: ___\nTe mando foto del área."
+      }
     }
   ]
 }

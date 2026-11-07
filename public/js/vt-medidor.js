@@ -3,15 +3,16 @@
    Precios y textos llegan en los data-* de cada opción, que escribe tools/site/componentes.py desde datos.py: aquí no
    vive ningún precio. Las mensualidades salen de vt-mensualidades.js (window.VTMensualidades), nunca de una fórmula
    propia. Mismo cálculo que componentes.calculo_medidor / textos_medidor (paridad en tests/casos-medidor.json).
-   Las funciones puras se exportan para node --test. */
+   El número de WhatsApp y el mensaje genérico de la página también llegan del HTML (data-wa y data-mensaje en
+   [data-vt-medidor]). Las funciones puras se exportan para node --test. */
 (function (root) {
   'use strict';
-  const WA = 'https://wa.me/528333268008?text=';
   const PLANO = { ancho: 360, alto: 190, x: 44, y: 56, minimo: 24 };
 
   const dinero = (n) => '$' + Math.round(n).toLocaleString('es-MX');
   const formatoM2 = (x) => x.toLocaleString('es-MX', { maximumFractionDigits: 1 });
   const n1 = (v) => v.toFixed(1);
+  const enlace = (wa, texto) => `https://wa.me/${wa}?text=${encodeURIComponent(texto)}`;
 
   function numero(valor) {
     const n = parseFloat(String(valor == null ? '' : valor).replace(',', '.'));
@@ -97,6 +98,7 @@
     const salida = (nombre) => caja.querySelector(`[data-vt-o="${nombre}"]`);
     const svg = caja.querySelector('svg');
     const modos = leerModos(caja);
+    const wa = caja.dataset.wa;
     function actualizar() {
       const largo = numero(campo('largo').value);
       const ancho = numero(campo('ancho').value);
@@ -106,6 +108,8 @@
         salida('calc').textContent = 'Escribe el largo y el ancho de tu patio.';
         salida('plan').textContent = '';
         salida('aviso').hidden = true;
+        // Sin medida válida, el botón manda el mensaje genérico de la página: nunca un estimado viejo.
+        salida('cta').setAttribute('href', enlace(wa, caja.dataset.mensaje));
         return;
       }
       const r = calcular(largo, ancho, elegido.value, modos);
@@ -118,14 +122,14 @@
       salida('plan').textContent = t.plan;
       salida('aviso').textContent = r.aviso;
       salida('aviso').hidden = !r.aviso;
-      salida('cta').setAttribute('href', WA + encodeURIComponent(t.mensaje));
+      salida('cta').setAttribute('href', enlace(wa, t.mensaje));
     }
     caja.addEventListener('input', actualizar);
     caja.addEventListener('change', actualizar);
     actualizar();
   }
 
-  const api = { numero, calcular, textos, plano };
+  const api = { numero, calcular, textos, plano, enlace };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
     return;

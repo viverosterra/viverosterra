@@ -94,6 +94,8 @@ class ReglasDelDuenoTest(unittest.TestCase):
                     continue
                 if destino.isdigit():
                     ok = destino == NUMERO
+                elif destino == "${wa}" and "dataset.wa" in fuente:  # vt-medidor.js: data-wa lo escribe datos.py
+                    ok = True
                 else:  # wa.me/${PHONE} o wa.me/52${WA}: la constante del archivo debe ser el número real
                     ok = NUMERO[2:] in fuente
                 if not ok:

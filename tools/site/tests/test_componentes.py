@@ -112,6 +112,23 @@ class MedidorTest(unittest.TestCase):
             self.assertIn(f'<label for="prueba-{campo}">', html)
         self.assertNotIn("<form", html)
 
+    def test_medidor_lee_numero_y_mensaje_de_la_pagina_y_anuncia_el_resultado(self):
+        html = c.medidor("prueba", "home", mensaje=datos.MENSAJES["pasto-natural"])
+        self.assertIn(f'data-wa="{datos.TELEFONO_WA}"', html)
+        self.assertIn(f'data-mensaje="{c.esc(datos.con_firma(datos.MENSAJES["pasto-natural"]))}"', html)
+        self.assertIn('<div class="vt-etiqueta vt-medidor__res" role="status">', html)
+        self.assertEqual(html.count("aria-live"), 0)
+
+
+class EscapeTest(unittest.TestCase):
+    def test_bloque_y_figura_escapan_atributos(self):
+        html = c.bloque(1, "R", 'a"b', "T", "", id_seccion='c"d')
+        self.assertIn('aria-labelledby="a&quot;b"', html)
+        self.assertIn('id="c&quot;d"', html)
+        self.assertIn('<h2 id="a&quot;b">', html)
+        f = c.figura({"src": "/x.webp", "ancho": '1"', "alto": "<2", "alt": "x", "numero": 1, "lugar": "l", "etapa": "e"})
+        self.assertIn('width="1&quot;" height="&lt;2"', f)
+
 
 if __name__ == "__main__":
     unittest.main()

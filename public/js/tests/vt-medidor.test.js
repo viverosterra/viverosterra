@@ -4,7 +4,7 @@ const assert = require('node:assert');
 const path = require('node:path');
 const fs = require('node:fs');
 const M = require('../vt-mensualidades.js');
-const { numero, calcular, textos, plano } = require('../vt-medidor.js');
+const { numero, calcular, textos, plano, enlace } = require('../vt-medidor.js');
 
 const CASOS = JSON.parse(fs.readFileSync(path.join(__dirname, 'casos-medidor.json'), 'utf8'));
 
@@ -43,4 +43,27 @@ test('el mensaje es texto plano de cinco renglones y termina pidiendo la foto', 
   const renglones = textos(8, 6, r, '', M).mensaje.split('\n');
   assert.strictEqual(renglones.length, 5);
   assert.strictEqual(renglones[4], 'Te mando foto del área.');
+});
+
+test('enlace arma wa.me con el número que le da la página y codifica todo el texto', () => {
+  assert.strictEqual(enlace('528333268008', 'Hola, ñ\nColonia: ___'),
+    'https://wa.me/528333268008?text=Hola%2C%20%C3%B1%0AColonia%3A%20___');
+});
+
+test('sin número fijo en el archivo: el número llega de data-wa', () => {
+  const fuente = fs.readFileSync(path.join(__dirname, '..', 'vt-medidor.js'), 'utf8');
+  assert.doesNotMatch(fuente, /\d{10,}/);
+  assert.match(fuente, /dataset\.wa/);
+  assert.match(fuente, /dataset\.mensaje/);
+});
+
+test('hay casos de paridad en la frontera de .5 de la mensualidad (Math.round frente a round de Python)', () => {
+  const frontera = CASOS.casos.filter(({ entrada }) => {
+    const r = calcular(entrada.largo, entrada.ancho, entrada.modo, CASOS.modos);
+    const d = M.plazosDisponibles(r.total);
+    if (!d.length) return false;
+    const u = d[d.length - 1];
+    return (M.totalAPlazos(r.total, u) / u) % 1 === 0.5;
+  });
+  assert.ok(frontera.length >= 2);
 });

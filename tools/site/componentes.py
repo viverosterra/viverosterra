@@ -81,19 +81,19 @@ def migas(items):
 def bloque(numero, rotulo, id_titulo, titulo, cuerpo, lede=None, tinte=False, id_seccion=None):
     """Sección numerada con encabezado a dos columnas (título y entrada)."""
     clase = "vt-bloque vt-bloque--tinte" if tinte else "vt-bloque"
-    ident = f' id="{id_seccion}"' if id_seccion else ""
+    ident = f' id="{esc(id_seccion)}"' if id_seccion else ""
     entrada = f'<p class="vt-lede">{lede}</p>' if lede else ""
-    return (f'<section class="{clase}"{ident} aria-labelledby="{id_titulo}"><div class="vt-wrap">'
+    return (f'<section class="{clase}"{ident} aria-labelledby="{esc(id_titulo)}"><div class="vt-wrap">'
             f'<p class="vt-bloque__no"><b>{numero:02d}</b>{rotulo}</p>'
-            f'<div class="vt-bloque__cabeza"><h2 id="{id_titulo}">{titulo}</h2>{entrada}</div>{cuerpo}</div></section>')
+            f'<div class="vt-bloque__cabeza"><h2 id="{esc(id_titulo)}">{titulo}</h2>{entrada}</div>{cuerpo}</div></section>')
 
 
 def bloque_dos(numero, rotulo, id_titulo, titulo, izquierda, derecha, tinte=False, id_seccion=None):
     """Sección numerada a dos columnas: título y apoyo a la izquierda, contenido a la derecha."""
     clase = "vt-bloque vt-bloque--tinte" if tinte else "vt-bloque"
-    ident = f' id="{id_seccion}"' if id_seccion else ""
-    return (f'<section class="{clase}"{ident} aria-labelledby="{id_titulo}"><div class="vt-wrap vt-dos"><div>'
-            f'<p class="vt-bloque__no"><b>{numero:02d}</b>{rotulo}</p><h2 id="{id_titulo}">{titulo}</h2>{izquierda}</div>'
+    ident = f' id="{esc(id_seccion)}"' if id_seccion else ""
+    return (f'<section class="{clase}"{ident} aria-labelledby="{esc(id_titulo)}"><div class="vt-wrap vt-dos"><div>'
+            f'<p class="vt-bloque__no"><b>{numero:02d}</b>{rotulo}</p><h2 id="{esc(id_titulo)}">{titulo}</h2>{izquierda}</div>'
             f'<div>{derecha}</div></div></section>')
 
 
@@ -129,8 +129,8 @@ def figura(f, principal=False):
     principal carga con prioridad; las demás son lazy."""
     carga = 'loading="eager" fetchpriority="high"' if principal else 'loading="lazy"'
     srcset = f' srcset="{esc(f["srcset"])}" sizes="{esc(f["sizes"])}"' if f.get("srcset") else ""
-    return (f'<figure class="vt-fig"><div class="vt-fig__marco"><img src="{esc(f["src"])}"{srcset} width="{f["ancho"]}" '
-            f'height="{f["alto"]}" {carga} decoding="async" alt="{esc(f["alt"])}"></div>'
+    return (f'<figure class="vt-fig"><div class="vt-fig__marco"><img src="{esc(f["src"])}"{srcset} width="{esc(f["ancho"])}" '
+            f'height="{esc(f["alto"])}" {carga} decoding="async" alt="{esc(f["alt"])}"></div>'
             f'<figcaption><span><b>Fig. {f["numero"]:02d}</b> · {f["lugar"]}</span><span>{f["etapa"]}</span></figcaption>'
             f'</figure>')
 
@@ -239,8 +239,9 @@ def garantia(g):
     """g: titulo, id_titulo, numero, rotulo, grande, unidad, resumen, puntos (texto, si_aplica), pie."""
     no_aplica = ' class="vt-checks__no"'
     puntos = "".join(f'<li{"" if ok else no_aplica}>{t}</li>' for t, ok in g["puntos"])
-    return (f'<section class="vt-bloque vt-bloque--tinte" aria-labelledby="{g["id_titulo"]}"><div class="vt-wrap vt-dos">'
-            f'<div><p class="vt-bloque__no"><b>{g["numero"]:02d}</b>{g["rotulo"]}</p><h2 id="{g["id_titulo"]}">'
+    ident = esc(g["id_titulo"])
+    return (f'<section class="vt-bloque vt-bloque--tinte" aria-labelledby="{ident}"><div class="vt-wrap vt-dos">'
+            f'<div><p class="vt-bloque__no"><b>{g["numero"]:02d}</b>{g["rotulo"]}</p><h2 id="{ident}">'
             f'{g["titulo"]}</h2><p class="vt-grande">{g["grande"]}<small> {g["unidad"]}</small></p>'
             f'<p class="vt-promesa">{g["resumen"]}</p></div><div><ul class="vt-checks">{puntos}</ul>'
             f'<p class="vt-promesa">{g["pie"]}</p></div></div></section>')
@@ -387,17 +388,20 @@ def _opcion_medidor(prefijo, clave, m, elegido):
             f'data-texto="{esc(m["texto"])}" data-rotulo="{esc(m["rotulo"])}"{minimo}{marcado}></label>')
 
 
-def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado"):
+def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
     """Medidor: largo × ancho → plano a escala → etiqueta con el estimado y mensualidades → WhatsApp con la medida.
     Sin JavaScript queda el cálculo inicial y un enlace válido. vt-medidor.js lo actualiza con los data-* de cada
-    opción: los precios no viven en el JS."""
+    opción: los precios no viven en el JS. data-wa (número) y data-mensaje (mensaje genérico de la página, con firma)
+    le dan el destino; sin medida válida, el botón manda el genérico y nunca un estimado viejo."""
+    generico = datos.con_firma(mensaje or datos.MENSAJES["general"])
     r = calculo_medidor(largo, ancho, modo)
     t = textos_medidor(largo, ancho, r)
     opciones = "".join(_opcion_medidor(prefijo, k, m, modo) for k, m in MODOS_MEDIDOR.items())
     campo = ('<div class="vt-campo"><label for="{p}-{n}">{t}</label><div class="vt-control"><input id="{p}-{n}" '
              'data-vt-campo="{n}" inputmode="decimal" value="{v}" autocomplete="off"><span>m</span></div></div>')
     return (
-        f'<div class="vt-medidor" data-vt-medidor><div class="vt-medidor__form" role="group" aria-label="Medidor de pasto">'
+        f'<div class="vt-medidor" data-vt-medidor data-wa="{esc(datos.TELEFONO_WA)}" data-mensaje="{esc(generico)}">'
+        f'<div class="vt-medidor__form" role="group" aria-label="Medidor de pasto">'
         f'<div class="vt-medidor__medidas">{campo.format(p=prefijo, n="largo", t="Largo", v=largo)}'
         f'<span class="vt-medidor__x" aria-hidden="true">×</span>{campo.format(p=prefijo, n="ancho", t="Ancho", v=ancho)}'
         f'</div><fieldset class="vt-opciones"><legend>¿Qué necesitas?</legend>{opciones}</fieldset>'
@@ -406,9 +410,9 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado"):
         f'autocomplete="off"></div></div></div>'
         f'<figure class="vt-fig vt-medidor__plano">{svg_plano(largo, ancho, r["m2"])}<figcaption><span><b>Vista en planta'
         f'</b> · escala ajustada a tu medida</span><span>Cotas en metros</span></figcaption></figure>'
-        f'<div class="vt-etiqueta vt-medidor__res"><p class="vt-etiqueta__cod"><span>Tu etiqueta</span><span>Estimado'
+        f'<div class="vt-etiqueta vt-medidor__res" role="status"><p class="vt-etiqueta__cod"><span>Tu etiqueta</span><span>Estimado'
         f'</span></p><p class="vt-etiqueta__nombre" data-vt-o="m2">{t["medida"]}</p><p class="vt-etiqueta__sci">'
-        f'Stenotaphrum secundatum</p><p class="vt-etiqueta__precio" aria-live="polite"><small data-vt-o="rotulo">'
+        f'Stenotaphrum secundatum</p><p class="vt-etiqueta__precio"><small data-vt-o="rotulo">'
         f'{r["rotulo"]}</small><b data-vt-o="monto">{t["monto"]}</b><span>con IVA</span></p>'
         f'<p class="vt-medidor__calc" data-vt-o="calc">{t["calc"]}</p>'
         f'<p class="vt-medidor__aviso" data-vt-o="aviso"{"" if r["aviso"] else " hidden"}>{r["aviso"]}</p>'
