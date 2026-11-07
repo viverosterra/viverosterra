@@ -1,0 +1,151 @@
+{
+  "modos": {
+    "instalado": {
+      "precio": 120,
+      "desde": true,
+      "texto": "pasto San Agustín instalado",
+      "rotulo": "Instalado · desde"
+    },
+    "solo": {
+      "precio": 85,
+      "desde": false,
+      "texto": "solo el pasto San Agustín (yo lo instalo)",
+      "rotulo": "Solo pasto"
+    },
+    "mayoreo": {
+      "precio": 60,
+      "desde": true,
+      "minimo": 500,
+      "texto": "pasto San Agustín de mayoreo (solo pasto)",
+      "rotulo": "Mayoreo · desde"
+    }
+  },
+  "casos": [
+    {
+      "entrada": {
+        "largo": 8,
+        "ancho": 6,
+        "modo": "instalado",
+        "colonia": ""
+      },
+      "esperado": {
+        "m2": 48.0,
+        "precio": 120,
+        "desde": true,
+        "total": 5760,
+        "rotulo": "Instalado · desde",
+        "aviso": "",
+        "medida": "8.00 × 6.00 m = 48 m²",
+        "monto": "$5,760",
+        "calc": "48 m² × desde $120/m², con IVA. Al medir te damos el precio cerrado.",
+        "plan": "O 6 mensualidades de $1,103 con tarjeta de crédito (total $6,618).",
+        "mensaje": "Hola, quiero cotizar pasto San Agustín instalado.\nMedidas: 8.00 × 6.00 m = 48 m²\nEstimado de la web: desde $5,760 con IVA\nColonia: ___\nTe mando foto del área."
+      }
+    },
+    {
+      "entrada": {
+        "largo": 10,
+        "ancho": 10,
+        "modo": "mayoreo",
+        "colonia": "Lomas de Rosales"
+      },
+      "esperado": {
+        "m2": 100.0,
+        "precio": 85,
+        "desde": false,
+        "total": 8500,
+        "rotulo": "Solo pasto (mayoreo desde 500 m²)",
+        "aviso": "El mayoreo aplica desde 500 m². Te faltan 400 m²; mientras, calculamos a $85/m² (solo pasto).",
+        "medida": "10.00 × 10.00 m = 100 m²",
+        "monto": "$8,500",
+        "calc": "100 m² × $85/m², con IVA. La entrega se cotiza según tu colonia.",
+        "plan": "O 6 mensualidades de $1,628 con tarjeta de crédito (total $9,766).",
+        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 10.00 × 10.00 m = 100 m²\nEstimado de la web: $8,500 con IVA\nColonia: Lomas de Rosales\nTe mando foto del área."
+      }
+    },
+    {
+      "entrada": {
+        "largo": 5,
+        "ancho": 4,
+        "modo": "solo",
+        "colonia": ""
+      },
+      "esperado": {
+        "m2": 20.0,
+        "precio": 85,
+        "desde": false,
+        "total": 1700,
+        "rotulo": "Solo pasto",
+        "aviso": "",
+        "medida": "5.00 × 4.00 m = 20 m²",
+        "monto": "$1,700",
+        "calc": "20 m² × $85/m², con IVA. La entrega se cotiza según tu colonia.",
+        "plan": "Mensualidades con tarjeta de crédito en cotizaciones desde $2,000.",
+        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 5.00 × 4.00 m = 20 m²\nEstimado de la web: $1,700 con IVA\nColonia: ___\nTe mando foto del área."
+      }
+    },
+    {
+      "entrada": {
+        "largo": 25,
+        "ancho": 24,
+        "modo": "mayoreo",
+        "colonia": ""
+      },
+      "esperado": {
+        "m2": 600.0,
+        "precio": 60,
+        "desde": true,
+        "total": 36000,
+        "rotulo": "Mayoreo · desde",
+        "aviso": "",
+        "medida": "25.00 × 24.00 m = 600 m²",
+        "monto": "$36,000",
+        "calc": "600 m² × desde $60/m², con IVA. Al medir te damos el precio cerrado.",
+        "plan": "O 12 mensualidades de $3,703 con tarjeta de crédito (total $44,439).",
+        "mensaje": "Hola, quiero cotizar pasto San Agustín de mayoreo (solo pasto).\nMedidas: 25.00 × 24.00 m = 600 m²\nEstimado de la web: desde $36,000 con IVA\nColonia: ___\nTe mando foto del área."
+      }
+    },
+    {
+      "entrada": {
+        "largo": 12.5,
+        "ancho": 8.3,
+        "modo": "instalado",
+        "colonia": "Altavista"
+      },
+      "esperado": {
+        "m2": 103.8,
+        "precio": 120,
+        "desde": true,
+        "total": 12456,
+        "rotulo": "Instalado · desde",
+        "aviso": "",
+        "medida": "12.50 × 8.30 m = 103.8 m²",
+        "monto": "$12,456",
+        "calc": "103.8 m² × desde $120/m², con IVA. Al medir te damos el precio cerrado.",
+        "plan": "O 6 mensualidades de $2,385 con tarjeta de crédito (total $14,311).",
+        "mensaje": "Hola, quiero cotizar pasto San Agustín instalado.\nMedidas: 12.50 × 8.30 m = 103.8 m²\nEstimado de la web: desde $12,456 con IVA\nColonia: Altavista\nTe mando foto del área."
+      }
+    },
+    {
+      "entrada": {
+        "largo": 30,
+        "ancho": 20,
+        "modo": "solo",
+        "colonia": ""
+      },
+      "esperado": {
+        "m2": 600.0,
+        "precio": 85,
+        "desde": false,
+        "total": 51000,
+        "rotulo": "Solo pasto",
+        "aviso": "",
+        "medida": "30.00 × 20.00 m = 600 m²",
+        "monto": "$51,000",
+        "calc": "600 m² × $85/m², con IVA. La entrega se cotiza según tu colonia.",
+        "plan": "O 12 mensualidades de $5,246 con tarjeta de crédito (total $62,955).",
+        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 30.00 × 20.00 m = 600 m²\nEstimado de la web: $51,000 con IVA\nColonia: ___\nTe mando foto del área."
+      }
+    }
+  ]
+}
