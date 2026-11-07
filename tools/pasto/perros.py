@@ -79,9 +79,8 @@ def build_perros():
         canonical=URL, og_image=f"{SITE}{IMG}.webp", og_type="article",
         preload_img=f"{IMG}-sm.webp", preload_srcset=f"{IMG}-sm.webp 560w, {IMG}.webp 960w", ld=ld,
     )
-    return "".join([base.replace('<a class="skip-link" href="#comprar">Ir al cotizador</a>',
-                                 '<a class="skip-link" href="#elegir">Ir al contenido</a>'), f"""
-<main>
+    return "".join([base, f"""
+<main id="main">
   <div class="wrap">
     <nav class="crumbs" aria-label="Ruta de navegación">
       <ol>

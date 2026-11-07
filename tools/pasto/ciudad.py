@@ -151,9 +151,8 @@ def build_ciudad(c):
         preload_img=f"{GAL}/obra-proyecto-02-sm.webp", preload_srcset=f"{GAL}/obra-proyecto-02-sm.webp 560w, {GAL}/obra-proyecto-02.webp 960w",
         ld=schema(c, zona, url, faqs),
     )
-    return "".join([base.replace('<a class="skip-link" href="#comprar">Ir al cotizador</a>',
-                                 '<a class="skip-link" href="#modelos">Ir a los modelos</a>'), f"""
-<main>
+    return "".join([base, f"""
+<main id="main">
   <div class="wrap">
     <nav class="crumbs" aria-label="Ruta de navegación">
       <ol>

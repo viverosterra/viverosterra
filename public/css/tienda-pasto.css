@@ -780,3 +780,9 @@ a.quote-btn { text-decoration: none; }
   .plan input { align-self: start; margin-top: 1px; }
 }
 @media (prefers-reduced-motion: reduce) { .plan { transition: none; } }
+
+/* Etapa 1: barra contextual de la tienda debajo del menú principal del shell (terra.css). */
+.site-header--sub { top: var(--vt-head-h, 56px); z-index: 800; }
+.site-header--sub .site-header__bar { height: 48px; justify-content: flex-end; }
+@media (min-width: 1100px) { .site-header--sub .site-header__bar { justify-content: space-between; } }
+.quote-btn__count[data-empty="true"] { display: none; }

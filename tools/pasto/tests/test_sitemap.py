@@ -32,3 +32,9 @@ class SitemapTest(unittest.TestCase):
         self.assertNotIn("2020-01-01", xml)
         self.assertIn("<changefreq>weekly</changefreq><priority>0.9</priority>", xml)
         self.assertTrue(xml.rstrip().endswith("</urlset>"))
+
+    def test_conservar_no_toca_lastmod_existente(self):
+        sitemap.upsert(["https://x.com/a", "https://x.com/c"], lastmod="2026-10-05", conservar=True)
+        xml = self.tmp.read_text(encoding="utf-8")
+        self.assertIn("<loc>https://x.com/a</loc><lastmod>2020-01-01</lastmod>", xml)
+        self.assertIn("<loc>https://x.com/c</loc><lastmod>2026-10-05</lastmod>", xml)
