@@ -239,6 +239,7 @@
 .vt-portada__foto .vt-fig__marco{aspect-ratio:4/3}
 .vt-portada .vt-datos{margin-top:28px}
 .vt-portada .vt-crumbs{margin:-22px calc(var(--vt-gutter) * -1) 16px;background:transparent}
+.vt-portada .vt-crumbs ol{padding-inline:var(--vt-gutter)}
 @media (min-width:1024px){
   .vt-portada{padding-top:48px}
   .vt-portada__grid{grid-template-columns:7fr 5fr;gap:48px;align-items:start}
@@ -290,6 +291,7 @@
 .vt-obras{display:grid;gap:20px}
 .vt-obras .vt-fig__marco{aspect-ratio:4/3}
 .vt-obras>:first-child .vt-fig__marco{aspect-ratio:16/9}
+@media (min-width:560px) and (max-width:899px){.vt-obras{grid-template-columns:repeat(2,minmax(0,1fr))}.vt-obras>:first-child{grid-column:1 / -1}}
 @media (min-width:900px){
   .vt-obras{grid-template-columns:repeat(6,minmax(0,1fr));gap:24px}
   .vt-obras>*{grid-column:span 2}
@@ -360,6 +362,7 @@
 .vt-pagina main .vt-medidor__calc,.vt-pagina main .vt-medidor__plan{margin-top:8px;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
 .vt-medidor .vt-btn{width:100%;margin-top:14px}
 .vt-medidor .vt-etiqueta{width:100%}
+@media (min-width:640px) and (max-width:1023px){.vt-medidor{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.vt-medidor__form{grid-row:span 2}}
 @media (min-width:1024px){.vt-medidor{grid-template-columns:4fr 4fr 4fr;gap:32px;align-items:start}}
 
 /* ---------- precios con columna Unidad y mensualidades ---------- */
@@ -426,7 +429,7 @@
 .vt-nota__t{display:block;margin-bottom:4px;font-size:var(--vt-text-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-soil)}
 .vt-pagina main .vt-nota p{margin:0;font-family:var(--vt-font-serif);font-style:italic;font-size:18px;line-height:1.4;color:var(--vt-ink-2)}
 .vt-nota__firma{display:block;margin-top:6px;font-size:var(--vt-text-xs);color:var(--vt-muted)}
-.vt-grande{margin:0;font-size:clamp(4rem,3rem + 4vw,7rem);font-weight:800;line-height:.9;font-variant-numeric:tabular-nums;font-variation-settings:"wdth" var(--vt-wdth-tight)}
+.vt-pagina main .vt-grande{margin:0 0 4px;font-size:clamp(4rem,3rem + 4vw,7rem);font-weight:800;line-height:.9;font-variant-numeric:tabular-nums;font-variation-settings:"wdth" var(--vt-wdth-tight)}
 .vt-grande small{font-size:.32em;font-weight:700;color:var(--vt-soil)}
 .vt-checks{display:grid;gap:10px;list-style:none}
 .vt-checks li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
