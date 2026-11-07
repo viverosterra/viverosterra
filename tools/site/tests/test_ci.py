@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-WORKFLOW = Path(__file__).resolve().parents[3] / ".github" / "workflows" / "sitio.yml"
+WORKFLOW = Path(__file__).resolve().parents[1] / "ci" / "sitio.yml"  # pendiente: volver a .github/workflows/ cuando el token tenga permiso de workflows
 
 
 class CiTest(unittest.TestCase):
