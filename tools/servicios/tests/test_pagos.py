@@ -30,9 +30,12 @@ class PagoNotaTest(unittest.TestCase):
         cfg = {k: v for k, v in self.cfg().items() if k != "pago_nota"}
         self.assertNotIn("svc-hero__pay", hero.hero_html(cfg))
 
-    def test_solo_tres_paginas_con_pago_nota(self):
+    def test_solo_dos_paginas_con_pago_nota(self):
         con = sorted(slug for slug, cfg in PAGES.items() if cfg.get("pago_nota"))
-        self.assertEqual(con, ["diseno-jardines-tampico", "pasto-en-rollo-tampico", "sistema-riego-tampico"])
+        self.assertEqual(con, ["diseno-jardines-tampico", "sistema-riego-tampico"])
+
+    def test_paginas_con_plantilla_fuera_de_los_parches(self):
+        self.assertNotIn("pasto-en-rollo-tampico", PAGES)
 
 
 class PlanesDisenoTest(unittest.TestCase):

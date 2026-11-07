@@ -12,6 +12,7 @@ import shell
 
 PAGINAS = (
     ("/", "index.html", "inicio", "inicio"),
+    ("/pasto-en-rollo-tampico", "pasto-en-rollo-tampico/index.html", "servicio", "pasto_en_rollo"),
 )
 
 

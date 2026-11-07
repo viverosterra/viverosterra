@@ -11,8 +11,8 @@ from html import escape
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2] / "public"
+# /pasto-en-rollo-tampico trae su simulador desde tools/site/plantillas/servicio.py (Etapa 2a).
 PAGES = (
-    ("pasto-en-rollo-tampico", "pasto en rollo instalado", 12000),
     ("sistema-riego-tampico", "un sistema de riego", 18000),
     ("diseno-jardines-tampico", "el diseño de mi jardín", 6500),
 )
