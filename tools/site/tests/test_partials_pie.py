@@ -29,7 +29,7 @@ class PieTest(unittest.TestCase):
     def test_correo_en_contacto(self):
         self.assertEqual(datos.CORREO_FORMULARIOS, "viverosterra@hotmail.com")
         self.assertIn(f'<li><a class="vt-foot__correo" href="mailto:{datos.CORREO_FORMULARIOS}">'
-                      f'{datos.CORREO_FORMULARIOS}</a></li>', self.f)
+                      f'{datos.CORREO_FORMULARIOS.replace("@", "@<wbr>")}</a></li>', self.f)
 
     def test_barra_segun_contexto(self):
         self.assertIn("data-vt-bar", self.f)

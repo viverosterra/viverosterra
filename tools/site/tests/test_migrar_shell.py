@@ -162,6 +162,19 @@ class LimpiezaYMedicionTest(unittest.TestCase):
         self.assertIn(".card{", html)
         self.assertIn("main{flex:1", html)
 
+    def test_boton_flotante_fab_de_las_paginas_de_plantas(self):
+        pagina = (
+            "<html><head><style>.fab{position:fixed;bottom:20px}\n.fab:hover{transform:scale(1.1)}\n.card{color:red}</style>"
+            "</head><body><main><h1>Palmas</h1></main>"
+            '<a class="fab" href="https://wa.me/528333268008?text=Hola" target="_blank" rel="noopener" aria-label="WhatsApp">'
+            "<svg></svg></a></body></html>"
+        )
+        cuenta = {}
+        html = migrar_shell.migrar(pagina, "/palmas-tropicales-tampico", cuenta)
+        self.assertNotIn('class="fab"', html)
+        self.assertNotIn(".fab", html)
+        self.assertIn(".card{color:red}", html)
+
 
 class MigasBlogTest(unittest.TestCase):
     def test_articulo_recibe_ruta_visible_al_inicio_del_main(self):

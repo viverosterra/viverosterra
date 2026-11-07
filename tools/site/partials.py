@@ -199,11 +199,12 @@ def footer(ctx):
     columnas = "\n".join(_columna(titulo, enlaces) for titulo, enlaces in PIE)
     celdas = "".join(f"<div><dt>{esc(t)}</dt><dd>{esc(v)}<small>{esc(s)}</small></dd></div>" for t, v, s in DATOS_PIE)
     redes = "".join(f'<a href="{url}" target="_blank" rel="noopener">{esc(nombre)}</a>' for nombre, url in datos.REDES)
+    correo_visible = datos.CORREO_FORMULARIOS.replace("@", "@<wbr>")  # a 375 px corta después de la arroba
     contacto = (
         '<div class="vt-foot__col"><h2 class="vt-foot__h">Contacto</h2><ul>'
         f'<li><a data-cta="{tipo}:footer" href="{wa}" target="_blank" rel="noopener">WhatsApp {datos.TELEFONO_VISIBLE}</a></li>'
         f'<li><a data-cta="{tipo}:footer" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a></li>'
-        f'<li><a class="vt-foot__correo" href="mailto:{datos.CORREO_FORMULARIOS}">{datos.CORREO_FORMULARIOS}</a></li>'
+        f'<li><a class="vt-foot__correo" href="mailto:{datos.CORREO_FORMULARIOS}">{correo_visible}</a></li>'
         f'<li><a href="{datos.MAPS_URL}" target="_blank" rel="noopener">Cómo llegar</a></li></ul>'
         f'<p class="vt-foot__promesa">{esc(datos.PROMESA_COMPLETA)}</p></div>'
     )

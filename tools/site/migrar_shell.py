@@ -1,6 +1,6 @@
 """Migración única de las páginas escritas a mano al shell compartido (Etapa 1).
 
-Quita el menú viejo (terra-nav o header sticky del blog), los pies, el botón flotante de WhatsApp, la barra móvil de
+Quita el menú viejo (terra-nav o header sticky del blog), los pies, los botones flotantes de WhatsApp (wa-float y fab), la barra móvil de
 la home, el gtag duplicado, las meta heredadas, los favicons sueltos, nav-scroll.js y los eventos sueltos clic_*;
 protege el único script de menú sin guarda; inserta las regiones vacías del shell y envuelve el contenido en
 <main id="main">. Después, tools/site/build.py llena las regiones. Las páginas que ya tienen regiones no se tocan.
@@ -116,6 +116,8 @@ def migrar(html, ruta=None, cuenta=None):
         quitar_header_viejo,
         lambda h: quitar_todos(h, r"<footer\b"),
         lambda h: quitar_todos(h, r'<a\b[^>]*class="[^"]*\bwa-float\b'),
+        # Botón flotante de WhatsApp de las páginas de plantas y árboles (lo reemplaza la barra móvil del shell).
+        lambda h: quitar_todos(h, r'<a\b[^>]*class="fab"'),
         lambda h: quitar_elemento(h, r'<div class="vt-stickybar"'),
     ):
         html, fragmentos = paso(html)
