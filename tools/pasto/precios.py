@@ -2,15 +2,13 @@
 
 Los precios de pasto sintético salen de data.py; el resto son los datos oficiales confirmados por el dueño.
 """
-from common import (SECTION_CLOSE, breadcrumb_schema, esc, faq_html, faq_schema, head, jsonld, section_open, wa)
+from common import (SECTION_CLOSE, breadcrumb_schema, esc, faq_html, faq_schema, footer, head, jsonld, section_open, wa)
 from data import MODELOS, PHONE_DISPLAY, SITE, UPDATED, WA_NUMBER
 from mensualidades import PLAZOS, minimo_de, total_a_plazos
 
 URL = f"{SITE}/precios"
 BUSINESS_ID = f"{SITE}/#negocio"
 IMG = "/img/precios/pasto-rollo-jardin"
-MAPS = "https://maps.app.goo.gl/xC4XGL2WeucAjGwAA"
-APPLE_MAPS = "https://maps.apple.com/?daddr=22.2777575,-97.8433341&amp;q=Viveros%20Terra"
 
 PASTO_M2, PASTO_INSTALADO = 85, 120
 MANTENIMIENTO = 750
@@ -172,57 +170,6 @@ def hero_html():
   </section>"""
 
 
-HEADER = """<header class="site-header">
-  <div class="wrap site-header__bar">
-    <a class="site-header__logo" href="/" aria-label="Viveros Terra, inicio"><img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" width="140" height="36"></a>
-    <nav class="site-nav" aria-label="Principal">
-      <a href="/pasto-en-rollo-tampico">Pasto en rollo</a>
-      <a href="/pasto-sintetico">Pasto sintético</a>
-      <a href="/plantas-palmas-arboles-tampico">Plantas y palmas</a>
-      <a href="/diseno-jardines-tampico">Diseño</a>
-      <a href="/mantenimiento-jardines-tampico">Mantenimiento</a>
-    </nav>
-    <a class="quote-btn" href="{wa}" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg><span>Cotizar</span></a>
-  </div>
-</header>
-"""
-
-
-def footer():
-    return f"""<footer class="site-footer">
-  <div class="wrap">
-    <div class="site-footer__grid">
-      <div>
-        <img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" width="130" height="34" loading="lazy">
-        <p>Vivero, pasto en rollo y servicios de jardinería en Tampico, Madero y Altamira desde 2007.</p>
-        <p><a href="{MAPS}" target="_blank" rel="noopener">Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional, 89510 Cd. Madero, Tamps.</a><br><a href="{MAPS}" target="_blank" rel="noopener">Google Maps</a> · <a href="{APPLE_MAPS}" target="_blank" rel="noopener">Apple Maps</a></p>
-      </div>
-      <div>
-        <h3>Servicios</h3>
-        <ul>
-          <li><a href="/pasto-en-rollo-tampico">Pasto en rollo</a></li>
-          <li><a href="/mantenimiento-jardines-tampico">Mantenimiento</a></li>
-          <li><a href="/diseno-jardines-tampico">Diseño de jardines</a></li>
-          <li><a href="/sistema-riego-tampico">Riego automático</a></li>
-          <li><a href="/pasto-sintetico-tampico">Pasto sintético en Tampico</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Contacto</h3>
-        <ul>
-          <li><a href="{wa('Hola, tengo una pregunta sobre precios')}" target="_blank" rel="noopener">WhatsApp {PHONE_DISPLAY}</a></li>
-          <li><a href="tel:+528333268008">Llamar {PHONE_DISPLAY}</a></li>
-          <li>Lun a vie 9 a 18 h · Sáb 9 a 14 h</li>
-          <li><a href="/politicas">Envíos, devoluciones y garantías</a></li>
-        </ul>
-      </div>
-    </div>
-    <p class="site-footer__legal">© 2026 Viveros Terra · Cd. Madero, Tamaulipas, México · Actualizado {UPDATED}</p>
-  </div>
-</footer>
-"""
-
-
 def offer(name, price, url, unit=None):
     o = {"@type": "Offer", "name": name, "price": str(price), "priceCurrency": "MXN", "url": f"{SITE}{url}",
          "seller": {"@id": BUSINESS_ID}}
@@ -262,14 +209,12 @@ def build_precios():
                     f"diseño desde $3,000 y pasto sintético desde ${SINTETICO_MIN}/m². Precios con IVA en Tampico, Madero y Altamira.",
         canonical=URL, og_image=f"{SITE}{IMG}.webp", og_type="website",
         preload_img=f"{IMG}-sm.webp", preload_srcset=f"{IMG}-sm.webp 560w, {IMG}.webp 960w", ld=schema(faqs),
+        subnav=False,
     )
     base = (base.split('<script src="/js/vt-mensualidades.js')[0]
             + base.split('<script src="/js/tienda-pasto.js', 1)[1].split("defer></script>", 1)[1])
-    base = base.split('<header class="site-header">')[0].replace(
-        '<a class="skip-link" href="#comprar">Ir al cotizador</a>', '<a class="skip-link" href="#pasto">Ir a la lista de precios</a>')
-    base += HEADER.format(wa=wa("Hola, vi la lista de precios y quiero cotizar"))
     return "".join([base, f"""
-<main>
+<main id="main">
   <div class="wrap">
     <nav class="crumbs" aria-label="Ruta de navegación">
       <ol>

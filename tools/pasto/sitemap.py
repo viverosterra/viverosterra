@@ -6,8 +6,8 @@ from pathlib import Path
 SITEMAP = Path(__file__).resolve().parents[2] / "public" / "sitemap.xml"
 
 
-def upsert(urls, lastmod=None, changefreq="monthly", priority="0.8"):
-    """Actualiza lastmod de las URLs que ya existen y agrega las que faltan."""
+def upsert(urls, lastmod=None, changefreq="monthly", priority="0.8", conservar=False):
+    """Agrega las URLs que faltan; actualiza lastmod de las que ya existen salvo con conservar=True."""
     lastmod = lastmod or date.today().isoformat()
     xml = SITEMAP.read_text(encoding="utf-8")
     for url in urls:
@@ -15,7 +15,8 @@ def upsert(urls, lastmod=None, changefreq="monthly", priority="0.8"):
             r"(<url>\s*<loc>" + re.escape(url) + r"</loc>\s*<lastmod>)[^<]*(</lastmod>)", re.S
         )
         if entry.search(xml):
-            xml = entry.sub(lambda m: m.group(1) + lastmod + m.group(2), xml, count=1)
+            if not conservar:
+                xml = entry.sub(lambda m: m.group(1) + lastmod + m.group(2), xml, count=1)
             continue
         line = (
             f"  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod>"

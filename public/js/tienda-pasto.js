@@ -37,6 +37,13 @@
     if (typeof window.gtag === 'function') window.gtag('event', name, params);
   }
 
+  // Mismos parámetros que el generate_lead del shell (terra.js): cta_id "<tipo de página>:<sección>" y service.
+  function leadWhatsapp(method, seccion, extra) {
+    const head = document.querySelector('.vt-head');
+    const tipo = (head && head.getAttribute('data-vt-tipo')) || 'tienda';
+    track('generate_lead', { ...extra, method, cta_id: tipo + ':' + seccion, service: 'pasto-sintetico' });
+  }
+
   /* ---------- Pricing ---------- */
   function precioM2(model, m2) {
     if (m2 >= ROLLO_M2) return model.rollo;
@@ -313,7 +320,7 @@
     });
     $('#cot-send').addEventListener('click', (e) => {
       if (e.currentTarget.getAttribute('aria-disabled') === 'true') { e.preventDefault(); return; }
-      track('generate_lead', { method: 'whatsapp_lista', items: memoryState.items.length });
+      leadWhatsapp('whatsapp_lista', 'lista', { items: memoryState.items.length });
     });
   }
 
@@ -356,7 +363,7 @@
     writeStore(upsertItem(memoryState, {
       slug: model.slug, nombre: model.nombre, img: model.img, t1: model.t1, t2: model.t2, rollo: model.rollo, m2: qty,
     }));
-    showToast(`${model.nombre} · ${qty} m² en tu cotización`);
+    showToast(`${model.nombre} · ${qty} m² en tu lista`);
     track('add_to_cart', { item_id: model.slug, quantity: qty });
   }
 
@@ -391,7 +398,7 @@
 
     $('#cta-add').addEventListener('click', () => addItem(current(), parseInt(inp.value, 10)));
     $$('[data-cta-wa]').forEach((a) => a.addEventListener('click', () => {
-      track('generate_lead', { method: 'whatsapp_cotizador', item_id: current().slug, quantity: parseInt(inp.value, 10) || 0 });
+      leadWhatsapp('whatsapp_cotizador', 'cotizador', { item_id: current().slug, quantity: parseInt(inp.value, 10) || 0 });
     }));
 
     function renderModelPrices(model) {

@@ -849,6 +849,21 @@
       "source": "/venta-pasto-sintetico-tampico/",
       "destination": "/pasto-sintetico-tampico",
       "permanent": true
+    },
+    {
+      "source": "/preview-mapa-cobertura",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/preview-mapa-cobertura.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/pdf/guia-12-palmas-arquitectos.pdf",
+      "destination": "/palmas-tropicales-tampico",
+      "permanent": true
     }
   ],
   "cleanUrls": true,
@@ -863,11 +878,7 @@
         },
         {
           "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
+          "value": "DENY"
         },
         {
           "key": "Referrer-Policy",
@@ -876,6 +887,10 @@
         {
           "key": "Permissions-Policy",
           "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy-Report-Only",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://www.google.com https://www.googletagmanager.com https://lh3.googleusercontent.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://www.google.com https://www.googletagmanager.com https://formsubmit.co; form-action 'self' https://formsubmit.co; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
         }
       ]
     },
@@ -889,7 +904,25 @@
       ]
     },
     {
-      "source": "/(.*)\\.(woff2|woff|ttf|svg|png|jpg|jpeg|webp|ico|gif)",
+      "source": "/(.*)\\.(png|jpg|jpeg|webp|gif|svg|ico)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(woff2|woff|ttf)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(css|js)/(terra|legacy-fixes)\\.([0-9a-f]+)\\.(css|js)",
       "headers": [
         {
           "key": "Cache-Control",

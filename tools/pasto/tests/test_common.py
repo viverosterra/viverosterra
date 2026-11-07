@@ -1,6 +1,8 @@
 import unittest
 
-from common import estado_select_html, height_rule_html, trust_band_html
+from pathlib import Path
+
+from common import SUBNAV, estado_select_html, height_rule_html, trust_band_html
 from data import ESTADOS_ORDEN
 
 
@@ -13,6 +15,15 @@ class CommonTest(unittest.TestCase):
 
     def test_selector_preselecciona(self):
         self.assertIn('value="Nuevo León" selected', estado_select_html("x", selected="Nuevo León"))
+
+    def test_boton_de_la_lista_distinto_del_cotizar_del_menu(self):
+        # El menú del shell ya tiene "Cotizar" (WhatsApp); el carrito de la tienda se llama "Mi lista".
+        self.assertIn("<span>Mi lista</span>", SUBNAV)
+        self.assertNotIn("Cotización<", SUBNAV)
+
+    def test_barra_de_la_tienda_no_se_pega_en_celular(self):
+        css = (Path(__file__).resolve().parents[3] / "public" / "css" / "tienda-pasto.css").read_text(encoding="utf-8")
+        self.assertIn("@media (max-width: 767px) { .site-header--sub { position: static; } }", css)
 
     def test_regla_escala(self):
         html = height_rule_html(35)

@@ -268,7 +268,7 @@ def build_ficha(m):
              preload_img=f"{first}-sm.webp", preload_srcset=f"{first}-sm.webp 420w, {first}.webp 720w", ld=ld,
              extra=(f'<script type="application/json" id="vt-model">{model_json}</script>\n' + LANDED_SCRIPTS)),
         f"""
-<main>
+<main id="main">
   <div class="wrap">
     <nav class="crumbs" aria-label="Ruta de navegación">
       <ol>

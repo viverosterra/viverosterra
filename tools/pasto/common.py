@@ -3,7 +3,7 @@ import json
 from html import escape
 from urllib.parse import quote
 
-from data import ASSET_VERSION, ESTADOS_ORDEN, PHONE_DISPLAY, SITE, UPDATED, WA_NUMBER
+from data import ASSET_VERSION, ESTADOS_ORDEN, SITE, WA_NUMBER
 
 GAL = "/img/pasto-sintetico/galeria"
 
@@ -24,7 +24,9 @@ def jsonld(graph):
     return json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, separators=(",", ":"))
 
 
-def head(*, title, description, canonical, og_image, og_type, preload_img, preload_srcset, ld, extra=""):
+def head(*, title, description, canonical, og_image, og_type, preload_img, preload_srcset, ld, extra="", subnav=True):
+    """<head> y apertura de <body> con las regiones vacías del shell; con subnav, la barra contextual de la tienda."""
+    barra_tienda = SUBNAV if subnav else ""
     return f"""<!DOCTYPE html>
 <html lang="es-MX">
 <head>
@@ -43,22 +45,22 @@ def head(*, title, description, canonical, og_image, og_type, preload_img, prelo
 <meta property="og:image" content="{og_image}">
 <meta property="og:locale" content="es_MX">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" href="/img/logo-viveros-terra-tampico.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="{preload_img}" imagesrcset="{preload_srcset}" imagesizes="(min-width: 1024px) 620px, 100vw" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/tienda-pasto.css?v={ASSET_VERSION}">
 <script type="application/ld+json">{ld}</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RMZCVJ734M"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-RMZCVJ734M');</script>
 {extra}<script src="/js/vt-mensualidades.js?v={ASSET_VERSION}" defer></script>
 <script src="/js/tienda-pasto.js?v={ASSET_VERSION}" defer></script>
+<!-- vt:head -->
+<!-- /vt:head -->
 </head>
 <body>
 {SYMBOLS}
-<a class="skip-link" href="#comprar">Ir al cotizador</a>
-{HEADER}"""
+<!-- vt:header -->
+<!-- /vt:header -->
+{barra_tienda}"""
 
 
 SYMBOLS = """<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
@@ -72,61 +74,27 @@ SYMBOLS = """<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-h
   <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
 </svg>"""
 
-HEADER = """<header class="site-header">
+# Barra contextual de la tienda, debajo del menú principal del shell (spec §3.1).
+SUBNAV = """<div class="site-header site-header--sub">
   <div class="wrap site-header__bar">
-    <a class="site-header__logo" href="/" aria-label="Viveros Terra, inicio"><img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" width="140" height="36"></a>
     <nav class="site-nav" aria-label="Tienda de pasto sintético">
       <a href="/pasto-sintetico#modelos">Los 9 modelos</a>
       <a href="/pasto-sintetico#elegir">¿Cuál me conviene?</a>
       <a href="/pasto-sintetico#como-funciona">Cómo comprar</a>
-      <a href="/pasto-sintetico-tampico">Tampico</a>
-      <a href="/">Viveros Terra</a>
     </nav>
     <button class="quote-btn" type="button" data-open-cot aria-haspopup="dialog">
       <svg class="icon" aria-hidden="true"><use href="#i-list"/></svg>
-      <span>Cotización</span>
+      <span>Mi lista</span>
       <span class="quote-btn__count num" data-cot-count data-empty="true">0</span>
     </button>
   </div>
-</header>
+</div>
 """
 
 
 def footer():
-    return f"""<footer class="site-footer">
-  <div class="wrap">
-    <div class="site-footer__grid">
-      <div>
-        <img src="/img/logo-viveros-terra-tampico.svg" alt="Viveros Terra" width="130" height="34" loading="lazy">
-        <p>Pasto sintético con envío a todo México. Vivero, showroom y servicios de jardinería desde 2007.</p>
-        <p><a href="https://maps.app.goo.gl/xC4XGL2WeucAjGwAA" target="_blank" rel="noopener">Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional, 89510 Cd. Madero, Tamps.</a><br><a href="https://maps.app.goo.gl/xC4XGL2WeucAjGwAA" target="_blank" rel="noopener">Google Maps</a> · <a href="https://maps.apple.com/?daddr=22.2777575,-97.8433341&amp;q=Viveros%20Terra" target="_blank" rel="noopener">Apple Maps</a></p>
-      </div>
-      <div>
-        <h3>Tienda</h3>
-        <ul>
-          <li><a href="/pasto-sintetico">Los 9 modelos</a></li>
-          <li><a href="/blog/cuanto-cuesta-pasto-sintetico-mexico">Cuánto cuesta</a></li>
-          <li><a href="/blog/que-altura-de-pasto-sintetico-elegir">Qué altura elegir</a></li>
-          <li><a href="/blog/como-instalar-pasto-sintetico">Cómo instalarlo</a></li>
-          <li><a href="/politicas">Envíos y devoluciones</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Viveros Terra</h3>
-        <ul>
-          <li><a href="/pasto-sintetico-tampico">Pasto sintético en Tampico</a></li>
-          <li><a href="/pasto-en-rollo-tampico">Pasto natural en rollo</a></li>
-          <li><a href="/plantas-palmas-arboles-tampico">Plantas y palmas</a></li>
-          <li><a href="/diseno-jardines-tampico">Diseño de jardines</a></li>
-          <li><a href="{wa('Hola, tengo una pregunta sobre pasto sintético')}" target="_blank" rel="noopener">WhatsApp {PHONE_DISPLAY}</a></li>
-          <li>Lun a vie 9 a 18 h · Sáb 9 a 14 h</li>
-        </ul>
-      </div>
-    </div>
-    <p class="site-footer__legal">© 2026 Viveros Terra · Tampico, Tamaulipas, México · Actualizado {UPDATED}</p>
-  </div>
-</footer>
-"""
+    """Región vacía del pie: tools/site/shell.py la llena con el pie único y la barra móvil."""
+    return "<!-- vt:footer -->\n<!-- /vt:footer -->\n"
 
 
 def buybar(name, price_text, *, rollo=None):
@@ -150,7 +118,7 @@ def drawer_and_toast():
     return f"""<dialog class="drawer" id="cotizacion" aria-labelledby="cot-titulo">
   <div class="drawer__inner">
     <div class="drawer__head">
-      <h2 id="cot-titulo">Tu cotización</h2>
+      <h2 id="cot-titulo">Tu lista</h2>
       <button class="drawer__close" type="button" id="cot-close" aria-label="Cerrar">×</button>
     </div>
     <div class="drawer__body" id="cot-list"></div>

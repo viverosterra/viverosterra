@@ -268,7 +268,7 @@ def build_local():
              preload_img=f"{GAL}/obra-proyecto-02-sm.webp", preload_srcset=f"{GAL}/obra-proyecto-02-sm.webp 560w, {GAL}/obra-proyecto-02.webp 960w",
              ld=schema(faqs), extra=f'<script type="application/json" id="vt-models">{models_json}</script>\n'),
         f"""
-<main>
+<main id="main">
   <div class="wrap">
     <nav class="crumbs" aria-label="Ruta de navegación">
       <ol>
@@ -309,5 +309,4 @@ def build_local():
         buybar("Pasto sintético en Tampico", f"Instalado desde ${INSTALADO_MIN}/m²"),
         drawer_and_toast(),
     ])
-    return html.replace('<a class="skip-link" href="#comprar">Ir al cotizador</a>',
-                        '<a class="skip-link" href="#opciones">Ir a precios y opciones</a>')
+    return html

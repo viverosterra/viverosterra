@@ -302,7 +302,7 @@ def build_hub():
              preload_img=f"{GAL}/obra-proyecto-03-sm.webp", preload_srcset=f"{GAL}/obra-proyecto-03-sm.webp 560w, {GAL}/obra-proyecto-03.webp 960w", ld=ld,
              extra=f'<script type="application/json" id="vt-models">{models_json}</script>\n<script src="/js/vt-landed.js?v={ASSET_VERSION}" defer></script>\n<script src="/js/tienda-hub.js?v={ASSET_VERSION}" defer></script>\n'),
         f"""
-<main>
+<main id="main">
   <div class="wrap">
     <nav class="crumbs" aria-label="Ruta de navegación">
       <ol>
@@ -341,8 +341,7 @@ def build_hub():
         buybar("Pasto sintético · 9 modelos", f"Desde ${min(m['rollo'] for m in MODELOS)}/m²", rollo=min(m["rollo"] for m in MODELOS)),
         drawer_and_toast(),
     ]
-    return "".join(parts).replace('<a class="skip-link" href="#comprar">Ir al cotizador</a>',
-                                  '<a class="skip-link" href="#modelos">Ir a los modelos</a>')
+    return "".join(parts)
 
 
 __all__ = ["build_hub", "strip_tags"]
