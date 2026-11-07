@@ -5,14 +5,22 @@ la home, el gtag duplicado, las meta heredadas, los favicons sueltos, nav-scroll
 protege el único script de menú sin guarda; inserta las regiones vacías del shell y envuelve el contenido en
 <main id="main">. Después, tools/site/build.py llena las regiones. Las páginas que ya tienen regiones no se tocan.
 
-Uso: python3 tools/site/migrar_shell.py   (una sola vez, desde cualquier carpeta)
+También quita el CSS y los scripts que solo servían al marcado retirado (huerfanos.py), cambia los eventos clic_wa_*
+y los window.open de WhatsApp por VTMedicion.whatsapp (medicion_js.py) y, en los artículos del blog que perdieron su
+ruta de navegación con el header viejo, vuelve a poner una visible (Inicio › Blog › título) al inicio del <main>.
+
+Uso: python3 tools/site/migrar_shell.py [--dry-run] [carpeta public]   (una sola vez, desde cualquier carpeta)
 """
 import re
 import sys
+from html import escape, unescape
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import huerfanos  # noqa: E402
+import medicion_js  # noqa: E402
+import paginas  # noqa: E402
 from shell import PUBLIC, fin_elemento, paginas_html  # noqa: E402
 
 GTAG_RE = re.compile(
@@ -30,23 +38,25 @@ NAV_SCROLL_RE = re.compile(r'[ \t]*<script src="/js/nav-scroll\.js[^"]*"[^>]*></
 ONCLICK_CLIC_RE = re.compile(r"""\s+onclick="gtag\('event',\s*'clic_[^"]*\"""")
 EVENTO_CLIC_RE = re.compile(r"[ \t]*gtag\('event',\s*'clic_[^']*',\s*\{[^{}]*\}\);?[ \t]*\n?")
 MENU_SIN_GUARDA_RE = re.compile(r"^(\s*)mb\.addEventListener\(", re.M)
+MIGAS_EN_CUERPO_RE = re.compile(r'aria-label="(?:[Bb]readcrumb|Ruta de navegación)"')
 
 
 def quitar_elemento(html, patron):
-    """Quita el primer elemento cuya etiqueta de apertura coincide con `patron`. Devuelve (html, quitados)."""
+    """Quita el primer elemento cuya etiqueta de apertura coincide con `patron`. Devuelve (html, fragmentos quitados)."""
     m = re.search(patron, html)
     if not m:
-        return html, 0
-    return html[:m.start()] + html[fin_elemento(html, m.start()):], 1
+        return html, []
+    fin = fin_elemento(html, m.start())
+    return html[:m.start()] + html[fin:], [html[m.start():fin]]
 
 
 def quitar_todos(html, patron):
-    total = 0
+    quitados = []
     while True:
         html, quitado = quitar_elemento(html, patron)
         if not quitado:
-            return html, total
-        total += quitado
+            return html, quitados
+        quitados += quitado
 
 
 def quitar_header_viejo(html):
@@ -56,8 +66,8 @@ def quitar_header_viejo(html):
     for m in re.finditer(r"<header\b", html[:tope]):
         fin = fin_elemento(html, m.start())
         if "<nav" in html[m.start():fin]:
-            return html[:m.start()] + html[fin:], 1
-    return html, 0
+            return html[:m.start()] + html[fin:], [html[m.start():fin]]
+    return html, []
 
 
 def insertar_regiones(html):
@@ -78,40 +88,73 @@ def envolver_main(html):
         # Un <main> con otro id (la rejilla del catálogo) pasa a <div> para poder envolver la página.
         fin = fin_elemento(html, m.start())
         bloque = html[m.start():fin]
-        bloque = "<div" + bloque[len("<main"):-len("</main>")] + "</div>"
+        # role="region" conserva el landmark con nombre que daba el <main aria-label>.
+        bloque = '<div role="region"' + bloque[len("<main"):-len("</main>")] + "</div>"
         html = html[:m.start()] + bloque + html[fin:]
     html = html.replace("<!-- /vt:header -->", '<!-- /vt:header -->\n<main id="main">', 1)
     return html.replace("<!-- vt:footer -->", "</main>\n<!-- vt:footer -->", 1)
 
 
-def migrar(html):
+def migas_blog(html):
+    """Ruta visible Inicio › Blog › título (el del <h1>) para un artículo del blog."""
+    h1 = re.search(r"<h1\b[^>]*>(.*?)</h1>", html, re.S)
+    titulo = " ".join(unescape(re.sub(r"<[^>]+>", "", h1.group(1))).split()) if h1 else "Artículo"
+    return (
+        '<nav class="vt-crumbs" aria-label="Ruta de navegación"><ol class="vt-wrap">'
+        '<li><a href="/">Inicio</a></li><li><a href="/blog">Blog</a></li>'
+        f'<li aria-current="page">{escape(titulo)}</li></ol></nav>'
+    )
+
+
+def migrar(html, ruta=None, cuenta=None):
+    """Página migrada a las regiones del shell. `cuenta` (opcional) acumula lo que quitaron los pasos de limpieza."""
     if "<!-- vt:header -->" in html:
         return html
-    html, _ = quitar_elemento(html, r'<nav class="terra-nav"')
-    html, _ = quitar_header_viejo(html)
-    html, _ = quitar_todos(html, r"<footer\b")
-    html, _ = quitar_todos(html, r'<a\b[^>]*class="[^"]*\bwa-float\b')
-    html, _ = quitar_elemento(html, r'<div class="vt-stickybar"')
+    quitados = []
+    for paso in (
+        lambda h: quitar_elemento(h, r'<nav class="terra-nav"'),
+        quitar_header_viejo,
+        lambda h: quitar_todos(h, r"<footer\b"),
+        lambda h: quitar_todos(h, r'<a\b[^>]*class="[^"]*\bwa-float\b'),
+        lambda h: quitar_elemento(h, r'<div class="vt-stickybar"'),
+    ):
+        html, fragmentos = paso(html)
+        quitados += fragmentos
     html = GTAG_RE.sub("", html)
     html = META_RE.sub("", html)
     html = ICONO_RE.sub("", html)
     html = NAV_SCROLL_RE.sub("", html)
     html = ONCLICK_CLIC_RE.sub("", html)
+    html, medidos = medicion_js.medir_whatsapp_js(html)
     html = EVENTO_CLIC_RE.sub("", html)
     html = MENU_SIN_GUARDA_RE.sub(r"\1if(mb&&mm)mb.addEventListener(", html)
-    return envolver_main(insertar_regiones(html))
+    html, limpios = huerfanos.limpiar(html, quitados)
+    if cuenta is not None:
+        for clave, valor in {**medidos, **limpios}.items():
+            cuenta[clave] = cuenta.get(clave, 0) + valor
+    html = envolver_main(insertar_regiones(html))
+    if ruta and ruta.startswith("/blog/") and not MIGAS_EN_CUERPO_RE.search(html):
+        html = html.replace('<main id="main">', '<main id="main">\n' + migas_blog(html), 1)
+    return html
 
 
-def main():
-    migradas = 0
-    for path in paginas_html():
+def main(argv=None):
+    """Migra las páginas de public/ (o de la carpeta indicada). Con --dry-run solo cuenta, sin escribir."""
+    args = list(sys.argv[1:] if argv is None else argv)
+    simulacro = "--dry-run" in args
+    args = [a for a in args if a != "--dry-run"]
+    public = Path(args[0]).resolve() if args else PUBLIC
+    migradas, cuenta = 0, {}
+    for path in paginas_html(public):
         original = path.read_text(encoding="utf-8")
-        nuevo = migrar(original)
+        nuevo = migrar(original, paginas.ruta_de(path, public), cuenta)
         if nuevo != original:
-            path.write_text(nuevo, encoding="utf-8")
             migradas += 1
-            print(f"migrada {path.relative_to(PUBLIC)}")
-    print(f"{migradas} páginas migradas")
+            if not simulacro:
+                path.write_text(nuevo, encoding="utf-8")
+            print(f"{'migraría' if simulacro else 'migrada'} {path.relative_to(public)}")
+    print(f"{migradas} páginas {'por migrar' if simulacro else 'migradas'}")
+    print("limpieza: " + ", ".join(f"{clave} {valor}" for clave, valor in sorted(cuenta.items())))
 
 
 if __name__ == "__main__":

@@ -47,10 +47,22 @@ TERRA_NAV = """<!DOCTYPE html>
 </head>
 <body>
 <!-- HEADER -->
+<style>
+.terra-nav{position:sticky;top:0}
+.terra-nav__inner{height:64px}
+@media (max-width:900px){.terra-nav__links{display:none}}
+</style>
 <nav class="terra-nav" data-page="/"><div class="terra-nav__inner"><nav class="sub"></nav></div><div class="terra-nav__drawer" id="terra-nav-drawer"></div></nav>
 <section class="vt-hero"><h1>Pasto</h1></section>
 <div class="vt-stickybar" role="region"><a href="tel:8333268008">Llamar</a></div>
 <footer class="bg-dark">f</footer>
+<script>
+(function() {
+  var nav = document.querySelector('.terra-nav');
+  if (!nav) return;
+  nav.classList.add('is-scrolled');
+})();
+</script>
 </body></html>
 """
 
@@ -126,10 +138,49 @@ class MigrarOtrasFamiliasTest(unittest.TestCase):
 
     def test_main_del_catalogo_pasa_a_div(self):
         html = migrar_shell.migrar(CATALOGO)
-        self.assertIn('<div class="grid" id="grid" aria-label="Catálogo de plantas"></div>', html)
+        self.assertIn('<div role="region" class="grid" id="grid" aria-label="Catálogo de plantas"></div>', html)
         self.assertIn('<nav class="tabs" aria-label="Categorías">', html)
         self.assertEqual(html.count("<main"), 1)
         self.assertIn('<main id="main">', html)
+
+
+class LimpiezaYMedicionTest(unittest.TestCase):
+    def test_quita_css_y_script_huerfanos_del_menu_viejo(self):
+        cuenta = {}
+        html = migrar_shell.migrar(TERRA_NAV, "/", cuenta)
+        self.assertNotIn("terra-nav", html)
+        self.assertNotIn("<style>", html)
+        self.assertEqual((cuenta["reglas"], cuenta["bloques"], cuenta["scripts"]), (3, 1, 1))
+
+    def test_evento_de_calculadora_pasa_al_helper(self):
+        html = migrar_shell.migrar(BLOG, "/blog/post")
+        self.assertIn("window.VTMedicion&&VTMedicion.whatsapp('calculadora',{label:'a_'+t});", html)
+
+    def test_gracias_real_sin_reglas_sueltas_de_header_y_footer(self):
+        html = migrar_shell.migrar((migrar_shell.PUBLIC / "gracias" / "index.html").read_text(encoding="utf-8"), "/gracias")
+        self.assertNotRegex(html, r"(?m)^\s*(?:header|footer)\s*\{")
+        self.assertIn(".card{", html)
+        self.assertIn("main{flex:1", html)
+
+
+class MigasBlogTest(unittest.TestCase):
+    def test_articulo_recibe_ruta_visible_al_inicio_del_main(self):
+        html = migrar_shell.migrar(BLOG, "/blog/post")
+        self.assertIn(
+            '<main id="main">\n<nav class="vt-crumbs" aria-label="Ruta de navegación"><ol class="vt-wrap">'
+            '<li><a href="/">Inicio</a></li><li><a href="/blog">Blog</a></li><li aria-current="page">Título</li></ol></nav>',
+            html,
+        )
+
+    def test_sin_ruta_duplicada_ni_fuera_del_blog(self):
+        con_migas = BLOG.replace("<article", '<nav aria-label="Breadcrumb"><a href="/">Inicio</a></nav><article', 1)
+        self.assertNotIn("vt-crumbs", migrar_shell.migrar(con_migas, "/blog/post"))
+        self.assertNotIn("vt-crumbs", migrar_shell.migrar(BLOG, "/blog"))
+        self.assertNotIn("vt-crumbs", migrar_shell.migrar(BLOG))
+
+    def test_titulo_sin_etiquetas_y_escapado(self):
+        html = BLOG.replace("<h1>Título</h1>", "<h1>Pasto <em>San Agustín</em> &amp; riego</h1>")
+        self.assertIn('<li aria-current="page">Pasto San Agustín &amp; riego</li>', migrar_shell.migrar(html, "/blog/x"))
 
 
 if __name__ == "__main__":
