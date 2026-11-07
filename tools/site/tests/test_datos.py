@@ -55,7 +55,8 @@ class DatosTest(unittest.TestCase):
         self.assertEqual(datos.PRECIOS["poda"], 500)
         self.assertTrue(datos.PODA.startswith("Desde $500, según cotización"))
         self.assertEqual(datos.PRECIOS["flamboyan"], 250)
-        self.assertEqual(len(datos.CLIENTES_B2B), 6)
+        self.assertEqual(len(datos.CLIENTES_B2B), 7)
+        self.assertEqual(datos.CLIENTES_B2B[-1], "Renault")
         self.assertEqual(datos.AUTOR_BLOG, "Equipo técnico de Viveros Terra")
         self.assertIsNone(datos.PROXIMO_CORTE)
 

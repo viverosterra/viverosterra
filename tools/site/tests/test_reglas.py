@@ -30,6 +30,30 @@ PROHIBIDAS = (
 )
 DEPORTES_RE = re.compile(r"p[aá]del|canchas?", re.I)
 PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
+# Decisión del dueño (2026-11-07): la visita para medir tiene costo o depende; nunca "visita sin costo", "visita
+# gratis" ni "visita gratuita" (tampoco "vamos a medir sin costo").
+GRATIS = r"(?:sin\s+costo|gratis|gratuitas?)"
+VISITA_GRATIS_RE = re.compile(
+    rf"\bvisitas?\b\W+(?:\w+\W+){{0,3}}?{GRATIS}\b|\b(?:medir|medimos|medici[oó]n)\W+(?:\w+\W+){{0,2}}?{GRATIS}\b"
+    rf"|\b{GRATIS}\W+(?:\w+\W+){{0,2}}?visitas?\b", re.I)
+# Páginas viejas que todavía lo dicen: se corrigen al migrar a su plantilla (o con el copy que defina el dueño). Esta
+# lista solo puede encoger: una página nueva o migrada que lo diga falla.
+VISITA_PENDIENTES = frozenset({
+    "blog/cesped-amarillo-tampico-causas-soluciones/index.html",
+    "blog/cuando-regar-pasto-san-agustin-tampico/index.html",
+    "blog/sistema-riego-automatizado-tampico/index.html",
+    "diseno-jardines-tampico/index.html",
+    "index.html",
+    "jardineria-aguila-tampico/index.html",
+    "jardineria-altamira/index.html",
+    "jardineria-ciudad-madero/index.html",
+    "jardineria-country-club-tampico/index.html",
+    "jardineria-lomas-de-rosales-tampico/index.html",
+    "jardineria-lomas-del-chairel-tampico/index.html",
+    "mantenimiento-jardines-tampico/index.html",
+    "precios/index.html",
+    "sistema-riego-tampico/index.html",
+})
 
 
 def sin_valores_css(css):
@@ -160,6 +184,22 @@ class ReglasDelDuenoTest(unittest.TestCase):
             for m in PAGO_AL_TERMINAR_RE.finditer(texto):
                 hallazgos.append(f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
         self.assertEqual(hallazgos, [])
+
+    def test_nunca_visita_gratis(self):
+        con = {}
+        for path, texto in publicados():
+            for m in VISITA_GRATIS_RE.finditer(texto):
+                con.setdefault(path.relative_to(PUBLIC).as_posix(), f"…{texto[max(0, m.start() - 40):m.end() + 20]}…")
+        self.assertEqual({k: v for k, v in con.items() if k not in VISITA_PENDIENTES}, {})
+        self.assertEqual(sorted(VISITA_PENDIENTES - set(con)), [], "ya no lo dicen: sácalas de VISITA_PENDIENTES")
+
+    def test_visita_gratis_se_detecta(self):
+        for sucio in ("Agendamos una visita sin costo", "Visita técnica gratuita", "vamos a medir sin costo",
+                      "Visita y medición Sin costo", "visita gratis"):
+            self.assertRegex(sucio, VISITA_GRATIS_RE)
+        for limpio in ("Agendamos una visita para medir y cotizar", "Cotización gratis por WhatsApp",
+                       "la reponemos sin costo", "Visítanos en el vivero"):
+            self.assertNotRegex(limpio, VISITA_GRATIS_RE)
 
     def test_deportes_solo_se_marcan_con_sintetico(self):
         def marcado(texto):

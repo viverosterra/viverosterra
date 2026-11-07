@@ -56,8 +56,21 @@ class BloquesTest(unittest.TestCase):
     def test_logos_son_los_clientes_autorizados(self):
         self.assertEqual(tuple(n for n, *_ in c.LOGOS), datos.CLIENTES_B2B)
         for _nombre, archivo, _a, _h in c.LOGOS:
+            if archivo is None:
+                continue
             self.assertTrue((Path(__file__).resolve().parents[3] / "public" / "img" / "clientes" / f"{archivo}-c.webp")
                             .is_file(), archivo)
+
+    def test_cliente_sin_logo_va_con_su_nombre_en_texto(self):
+        html = c.logos()
+        self.assertIn('<li class="vt-logos__nombre">Renault</li>', html)
+        self.assertNotIn('alt="Renault"', html)
+        self.assertEqual(html.count("<img"), 6)
+
+    def test_testimonios_con_nombre_y_servicio(self):
+        html = c.testimonios((("Quedó muy bien.", "Ana Pérez", "Pasto · Tampico"),))
+        self.assertIn('<blockquote><p>“Quedó muy bien.”</p></blockquote>', html)
+        self.assertIn("<figcaption><b>Ana Pérez</b><span>Pasto · Tampico</span></figcaption>", html)
 
     def test_tabla_de_precios_con_unidad_y_desde(self):
         html = c.tabla_precios([{"nombre": "Pasto", "detalle": "d", "unidad": "/m²", "precio": 120, "desde": True,

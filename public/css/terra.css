@@ -301,7 +301,18 @@
 .vt-logos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:24px;list-style:none;border-top:1px solid var(--vt-line);border-left:1px solid var(--vt-line)}
 .vt-logos li{display:grid;place-items:center;height:84px;padding:14px;border-right:1px solid var(--vt-line);border-bottom:1px solid var(--vt-line);background:var(--vt-card)}
 .vt-pagina .vt-logos img{width:auto;max-height:34px;filter:grayscale(1)}
-@media (min-width:900px){.vt-logos{grid-template-columns:repeat(6,minmax(0,1fr))}.vt-pagina .vt-logos img{max-height:40px}}
+.vt-logos__nombre{font-size:15px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--vt-muted)}
+.vt-logos li:last-child:nth-child(3n+1){grid-column:1 / -1}
+@media (min-width:900px){.vt-logos{grid-template-columns:repeat(7,minmax(0,1fr))}.vt-logos li:last-child{grid-column:auto}.vt-pagina .vt-logos img{max-height:40px}}
+
+/* ---------- opiniones con nombre ---------- */
+.vt-testimonios{display:grid;gap:20px;list-style:none}
+.vt-testimonio{height:100%;margin:0;padding:22px 22px 18px;border:1px solid var(--vt-line);border-top:3px solid var(--vt-field);background:var(--vt-card)}
+.vt-testimonio blockquote{margin:0}
+.vt-pagina main .vt-testimonio p{font-family:var(--vt-font-serif);font-style:italic;font-size:19px;line-height:1.42;color:var(--vt-ink-2)}
+.vt-testimonio figcaption{display:grid;gap:2px;padding-top:12px;border-top:1px dashed var(--vt-line-strong);font-size:var(--vt-text-xs);color:var(--vt-muted)}
+.vt-testimonio figcaption b{font-size:var(--vt-text-sm);color:var(--vt-ink)}
+@media (min-width:900px){.vt-testimonios{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.vt-testimonios li:nth-child(2n){transform:translateY(28px)}}
 
 /* ---------- índice de servicios con su precio ---------- */
 .vt-indice{list-style:none;border-top:1px solid var(--vt-ink)}
@@ -311,7 +322,6 @@
 .vt-pagina main .vt-indice h3 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
 .vt-pagina main .vt-indice p{margin:0;font-size:var(--vt-text-sm);line-height:1.45;color:var(--vt-ink-2)}
 .vt-indice__desde{grid-column:2}
-.vt-indice__desde .vt-pagina main .vt-mt{margin-top:48px}
 .vt-precio-marca{font-size:20px}
 @media (min-width:900px){
   .vt-indice li{grid-template-columns:120px minmax(0,1.1fr) minmax(0,1.3fr) 190px;gap:24px;padding:20px 0}

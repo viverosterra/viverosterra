@@ -79,8 +79,9 @@ RESPUESTA_PRECIO_PASTO = (
     f"Precios {ANIO}, con IVA, para Tampico, Ciudad Madero y Altamira."
 )
 
-# Permiso del dueño (2026-11-07) para mostrarlos con nombre y logo.
-CLIENTES_B2B = ("BMW", "Taghleef Industries", "Gobierno de Tampico", "Grupo Velas", "Velamar", "Flex")
+# Permiso del dueño (2026-11-07) para mostrarlos con nombre y logo. Renault (cliente real, permiso del dueño) va con su
+# nombre en texto: no hay logo en public/img/clientes y no se inventa uno.
+CLIENTES_B2B = ("BMW", "Taghleef Industries", "Gobierno de Tampico", "Grupo Velas", "Velamar", "Flex", "Renault")
 # Autor del blog: la organización (Organization ligada a #negocio). Nunca una persona inventada.
 AUTOR_BLOG = "Equipo técnico de Viveros Terra"
 # Decisión del dueño (2026-11-07): nunca se muestra fecha de corte ni disponibilidad semanal.

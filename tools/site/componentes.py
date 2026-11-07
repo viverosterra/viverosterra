@@ -150,7 +150,8 @@ def linea_prueba():
             f'<span><b>{datos.CLIENTES} clientes · {datos.INSTALACIONES} instalaciones</b> desde {datos.DESDE}</span></p>')
 
 
-# Nombre (igual que datos.CLIENTES_B2B), archivo en /img/clientes/<archivo>-c.webp, ancho y alto.
+# Nombre (igual que datos.CLIENTES_B2B), archivo en /img/clientes/<archivo>-c.webp, ancho y alto. Sin archivo, el
+# cliente va con su nombre en texto (nunca un logo inventado).
 LOGOS = (
     ("BMW", "logo-bmw", 120, 120),
     ("Taghleef Industries", "logo-taghleef", 584, 120),
@@ -158,13 +159,26 @@ LOGOS = (
     ("Grupo Velas", "logo-grupo-velas", 229, 120),
     ("Velamar", "logo-velamar", 188, 120),
     ("Flex", "logo-flex", 120, 120),
+    ("Renault", None, 0, 0),
 )
 
 
+def _logo(nombre, archivo, ancho, alto):
+    if archivo is None:
+        return f'<li class="vt-logos__nombre">{esc(nombre)}</li>'
+    return (f'<li><img src="/img/clientes/{archivo}-c.webp" width="{ancho}" height="{alto}" alt="{esc(nombre)}" '
+            f'loading="lazy" decoding="async"></li>')
+
+
 def logos():
-    items = "".join(f'<li><img src="/img/clientes/{archivo}-c.webp" width="{ancho}" height="{alto}" alt="{esc(nombre)}" '
-                    f'loading="lazy" decoding="async"></li>' for nombre, archivo, ancho, alto in LOGOS)
-    return f'<ul class="vt-logos" aria-label="Clientes de Viveros Terra">{items}</ul>'
+    return f'<ul class="vt-logos" aria-label="Clientes de Viveros Terra">{"".join(_logo(*l) for l in LOGOS)}</ul>'
+
+
+def testimonios(items):
+    """Opiniones reales con nombre (publicadas con permiso del dueño). items: (cita, nombre, servicio · lugar)."""
+    filas = "".join(f'<li><figure class="vt-testimonio"><blockquote><p>“{cita}”</p></blockquote><figcaption>'
+                    f'<b>{nombre}</b><span>{detalle}</span></figcaption></figure></li>' for cita, nombre, detalle in items)
+    return f'<ul class="vt-testimonios">{filas}</ul>'
 
 
 # ---------- índice de servicios, tablas y relacionados ----------
