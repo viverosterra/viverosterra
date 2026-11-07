@@ -138,3 +138,84 @@ def header(ctx):
 </nav>
 </header>"""
     return region("header", cuerpo)
+
+
+PIE = (
+    ("Servicios", (("Pasto en rollo", "/pasto-en-rollo-tampico"),
+                   ("Mayoreo de pasto", "/mayoreo-pasto-tampico"),
+                   ("Pasto sintético en Tampico", "/pasto-sintetico-tampico"),
+                   ("Tienda de pasto sintético", "/pasto-sintetico"),
+                   ("Diseño de jardines", "/diseno-jardines-tampico"),
+                   ("Mantenimiento", "/mantenimiento-jardines-tampico"),
+                   ("Riego automático", "/sistema-riego-tampico"))),
+    ("Plantas y materiales", (("Plantas, palmas y árboles", "/plantas-palmas-arboles-tampico"),
+                              ("Palmas para proyectos", "/palmas-mayoreo-proyectos"),
+                              ("Arma tu lista", "/catalogo"),
+                              ("Tierra negra", "/tierra-negra-vegetal-tampico"),
+                              ("Tezontle rojo", "/tezontle-rojo-tampico"),
+                              ("Mármol blanco", "/marmol-blanco-tampico"),
+                              ("Piedra bola de río", "/piedra-bola-rio-tampico"))),
+    ("Zonas", (("Lomas de Rosales", "/jardineria-lomas-de-rosales-tampico"),
+               ("Country Club", "/jardineria-country-club-tampico"),
+               ("Águila y Altavista", "/jardineria-aguila-tampico"),
+               ("Lomas del Chairel", "/jardineria-lomas-del-chairel-tampico"),
+               ("Ciudad Madero", "/jardineria-ciudad-madero"),
+               ("Altamira", "/jardineria-altamira"))),
+    ("Viveros Terra", (("Visítanos", "/vivero-tampico"),
+                       ("Precios", "/precios"),
+                       ("Blog", "/blog"),
+                       ("Políticas y garantías", "/politicas"),
+                       ("Aviso de privacidad", "/politica-privacidad"))),
+)
+DATOS_PIE = (
+    ("Domicilio", datos.CALLE, f"{datos.COLONIA}, {datos.CIUDAD}"),
+    ("Referencia", "Frente a Walmart", "Entrando por Banamex"),
+    ("Horario", "Lun a vie 9 a 18 h", "Sábado 9 a 14 h"),
+    ("REPSE", datos.REPSE, "Padrón de la STPS"),
+    ("Factura", datos.FACTURA, "Persona física o moral"),
+    ("Desde", str(datos.DESDE), f"{datos.M2_INSTALADOS} instalados"),
+)
+
+
+def _columna(titulo, enlaces):
+    items = "".join(f'<li><a href="{href}">{esc(texto)}</a></li>' for texto, href in enlaces)
+    return f'<div class="vt-foot__col"><h2 class="vt-foot__h">{esc(titulo)}</h2><ul>{items}</ul></div>'
+
+
+def barra(ctx):
+    """Barra fija móvil [Cotizar por WhatsApp | teléfono]; terra.js la oculta mientras el CTA del hero se ve."""
+    tipo = ctx["tipo"]
+    wa = esc(datos.wa_url(ctx["mensaje"]))
+    return f"""<div class="vt-bar" data-vt-bar role="region" aria-label="Contacto rápido">
+<a class="vt-btn vt-btn--wa vt-bar__go" data-cta="{tipo}:barra" href="{wa}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp</a>
+<a class="vt-bar__tel" data-cta="{tipo}:barra" href="tel:{datos.TELEFONO_TEL}" aria-label="Llamar {datos.TELEFONO_VISIBLE}"><svg aria-hidden="true"><use href="#vt-i-tel"/></svg></a>
+</div>"""
+
+
+def footer(ctx):
+    """Pie único con columnas, contacto, promesa, cuadro de datos y redes; incluye la barra móvil si el contexto la pide."""
+    tipo = ctx["tipo"]
+    wa = esc(datos.wa_url(ctx["mensaje"]))
+    columnas = "\n".join(_columna(titulo, enlaces) for titulo, enlaces in PIE)
+    celdas = "".join(f"<div><dt>{esc(t)}</dt><dd>{esc(v)}<small>{esc(s)}</small></dd></div>" for t, v, s in DATOS_PIE)
+    redes = "".join(f'<a href="{url}" target="_blank" rel="noopener">{esc(nombre)}</a>' for nombre, url in datos.REDES)
+    contacto = (
+        '<div class="vt-foot__col"><h2 class="vt-foot__h">Contacto</h2><ul>'
+        f'<li><a data-cta="{tipo}:footer" href="{wa}" target="_blank" rel="noopener">WhatsApp {datos.TELEFONO_VISIBLE}</a></li>'
+        f'<li><a data-cta="{tipo}:footer" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a></li>'
+        f'<li><a href="{datos.MAPS_URL}" target="_blank" rel="noopener">Cómo llegar</a></li></ul>'
+        f'<p class="vt-foot__promesa">{esc(datos.PROMESA_COMPLETA)}</p></div>'
+    )
+    pie = f"""<footer class="vt-foot">
+<div class="vt-wrap">
+<div class="vt-foot__grid">
+<div class="vt-foot__about"><img src="{LOGO}" alt="Viveros Terra" width="150" height="41" loading="lazy"><p>Vivero, pasto en rollo y jardinería en Tampico, Madero y Altamira desde {datos.DESDE}. Pasto sintético con envío a todo México desde {datos.SINTETICO_NACIONAL_DESDE}.</p><p class="vt-foot__google">{esc(datos.GOOGLE)}</p></div>
+{columnas}
+{contacto}
+</div>
+<dl class="vt-foot__datos">{celdas}</dl>
+<div class="vt-foot__legal"><p>© {datos.ANIO} {datos.NOMBRE} · {datos.CIUDAD}, Tamaulipas · Precios {datos.ANIO} con IVA incluido</p><p class="vt-foot__redes">{redes}</p></div>
+</div>
+</footer>"""
+    cuerpo = pie + ("\n" + barra(ctx) if ctx["barra"] else "")
+    return region("footer", cuerpo)
