@@ -859,6 +859,11 @@
       "source": "/preview-mapa-cobertura.html",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/pdf/guia-12-palmas-arquitectos.pdf",
+      "destination": "/palmas-tropicales-tampico",
+      "permanent": true
     }
   ],
   "cleanUrls": true,
