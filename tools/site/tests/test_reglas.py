@@ -43,7 +43,6 @@ VISITA_PENDIENTES = frozenset({
     "blog/cuando-regar-pasto-san-agustin-tampico/index.html",
     "blog/sistema-riego-automatizado-tampico/index.html",
     "diseno-jardines-tampico/index.html",
-    "index.html",
     "jardineria-aguila-tampico/index.html",
     "jardineria-altamira/index.html",
     "jardineria-ciudad-madero/index.html",

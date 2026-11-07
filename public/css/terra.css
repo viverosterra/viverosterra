@@ -303,7 +303,7 @@
 .vt-pagina .vt-logos img{width:auto;max-height:34px;filter:grayscale(1)}
 .vt-logos__nombre{font-size:15px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--vt-muted)}
 .vt-logos li:last-child:nth-child(3n+1){grid-column:1 / -1}
-@media (min-width:900px){.vt-logos{grid-template-columns:repeat(7,minmax(0,1fr))}.vt-logos li:last-child{grid-column:auto}.vt-pagina .vt-logos img{max-height:40px}}
+@media (min-width:900px){.vt-logos{grid-template-columns:repeat(7,minmax(0,1fr))}.vt-logos li:last-child:nth-child(3n+1){grid-column:auto}.vt-pagina .vt-logos img{max-height:40px}}
 
 /* ---------- opiniones con nombre ---------- */
 .vt-testimonios{display:grid;gap:20px;list-style:none}
