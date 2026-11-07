@@ -290,8 +290,8 @@ que ya existe (`test_paridad_js.py`) se extiende a las constantes nuevas.
 
 - Número antes que adjetivo; precio "desde" con IVA y unidad; vigencia visible ("Lista vigente: nov 2026").
 - Una admisión honesta por página (Nota de campo): cuándo no conviene comprar.
-- Promesa única: "Respondemos el mismo día hábil · Lun a vie 9 a 18 h, sáb 9 a 14 h" (sustituye "en minutos", "hoy
-  mismo", "< 2 horas", "24 h", "4 horas hábiles"; pendiente confirmar contra la de la tienda, §12).
+- Promesa única: "Respondemos en menos de 1 hora en horario · Lun a vie 9 a 18 h, sáb 9 a 14 h" (decisión del dueño
+  2026-09-30; sustituye "en minutos", "hoy mismo", "< 2 horas", "24 h", "4 horas hábiles").
 - Riego: "El primer riego lo haces tú: te enseñamos cómo y te dejamos el protocolo de 20 días".
 - Garantía de pasto: "Si una sección no arraiga en 15–20 días, la reponemos sin costo, siguiendo el protocolo de riego
   (ver condiciones)". Nunca promesas de pago al terminar.
@@ -585,8 +585,7 @@ fotos generadas (mitigado por la sesión real y el tratamiento documental); caí
 consolidaciones (mitigado por datos de Search Console); deriva de datos entre Python y JS (paridad probada).
 
 **Decisiones pendientes del dueño:**
-1. Promesa única de respuesta: "el mismo día hábil" (propuesta) contra "menos de 1 hora en horario" (spec de la tienda,
-   2026-09-30). Por omisión se usa "el mismo día hábil" en todo el sitio.
+1. (Resuelta) Promesa única de respuesta: "menos de 1 hora en horario", decidida por el dueño el 2026-09-30.
 2. ¿La poda de palmas y árboles es servicio real? Precio "desde".
 3. Precio único del framboyán y precios "desde" de palmas sin precio publicado.
 4. Permiso para publicar clientes con nombre y logos (BMW, Taghleef, Gobierno de Tampico, Grupo Velas, Velamar, Flex).
