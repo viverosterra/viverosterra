@@ -2,7 +2,8 @@
 
 Cada página lleva tres regiones marcadas: <!-- vt:head -->, <!-- vt:header --> y <!-- vt:footer -->. Este módulo
 reemplaza su contenido por los parciales canónicos y marca con data-cta los enlaces de WhatsApp y teléfono del cuerpo
-("<tipo>:hero" dentro de la portada, "<tipo>:cuerpo" en el resto). Es idempotente.
+("<tipo>:hero" dentro de la portada, "<tipo>:cuerpo" en el resto). En el índice del blog pone el número real de
+artículos en cada <span data-vt-conteo="blog">. Es idempotente.
 """
 import re
 from pathlib import Path
@@ -17,6 +18,7 @@ ENLACE_RE = re.compile(
 )
 SVC_HERO_RE = re.compile(r"<!-- svc-hero -->.*?<!-- /svc-hero -->", re.S)
 VT_HERO_RE = re.compile(r'<section\b[^>]*class="vt-hero\b')
+CONTEO_BLOG_RE = re.compile(r'(<span data-vt-conteo="blog">)\d+(</span>)')
 
 
 def fin_elemento(html, inicio):
@@ -56,7 +58,12 @@ def marcar_ctas(html, tipo):
     return "".join(salida)
 
 
-def aplicar(html, ruta, urls):
+def conteo_blog(public=PUBLIC):
+    """Número de artículos publicados en public/blog/<slug>/index.html."""
+    return len(list((Path(public) / "blog").glob("*/index.html")))
+
+
+def aplicar(html, ruta, urls, public=PUBLIC):
     """Página con el shell canónico de su ruta. Falla si no tiene exactamente una región de cada tipo."""
     ctx = paginas.contexto(ruta)
     encontradas = sorted(m.group(1) for m in REGION_RE.finditer(html))
@@ -68,6 +75,8 @@ def aplicar(html, ruta, urls):
         "footer": partials.footer(ctx),
     }
     html = REGION_RE.sub(lambda m: partes[m.group(1)], html)
+    if ruta == "/blog":
+        html = CONTEO_BLOG_RE.sub(lambda m: f"{m.group(1)}{conteo_blog(public)}{m.group(2)}", html)
     return marcar_ctas(html, ctx["tipo"])
 
 
@@ -79,7 +88,7 @@ def aplicar_archivo(path, urls, public=PUBLIC):
     """Aplica el shell al archivo; escribe solo si cambia. Devuelve True si lo escribió."""
     path = Path(path)
     original = path.read_text(encoding="utf-8")
-    nuevo = aplicar(original, paginas.ruta_de(path, public), urls)
+    nuevo = aplicar(original, paginas.ruta_de(path, public), urls, public)
     if nuevo == original:
         return False
     path.write_text(nuevo, encoding="utf-8")
