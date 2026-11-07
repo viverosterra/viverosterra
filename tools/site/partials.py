@@ -203,6 +203,7 @@ def footer(ctx):
         '<div class="vt-foot__col"><h2 class="vt-foot__h">Contacto</h2><ul>'
         f'<li><a data-cta="{tipo}:footer" href="{wa}" target="_blank" rel="noopener">WhatsApp {datos.TELEFONO_VISIBLE}</a></li>'
         f'<li><a data-cta="{tipo}:footer" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a></li>'
+        f'<li><a class="vt-foot__correo" href="mailto:{datos.CORREO_FORMULARIOS}">{datos.CORREO_FORMULARIOS}</a></li>'
         f'<li><a href="{datos.MAPS_URL}" target="_blank" rel="noopener">Cómo llegar</a></li></ul>'
         f'<p class="vt-foot__promesa">{esc(datos.PROMESA_COMPLETA)}</p></div>'
     )

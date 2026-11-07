@@ -2,6 +2,8 @@
    - Mide por delegación cada clic en WhatsApp (generate_lead) y teléfono (click_to_call) con data-cta.
    - Firma los mensajes de WhatsApp con "Vengo de viverosterra.com" para atribuir el chat.
    - Abre y cierra el menú (paneles de escritorio y menú móvil) y oculta la barra móvil mientras el CTA del hero se ve.
+   - Expone window.VTMedicion.whatsapp(ctaId, extra) para los WhatsApp que las páginas abren con window.open: manda el
+     mismo generate_lead que un clic en enlace (seguro aunque gtag no exista).
    Las funciones puras se exportan para node --test. */
 (function (root) {
   'use strict';
@@ -44,6 +46,15 @@
     const cta = a.getAttribute('data-cta') || contexto.tipo + ':sin-etiqueta';
     if (tipo === 'tel') return { nombre: 'click_to_call', params: { link_type: 'tel', cta_id: cta, service: contexto.servicio } };
     return { nombre: 'generate_lead', params: { method: 'whatsapp', cta_id: cta, service: contexto.servicio } };
+  }
+
+  // ctaId sin prefijo ("calculadora") toma el tipo de la página: "servicio-pasto:calculadora". `extra` no puede pisar
+  // method, cta_id ni service.
+  function eventoWhatsapp(ctaId, contexto, extra) {
+    const seccion = String(ctaId || 'js');
+    const cta = seccion.indexOf(':') >= 0 ? seccion : contexto.tipo + ':' + seccion;
+    const base = extra && typeof extra === 'object' ? extra : {};
+    return { nombre: 'generate_lead', params: { ...base, method: 'whatsapp', cta_id: cta, service: contexto.servicio } };
   }
 
   function contextoPagina(doc) {
@@ -138,23 +149,47 @@
     });
   }
 
-  // La barra oculta queda inerte (y con visibility:hidden en el CSS) para que sus enlaces no reciban el foco.
-  function barra(doc, win) {
-    const bar = doc.querySelector('[data-vt-bar]');
-    const hero = doc.querySelector('[data-hero-cta], .svc-hero__ctas');
-    if (!bar || !hero || !('IntersectionObserver' in win)) return;
-    new win.IntersectionObserver(([entrada]) => {
-      bar.classList.toggle('is-oculta', entrada.isIntersecting);
-      bar.inert = entrada.isIntersecting;
-    }).observe(hero);
+  function medicion(doc, win) {
+    return Object.freeze({
+      whatsapp(ctaId, extra) {
+        try {
+          const ev = eventoWhatsapp(ctaId, contextoPagina(doc), extra);
+          if (typeof win.gtag === 'function') win.gtag('event', ev.nombre, ev.params);
+          return ev;
+        } catch (error) {
+          // La medición nunca debe impedir que se abra el WhatsApp que viene justo después.
+          return null;
+        }
+      },
+    });
   }
 
-  const api = { FIRMA, tipoEnlace, conFirma, evento };
+  // CTAs de hero: los marcados a mano, los de servicios, los de la home vieja y los que shell.py etiqueta ":hero".
+  const HERO_CTA = '[data-hero-cta], .svc-hero__ctas, .vt-hero__ctas, [data-cta$=":hero"]';
+
+  // La barra oculta queda inerte (y con visibility:hidden en el CSS) para que sus enlaces no reciban el foco. Se oculta
+  // mientras se vea cualquiera de los CTAs del hero.
+  function barra(doc, win) {
+    const bar = doc.querySelector('[data-vt-bar]');
+    const heroes = Array.from(doc.querySelectorAll(HERO_CTA));
+    if (!bar || !heroes.length || !('IntersectionObserver' in win)) return;
+    const visibles = new Set();
+    const observador = new win.IntersectionObserver((entradas) => {
+      entradas.forEach((e) => (e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target)));
+      const ocultar = visibles.size > 0;
+      bar.classList.toggle('is-oculta', ocultar);
+      bar.inert = ocultar;
+    });
+    heroes.forEach((h) => observador.observe(h));
+  }
+
+  const api = { FIRMA, HERO_CTA, tipoEnlace, conFirma, evento, eventoWhatsapp };
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ...api, medir, menu, barra };
+    module.exports = { ...api, medir, menu, barra, medicion };
     return;
   }
   root.VTTerra = Object.freeze(api);
+  root.VTMedicion = medicion(document, root);
   medir(document, root);
   const iniciar = () => { menu(document, root); barra(document, root); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);

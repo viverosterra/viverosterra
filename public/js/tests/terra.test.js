@@ -1,7 +1,7 @@
 // public/js/tests/terra.test.js
 const test = require('node:test');
 const assert = require('node:assert');
-const { FIRMA, tipoEnlace, conFirma, evento } = require('../terra.js');
+const { FIRMA, HERO_CTA, tipoEnlace, conFirma, evento, eventoWhatsapp } = require('../terra.js');
 
 function enlace(atributos) {
   return { getAttribute: (nombre) => (nombre in atributos ? atributos[nombre] : null) };
@@ -114,11 +114,11 @@ function armarPagina() {
   const hero = n({ atributos: { 'data-hero-cta': '' }, padre: body });
   const wa = n({ tag: 'a', atributos: { href: 'https://wa.me/528333268008?text=Hola', 'data-cta': 'servicio:barra' }, padre: bar });
   const tel = n({ tag: 'a', atributos: { href: 'tel:+528333268008', 'data-cta': 'servicio:barra' }, padre: bar });
-  const consultas = {
-    '.vt-burger': burger, '.vt-head': head, '[data-vt-bar]': bar, '[data-hero-cta], .svc-hero__ctas': hero,
-  };
+  const hero2 = n({ atributos: { 'data-cta': 'home:hero' }, padre: body });
+  const consultas = { '.vt-burger': burger, '.vt-head': head, '[data-vt-bar]': bar };
+  const listas = { '.vt-nav [aria-controls]': [exp1, exp2], [HERO_CTA]: [hero, hero2] };
   doc.querySelector = (s) => consultas[s] || null;
-  doc.querySelectorAll = (s) => (s === '.vt-nav [aria-controls]' ? [exp1, exp2] : []);
+  doc.querySelectorAll = (s) => listas[s] || [];
   doc.getElementById = (id) => (id === 'vt-mmenu' ? movil : null);
   const relojes = [];
   const enviados = [];
@@ -128,10 +128,10 @@ function armarPagina() {
     gtag: (...args) => enviados.push(args),
   };
   const correrRelojes = () => relojes.splice(0).forEach((r) => r.fn && r.fn());
-  return { doc, win, item1, exp1, enlace1, item2, exp2, burger, movil, afuera, bar, hero, wa, tel, correrRelojes, enviados };
+  return { doc, win, item1, exp1, enlace1, item2, exp2, burger, movil, afuera, bar, hero, hero2, wa, tel, correrRelojes, enviados };
 }
 
-const { menu, barra, medir } = require('../terra.js');
+const { menu, barra, medir, medicion } = require('../terra.js');
 
 test('el burger abre y cierra el menú móvil con aria-expanded en sincronía', () => {
   const p = armarPagina();
@@ -223,17 +223,53 @@ test('el foco que sale del item cierra su panel', () => {
   assert.strictEqual(p.exp1.getAttribute('aria-expanded'), 'false');
 });
 
-test('la barra se oculta e inerte mientras el CTA del hero se ve', () => {
+test('la barra se oculta e inerte mientras cualquier CTA del hero se ve', () => {
   const p = armarPagina();
   let avisar = null;
-  p.win.IntersectionObserver = class { constructor(fn) { avisar = fn; } observe(el) { assert.strictEqual(el, p.hero); } };
+  const observados = [];
+  p.win.IntersectionObserver = class { constructor(fn) { avisar = fn; } observe(el) { observados.push(el); } };
   barra(p.doc, p.win);
-  avisar([{ isIntersecting: true }]);
+  assert.deepStrictEqual(observados, [p.hero, p.hero2]);
+  avisar([{ target: p.hero, isIntersecting: true }, { target: p.hero2, isIntersecting: true }]);
   assert.ok(p.bar.classList.contains('is-oculta'));
   assert.strictEqual(p.bar.inert, true);
-  avisar([{ isIntersecting: false }]);
+  avisar([{ target: p.hero, isIntersecting: false }]);
+  assert.ok(p.bar.classList.contains('is-oculta'), 'sigue oculta: el otro CTA aún se ve');
+  avisar([{ target: p.hero2, isIntersecting: false }]);
   assert.ok(!p.bar.classList.contains('is-oculta'));
   assert.strictEqual(p.bar.inert, false);
+});
+
+test('el selector de hero cubre los CTAs que marca shell.py y el hero viejo de la home', () => {
+  for (const parte of ['[data-hero-cta]', '.svc-hero__ctas', '.vt-hero__ctas', '[data-cta$=":hero"]']) {
+    assert.ok(HERO_CTA.split(',').map((x) => x.trim()).includes(parte), parte);
+  }
+});
+
+test('eventoWhatsapp arma el mismo generate_lead que un clic, con prefijo de la página', () => {
+  const ctx = { tipo: 'servicio-pasto', servicio: 'pasto-natural' };
+  assert.deepStrictEqual(eventoWhatsapp('calculadora', ctx, { label: 'pasto_calc_wa_solo', cta_id: 'x', method: 'y' }), {
+    nombre: 'generate_lead',
+    params: { label: 'pasto_calc_wa_solo', method: 'whatsapp', cta_id: 'servicio-pasto:calculadora', service: 'pasto-natural' },
+  });
+  assert.strictEqual(eventoWhatsapp('home:hero', ctx).params.cta_id, 'home:hero');
+  assert.strictEqual(eventoWhatsapp(undefined, ctx).params.cta_id, 'servicio-pasto:js');
+});
+
+test('VTMedicion.whatsapp manda el evento con el contexto del header', () => {
+  const p = armarPagina();
+  const ev = medicion(p.doc, p.win).whatsapp('cta-final', { label: 'pasto_cta_final' });
+  assert.deepStrictEqual(p.enviados, [['event', 'generate_lead',
+    { label: 'pasto_cta_final', method: 'whatsapp', cta_id: 'servicio:cta-final', service: 'pasto-natural' }]]);
+  assert.strictEqual(ev.nombre, 'generate_lead');
+});
+
+test('VTMedicion.whatsapp no falla sin gtag ni con un documento roto', () => {
+  const p = armarPagina();
+  delete p.win.gtag;
+  assert.strictEqual(medicion(p.doc, p.win).whatsapp('calculadora').params.cta_id, 'servicio:calculadora');
+  const roto = { querySelector() { throw new Error('x'); } };
+  assert.strictEqual(medicion(roto, p.win).whatsapp('calculadora'), null);
 });
 
 test('clic medio (auxclick) y clic con modificador miden sin impedir la navegación', () => {
