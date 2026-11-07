@@ -42,7 +42,7 @@
     const tipo = tipoEnlace(a.getAttribute('href'));
     if (!tipo) return null;
     const cta = a.getAttribute('data-cta') || contexto.tipo + ':sin-etiqueta';
-    if (tipo === 'tel') return { nombre: 'click_to_call', params: { cta_id: cta } };
+    if (tipo === 'tel') return { nombre: 'click_to_call', params: { link_type: 'tel', cta_id: cta, service: contexto.servicio } };
     return { nombre: 'generate_lead', params: { method: 'whatsapp', cta_id: cta, service: contexto.servicio } };
   }
 
@@ -54,8 +54,11 @@
     };
   }
 
+  // Clic normal, con Ctrl/Cmd/Shift (llega como 'click') y clic medio ('auxclick', botón 1). Nunca se impide la
+  // navegación: solo se firma el enlace de WhatsApp y se manda el evento.
   function medir(doc, win) {
-    doc.addEventListener('click', (e) => {
+    const alPulsar = (e) => {
+      if (e.type === 'auxclick' && e.button !== 1) return;
       const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
       if (!a) return;
       const href = a.getAttribute('href');
@@ -63,53 +66,97 @@
       if (a.matches(OMITIR_EVENTO)) return;
       const ev = evento(a, contextoPagina(doc));
       if (ev && typeof win.gtag === 'function') win.gtag('event', ev.nombre, ev.params);
-    }, true);
+    };
+    doc.addEventListener('click', alPulsar, true);
+    doc.addEventListener('auxclick', alPulsar, true);
   }
 
-  function menu(doc) {
+  // Los paneles de escritorio solo se muestran con aria-expanded="true" (el CSS no usa :hover). Con mouse se abren
+  // por hover con retraso, y el panel sigue abierto mientras el puntero esté en el item (WCAG 1.4.13); Escape los
+  // cierra y regresa el foco a su botón. Un clic sobre un panel abierto por hover lo fija en vez de cerrarlo.
+  const ABRIR_MS = 120;
+  const CERRAR_MS = 300;
+
+  function menu(doc, win) {
     const burger = doc.querySelector('.vt-burger');
     const movil = doc.getElementById('vt-mmenu');
+    const abrirMovil = (abrir) => {
+      burger.setAttribute('aria-expanded', String(abrir));
+      movil.hidden = !abrir;
+    };
     if (burger && movil) {
-      burger.addEventListener('click', () => {
-        const abierto = burger.getAttribute('aria-expanded') === 'true';
-        burger.setAttribute('aria-expanded', String(!abierto));
-        movil.hidden = abierto;
-      });
+      burger.addEventListener('click', () => abrirMovil(burger.getAttribute('aria-expanded') !== 'true'));
     }
     const botones = Array.from(doc.querySelectorAll('.vt-nav [aria-controls]'));
-    const cerrar = (excepto) => botones.forEach((b) => { if (b !== excepto) b.setAttribute('aria-expanded', 'false'); });
-    botones.forEach((b) => b.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const abierto = b.getAttribute('aria-expanded') === 'true';
-      cerrar(b);
-      b.setAttribute('aria-expanded', String(!abierto));
-    }));
+    const origen = new Map();
+    const abierto = (b) => b.getAttribute('aria-expanded') === 'true';
+    const fijar = (b, abrir, como) => {
+      b.setAttribute('aria-expanded', String(abrir));
+      if (abrir) origen.set(b, como);
+      else origen.delete(b);
+    };
+    const cerrar = (excepto) => botones.forEach((b) => { if (b !== excepto) fijar(b, false); });
+    botones.forEach((b) => {
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const abrir = !abierto(b) || origen.get(b) === 'hover';
+        cerrar(b);
+        fijar(b, abrir, 'clic');
+      });
+      const item = b.closest ? b.closest('.vt-nav__item') : null;
+      if (!item) return;
+      let reloj = null;
+      const programar = (fn, ms) => { win.clearTimeout(reloj); reloj = win.setTimeout(fn, ms); };
+      item.addEventListener('pointerenter', (e) => {
+        if (e.pointerType !== 'mouse') return;
+        programar(() => { if (!abierto(b)) { cerrar(b); fijar(b, true, 'hover'); } }, ABRIR_MS);
+      });
+      item.addEventListener('pointerleave', (e) => {
+        if (e.pointerType !== 'mouse') return;
+        programar(() => { if (origen.get(b) === 'hover') fijar(b, false); }, CERRAR_MS);
+      });
+      item.addEventListener('focusout', (e) => {
+        // Solo cuando el foco pasa a otro elemento (Tab); los clics afuera los cierra el oyente del documento.
+        if (e.relatedTarget && !item.contains(e.relatedTarget)) fijar(b, false);
+      });
+    });
     doc.addEventListener('click', (e) => {
       if (!e.target.closest || !e.target.closest('.vt-nav')) cerrar(null);
     });
     doc.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
-      const abierto = botones.find((b) => b.getAttribute('aria-expanded') === 'true');
-      cerrar(null);
-      if (abierto) abierto.focus();
+      const panel = botones.find(abierto);
+      if (panel) {
+        cerrar(null);
+        panel.focus();
+        return;
+      }
+      if (burger && movil && !movil.hidden) {
+        abrirMovil(false);
+        burger.focus();
+      }
     });
   }
 
+  // La barra oculta queda inerte (y con visibility:hidden en el CSS) para que sus enlaces no reciban el foco.
   function barra(doc, win) {
     const bar = doc.querySelector('[data-vt-bar]');
     const hero = doc.querySelector('[data-hero-cta], .svc-hero__ctas');
     if (!bar || !hero || !('IntersectionObserver' in win)) return;
-    new win.IntersectionObserver(([entrada]) => bar.classList.toggle('is-oculta', entrada.isIntersecting)).observe(hero);
+    new win.IntersectionObserver(([entrada]) => {
+      bar.classList.toggle('is-oculta', entrada.isIntersecting);
+      bar.inert = entrada.isIntersecting;
+    }).observe(hero);
   }
 
   const api = { FIRMA, tipoEnlace, conFirma, evento };
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = api;
+    module.exports = { ...api, medir, menu, barra };
     return;
   }
   root.VTTerra = Object.freeze(api);
   medir(document, root);
-  const iniciar = () => { menu(document); barra(document, root); };
+  const iniciar = () => { menu(document, root); barra(document, root); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
   else iniciar();
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -87,6 +87,46 @@ class TerraCssTest(unittest.TestCase):
                 viejas |= clases(estilo)
         self.assertEqual(sorted(clases(self.css) & viejas), [])
 
+    def regla(self, selector):
+        """Cuerpo de la primera regla cuyo selector es exactamente `selector`."""
+        css = sin_comentarios(self.css)
+        m = re.search(r"(?:^|[{}\n])" + re.escape(selector) + r"\{([^}]*)\}", css)
+        self.assertIsNotNone(m, selector)
+        return m.group(1)
+
+    def test_panel_solo_se_muestra_con_aria_expanded(self):
+        css = sin_comentarios(self.css)
+        for selector in re.findall(r"([^{}]+)\{[^{}]*display:block", css):
+            for parte in selector.split(","):
+                if parte.strip().endswith(".vt-nav__panel"):
+                    with self.subTest(selector=parte.strip()):
+                        self.assertIn('[aria-expanded="true"]', parte)
+                        self.assertNotIn(":hover", parte)
+                        self.assertNotIn(":focus-within", parte)
+
+    def test_barra_oculta_no_se_alcanza_con_tab(self):
+        cuerpo = self.regla(".vt-bar.is-oculta")
+        self.assertIn("visibility:hidden", cuerpo)
+        self.assertIn("visibility 0s", cuerpo)
+
+    def test_borde_del_burger_contrasta_3_a_1(self):
+        token = re.search(r"border:1px solid var\((--vt-[\w-]+)\)", self.regla(".vt-burger")).group(1)
+        self.assertGreaterEqual(contraste(tokens(self.css)[token], tokens(self.css)["--vt-bone"]), 3)
+
+    def test_menu_movil_usa_dvh_con_respaldo(self):
+        cuerpo = self.regla(".vt-mmenu")
+        self.assertLess(cuerpo.index("100vh"), cuerpo.index("100dvh"))
+
+    def test_enlace_del_menu_movil_subrayado(self):
+        self.assertIn("text-decoration:underline", self.regla(".vt-mmenu__meta a"))
+
+    def test_area_del_boton_de_submenu_de_44(self):
+        self.assertIn("inset:-10px -20px -10px 0", self.regla(".vt-nav__exp::before"))
+
+    def test_barra_de_56_mas_area_segura(self):
+        self.assertEqual(tokens(self.css)["--vt-bar-h"], "56px")
+        self.assertIn("calc(var(--vt-bar-h) + env(safe-area-inset-bottom))", self.regla(".vt-bar"))
+
 
 if __name__ == "__main__":
     unittest.main()
