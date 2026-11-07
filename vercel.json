@@ -878,7 +878,7 @@
         },
         {
           "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
+          "value": "DENY"
         },
         {
           "key": "Referrer-Policy",
@@ -890,7 +890,7 @@
         },
         {
           "key": "Content-Security-Policy-Report-Only",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://lh3.googleusercontent.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://formsubmit.co; form-action 'self' https://formsubmit.co; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://www.google.com https://www.googletagmanager.com https://lh3.googleusercontent.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://www.google.com https://www.googletagmanager.com https://formsubmit.co; form-action 'self' https://formsubmit.co; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
         }
       ]
     },
@@ -904,7 +904,16 @@
       ]
     },
     {
-      "source": "/(css|js)/(terra|legacy-fixes)\\.([0-9a-f]+)\\.(css|js)",
+      "source": "/(.*)\\.(png|jpg|jpeg|webp|gif|svg|ico)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(woff2|woff|ttf)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -913,7 +922,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.(woff2|woff|ttf|svg|png|jpg|jpeg|webp|ico|gif)",
+      "source": "/(css|js)/(terra|legacy-fixes)\\.([0-9a-f]+)\\.(css|js)",
       "headers": [
         {
           "key": "Cache-Control",

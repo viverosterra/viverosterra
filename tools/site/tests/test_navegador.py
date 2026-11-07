@@ -65,9 +65,20 @@ class NavegadorTest(unittest.TestCase):
         page.on("console", lambda msg: errores.append(f"{page.url} · consola · {msg.text}")
                 if msg.type == "error" and not msg.text.startswith("Failed to load resource") else None)
         page.on("response", lambda r: errores.append(f"{r.url} · HTTP {r.status}") if r.status >= 400 else None)
+        # Sin colector de reportes: cualquier violación de la CSP en Report-Only (servidor.py manda la misma cabecera
+        # que vercel.json) cuenta como error, para que CI la detecte antes de pasar la CSP a obligatoria.
+        page.add_init_script(
+            "window.__vtCsp = []; document.addEventListener('securitypolicyviolation', (e) => "
+            "window.__vtCsp.push(e.violatedDirective + ' · ' + (e.blockedURI || 'inline')));")
         for path in shell.paginas_html():
             page.goto(self.base + servidor.url_de(path), wait_until="load")
+            errores.extend(f"{page.url} · CSP · {v}" for v in page.evaluate("() => window.__vtCsp"))
         self.assertEqual(errores, [])
+
+    def test_servidor_local_manda_la_csp_de_vercel(self):
+        respuesta = self.pagina().goto(self.base + "/", wait_until="load")
+        csp = respuesta.headers.get("content-security-policy-report-only", "")
+        self.assertEqual(csp, servidor.cabeceras_globales()["Content-Security-Policy-Report-Only"])
 
     def test_shell_sin_violaciones_serias_de_axe(self):
         script = AXE.read_text(encoding="utf-8")
