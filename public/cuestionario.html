@@ -798,8 +798,10 @@ textarea{resize:vertical;min-height:80px}
 
 <div class="page-wrap">
   <div class="vt-body">
-    <form id="mainForm" action="https://formspree.io/f/xlgaqlzn" method="POST">
+    <form id="mainForm" action="https://formsubmit.co/ajax/viverosterra@hotmail.com" method="POST">
       <input type="hidden" name="_subject" value="Nuevo cuestionario de jardín — Viveros Terra">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
 
       <!-- PAGE 1 -->
       <div class="form-page active" id="page-1">
@@ -1167,7 +1169,8 @@ document.getElementById('mainForm').addEventListener('submit', async function(e)
   btn.disabled = true;
   try {
     const res = await fetch(this.action, { method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' } });
-    if (res.ok) {
+    const data = res.ok ? await res.json().catch(() => ({})) : {};
+    if (res.ok && String(data.success) !== 'false') {
       document.getElementById('mainForm').style.display = 'none';
       document.getElementById('main-footer').style.display = 'none';
       document.getElementById('success-screen').classList.add('show');
