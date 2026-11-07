@@ -34,7 +34,8 @@ PROHIBIDAS = (
      r"\bcontact\w*(?: contigo)? en (?:menos de )?24 ?(?:h|hrs?|horas)\b|en contacto contigo en menos de 24 horas"
      r"|\bcotización en 24 horas"),
     ("plazo de respuesta viejo",
-     r"\ben menos de (?:2|4) horas\b|\b[24] horas hábiles\b|\bEn 24 hrs\b|por WhatsApp en minutos|en minutos sabrás"
+     r"\ben menos de (?:2|4) horas\b|\b[24] horas hábiles\b|\b\d+ ?h(?:rs?)? hábiles\b|\bEn 24 hrs\b"
+     r"|por WhatsApp en minutos|en minutos sabrás"
      r"|(?:disponibilidad|personalizada|precio exacto[^.]{0,40}|diagnóstico y solución) (?:hoy mismo|el mismo día)"
      r"|\bconfirmamos disponibilidad hoy"),
     ("pago al terminar", r"\bpagas\s+(?:cuando|al\s+ver)\b"),
@@ -259,6 +260,7 @@ class ConsistenciaTest(unittest.TestCase):
                 "Próxima visita técnica: esta semana", "Visitas disponibles desde el Lunes", "hoy o mañana",
                 "mañana disponible", "Tu jardín verde, esta semana."),
             "frescura con fecha de corte": ("Pasto cortado esta semana", "Cortado esta semana"),
+            "plazo de respuesta viejo": ("Respondemos en menos de 4h hábiles", "Respuesta en 2 h hábiles"),
         }
         for nombre_regla, frases in sucios.items():
             for frase in frases:

@@ -53,7 +53,7 @@ PAGES = {
         title="Riego automático", accent="para jardines en Tampico",
         price_pre="De", price="$180 a $320", price_unit="/m²", price_alt="· según el tipo de sistema",
         lede="Aspersión, goteo o microaspersión con programador, para casas, fraccionamientos, hoteles e industria en Tampico, Madero y Altamira.",
-        facts=[("Hasta 40%", "Menos agua que el riego manual"), ("Sin costo", "Visita técnica y medición"), ("Aspersión o goteo", "Según tus plantas y tu pasto")],
+        facts=[("Hasta 40%", "Menos agua que el riego manual"), ("Por WhatsApp", "Fotos y medidas para cotizar"), ("Aspersión o goteo", "Según tus plantas y tu pasto")],
         img="/img/riego-pro-01.webp",
         alt="Aspersores de riego automático funcionando en un jardín", caption="Sistema de riego por aspersión instalado.",
         wa=guided("Hola, quiero cotizar riego automático.", "Colonia", "Metros aprox. del jardín", "Tengo pasto, plantas o ambos"),

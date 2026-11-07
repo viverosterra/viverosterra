@@ -228,7 +228,7 @@ def build_precios():
   {section_open(1, "Pasto natural", "pasto-titulo", "Pasto San Agustín <em>en rollo</em>", section_id="pasto")}
         {table_html("Precios de pasto natural", PASTO, 'Solo el pasto: recoges en el vivero o se cobra la entrega según tu colonia. <a href="/protocolo-cuidados-pasto-san-agustin">Protocolo de riego y garantía</a>.')}{SECTION_CLOSE}
   {section_open(2, "Servicios", "servicios-titulo", "Mantenimiento, diseño <em>y riego</em>", tint=True, section_id="servicios")}
-        {table_html("Precios de servicios de jardinería", SERVICIOS, "Visita técnica sin costo. Contratos con empresas con factura y REPSE 773725.")}{SECTION_CLOSE}
+        {table_html("Precios de servicios de jardinería", SERVICIOS, "Cotiza por WhatsApp. Contratos con empresas con factura y REPSE 773725.")}{SECTION_CLOSE}
   {section_open(3, "Pasto sintético", "sintetico-titulo", "Pasto sintético <em>por modelo</em>", section_id="sintetico")}
         {sintetico_html()}{SECTION_CLOSE}
   {section_open(4, "Materiales", "materiales-titulo", "Tierra, tezontle <em>y piedra</em>", tint=True, section_id="materiales")}
@@ -242,7 +242,7 @@ def build_precios():
   <section class="closing" aria-labelledby="cierre">
     <div class="wrap">
       <h2 id="cierre">¿Quieres el precio exacto <em>de tu jardín?</em></h2>
-      <p>Mándanos tu colonia, los metros aproximados y una foto del espacio. Te respondemos en menos de 1 hora en horario y, si hace falta, vamos a medir sin costo.</p>
+      <p>Mándanos tu colonia, los metros aproximados y una foto del espacio. Te respondemos en menos de 1 hora en horario y, si hace falta, agendamos una visita para medir.</p>
       <div class="closing__actions">
         <a class="btn btn--light" href="{wa('Hola, quiero el precio exacto de mi jardín. Mi colonia es: ___ · Metros aprox.: ___ · Te mando foto del espacio.')}" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
         <a class="btn btn--ghost" href="tel:+528333268008">Llamar {PHONE_DISPLAY}</a>

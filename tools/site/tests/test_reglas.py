@@ -32,27 +32,13 @@ DEPORTES_RE = re.compile(r"p[aá]del|canchas?", re.I)
 PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
 # Decisión del dueño (2026-11-07): la visita para medir tiene costo o depende; nunca "visita sin costo", "visita
 # gratis" ni "visita gratuita" (tampoco "vamos a medir sin costo").
-GRATIS = r"(?:sin\s+costo|gratis|gratuitas?)"
+GRATIS = r"(?:sin\s+costo|gratis|gratuit(?:[ao]s?|amente))"
 VISITA_GRATIS_RE = re.compile(
-    rf"\bvisitas?\b\W+(?:\w+\W+){{0,3}}?{GRATIS}\b|\b(?:medir|medimos|medici[oó]n)\W+(?:\w+\W+){{0,2}}?{GRATIS}\b"
+    rf"\bvisit\w*\b\W+(?:\w+\W+){{0,4}}?{GRATIS}\b|\b(?:medir|medimos|medici[oó]n|diagn[oó]sticos?)\W+(?:\w+\W+){{0,2}}?{GRATIS}\b"
     rf"|\b{GRATIS}\W+(?:\w+\W+){{0,2}}?visitas?\b", re.I)
-# Páginas viejas que todavía lo dicen: se corrigen al migrar a su plantilla (o con el copy que defina el dueño). Esta
-# lista solo puede encoger: una página nueva o migrada que lo diga falla.
-VISITA_PENDIENTES = frozenset({
-    "blog/cesped-amarillo-tampico-causas-soluciones/index.html",
-    "blog/cuando-regar-pasto-san-agustin-tampico/index.html",
-    "blog/sistema-riego-automatizado-tampico/index.html",
-    "diseno-jardines-tampico/index.html",
-    "jardineria-aguila-tampico/index.html",
-    "jardineria-altamira/index.html",
-    "jardineria-ciudad-madero/index.html",
-    "jardineria-country-club-tampico/index.html",
-    "jardineria-lomas-de-rosales-tampico/index.html",
-    "jardineria-lomas-del-chairel-tampico/index.html",
-    "mantenimiento-jardines-tampico/index.html",
-    "precios/index.html",
-    "sistema-riego-tampico/index.html",
-})
+# Páginas que todavía lo dicen. Debe quedar vacía: ninguna página pública promete la visita, la medición ni el
+# diagnóstico gratis. Esta lista solo puede encoger; no se agregan páginas nuevas.
+VISITA_PENDIENTES = frozenset()
 
 
 def sin_valores_css(css):
@@ -194,7 +180,9 @@ class ReglasDelDuenoTest(unittest.TestCase):
 
     def test_visita_gratis_se_detecta(self):
         for sucio in ("Agendamos una visita sin costo", "Visita técnica gratuita", "vamos a medir sin costo",
-                      "Visita y medición Sin costo", "visita gratis"):
+                      "Visita y medición Sin costo", "visita gratis",
+                      "ofrece visita de diagnóstico y cotización gratuita", "visita el terreno gratuitamente",
+                      "diagnóstico gratuito", "una visita de diagnóstico sin costo", "diagnósticos de pasto sin costo"):
             self.assertRegex(sucio, VISITA_GRATIS_RE)
         for limpio in ("Agendamos una visita para medir y cotizar", "Cotización gratis por WhatsApp",
                        "la reponemos sin costo", "Visítanos en el vivero"):
