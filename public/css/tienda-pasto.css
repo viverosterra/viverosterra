@@ -786,3 +786,5 @@ a.quote-btn { text-decoration: none; }
 .site-header--sub .site-header__bar { height: 48px; justify-content: flex-end; }
 @media (min-width: 1100px) { .site-header--sub .site-header__bar { justify-content: space-between; } }
 .quote-btn__count[data-empty="true"] { display: none; }
+/* En celular y tableta la barra de la tienda no se pega: con el menú del shell pegado (56px) ocupaban 105px de pantalla. */
+@media (max-width: 767px) { .site-header--sub { position: static; } }

@@ -84,7 +84,7 @@ SUBNAV = """<div class="site-header site-header--sub">
     </nav>
     <button class="quote-btn" type="button" data-open-cot aria-haspopup="dialog">
       <svg class="icon" aria-hidden="true"><use href="#i-list"/></svg>
-      <span>Cotización</span>
+      <span>Mi lista</span>
       <span class="quote-btn__count num" data-cot-count data-empty="true">0</span>
     </button>
   </div>
@@ -118,7 +118,7 @@ def drawer_and_toast():
     return f"""<dialog class="drawer" id="cotizacion" aria-labelledby="cot-titulo">
   <div class="drawer__inner">
     <div class="drawer__head">
-      <h2 id="cot-titulo">Tu cotización</h2>
+      <h2 id="cot-titulo">Tu lista</h2>
       <button class="drawer__close" type="button" id="cot-close" aria-label="Cerrar">×</button>
     </div>
     <div class="drawer__body" id="cot-list"></div>

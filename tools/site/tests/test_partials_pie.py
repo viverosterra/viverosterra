@@ -26,6 +26,10 @@ class PieTest(unittest.TestCase):
                 self.assertIn(texto, self.f)
         self.assertIn('data-cta="blog:footer" href="tel:+528333268008"', self.f)
 
+    def test_contacto_a_todo_lo_ancho_y_telefonos_sin_cortar(self):
+        self.assertIn('<div class="vt-foot__col vt-foot__contacto">', self.f)
+        self.assertEqual(self.f.count(f'<span class="vt-nowrap">{datos.TELEFONO_VISIBLE}</span>'), 2)
+
     def test_pie_de_la_tienda_con_su_pregunta(self):
         pie = partials.footer(paginas.contexto("/pasto-sintetico/toscana-28"))
         self.assertIn(datos.wa_url(datos.con_firma("Hola, tengo una pregunta sobre pasto sintético")), pie)

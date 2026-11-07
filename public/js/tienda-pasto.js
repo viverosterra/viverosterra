@@ -363,7 +363,7 @@
     writeStore(upsertItem(memoryState, {
       slug: model.slug, nombre: model.nombre, img: model.img, t1: model.t1, t2: model.t2, rollo: model.rollo, m2: qty,
     }));
-    showToast(`${model.nombre} · ${qty} m² en tu cotización`);
+    showToast(`${model.nombre} · ${qty} m² en tu lista`);
     track('add_to_cart', { item_id: model.slug, quantity: qty });
   }
 
