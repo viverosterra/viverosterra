@@ -28,6 +28,15 @@ class HeadTest(unittest.TestCase):
         self.assertIn('<script src="/js/terra.0123456789.js" defer></script>', h)
         self.assertNotIn("legacy-fixes", h)
 
+    def test_geo_y_fuente_principal_precargada(self):
+        h = partials.head(URLS, legacy=False)
+        self.assertIn('<meta name="geo.region" content="MX-TAM">', h)
+        self.assertIn('<meta name="geo.placename" content="Ciudad Madero">', h)
+        self.assertIn('<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>', h)
+        self.assertLess(h.index("archivo-latin.woff2"), h.index("terra.0123456789.css"))
+        for obsoleta in ("keywords", "last-modified", "ai-content-declaration", '"language"'):
+            self.assertNotIn(obsoleta, h)
+
     def test_legacy_fixes_solo_con_tailwind_y_antes_de_terra(self):
         h = partials.head(URLS, legacy=True)
         self.assertLess(h.index("legacy-fixes.0123456789.css"), h.index("terra.0123456789.css"))

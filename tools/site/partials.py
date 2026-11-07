@@ -65,9 +65,19 @@ def region(nombre, cuerpo):
     return f"<!-- vt:{nombre} -->\n{cuerpo}\n<!-- /vt:{nombre} -->"
 
 
+FUENTE_PRINCIPAL = "/fonts/archivo-latin.woff2"
+
+
 def head(urls, legacy):
-    """Favicon, CSS del shell (y legacy-fixes en páginas con Tailwind), GA4 una sola vez y terra.js diferido."""
-    lineas = ['<link rel="icon" type="image/png" href="/img/logo-viveros-terra-tampico.png">']
+    """Favicon, geo de la tienda, fuente principal precargada, CSS del shell (y legacy-fixes en páginas con Tailwind),
+    GA4 una sola vez y terra.js diferido. Las meta keywords, last-modified, ai-content-declaration y language ya no se
+    usan: no se reponen."""
+    lineas = [
+        '<link rel="icon" type="image/png" href="/img/logo-viveros-terra-tampico.png">',
+        '<meta name="geo.region" content="MX-TAM">',
+        f'<meta name="geo.placename" content="{datos.CIUDAD}">',
+        f'<link rel="preload" href="{FUENTE_PRINCIPAL}" as="font" type="font/woff2" crossorigin>',
+    ]
     if legacy:
         lineas.append(f'<link rel="stylesheet" href="{urls["legacy-fixes.css"]}">')
     lineas += [
