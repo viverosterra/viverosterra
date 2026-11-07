@@ -1,3 +1,4 @@
+import gzip
 import re
 import unittest
 from pathlib import Path
@@ -5,6 +6,10 @@ from pathlib import Path
 PUBLIC = Path(__file__).resolve().parents[3] / "public"
 TERRA = PUBLIC / "css" / "terra.css"
 CSS_VIEJOS = ("design-system.css", "tailwind.css", "servicios.css", "tienda-pasto.css")
+# Clases que crea public/js/vt-simulador.js (las mismas en servicios.css). En terra.css solo aparecen bajo .vt-sim, que
+# ninguna página vieja tiene, así que no pueden alterar el simulador viejo.
+CLASES_DEL_SIMULADOR = {"sim-plan", "sim-plan__name", "sim-plan__amt", "sim-plan__sep", "sim-plan__more", "is-selected",
+                        "is-disabled"}
 
 
 def sin_comentarios(css):
@@ -64,13 +69,21 @@ class TerraCssTest(unittest.TestCase):
         pares = [("--vt-ink", "--vt-bone"), ("--vt-ink-2", "--vt-bone"), ("--vt-muted", "--vt-bone"),
                  ("--vt-muted", "--vt-card"), ("--vt-field", "--vt-bone"), ("--vt-card", "--vt-field"),
                  ("--vt-on-dark", "--vt-ink"), ("--vt-on-dark-2", "--vt-ink"), ("--vt-tag", "--vt-ink"),
-                 ("--vt-tag-ink", "--vt-tag"), ("--vt-field-deep", "--vt-field-100")]
+                 ("--vt-tag-ink", "--vt-tag"), ("--vt-field-deep", "--vt-field-100"),
+                 # componentes del cuerpo (Etapa 2)
+                 ("--vt-soil", "--vt-bone"), ("--vt-soil", "--vt-bone-2"), ("--vt-soil", "--vt-card"),
+                 ("--vt-muted", "--vt-bone-2"), ("--vt-ink-2", "--vt-bone-2"), ("--vt-card", "--vt-soil"),
+                 ("--vt-on-dark-2", "--vt-field-deep"), ("--vt-tag", "--vt-field-deep"), ("--vt-ink", "--vt-field-100")]
         for texto, fondo in pares:
             with self.subTest(par=(texto, fondo)):
                 self.assertGreaterEqual(contraste(t[texto], t[fondo]), 4.5)
 
     def test_presupuesto(self):
-        self.assertLess(len(self.css.encode("utf-8")), 30 * 1024)
+        # Spec §8.2: meta de 10 KB con gzip. Desde la Etapa 2 terra.css también trae los componentes del cuerpo y
+        # sustituye, en cada página migrada, ~70 KB de CSS viejo (tailwind, design-system, servicios y <style>).
+        datos = self.css.encode("utf-8")
+        self.assertLess(len(gzip.compress(datos, mtime=0)), 10 * 1024)
+        self.assertLess(len(datos), 48 * 1024)
 
     def test_fuentes_referenciadas_existen(self):
         urls = re.findall(r'url\("(/fonts/[^"]+)"\)', self.css)
@@ -85,7 +98,11 @@ class TerraCssTest(unittest.TestCase):
         for pagina in PUBLIC.rglob("*.html"):
             for estilo in re.findall(r"<style[^>]*>(.*?)</style>", pagina.read_text(encoding="utf-8"), re.S):
                 viejas |= clases(estilo)
-        self.assertEqual(sorted(clases(self.css) & viejas), [])
+        self.assertEqual(sorted((clases(self.css) - CLASES_DEL_SIMULADOR) & viejas), [])
+        for regla in re.findall(r"([^{}]+)\{", sin_comentarios(self.css)):
+            if re.search(r"\.(?:sim-plan|is-selected|is-disabled)\b", regla):
+                with self.subTest(selector=regla.strip()):
+                    self.assertTrue(all(".vt-sim " in parte for parte in regla.split(",")))
 
     def regla(self, selector):
         """Cuerpo de la primera regla cuyo selector es exactamente `selector`."""
@@ -126,6 +143,14 @@ class TerraCssTest(unittest.TestCase):
     def test_barra_de_56_mas_area_segura(self):
         self.assertEqual(tokens(self.css)["--vt-bar-h"], "56px")
         self.assertIn("calc(var(--vt-bar-h) + env(safe-area-inset-bottom))", self.regla(".vt-bar"))
+
+    def test_componentes_del_cuerpo_presentes(self):
+        for selector in (".vt-pagina", ".vt-portada", ".vt-etiqueta", ".vt-datos", ".vt-medidor", ".vt-tabla",
+                         ".vt-pasos", ".vt-nota", ".vt-faq summary", ".vt-cierre", ".vt-sim .sim-plan"):
+            with self.subTest(selector=selector):
+                self.regla(selector)
+        for token in ("--vt-text-h1", "--vt-text-h2", "--vt-text-h3", "--vt-text-precio", "--vt-space-section"):
+            self.assertIn(token, tokens(self.css))
 
 
 if __name__ == "__main__":
