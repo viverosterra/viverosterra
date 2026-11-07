@@ -38,7 +38,7 @@ BLOG = {
     "errores-pasto-san-agustin-tampico": "Hola, vi el artículo de errores del pasto y quiero mantenimiento profesional",
     "fertilizacion-jardines-tampico-temporada-lluvias": 'Hola, leí su artículo "Fertilización de jardines en Tampico: guía completa para la temporada de lluvias" y quiero cotizar.',
     "ficus-elastica-cuidados-tampico": 'Hola, leí su artículo "Ficus Elastica en Tampico: guía completa para no matarlo (y que crezca espectacular)" y quiero cotizar.',
-    "framboyan-delonix-regia-tampico": "Hola, vi el artículo de Framboyán y quiero cotizar",
+    "framboyan-delonix-regia-tampico": "Hola, vi el artículo de Flamboyán y quiero cotizar",
     "hongos-plantas-exceso-humedad-tampico": 'Hola, leí su artículo "Hongos en plantas por exceso de humedad en Tampico" y quiero cotizar.',
     "jardin-bajo-presupuesto-tampico": "Hola, mi presupuesto para jardín es $___",
     "jardin-en-macetas-terraza-tampico-guia": "Hola, vi el artículo de jardín en macetas y terrazas y quiero cotizar plantas",

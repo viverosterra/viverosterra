@@ -788,3 +788,9 @@ a.quote-btn { text-decoration: none; }
 .quote-btn__count[data-empty="true"] { display: none; }
 /* En celular y tableta la barra de la tienda no se pega: con el menú del shell pegado (56px) ocupaban 105px de pantalla. */
 @media (max-width: 767px) { .site-header--sub { position: static; } }
+
+/* Etapa 1b: el botón "+ Agregar" no se corta en tarjetas angostas (hub a 1100–1440 con índice lateral). */
+.spec-card__foot { flex-wrap: wrap; }
+.spec-card__price { flex: 1 1 auto; min-width: 0; }
+.spec-card__pay { order: 3; flex-basis: 100%; }
+.spec-card__add { flex: none; }

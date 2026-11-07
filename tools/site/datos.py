@@ -54,7 +54,7 @@ PRECIOS = {
     "sintetico_instalado_m2": (385, 650),
     "sintetico_tienda_m2": 139,
     "poda": 500,
-    "framboyan": 250,
+    "flamboyan": 250,
 }
 PODA = ("Desde $500, según cotización: el precio depende del tamaño del árbol o la palma y de los residuos que se "
         "generan. Mándanos fotos y ubicación por WhatsApp.")

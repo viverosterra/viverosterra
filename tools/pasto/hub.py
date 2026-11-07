@@ -103,7 +103,7 @@ def card_html(m):
               <dl class="spec-card__specs num"><div><dt>Peso</dt><dd>{m['peso']} g/m²</dd></div><div><dt>Garantía</dt><dd>{gar}</dd></div></dl>
               <div class="spec-card__foot">
                 <p class="spec-card__price num">Desde <strong>${m['rollo']}</strong>/m² <span class="spec-card__landed" data-landed-slug="{m['slug']}"></span></p>
-                <p class="spec-card__pay">Paga en mensualidades con tarjeta</p>
+                <p class="spec-card__pay">Paga en mensualidades con tarjeta de crédito</p>
                 <button class="spec-card__add" type="button" data-add="{m['slug']}" aria-label="Agregar {esc(m['nombre'])} a mi cotización"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Agregar</span></button>
               </div>
             </div>

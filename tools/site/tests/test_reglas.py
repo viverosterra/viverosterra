@@ -30,9 +30,6 @@ PROHIBIDAS = (
 )
 DEPORTES_RE = re.compile(r"p[aá]del|canchas?", re.I)
 PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
-# Pendiente con fecha: la Etapa 1b (test_consistencia.py, plan 2026-11-07-etapa-1b) reescribe estas frases con su
-# texto aprobado. Cualquier página nueva con "pagas cuando…" falla desde ya.
-PAGO_AL_TERMINAR_PENDIENTE_1B = {"pasto-en-rollo-tampico/index.html"}
 
 
 def sin_valores_css(css):
@@ -158,8 +155,6 @@ class ReglasDelDuenoTest(unittest.TestCase):
     def test_sin_pago_al_ver_el_jardin_terminado(self):
         hallazgos = []
         for path, texto in publicados():
-            if path.relative_to(PUBLIC).as_posix() in PAGO_AL_TERMINAR_PENDIENTE_1B:
-                continue
             for m in PAGO_AL_TERMINAR_RE.finditer(texto):
                 hallazgos.append(f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
         self.assertEqual(hallazgos, [])
