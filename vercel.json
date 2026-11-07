@@ -849,6 +849,16 @@
       "source": "/venta-pasto-sintetico-tampico/",
       "destination": "/pasto-sintetico-tampico",
       "permanent": true
+    },
+    {
+      "source": "/preview-mapa-cobertura",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/preview-mapa-cobertura.html",
+      "destination": "/",
+      "permanent": true
     }
   ],
   "cleanUrls": true,
