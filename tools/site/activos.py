@@ -1,7 +1,9 @@
 """Copias con hash de los assets del shell, para servirlas con caché inmutable de un año.
 
 La fuente vive sin hash (public/css/terra.css, public/css/legacy-fixes.css, public/js/terra.js) y el build publica
-<nombre>.<10 hex>.<ext> al lado, borrando las copias viejas. Las páginas solo enlazan la copia con hash.
+<nombre>.<10 hex>.<ext> al lado. Se conservan la copia actual y la generación anterior (la más reciente de las demás),
+para que el HTML que quedó en caché justo después de un deploy no pida un archivo borrado; las más viejas se borran.
+Las páginas solo enlazan la copia con hash.
 """
 import hashlib
 import re
@@ -27,16 +29,20 @@ def urls(public=PUBLIC):
 
 
 def publicar(public=PUBLIC):
-    """Escribe las copias con hash que falten, borra las viejas y devuelve las URLs."""
+    """Escribe las copias con hash que falten, deja la generación anterior, borra las demás y devuelve las URLs."""
     public = Path(public)
     resultado = urls(public)
     for clave, rel in FUENTES.items():
         fuente = public / rel
         destino = public / resultado[clave].lstrip("/")
         patron = re.compile(rf"{re.escape(fuente.stem)}\.[0-9a-f]{{10}}{re.escape(fuente.suffix)}")
-        for viejo in fuente.parent.glob(f"{fuente.stem}.*{fuente.suffix}"):
-            if viejo != destino and patron.fullmatch(viejo.name):
-                viejo.unlink()
+        viejas = sorted(
+            (p for p in fuente.parent.glob(f"{fuente.stem}.*{fuente.suffix}") if p != destino and patron.fullmatch(p.name)),
+            key=lambda p: (p.stat().st_mtime_ns, p.name),
+            reverse=True,
+        )
+        for vieja in viejas[1:]:
+            vieja.unlink()
         if not destino.exists():
             destino.write_bytes(fuente.read_bytes())
     return resultado
