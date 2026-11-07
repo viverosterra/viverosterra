@@ -18,6 +18,13 @@ tokens y fuentes definitivos se fijan desde ella en la Etapa 1).
 | Cifras | "+500,000 m² instalados" es real y se puede usar. |
 | Garantía de pasto | Se permite "Si una sección no arraiga, la reponemos sin costo", siempre ligada a la garantía de arraigo de 15–20 días y a sus condiciones. Prohibido "pagas cuando ves tu jardín terminado". |
 | Deportes | La regla de no deportes aplica solo al pasto sintético. Pasto natural y riego para campos deportivos es un servicio real y se queda. |
+| Poda de palmas y árboles (2026-11-07) | Servicio real: "desde $500, según cotización". El precio depende del tamaño del árbol o la palma y de los residuos que se generan; el cliente manda fotos y ubicación por WhatsApp y recibe su cotización. La página `/poda-palmas-arboles-tampico` es de la Etapa 3; el dato vive en `tools/site/datos.py` desde la Etapa 1. |
+| Framboyán (2026-11-07) | Desde $250. Se corrige el "$500" en la Etapa 1 y se usa una sola ortografía: framboyán. |
+| Clientes B2B (2026-11-07) | Permiso otorgado para mostrar con nombre y logo: BMW, Taghleef, Gobierno de Tampico, Grupo Velas, Velamar y Flex. |
+| Autor del blog (2026-11-07) | No se inventa una persona (un autor ficticio es engañoso y resta E-E-A-T). Autor = la organización: "Equipo técnico de Viveros Terra", tipo `Organization` ligado al `@id` `#negocio`, hasta que el dueño nombre a una persona real. |
+| Tienda nacional de sintético (2026-11-07) | "Vendemos pasto sintético a todo México desde 2012." |
+| Guía de palmas en PDF (2026-11-07) | Se retira la oferta: formulario con correo, enlace, CTA y el PDF borrador de `public/pdf/`. La URL del PDF redirige con 301 a `/palmas-tropicales-tampico`. Se hace en la Etapa 1. |
+| Próximo corte (2026-11-07) | No. No se muestra ninguna fecha de corte ni aviso de disponibilidad semanal en ningún lugar; se retiran los que existan. |
 
 ### Reglas permanentes (se prueban en automático, ver §9)
 
@@ -94,7 +101,7 @@ con un solo sistema visual, datos sin contradicciones y autoridad local en Googl
 |---|---|---|
 | Pasto natural | `/pasto-en-rollo-tampico` | Pasto en rollo · Mayoreo (500 m²+) · Protocolo de riego |
 | Pasto sintético | `/pasto-sintetico-tampico` | Instalado en Tampico · Tienda con envío a todo México · Para perros |
-| Jardín | — (solo abre el panel) | Diseño · Mantenimiento · Riego automático · Poda (si se aprueba, §3.5) |
+| Jardín | — (solo abre el panel) | Diseño · Mantenimiento · Riego automático · Poda (desde la Etapa 3, cuando exista la página) |
 | Plantas y palmas | `/plantas-palmas-arboles-tampico` | Palmas · Plantas para jardín · Árboles ornamentales · Árboles para banqueta · Interior · Arma tu lista (catálogo) · Materiales |
 | Empresas | `/empresas` (nueva) | Mayoreo de pasto · Palmas para proyectos · Mantenimiento de áreas verdes |
 | Precios | `/precios` | — |
@@ -119,7 +126,7 @@ CTA fijo del menú: "Cotizar por WhatsApp". Zonas, Materiales (además del panel
 │   ├── /diseno-jardines-tampico  →  /cuestionario (paso 2, noindex)
 │   ├── /mantenimiento-jardines-tampico
 │   ├── /sistema-riego-tampico         incluye riego de campos deportivos (pasto natural)
-│   └── /poda-palmas-arboles-tampico   NUEVA, condicionada (§3.5)
+│   └── /poda-palmas-arboles-tampico   NUEVA (Etapa 3; servicio confirmado, desde $500)
 ├── Plantas y palmas
 │   ├── /plantas-palmas-arboles-tampico   HUB
 │   │   ├── /palmas-tropicales-tampico  /plantas-para-jardin-tampico  /arboles-ornamentales-tampico
@@ -185,7 +192,7 @@ CTA fijo del menú: "Cotizar por WhatsApp". Zonas, Materiales (además del panel
 | `/nosotros` | Página de entidad para E-E-A-T y LLMs (A04 §2.4, P1-9) | Ninguna; fotos reales recomendadas |
 | `/empresas` | Bifurcación B2B y menú de 6 (A02 §6.2, §7) | Ninguna |
 | `/zonas` | Da enlaces entrantes a las 6 zonas y evita doorways por colonia (A03 §3.4, §4.2) | Ninguna; no se agregan zonas nuevas sin caso real |
-| `/poda-palmas-arboles-tampico` | Hueco de intención local "poda de palmas/árboles Tampico" (A03 §3.4) | Solo si el dueño confirma que es servicio real y da un precio "desde" |
+| `/poda-palmas-arboles-tampico` | Hueco de intención local "poda de palmas/árboles Tampico" (A03 §3.4) | Confirmado por el dueño el 2026-11-07: "desde $500, según cotización" (tamaño y residuos; fotos y ubicación por WhatsApp) |
 | `/404` | Hoy 79 bytes sin diseño (A03 §2) | Ninguna |
 | `llms-full.txt` | Hoy 404 (A04 §3.3) | Generado, nunca a mano |
 
@@ -271,7 +278,7 @@ que ya existe (`test_paridad_js.py`) se extiende a las constantes nuevas.
 | Home cotizador | "Más de 1,500 clientes han calculado su jardín" | "+900 clientes · +1,500 instalaciones" |
 | `mayoreo-pasto-tampico` FAQ | "a partir de 200 m²" | 500 m² |
 | Blogs (`palma-coco-plumoso`, `sistema-riego-automatizado`, `cuidados-palma-del-viajero`, `pasto-sintetico-vs-natural`) | 10, 12 o 15 años (de la empresa) | "desde 2007"; se revisan una por una para no tocar las de vida útil del producto |
-| `blog/framboyan-delonix-regia-tampico` y `arboles-ornamentales-tampico` | $250 contra $500; "Framboyán" y "Flamboyán" | Un solo precio por tamaño (confirma el dueño) y una ortografía |
+| `blog/framboyan-delonix-regia-tampico` y `arboles-ornamentales-tampico` | $250 contra $500; "Framboyán" y "Flamboyán" | "Desde $250" (decisión del dueño 2026-11-07) y una sola ortografía: framboyán |
 | Todo el sitio | 6 promesas de respuesta | Una sola (§5.3) |
 | `pasto-sintetico-tampico` | "los otros 7 modelos sobre pedido" | "Los 9 modelos en existencia; Toscana 18 y 28 para llevar hoy en Obregón 209 Sur" |
 | Home | Banner "Temporada de lluvias" fijo | Se elimina; si vuelve, sale de un calendario en `datos.py` con fecha de inicio y fin |
@@ -295,8 +302,8 @@ que ya existe (`test_paridad_js.py`) se extiende a las constantes nuevas.
 - Riego: "El primer riego lo haces tú: te enseñamos cómo y te dejamos el protocolo de 20 días".
 - Garantía de pasto: "Si una sección no arraiga en 15–20 días, la reponemos sin costo, siguiendo el protocolo de riego
   (ver condiciones)". Nunca promesas de pago al terminar.
-- Sin escasez inventada: nada de "corte de esta semana disponible" fijo. Un "Próximo corte: viernes {fecha}" solo si el
-  dueño lo mantiene desde `datos.py`.
+- Sin escasez inventada: nunca "corte de esta semana disponible", "lote semanal disponible" ni "próximo corte" (decisión del
+  dueño 2026-11-07: no se muestra ninguna fecha de corte ni disponibilidad semanal).
 - Superlativos fuera ("el mejor", "líder"). Los LLMs los descartan.
 
 ---
@@ -394,8 +401,9 @@ Perfil de Negocio de Google y, cuando exista, Wikidata.
 
 ### 7.4 E-E-A-T
 - `/nosotros` con el párrafo de entidad (bloque B de A04 §7, con "209 Sur" y "+500,000 m²"), historia desde el
-  12 dic 2007, REPSE con enlace al padrón, clientes con nombre (si el dueño lo autoriza), fotos reales del vivero.
-- Autor `Person` con nombre y página de autor para el blog técnico (lo nombra el dueño).
+  12 dic 2007, REPSE con enlace al padrón, clientes con nombre y logo (autorizado el 2026-11-07), fotos reales del vivero.
+- Autor del blog: `Organization` "Equipo técnico de Viveros Terra" ligado a `#negocio` (decisión del dueño 2026-11-07: sin
+  persona inventada). Si el dueño nombra después a una persona real, se agrega `Person` con su página de autor.
 - `dateModified` y "Actualizado: mes año" visible en servicios, materiales, mayoreo y vivero; las 8 fechas que faltan
   en el blog.
 
@@ -498,7 +506,7 @@ contenido de sintético · feed de actividad inventada eliminado · `aggregateRa
   de página; `curl -I https://viverosterra.com/` responde 308; capturas a 320–1440 sin desbordamiento.
 - **Riesgos:** regresión visual al envolver páginas viejas con el header nuevo (mitigación: prefijo `vt-`, capturas
   antes/después por página); deriva de datos durante la migración (mitigación: la prueba de consistencia bloquea).
-- **El dueño aporta:** acceso a GA4 y a Vercel > Domains; confirmación de la promesa única; precio del framboyán.
+- **El dueño aporta:** acceso a GA4 y a Vercel > Domains. (Promesa única y precio del framboyán ya resueltos.)
 
 ### Etapa 2 · Plantillas y migración por tipo de página (orden por impacto en leads)
 - **Alcance, en este orden:**
@@ -520,21 +528,21 @@ contenido de sintético · feed de actividad inventada eliminado · `aggregateRa
 - **Riesgos:** fotos generadas o retocadas que restan confianza (mitigación: pies `FIG.`, recorte documental, sesión real);
   pérdida de contenido al migrar posts (mitigación: diff de texto visible antes/después).
 - **El dueño aporta:** **sesión de fotos real de medio día (muy recomendada)**: corte del viernes, camión cargado,
-  cuadrilla instalando en una colonia reconocible, vivero y punto de venta de Obregón 209 Sur; permiso para publicar
-  clientes con nombre; precios "desde" de palmas faltantes.
+  cuadrilla instalando en una colonia reconocible, vivero y punto de venta de Obregón 209 Sur; precios "desde" de palmas
+  faltantes. (Permiso para publicar clientes con nombre y logo: otorgado el 2026-11-07.)
 
 ### Etapa 3 · Arquitectura y contenido
 - **Alcance:** consolidaciones y 301 del §3.5; páginas nuevas `/nosotros`, `/empresas`, `/zonas`, `/404` y, si se
   confirma, `/poda-palmas-arboles-tampico`; contenido único por zona; reescritura de títulos y H1; enlazado contextual
-  del §6.5; breadcrumbs; PDF real de la guía de palmas o retiro de la promesa.
+  del §6.5; breadcrumbs. (La guía de palmas en PDF se retira en la Etapa 1 por decisión del dueño.)
 - **Entregables:** redirects en `vercel.json` generados desde `datos.py`, páginas nuevas, mapa de enlaces antes/después.
 - **Revisores:** SEO/AEO (canibalización, 301), CRO (recorridos), diseño (páginas nuevas), cumplimiento/QA.
 - **Definición de terminado:** 0 redirects en cadena; cada zona con ≥ 3 enlaces entrantes contextuales; cada post con
   ≥ 2 enlaces contextuales a su money page; títulos ≤ 65; cero páginas huérfanas indexables.
 - **Riesgos:** pérdida temporal de posiciones por 301 (mitigación: decidir con datos de Search Console, fusionar
   contenido, no solo redirigir).
-- **El dueño aporta:** acceso a Search Console; confirmación y precio del servicio de poda; historia y fotos para
-  Nosotros; nombre del autor técnico del blog.
+- **El dueño aporta:** acceso a Search Console; historia y fotos para Nosotros. (Poda confirmada desde $500; el blog
+  firma como "Equipo técnico de Viveros Terra".)
 
 ### Etapa 4 · SEO, AEO y entidad
 - **Alcance:** grafo JSON-LD único (§7.1); `sameAs`; respuesta directa y FAQ con rangos (§7.3); fechas y autor; `llms.txt`
@@ -584,16 +592,20 @@ contenido de sintético · feed de actividad inventada eliminado · `aggregateRa
 fotos generadas (mitigado por la sesión real y el tratamiento documental); caída temporal de posiciones por
 consolidaciones (mitigado por datos de Search Console); deriva de datos entre Python y JS (paridad probada).
 
-**Decisiones pendientes del dueño:**
+**Decisiones del dueño (§12), estado al 2026-11-07:**
 1. (Resuelta) Promesa única de respuesta: "menos de 1 hora en horario", decidida por el dueño el 2026-09-30.
-2. ¿La poda de palmas y árboles es servicio real? Precio "desde".
-3. Precio único del framboyán y precios "desde" de palmas sin precio publicado.
-4. Permiso para publicar clientes con nombre y logos (BMW, Taghleef, Gobierno de Tampico, Grupo Velas, Velamar, Flex).
-5. Nombre del autor técnico del blog.
-6. Año de inicio de la tienda nacional de sintético (para el párrafo de entidad).
-7. PDF real de la guía de palmas o retiro de la promesa.
-8. ¿Mantendrá una fecha de "próximo corte"? Si no, no se muestra.
-9. Correo con dominio propio para el sitio (opcional; los formularios siguen en viverosterra@hotmail.com).
+2. (Resuelta 2026-11-07) La poda de palmas y árboles es servicio real: "desde $500, según cotización" (tamaño y residuos;
+   fotos y ubicación por WhatsApp). Página en la Etapa 3; dato en `datos.py` desde la Etapa 1.
+3. (Resuelta 2026-11-07) Framboyán desde $250. Siguen pendientes los precios "desde" de palmas sin precio publicado.
+4. (Resuelta 2026-11-07) Permiso para publicar clientes con nombre y logo (BMW, Taghleef, Gobierno de Tampico, Grupo Velas,
+   Velamar, Flex).
+5. (Resuelta 2026-11-07) Autor del blog: la organización, "Equipo técnico de Viveros Terra" (`Organization` ligado a
+   `#negocio`), sin persona inventada, hasta que el dueño nombre a una persona real.
+6. (Resuelta 2026-11-07) Tienda nacional de sintético: desde 2012.
+7. (Resuelta 2026-11-07) Guía de palmas en PDF: se retira la oferta y el PDF; 301 de su URL a `/palmas-tropicales-tampico`
+   (Etapa 1).
+8. (Resuelta 2026-11-07) "Próximo corte": no se muestra nunca; se retira cualquier aviso de corte o disponibilidad semanal.
+9. (Pendiente) Correo con dominio propio para el sitio (opcional; los formularios siguen en viverosterra@hotmail.com).
 
 **Fuera de alcance:** checkout o pago en línea; campaña de reseñas de Google; nuevas páginas de ciudades o colonias sin
 datos; cambio de framework (Astro/Next); Meta Pixel u otros terceros; rediseño del logo; publicación en Mercado Libre y
@@ -665,7 +677,7 @@ Amazon (se menciona como oportunidad).
 | A05 #8 | Fuentes autoalojadas, ≤ 2 familias | 1 (decisión) · 5 |
 | A05 #9 | `/api/img` proxy abierto y LCP del catálogo | 2 (fotos locales) · 5 (retiro) |
 | A05 #10 | Labels, `aria-label`, `<main>`, skip-link | 1 (parciales) · 2 |
-| A05 #11 | PDF placeholder de palmas | 3 |
+| A05 #11 | PDF placeholder de palmas (se retira la oferta, decisión del dueño) | 1 |
 | A05 #12 | Parciales y prueba de paridad | 1 |
 | A05 #13 | Assets con hash e `immutable` | 1 · 5 |
 | A05 #14 | Imágenes sin dimensiones, pesadas o sin uso | 2 · 5 |
