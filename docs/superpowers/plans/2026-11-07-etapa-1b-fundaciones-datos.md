@@ -380,7 +380,7 @@ POR_ARCHIVO = (
     ("public/pasto-en-rollo-tampico/index.html",
      "No. <strong>Pagas cuando ves tu jardín terminado.</strong> Sin pago total por adelantado, sin sorpresas. Lo importante "
      "es que empieces con tranquilidad y que confíes en el resultado.",
-     "No. No pedimos el 100% por adelantado: el esquema se acuerda al cotizar, y puedes pagar en mensualidades con tarjeta "
+     "No. No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos un anticipo, y puedes pagar en mensualidades con tarjeta "
      "de crédito en cotizaciones desde $2,000. Si una sección no arraiga en 15 a 20 días, la reponemos sin costo, siguiendo "
      "el protocolo de riego."),
     ("public/pasto-en-rollo-tampico/index.html",
@@ -388,7 +388,7 @@ POR_ARCHIVO = (
      "adelantado. Al confirmar tu proyecto coordinamos el esquema contigo directamente — sin letras chicas ni sorpresas. "
      "de pago flexibles</strong> — adaptamos las condiciones a tu proyecto y conveniencia. Lo que no hacemos es pedirte el "
      "100% por adelantado sin haber entregado nada. Pregúntanos al cotizar y te decimos qué opciones hay para tu caso.</div>",
-     '<div class="pb-5">Sí. No pedimos el 100% por adelantado: al confirmar tu proyecto acordamos el esquema contigo, sin '
+     '<div class="pb-5">Sí. No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos un anticipo, sin '
      "letra chica. También puedes pagar en mensualidades con tarjeta de crédito desde $2,000; los plazos dependen del monto "
      '(<a href="/politicas#mensualidades">ver condiciones</a>).</div>'),
     ("public/pasto-en-rollo-tampico/index.html",
