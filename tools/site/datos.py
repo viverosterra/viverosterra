@@ -55,6 +55,10 @@ PRECIOS = {
     "sintetico_tienda_m2": 139,
     "poda": 500,
     "flamboyan": 250,
+    "palma_desde": 250,
+    "tierra_negra_costal": 90,
+    "tierra_negra_m3": 1500,
+    "tezontle_costal": 200,
 }
 PODA = ("Desde $500, según cotización: el precio depende del tamaño del árbol o la palma y de los residuos que se "
         "generan. Mándanos fotos y ubicación por WhatsApp.")
@@ -62,6 +66,19 @@ GARANTIA_PASTO = ("Si una sección no arraiga en 15 a 20 días, la reponemos sin
                   "(ver condiciones).")
 GARANTIA_PLANTAS = "30 días en las plantas que sembramos nosotros, con el riego indicado (ver condiciones)."
 PRIMER_RIEGO = "El primer riego lo haces tú: te enseñamos cómo y te dejamos el protocolo de 20 días."
+ARRAIGO = "15 a 20 días"
+LLEGADA_PASTO = "una vez por semana, generalmente los viernes"
+ANTICIPO = ("No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos "
+            "un anticipo.")
+VIGENCIA = f"noviembre de {ANIO}"
+# Una sola respuesta a "¿cuánto cuesta el pasto en rollo en Tampico?" en home, servicio y precios (spec §7.3).
+RESPUESTA_PRECIO_PASTO = (
+    f"En Viveros Terra el pasto San Agustín en rollo cuesta ${PRECIOS['pasto_solo_m2']} por m² solo el pasto y desde "
+    f"${PRECIOS['pasto_instalado_m2']} por m² instalado, con IVA incluido. El instalado incluye la preparación básica "
+    f"del terreno, la colocación y una garantía de arraigo de {ARRAIGO}. En pedidos de "
+    f"{PRECIOS['pasto_mayoreo_minimo_m2']} m² o más, el mayoreo cuesta desde ${PRECIOS['pasto_mayoreo_m2']}/m². "
+    f"Precios vigentes en {VIGENCIA} para Tampico, Ciudad Madero y Altamira."
+)
 
 # Permiso del dueño (2026-11-07) para mostrarlos con nombre y logo.
 CLIENTES_B2B = ("BMW", "Taghleef Industries", "Gobierno de Tampico", "Grupo Velas", "Velamar", "Flex")

@@ -64,6 +64,17 @@ class DatosTest(unittest.TestCase):
         self.assertIn("sembramos nosotros", datos.GARANTIA_PLANTAS)
         self.assertEqual(datos.PRIMER_RIEGO, "El primer riego lo haces tú: te enseñamos cómo y te dejamos el protocolo de 20 días.")
 
+    def test_datos_de_las_plantillas_etapa_2a(self):
+        p = datos.PRECIOS
+        self.assertEqual((p["palma_desde"], p["tierra_negra_costal"], p["tierra_negra_m3"], p["tezontle_costal"]),
+                         (250, 90, 1500, 200))
+        self.assertEqual(datos.LLEGADA_PASTO, "una vez por semana, generalmente los viernes")
+        self.assertTrue(datos.ANTICIPO.startswith("No pedimos el 100% por adelantado: para confirmar tu pedido o "
+                                                  "agendar el servicio solicitamos un anticipo"))
+        self.assertEqual(datos.ARRAIGO, "15 a 20 días")
+        for cifra in ("$85 por m²", "desde $120 por m²", "500 m²", "$60/m²", "noviembre de 2026"):
+            self.assertIn(cifra, datos.RESPUESTA_PRECIO_PASTO)
+
     def test_mensajes_terminan_con_la_firma(self):
         for servicio in datos.MENSAJES:
             with self.subTest(servicio=servicio):
