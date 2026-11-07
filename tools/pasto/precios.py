@@ -242,7 +242,7 @@ def build_precios():
   <section class="closing" aria-labelledby="cierre">
     <div class="wrap">
       <h2 id="cierre">¿Quieres el precio exacto <em>de tu jardín?</em></h2>
-      <p>Mándanos tu colonia, los metros aproximados y una foto del espacio. Te respondemos hoy y, si hace falta, vamos a medir sin costo.</p>
+      <p>Mándanos tu colonia, los metros aproximados y una foto del espacio. Te respondemos en menos de 1 hora en horario y, si hace falta, vamos a medir sin costo.</p>
       <div class="closing__actions">
         <a class="btn btn--light" href="{wa('Hola, quiero el precio exacto de mi jardín. Mi colonia es: ___ · Metros aprox.: ___ · Te mando foto del espacio.')}" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
         <a class="btn btn--ghost" href="tel:+528333268008">Llamar {PHONE_DISPLAY}</a>

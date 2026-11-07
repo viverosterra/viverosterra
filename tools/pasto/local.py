@@ -11,7 +11,7 @@ from ficha import NOTE_FLETE, calc_html, quote_html, tiers_html
 
 URL = f"{SITE}/pasto-sintetico-tampico"
 BUSINESS_ID = f"{SITE}/#negocio"
-ADDRESS = "Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional, 89510 Cd. Madero, frente a Walmart"
+ADDRESS = "Av. Álvaro Obregón 209 Sur, Col. Ampliación Unidad Nacional, 89510 Cd. Madero, frente a Walmart"
 MAPS = "https://maps.app.goo.gl/xC4XGL2WeucAjGwAA"
 APPLE_MAPS = "https://maps.apple.com/?daddr=22.2777575,-97.8433341&q=Viveros%20Terra"
 INSTALADO_MIN, INSTALADO_MAX = 385, 650
@@ -21,8 +21,8 @@ DEFAULT = next(m for m in MODELOS if m["slug"] == "toscana-28")
 
 FAQS = [
     ("¿Dónde comprar pasto sintético en Tampico?",
-     "En Viveros Terra, en Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional, Cd. Madero, frente a Walmart. Tenemos Toscana 18 y Toscana 28 en "
-     "existencia para llevar el mismo día, y los otros 7 modelos sobre pedido. Atendemos de lunes a viernes de 9 a 18 h "
+     "En Viveros Terra, en Av. Álvaro Obregón 209 Sur, Col. Ampliación Unidad Nacional, Cd. Madero, frente a Walmart. Tenemos Toscana 18 y Toscana 28 en "
+     "existencia para llevar hoy; los otros 7 modelos también están en existencia y llegan en 3 a 5 días. Atendemos de lunes a viernes de 9 a 18 h "
      "y sábado de 9 a 14 h."),
     ("¿Cuánto cuesta instalar pasto sintético en Tampico?",
      f"La instalación cuesta desde ${INSTALADO_MIN}/m² y hasta ${INSTALADO_MAX}/m² en modelos premium. Incluye el "
@@ -241,7 +241,7 @@ def schema(faqs):
     business = {
         "@type": ["LocalBusiness", "Store"], "@id": BUSINESS_ID, "name": "Viveros Terra", "url": SITE,
         "telephone": f"+{WA_NUMBER}", "priceRange": "$$", "foundingDate": "2007-12-12",
-        "address": {"@type": "PostalAddress", "streetAddress": "Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional",
+        "address": {"@type": "PostalAddress", "streetAddress": "Av. Álvaro Obregón 209 Sur",
                     "addressLocality": "Ciudad Madero", "addressRegion": "Tamaulipas", "postalCode": "89510", "addressCountry": "MX"},
         "geo": {"@type": "GeoCoordinates", "latitude": 22.2777575, "longitude": -97.8433341},
         "hasMap": MAPS,

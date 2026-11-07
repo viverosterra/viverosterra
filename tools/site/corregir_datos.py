@@ -170,6 +170,15 @@ POR_ARCHIVO = (
     ("public/pasto-en-rollo-tampico/index.html",
      "<!-- ═══ DISPONIBILIDAD SEMANAL — el diferenciador de frescura ═══ -->\n", ""),
     ("public/pasto-en-rollo-tampico/index.html", ".disponibilidad-bar{background:linear-gradient(90deg,#064e3b,#065f46)}\n", ""),
+    ("public/pasto-en-rollo-tampico/index.html",
+     "Lo manejamos con un sistema de lote semanal para garantizar que nunca almacenamos pasto más de una semana.",
+     "Así nunca almacenamos pasto más de una semana."),
+    # Tierra negra: los años de la empresa salen de la fundación (2007), no "20+".
+    ("public/tierra-negra-vegetal-tampico/index.html",
+     '<div class="text-3xl font-display font-bold text-primary">20+</div>\n'
+     '        <div class="text-gray-500 text-sm mt-1">Años en Tampico</div>',
+     '<div class="text-3xl font-display font-bold text-primary">+18</div>\n'
+     f'        <div class="text-gray-500 text-sm mt-1">Años en la región (desde {datos.DESDE})</div>'),
     # Mayoreo: el mínimo es 500 m²; la respuesta, la promesa única.
     ("public/mayoreo-pasto-tampico/index.html", "pedidos a partir de 200 m²",
      f"pedidos a partir de {P['pasto_mayoreo_minimo_m2']} m²"),
@@ -269,8 +278,8 @@ POR_ARCHIVO = (
     # llms.txt: entidad sin "líder", datos y páginas que faltaban, "Lo que no hacemos".
     ("public/llms.txt", "> Empresa de jardinería líder en el sur de Tamaulipas, México, desde 2007.",
      "> Vivero y empresa de jardinería de Ciudad Madero, Tamaulipas, México, fundada el 12 de diciembre de 2007."),
-    ("public/llms.txt", "- Fundada: 12 de diciembre de 2007 (más de 18 años en la región)\n",
-     "Última actualización: 2026-11-07\n\n- Fundada: 12 de diciembre de 2007 (más de 18 años en la región)\n"
+    ("public/llms.txt", "Datos clave:\n- Fundada: 12 de diciembre de 2007 (más de 18 años en la región)\n",
+     "Última actualización: 2026-11-07\n\nDatos clave:\n- Fundada: 12 de diciembre de 2007 (más de 18 años en la región)\n"
      f"- Pasto sintético con envío a todo México desde {datos.SINTETICO_NACIONAL_DESDE}\n"),
     ("public/llms.txt", "México (frente a Walmart). Google Maps:", "México (frente a Walmart, entrando por Banamex). Google Maps:"),
     ("public/llms.txt", "- Horario: Lunes–Viernes 9am–6pm, Sábado 9am–2pm\n",
@@ -283,7 +292,7 @@ POR_ARCHIVO = (
     ("public/llms.txt", "sin garantía de arraigo.\n\n- ¿Cuánto cuesta", "sin garantía de arraigo.\n- ¿Cuánto cuesta"),
     ("public/llms.txt", "- ¿Hacen entregas a domicilio? Sí, en Tampico, Madero y Altamira; mayoreo a toda la Huasteca.\n",
      "- ¿Hacen entregas a domicilio? Sí, en Tampico, Madero y Altamira; mayoreo a toda la Huasteca.\n\n"
-     "## Lo que no hacemos\n- No enviamos muestras físicas del pasto sintético: se elige con fichas técnicas y fotos.\n"
+     "## Lo que no hacemos\n- No ofrecemos muestras físicas del pasto sintético: se elige con fichas técnicas y fotos.\n"
      "- No enviamos pasto natural fuera de la región (Tampico, Madero, Altamira y la Huasteca).\n"
      "- No publicamos fechas de corte ni disponibilidad semanal.\n"),
 )

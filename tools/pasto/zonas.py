@@ -100,11 +100,11 @@ ZONAS = {
         retos=[
             ("Brisa y salitre cerca de la playa", "En Miramar el viento trae sal. Recomendamos plantas y palmas que la toleran, como coco plumoso, washingtonia y cubresuelos costeros."),
             ("Suelo arenoso", "La arena retiene poca agua y pocos nutrientes. Mejoramos el suelo con tierra negra y ajustamos el riego y la fertilización."),
-            ("A minutos del vivero", "Estamos en Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional, frente a Walmart. Puedes venir a escoger tus plantas."),
+            ("A minutos del vivero", "Estamos en Av. Álvaro Obregón 209 Sur, Col. Ampliación Unidad Nacional, frente a Walmart. Puedes venir a escoger tus plantas."),
         ],
         img=("diseno-jardines-madero-altamira-pasto", 960, 640, None),
         faqs=[
-            ("¿Dónde está el vivero de Viveros Terra en Madero?", "En Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional, 89510 Cd. Madero, frente a Walmart. Lunes a viernes de 9 a 18 h y sábado de 9 a 14 h."),
+            ("¿Dónde está el vivero de Viveros Terra en Madero?", "En Av. Álvaro Obregón 209 Sur, Col. Ampliación Unidad Nacional, 89510 Cd. Madero, frente a Walmart. Lunes a viernes de 9 a 18 h y sábado de 9 a 14 h."),
             ("¿Qué plantas aguantan la brisa de Playa Miramar?", "Coco plumoso, washingtonia, uva de mar y plantas de hoja gruesa toleran el salitre. Te decimos cuáles según qué tan cerca estés del mar."),
             ("¿Cuánto cuesta el pasto en rollo en Madero?", "El pasto San Agustín cuesta $85/m² solo el pasto y desde $120/m² instalado, con garantía de arraigo de 15 a 20 días."),
         ],
@@ -242,7 +242,7 @@ def build_zona(slug, z):
   <section class="closing" aria-labelledby="cierre">
     <div class="wrap">
       <h2 id="cierre">Cotiza tu jardín <em>en {esc(z["corto"])}</em></h2>
-      <p>Mándanos tu colonia, el servicio que necesitas, los metros aproximados y una foto. Te respondemos hoy y, si hace falta, vamos a medir sin costo.</p>
+      <p>Mándanos tu colonia, el servicio que necesitas, los metros aproximados y una foto. Te respondemos en menos de 1 hora en horario y, si hace falta, vamos a medir sin costo.</p>
       <div class="closing__actions">
         <a class="btn btn--light" href="{wa(guided(z["corto"]))}" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
         <a class="btn btn--ghost" href="/vivero-tampico">Visitar el vivero</a>

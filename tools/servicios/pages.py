@@ -72,7 +72,7 @@ PAGES = {
     "vivero-tampico": dict(
         title="Vivero en Tampico", accent="y Ciudad Madero, desde 2007",
         price_pre="Palmas desde", price="$250", price_unit="", price_alt="· pasto $85/m² · plantas por tamaño",
-        lede='Pasto, plantas, palmas, árboles y materiales para jardín en Av. Álvaro Obregón 209, Col. Ampliación Unidad Nacional, Cd. Madero, frente a Walmart.',
+        lede='Pasto, plantas, palmas, árboles y materiales para jardín en Av. Álvaro Obregón 209 Sur, Col. Ampliación Unidad Nacional, Cd. Madero, frente a Walmart.',
         facts=[VARIEDADES, DESDE_2007, GARANTIA_PLANTAS],
         img="/img/arboles-tampico-viveros-terra.webp",
         alt="Equipo de Viveros Terra sembrando un árbol en un jardín de Tampico", caption="Siembra de árboles y plantas en Tampico.",
@@ -131,7 +131,7 @@ PAGES = {
     ),
     "arboles-ornamentales-tampico": dict(
         title="Árboles ornamentales", accent="para jardines en Tampico",
-        price_pre="Desde", price="$350", price_unit="", price_alt="· crespón $350 · jacaranda $450 · framboyán $500",
+        price_pre="Desde", price="$250", price_unit="", price_alt="· framboyán $250 · crespón $350 · jacaranda $450",
         lede="Árboles de sombra y de flor elegidos para el clima de Tamaulipas. Te los llevamos y los sembramos con garantía de arraigo.",
         facts=[GARANTIA_PLANTAS, ("Entrega y siembra", "Tampico, Madero y Altamira"), VARIEDADES],
         img="/img/arboles-tampico-viveros-terra.webp",

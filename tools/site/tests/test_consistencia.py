@@ -28,7 +28,7 @@ PROHIBIDAS = (
      r"\b(?:te )?respond\w*\s+(?:por WhatsApp\s+)?(?:con [^.·]{0,40}?)?"
      r"(?:en minutos|hoy\b|el mismo día|en menos de (?:[2-9]|\d{2,}) horas)"),
     ("respuesta en un plazo viejo",
-     r"\brespuesta\s+(?:a cotización\s+)?(?:el mismo día|en (?:menos de )?\d+ ?(?:h|hrs?|horas)\b)"
+     r"\brespuesta\s+(?:a cotización\s+)?(?:hoy\b|el mismo día|en (?:menos de )?\d+ ?(?:h|hrs?|horas)\b)"
      r"|\bmismo día\W+respuesta|\b24 ?h\w*\W+respuesta"),
     ("contacto en 24 horas",
      r"\bcontact\w*(?: contigo)? en (?:menos de )?24 ?(?:h|hrs?|horas)\b|en contacto contigo en menos de 24 horas"
@@ -45,7 +45,7 @@ PROHIBIDAS = (
      r"pr[oó]ximo corte|lote semanal|reservar (?:mi|tu) lote|lote de esta semana|instalaciones esta semana|"
      r"temporada de lluvias — el mejor momento"),
     ("mayoreo desde 200 m²", r"(?:mayoreo|pedidos)[^.]{0,60}\b200 m²"),
-    ("mantenimiento desde $500/mes", r"\$500\s?/\s?mes"),
+    ("mantenimiento desde $500/mes", r"mantenimiento[^.]{0,90}\$500\s?/\s?mes"),
     ("framboyán a $500", r"framboy[aá]n[^.$]{0,40}\$\s?500\b|\$\s?500\b[^.]{0,40}framboy[aá]n"),
     ("Flamboyán (ortografía)", r"(?<!conocido como )\bflamboyán\b"),
     ("Plan Terra Completo de $50,000",
@@ -197,7 +197,7 @@ class ConsistenciaTest(unittest.TestCase):
             "promesa de respuesta vieja": ("Respondemos hoy mismo", "respondemos en minutos", "Te respondemos hoy y",
                                            "Respondemos el mismo día ·", "Respondemos en menos de 4 horas hábiles"),
             "respuesta en un plazo viejo": ("Respuesta el mismo día · Tampico", "Mismo día Respuesta a cotización",
-                                            "Respuesta en 24h", "Respuesta en menos de 2 horas"),
+                                            "Respuesta en 24h", "Respuesta en menos de 2 horas", "Respuesta hoy · Lun–Sáb"),
             "contacto en 24 horas": ("Te contactamos en 24 hrs", "te contactará en menos de 24 horas"),
             "años de la empresa distintos de 2007": ("20+ Años en Tampico", "más de 15 años de experiencia"),
         }
