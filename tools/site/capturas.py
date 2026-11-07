@@ -17,7 +17,6 @@ PAGINAS = ("/", "/pasto-en-rollo-tampico/", "/pasto-sintetico/", "/pasto-sinteti
 ANCHOS = (320, 375, 1440)
 # Desbordes conocidos del cuerpo viejo (no del shell, que test_navegador cubre): se anotan, no se esconden.
 CONOCIDOS = {
-    "/blog/cuando-regar-pasto-san-agustin-tampico/": "tabla del cuerpo sin contenedor con scroll (Etapa 2)",
     "/pasto-sintetico/": "fila de chips de filtro de la tienda a 320 px (Etapa 2)",
 }
 

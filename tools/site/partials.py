@@ -109,7 +109,8 @@ def _item_movil(item, ctx):
         return f'<a class="vt-mmenu__link" href="{item["href"]}"{actual}>{esc(item["texto"])}{nota}</a>'
     abierto = " open" if item["id"] == ctx["activo"] else ""
     enlaces = "".join(_enlace(t, h, ctx["ruta"]) for t, h in item["items"])
-    return f'<details class="vt-acc"{abierto}><summary>{esc(item["texto"])}{nota}</summary><ul>{enlaces}</ul></details>'
+    fin = f'<span class="vt-acc__fin">{nota}{CHEV}</span>'
+    return f'<details class="vt-acc"{abierto}><summary>{esc(item["texto"])}{fin}</summary><ul>{enlaces}</ul></details>'
 
 
 def header(ctx):
@@ -195,7 +196,7 @@ def barra(ctx):
 def footer(ctx):
     """Pie único con columnas, contacto, promesa, cuadro de datos y redes; incluye la barra móvil si el contexto la pide."""
     tipo = ctx["tipo"]
-    wa = esc(datos.wa_url(ctx["mensaje"]))
+    wa = esc(datos.wa_url(ctx["mensaje_pie"]))
     columnas = "\n".join(_columna(titulo, enlaces) for titulo, enlaces in PIE)
     celdas = "".join(f"<div><dt>{esc(t)}</dt><dd>{esc(v)}<small>{esc(s)}</small></dd></div>" for t, v, s in DATOS_PIE)
     redes = "".join(f'<a href="{url}" target="_blank" rel="noopener">{esc(nombre)}</a>' for nombre, url in datos.REDES)

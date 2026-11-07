@@ -49,6 +49,42 @@ class ContextoTest(unittest.TestCase):
             with self.subTest(ruta=ruta):
                 self.assertFalse(paginas.contexto(ruta)["barra"])
 
+    def test_sin_barra_del_shell_donde_la_pagina_tiene_su_barra_de_compra(self):
+        # /pasto-sintetico-tampico tiene #buybar (precio + Cotizar): dos barras fijas se tapan a 375 px.
+        self.assertFalse(paginas.contexto("/pasto-sintetico-tampico")["barra"])
+
+    def test_mensaje_propio_del_articulo_y_tema_por_slug(self):
+        ctx = paginas.contexto("/blog/cuando-regar-pasto-san-agustin-tampico")
+        self.assertTrue(ctx["mensaje"].startswith('Hola, leí su artículo "¿Cuándo y cuánto regar el pasto San Agustín'))
+        self.assertTrue(ctx["mensaje"].endswith("\n\n" + datos.FIRMA))
+        self.assertEqual(ctx["servicio"], "pasto-natural")
+        self.assertEqual(ctx["mensaje_pie"], ctx["mensaje"])
+        temas = {"/blog/pasto-sintetico-para-perros": "pasto-sintetico", "/blog/palma-areca-tampico": "plantas",
+                 "/blog/sistema-riego-automatizado-tampico": "jardin", "/blog/tezontle-usos-jardin-tampico": "materiales",
+                 "/blog/plantas-interior-tampico": "plantas", "/blog/jardin-vertical-tampico-guia": "jardin"}
+        for ruta, servicio in temas.items():
+            with self.subTest(ruta=ruta):
+                self.assertEqual(paginas.contexto(ruta)["servicio"], servicio)
+
+    def test_todo_articulo_del_blog_tiene_mensaje_propio(self):
+        for path in sorted((paginas.PUBLIC / "blog").glob("*/index.html")):
+            ruta = paginas.ruta_de(path)
+            with self.subTest(ruta=ruta):
+                self.assertNotEqual(paginas.contexto(ruta)["mensaje"], datos.mensaje("general"))
+
+    def test_mensajes_de_catalogo_precios_tienda_y_ciudad(self):
+        firma = "\n\n" + datos.FIRMA
+        self.assertEqual(paginas.contexto("/catalogo")["mensaje"], "Hola, vi el catálogo y quiero cotizar una planta" + firma)
+        precios = paginas.contexto("/precios")
+        self.assertEqual(precios["mensaje"], "Hola, vi la lista de precios y quiero cotizar" + firma)
+        self.assertEqual(precios["mensaje_pie"], "Hola, tengo una pregunta sobre precios" + firma)
+        for ruta in ("/pasto-sintetico", "/pasto-sintetico/toscana-28", "/pasto-sintetico/envio/cdmx"):
+            with self.subTest(ruta=ruta):
+                ctx = paginas.contexto(ruta)
+                self.assertEqual(ctx["mensaje"], datos.mensaje("pasto-sintetico"))
+                self.assertEqual(ctx["mensaje_pie"], "Hola, tengo una pregunta sobre pasto sintético" + firma)
+        self.assertEqual(paginas.contexto("/")["mensaje_pie"], datos.mensaje("general"))
+
     def test_ruta_desconocida_falla(self):
         with self.assertRaises(KeyError):
             paginas.contexto("/no-existe")

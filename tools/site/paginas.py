@@ -1,14 +1,17 @@
-"""Contexto de cada página para el shell: tipo (prefijo de data-cta), sección activa del menú, servicio y barra móvil.
+"""Contexto de cada página para el shell: tipo (prefijo de data-cta), sección activa del menú, servicio, barra móvil y
+mensajes de WhatsApp (los propios de la página salen de mensajes_paginas.py).
 
 Toda página de public/ debe tener contexto. Si agregas una página, agrégala aquí: el build falla con rutas sin contexto.
 """
 from pathlib import Path
 
 import datos
+import mensajes_paginas
 
 PUBLIC = Path(__file__).resolve().parents[2] / "public"
 SIN_BARRA = {"tienda", "ciudad", "catalogo"}
-RUTAS_SIN_BARRA = {"/cuestionario", "/gracias", "/datos-envio"}
+# Formularios y páginas con su propia barra fija de compra (#buybar): dos barras fijas se tapan en celular.
+RUTAS_SIN_BARRA = {"/cuestionario", "/gracias", "/datos-envio", "/pasto-sintetico-tampico"}
 
 _PLANTAS = ("plantas", "plantas", "plantas")
 _MATERIAL = ("material", "plantas", "materiales")
@@ -65,18 +68,26 @@ def ruta_de(path, public=PUBLIC):
 
 
 def contexto(ruta):
-    """Diccionario nuevo con ruta, tipo, activo, servicio, barra y mensaje de WhatsApp de la ruta."""
+    """Diccionario nuevo con ruta, tipo, activo, servicio, barra y mensajes de WhatsApp (menú/barra y pie) de la ruta."""
     valores = EXACTAS.get(ruta)
     if valores is None:
         valores = next((v for prefijo, v in PREFIJOS if ruta.startswith(prefijo)), None)
     if valores is None:
         raise KeyError(f"Ruta sin contexto en tools/site/paginas.py: {ruta}")
     tipo, activo, servicio = valores
+    texto, texto_pie = datos.MENSAJES[servicio], mensajes_paginas.PIE_TIPO.get(tipo)
+    slug = ruta[len("/blog/"):] if ruta.startswith("/blog/") else None
+    if slug:
+        servicio = mensajes_paginas.tema_blog(slug)
+        texto = mensajes_paginas.BLOG.get(slug, texto)
+    if ruta in mensajes_paginas.RUTAS:
+        texto, texto_pie = mensajes_paginas.RUTAS[ruta]
     return {
         "ruta": ruta,
         "tipo": tipo,
         "activo": activo,
         "servicio": servicio,
         "barra": tipo not in SIN_BARRA and ruta not in RUTAS_SIN_BARRA,
-        "mensaje": datos.mensaje(servicio),
+        "mensaje": datos.con_firma(texto),
+        "mensaje_pie": datos.con_firma(texto_pie or texto),
     }

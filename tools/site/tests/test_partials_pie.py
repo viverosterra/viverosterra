@@ -26,6 +26,10 @@ class PieTest(unittest.TestCase):
                 self.assertIn(texto, self.f)
         self.assertIn('data-cta="blog:footer" href="tel:+528333268008"', self.f)
 
+    def test_pie_de_la_tienda_con_su_pregunta(self):
+        pie = partials.footer(paginas.contexto("/pasto-sintetico/toscana-28"))
+        self.assertIn(datos.wa_url(datos.con_firma("Hola, tengo una pregunta sobre pasto sintético")), pie)
+
     def test_correo_en_contacto(self):
         self.assertEqual(datos.CORREO_FORMULARIOS, "viverosterra@hotmail.com")
         self.assertIn(f'<li><a class="vt-foot__correo" href="mailto:{datos.CORREO_FORMULARIOS}">'

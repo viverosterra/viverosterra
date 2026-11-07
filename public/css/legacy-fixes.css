@@ -3,6 +3,11 @@
    package.json para regenerarlo). Valores de Tailwind 3 y colores de tailwind.config.js (primary #1B5E20,
    accent #66BB6A, wa #25D366). "text-slate" era un error de tipeo en mármol: se fija al slate-600 de Tailwind.
    Se borra junto con tailwind.css al cerrar la Etapa 2. */
+/* Tablas de los artículos del blog (<table> sin clase dentro de article.prose o .article-prose): en celular, si no caben, se desplazan
+   dentro de su propia caja en vez de ensanchar la página y sacar de la pantalla la barra fija. Solo bajo 768px, para no
+   cambiar el ancho de las tablas en escritorio. Las tablas de servicios ya traen su contenedor overflow-x-auto y las de
+   la tienda y precios no cargan este archivo. */
+@media (max-width:767px){article.prose table:not([class]),.article-prose table:not([class]){display:block;max-width:100%;overflow-x:auto}}
 .pt-0{padding-top:0}
 .pt-4{padding-top:1rem}
 .pb-1{padding-bottom:.25rem}

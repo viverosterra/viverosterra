@@ -24,6 +24,26 @@ AXE_SHELL = """async () => {
   return r.violations.filter((v) => ['serious', 'critical'].includes(v.impact))
     .map((v) => v.id + ': ' + v.nodes.map((n) => n.target.join(' ')).join(', '));
 }"""
+# Elementos fijos que ocupan el fondo de la pantalla y se ven (los ocultos con translateY quedan abajo del viewport).
+BARRAS_FIJAS_ABAJO = """() => Array.from(document.querySelectorAll('body *')).filter((e) => {
+  const s = getComputedStyle(e);
+  if (s.position !== 'fixed' || s.display === 'none' || s.visibility === 'hidden' || Number(s.opacity) === 0) return false;
+  const r = e.getBoundingClientRect();
+  return r.height > 0 && r.width > innerWidth / 2 && r.top < innerHeight - 1 && r.bottom >= innerHeight - 2;
+}).map((e) => e.id ? '#' + e.id : e.className.toString().split(' ')[0])"""
+RECORRER_BARRAS = """async () => {
+  const barras = """ + BARRAS_FIJAS_ABAJO + """;
+  const cuadro = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  for (let y = 0; y <= document.documentElement.scrollHeight; y += innerHeight) {
+    scrollTo({ top: y, behavior: 'instant' });
+    await cuadro();
+    const visibles = barras();
+    if (visibles.length > 1) return 'en y=' + y + ': ' + visibles.join(' + ');
+  }
+  return '';
+}"""
+QUIETO = """() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(
+  () => r(document.getAnimations().every((a) => a.playState !== 'running')))))"""
 BORDE_DERECHO = """() => Math.max(...Array.from(document.querySelectorAll('.vt-head__bar, .vt-foot, [data-vt-bar]'))
   .map((e) => e.getBoundingClientRect().right)) - document.documentElement.clientWidth"""
 
@@ -121,6 +141,61 @@ class NavegadorTest(unittest.TestCase):
         self.assertIn(["event", "click_to_call", {"link_type": "tel", "cta_id": "servicio-pasto:footer",
                                                   "service": "pasto-natural"}], eventos)
         self.assertEqual(page.get_attribute(".vt-head__cta", "href").count("viverosterra.com"), 1)
+
+    def test_nunca_dos_barras_fijas_abajo_a_375(self):
+        page = self.pagina(375, 812)
+        dobles = []
+        for path in shell.paginas_html():
+            page.goto(self.base + servidor.url_de(path), wait_until="load")
+            # Sin transiciones, y bajando de a una pantalla: los IntersectionObserver de las barras (la de compra
+            # aparece al pasar #comprar) solo avisan cuando un elemento cruza el viewport, no si se salta.
+            page.add_style_tag(content="*,*::before,*::after{transition:none!important;animation:none!important}")
+            barras = page.evaluate(RECORRER_BARRAS)
+            if barras:
+                dobles.append(f"{servidor.url_de(path)}: {barras}")
+        self.assertEqual(dobles, [])
+
+    def test_articulos_del_blog_sin_desbordar_a_375(self):
+        page = self.pagina(375, 812)
+        anchas = []
+        for path in sorted((shell.PUBLIC / "blog").glob("*/index.html")):
+            page.goto(self.base + servidor.url_de(path), wait_until="load")
+            sobra = page.evaluate("() => document.documentElement.scrollWidth - document.documentElement.clientWidth")
+            if sobra > 1:
+                anchas.append(f"{servidor.url_de(path)}: {sobra}px")
+        self.assertEqual(anchas, [])
+
+    def test_window_open_de_whatsapp_sale_firmado(self):
+        page = self.pagina(1440)
+        page.add_init_script("window.__abiertos = []; window.open = (url) => { window.__abiertos.push(String(url)); return null; };")
+        page.goto(self.base + "/diseno-jardines-tampico/", wait_until="load")
+        page.evaluate("() => sendWA('Hola, me interesa el Plan Terra')")
+        abiertos = page.evaluate("() => window.__abiertos")
+        self.assertEqual(len(abiertos), 1)
+        self.assertEqual(abiertos[0].count("viverosterra.com"), 1)
+        self.assertTrue(abiertos[0].startswith("https://wa.me/528333268008?text="))
+
+    def test_cotizador_de_la_tienda_manda_el_lead_con_cta_y_servicio(self):
+        page = self.pagina(1440)
+        page.goto(self.base + "/pasto-sintetico/toscana-28/", wait_until="load")
+        page.locator("[data-cta-wa]:visible").first.click()
+        eventos = page.evaluate(
+            "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+        leads = [e[2] for e in eventos if e[1] == "generate_lead"]
+        self.assertEqual(len(leads), 1)
+        self.assertEqual({k: leads[0][k] for k in ("method", "cta_id", "service")},
+                         {"method": "whatsapp_cotizador", "cta_id": "tienda:cotizador", "service": "pasto-sintetico"})
+
+    def test_menu_movil_abierto_deja_el_telefono_arriba_de_la_barra(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/blog/cuando-regar-pasto-san-agustin-tampico/", wait_until="load")
+        page.click(".vt-burger")
+        page.evaluate("() => document.querySelectorAll('#vt-mmenu details').forEach((d) => { d.open = true; })")
+        page.evaluate("() => { const m = document.getElementById('vt-mmenu'); m.scrollTop = m.scrollHeight; }")
+        page.wait_for_function(QUIETO)
+        tel = page.locator('.vt-mmenu__meta a[href^="tel:"]').bounding_box()
+        barra = page.locator("[data-vt-bar]").bounding_box()
+        self.assertLessEqual(tel["y"] + tel["height"], barra["y"])
 
     def test_shell_sin_desbordar(self):
         for ancho in (320, 375, 768, 1440):

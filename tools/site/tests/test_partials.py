@@ -46,7 +46,8 @@ class HeaderTest(unittest.TestCase):
         self.assertEqual(self.h.count("vt-nav__item is-activo"), 1)
         self.assertIn('<li class="vt-nav__item is-activo"><a class="vt-nav__top" href="/pasto-en-rollo-tampico">Pasto natural</a>', self.h)
         self.assertIn('<a href="/pasto-en-rollo-tampico" aria-current="page">Pasto en rollo</a>', self.h)
-        self.assertIn('<details class="vt-acc" open><summary>Pasto natural<small>desde $85/m²</small></summary>', self.h)
+        self.assertIn('<details class="vt-acc" open><summary>Pasto natural<span class="vt-acc__fin"><small>desde $85/m²</small>'
+                      f'{partials.CHEV}</span></summary>', self.h)
 
     def test_cta_con_mensaje_del_servicio(self):
         self.assertIn('data-cta="servicio-pasto:header"', self.h)

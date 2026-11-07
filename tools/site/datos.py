@@ -90,9 +90,14 @@ MENSAJES = {
 }
 
 
+def con_firma(texto):
+    """Texto de WhatsApp con la firma al final para atribuir el chat."""
+    return f"{texto}\n\n{FIRMA}"
+
+
 def mensaje(servicio):
-    """Texto de WhatsApp del servicio, siempre con la firma al final para atribuir el chat."""
-    return f"{MENSAJES[servicio]}\n\n{FIRMA}"
+    """Texto de WhatsApp del servicio, siempre con la firma al final."""
+    return con_firma(MENSAJES[servicio])
 
 
 def wa_url(texto):

@@ -1,6 +1,8 @@
 /* Viveros Terra · terra.js · shell compartido (Etapa 1).
    - Mide por delegación cada clic en WhatsApp (generate_lead) y teléfono (click_to_call) con data-cta.
-   - Firma los mensajes de WhatsApp con "Vengo de viverosterra.com" para atribuir el chat.
+   - Firma los mensajes de WhatsApp con "Vengo de viverosterra.com" para atribuir el chat, tanto en los enlaces como en
+     los que las páginas abren con window.open (calculadoras, catálogo, formulario de la home).
+   - Mide los enlaces al catálogo (select_content), que antes medían los clic_catalogo_* sueltos.
    - Abre y cierra el menú (paneles de escritorio y menú móvil) y oculta la barra móvil mientras el CTA del hero se ve.
    - Expone window.VTMedicion.whatsapp(ctaId, extra) para los WhatsApp que las páginas abren con window.open: manda el
      mismo generate_lead que un clic en enlace (seguro aunque gtag no exista).
@@ -40,8 +42,15 @@
     return base + '?' + consulta.join('&') + ancla;
   }
 
+  const CATALOGO_RE = /^\/catalogo(\.html)?(?:[?#].*)?$/;
+
   function evento(a, contexto) {
-    const tipo = tipoEnlace(a.getAttribute('href'));
+    const href = a.getAttribute('href');
+    if (href && CATALOGO_RE.test(href)) {
+      const cta = a.getAttribute('data-cta') || contexto.tipo + ':catalogo';
+      return { nombre: 'select_content', params: { content_type: 'catalogo', item_id: 'catalogo', cta_id: cta, service: contexto.servicio } };
+    }
+    const tipo = tipoEnlace(href);
     if (!tipo) return null;
     const cta = a.getAttribute('data-cta') || contexto.tipo + ':sin-etiqueta';
     if (tipo === 'tel') return { nombre: 'click_to_call', params: { link_type: 'tel', cta_id: cta, service: contexto.servicio } };
@@ -63,6 +72,18 @@
       tipo: (head && head.getAttribute('data-vt-tipo')) || 'desconocido',
       servicio: (head && head.getAttribute('data-vt-servicio')) || 'general',
     };
+  }
+
+  // window.open('https://wa.me/...') de las páginas sale con la firma, como los enlaces. conFirma no firma dos veces.
+  function firmarAperturas(win) {
+    const original = win.open;
+    if (typeof original !== 'function' || original.vtFirma) return;
+    const firmado = function (url, ...resto) {
+      const texto = url == null ? url : String(url);
+      return original.call(this, tipoEnlace(texto) === 'wa' ? conFirma(texto) : url, ...resto);
+    };
+    firmado.vtFirma = true;
+    win.open = firmado;
   }
 
   // Clic normal, con Ctrl/Cmd/Shift (llega como 'click') y clic medio ('auxclick', botón 1). Nunca se impide la
@@ -185,11 +206,12 @@
 
   const api = { FIRMA, HERO_CTA, tipoEnlace, conFirma, evento, eventoWhatsapp };
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ...api, medir, menu, barra, medicion };
+    module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas };
     return;
   }
   root.VTTerra = Object.freeze(api);
   root.VTMedicion = medicion(document, root);
+  firmarAperturas(root);
   medir(document, root);
   const iniciar = () => { menu(document, root); barra(document, root); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);

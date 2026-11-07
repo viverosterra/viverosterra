@@ -282,3 +282,35 @@ test('clic medio (auxclick) y clic con modificador miden sin impedir la navegaci
   despachar(p.tel, 'auxclick', { button: 2 });
   assert.deepStrictEqual(p.enviados.map((e) => e[1]), ['generate_lead', 'click_to_call']);
 });
+
+const { firmarAperturas } = require('../terra.js');
+
+test('window.open de WhatsApp sale firmado una sola vez; lo demás no se toca', () => {
+  const abiertos = [];
+  const win = { open: (url, destino, rasgos) => { abiertos.push([url, destino, rasgos]); return 'ventana'; } };
+  firmarAperturas(win);
+  firmarAperturas(win);
+  assert.strictEqual(win.open('https://wa.me/528333268008?text=Hola', '_blank', 'noopener'), 'ventana');
+  win.open('https://wa.me/528333268008?text=' + encodeURIComponent('Hola\n\n' + FIRMA), '_blank');
+  win.open('/precios');
+  win.open(new URL('https://wa.me/528333268008?text=Pasto'));
+  assert.deepStrictEqual(abiertos[0], ['https://wa.me/528333268008?text=' + encodeURIComponent('Hola\n\n' + FIRMA), '_blank', 'noopener']);
+  assert.strictEqual(abiertos[1][0].split('viverosterra.com').length, 2, 'no se firma dos veces');
+  assert.strictEqual(abiertos[2][0], '/precios');
+  assert.strictEqual(abiertos[3][0], 'https://wa.me/528333268008?text=' + encodeURIComponent('Pasto\n\n' + FIRMA));
+});
+
+test('firmarAperturas no falla si window.open no existe', () => {
+  const win = {};
+  firmarAperturas(win);
+  assert.strictEqual(win.open, undefined);
+});
+
+test('un enlace al catálogo manda select_content con el tipo de la página', () => {
+  const ctx = { tipo: 'plantas', servicio: 'plantas' };
+  const params = { content_type: 'catalogo', item_id: 'catalogo', cta_id: 'plantas:catalogo', service: 'plantas' };
+  for (const href of ['/catalogo', '/catalogo.html', '/catalogo#palmas']) {
+    assert.deepStrictEqual(evento(enlace({ href }), ctx), { nombre: 'select_content', params }, href);
+  }
+  assert.strictEqual(evento(enlace({ href: '/catalogos-viejos' }), ctx), null);
+});
