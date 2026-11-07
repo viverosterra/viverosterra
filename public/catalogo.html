@@ -1606,27 +1606,27 @@ function jumpTo(name){
 }
 
 function cotizar(n){
-  const m=encodeURIComponent('Hola Viveros Terra <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg>\n\nMe interesa cotizar: *'+n+'*\n¿Pueden darme precio y disponibilidad por tamaño?');
+  const m=encodeURIComponent('Hola Viveros Terra\n\nMe interesa cotizar: *'+n+'*\n¿Pueden darme precio y disponibilidad por tamaño?');
   window.open('https://wa.me/528333268008?text='+m,'_blank');
 }
 function solMedida(n){
-  const m=encodeURIComponent('Hola Viveros Terra <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg>\n\nBusco *'+n+'* en una medida o tamaño especial.\n¿Pueden conseguirla o cotizarme?');
+  const m=encodeURIComponent('Hola Viveros Terra\n\nBusco *'+n+'* en una medida o tamaño especial.\n¿Pueden conseguirla o cotizarme?');
   window.open('https://wa.me/528333268008?text='+m,'_blank');
 }
 function solEsp(){
   const v=document.getElementById('solinput').value.trim();
   if(!v)return;
-  const m=encodeURIComponent('Hola Viveros Terra <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg>\n\nBusco: *'+v+'*\nNo lo encontré en el catálogo. ¿Lo manejan o pueden cotizarme?');
+  const m=encodeURIComponent('Hola Viveros Terra\n\nBusco: *'+v+'*\nNo lo encontré en el catálogo. ¿Lo manejan o pueden cotizarme?');
   window.open('https://wa.me/528333268008?text='+m,'_blank');
 }
 function solPasto(){
   const v=document.getElementById('solpasto').value.trim();
   if(!v)return;
-  const m=encodeURIComponent('Hola Viveros Terra <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg>\n\nMe interesa cotizar: *'+v+'*\n¿Pueden asesorarme?');
+  const m=encodeURIComponent('Hola Viveros Terra\n\nMe interesa cotizar: *'+v+'*\n¿Pueden asesorarme?');
   window.open('https://wa.me/528333268008?text='+m,'_blank');
 }
 function openWA(){
-  window.open('https://wa.me/528333268008?text='+encodeURIComponent('Hola Viveros Terra <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg>\n\nVi su catálogo y quisiera asesoría para mi jardín.'),'_blank');
+  window.open('https://wa.me/528333268008?text='+encodeURIComponent('Hola Viveros Terra\n\nVi su catálogo y quisiera asesoría para mi jardín.'),'_blank');
 }
 
 render();
@@ -1783,7 +1783,7 @@ function sendWA() {
   if(cart.length === 0) return;
   const lines = cart.map(i => `• ${i.name} (${i.sz}) × ${i.qty}`).join('\n');
   const total = cart.reduce((s,i) => s+i.qty, 0);
-  const msg = `Hola Viveros Terra <svg viewBox="0 0 24 24" class="w-4 h-4 inline-block align-text-bottom" aria-hidden="true" style="vertical-align:text-bottom"><use href="#ic-leaf"/></svg>\n\nQuisiera cotizar lo siguiente:\n\n${lines}\n\nTotal: ${cart.length} variedad${cart.length>1?'es':''}, ${total} unidad${total>1?'es':''}\n\n¿Pueden darme precio y disponibilidad?`;
+  const msg = `Hola Viveros Terra\n\nQuisiera cotizar lo siguiente:\n\n${lines}\n\nTotal: ${cart.length} variedad${cart.length>1?'es':''}, ${total} unidad${total>1?'es':''}\n\n¿Pueden darme precio y disponibilidad?`;
   window.open('https://wa.me/528333268008?text=' + encodeURIComponent(msg), '_blank');
 }
 
