@@ -374,7 +374,7 @@ document.querySelectorAll('.faq-btn').forEach(b=>{
 const headings=document.querySelectorAll('.prose h2[id]');
 const tocLinks=document.querySelectorAll('.toc-link');
 const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));const t=document.querySelector(\`.toc-link[href="#${e.target.id}"]\`);if(t)t.classList.add('active');}});
+  entries.forEach(e=>{if(e.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));const t=document.querySelector(`.toc-link[href="#${e.target.id}"]`);if(t)t.classList.add('active');}});
 },{threshold:0.3,rootMargin:'-80px 0px -60% 0px'});
 headings.forEach(h=>obs.observe(h));
 </script>
