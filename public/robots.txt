@@ -1,51 +1,27 @@
+# robots.txt de www.viverosterra.com
+# Todo el sitio es público (precios y servicios). Las páginas de utilidad llevan noindex en su HTML.
+
 User-agent: *
 Allow: /
 
-# LLMs — resumen estructurado para asistentes de IA
-# https://www.viverosterra.com/llms.txt
-
-# Sitemap
-Sitemap: https://www.viverosterra.com/sitemap.xml
-
-# Permitir bots de AI para citación en búsquedas
-User-agent: GPTBot
-Allow: /
-
+# Buscadores y asistentes de IA: citación en respuestas y conocimiento de la marca
+User-agent: OAI-SearchBot
 User-agent: ChatGPT-User
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
+User-agent: GPTBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
 User-agent: ClaudeBot
-Allow: /
-
 User-agent: anthropic-ai
-Allow: /
-
+User-agent: PerplexityBot
+User-agent: Perplexity-User
 User-agent: Google-Extended
-Allow: /
-
+User-agent: Applebot-Extended
 User-agent: Bingbot
+User-agent: CCBot
 Allow: /
 
-# Bloquear solo rastreadores de entrenamiento masivo (Common Crawl)
-User-agent: CCBot
-Disallow: /
+# Google Ads (AdsBot) rastrea todo el sitio para revisar las landings de los anuncios.
+# La exclusión de servicios en Google Shopping se hace en el feed y en Merchant Center, no aquí.
 
-# Google Shopping — Excluir páginas de SERVICIOS del feed de productos
-# Solo productos tangibles deben aparecer en Google Shopping
-# Referencia: política "Unsupported Shopping content (Services)" de Google Merchant
-User-agent: AdsBot-Google
-Disallow: /diseno-jardines-tampico
-Disallow: /mantenimiento-jardines-tampico
-Disallow: /sistema-riego-tampico
-Disallow: /cuestionario
-Disallow: /protocolo-cuidados-pasto-san-agustin
-
-User-agent: AdsBot-Google-Mobile
-Disallow: /diseno-jardines-tampico
-Disallow: /mantenimiento-jardines-tampico
-Disallow: /sistema-riego-tampico
-Disallow: /cuestionario
-Disallow: /protocolo-cuidados-pasto-san-agustin
+# Resumen para asistentes de IA: https://www.viverosterra.com/llms.txt
+Sitemap: https://www.viverosterra.com/sitemap.xml
