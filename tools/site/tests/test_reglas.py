@@ -1,6 +1,7 @@
 """Reglas permanentes del dueño sobre todo lo publicado en public/: texto visible, JSON-LD, atributos legibles
-(content, alt, title, aria-label, placeholder) y mensajes de WhatsApp prellenados. Los .js, .txt y .xml se revisan
-completos para las reglas de marcas y pagos."""
+(content, alt, title, aria-label, placeholder), mensajes de WhatsApp prellenados, scripts y estilos en línea. Los .js,
+.css, .txt y .xml se revisan completos para las reglas de marcas y pagos. En CSS, los valores "clip" de propiedades
+(text-overflow: clip) no cuentan como el nombre del proveedor de la terminal."""
 import html as html_mod
 import re
 import sys
@@ -34,14 +35,21 @@ PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
 PAGO_AL_TERMINAR_PENDIENTE_1B = {"pasto-en-rollo-tampico/index.html"}
 
 
+def sin_valores_css(css):
+    """CSS sin los valores "clip" de propiedades (text-overflow: clip, clip: rect()), que no son la marca."""
+    return re.sub(r":\s*clip\b", ":", css, flags=re.I)
+
+
 def textos_publicos(html):
     ld = " ".join(re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S))
+    scripts = " ".join(re.findall(r'<script\b(?![^>]*application/ld\+json)[^>]*>(.*?)</script>', html, re.S | re.I))
+    estilos = sin_valores_css(" ".join(re.findall(r"<style\b[^>]*>(.*?)</style>", html, re.S | re.I)))
     atributos = " ".join(re.findall(r'\b(?:content|alt|title|aria-label|placeholder)="([^"]*)"', html))
     mensajes = " ".join(unquote(t) for t in re.findall(r'https://wa\.me/\d+\?text=([^"\'&\s<]*)', html))
     cuerpo = re.sub(r"<(script|style|svg)\b.*?</\1>", " ", html, flags=re.S | re.I)
     cuerpo = re.sub(r"<!--.*?-->", " ", cuerpo, flags=re.S)
     cuerpo = re.sub(r"<[^>]+>", " ", cuerpo)
-    texto = re.sub(r"\s+", " ", html_mod.unescape(" ".join([cuerpo, ld, atributos, mensajes])))
+    texto = re.sub(r"\s+", " ", html_mod.unescape(" ".join([cuerpo, ld, atributos, mensajes, scripts, estilos])))
     for permitida in PERMITIDAS:
         texto = texto.replace(permitida, "")
     return texto
@@ -50,10 +58,25 @@ def textos_publicos(html):
 def publicados():
     for path in sorted(PUBLIC.rglob("*.html")):
         yield path, textos_publicos(path.read_text(encoding="utf-8"))
-    for ext in ("js", "txt", "xml"):
+    for ext in ("js", "css", "txt", "xml"):
+        for path in sorted(PUBLIC.rglob(f"*.{ext}")):
+            if "/tests/" not in path.as_posix():
+                texto = path.read_text(encoding="utf-8")
+                yield path, sin_valores_css(texto) if ext == "css" else texto
+
+
+def archivos_fuente():
+    """HTML y JS publicados (sin las pruebas), completos: para las reglas que miran el código y no solo el texto."""
+    for ext in ("html", "js"):
         for path in sorted(PUBLIC.rglob(f"*.{ext}")):
             if "/tests/" not in path.as_posix():
                 yield path, path.read_text(encoding="utf-8")
+
+
+WA_RE = re.compile(r"(?:wa\.me|api\.whatsapp\.com/send\?phone=)/?([^\s\"'`?&<>]*)")
+TEXTO_WA_RE = re.compile(r"wa\.me/\d+\?(?:[^\"'`\s<>]*&)?text=([^\"'`\s<>&]*)")
+NUMERO = "528333268008"
+CORREO_RE = re.compile(r"(?:mailto:|formsubmit\.co/(?:ajax/)?)([\w.+-]+@[\w.-]+)")
 
 
 class ReglasDelDuenoTest(unittest.TestCase):
@@ -63,6 +86,64 @@ class ReglasDelDuenoTest(unittest.TestCase):
             for regla, patron in PROHIBIDAS:
                 for m in re.finditer(patron, texto, re.I):
                     hallazgos.append(f"{path.relative_to(PUBLIC)} · {regla} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
+        self.assertEqual(hallazgos, [])
+
+    def test_todo_whatsapp_va_al_numero_real(self):
+        hallazgos = []
+        for path, fuente in archivos_fuente():
+            for m in WA_RE.finditer(fuente):
+                destino = m.group(1)
+                if destino and set(destino) == {"."}:  # "wa.me/..." en un comentario
+                    continue
+                if destino.isdigit():
+                    ok = destino == NUMERO
+                else:  # wa.me/${PHONE} o wa.me/52${WA}: la constante del archivo debe ser el número real
+                    ok = NUMERO[2:] in fuente
+                if not ok:
+                    hallazgos.append(f"{path.relative_to(PUBLIC)} · {fuente[m.start():m.end() + 20]}")
+        self.assertEqual(hallazgos, [])
+
+    def test_mensajes_de_whatsapp_sin_marcado(self):
+        hallazgos = []
+        for path, fuente in archivos_fuente():
+            for m in TEXTO_WA_RE.finditer(html_mod.unescape(fuente)):
+                texto = unquote(m.group(1))
+                if "<" in texto:
+                    hallazgos.append(f"{path.relative_to(PUBLIC)} · {texto[:80]}")
+        self.assertEqual(hallazgos, [])
+
+    def test_sin_aggregate_rating_ni_feed_de_actividad(self):
+        hallazgos = [str(p.relative_to(PUBLIC)) for p in PUBLIC.rglob("activity-feed*")]
+        for path, fuente in archivos_fuente():
+            for patron in (r"aggregateRating", r"activity-feed", r"Actividad t[ií]pica", r"acaba de (?:comprar|cotizar|pedir)"):
+                if re.search(patron, fuente, re.I):
+                    hallazgos.append(f"{path.relative_to(PUBLIC)} · {patron}")
+        self.assertEqual(hallazgos, [])
+
+    def test_para_llevar_hoy_solo_toscana_18_y_28(self):
+        hallazgos = []
+        for path, texto in publicados():
+            for m in re.finditer(r"llevar hoy", texto, re.I):
+                ventana = texto[max(0, m.start() - 120):m.start()]
+                modelos = re.findall(r"\b(Aruba|Bali|Capri|Irlanda|Japon[eé]s|M[oó]naco|Toscana|Viena)\s*(\d+)", ventana, re.I)
+                if not modelos or modelos[-1][0].lower() != "toscana" or modelos[-1][1] not in ("18", "28"):
+                    hallazgos.append(f"{path.relative_to(PUBLIC)} · …{ventana[-60:]}llevar hoy…")
+        self.assertEqual(hallazgos, [])
+
+    def test_primer_riego_nunca_incluido(self):
+        hallazgos = [f"{p.relative_to(PUBLIC)}" for p, texto in publicados()
+                     if re.search(r"primer riego\W+(?:\w+\W+){0,2}incluido", texto, re.I)]
+        self.assertEqual(hallazgos, [])
+
+    def test_formularios_y_correos_a_la_cuenta_oficial(self):
+        hallazgos = []
+        for path, fuente in archivos_fuente():
+            for m in CORREO_RE.finditer(fuente):
+                if m.group(1).lower() != "viverosterra@hotmail.com":
+                    hallazgos.append(f"{path.relative_to(PUBLIC)} · {m.group(0)}")
+            for accion in re.findall(r'<form\b[^>]*\baction="([^"]*)"', fuente, re.I):
+                if accion and "formsubmit.co" not in accion:
+                    hallazgos.append(f"{path.relative_to(PUBLIC)} · form a {accion}")
         self.assertEqual(hallazgos, [])
 
     def test_sin_padel_ni_canchas_en_pasto_sintetico(self):
@@ -112,6 +193,13 @@ class ReglasDelDuenoTest(unittest.TestCase):
                        "<p>No ofrecemos muestras físicas</p>"):
             texto = textos_publicos(limpio)
             self.assertEqual([r for r, pat in PROHIBIDAS if re.search(pat, texto, re.I)], [], limpio)
+        self.assertEqual([r for r, pat in PROHIBIDAS if re.search(pat, textos_publicos(
+            "<script>pagar('Paga con Clip')</script>"), re.I)], ["nombre del proveedor de la terminal"])
+        self.assertEqual([r for r, pat in PROHIBIDAS if re.search(pat, sin_valores_css(
+            ".a{text-overflow:clip!important;clip: rect(0 0 0 0)}"), re.I)], [])
+        self.assertTrue(TEXTO_WA_RE.search('href="https://wa.me/528333268008?text=Hola%3Csvg%3E"'))
+        self.assertEqual(WA_RE.search("https://wa.me/5218331234567?text=x").group(1), "5218331234567")
+        self.assertEqual(CORREO_RE.search('action="https://formsubmit.co/ajax/otro@gmail.com"').group(1), "otro@gmail.com")
         js = "el.style.clip = 'auto'; ctx.clip(); x.clipPath"
         self.assertIsNone(re.search(regla["nombre del proveedor de la terminal"], js, re.I))
         self.assertIsNotNone(re.search(regla["muestras gratis o físicas"], "Te enviamos muestras a domicilio", re.I))

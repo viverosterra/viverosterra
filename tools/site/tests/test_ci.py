@@ -14,6 +14,10 @@ class CiTest(unittest.TestCase):
             with self.subTest(paso=paso):
                 self.assertIn(paso, yml)
         self.assertNotIn("npm ", yml)
+        self.assertIn("uses: actions/cache@v4", yml)
+        for ruta in ("~/.cache/pip", "~/.cache/ms-playwright"):
+            self.assertIn(ruta, yml)
+        self.assertLess(yml.index("actions/cache@v4"), yml.index("playwright install --with-deps chromium"))
         self.assertNotIn("package.json", yml)
 
 

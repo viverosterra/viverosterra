@@ -179,7 +179,7 @@ PIE = (
                        ("Aviso de privacidad", "/politica-privacidad"))),
 )
 DATOS_PIE = (
-    ("Domicilio", datos.CALLE, f"{datos.COLONIA}, {datos.CIUDAD}"),
+    ("Domicilio", datos.CALLE, f"{datos.COLONIA}, {datos.CP} {datos.CIUDAD}, {datos.ESTADO}"),
     ("Referencia", "Frente a Walmart", "Entrando por Banamex"),
     ("Horario", "Lun a vie 9 a 18 h", "Sábado 9 a 14 h"),
     ("REPSE", datos.REPSE, "Padrón de la STPS"),

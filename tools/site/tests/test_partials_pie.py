@@ -26,6 +26,9 @@ class PieTest(unittest.TestCase):
                 self.assertIn(texto, self.f)
         self.assertIn('data-cta="blog:footer" href="tel:+528333268008"', self.f)
 
+    def test_domicilio_completo_con_cp_y_estado(self):
+        self.assertIn(f"{datos.COLONIA}, {datos.CP} {datos.CIUDAD}, {datos.ESTADO}", self.f)
+
     def test_contacto_a_todo_lo_ancho_y_telefonos_sin_cortar(self):
         self.assertIn('<div class="vt-foot__col vt-foot__contacto">', self.f)
         self.assertEqual(self.f.count(f'<span class="vt-nowrap">{datos.TELEFONO_VISIBLE}</span>'), 2)
