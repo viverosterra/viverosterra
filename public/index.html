@@ -818,10 +818,6 @@
       </p>
 
       <p class="vt-hero__caption">Sin compromiso · Respondemos en menos de 1 hora en horario · Lun a vie 9 a 18 h, sáb 9 a 14 h</p>
-      <div style="display:inline-flex;align-items:center;gap:6px;background:#FFFFFF;border:1px solid rgba(27,94,32,0.25);padding:6px 14px;border-radius:999px;font-size:12px;color:#1B5E20;margin-top:6px;box-shadow:0 2px 8px rgba(15,61,20,0.08);font-weight:500">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1B5E20" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        <span id="next-visit-text">Próxima visita técnica: <strong style="color:#0D2B0E;font-weight:700">esta semana</strong></span>
-      </div>
     </div>
 
     <!-- DERECHA: tarjetas de métricas -->
@@ -2092,29 +2088,6 @@ function updateHidden(min, max) {
   }
 </script>
 
-<script>
-// Widget disponibilidad — actualiza según día de semana
-(function(){
-  const el = document.getElementById('next-visit-text');
-  if(!el) return;
-  const now = new Date();
-  const day = now.getDay(); // 0=dom, 1=lun...5=vie, 6=sab
-  const hour = now.getHours();
-  const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-  let msg = '';
-  if(day === 6 || day === 0) {
-    msg = 'Visitas disponibles desde el <strong style="color:#55B96A">Lunes</strong>';
-  } else if(day >= 1 && day <= 5) {
-    const nextDay = day < 5 ? days[day + 1] : 'el próximo Lunes';
-    if(hour < 14) {
-      msg = 'Próxima visita técnica: <strong style="color:#55B96A">hoy o mañana</strong>';
-    } else {
-      msg = 'Próxima visita técnica: <strong style="color:#55B96A">mañana disponible</strong>';
-    }
-  }
-  if(msg) el.innerHTML = msg;
-})();
-</script>
 </main>
 <!-- vt:footer -->
 <footer class="vt-foot">

@@ -131,7 +131,7 @@ PAGES = {
     ),
     "arboles-ornamentales-tampico": dict(
         title="Árboles ornamentales", accent="para jardines en Tampico",
-        price_pre="Desde", price="$250", price_unit="", price_alt="· framboyán $250 · crespón $350 · jacaranda $450",
+        price_pre="Desde", price="$250", price_unit="", price_alt="· flamboyán $250 · crespón $350 · jacaranda $450",
         lede="Árboles de sombra y de flor elegidos para el clima de Tamaulipas. Te los llevamos y los sembramos con garantía de arraigo.",
         facts=[GARANTIA_PLANTAS, ("Entrega y siembra", "Tampico, Madero y Altamira"), VARIEDADES],
         img="/img/arboles-tampico-viveros-terra.webp",

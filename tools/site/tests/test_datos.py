@@ -54,7 +54,7 @@ class DatosTest(unittest.TestCase):
     def test_decisiones_del_dueno_2026_11_07(self):
         self.assertEqual(datos.PRECIOS["poda"], 500)
         self.assertTrue(datos.PODA.startswith("Desde $500, según cotización"))
-        self.assertEqual(datos.PRECIOS["framboyan"], 250)
+        self.assertEqual(datos.PRECIOS["flamboyan"], 250)
         self.assertEqual(len(datos.CLIENTES_B2B), 6)
         self.assertEqual(datos.AUTOR_BLOG, "Equipo técnico de Viveros Terra")
         self.assertIsNone(datos.PROXIMO_CORTE)

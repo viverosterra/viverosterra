@@ -47,13 +47,13 @@ class ReglasGlobalesTest(unittest.TestCase):
             with self.subTest(viejo=viejo):
                 self.assertEqual(c.corregir_texto(viejo), nuevo)
 
-    def test_perfiles_y_framboyan(self):
+    def test_perfiles_y_flamboyan(self):
         self.assertEqual(c.corregir_texto("https://il.linkedin.com/company/viveros-terra-tampico"),
                          "https://www.linkedin.com/company/viveros-terra-tampico")
         self.assertEqual(c.corregir_texto("https://www.instagram.com/viverosterra"), "https://www.instagram.com/viverosterramx")
         self.assertEqual(c.corregir_texto("https://www.instagram.com/viverosterramx"), "https://www.instagram.com/viverosterramx")
-        self.assertEqual(c.corregir_texto("Flamboyán Tabachín y flamboyán"), "Framboyán Tabachín y framboyán")
-        self.assertEqual(c.corregir_texto("también conocido como flamboyán"), "también conocido como flamboyán")
+        self.assertEqual(c.corregir_texto("Framboyán Tabachín y framboyán"), "Flamboyán Tabachín y flamboyán")
+        self.assertEqual(c.corregir_texto("también conocido como framboyán"), "también conocido como framboyán")
         self.assertEqual(c.corregir_texto("Lomas del Chairel y Flamboyanes"), "Lomas del Chairel y Flamboyanes")
 
     def test_cada_regla_global_es_idempotente(self):

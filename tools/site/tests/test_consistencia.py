@@ -46,8 +46,16 @@ PROHIBIDAS = (
      r"temporada de lluvias — el mejor momento"),
     ("mayoreo desde 200 m²", r"(?:mayoreo|pedidos)[^.]{0,60}\b200 m²"),
     ("mantenimiento desde $500/mes", r"mantenimiento[^.]{0,90}\$500\s?/\s?mes"),
-    ("framboyán a $500", r"framboy[aá]n[^.$]{0,40}\$\s?500\b|\$\s?500\b[^.]{0,40}framboy[aá]n"),
-    ("Flamboyán (ortografía)", r"(?<!conocido como )\bflamboyán\b"),
+    ("flamboyán a $500", r"f[lr]amboy[aá]n[^.$]{0,40}\$\s?500\b|\$\s?500\b[^.]{0,40}f[lr]amboy[aá]n"),
+    # El dueño eligió "flamboyán" (2026-11-07). Los slugs existentes (/blog/framboyan-…) no se tocan.
+    ("Framboyán (ortografía)", r"(?<!conocido como )(?<![\w/-])framboy[aá]n(?![\w-])"),
+    ("esquema de pago con porcentaje (el dueño solo confirma un anticipo, sin porcentaje)",
+     r"\b\d{1,3} ?% (?:de anticipo|restante|al (?:inicio|confirmar|terminar)|a la entrega)|\banticipo del \d"
+     r"|\bpagas el \d{1,3} ?%|\bprimer pago[^.]{0,30}\d{1,3} ?%|\b(?:50/50|30/40/30)\b[^.]{0,40}(?:avances?|pago|anticipo)"),
+    ("promesa de disponibilidad de visita o agenda",
+     r"pr[oó]xima visita t[eé]cnica|visitas? disponibles?|\bhoy o mañana\b|\bmañana disponible\b"
+     r"|disponibles? esta semana|agenda abierta|\bcupos? (?:disponibles?|limitados?)|jardín verde, esta semana"),
+    ("frescura con fecha de corte", r"(?<!instalas fue )cortado esta semana"),
     ("Plan Terra Completo de $50,000",
      r"Plan Terra Completo (?:de )?\(?\$50,000|\(Plan Terra Completo\)|Plan Terra Completo incluye el primer mes"),
     ("tabla que desacredita el sintético", r"\bPlástico, áspero\b|\(quema\)|residuo plástico"),
@@ -81,6 +89,17 @@ def direcciones_ld(html):
     for bloque in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S):
         recorrer(json.loads(bloque))
     return encontradas
+
+
+def _same_as(nodo):
+    """Todas las URL de `sameAs` en un bloque JSON-LD."""
+    if isinstance(nodo, list):
+        return {u for v in nodo for u in _same_as(v)}
+    if not isinstance(nodo, dict):
+        return set()
+    propias = nodo.get("sameAs", [])
+    propias = {propias} if isinstance(propias, str) else set(propias)
+    return propias | {u for v in nodo.values() for u in _same_as(v)}
 
 
 class ConsistenciaTest(unittest.TestCase):
@@ -141,9 +160,40 @@ class ConsistenciaTest(unittest.TestCase):
         texto = TEXTOS[PUBLIC / "mayoreo-pasto-tampico" / "index.html"]
         self.assertIn(f"a partir de {PRECIOS['pasto_mayoreo_minimo_m2']} m²", texto)
 
-    def test_framboyan_desde_250(self):
+    def test_flamboyan_desde_250(self):
         texto = TEXTOS[PUBLIC / "arboles-ornamentales-tampico" / "index.html"]
-        self.assertIn(f"Framboyán desde ${PRECIOS['framboyan']}", texto)
+        self.assertIn(f"Flamboyán desde ${PRECIOS['flamboyan']}", texto)
+
+    def test_slugs_de_framboyan_intactos(self):
+        self.assertTrue((PUBLIC / "blog" / "framboyan-delonix-regia-tampico" / "index.html").exists())
+        self.assertIn("también conocido como framboyán", TEXTOS[PUBLIC / "blog" / "framboyan-delonix-regia-tampico" / "index.html"])
+
+    def test_home_sin_widget_de_disponibilidad(self):
+        html = PAGINAS[PUBLIC / "index.html"]
+        self.assertNotIn("next-visit-text", html)
+        self.assertNotIn("Widget disponibilidad", html)
+
+    def test_pago_de_pasto_y_palmas_sin_porcentaje(self):
+        rollo = PAGINAS[PUBLIC / "pasto-en-rollo-tampico" / "index.html"]
+        self.assertIn('"text":"No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos '
+                      'un anticipo. También puedes pagar en mensualidades con tarjeta de crédito en cotizaciones desde $2,000."',
+                      rollo)
+        self.assertIn('"text":"Confirmas con un anticipo y coordinamos la entrega."', rollo)
+        self.assertEqual(TEXTOS[PUBLIC / "pasto-en-rollo-tampico" / "index.html"].count("Cortado para tu pedido"), 2)
+        palmas = TEXTOS[PUBLIC / "palmas-mayoreo-proyectos" / "index.html"]
+        self.assertEqual(palmas.count("Para proyectos solicitamos un anticipo al confirmar y el resto se acuerda contra "
+                                      "avances de obra; te lo detallamos en la cotización."), 2)
+
+    def test_same_as_igual_a_redes_oficiales(self):
+        oficiales = {url for _, url in datos.REDES}
+        sociales = re.compile(r"(?:facebook|instagram|tiktok|youtube|linkedin)\.com", re.I)
+        hallazgos = []
+        for path, html in PAGINAS.items():
+            for bloque in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S):
+                for url in sorted(_same_as(json.loads(bloque))):
+                    if sociales.search(url) and url not in oficiales:
+                        hallazgos.append(f"{nombre(path)} · {url}")
+        self.assertEqual(hallazgos, [])
 
     def test_mantenimiento_desde_750_en_el_blog_de_precios(self):
         texto = TEXTOS[PUBLIC / "blog" / "cuanto-cuesta-jardin-tampico-precios" / "index.html"]
@@ -200,6 +250,15 @@ class ConsistenciaTest(unittest.TestCase):
                                             "Respuesta en 24h", "Respuesta en menos de 2 horas", "Respuesta hoy · Lun–Sáb"),
             "contacto en 24 horas": ("Te contactamos en 24 hrs", "te contactará en menos de 24 horas"),
             "años de la empresa distintos de 2007": ("20+ Años en Tampico", "más de 15 años de experiencia"),
+            "Framboyán (ortografía)": ("Framboyán Tabachín", "un framboyán adulto", "Framboyan en Tampico"),
+            "esquema de pago con porcentaje (el dueño solo confirma un anticipo, sin porcentaje)": (
+                "El pago es 50% de anticipo al confirmar", "y 50% restante al terminar", "Confirmas con 50% de anticipo",
+                "Pagas el 50% restante", "Esquemas típicos: 50/50 o 30/40/30 contra avances",
+                "El primer pago suele ser del 50% al inicio"),
+            "promesa de disponibilidad de visita o agenda": (
+                "Próxima visita técnica: esta semana", "Visitas disponibles desde el Lunes", "hoy o mañana",
+                "mañana disponible", "Tu jardín verde, esta semana."),
+            "frescura con fecha de corte": ("Pasto cortado esta semana", "Cortado esta semana"),
         }
         for nombre_regla, frases in sucios.items():
             for frase in frases:
@@ -207,7 +266,10 @@ class ConsistenciaTest(unittest.TestCase):
                     self.assertRegex(frase, re.compile(regla[nombre_regla], re.I))
         limpios = ("Respondemos en menos de 1 hora en horario", "Riego abundante el mismo día de la instalación",
                    "humedece el suelo 24 horas antes de instalar", "se enfría en minutos", "Te respondemos con el precio final",
-                   "coordinar ambas entregas el mismo día", "Más de 18 años de experiencia", "dura de 8 a 12 años")
+                   "coordinar ambas entregas el mismo día", "Más de 18 años de experiencia", "dura de 8 a 12 años",
+                   "/blog/framboyan-delonix-regia-tampico", "también conocido como framboyán", "Flamboyán Tabachín",
+                   "proporción 50/50. Agrega compost", "No pedimos el 100% por adelantado", "ahorra entre 30% y 50% de agua",
+                   "Lo que instalas fue cortado esta semana", "Lomas del Chairel y Flamboyanes")
         for frase in limpios:
             with self.subTest(frase=frase):
                 self.assertEqual([r for r, p in PROHIBIDAS if re.search(p, frase, re.I)], [])

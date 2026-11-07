@@ -2,7 +2,7 @@
 
 Reglas globales (todas las páginas, llms.txt y las fuentes de tools/pasto y tools/servicios): domicilio "209 Sur"
 (también en el JSON-LD, con calle y código postal oficiales), promesa única de respuesta, perfiles oficiales y una sola
-ortografía de framboyán. Cambios por archivo: home, pasto en rollo, mayoreo, sintético en Tampico, árboles
+ortografía de flamboyán. Cambios por archivo: home, pasto en rollo, mayoreo, sintético en Tampico, árboles
 ornamentales, catálogo, diseño, materiales, cuestionario, blogs de precios, índice del blog, gracias y llms.txt.
 Retira el banner de temporada de la home, la barra "Lote semanal" y las etiquetas de búsquedas del blog. Los valores
 salen de tools/site/datos.py. Es idempotente: lo ya corregido se salta; lo que no encuentra y no está corregido lo
@@ -54,8 +54,8 @@ GLOBALES = (
     # Perfiles oficiales y ortografía.
     ("https://il.linkedin.com/company/viveros-terra-tampico", "https://www.linkedin.com/company/viveros-terra-tampico"),
     ("http://www.tiktok.com/@viverosterra", "https://www.tiktok.com/@viverosterra"),
-    ("Flamboyán", "Framboyán"),
-    ("Flamboy%C3%A1n", "Framboy%C3%A1n"),
+    ("Framboyán", "Flamboyán"),
+    ("Framboy%C3%A1n", "Flamboy%C3%A1n"),
 )
 REGLAS = (
     # Domicilio: siempre "209 Sur"; en el JSON-LD la calle va sola y con su código postal.
@@ -69,7 +69,7 @@ REGLAS = (
     (re.compile(r"\bRespuesta el mismo día\b"), "Respuesta en menos de 1 hora en horario"),
     (re.compile(r'>Mismo día</div>(\s*<div[^>]*>)Respuesta a cotización<'), r">1 hora</div>\1Respuesta máxima en horario<"),
     (re.compile(r"https://www\.instagram\.com/viverosterra(?!mx)"), "https://www.instagram.com/viverosterramx"),
-    (re.compile(r"(?<!conocido como )flamboyán"), "framboyán"),
+    (re.compile(r"(?<!conocido como )framboyán"), "flamboyán"),
 )
 
 PAGO_ANTICIPO = "No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos un anticipo"
@@ -189,15 +189,15 @@ POR_ARCHIVO = (
      'existencia para llevar el mismo día, y los otros 7 modelos sobre pedido. Atendemos de lunes a viernes de 9 a 18 h "',
      'existencia para llevar hoy; los otros 7 modelos también están en existencia y llegan en 3 a 5 días. Atendemos de '
      'lunes a viernes de 9 a 18 h "'),
-    # Framboyán desde $250 (decisión del dueño 2026-11-07).
-    ("public/arboles-ornamentales-tampico/index.html", "Framboyán desde $500", f"Framboyán desde ${P['framboyan']}"),
+    # Flamboyán desde $250 (decisión del dueño 2026-11-07).
+    ("public/arboles-ornamentales-tampico/index.html", "Flamboyán desde $500", f"Flamboyán desde ${P['flamboyan']}"),
     ("public/arboles-ornamentales-tampico/index.html",
-     'Desde <strong>$350</strong></span><span class="svc-hero__price-alt">crespón $350 · jacaranda $450 · framboyán $500</span>',
-     f'Desde <strong>${P["framboyan"]}</strong></span><span class="svc-hero__price-alt">framboyán ${P["framboyan"]} · '
+     'Desde <strong>$350</strong></span><span class="svc-hero__price-alt">crespón $350 · jacaranda $450 · flamboyán $500</span>',
+     f'Desde <strong>${P["flamboyan"]}</strong></span><span class="svc-hero__price-alt">flamboyán ${P["flamboyan"]} · '
      'crespón $350 · jacaranda $450</span>'),
     ("tools/servicios/pages.py",
-     'price_pre="Desde", price="$350", price_unit="", price_alt="· crespón $350 · jacaranda $450 · framboyán $500",',
-     f'price_pre="Desde", price="${P["framboyan"]}", price_unit="", price_alt="· framboyán ${P["framboyan"]} · crespón $350 '
+     'price_pre="Desde", price="$350", price_unit="", price_alt="· crespón $350 · jacaranda $450 · flamboyán $500",',
+     f'price_pre="Desde", price="${P["flamboyan"]}", price_unit="", price_alt="· flamboyán ${P["flamboyan"]} · crespón $350 '
      '· jacaranda $450",'),
     # Garantía de plantas siempre con su condición.
     ("public/catalogo.html",
@@ -305,7 +305,7 @@ ELEMENTOS = (
 
 
 def corregir_texto(texto):
-    """Aplica las reglas globales (domicilio, promesa, perfiles, framboyán)."""
+    """Aplica las reglas globales (domicilio, promesa, perfiles, flamboyán)."""
     for viejo, nuevo in GLOBALES:
         texto = texto.replace(viejo, nuevo)
     for patron, reemplazo in REGLAS:

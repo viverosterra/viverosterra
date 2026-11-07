@@ -45,7 +45,7 @@ MATERIALES = [
 ]
 PLANTAS = [
     ("Palmas", "/palmas-tropicales-tampico", "desde $250", "Areca y coco plumoso desde $250 y palma real desde $500 en tamaño chico. El precio sube con la altura."),
-    ("Árboles", "/arboles-ornamentales-tampico", "por tamaño", "Framboyán, jacaranda, olivo negro, crespón, guayacán y más."),
+    ("Árboles", "/arboles-ornamentales-tampico", "por tamaño", "Flamboyán, jacaranda, olivo negro, crespón, guayacán y más."),
     ("Plantas de jardín e interior", "/plantas-para-jardin-tampico", "por tamaño", "Más de 200 variedades en el vivero."),
 ]
 
