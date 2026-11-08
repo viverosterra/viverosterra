@@ -213,14 +213,17 @@
     // El envío del <form method="dialog"> llega antes que el evento close (que va en cola): la lista se actualiza aquí,
     // en el mismo turno del clic o del Enter, y close solo devuelve el foco.
     dAgregar.querySelector('form').addEventListener('submit', (e) => {
-      if (!actual || !e.submitter || e.submitter.value !== 'agregar') return;
+      if (!actual || (e.submitter && e.submitter.value !== 'agregar')) return;
       const sz = sel.value === OTRO ? (otro.value.trim() || 'Medida especial') : sel.value;
       const qty = cantidad(n.value);
       seleccion = agregar(seleccion, { name: actual.name, sc: actual.sc, sz, qty });
       pintar();
       aviso.textContent = 'Agregaste ' + actual.name + ' (' + sz + ') × ' + qty + '. Llevas ' + resumen(seleccion) + '.';
     });
+    dAgregar.querySelector('[data-vt-cancelar]').addEventListener('click', () => dAgregar.close('cancelar'));
+    // close va en cola: si el diálogo ya se volvió a abrir (Enter rápido sobre el mismo botón), no se toca la selección.
     dAgregar.addEventListener('close', () => {
+      if (dAgregar.open) return;
       actual = null;
       if (origen) origen.focus();
     });

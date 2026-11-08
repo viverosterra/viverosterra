@@ -187,12 +187,13 @@ def lista_catalogo(tipo):
         '<div class="vt-campo"><label for="vt-agregar-tam">Tamaño</label><div class="vt-control">'
         '<select id="vt-agregar-tam" data-vt-campo="tam"></select></div></div>'
         f'<div class="vt-campo" data-vt-otro hidden><label for="vt-agregar-otro">{OTRO_TAMANO}</label>'
-        '<div class="vt-control"><input id="vt-agregar-otro" type="text" data-vt-campo="otro" placeholder="Ej. 3.5 m">'
+        '<div class="vt-control"><input id="vt-agregar-otro" type="text" maxlength="60" data-vt-campo="otro" placeholder="Ej. 3.5 m">'
         '</div></div><div class="vt-campo"><label for="vt-agregar-n">Cantidad (piezas)</label>'
         '<div class="vt-cantidad"><button type="button" data-vt-menos aria-label="Una pieza menos">−</button>'
         '<input id="vt-agregar-n" type="number" inputmode="numeric" min="1" max="9999" value="1" data-vt-campo="n">'
         '<button type="button" data-vt-mas aria-label="Una pieza más">+</button></div></div>'
-        '<p class="vt-dialogo__botones"><button type="submit" value="cancelar" class="vt-btn vt-btn--linea">Cancelar'
+        # Un solo submit: Enter en cantidad o medida usa el primer submit del formulario y debe agregar, no cancelar.
+        '<p class="vt-dialogo__botones"><button type="button" class="vt-btn vt-btn--linea" data-vt-cancelar>Cancelar'
         '</button><button type="submit" value="agregar" class="vt-btn vt-btn--tinta">Agregar a mi lista</button></p>'
         '</form></dialog>'
         '<dialog class="vt-dialogo" id="vt-lista" aria-labelledby="vt-lista-t"><h2 id="vt-lista-t">Mi lista para cotizar'
@@ -216,7 +217,7 @@ def mensaje_especial(texto):
 def pedido_especial(tipo):
     return ('<div class="vt-especial" data-vt-especial><div class="vt-campo"><label for="vt-especial-q">Planta, árbol, '
             'tamaño o medida que buscas</label><div class="vt-control"><input id="vt-especial-q" type="text" '
-            'autocomplete="off" placeholder="Ej. palma phoenix de 4 m"></div></div>'
+            'autocomplete="off" maxlength="120" placeholder="Ej. palma phoenix de 4 m"></div></div>'
             f'<a class="vt-btn vt-btn--wa" data-cta="{esc(tipo)}:solEsp" href="{esc(datos.wa_url(mensaje_especial("")))}" '
             f'target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp<span class="vt-flecha" aria-hidden="true">→'
             '</span></a></div>')

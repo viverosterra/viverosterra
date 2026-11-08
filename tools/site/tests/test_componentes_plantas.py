@@ -118,6 +118,15 @@ class ComponentesPlantasTest(unittest.TestCase):
         self.assertIn('<label for="vt-agregar-tam">', html)
         self.assertIn('role="status"', html)
 
+    def test_enter_en_el_dialogo_agrega(self):
+        """El envío implícito (Enter en cantidad o medida) usa el primer botón submit: el único es "Agregar"; Cancelar es
+        un botón normal que cierra el diálogo."""
+        agregar = re.search(r'<dialog class="vt-dialogo" id="vt-agregar".*?</dialog>', cp.lista_catalogo("catalogo"), re.S).group(0)
+        self.assertEqual(re.findall(r'<button type="submit"[^>]*>', agregar),
+                         ['<button type="submit" value="agregar" class="vt-btn vt-btn--tinta">'])
+        self.assertIn('<button type="button" class="vt-btn vt-btn--linea" data-vt-cancelar>Cancelar</button>', agregar)
+        self.assertIn('maxlength="60"', agregar)
+
     def test_pedido_especial_con_el_mensaje_de_main(self):
         html = cp.pedido_especial("catalogo")
         texto = unquote(re.search(r'href="https://wa\.me/\d+\?text=([^"]+)"', html).group(1))
