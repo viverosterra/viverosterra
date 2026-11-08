@@ -14,7 +14,8 @@ import paridad  # noqa: E402
 
 MIGRADAS = {"/tierra-negra-vegetal-tampico": "tierra-negra-vegetal-tampico/index.html",
             "/tezontle-rojo-tampico": "tezontle-rojo-tampico/index.html",
-            "/marmol-blanco-tampico": "marmol-blanco-tampico/index.html"}
+            "/marmol-blanco-tampico": "marmol-blanco-tampico/index.html",
+            "/piedra-bola-rio-tampico": "piedra-bola-rio-tampico/index.html"}
 ORDEN = ('id="vt-h1"', 'id="vt-h-precio"', 'id="vt-h-usos"', 'id="vt-h-calc"', 'id="vt-h-entrega"', 'id="vt-h-faq"',
          'id="vt-cierre-titulo"', 'id="vt-h-correo"')
 

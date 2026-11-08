@@ -17,8 +17,8 @@ DESDE_2007 = ("Desde 2007", "Vivero propio en Cd. Madero")
 VARIEDADES = ("+200", "Variedades en el vivero")
 
 # La home y /pasto-en-rollo-tampico (Etapa 2a), diseño, mantenimiento y riego (Etapa 2c) y mayoreo y palmas para
-# proyectos (Etapa 2d) y, desde la Etapa 2e, el hub de plantas y sus cinco subcategorías salen de tools/site/plantillas/:
-# este script ya no las toca. Quedan el vivero (Etapa 3) y los materiales (Etapas 2f y 2g).
+# proyectos (Etapa 2d), el hub de plantas y sus cinco subcategorías (Etapa 2e) y, desde la Etapa 2f, los cuatro
+# materiales salen de tools/site/plantillas/: este script ya no las toca. Queda el vivero (Etapa 3).
 PAGES = {
     "vivero-tampico": dict(
         title="Vivero en Tampico", accent="y Ciudad Madero, desde 2007",
@@ -29,12 +29,5 @@ PAGES = {
         alt="Equipo de Viveros Terra sembrando un árbol en un jardín de Tampico", caption="Siembra de árboles y plantas en Tampico.",
         wa=guided("Hola, quiero visitar el vivero o cotizar plantas.", "Lo que busco", "Tamaño aprox.", foto=False),
         secondary=("https://maps.app.goo.gl/xC4XGL2WeucAjGwAA", "Cómo llegar"),
-    ),
-    "piedra-bola-rio-tampico": dict(
-        title="Piedra bola de río", accent="para jardines y senderos",
-        price_pre="Precio", price="por medida", price_unit="", price_alt="· chica, mediana y grande",
-        lede="Piedra de río natural para senderos, jardines secos y decoración. Venta por costal o camión con entrega en Tampico y la zona.",
-        facts=[("3 medidas", "Chica, mediana y grande"), ("Costal o camión", "Según tu proyecto"), ("Entrega", "Tampico, Madero y Altamira")],
-        wa=guided("Hola, quiero cotizar piedra bola de río.", "Medida", "Metros a cubrir", "Colonia de entrega"),
     ),
 }
