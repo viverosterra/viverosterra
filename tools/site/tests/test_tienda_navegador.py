@@ -35,6 +35,10 @@ LAZY_EN_PANTALLA = """() => Array.from(document.images).filter((i) => {
   return i.loading === 'lazy' && r.top < innerHeight && r.bottom > 0 && r.width > 200;
 }).map((i) => i.src)"""
 
+# El aviso visible y sin transición en curso (la caja se mide ya en su lugar).
+QUIETO_AVISO = ("() => { const t = document.querySelector('#toast'); "
+                "return t.dataset.visible === 'true' && t.getAnimations().length === 0; }")
+
 
 def mensaje(page, selector):
     return unquote(page.locator(selector).first.get_attribute("href").split("text=", 1)[1])
@@ -126,10 +130,102 @@ class TiendaNavegadorTest(unittest.TestCase):
         self.assertEqual(page.inner_text(".vt-subnav__n"), "4")
         self.assertIn("También en mi lista: Toscana 18 (50 m²), Irlanda 25 (50 m²), Viena 30 (50 m²).",
                       mensaje(page, ".vt-cotizador [data-cta-wa]"))
+        # El cotizador dice el flete: rollos y monto de la zona.
+        self.assertIn("Envío: 1 rollo · $1,150", mensaje(page, ".vt-cotizador [data-cta-wa]"))
         page.click(".vt-subnav__lista")
         lista = mensaje(page, "#cot-send")
-        for linea in ("• Toscana 18: 50 m²", "• Irlanda 25: 50 m²", "• Viena 30: 50 m²", "Entrega en Nuevo León."):
+        for linea in ("• Toscana 18: 50 m² · $149/m² · material $7,450", "• Irlanda 25: 50 m² · $209/m² · material $10,450",
+                      "• Viena 30: 50 m² · $249/m² · material $12,450", "Entrega en Nuevo León.",
+                      "Envío: 4 rollos · $4,600"):
             self.assertIn(linea, lista)
+
+    def test_aviso_arriba_de_la_barra_y_sin_tapar_los_botones(self):
+        for ancho in (320, 375, 768):
+            page = self.pagina(ancho, 740)
+            page.goto(self.base + "/pasto-sintetico/toscana-28/", wait_until="load")
+            page.evaluate("() => localStorage.clear()")
+            while page.get_attribute("#buybar", "data-visible") != "true":
+                page.mouse.wheel(0, 600)
+                page.wait_for_timeout(100)
+            boton = page.locator(".vt-vecino [data-agregar]").first
+            boton.scroll_into_view_if_needed()
+            boton.click()
+            page.wait_for_function(QUIETO_AVISO)
+            aviso, barra = page.locator("#toast").bounding_box(), page.locator("#buybar").bounding_box()
+            with self.subTest(ancho=ancho, caso="barra"):
+                self.assertGreaterEqual(aviso["y"], 0)
+                self.assertLessEqual(aviso["y"] + aviso["height"], barra["y"])
+            # Desde el cotizador: el aviso no tapa "Cotizar por WhatsApp" ni "Agregar a mi cotización".
+            page.evaluate("() => { const b = document.querySelector('#cta-add'); "
+                          "window.scrollBy(0, b.getBoundingClientRect().bottom - innerHeight + 30); }")
+            page.click("#cta-add")
+            page.wait_for_function(QUIETO_AVISO)
+            aviso = page.locator("#toast").bounding_box()
+            for selector in (".vt-cotizador [data-cta-wa]", "#cta-add"):
+                b = page.locator(selector).bounding_box()
+                choca = not (aviso["y"] + aviso["height"] <= b["y"] or b["y"] + b["height"] <= aviso["y"])
+                with self.subTest(ancho=ancho, boton=selector):
+                    self.assertFalse(choca)
+
+    def test_agregar_otra_vez_conserva_la_cantidad_mayor(self):
+        page = self.pagina()
+        page.goto(self.base + "/pasto-sintetico/toscana-28/", wait_until="load")
+        page.evaluate("() => localStorage.clear()")
+        self.cotizar(page, 120, "CDMX")
+        page.click("#cta-add")
+        page.click('.vt-vecino [data-agregar*="toscana-28"]')  # "+ Agregar · 1 rollo" (50 m²) del mismo modelo
+        self.assertIn("ya está en tu lista con 120 m²", page.inner_text("#toast"))
+        m2 = page.evaluate("() => JSON.parse(localStorage.getItem('vt-cotizacion-v1')).items.map((i) => i.m2)")
+        self.assertEqual(m2, [120])
+
+    def test_la_ficha_abre_con_el_estado_de_la_ciudad(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/pasto-sintetico/envio/monterrey/", wait_until="load")
+        page.evaluate("() => localStorage.clear()")
+        page.click('.vt-recomendado a[href^="/pasto-sintetico/irlanda-25?estado=nuevo-leon"]')
+        page.wait_for_load_state("load")
+        self.assertEqual(page.input_value("#estado"), "Nuevo León")
+        self.assertEqual(page.text_content("#buybar .buybar__name"), "Puesto en Nuevo León")
+        self.assertIn("con envío", page.text_content("#buybar .buybar__price"))
+
+    def test_la_barra_se_mide_como_barra(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/pasto-sintetico/toscana-28/", wait_until="load")
+        page.evaluate("() => { document.querySelector('#buybar [data-cta-wa]').addEventListener('click', "
+                      "(e) => e.preventDefault()); }")
+        page.dispatch_event("#buybar [data-cta-wa]", "click")
+        leads = page.evaluate("() => Array.from(window.dataLayer || []).map((a) => Array.from(a))"
+                              ".filter((a) => a[0] === 'event' && a[1] === 'generate_lead').map((a) => a[2].cta_id)")
+        self.assertEqual(leads, ["tienda:barra"])
+
+    def test_unidades_sin_mayusculas(self):
+        script = """() => { const out = []; document.querySelectorAll('main *').forEach((el) => {
+          if (getComputedStyle(el).textTransform !== 'uppercase') return;
+          el.childNodes.forEach((n) => { if (n.nodeType === 3 && /m²/.test(n.textContent)) out.push(n.textContent.trim()); });
+        }); return out; }"""
+        page = self.pagina(375, 812)
+        for ruta in PAGINAS + ("/pasto-en-rollo-tampico/",):
+            page.goto(self.base + ruta, wait_until="load")
+            with self.subTest(ruta=ruta):
+                self.assertEqual(page.evaluate(script), [])
+
+    def test_tampico_calcula_venta_local_sin_flete_por_estado(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/pasto-sintetico-tampico/", wait_until="load")
+        opciones = page.evaluate("() => Array.from(document.querySelectorAll('#estado option')).map((o) => o.value)")
+        self.assertEqual(opciones, ["showroom", "local"])
+        page.select_option("#estado", "local")
+        self.assertEqual(page.inner_text("#q-envio"), "Según tu colonia")
+        self.assertEqual(page.inner_text("#q-total"), "$4,580")  # 20 m² de Toscana 28 a $229, sin flete
+        texto = mensaje(page, ".vt-cotizador [data-cta-wa]")
+        self.assertIn("Envío local en Tampico, Madero o Altamira", texto)
+        self.assertNotIn("Envío:", texto)
+
+    def test_hub_en_celular_no_crece_de_mas(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/pasto-sintetico/", wait_until="load")
+        # main medía 17,805 px a 375 px; con las tarjetas horizontales el hub queda abajo de 1.2 veces eso.
+        self.assertLessEqual(page.evaluate("document.documentElement.scrollHeight"), 21366)
 
     def test_precio_y_cta_en_el_primer_pantallazo_movil(self):
         page = self.pagina(375, 812)

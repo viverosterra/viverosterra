@@ -14,7 +14,11 @@
   const MIN_SHOWROOM_M2 = Number(LIMITES.minShowroom) || 2;
   const MAX_M2 = 5000;
   const PICKUP = 'showroom';
-  const TOAST_MS = 4000;
+  // Envío local en Tampico, Madero y Altamira (cotizador de /pasto-sintetico-tampico): sin flete nacional por estado;
+  // el envío local se cotiza según la colonia.
+  const LOCAL = 'local';
+  const TOAST_MS = 2500;
+  const TOAST_GAP = 12;
 
   const ZONAS = {
     A: { tarifa: 900, nombre: 'Centro y Occidente' },
@@ -58,8 +62,10 @@
     return m2 >= TIER2_MIN_M2 ? 't2' : 't1';
   }
 
+  const sinFleteNacional = (estado) => estado === PICKUP || estado === LOCAL;
+
   function quoteLine(model, m2, estado) {
-    const isPickup = estado === PICKUP;
+    const isPickup = sinFleteNacional(estado);
     const min = isPickup ? MIN_SHOWROOM_M2 : MIN_NACIONAL_M2;
     if (!Number.isFinite(m2) || m2 < min) {
       return { error: isPickup
@@ -173,10 +179,11 @@
     if (avisar) document.dispatchEvent(new CustomEvent('vt:lista'));
   }
 
+  /* Si el modelo ya está en la lista se queda la cantidad mayor (agregar 1 rollo no baja unos 120 m² ya elegidos). */
   function upsertItem(state, item) {
-    const exists = state.items.some((it) => it.slug === item.slug);
-    const items = exists
-      ? state.items.map((it) => (it.slug === item.slug ? { ...it, m2: item.m2 } : it))
+    const previo = state.items.find((it) => it.slug === item.slug);
+    const items = previo
+      ? state.items.map((it) => (it.slug === item.slug ? { ...it, m2: Math.max(it.m2, item.m2) } : it))
       : [...state.items, item];
     return { ...state, items };
   }
@@ -187,19 +194,35 @@
 
   function estadoLabel(estado) {
     if (estado === PICKUP) return 'Lo recojo en el showroom de Cd. Madero';
+    if (estado === LOCAL) return 'Envío local en Tampico, Madero o Altamira (según mi colonia)';
     return estado ? `Entrega en ${estado}` : '';
+  }
+
+  const rollosTexto = (n) => `${n} rollo${n > 1 ? 's' : ''}`;
+
+  /* Renglón de flete del mensaje: "Envío: 2 rollos · $2,300" (nunca gratis; se cobra por rollo según el estado). */
+  function envioLinea(q) {
+    return q && !q.error && q.zona ? `Envío: ${rollosTexto(q.rollos)} · ${money(q.envio)} (${ZONAS[q.zona].nombre}).` : '';
   }
 
   function listMessage(state) {
     const lines = ['Hola, quiero cotizar pasto sintético:'];
     let total = 0;
+    let rollos = 0;
+    let envio = 0;
+    let zona = null;
     let complete = Boolean(state.estado);
     state.items.forEach((it) => {
       const q = quoteLine(it, it.m2, state.estado || PICKUP);
-      lines.push(`• ${it.nombre}: ${it.m2} m²`);
-      if (q.error) complete = false; else total += state.estado ? q.total : q.material;
+      lines.push(q.error
+        ? `• ${it.nombre}: ${it.m2} m²`
+        : `• ${it.nombre}: ${it.m2} m² · ${money(q.pm2)}/m² · material ${money(q.material)}`);
+      if (q.error) { complete = false; return; }
+      total += state.estado ? q.total : q.material;
+      if (q.zona) { rollos += q.rollos; envio += q.envio; zona = q.zona; }
     });
     if (state.estado) lines.push(estadoLabel(state.estado) + '.');
+    if (complete && zona) lines.push(envioLinea({ rollos, envio, zona }));
     if (complete && total > 0) lines.push(`Total estimado en la web: ${money(total)}.`);
     if (complete && total > 0) lines.push(planLine(total));
     lines.push('¿Me confirman el precio final con envío a mi dirección?');
@@ -217,10 +240,45 @@
 
   /* ---------- Toast ---------- */
   let toastTimer = null;
+
+  const visible = (el) => {
+    if (!el) return false;
+    const st = getComputedStyle(el);
+    const r = el.getBoundingClientRect();
+    return st.display !== 'none' && st.visibility !== 'hidden' && r.height > 0 && r.top < innerHeight && r.bottom > 0;
+  };
+
+  /* Alto que ocupan abajo las barras fijas visibles (la de compra o la del shell). */
+  function altoBarras() {
+    return $$('#buybar[data-visible="true"], [data-vt-bar]').filter(visible)
+      .reduce((max, el) => Math.max(max, innerHeight - el.getBoundingClientRect().top), 0);
+  }
+
+  /* El aviso va arriba de las barras fijas y nunca encima de los botones del cotizador: si chocaría con ellos, se
+     coloca justo debajo (si cabe) o justo arriba de los botones. */
+  function colocarAviso(toast) {
+    const piso = altoBarras() + TOAST_GAP;
+    const alto = toast.offsetHeight;
+    let bottom = piso;
+    const botones = $$('.vt-cotizador__acciones .vt-btn').filter(visible).map((b) => b.getBoundingClientRect());
+    if (botones.length) {
+      const arriba = Math.min(...botones.map((r) => r.top));
+      const abajo = Math.max(...botones.map((r) => r.bottom));
+      const topAviso = innerHeight - bottom - alto;
+      const choca = topAviso < abajo + TOAST_GAP && innerHeight - bottom > arriba - TOAST_GAP;
+      if (choca) {
+        const debajo = innerHeight - (abajo + TOAST_GAP) - alto;
+        bottom = debajo >= piso ? debajo : innerHeight - arriba + TOAST_GAP;
+      }
+    }
+    toast.style.bottom = `${Math.round(bottom)}px`;
+  }
+
   function showToast(message) {
     const toast = $('#toast');
     if (!toast) return;
     $('[data-toast-text]', toast).textContent = message;
+    colocarAviso(toast);
     toast.dataset.visible = 'true';
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => { toast.dataset.visible = 'false'; }, TOAST_MS);
@@ -251,7 +309,7 @@
     });
     $('#cot-estado').value = estado;
     $('#cot-total').textContent = hasError ? 'Revisa los m²' : money(total);
-    $('#cot-total-label').textContent = estado && estado !== PICKUP ? 'Total estimado con envío' : 'Total estimado del material';
+    $('#cot-total-label').textContent = estado && !sinFleteNacional(estado) ? 'Total estimado con envío' : 'Total estimado del material';
     const send = $('#cot-send');
     send.href = waLink(listMessage(memoryState));
     send.setAttribute('aria-disabled', String(hasError));
@@ -330,7 +388,7 @@
   }
 
   function fillEstados(select) {
-    if (!select || select.options.length > 2) return;
+    if (!select || select.options.length > 2 || 'local' in select.dataset) return;
     Object.keys(ESTADO_ZONA).sort((a, b) => a.localeCompare(b, 'es')).forEach((e) => {
       const opt = document.createElement('option');
       opt.value = e; opt.textContent = e;
@@ -365,10 +423,14 @@
 
   function addItem(model, m2) {
     const qty = clampM2(m2);
+    const previo = memoryState.items.find((it) => it.slug === model.slug);
     writeStore(upsertItem(memoryState, {
       slug: model.slug, nombre: model.nombre, img: model.img, t1: model.t1, t2: model.t2, rollo: model.rollo, m2: qty,
     }));
-    showToast(`${model.nombre} · ${qty} m² en tu lista`);
+    const queda = previo ? Math.max(previo.m2, qty) : qty;
+    showToast(!previo ? `${model.nombre} · ${qty} m² en tu lista`
+      : (queda === previo.m2 && qty !== previo.m2 ? `${model.nombre} ya está en tu lista con ${queda} m²`
+        : `${model.nombre} actualizado a ${queda} m² en tu lista`));
     track('add_to_cart', { item_id: model.slug, quantity: qty });
   }
 
@@ -392,7 +454,8 @@
     if (!inp || !sel || models.length === 0) return null;
     const modelSel = $('#modelo');
     fillEstados(sel);
-    if (memoryState.estado) sel.value = memoryState.estado;
+    const hayOpcion = (v) => Array.from(sel.options).some((o) => o.value === v);
+    if (memoryState.estado && hayOpcion(memoryState.estado)) sel.value = memoryState.estado;
 
     if (modelSel) {
       const wanted = normalizeSlug(new URLSearchParams(location.search).get('modelo'));
@@ -410,13 +473,15 @@
     sel.addEventListener('change', () => {
       writeStore({ ...memoryState, estado: sel.value });
       update();
-      document.dispatchEvent(new CustomEvent('vt:estado', { detail: { estado: sel.value === PICKUP ? '' : sel.value } }));
+      document.dispatchEvent(new CustomEvent('vt:estado', { detail: { estado: sinFleteNacional(sel.value) ? '' : sel.value } }));
     });
     if (modelSel) modelSel.addEventListener('change', update);
 
     $('#cta-add').addEventListener('click', () => addItem(current(), parseInt(inp.value, 10)));
+    // La barra fija lleva el mismo mensaje del cotizador, pero se mide aparte (cta_id "<tipo>:barra").
     $$('[data-cta-wa]').forEach((a) => a.addEventListener('click', () => {
-      leadWhatsapp('whatsapp_cotizador', 'cotizador', { item_id: current().slug, quantity: parseInt(inp.value, 10) || 0 });
+      leadWhatsapp('whatsapp_cotizador', a.closest('#buybar') ? 'barra' : 'cotizador',
+        { item_id: current().slug, quantity: parseInt(inp.value, 10) || 0 });
     }));
 
     function renderModelPrices(model) {
@@ -448,6 +513,9 @@
       if (!estado) {
         envioLabel.textContent = 'Envío';
         envioEl.textContent = 'Elige tu estado';
+      } else if (estado === LOCAL) {
+        envioLabel.textContent = 'Envío local';
+        envioEl.textContent = 'Según tu colonia';
       } else if (estado === PICKUP) {
         envioLabel.textContent = 'Recoger en showroom';
         envioEl.textContent = 'Sin costo';
@@ -459,18 +527,19 @@
         envioEl.textContent = '—';
       }
 
+      const conFlete = Boolean(estado) && !sinFleteNacional(estado);
       $('#q-total').textContent = error ? '—' : money(estado ? q.total : q.material);
-      $('#q-total-label').textContent = estado && estado !== PICKUP ? 'Total estimado con envío' : 'Total estimado';
-      $('#q-landed').textContent = !error && estado && estado !== PICKUP
-        ? `≈ ${money(q.landed)} por m² puesto en tu domicilio` : '';
-      const contado = error ? 0 : (estado && estado !== PICKUP ? q.total : q.material);
+      $('#q-total-label').textContent = conFlete ? 'Total estimado con envío'
+        : (estado === LOCAL ? 'Total del material' : 'Total estimado');
+      $('#q-landed').textContent = !error && conFlete ? `≈ ${money(q.landed)} por m² puesto en tu domicilio` : '';
+      const contado = error ? 0 : (conFlete ? q.total : q.material);
       renderPlans($('#q-plans'), contado);
       lastContado = contado;
       paintBuybarPlan();
 
       const faltan = ROLLO_M2 - m2;
       $('#q-hint').textContent = !error && m2 >= TIER2_MIN_M2 && faltan > 0
-        ? `Con ${faltan} m² más llegas a rollo completo y pagas ${money(model.rollo)}/m² en lugar de ${money(model.t2)}/m². El envío cuesta lo mismo.`
+        ? `Con ${faltan} m² más llegas a rollo completo y pagas ${money(model.rollo)}/m² en lugar de ${money(model.t2)}/m².${conFlete ? ' El envío cuesta lo mismo.' : ''}`
         : '';
 
       const otros = memoryState.items.filter((it) => it.slug !== model.slug);
@@ -479,7 +548,8 @@
         Number.isFinite(m2) ? `Necesito ${m2} m².` : '',
         otros.length ? `También en mi lista: ${otros.map((it) => `${it.nombre} (${it.m2} m²)`).join(', ')}.` : '',
         estado ? estadoLabel(estado) + '.' : '¿Me ayudan a calcular el envío a mi ciudad?',
-        !error && estado ? `Total estimado en la web: ${money(estado === PICKUP ? q.material : q.total)}.` : '',
+        !error && conFlete ? envioLinea(q) : '',
+        !error && estado ? `Total estimado en la web: ${money(conFlete ? q.total : q.material)}.` : '',
         contado ? planLine(contado) : '',
         '¿Me confirman el precio final?',
       ].filter(Boolean).join('\n');
@@ -573,7 +643,16 @@
     if (btn) btn.addEventListener('click', () => { $('#toast').dataset.visible = 'false'; });
   }
 
+  /* ?estado=<slug> (enlaces de las páginas de ciudad): la ficha abre con ese estado elegido, como el hub. */
+  function estadoDesdeUrl() {
+    const slug = new URLSearchParams(location.search).get('estado');
+    if (!slug || !window.VTLanded) return;
+    const estado = window.VTLanded.estadoDesdeSlug(slug, Object.keys(ESTADO_ZONA));
+    if (estado && estado !== memoryState.estado) writeStore({ ...memoryState, estado }, false);
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
+    estadoDesdeUrl();
     renderCount();
     initDrawer();
     initToast();
@@ -586,7 +665,7 @@
       models,
       zonas: Object.fromEntries(Object.entries(ZONAS).map(([z, v]) => [z, v.tarifa])),
       estadoZona: ESTADO_ZONA,
-      getEstado: () => (memoryState.estado && memoryState.estado !== PICKUP ? memoryState.estado : ''),
+      getEstado: () => (memoryState.estado && !sinFleteNacional(memoryState.estado) ? memoryState.estado : ''),
       setEstado: (estado) => {
         if (estado && !(estado in ESTADO_ZONA)) return;
         writeStore({ ...memoryState, estado });

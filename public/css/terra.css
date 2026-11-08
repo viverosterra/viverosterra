@@ -291,6 +291,8 @@
   .vt-portada .vt-etiqueta__nombre,.vt-pagina main .vt-portada .vt-etiqueta__sci,.vt-pagina main .vt-portada .vt-etiqueta__nota{display:none}
 }
 
+/* Unidades dentro de rótulos en mayúsculas: m² y g/m² no se vuelven "M²" (componentes.unidades). */
+.vt-u{text-transform:none}
 /* ---------- cuadro de datos ---------- */
 .vt-datos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;border:1px solid var(--vt-ink);background:var(--vt-card)}
 .vt-datos>div{min-width:0;padding:12px 14px;border-right:1px solid var(--vt-line);border-bottom:1px solid var(--vt-line)}
@@ -298,7 +300,7 @@
 .vt-datos dt{font-size:var(--vt-text-xs);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--vt-muted)}
 .vt-datos dd{margin:4px 0 0;font-size:var(--vt-text-dato);font-weight:800;line-height:1.1;font-variation-settings:"wdth" var(--vt-wdth-mid);font-variant-numeric:tabular-nums}
 .vt-datos dd small{display:block;margin-top:3px;font-size:var(--vt-text-xs);font-weight:400;color:var(--vt-muted);font-variation-settings:"wdth" 100}
-@media (min-width:900px){.vt-datos{grid-template-columns:repeat(6,minmax(0,1fr))}.vt-datos>div{border-bottom:0}.vt-datos>div:nth-child(2n){border-right:1px solid var(--vt-line)}.vt-datos>div:last-child{border-right:0}}
+@media (min-width:900px){.vt-datos{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}.vt-datos>div{border-bottom:0}.vt-datos>div:nth-child(2n){border-right:1px solid var(--vt-line)}.vt-datos>div:last-child{border-right:0}.vt-datos dt{overflow-wrap:break-word;hyphens:auto}}
 
 /* ---------- figura documental: FIG. 0X · lugar · etapa ---------- */
 .vt-fig{margin:0}
@@ -335,7 +337,7 @@
 .vt-pagina main .vt-testimonios__dest .vt-testimonio p{font-size:clamp(1.375rem,1.1rem + 1.1vw,2rem);line-height:1.3}
 .vt-testimonios__dest .vt-testimonio{padding:28px 28px 22px}
 .vt-pagina main .vt-testimonios li:not(.vt-testimonios__dest) .vt-testimonio p{font-size:17px}
-@media (min-width:900px){.vt-testimonios{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.vt-testimonios__dest{grid-column:1 / -1}}
+@media (min-width:900px){.vt-testimonios{grid-template-columns:repeat(6,minmax(0,1fr));gap:24px}.vt-testimonios>li{grid-column:span 2}.vt-testimonios__dest,.vt-testimonios>li:not(.vt-testimonios__dest):nth-child(2):nth-last-child(2),.vt-testimonios>li:not(.vt-testimonios__dest):nth-child(3):nth-last-child(1){grid-column:span 3}.vt-testimonios>.vt-testimonios__dest,.vt-testimonios>li:nth-child(2):last-child{grid-column:1 / -1}}
 
 /* ---------- índice de servicios con su precio ---------- */
 .vt-indice{list-style:none;border-top:1px solid var(--vt-ink)}
@@ -382,7 +384,7 @@
 .vt-opciones--plazo{grid-template-columns:repeat(auto-fit,minmax(86px,1fr));margin-top:14px}
 .vt-opciones--plazo legend{margin-bottom:8px}
 .vt-opciones--plazo label{flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;padding:8px 10px;font-size:14px}
-.vt-pagina main h3+:is(.vt-medidor,.vt-tabla){margin-top:20px}
+.vt-pagina main h3+:is(.vt-medidor,.vt-tabla,.vt-testimonios){margin-top:20px}
 .vt-medidor__plano{padding:14px;border:1px solid var(--vt-line);background:var(--vt-card)}
 .vt-pagina .vt-medidor__plano svg{display:block;width:100%;height:auto}
 .vt-plano-relleno{fill:var(--vt-field-100)}
@@ -427,7 +429,7 @@
   .vt-tabla--comparar tbody th{padding:12px 14px 8px;border-bottom:1px solid var(--vt-line);font-weight:700}
   .vt-tabla--comparar td{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:10px;padding:8px 14px;border-bottom:1px dashed var(--vt-line)}
   .vt-tabla--comparar td:last-child{border-bottom:0}
-  .vt-tabla--comparar td::before{content:attr(data-col);font-size:var(--vt-text-xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--vt-muted)}
+  .vt-tabla--comparar td::before{content:attr(data-col);font-size:var(--vt-text-xs);font-weight:600;letter-spacing:.04em;color:var(--vt-muted)}
 }
 .vt-planes{margin-top:24px;border:1px solid var(--vt-line);background:var(--vt-card)}
 .vt-planes__cabeza{display:grid;gap:4px;padding:14px 16px;border-bottom:1px solid var(--vt-line)}
@@ -466,9 +468,8 @@
 .vt-pasos{counter-reset:paso;display:grid;list-style:none;border-top:1px solid var(--vt-ink)}
 .vt-pasos li{counter-increment:paso;display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 14px;padding:18px 0;border-bottom:1px solid var(--vt-line)}
 .vt-pasos li::before{content:counter(paso,decimal-leading-zero);grid-row:1 / span 3;font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;font-variation-settings:"wdth" var(--vt-wdth-tight)}
-.vt-pagina main .vt-pasos h3{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .vt-pagina main .vt-pasos p{margin:0;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
-.vt-pagina main .vt-pasos .vt-pasos__cuando{font-size:var(--vt-text-xs);font-weight:700;letter-spacing:.04em;color:var(--vt-soil)}
+.vt-pagina main .vt-pasos .vt-pasos__cuando{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:var(--vt-text-xs);font-weight:700;letter-spacing:.04em;color:var(--vt-soil)}
 .vt-quien{display:inline-block;padding:3px 8px 2px;border-radius:var(--vt-radius);background:var(--vt-field);color:var(--vt-card);font-size:12px;font-weight:700;line-height:1.3;letter-spacing:.12em;text-transform:uppercase;font-variation-settings:"wdth" 100}
 .vt-quien--tu{background:var(--vt-soil)}
 .vt-quien--juntos{background:var(--vt-card);color:var(--vt-ink);box-shadow:inset 0 0 0 1.5px var(--vt-ink)}
