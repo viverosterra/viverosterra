@@ -456,12 +456,13 @@
 
 /* ---------- formas de contratar (máx. 3, cada una con su mensaje) ---------- */
 .vt-modos{display:grid;gap:20px;list-style:none}
-@media (min-width:768px){.vt-modos{grid-template-columns:repeat(auto-fit,minmax(0,1fr))}}
+@media (min-width:768px){.vt-modos{grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr))}}
 .vt-modo{display:grid;gap:14px;align-content:start;padding:24px 20px;border:1px solid var(--vt-line);background:var(--vt-card)}
 .vt-modo--rec{border:1.5px solid var(--vt-field)}
 .vt-pagina main .vt-modo p{margin:0}
 .vt-pagina main .vt-modo__n{font-size:var(--vt-text-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-muted)}
 .vt-modo__precio small{display:block;margin-top:4px;font-size:var(--vt-text-sm);color:var(--vt-muted)}
+.vt-modo__precio .vt-modo__mes{color:var(--vt-ink-2);font-weight:600}
 .vt-modo .vt-btn{width:100%}
 
 /* ---------- proceso NOSOTROS / TÚ / JUNTOS ---------- */

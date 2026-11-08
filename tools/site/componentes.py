@@ -243,19 +243,55 @@ def tabla_comparativa(columnas, filas, caption):
             f'<tbody>{cuerpo}</tbody></table>')
 
 
+def linea_mensualidad(contado):
+    """Plazo más largo disponible para un precio de contado, con la fórmula oficial (tools/pasto/mensualidades.py, la
+    misma de vt-mensualidades.js): "o en 12 mensualidades de ≈ $1,852 con tarjeta de crédito (total $22,220)"."""
+    disponibles = [p for p in mensualidades.planes(contado) if p["disponible"]]
+    if not disponibles:
+        raise ValueError(f"{dinero(contado)}: no hay plazos de mensualidades para ese monto")
+    p = disponibles[-1]
+    return (f'o en {p["plazo"]} mensualidades de ≈ {dinero(p["mensualidad"])} con tarjeta de crédito '
+            f'(total {dinero(p["total"])})')
+
+
+def _precio_opcion(o):
+    """Renglón de precio de una opción: "desde $X unidad" (o sin "desde"), un texto propio o nada."""
+    if "precio" in o:
+        desde = "desde " if o.get("desde", True) else ""
+        mes = f'<small class="vt-modo__mes">{linea_mensualidad(o["precio"])}</small>' if o.get("mensualidad") else ""
+        return (f'<p class="vt-modo__precio">{desde}<span class="vt-precio-marca">{dinero(o["precio"])}</span> '
+                f'{o["unidad"]} <small>{o["detalle"]}</small>{mes}</p>')
+    if "precio_texto" in o:
+        return f'<p class="vt-modo__precio">{o["precio_texto"]} <small>{o["detalle"]}</small></p>'
+    return ""
+
+
 def opciones(items, tipo):
-    """Formas de contratar (máx. 3, spec §3.3), cada una con su precio "desde", lo que incluye, su nota y su propio
-    mensaje de WhatsApp. items: rotulo, titulo, precio (número), unidad, detalle, puntos, nota, mensaje, rec."""
+    """Formas de contratar o planes (máx. 3, spec §3.3), cada uno con su propio mensaje de WhatsApp (data-cta
+    <tipo>:opcion-<n>). items: rotulo, titulo, puntos, mensaje y, opcionales, precio (número) con unidad y detalle,
+    desde (False para un precio cerrado), mensualidad (True: línea con el plazo más largo), precio_texto (en vez de
+    precio: "Por cotización"), nota y rec (recomendado)."""
+    if len(items) > 3:
+        raise ValueError("máximo 3 opciones por página (spec §3.3)")
     filas = []
     for i, o in enumerate(items, 1):
         clase = "vt-modo vt-modo--rec" if o.get("rec") else "vt-modo"
         puntos = "".join(f"<li>{x}</li>" for x in o["puntos"])
         nota_html = f'<p class="vt-promesa">{o["nota"]}</p>' if o.get("nota") else ""
         filas.append(f'<li class="{clase}"><p class="vt-modo__n">{o["rotulo"]}</p><h3>{o["titulo"]}</h3>'
-                     f'<p class="vt-modo__precio">desde <span class="vt-precio-marca">{dinero(o["precio"])}</span> '
-                     f'{o["unidad"]} <small>{o["detalle"]}</small></p><ul class="vt-checks">{puntos}</ul>{nota_html}'
+                     f'{_precio_opcion(o)}<ul class="vt-checks">{puntos}</ul>{nota_html}'
                      f'{boton_wa(o["mensaje"], f"{tipo}:opcion-{i}")}</li>')
     return f'<ul class="vt-modos">{"".join(filas)}</ul>'
+
+
+def fichas(items):
+    """Tarjetas de lo que incluye un servicio, sin precio ni botón. items: titulo, texto y, opcional, puntos."""
+    filas = []
+    for f in items:
+        puntos = "".join(f"<li>{x}</li>" for x in f.get("puntos", ()))
+        lista = f'<ul class="vt-checks">{puntos}</ul>' if puntos else ""
+        filas.append(f'<li class="vt-modo"><h3>{f["titulo"]}</h3><p>{f["texto"]}</p>{lista}</li>')
+    return f'<ul class="vt-modos vt-fichas">{"".join(filas)}</ul>'
 
 
 def relacionados(items):
@@ -303,13 +339,15 @@ def howto(nombre, items):
 
 
 def garantia(g):
-    """g: titulo, id_titulo, numero, rotulo, grande, unidad, resumen, puntos (texto, si_aplica), pie."""
+    """g: titulo, id_titulo, numero, rotulo, resumen, puntos (texto, si_aplica), pie y, opcionales, grande y unidad (la
+    cifra de la garantía; riego no tiene un plazo y la omite)."""
     no_aplica = ' class="vt-checks__no"'
+    cifra = f'<p class="vt-grande">{g["grande"]}<small> {g["unidad"]}</small></p>' if g.get("grande") else ""
     puntos = "".join(f'<li{"" if ok else no_aplica}>{t}</li>' for t, ok in g["puntos"])
     ident = esc(g["id_titulo"])
     return (f'<section class="vt-bloque vt-bloque--tinte" aria-labelledby="{ident}"><div class="vt-wrap vt-dos">'
             f'<div><p class="vt-bloque__no"><b>{g["numero"]:02d}</b>{g["rotulo"]}</p><h2 id="{ident}">'
-            f'{g["titulo"]}</h2><p class="vt-grande">{g["grande"]}<small> {g["unidad"]}</small></p>'
+            f'{g["titulo"]}</h2>{cifra}'
             f'<p class="vt-promesa">{g["resumen"]}</p></div><div><ul class="vt-checks">{puntos}</ul>'
             f'<p class="vt-promesa">{g["pie"]}</p></div></div></section>')
 

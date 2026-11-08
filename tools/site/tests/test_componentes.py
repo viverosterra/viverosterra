@@ -136,6 +136,60 @@ class BloquesTest(unittest.TestCase):
         self.assertEqual([unquote(t).split("\n")[0] for t in re.findall(r"text=([^\"&]+)", html)], ["Hola A", "Hola B"])
 
 
+class PlanesTest(unittest.TestCase):
+    """Etapa 2c: planes con precio cerrado, por cotización o sin precio, con línea de mensualidades; tarjetas de lo
+    que incluye un servicio y garantía sin cifra."""
+    BASE = {"rotulo": "Plan 1", "titulo": "Esencial", "unidad": "MXN", "detalle": "d", "puntos": ("p",),
+            "mensaje": "Hola, me interesa el Plan Terra Esencial"}
+
+    def test_linea_de_mensualidades_con_el_plazo_mas_largo(self):
+        self.assertEqual(c.linea_mensualidad(3000),
+                         "o en 3 mensualidades de ≈ $1,105 con tarjeta de crédito (total $3,315)")
+        self.assertEqual(c.linea_mensualidad(6500),
+                         "o en 6 mensualidades de ≈ $1,245 con tarjeta de crédito (total $7,468)")
+        self.assertEqual(c.linea_mensualidad(18000),
+                         "o en 12 mensualidades de ≈ $1,852 con tarjeta de crédito (total $22,220)")
+        with self.assertRaises(ValueError):
+            c.linea_mensualidad(750)  # bajo el mínimo de $2,000 no hay plazos
+
+    def test_precio_cerrado_sin_desde_y_con_mensualidad(self):
+        html = c.opciones((dict(self.BASE, precio=3000, desde=False, mensualidad=True),), "servicio-diseno")
+        self.assertIn('<p class="vt-modo__precio"><span class="vt-precio-marca">$3,000</span> MXN', html)
+        self.assertIn('<small class="vt-modo__mes">o en 3 mensualidades de ≈ $1,105', html)
+        self.assertNotIn("desde ", html)
+
+    def test_precio_desde_por_omision_y_sin_mensualidad(self):
+        html = c.opciones((dict(self.BASE, precio=18000),), "servicio-diseno")
+        self.assertIn('desde <span class="vt-precio-marca">$18,000</span>', html)
+        self.assertNotIn("vt-modo__mes", html)
+
+    def test_por_cotizacion_y_sin_precio(self):
+        html = c.opciones((dict(self.BASE, precio_texto="Por cotización"), dict(self.BASE, titulo="Goteo")),
+                          "servicio-mantenimiento")
+        self.assertIn('<p class="vt-modo__precio">Por cotización <small>d</small></p>', html)
+        self.assertEqual(html.count('class="vt-modo__precio"'), 1)
+        self.assertEqual(re.findall(r'data-cta="([^"]+)"', html),
+                         ["servicio-mantenimiento:opcion-1", "servicio-mantenimiento:opcion-2"])
+
+    def test_maximo_tres_opciones(self):
+        with self.assertRaises(ValueError):
+            c.opciones((self.BASE,) * 4, "servicio-diseno")
+
+    def test_fichas_sin_precio_ni_boton(self):
+        html = c.fichas(({"titulo": "Poda de pasto", "texto": "Corte parejo."},
+                         {"titulo": "Goteo", "texto": "A la raíz.", "puntos": ("Menos agua",)}))
+        self.assertTrue(html.startswith('<ul class="vt-modos vt-fichas">'))
+        self.assertIn("<h3>Poda de pasto</h3><p>Corte parejo.</p></li>", html)
+        self.assertIn('<ul class="vt-checks"><li>Menos agua</li></ul>', html)
+        self.assertNotIn("wa.me", html)
+
+    def test_garantia_con_y_sin_cifra(self):
+        g = {"titulo": "Garantía.", "id_titulo": "vt-h-garantia", "numero": 6, "rotulo": "Garantía", "resumen": "r",
+             "puntos": (("a", True), ("b", False)), "pie": "p"}
+        self.assertNotIn("vt-grande", c.garantia(g))
+        self.assertIn('<p class="vt-grande">30<small> días</small></p>', c.garantia(dict(g, grande="30", unidad="días")))
+
+
 class MedidorTest(unittest.TestCase):
     def test_html_del_medidor(self):
         html = c.medidor("prueba", "home")
