@@ -48,6 +48,9 @@ VISITA_GRATIS_RE = re.compile(
 VISITA_PENDIENTES = frozenset()
 # Decisión del dueño (2026-11-07): Viveros Terra no tiene registro, certificación ni certificado SENASICA en ninguna
 # forma; tampoco certificados fitosanitarios ni SADER. En ninguna página, JSON-LD, llms.txt ni blog. Sin excepciones.
+# Decisión del dueño (2026-11-08): "sin costo" solo en la garantía de arraigo del pasto (la "sección" que no arraiga);
+# en plantas y palmas la garantía dice "la reponemos." a secas.
+REPOSICION_SIN_COSTO_RE = re.compile(r"\brepon\w*(?:\s+\w+){0,2}?\s+sin\s+costo", re.I)
 CERTIFICACION_RE = re.compile(
     r"\bSENASICA\b|\bSADER\b"
     r"|\b(?:certificad[oa]s?|certificaci[oó]n|registro|constancia|permiso)\W+(?:\w+\W+){0,2}?fitosanitari\w*"
@@ -90,6 +93,16 @@ def publicados():
             if "/tests/" not in path.as_posix():
                 texto = path.read_text(encoding="utf-8")
                 yield path, sin_valores_css(texto) if ext == "css" else texto
+
+
+def reposiciones_que_no_son_de_pasto(texto):
+    """Frases con "repon… sin costo" que no hablan de una sección de pasto: solo esa garantía puede decirlo."""
+    salida = []
+    for m in REPOSICION_SIN_COSTO_RE.finditer(texto):
+        frase = texto[texto.rfind(". ", 0, m.start()) + 1:m.end()].strip()
+        if not re.search(r"secci[oó]n", frase, re.I):
+            salida.append(frase)
+    return salida
 
 
 def archivos_fuente():
@@ -274,6 +287,22 @@ class ReglasDelDuenoTest(unittest.TestCase):
                        "cuánto puedes ahorrar en agua", "Factura emitida el día del pago", "la recuperación del pasto",
                        "¿Cuándo se paga el anticipo?"):
             self.assertFalse(CERTIFICACION_RE.search(limpio) or AMORTIZA_RE.search(limpio), limpio)
+
+    def test_reposicion_sin_costo_solo_en_pasto(self):
+        hallazgos = [f"{path.relative_to(PUBLIC).as_posix()}: {frase}" for path, texto in publicados()
+                     for frase in reposiciones_que_no_son_de_pasto(texto)]
+        self.assertEqual(hallazgos, [])
+
+    def test_reposicion_sin_costo_se_detecta(self):
+        for sucio in ("Si una planta que sembramos no prende en 30 días, la reponemos sin costo.",
+                      "si no prenden y se regaron como indicamos, las reponemos sin costo. No cubre falta de riego",
+                      "Garantía de arraigo 30 días: reponemos plantas sin costo",
+                      "Garantía de arraigo 30 días: reponemos sin costo las plantas que sembramos"):
+            self.assertTrue(reposiciones_que_no_son_de_pasto(sucio), sucio)
+        for limpio in ("Si una sección no arraiga en 15 a 20 días, la reponemos sin costo, siguiendo el protocolo",
+                       "Si una planta que sembramos no prende en 30 días, la reponemos.",
+                       "fugas o fallas por causas de la instalación se atienden sin costo adicional"):
+            self.assertFalse(reposiciones_que_no_son_de_pasto(limpio), limpio)
 
     def test_visita_gratis_se_detecta(self):
         for sucio in ("Agendamos una visita sin costo", "Visita técnica gratuita", "vamos a medir sin costo",

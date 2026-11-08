@@ -272,7 +272,7 @@ CONTENIDO = {
         "titulo": "Garantía de arraigo de 30 días en las plantas que sembramos.", "grande": "30", "unidad": "días",
         "resumen": "En las plantas que sembramos nosotros al ejecutar tu proyecto, con el riego indicado.",
         "puntos": (
-            ("Si una planta que sembramos no prende en 30 días y se regó como te indicamos, la reponemos sin costo.",
+            ("Si una planta que sembramos no prende en 30 días y se regó como te indicamos, la reponemos.",
              True),
             ("Garantía de precio: la cotización de la obra se respeta 30 días.", True),
             (f"El costo del diseño se descuenta si contratas la obra (en el Premium, en proyectos de más de "

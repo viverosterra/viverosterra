@@ -199,7 +199,7 @@ POR_ARCHIVO = (
      "condiciones</a></span>"),
     ("public/diseno-jardines-tampico/index.html",
      "<strong>Garantía de arraigo 30 días:</strong> reponemos plantas sin costo",
-     "<strong>Garantía de arraigo 30 días:</strong> reponemos sin costo las plantas que sembramos nosotros, con el riego "
+     "<strong>Garantía de arraigo 30 días:</strong> reponemos las plantas que sembramos nosotros, con el riego "
      f"indicado {PLANTAS_CONDICION}"),
     ("public/diseno-jardines-tampico/index.html", "y garantia de arraigo 30 dias.",
      "y garantia de arraigo 30 dias en las plantas que sembramos, con el riego indicado."),
