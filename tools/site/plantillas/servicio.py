@@ -5,8 +5,12 @@ pago (anticipo y mensualidades con tarjeta de crédito, con su simulador) → pr
 final. Las secciones que el contenido no trae se omiten (diseño, mantenimiento y riego no llevan Medidor de pasto).
 Opcionales desde 2b: formas de contratar (máx. 3, cada una con su mensaje), tabla comparativa de precios, cotizador de
 la tienda (tienda-pasto.js, con lista de cotización y barra de compra), visita al showroom y pago sin simulador (con
-los plazos de mensualidades). Páginas: /pasto-en-rollo-tampico (contenido/pasto_en_rollo.py) y
-/pasto-sintetico-tampico (contenido/sintetico_tampico.py)."""
+los plazos de mensualidades). Desde 2c: planes con precio cerrado, "por cotización" o sin precio y con línea de
+mensualidades, tabla comparativa bajo los planes, "qué incluye" en tarjetas, objeción con una sola tabla y garantía
+sin cifra. Páginas: /pasto-en-rollo-tampico (contenido/pasto_en_rollo.py), /pasto-sintetico-tampico
+(contenido/sintetico_tampico.py), /diseno-jardines-tampico (contenido/diseno_jardines.py),
+/mantenimiento-jardines-tampico (contenido/mantenimiento_jardines.py) y /sistema-riego-tampico
+(contenido/sistema_riego.py)."""
 import componentes as c
 import componentes_tienda as t
 from plantillas import base
@@ -44,9 +48,28 @@ def _precio(k, numero):
 
 
 def _opciones(k, numero):
+    """Formas de contratar o planes (máx. 3), cada uno con su mensaje; opcionales: tabla comparativa y nota debajo."""
     o = k["opciones"]
-    return c.bloque(numero, "Opciones", "vt-h-opciones", o["titulo"], c.opciones(o["items"], k["tipo"]), lede=o.get("lede"),
+    cuerpo = c.opciones(o["items"], k["tipo"])
+    if o.get("tabla"):
+        tb = o["tabla"]
+        tabla = c.tabla_comparativa(tb["columnas"], tb["filas"], tb["caption"])
+        if tb.get("plegable"):
+            # Cerrada en celular para acortar la página; terra.js la abre desde 768 px (data-vt-plegable).
+            cuerpo += (f'<details class="vt-plegable vt-mt" data-vt-plegable><summary class="vt-plegable__resumen">'
+                       f'<h3>{tb["titulo"]}</h3></summary>{tabla}</details>')
+        else:
+            cuerpo += f'<h3 class="vt-mt">{tb["titulo"]}</h3>' + tabla
+    if o.get("nota"):
+        cuerpo += f'<p class="vt-promesa">{o["nota"]}</p>'
+    return c.bloque(numero, o.get("rotulo", "Opciones"), "vt-h-opciones", o["titulo"], cuerpo, lede=o.get("lede"),
                     id_seccion="opciones")
+
+
+def _incluye(k, numero):
+    """Qué incluye el servicio, en tarjetas sin precio (mantenimiento: lo que se hace en cada visita)."""
+    i = k["incluye"]
+    return c.bloque(numero, "Qué incluye", "vt-h-incluye", i["titulo"], c.fichas(i["items"]), lede=i.get("lede"))
 
 
 def _aparte(items):
@@ -78,11 +101,14 @@ def _visita(k, numero):
 
 
 def _objecion(k, numero):
+    """La objeción principal en una tabla con su cierre; una segunda tabla es opcional (pasto en rollo trae dos)."""
     o = k["objecion"]
-    a, b = o["comparativa"], o["comparativa_2"]
-    cuerpo = (c.tabla_comparativa(a["columnas"], a["filas"], a["caption"]) + f'<p class="vt-promesa">{a["cierre"]}</p>'
-              + f'<h3 class="vt-mt">{o["titulo_2"]}</h3>' + c.tabla_comparativa(b["columnas"], b["filas"], b["caption"]))
-    return c.bloque(numero, "Cuál te conviene", "vt-h-conviene", o["titulo"], cuerpo, lede=o["lede"])
+    a = o["comparativa"]
+    cuerpo = c.tabla_comparativa(a["columnas"], a["filas"], a["caption"]) + f'<p class="vt-promesa">{a["cierre"]}</p>'
+    if o.get("comparativa_2"):
+        b = o["comparativa_2"]
+        cuerpo += f'<h3 class="vt-mt">{o["titulo_2"]}</h3>' + c.tabla_comparativa(b["columnas"], b["filas"], b["caption"])
+    return c.bloque(numero, o.get("rotulo", "Cuál te conviene"), "vt-h-conviene", o["titulo"], cuerpo, lede=o["lede"])
 
 
 def _pago(k, numero):
@@ -114,7 +140,7 @@ def render(k):
     g, f, ci, p = k["garantia"], k["faq"], k["cierre"], k["proceso"]
     secciones = [c.portada(k["portada"], tipo, k["migas"]), _prueba(k, 1)]
     numero = 2
-    for clave, armar in (("opciones", _opciones), ("precio", _precio), ("cotizador", _cotizador),
+    for clave, armar in (("opciones", _opciones), ("incluye", _incluye), ("precio", _precio), ("cotizador", _cotizador),
                          ("objecion", _objecion)):
         if clave in k:
             secciones.append(armar(k, numero))

@@ -192,8 +192,9 @@ class NavegadorTest(unittest.TestCase):
     def test_window_open_de_whatsapp_sale_firmado(self):
         page = self.pagina(1440)
         page.add_init_script("window.__abiertos = []; window.open = (url) => { window.__abiertos.push(String(url)); return null; };")
-        page.goto(self.base + "/diseno-jardines-tampico/", wait_until="load")
-        page.evaluate("() => sendWA('Hola, me interesa el Plan Terra')")
+        # Diseño sale de su plantilla desde la Etapa 2c (un botón por plan); piedra bola conserva sendWA hasta la 2f.
+        page.goto(self.base + "/piedra-bola-rio-tampico/", wait_until="load")
+        page.evaluate("() => sendWA('Hola, quiero cotizar piedra bola de río')")
         abiertos = page.evaluate("() => window.__abiertos")
         self.assertEqual(len(abiertos), 1)
         self.assertEqual(abiertos[0].count("viverosterra.com"), 1)

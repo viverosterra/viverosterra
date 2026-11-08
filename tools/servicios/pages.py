@@ -1,8 +1,7 @@
 """Contenido de la portada de cada página de servicio o producto.
 
-Precios y datos: ver la memoria de datos oficiales (pasto $85 / $120, mayoreo $60 desde 500 m²,
-mantenimiento desde $750/mes, diseño $3,000 / $6,500 / desde $18,000, riego $180 a $320/m²,
-palmas desde $250 (areca y coco plumoso) y real desde $500 en tamaño chico, garantía de plantas 30 días con riego y cuidado indicados).
+Precios y datos: ver la memoria de datos oficiales (pasto $85 / $120, mayoreo $60 desde 500 m², palmas desde $250
+(areca y coco plumoso) y real desde $500 en tamaño chico, garantía de plantas 30 días con riego y cuidado indicados).
 """
 
 
@@ -17,7 +16,8 @@ GARANTIA_PLANTAS = ("30 días", "Garantía de arraigo al sembrarlas nosotros")
 DESDE_2007 = ("Desde 2007", "Vivero propio en Cd. Madero")
 VARIEDADES = ("+200", "Variedades en el vivero")
 
-# /pasto-en-rollo-tampico y la home salen de tools/site/plantillas/ desde la Etapa 2a: este script ya no las toca.
+# La home y /pasto-en-rollo-tampico (Etapa 2a), y diseño, mantenimiento y riego (Etapa 2c) salen de
+# tools/site/plantillas/: este script ya no las toca. Quedan las páginas de las Etapas 2d a 2g.
 PAGES = {
     "mayoreo-pasto-tampico": dict(
         eyebrow="Constructoras · Fraccionamientos · Industria",
@@ -29,36 +29,6 @@ PAGES = {
         alt="Cuadrilla instalando pasto San Agustín en rollo", caption="Pasto San Agustín cortado para obra.",
         wa=guided("Hola, necesito pasto al mayoreo para un proyecto.", "Empresa", "Ubicación de la obra", "Metros totales", "Fecha de entrega", foto=False),
         cta="Cotizar mayoreo",
-    ),
-    "mantenimiento-jardines-tampico": dict(
-        title="Mantenimiento de jardines", accent="en Tampico, cada mes",
-        price_pre="Desde", price="$750", price_unit="/mes", price_alt="· según metros y frecuencia",
-        lede="Poda, fertilización, control de plagas y revisión del riego para casas, fraccionamientos y empresas en Tampico, Madero y Altamira.",
-        facts=[("Cada 15 a 21 días", "Visitas en temporada de lluvias"), ("Cada 30 días", "Visitas en temporada seca"), ("REPSE 773725", "Contratos con empresas")],
-        img="/img/mantenimiento-jardines-poda-pasto-tampico.webp", img_pos="center 45%",
-        alt="Jardinero de Viveros Terra podando pasto en un jardín de Tampico", caption="Poda y mantenimiento en Tampico.",
-        wa=guided("Hola, quiero cotizar mantenimiento de jardín.", "Colonia", "Metros aprox. del jardín", "Casa o empresa"),
-    ),
-    "diseno-jardines-tampico": dict(
-        title="Diseño de jardines", accent="con plan y presupuesto claros",
-        price_pre="Plan Esencial", price="$3,000", price_unit="", price_alt="· Completo $6,500 · Premium desde $18,000",
-        lede="Te entregamos el diseño, la lista de plantas y materiales y el costo de la obra. Si nos contratas para hacerlo, el diseño se descuenta.",
-        facts=[("3 a 5 días", "Entrega del plan Esencial"), ("Se descuenta", "Si contratas la obra"), GARANTIA_PLANTAS],
-        img="/img/diseno-jardines-tampico-proyecto.webp", img_pos="center 55%",
-        alt="Jardín residencial diseñado por Viveros Terra en Tampico", caption="Proyecto de diseño de jardín en Tampico.",
-        wa=guided("Hola, me interesa el diseño de mi jardín.", "Colonia", "Metros aprox.", "Plan que me interesa"),
-        pago_nota="Paga en mensualidades con tarjeta de crédito en cotizaciones desde $2,000.",
-    ),
-    "sistema-riego-tampico": dict(
-        title="Riego automático", accent="para jardines en Tampico",
-        price_pre="De", price="$180 a $320", price_unit="/m²", price_alt="· según el tipo de sistema",
-        lede="Aspersión, goteo o microaspersión con programador, para casas, fraccionamientos, hoteles e industria en Tampico, Madero y Altamira.",
-        facts=[("Hasta 40%", "Menos agua que el riego manual"), ("Por WhatsApp", "Fotos y medidas para cotizar"), ("Aspersión o goteo", "Según tus plantas y tu pasto")],
-        img="/img/riego-pro-01.webp",
-        alt="Aspersores de riego automático funcionando en un jardín", caption="Sistema de riego por aspersión instalado.",
-        wa=guided("Hola, quiero cotizar riego automático.", "Colonia", "Metros aprox. del jardín", "Tengo pasto, plantas o ambos"),
-        secondary=("tel:8333268008", "Pedir visita"),
-        pago_nota="Paga en mensualidades con tarjeta de crédito en cotizaciones desde $2,000.",
     ),
     "vivero-tampico": dict(
         title="Vivero en Tampico", accent="y Ciudad Madero, desde 2007",
@@ -114,7 +84,7 @@ PAGES = {
         title="Palmas al mayoreo", accent="para proyectos en Tampico",
         price_pre="Precio", price="por volumen", price_unit="", price_alt="· según especie, altura y cantidad",
         lede="Suministro de palmas y árboles para constructoras, desarrolladoras, hoteles y gobierno en Tamaulipas, Veracruz y San Luis Potosí.",
-        facts=[("CFDI 4.0", "Factura y certificado fitosanitario"), ("3 estados", "Tamaulipas, Veracruz y SLP"), ("30 días", "Garantía de arraigo en siembra propia")],
+        facts=[("CFDI 4.0", "Factura emitida el día del pago"), ("3 estados", "Tamaulipas, Veracruz y SLP"), ("30 días", "Garantía de arraigo en siembra propia")],
         img="/img/palmas-reales-mayoreo-vivero-tampico.webp", img_pos="center 35%",
         alt="Palmas reales en el vivero listas para proyecto", caption="Palmas en vivero para proyectos.",
         wa=guided("Hola, necesito palmas al mayoreo para un proyecto.", "Empresa", "Especies y cantidad", "Ubicación de la obra", "Fecha de entrega", foto=False),

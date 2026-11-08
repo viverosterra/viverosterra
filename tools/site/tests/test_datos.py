@@ -80,6 +80,29 @@ class DatosTest(unittest.TestCase):
                                                           r"septiembre|octubre|noviembre|diciembre|vigentes)\b")
         self.assertFalse(hasattr(datos, "VIGENCIA"))
 
+    def test_visita_con_costo_segun_la_ubicacion(self):
+        """Decisión del dueño (2026-11-07): la visita para cotizar tiene costo y depende de la ubicación del servicio."""
+        self.assertEqual(datos.VISITA_COSTO, "El costo de la visita para cotizar depende de la ubicación del servicio; "
+                                             "te lo confirmamos por WhatsApp antes de agendar.")
+        self.assertEqual(datos.VISITA_COSTO_CORTO, "Visita para medir y cotizar: su costo depende de la ubicación")
+
+    def test_datos_de_servicios_etapa_2c(self):
+        p = datos.PRECIOS
+        self.assertEqual((p["diseno"], p["diseno_completo"], p["diseno_premium"]), (3000, 6500, 18000))
+        self.assertEqual(p["diseno_premium_descuento_desde"], 150000)
+        self.assertEqual(p["mantenimiento_mes"], 750)
+        # Respuestas del dueño (2026-11-07): el premium se cotiza; +200 sistemas de riego y +200 proyectos B2B.
+        self.assertNotIn("mantenimiento_premium_mes", p)
+        self.assertEqual(datos.SEGUN_COTIZACION, "Según cotización")
+        self.assertEqual(datos.MANTENIMIENTO_PREMIUM, datos.SEGUN_COTIZACION)
+        self.assertEqual((datos.SISTEMAS_RIEGO, datos.PROYECTOS_B2B), ("+200", "+200"))
+        self.assertEqual(datos.RIEGO_AHORRO, "hasta 40%")
+        self.assertEqual(datos.FRECUENCIAS_MANTENIMIENTO, ("semanal", "cada 15 días", "cada 21 días", "mensual"))
+        nombres = [n for grupo in (datos.OPINIONES_DISENO, datos.OPINIONES_MANTENIMIENTO, datos.OPINIONES_RIEGO)
+                   for _c, n, _d in grupo]
+        self.assertEqual(nombres, ["Daniela M.", "Ing. Roberto S.", "Carolina R.", "Ing. Gerardo M.", "Roberto C.",
+                                   "María V."])
+
     def test_mensajes_terminan_con_la_firma(self):
         for servicio in datos.MENSAJES:
             with self.subTest(servicio=servicio):

@@ -246,8 +246,8 @@ CONTENIDO = {
     },
     "pago": {
         "titulo": "Cómo se paga: anticipo y mensualidades con tarjeta de crédito.",
-        "lede": (f"{datos.ANTICIPO} El resto se liquida según lo acordado en tu cotización, de contado o en "
-                 f"mensualidades con tarjeta de crédito desde {DESDE_MENSUALIDADES}."),
+        "lede": (f"{datos.ANTICIPO} Puedes pagar de contado o en mensualidades con tarjeta de crédito desde "
+                 f"{DESDE_MENSUALIDADES}."),
         "puntos": (
             "Recibes el precio del pasto, la entrega y la instalación por separado.",
             "Contado (transferencia, efectivo o tarjeta en una exhibición): el precio más bajo.",
@@ -261,7 +261,7 @@ CONTENIDO = {
     "cierre": {
         "titulo": "Tu jardín verde, instalado en un día.",
         "lede": ("Dinos si lo quieres solo pasto o instalado, tu colonia y tus metros, y mándanos una foto. Si hace falta, "
-                 "agendamos una visita para medir y cotizar."),
+                 f"agendamos una visita para medir y cotizar. {datos.VISITA_COSTO}"),
         "mensaje": datos.MENSAJES["pasto-natural"],
     },
     "cobertura": {

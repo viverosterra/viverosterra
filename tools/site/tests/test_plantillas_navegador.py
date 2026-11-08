@@ -17,6 +17,9 @@ except ImportError:
 
 AXE = Path(__file__).resolve().parents[1] / "vendor" / "axe.min.js"
 PAGINAS = ("/", "/pasto-en-rollo-tampico/")
+# Etapa 2c: servicios de jardín con la plantilla de servicio (sin Medidor).
+SERVICIOS = ("/diseno-jardines-tampico/", "/mantenimiento-jardines-tampico/", "/sistema-riego-tampico/")
+CON_PLANTILLA = PAGINAS + SERVICIOS
 AXE_PAGINA = """async () => {
   const r = await axe.run(document, { resultTypes: ['violations'] });
   return r.violations.filter((v) => ['serious', 'critical'].includes(v.impact))
@@ -56,7 +59,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
         script = AXE.read_text(encoding="utf-8")
         for ancho in (375, 1440):
             page = self.pagina(ancho)
-            for ruta in PAGINAS:
+            for ruta in CON_PLANTILLA:
                 page.goto(self.base + ruta, wait_until="load")
                 page.add_script_tag(content=script)
                 with self.subTest(ruta=ruta, ancho=ancho):
@@ -64,7 +67,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
 
     def test_precio_y_cta_en_el_primer_pantallazo_movil(self):
         page = self.pagina(375, 812)
-        for ruta in PAGINAS:
+        for ruta in CON_PLANTILLA:
             page.goto(self.base + ruta, wait_until="load")
             precio = page.locator(".vt-portada .vt-etiqueta__precio").bounding_box()
             cta = page.locator('.vt-portada [data-hero-cta] .vt-btn--wa').bounding_box()
@@ -72,10 +75,44 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 self.assertLessEqual(precio["y"] + precio["height"], 812)
                 self.assertLessEqual(cta["y"] + cta["height"], 812)
 
-    def test_sin_desbordar_en_cuatro_anchos(self):
-        for ancho in (320, 375, 768, 1440):
+    def test_barra_no_tapa_la_etiqueta_y_cta_a_la_vista_en_celulares_cortos(self):
+        """Revisión de 2c: en mantenimiento, a 375×667 y 320×640 el CTA del hero cabe en la primera pantalla y la barra
+        móvil (que se oculta mientras el CTA se ve) no tapa la etiqueta de precio con la página sin desplazar."""
+        for ancho, alto in ((375, 667), (320, 640)):
+            page = self.pagina(ancho, alto)
+            page.goto(self.base + "/mantenimiento-jardines-tampico/", wait_until="load")
+            page.wait_for_function("() => document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
+            etiqueta = page.locator(".vt-portada .vt-etiqueta").bounding_box()
+            cta = page.locator('.vt-portada [data-hero-cta] .vt-btn--wa').bounding_box()
+            with self.subTest(ancho=ancho, alto=alto):
+                self.assertLessEqual(cta["y"] + cta["height"], alto)
+                self.assertLessEqual(etiqueta["y"] + etiqueta["height"], alto)
+
+    def test_cta_en_la_primera_pantalla_a_1024(self):
+        """Revisión de 2c: a 1024×800 la portada compacta deja el CTA de los servicios de jardín en la primera pantalla."""
+        page = self.pagina(1024, 800)
+        for ruta in SERVICIOS:
+            page.goto(self.base + ruta, wait_until="load")
+            cta = page.locator('.vt-portada [data-hero-cta] .vt-btn--wa').bounding_box()
+            with self.subTest(ruta=ruta):
+                self.assertLessEqual(cta["y"] + cta["height"], 800)
+
+    def test_tabla_de_planes_de_diseno_plegada_en_celular_y_abierta_desde_768(self):
+        for ancho, abierta in ((375, False), (768, True), (1440, True)):
             page = self.pagina(ancho)
-            for ruta in PAGINAS:
+            page.goto(self.base + "/diseno-jardines-tampico/", wait_until="load")
+            plegable = page.locator("details[data-vt-plegable]")
+            with self.subTest(ancho=ancho):
+                self.assertEqual(plegable.evaluate("d => d.open"), abierta)
+                self.assertEqual(plegable.locator("table").is_visible(), abierta)
+                self.assertEqual(plegable.locator("summary h3").inner_text(), "Compara los 3 planes en detalle")
+        page.locator("details[data-vt-plegable] summary").click()
+        self.assertFalse(page.locator("details[data-vt-plegable]").evaluate("d => d.open"))
+
+    def test_sin_desbordar_en_cuatro_anchos(self):
+        for ancho in (320, 375, 768, 1024, 1440):
+            page = self.pagina(ancho)
+            for ruta in CON_PLANTILLA:
                 page.goto(self.base + ruta, wait_until="load")
                 sobra = page.evaluate("() => document.documentElement.scrollWidth - document.documentElement.clientWidth")
                 with self.subTest(ruta=ruta, ancho=ancho):
@@ -165,9 +202,39 @@ class PlantillasNavegadorTest(unittest.TestCase):
         self.assertEqual(page.locator("[data-sim-list] .sim-plan").count(), 5)
         self.assertIn("text=", page.get_attribute("[data-sim-wa]", "href"))
 
+    def test_cada_plan_manda_su_mensaje_y_su_generate_lead(self):
+        """Etapa 2c (auditoría 02): el plan elegido viaja al chat y a GA4 con su propio cta_id."""
+        casos = (("/diseno-jardines-tampico/", "servicio-diseno", 2, "Plan Terra Completo ($6,500)"),
+                 ("/mantenimiento-jardines-tampico/", "servicio-mantenimiento", 2, "Residencial premium"),
+                 ("/sistema-riego-tampico/", "servicio-riego", 3, "campo deportivo"))
+        for ruta, tipo, n, frase in casos:
+            page = self.pagina()
+            page.add_init_script("window.open = () => null;")
+            page.goto(self.base + ruta, wait_until="load")
+            boton = page.locator(f'[data-cta="{tipo}:opcion-{n}"]')
+            page.evaluate("(b) => b.addEventListener('click', (e) => e.preventDefault())", boton.element_handle())
+            boton.click()
+            eventos = page.evaluate(
+                "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+            with self.subTest(ruta=ruta):
+                self.assertIn(["event", "generate_lead", {"method": "whatsapp", "cta_id": f"{tipo}:opcion-{n}",
+                                                          "service": "jardin"}], eventos)
+                texto = unquote(boton.get_attribute("href").split("text=", 1)[1])
+                self.assertIn(frase, texto)
+                self.assertTrue(texto.endswith(datos.FIRMA))
+
+    def test_simulador_de_diseno_y_riego_funciona(self):
+        for ruta, monto in (("/diseno-jardines-tampico/", "6500"), ("/sistema-riego-tampico/", "18000")):
+            page = self.pagina()
+            page.goto(self.base + ruta, wait_until="load")
+            with self.subTest(ruta=ruta):
+                self.assertEqual(page.input_value("[data-sim-monto]"), monto)
+                self.assertGreaterEqual(page.locator("[data-sim-list] .sim-plan").count(), 4)
+                self.assertIn("text=", page.get_attribute("[data-sim-wa]", "href"))
+
     def test_cls_bajo_0_1_en_movil(self):
         page = self.pagina(375, 812)
-        for ruta in PAGINAS:
+        for ruta in CON_PLANTILLA:
             page.goto(self.base + ruta, wait_until="load")
             with self.subTest(ruta=ruta):
                 self.assertLess(page.evaluate(CLS), 0.1)

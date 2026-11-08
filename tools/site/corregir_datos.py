@@ -48,7 +48,7 @@ GLOBALES = (
     ("Cotiza tu jardín en menos de 2 horas", f"Cotiza tu jardín: respondemos {EN_1_HORA}"),
     ("Cotiza en menos de 2 horas.", f"{PROMESA}."),
     ("Te contactamos en 24 hrs", f"Te respondemos {EN_1_HORA}"),
-    ("Respuesta en 24h", "Respuesta en menos de 1 hora"),
+    ("Respuesta en 24h", PROMESA),
     ("te respondemos con diagnóstico y solución el mismo día.",
      f"te respondemos {EN_1_HORA} con el diagnóstico y la solución."),
     # Perfiles oficiales y ortografía.
@@ -267,7 +267,7 @@ POR_ARCHIVO = (
      "          <li><strong>Si te interesa:</strong> arrancamos el proyecto en 3–10 días.</li>\n        </ol>",
      "<h3>Qué sigue ahora</h3>\n        <ol>\n"
      f"          <li><strong>En menos de 1 hora en horario</strong> te escribimos por WhatsApp o correo con tu cotización.</li>\n"
-     "          <li><strong>Si hace falta,</strong> agendamos contigo una visita para medir.</li>\n"
+     f"          <li><strong>Si hace falta,</strong> agendamos contigo una visita para medir. {datos.VISITA_COSTO}</li>\n"
      "          <li><strong>En la visita</strong> te damos el precio cerrado y el plan de trabajo.</li>\n        </ol>"),
     ("public/gracias/index.html", "        Hablar ahora por WhatsApp\n", "        Adelantar por WhatsApp\n"),
     ("public/gracias/index.html", "💡 <strong>Tip:</strong> mientras esperas, revisa nuestro", "<strong>Mientras tanto:</strong> revisa nuestro"),
@@ -349,14 +349,27 @@ def _escribir_si_cambia(path, nuevo, cambiados):
         cambiados.add(path)
 
 
+def con_plantilla():
+    """Rutas ("public/…") de las páginas que salen de tools/site/generar.py: su texto vive en tools/site/contenido/ y
+    ya trae las correcciones, así que los reemplazos por archivo de su HTML viejo no aplican (Etapas 2a y 2c)."""
+    import generar  # noqa: E402  (solo aquí: generar importa las plantillas)
+    return {f"public/{salida}" for _r, salida, _p, _c in generar.PAGINAS}
+
+
+def vigentes(entradas):
+    """Las entradas (rel, …) de POR_ARCHIVO o ELEMENTOS cuyo archivo sigue escrito a mano."""
+    fuera = con_plantilla()
+    return tuple(e for e in entradas if e[0] not in fuera)
+
+
 def main():
     cambiados = set()
     for path in archivos_globales():
         _escribir_si_cambia(path, corregir_texto(path.read_text(encoding="utf-8")), cambiados)
-    for rel, viejo, nuevo in POR_ARCHIVO:
+    for rel, viejo, nuevo in vigentes(POR_ARCHIVO):
         path = RAIZ / rel
         _escribir_si_cambia(path, reemplazar(path.read_text(encoding="utf-8"), viejo, nuevo, rel), cambiados)
-    for rel, patron in ELEMENTOS:
+    for rel, patron in vigentes(ELEMENTOS):
         path = RAIZ / rel
         _escribir_si_cambia(path, quitar_elementos(path.read_text(encoding="utf-8"), patron), cambiados)
     print(f"{len(cambiados)} archivos corregidos")

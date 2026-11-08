@@ -5,11 +5,24 @@ Los textos son los de main; solo se corrigieron dos artículos que decían "Palm
 (duranta y nortes) y los huecos vacíos se marcan con ___ como en datos.MENSAJES. La firma se agrega en datos.con_firma.
 """
 
+# Servicios de jardín (Etapa 2c): la plantilla de main de cada portada, con los huecos marcados ___. Lo usan la portada y
+# el cierre de la página (tools/site/contenido/) y, por RUTAS, el menú, la barra móvil y el pie.
+SERVICIOS = {
+    "/diseno-jardines-tampico": ("Hola, me interesa el diseño de mi jardín.\nColonia: ___\nMetros aprox.: ___\n"
+                                 "Plan que me interesa: ___\nLes mando fotos del espacio."),
+    "/mantenimiento-jardines-tampico": ("Hola, quiero cotizar mantenimiento de jardín.\nColonia: ___\n"
+                                        "Metros aprox. del jardín: ___\nCasa o empresa: ___\n"
+                                        "Frecuencia (semanal, cada 15 días, cada 21 días o mensual): ___"),
+    "/sistema-riego-tampico": ("Hola, quiero cotizar riego automático.\nColonia: ___\nMetros aprox. del jardín: ___\n"
+                               "Tengo pasto, plantas o ambos: ___\nLes mando fotos del espacio."),
+}
+
 # Ruta exacta → (mensaje del menú y la barra, mensaje del pie o None para usar el mismo).
 RUTAS = {
     "/blog": ("Hola, vi el blog de Viveros Terra y quiero cotizar", None),
     "/catalogo": ("Hola, vi el catálogo y quiero cotizar una planta", None),
     "/precios": ("Hola, vi la lista de precios y quiero cotizar", "Hola, tengo una pregunta sobre precios"),
+    **{ruta: (texto, None) for ruta, texto in SERVICIOS.items()},
 }
 # Tienda y páginas de envío: el pie conserva su "pregunta"; el menú usa el mensaje de cotizar pasto sintético.
 PIE_TIPO = {

@@ -65,7 +65,8 @@ PREGUNTAS = (
 
 PASOS = (
     {"titulo": "Visita y medición", "quien": "nosotros", "cuando": "Antes de cotizar",
-     "texto": "Medimos el área, revisamos el terreno y te recomendamos el modelo según el uso."},
+     "texto": ("Medimos el área, revisamos el terreno y te recomendamos el modelo según el uso. "
+               f"{datos.VISITA_COSTO_CORTO}.")},
     {"titulo": "Preparación del terreno", "quien": "nosotros", "cuando": "Si hace falta",
      "texto": ("Si hace falta, retiramos lo existente, nivelamos y ponemos grava fina para que drene. Se cotiza aparte "
                "según tu espacio.")},
@@ -163,7 +164,7 @@ CONTENIDO = {
              "mensaje": "Hola, quiero comprar pasto sintético en el showroom. ¿Tienen existencia?\nModelo: ___\nMetros: ___"},
             {"rotulo": "Opción 2", "titulo": "Nosotros lo instalamos", "precio": INST_MIN, "unidad": "/m²",
              "detalle": "Material y colocación", "rec": True,
-             "puntos": ("Visita y cotización sin compromiso", "Colocación, uniones, orillas y cepillado",
+             "puntos": (datos.VISITA_COSTO_CORTO, "Colocación, uniones, orillas y cepillado",
                         "Material con garantía de fábrica"),
              "nota": ("Cada terreno es distinto. Si el tuyo necesita retiro, nivelación o base drenante, lo vemos en la "
                       "visita y te lo cotizamos aparte, antes de empezar y sin sorpresas."),
@@ -208,8 +209,7 @@ CONTENIDO = {
     },
     "pago": {
         "titulo": "Cómo se paga: anticipo y mensualidades con tarjeta de crédito.",
-        "lede": (f"{datos.ANTICIPO} El resto se liquida según lo acordado en tu cotización, de contado o en mensualidades "
-                 "con tarjeta de crédito."),
+        "lede": f"{datos.ANTICIPO} Puedes pagar de contado o en mensualidades con tarjeta de crédito.",
         "puntos": ("Recibes el precio del material, la instalación y la preparación del terreno por separado.",
                    "Contado (transferencia, efectivo o tarjeta en una exhibición): el precio más bajo.",
                    ("Mensualidades con tarjeta de crédito: el total a plazos es mayor que el de contado y te lo mostramos "

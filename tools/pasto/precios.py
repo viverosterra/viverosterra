@@ -2,9 +2,15 @@
 
 Los precios de pasto sintético salen de data.py; el resto son los datos oficiales confirmados por el dueño.
 """
+import sys
+from pathlib import Path
+
 from common import (SECTION_CLOSE, breadcrumb_schema, esc, faq_html, faq_schema, footer, head, jsonld, section_open, wa)
 from data import MODELOS, PHONE_DISPLAY, SITE, UPDATED, WA_NUMBER
 from mensualidades import PLAZOS, minimo_de, total_a_plazos
+
+sys.path.append(str(Path(__file__).resolve().parents[1] / "site"))  # al final: tools/site también tiene un build.py
+import datos  # noqa: E402  (VISITA_COSTO: decisión del dueño 2026-11-07)
 
 URL = f"{SITE}/precios"
 BUSINESS_ID = f"{SITE}/#negocio"
@@ -241,7 +247,7 @@ def build_precios():
   <section class="closing" aria-labelledby="cierre">
     <div class="wrap">
       <h2 id="cierre">¿Quieres el precio exacto <em>de tu jardín?</em></h2>
-      <p>Mándanos tu colonia, los metros aproximados y una foto del espacio. Te respondemos en menos de 1 hora en horario y, si hace falta, agendamos una visita para medir.</p>
+      <p>Mándanos tu colonia, los metros aproximados y una foto del espacio. Te respondemos en menos de 1 hora en horario y, si hace falta, agendamos una visita para medir. {esc(datos.VISITA_COSTO)}</p>
       <div class="closing__actions">
         <a class="btn btn--light" href="{wa('Hola, quiero el precio exacto de mi jardín. Mi colonia es: ___ · Metros aprox.: ___ · Te mando foto del espacio.')}" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
         <a class="btn btn--ghost" href="tel:+528333268008">Llamar {PHONE_DISPLAY}</a>

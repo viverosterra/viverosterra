@@ -152,7 +152,8 @@ class TerraCssTest(unittest.TestCase):
 
     def test_componentes_del_cuerpo_presentes(self):
         for selector in (".vt-pagina", ".vt-portada", ".vt-etiqueta", ".vt-datos", ".vt-medidor", ".vt-tabla",
-                         ".vt-pasos", ".vt-nota", ".vt-faq summary", ".vt-cierre", ".vt-sim .sim-plan"):
+                         ".vt-pasos", ".vt-nota", ".vt-faq summary", ".vt-cierre", ".vt-sim .sim-plan",
+                         ".vt-modo__precio .vt-modo__mes"):
             with self.subTest(selector=selector):
                 self.regla(selector)
         for token in ("--vt-text-h1", "--vt-text-h2", "--vt-text-h3", "--vt-text-precio", "--vt-space-section"):

@@ -22,6 +22,8 @@ PAGINAS = {p: p.read_text(encoding="utf-8") for p in sorted(PUBLIC.rglob("*.html
 TEXTOS = {p: textos_publicos(h) for p, h in PAGINAS.items()}
 LLMS = (PUBLIC / "llms.txt").read_text(encoding="utf-8")
 PRECIOS = datos.PRECIOS
+# Páginas que todavía mencionan la visita sin su costo. Debe quedar vacía y solo puede encoger.
+VISITA_COSTO_PENDIENTES = frozenset()
 
 PROHIBIDAS = (
     ("promesa de respuesta vieja",
@@ -38,6 +40,8 @@ PROHIBIDAS = (
      r"|por WhatsApp en minutos|en minutos sabrás"
      r"|(?:disponibilidad|personalizada|precio exacto[^.]{0,40}|diagnóstico y solución) (?:hoy mismo|el mismo día)"
      r"|\bconfirmamos disponibilidad hoy"),
+    # La promesa oficial es datos.PROMESA: "menos de 1 hora" siempre lleva "en horario".
+    ("1 hora sin \"en horario\"", r"\bmenos de (?:1|una) hora\b(?! en horario)"),
     ("pago al terminar", r"\bpagas\s+(?:cuando|al\s+ver)\b"),
     # Decisión del dueño (2026-11-07): el envío local de sintético en Tampico, Madero y Altamira se cotiza por colonia.
     ("envío local con precio fijo", r"env[ií]o\s+local[^.]{0,40}\$\s?250\b|\blocal desde \$\s?250\b"),
@@ -149,6 +153,20 @@ class ConsistenciaTest(unittest.TestCase):
         for archivo in ("catalogo.html", "diseno-jardines-tampico/index.html"):
             with self.subTest(pagina=archivo):
                 self.assertIn("/politicas#garantia-plantas", PAGINAS[PUBLIC / archivo])
+
+    def test_visita_con_costo_segun_la_ubicacion(self):
+        """Decisión del dueño (2026-11-07): la visita para medir o cotizar tiene un costo que depende de la ubicación;
+        cada mención lo dice cerca (datos.VISITA_COSTO o datos.VISITA_COSTO_CORTO) y nada promete traslado sin cargo."""
+        mencion = re.compile(r"\bvisita\s+(?:t[eé]cnica\s+)?para\s+(?:medir|cotizar)", re.I)
+        hallazgos = {}
+        for path, texto in TEXTOS.items():
+            for m in mencion.finditer(texto):
+                if "depende de la ubicación" not in texto[max(0, m.start() - 150):m.end() + 200]:
+                    hallazgos.setdefault(nombre(path), f"…{texto[max(0, m.start() - 60):m.end() + 60]}…")
+            if re.search(r"sin cargo (?:extra )?por traslado", texto, re.I):
+                hallazgos.setdefault(nombre(path), "traslado sin cargo")
+        self.assertEqual({k: v for k, v in hallazgos.items() if k not in VISITA_COSTO_PENDIENTES}, {})
+        self.assertEqual(sorted(VISITA_COSTO_PENDIENTES - set(hallazgos)), [], "ya lo dicen: sácalas de la lista")
 
     def test_home_con_cifras_oficiales(self):
         home = TEXTOS[PUBLIC / "index.html"]
@@ -264,6 +282,7 @@ class ConsistenciaTest(unittest.TestCase):
                 "mañana disponible", "Tu jardín verde, esta semana."),
             "frescura con fecha de corte": ("Pasto cortado esta semana", "Cortado esta semana"),
             "plazo de respuesta viejo": ("Respondemos en menos de 4h hábiles", "Respuesta en 2 h hábiles"),
+            "1 hora sin \"en horario\"": ("Respuesta en menos de 1 hora", "respondemos en menos de una hora."),
             "envío local con precio fijo": ("El envío local cuesta desde $250 según el volumen", "Envío local desde $250",
                                             "Local desde $250"),
         }

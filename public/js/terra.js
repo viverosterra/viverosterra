@@ -204,16 +204,24 @@
     heroes.forEach((h) => observador.observe(h));
   }
 
+  // Tablas plegables (<details data-vt-plegable>): salen cerradas para acortar la página en celular; desde 768 px se
+  // abren. Quien la cierre a mano en escritorio la deja cerrada (solo se abre una vez, al cargar).
+  const PLEGABLE_DESDE = '(min-width: 768px)';
+  function plegables(doc, win) {
+    if (!win.matchMedia || !win.matchMedia(PLEGABLE_DESDE).matches) return;
+    doc.querySelectorAll('details[data-vt-plegable]').forEach((d) => { d.open = true; });
+  }
+
   const api = { FIRMA, HERO_CTA, tipoEnlace, conFirma, evento, eventoWhatsapp };
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas };
+    module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas, plegables };
     return;
   }
   root.VTTerra = Object.freeze(api);
   root.VTMedicion = medicion(document, root);
   firmarAperturas(root);
   medir(document, root);
-  const iniciar = () => { menu(document, root); barra(document, root); };
+  const iniciar = () => { menu(document, root); barra(document, root); plegables(document, root); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
   else iniciar();
 })(typeof window !== 'undefined' ? window : globalThis);

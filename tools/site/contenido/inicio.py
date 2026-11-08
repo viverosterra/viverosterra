@@ -205,8 +205,8 @@ CONTENIDO = {
             {"titulo": "Nos mandas medidas y foto", "quien": "tu", "cuando": "Día 0 · por WhatsApp",
              "texto": f"Tu colonia, los metros aproximados y una foto del espacio. {datos.PROMESA}."},
             {"titulo": "Medimos y decidimos", "quien": "juntos", "cuando": "Visita para medir",
-             "texto": ("Agendamos una visita para medir y cotizar, y recorremos el espacio contigo. Si hace falta tierra "
-                       f"negra o nivelación, te decimos cuánto cuesta antes de empezar. {datos.ANTICIPO}")},
+             "texto": (f"{datos.VISITA_COSTO_CORTO}. Recorremos el espacio contigo y, si hace falta tierra negra o "
+                       f"nivelación, te decimos cuánto cuesta antes de empezar. {datos.ANTICIPO}")},
             {"titulo": "Instalamos en un día", "quien": "nosotros", "cuando": "Día de instalación",
              "texto": f"El pasto llega del campo {datos.LLEGADA_PASTO}, se corta para tu pedido y va directo a tu jardín."},
             {"titulo": "El primer riego", "quien": "tu", "cuando": "Días 1 a 20",
@@ -264,7 +264,7 @@ CONTENIDO = {
     "cierre": {
         "titulo": "Mándanos tus medidas y una foto del espacio.",
         "lede": ("Tu colonia, los metros aproximados y qué quieres hacer. Si hace falta, agendamos una visita para medir y "
-                 "cotizar."),
+                 f"cotizar. {datos.VISITA_COSTO}"),
         "mensaje": datos.MENSAJES["general"],
     },
 }

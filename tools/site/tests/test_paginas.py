@@ -6,6 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import datos  # noqa: E402
+import mensajes_paginas  # noqa: E402
 import paginas  # noqa: E402
 
 
@@ -90,6 +91,17 @@ class ContextoTest(unittest.TestCase):
                 self.assertEqual(ctx["mensaje"], datos.mensaje("pasto-sintetico"))
                 self.assertEqual(ctx["mensaje_pie"], "Hola, tengo una pregunta sobre pasto sintético" + firma)
         self.assertEqual(paginas.contexto("/")["mensaje_pie"], datos.mensaje("general"))
+
+    def test_servicios_de_jardin_con_su_mensaje_en_menu_barra_y_pie(self):
+        """Etapa 2c: el menú, la barra móvil y el pie llevan el mismo mensaje que la portada de la página."""
+        for ruta, texto in mensajes_paginas.SERVICIOS.items():
+            ctx = paginas.contexto(ruta)
+            with self.subTest(ruta=ruta):
+                self.assertEqual(ctx["mensaje"], datos.con_firma(texto))
+                self.assertEqual(ctx["mensaje_pie"], ctx["mensaje"])
+                self.assertIn("Colonia: ___", texto)
+        self.assertEqual(sorted(mensajes_paginas.SERVICIOS), ["/diseno-jardines-tampico", "/mantenimiento-jardines-tampico",
+                                                              "/sistema-riego-tampico"])
 
     def test_ruta_desconocida_falla(self):
         with self.assertRaises(KeyError):

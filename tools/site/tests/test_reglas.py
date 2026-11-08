@@ -30,6 +30,9 @@ PROHIBIDAS = (
 )
 DEPORTES_RE = re.compile(r"p[aá]del|canchas?", re.I)
 PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
+# Decisión del dueño (2026-11-07): no le gusta "liquidas el saldo según lo acordado"; no se escribe ninguna frase sobre
+# liquidar el saldo o el resto (el pago se explica con el anticipo y las formas de pago). Las citas de clientes no cuentan.
+SALDO_RE = re.compile(r"\bliquid(?:as|a|amos|ar|es)\s+el\s+(?:saldo|resto)\b|\bel\s+(?:saldo|resto)\s+se\s+liquida\b", re.I)
 # Decisión del dueño (2026-11-07): no se ofrece crédito a clientes (ni a instaladores ni a constructoras recurrentes).
 CREDITO_CLIENTES_RE = re.compile(r"\bcr[eé]dito\s+(?:para|a)\s+(?:(?:los|sus|nuestros)\s+)?clientes\b", re.I)
 # Decisión del dueño (2026-11-07): la visita para medir tiene costo o depende; nunca "visita sin costo", "visita
@@ -42,6 +45,20 @@ VISITA_GRATIS_RE = re.compile(
 # Páginas que todavía lo dicen. Debe quedar vacía: ninguna página pública promete la visita, la medición ni el
 # diagnóstico gratis. Esta lista solo puede encoger; no se agregan páginas nuevas.
 VISITA_PENDIENTES = frozenset()
+# Decisión del dueño (2026-11-07): Viveros Terra no tiene registro, certificación ni certificado SENASICA en ninguna
+# forma; tampoco certificados fitosanitarios ni SADER. En ninguna página, JSON-LD, llms.txt ni blog. Sin excepciones.
+CERTIFICACION_RE = re.compile(
+    r"\bSENASICA\b|\bSADER\b"
+    r"|\b(?:certificad[oa]s?|certificaci[oó]n|registro|constancia|permiso)\W+(?:\w+\W+){0,2}?fitosanitari\w*"
+    r"|\bfitosanitari\w*\W+(?:\w+\W+){0,3}?(?:emitid\w*|vigente|oficial|por\s+estado)", re.I)
+CERTIFICACION_PENDIENTES = frozenset()
+# Tampoco se publica que el riego (ni otro servicio) "se amortiza", "se paga solo", en "cuántos meses se paga", la
+# "recuperación de la inversión" ni el "payback". Se habla de lo que se ahorra: "ahorra hasta 40% de agua". Sin excepciones.
+AMORTIZA_RE = re.compile(
+    r"\bse\s+pagan?\s+sol[oa]s?\b|\bcu[aá]nt[oa]s?\s+(?:meses|años|tiempo)\s+se\s+pagan?\b|\bamortiz\w*"
+    r"|\brecupera(?:r|s|n)?\s+(?:la|tu|su)\s+inversi[oó]n\b|\brecuperaci[oó]n\s+(?:de\s+(?:la\s+|tu\s+)?)?inversi[oó]n\b"
+    r"|\btiempo\s+de\s+recuperaci[oó]n\b|\bpayback\b", re.I)
+AMORTIZA_PENDIENTES = frozenset()
 
 
 def sin_valores_css(css):
@@ -173,6 +190,21 @@ class ReglasDelDuenoTest(unittest.TestCase):
                 hallazgos.append(f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
         self.assertEqual(hallazgos, [])
 
+    def test_sin_liquidar_el_saldo(self):
+        hallazgos = []
+        for path, texto in publicados():
+            for m in SALDO_RE.finditer(texto):
+                hallazgos.append(f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
+        self.assertEqual(hallazgos, [])
+
+    def test_liquidar_el_saldo_se_detecta(self):
+        for sucio in ("Liquidas el saldo según lo acordado en tu cotización", "El resto se liquida según lo acordado",
+                      "liquidamos el saldo", "el saldo se liquida al terminar"):
+            self.assertTrue(SALDO_RE.search(sucio), sucio)
+        for limpio in ("Pagué el resto hasta que lo vi terminado", "Puedes pagar de contado o en mensualidades",
+                       "Liquidambar styraciflua"):
+            self.assertIsNone(SALDO_RE.search(limpio), limpio)
+
     def test_sin_credito_para_clientes(self):
         hallazgos = []
         for path, texto in publicados():
@@ -196,6 +228,32 @@ class ReglasDelDuenoTest(unittest.TestCase):
         self.assertEqual({k: v for k, v in con.items() if k not in VISITA_PENDIENTES}, {})
         self.assertEqual(sorted(VISITA_PENDIENTES - set(con)), [], "ya no lo dicen: sácalas de VISITA_PENDIENTES")
 
+    def test_sin_senasica_ni_amortizacion_del_riego(self):
+        for regla, patron, pendientes in (("SENASICA/SADER/fitosanitario", CERTIFICACION_RE, CERTIFICACION_PENDIENTES),
+                                          ("amortización", AMORTIZA_RE, AMORTIZA_PENDIENTES)):
+            con = {}
+            for path, texto in publicados():
+                for m in patron.finditer(texto):
+                    con.setdefault(path.relative_to(PUBLIC).as_posix(), f"…{texto[max(0, m.start() - 40):m.end() + 20]}…")
+            with self.subTest(regla=regla):
+                self.assertEqual(pendientes, frozenset(), "sin excepciones: la lista se queda vacía")
+                self.assertEqual(con, {})
+
+    def test_senasica_y_amortizacion_se_detectan(self):
+        for sucio in ("Certificación SENASICA", "registro Senasica", "Emitido por SADER", "certificado fitosanitario",
+                      "Certificado fitosanitario por estado", "certificación fitosanitaria", "fitosanitario emitido",
+                      "constancia fitosanitaria", "se amortiza en 18–24 meses", "tarda 4+ años en amortizarse",
+                      "Se paga solo en 18-24 meses", "se paga sola en 24 meses", "se amortiza en 18 a 24 meses",
+                      "en cuántos meses se paga solo un sistema", "cuándo se paga solo", "sistemas que se pagan solos",
+                      "en cuántos meses se paga", "recupera la inversión en 18 a 24 meses",
+                      "recuperación inversión 18-24 meses", "Tiempo de recuperación de la inversión: 12–15 meses",
+                      "Payback: 30 meses"):
+            self.assertTrue(CERTIFICACION_RE.search(sucio) or AMORTIZA_RE.search(sucio), sucio)
+        for limpio in ("Ahorra hasta 40% de agua", "se paga en mensualidades con tarjeta de crédito",
+                       "cuánto puedes ahorrar en agua", "Factura emitida el día del pago", "la recuperación del pasto",
+                       "¿Cuándo se paga el anticipo?"):
+            self.assertFalse(CERTIFICACION_RE.search(limpio) or AMORTIZA_RE.search(limpio), limpio)
+
     def test_visita_gratis_se_detecta(self):
         for sucio in ("Agendamos una visita sin costo", "Visita técnica gratuita", "vamos a medir sin costo",
                       "Visita y medición Sin costo", "visita gratis",
@@ -205,6 +263,8 @@ class ReglasDelDuenoTest(unittest.TestCase):
                       "diagnóstico gratuito", "una visita de diagnóstico sin costo", "diagnósticos de pasto sin costo"):
             self.assertRegex(sucio, VISITA_GRATIS_RE)
         for limpio in ("Agendamos una visita para medir y cotizar", "Cotización gratis por WhatsApp",
+                       "El costo de la visita para cotizar depende de la ubicación del servicio",
+                       "Visita para medir y cotizar: su costo depende de la ubicación",
                        "la reponemos sin costo", "Visítanos en el vivero",
                        "el resto de Altamira, sin cargo extra por traslado", "no cuesta como un pasto de lujo"):
             self.assertNotRegex(limpio, VISITA_GRATIS_RE)
