@@ -86,6 +86,18 @@ class DatosTest(unittest.TestCase):
                                              "te lo confirmamos por WhatsApp antes de agendar.")
         self.assertEqual(datos.VISITA_COSTO_CORTO, "Visita para medir y cotizar: su costo depende de la ubicación")
 
+    def test_datos_de_servicios_etapa_2c(self):
+        p = datos.PRECIOS
+        self.assertEqual((p["diseno"], p["diseno_completo"], p["diseno_premium"]), (3000, 6500, 18000))
+        self.assertEqual(p["diseno_premium_descuento_desde"], 150000)
+        self.assertEqual((p["mantenimiento_mes"], p["mantenimiento_premium_mes"]), (750, 1800))
+        self.assertEqual(datos.RIEGO_AHORRO, "hasta 40%")
+        self.assertEqual(datos.FRECUENCIAS_MANTENIMIENTO, ("semanal", "cada 15 días", "cada 21 días", "mensual"))
+        nombres = [n for grupo in (datos.OPINIONES_DISENO, datos.OPINIONES_MANTENIMIENTO, datos.OPINIONES_RIEGO)
+                   for _c, n, _d in grupo]
+        self.assertEqual(nombres, ["Daniela M.", "Ing. Roberto S.", "Carolina R.", "Ing. Gerardo M.", "Roberto C.",
+                                   "María V."])
+
     def test_mensajes_terminan_con_la_firma(self):
         for servicio in datos.MENSAJES:
             with self.subTest(servicio=servicio):

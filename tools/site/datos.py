@@ -56,6 +56,10 @@ PRECIOS = {
     "pasto_mayoreo_minimo_m2": 500,
     "mantenimiento_mes": 750,
     "diseno": 3000,
+    "diseno_completo": 6500,
+    "diseno_premium": 18000,
+    "diseno_premium_descuento_desde": 150000,
+    "mantenimiento_premium_mes": 1800,
     "riego_m2": (180, 320),
     "sintetico_instalado_m2": (385, 650),
     "sintetico_tienda_m2": 139,
@@ -78,6 +82,10 @@ ARRAIGO = "15 a 20 días"
 VISITA_COSTO = ("El costo de la visita para cotizar depende de la ubicación del servicio; te lo confirmamos por "
                 "WhatsApp antes de agendar.")
 VISITA_COSTO_CORTO = "Visita para medir y cotizar: su costo depende de la ubicación"
+# Servicios de jardín (Etapa 2c): ahorro de agua del riego (publicado en main) y frecuencias de mantenimiento según el
+# plan y lo que necesita el jardín (decisión del dueño).
+RIEGO_AHORRO = "hasta 40%"
+FRECUENCIAS_MANTENIMIENTO = ("semanal", "cada 15 días", "cada 21 días", "mensual")
 LLEGADA_PASTO = "una vez por semana, generalmente los viernes"
 ANTICIPO = ("No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos "
             "un anticipo.")
@@ -124,6 +132,35 @@ OPINIONES_PASTO_EN_ROLLO = (
     ("Somos constructora y compramos el pasto para un fraccionamiento en Altamira. Precio de mayoreo muy competitivo, "
      "facturaron sin problema y respetaron el calendario de entrega por etapas. Ya son nuestro proveedor recurrente.",
      "Arq. Patricia L.", "Constructora · Altamira · Proyecto 2,400 m²"),
+)
+# Opiniones con nombre que publicaban en main las páginas de diseño, mantenimiento y riego antes de la Etapa 2c, textuales.
+# PENDIENTE DEL DUEÑO: confirmar que son reales y que hay permiso (plan 2c, "Lo que aporta el dueño"). Si alguna no lo
+# es, se borra de aquí y su encabezado pasa a PARIDAD["retirados"] con el motivo; nunca se edita ni se inventa otra.
+OPINIONES_DISENO = (
+    ("Contratamos el Plan Completo para remodelar el jardín de la casa. Hicieron la visita, nos preguntaron qué nos "
+     "gustaba y qué no, y la propuesta visual que nos mandaron fue exactamente lo que teníamos en mente. El manual de "
+     "cuidados nos ha servido muchísimo.",
+     "Daniela M.", "Plan Completo · Residencial Tampico"),
+    ("Somos un hotel boutique en Altamira y necesitábamos entregables formales para el proyecto de áreas verdes. El Plan "
+     "Premium incluyó planos ejecutivos, render 3D y presentación para la junta. Muy profesional, justo lo que nuestro "
+     "comité necesitaba para aprobar.",
+     "Ing. Roberto S.", "Plan Premium · Hotel Boutique · Altamira"),
+)
+OPINIONES_MANTENIMIENTO = (
+    ("Tenemos contrato mensual desde hace más de 2 años. Vienen puntuales, el jardín siempre está impecable y me avisan "
+     "cuando detectan plagas o alguna planta con problemas. Ya no tengo que estar pendiente de nada.",
+     "Carolina R.", "Residencial · Tampico Zona Norte"),
+    ("Contratamos a Terra para mantener las áreas verdes de nuestra nave industrial en Altamira. Son más de 3,000 m² y "
+     "desde que llegaron se nota la diferencia. Presentan reporte fotográfico de cada visita y facturan puntuales.",
+     "Ing. Gerardo M.", "Industrial · Altamira Puerto"),
+)
+OPINIONES_RIEGO = (
+    ("Tenía el jardín seco porque se me olvidaba regar. Terra instaló el sistema en un día, me programaron los horarios "
+     "y ahora siempre está perfecto. Mi recibo de agua bajó casi a la mitad.",
+     "Roberto C.", "Residencial · Tampico"),
+    ("Instalaron el sistema de riego en las áreas verdes de nuestra planta industrial en Altamira. Llegaron a tiempo, el "
+     "diseño es eficiente y el equipo de calidad. 100% recomendados.",
+     "María V.", "Parque Industrial · Altamira"),
 )
 # Zonas con página propia (nombre visible, ruta) y las que se atienden por proyecto.
 ZONAS = (
