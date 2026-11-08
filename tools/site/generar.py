@@ -26,6 +26,7 @@ UTILITARIAS = (
     ("/politica-privacidad", "politica-privacidad/index.html", "legal", "politica_privacidad"),
     ("/gracias", "gracias/index.html", "formulario", "gracias"),
     ("/cuestionario", "cuestionario.html", "formulario", "cuestionario"),
+    ("/datos-envio", "datos-envio/index.html", "formulario", "datos_envio"),
 )
 
 PAGINAS = (
