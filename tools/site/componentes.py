@@ -277,7 +277,7 @@ def opciones(items, tipo):
     filas = []
     for i, o in enumerate(items, 1):
         clase = "vt-modo vt-modo--rec" if o.get("rec") else "vt-modo"
-        puntos = "".join(f"<li>{x}</li>" for x in o["puntos"])
+        puntos = "".join(f"<li><span>{x}</span></li>" for x in o["puntos"])  # una celda del grid de .vt-checks
         nota_html = f'<p class="vt-promesa">{o["nota"]}</p>' if o.get("nota") else ""
         filas.append(f'<li class="{clase}"><p class="vt-modo__n">{o["rotulo"]}</p><h3>{o["titulo"]}</h3>'
                      f'{_precio_opcion(o)}<ul class="vt-checks">{puntos}</ul>{nota_html}'

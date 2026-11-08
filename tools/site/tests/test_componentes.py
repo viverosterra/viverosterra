@@ -280,6 +280,13 @@ class EmpresasTest(unittest.TestCase):
         self.assertIn(f"REPSE {datos.REPSE}", html)
         self.assertIn(f'href="{datos.REPSE_PADRON}" target="_blank" rel="noopener"', html)
 
+    def test_puntos_de_paquetes_con_enlace_en_una_sola_celda(self):
+        """.vt-checks li es grid: texto y enlace sueltos serían celdas distintas y el renglón se partía palabra por
+        palabra (captura de palmas a 1440). Cada punto va en un <span>."""
+        html = c.opciones([{"rotulo": "R", "titulo": "T", "puntos": ('<a href="/x">Mantenimiento</a> después',),
+                            "mensaje": "Hola", "precio_texto": "Según cotización", "detalle": "d"}], "b2b")
+        self.assertIn('<li><span><a href="/x">Mantenimiento</a> después</span></li>', html)
+
     def test_formulario_por_correo_para_compras(self):
         """Respuesta del dueño (2026-11-08): formulario por correo para compras, además de WhatsApp."""
         f = {"pagina": "Mayoreo de pasto", "cta": "mayoreo:formulario",
