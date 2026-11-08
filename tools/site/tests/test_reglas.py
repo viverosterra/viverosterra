@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import paginas  # noqa: E402
 
 PUBLIC = paginas.PUBLIC
-PERMITIDAS = ('anuncian "envío gratis"',)  # el hub explica que "envío gratis" de otros ya viene en el precio
+PERMITIDAS = ()  # 2b: el hub ya no cita el "envío gratis" de otras ofertas; no se agregan excepciones
 PAGOS = r"inter[eé]s|intereses|mensualidad|meses|pagos?|plazos?|tarjeta|comisi[oó]n|enganche|financ|recargo"
 PROHIBIDAS = (
     ("Oasis", r"\bOasis\b"),

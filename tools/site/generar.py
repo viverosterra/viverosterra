@@ -23,6 +23,7 @@ def _varias(modulo, ruta_de, archivo_de, plantilla):
 PAGINAS = (
     ("/", "index.html", "inicio", "inicio"),
     ("/pasto-en-rollo-tampico", "pasto-en-rollo-tampico/index.html", "servicio", "pasto_en_rollo"),
+    ("/pasto-sintetico", "pasto-sintetico/index.html", "tienda_hub", "tienda"),
 ) + _varias("ficha", lambda k: f"/pasto-sintetico/{k}", lambda k: f"pasto-sintetico/{k}/index.html", "ficha")
 
 

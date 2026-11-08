@@ -10,7 +10,6 @@ from ciudad import build_ciudad
 from ciudades import CIUDADES
 from data import MODELOS, SITE
 from feed import build_feed
-from hub import build_hub
 from local import build_local
 from perros import build_perros
 from precios import build_precios
@@ -42,7 +41,6 @@ def aplicar_shell(paths):
 
 def main():
     ESCRITAS.clear()
-    write(ROOT / "index.html", build_hub())
     write(ROOT.parent / "pasto-sintetico-tampico" / "index.html", build_local())
     write(ROOT.parent / "precios" / "index.html", build_precios())
     for slug, zona in ZONAS.items():

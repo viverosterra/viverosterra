@@ -78,6 +78,20 @@ class TiendaPublicadaTest(unittest.TestCase):
         self.assertEqual(re.findall(r'<script src="/js/([\w-]+)\.js" defer>', html("/pasto-sintetico/toscana-28")),
                          ["vt-mensualidades", "tienda-pasto", "vt-landed"])
 
+    def test_hub_con_precio_puesto_catalogo_y_lista(self):
+        texto = html("/pasto-sintetico")
+        cuerpo = principal(texto)
+        self.assertIn('data-landed-hero data-rollo="139"', cuerpo)
+        self.assertIn('id="hero-estado"', cuerpo)
+        self.assertEqual(cuerpo.count('class="spec-card vt-tarjeta-p"'), 9)
+        self.assertIn('id="vt-models"', texto)
+        self.assertIn('<dialog class="vt-lista" id="cotizacion"', texto)
+        self.assertNotIn("gratis", cuerpo.lower())
+        lista = next(n for n in grafo(texto) if n["@type"] == "ItemList")
+        self.assertEqual(len(lista["itemListElement"]), 9)
+
+    def test_vendemos_a_todo_mexico_desde_2012(self):
+        self.assertIn(f"desde {datos.SINTETICO_NACIONAL_DESDE}", principal(html("/pasto-sintetico")))
 
 if __name__ == "__main__":
     unittest.main()
