@@ -237,7 +237,7 @@
 .vt-portada h1 .vt-serif{display:block;margin-top:.18em;font-size:.6em;line-height:1.15;color:var(--vt-field)}
 .vt-portada .vt-lede{margin:14px 0 0}
 .vt-portada__trato{display:grid;gap:18px;margin-top:18px}
-.vt-portada__tambien{margin:14px 0 0;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
+.vt-pagina main .vt-portada__tambien{margin:14px 0 0;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
 .vt-pagina main .vt-portada__tambien a{color:var(--vt-ink-2)}
 .vt-portada__foto .vt-fig__marco{aspect-ratio:4/3}
 .vt-portada .vt-datos{margin-top:28px}
@@ -286,6 +286,7 @@
   .vt-pagina main .vt-portada .vt-etiqueta__cod{margin:0}
   .vt-pagina main .vt-portada .vt-etiqueta__precio{margin:8px -16px 0 -46px;padding:8px 16px 9px 46px}
   .vt-portada .vt-etiqueta__precio b{font-size:34px}
+  .vt-pagina main .vt-portada .vt-etiqueta__fila:has(+.vt-etiqueta__nota){border-bottom:0}
   .vt-portada .vt-etiqueta__nombre,.vt-pagina main .vt-portada .vt-etiqueta__sci,.vt-pagina main .vt-portada .vt-etiqueta__nota{display:none}
 }
 
@@ -380,7 +381,7 @@
 .vt-opciones--plazo{grid-template-columns:repeat(auto-fit,minmax(86px,1fr));margin-top:14px}
 .vt-opciones--plazo legend{margin-bottom:8px}
 .vt-opciones--plazo label{flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;padding:8px 10px;font-size:14px}
-.vt-pagina main h3+.vt-medidor{margin-top:20px}
+.vt-pagina main h3+:is(.vt-medidor,.vt-tabla){margin-top:20px}
 .vt-medidor__plano{padding:14px;border:1px solid var(--vt-line);background:var(--vt-card)}
 .vt-pagina .vt-medidor__plano svg{display:block;width:100%;height:auto}
 .vt-plano-relleno{fill:var(--vt-field-100)}
