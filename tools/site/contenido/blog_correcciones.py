@@ -16,6 +16,7 @@ from componentes import dinero
 
 P = datos.PRECIOS
 SEGUN = datos.SEGUN_COTIZACION.lower()
+SEGUN_CELDA = datos.SEGUN_COTIZACION
 CAMION_8 = dinero(P["tierra_negra_camion_8m3"])
 R0, R1 = P["riego_m2"]
 
@@ -39,6 +40,18 @@ M_GARANTIA = "Garantía del sintético: 3 a 8 años según modelo (tools/pasto/d
 M_DEK = "La entrada era la del artículo de árboles de banqueta (copiada por error)."
 M_ENTREGA = "La entrega se cobra por viaje, según la colonia (datos.ENTREGA_COBRO)."
 M_VISITA = "Toda mención de la visita lleva su costo (datos.VISITA_COSTO)."
+M_EXTRA = "Extras de riego (sensor, bomba, controlador WiFi): sin precio oficial, van según cotización."
+M_PAQUETES = "Paquete recalculado: pasto instalado al precio oficial por m² y el riego se cotiza aparte, para que el total sea alcanzable."
+M_TAMANO = "Tamaños en existencia sin confirmar por el dueño: quedan como alturas de referencia."
+M_KIT = "Precio de ferretería sin confirmar por el dueño: se quita la cifra."
+M_POPULAR = "\"Más popular\" o \"que más nos piden\" es un superlativo sin dato que lo respalde."
+M_ESTRELLA = "La estrella junto al modelo no tenía leyenda ni dato que la respalde."
+M_KICKER = "La categoría era la del artículo de árboles de banqueta (copiada por error)."
+M_TITULO = "El título prometía un plazo de recuperación que el artículo ya no calcula."
+M_REDACCION = "Redacción y formato: sin cambio de dato."
+M_SIN_DATO = "Dato sin verificar por el dueño."
+M_RANGO = "Rango total sin confirmar por el dueño."
+M_SIN_PESO = "Sin peso de costal: el dueño no lo tiene."
 
 GARANTIA_SINTETICO = "de 3 a 8 años según modelo"
 PAGO_RESPUESTA = (f"Viveros Terra no ofrece crédito propio. {datos.ANTICIPO_PROYECTOS} También puedes pagar a mensualidades con "
@@ -136,9 +149,9 @@ FILAS = {
         ("C047", "<td>Diseño Plan Terra Completo</td><td>$6,500–$18,000</td>", "<td>Diseño Plan Terra Completo</td><td>$6,500</td>", M_DISENO),
         ("C048", "<td>Riego automatizado</td><td>$15,000–$60,000</td><td>Según m² y número de zonas</td>", f"<td>Riego automatizado</td><td>{dinero(R0)}–{dinero(R1)}/m²</td><td>Según m² y número de zonas</td>", M_RIEGO),
         ("C049", "<td>Palmas pequeñas (hasta 1.5 m)</td><td>$250–$600 c/u</td><td>Areca, Kerpis, Cycas pequeñas</td>", "<td>Palmas pequeñas (hasta 1.5 m)</td><td>Desde $250 c/u</td><td>Areca y coco plumoso; palma real desde $500; las demás, según cotización</td>", M_PLANTA),
-        ("C050", "<td>Palmas medianas (1.5–3 m)</td><td>$600–$1,200 c/u</td>", f"<td>Palmas medianas (1.5–3 m)</td><td>{SEGUN}</td>", M_PLANTA),
-        ("C051", "<td>Palmas grandes (3 m+)</td><td>$1,200–$2,500 c/u</td>", f"<td>Palmas grandes (3 m+)</td><td>{SEGUN}</td>", M_PLANTA),
-        ("C052", "<td>Mano de obra general</td><td>~$200/m²</td>", f"<td>Mano de obra general</td><td>{SEGUN}</td>", "Precio sin confirmar."),
+        ("C050", "<td>Palmas medianas (1.5–3 m)</td><td>$600–$1,200 c/u</td>", f"<td>Palmas medianas (1.5–3 m)</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
+        ("C051", "<td>Palmas grandes (3 m+)</td><td>$1,200–$2,500 c/u</td>", f"<td>Palmas grandes (3 m+)</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
+        ("C052", "<td>Mano de obra general</td><td>~$200/m²</td>", f"<td>Mano de obra general</td><td>{SEGUN_CELDA}</td>", "Precio sin confirmar."),
         ("C053", "<td>Tezontle decorativo</td><td>$35/kg o $280/costal</td>", f"<td>Tezontle decorativo</td><td>Costal desde {dinero(P['tezontle_costal'])}</td>", "Tezontle: costal desde $200 (datos.py)."),
         ("C054", "3 ejemplos reales de presupuestos", "3 ejemplos de presupuesto", M_CASO),
         ("C055", "Caso A: Jardín residencial de 50 m² → ~$13,500 MXN", "Ejemplo A: jardín residencial de 50 m²", M_CASO),
@@ -164,12 +177,12 @@ FILAS = {
          f"{datos.GARANTIA_PASTO} {datos.PRIMER_RIEGO} El arraigo exitoso", "Garantía oficial de arraigo; sin \"gratuita\" ni visita de seguimiento sin confirmar."),
     ),
     "framboyan-delonix-regia-tampico": (
-        ("C071", "<td>Ficus benjamina</td><td>$200</td>", f"<td>Ficus benjamina</td><td>{SEGUN}</td>", M_PLANTA),
-        ("C072", "<td>Trueno</td><td>$300</td>", f"<td>Trueno</td><td>{SEGUN}</td>", M_PLANTA),
-        ("C073", "<td>Neem</td><td>$300</td>", f"<td>Neem</td><td>{SEGUN}</td>", M_PLANTA),
-        ("C074", "<td>Tabachín</td><td>$350</td>", f"<td>Tabachín</td><td>{SEGUN}</td>", M_PLANTA),
-        ("C075", "<td>Laurel de la India</td><td>$500</td>", f"<td>Laurel de la India</td><td>{SEGUN}</td>", M_PLANTA),
-        ("C076", "<td>Tulipán Africano</td><td>$600</td>", f"<td>Tulipán Africano</td><td>{SEGUN}</td>", M_PLANTA),
+        ("C071", "<td>Ficus benjamina</td><td>$200</td>", f"<td>Ficus benjamina</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
+        ("C072", "<td>Trueno</td><td>$300</td>", f"<td>Trueno</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
+        ("C073", "<td>Neem</td><td>$300</td>", f"<td>Neem</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
+        ("C074", "<td>Tabachín</td><td>$350</td>", f"<td>Tabachín</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
+        ("C075", "<td>Laurel de la India</td><td>$500</td>", f"<td>Laurel de la India</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
+        ("C076", "<td>Tulipán Africano</td><td>$600</td>", f"<td>Tulipán Africano</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
         ("C077", '<th scope="col">Precio desde</th>', '<th scope="col">Precio</th>', M_PLANTA),
     ),
     "jardin-bajo-presupuesto-tampico": (
@@ -179,7 +192,7 @@ FILAS = {
         ("C081", "<li>12 plantas × $300 + 2 palmas × $600 = $4,800</li>", f"<li>12 plantas + 2 palmas: {SEGUN}</li>", M_PLANTA),
         ("C082", "<li>Riego básico aspersores = $4,500</li>\n<li>Mano de obra general = $3,000</li>\n<li><em>Total: $27,450 (ajustable reduciendo área o número de plantas)</em></li>", f"<li>Riego básico por aspersores: {SEGUN}</li>\n<li>Mano de obra: {SEGUN}</li>\n<li><strong>Total: {SEGUN}</strong> <em>(ajustable reduciendo área o número de plantas)</em></li>", M_RIEGO),
         ("C083", "3 palmas medianas ($800–$1,500 c/u)", f"3 palmas medianas ({SEGUN})", M_PLANTA),
-        ("C084", "<li>Tierra negra 7 m³ = $10,500</li>\n<li>25 plantas + 3 palmas medianas = $13,500</li>", f"<li>Tierra negra 7 m³ = $10,500</li>\n<li>25 plantas + 3 palmas medianas: {SEGUN}</li>", M_PLANTA),
+        ("C084", "<li>Tierra negra 7 m³ = $10,500</li>\n<li>25 plantas + 3 palmas medianas = $13,500</li>", f"<li>Tierra negra, camión de 8 m³ = {CAMION_8}</li>\n<li>25 plantas + 3 palmas medianas: {SEGUN}</li>", M_PLANTA),
         ("C085", "<li>Riego automatizado = $18,000</li>\n<li>Árbol ornamental + acabados = $5,000</li>\n<li>Mano de obra total = $8,000</li>\n<li><em>Total: $75,100 (el presupuesto de $50K es el punto de entrada, el rango completo va hasta $120K+)</em></li>", f"<li>Riego automatizado: {SEGUN}</li>\n<li>Árbol ornamental + acabados: {SEGUN}</li>\n<li>Mano de obra: {SEGUN}</li>\n<li><strong>Total: {SEGUN}</strong> <em>(el presupuesto de $50K es el punto de entrada)</em></li>", M_RIEGO),
         ("C086", "Según estudios de valuación inmobiliaria aplicados al mercado mexicano, un jardín profesional y en buen estado puede añadir entre el 5% y el 15% al valor de venta o renta de una propiedad residencial.", "Un jardín profesional y en buen estado ayuda a vender o rentar una propiedad residencial.", M_ESTAD),
         ("C087", " Un jardín de $50,000 bien ejecutado en una casa de $1,500,000 puede representar una plusvalía de $75,000 a $225,000, con un ROI que va del 50% al 350% de la inversión original.", "", M_ESTAD),
@@ -205,7 +218,7 @@ FILAS = {
         ("C099", "tamaños y precios desde $500. La palma", "y tamaños. La palma", M_PLANTA),
         ("C100", "tamaños y precios desde $500 para lobbies", "y tamaños para lobbies", M_PLANTA),
         ("C101", "En Viveros Terra el precio va desde <strong>$500 MXN</strong>.", f"En Viveros Terra su precio va <strong>{SEGUN}</strong>.", M_PLANTA),
-        ("C102", "esquinas de habitación</td><td>$500 MXN</td>", f"esquinas de habitación</td><td>{SEGUN}</td>", M_PLANTA),
+        ("C102", "esquinas de habitación</td><td>$500 MXN</td>", f"esquinas de habitación</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
         ("C103", "En Viveros Terra, una Palma Kerpis tiene precio desde $500 MXN. Ejemplares grandes y bien formados, ideales para lobbies o espacios amplios, cuestan desde $1,200 MXN.", f"En Viveros Terra, la Palma Kerpis va {SEGUN}.", M_PLANTA),
         ("C104", "En Viveros Terra el precio de la Palma Kerpis inicia en <strong>$500 MXN</strong>. Ejemplares grandes y bien formados, con varios tallos por maceta y listos para dar presencia inmediata en un lobby u oficina, tienen precio desde <strong>$1,200 MXN</strong>.", f"En Viveros Terra el precio de la Palma Kerpis va <strong>{SEGUN}</strong>, también en ejemplares grandes y bien formados, con varios tallos por maceta.", M_PLANTA),
     ),
@@ -228,11 +241,11 @@ FILAS = {
         ("C116", "Las 8 palmas más vendidas en Tampico (con precios actualizados)", "8 palmas para jardines en Tampico (con precios actualizados)", M_VENDIDA),
         ("C117", "Palmas más vendidas Tampico", "8 palmas para Tampico", M_VENDIDA),
         ("C118", "Las 8 palmas más vendidas en Tampico son: Washingtona (desde $500), Palma del Viajero ($500), Areca ($250), Real, Coco Plumoso ($250), Kerpis ($500), Cycas Revoluta ($700), y Bambú ($1,000). Los precios varían según el tamaño.", "Estas 8 palmas funcionan bien en Tampico: Areca y Coco Plumoso desde $250 y Real desde $500 en tamaño chico; Washingtona, Palma del Viajero, Kerpis, Cycas Revoluta y Bambú, según cotización. El precio sube con la altura.", M_PLANTA),
-        ("C119", "<td>Washingtona</td><td>$500</td>", f"<td>Washingtona</td><td>{SEGUN}</td>", M_PLANTA),
-        ("C120", "<td>Palma del Viajero</td><td>$500</td>", f"<td>Palma del Viajero</td><td>{SEGUN}</td>", M_PLANTA),
-        ("C121", "<td>Kerpis (Howea)</td><td>$500</td>", f"<td>Kerpis (Howea)</td><td>{SEGUN}</td>", M_PLANTA),
-        ("C122", "<td>Cycas Revoluta</td><td>$700</td>", f"<td>Cycas Revoluta</td><td>{SEGUN}</td>", M_PLANTA),
-        ("C123", "<td>Bambú Tarro</td><td>$1,000</td>", f"<td>Bambú Tarro</td><td>{SEGUN}</td>", M_PLANTA),
+        ("C119", "<td>Washingtona</td><td>$500</td>", f"<td>Washingtona</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
+        ("C120", "<td>Palma del Viajero</td><td>$500</td>", f"<td>Palma del Viajero</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
+        ("C121", "<td>Kerpis (Howea)</td><td>$500</td>", f"<td>Kerpis (Howea)</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
+        ("C122", "<td>Cycas Revoluta</td><td>$700</td>", f"<td>Cycas Revoluta</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
+        ("C123", "<td>Bambú Tarro</td><td>$1,000</td>", f"<td>Bambú Tarro</td><td>{SEGUN_CELDA}</td>", M_PLANTA),
         ("C124", "<strong>Precio desde:</strong> $500 MXN (planta de 0.8–1.2 m). Ejemplares de 2–3 m desde $1,200.", f"<strong>Precio:</strong> {SEGUN}.", M_PLANTA),
         ("C125", "<strong>Precio desde:</strong> $500 MXN (hijuelo pequeño). Plantas de 1.5–2 m desde $1,500.", f"<strong>Precio:</strong> {SEGUN}.", M_PLANTA),
         ("C126", " Matas grandes y densas desde $800.", f" Matas grandes y densas, {SEGUN}.", M_PLANTA),
@@ -288,7 +301,7 @@ FILAS = {
         ("C162", "<td>$15,000–$28,000</td><td>Aspersores emergentes + goteo zonas plantas</td>", f"<td>{riego(60, 120)}</td><td>Aspersores emergentes + goteo zonas plantas</td>", M_RIEGO),
         ("C163", "<td>$28,000–$45,000</td><td>Sistema mixto multi-zona con programador</td>", f"<td>{riego(120, 200)}</td><td>Sistema mixto multi-zona con programador</td>", M_RIEGO),
         ("C164", "<td>$45,000–$90,000</td><td>Sistema completo con controlador inteligente</td>", f"<td>{riego(200, 500)}</td><td>Sistema completo con controlador inteligente</td>", M_RIEGO),
-        ("C165", "<td>$90,000+</td>", f"<td>{SEGUN}</td>", M_RIEGO),
+        ("C165", "<td>$90,000+</td>", f"<td>{SEGUN_CELDA}</td>", M_RIEGO),
         ("C166", "3 casos reales de riego automático en Tampico", "3 ejemplos de riego automático en Tampico", M_CASO),
         ("C167", "Caso A: Residencial 80 m² en fraccionamiento de Madero", "Ejemplo A: residencial de 80 m²", M_CASO),
         ("C168", "Caso B: Residencial 200 m² en fraccionamiento privado de Tampico", "Ejemplo B: residencial de 200 m²", M_CASO),
@@ -310,7 +323,7 @@ FILAS = {
         ("C182", "<td>$15,000–$25,000 (100 m²)</td>", f"<td>{riego(100)} (100 m²)</td>", M_RIEGO),
         ("C183", "<td>$8,000–$18,000 (100 m²)</td>", f"<td>{riego(100)} (100 m²)</td>", M_RIEGO),
         ("C184", "<td>$25,000–$45,000 (200 m²)</td>", f"<td>{riego(200)} (200 m²)</td>", M_RIEGO),
-        ("C185", "<td>+$4,000 al sistema</td>", f"<td>{SEGUN}</td>", "Precio sin confirmar."),
+        ("C185", "<td>+$4,000 al sistema</td>", f"<td>{SEGUN_CELDA}</td>", "Precio sin confirmar."),
         ("C186", "Ejemplo real: cuánto se ahorra", "Ejemplo: cuánto se ahorra", M_CASO),
         ("C187", "<p>Cliente típico Viveros Terra (Cd. Madero, casa residencial):</p>", "<p>Ejemplo de una casa residencial:</p>", M_CASO),
         ("C188", "controlador WiFi = <strong>$32,000</strong>", f"controlador WiFi = <strong>{riego(150)}</strong>", M_RIEGO),
@@ -325,9 +338,9 @@ FILAS = {
         ("C195", "Costo aproximado para 20 plantas: $4,000–$10,000", f"Costo: {SEGUN}", M_RIEGO),
         ("C196", "(ahorro hasta 60%)", f"(ahorro {datos.RIEGO_AHORRO})", M_AHORRO),
         ("C197", "<td>$8,000–$15,000</td><td>$300–$600</td>", f"<td>{riego(50, 80)}</td><td>Hasta 40% menos de agua</td>", M_RIEGO),
-        ("C198", "<td>$4,000–$10,000</td><td>$200–$400</td>", f"<td>{SEGUN}</td><td>Hasta 40% menos de agua</td>", M_RIEGO),
+        ("C198", "<td>$4,000–$10,000</td><td>$200–$400</td>", f"<td>{SEGUN_CELDA}</td><td>Hasta 40% menos de agua</td>", M_RIEGO),
         ("C199", "<td>$15,000–$28,000</td><td>$500–$1,000</td>", f"<td>{riego(100, 150)}</td><td>Hasta 40% menos de agua</td>", M_RIEGO),
-        ("C200", "<td>$40,000–$150,000</td><td>$2,000–$8,000</td>", f"<td>{SEGUN}</td><td>Hasta 40% menos de agua</td>", M_RIEGO),
+        ("C200", "<td>$40,000–$150,000</td><td>$2,000–$8,000</td>", f"<td>{SEGUN_CELDA}</td><td>Hasta 40% menos de agua</td>", M_RIEGO),
         ("C201", "<p>Para un sistema de $12,000 pesos en un jardín residencial de 80 m²:</p>", "<p>En un jardín residencial de 80 m²:</p>", M_RIEGO),
         ("C202", "<li>Ahorro en agua: ~$500/mes = $6,000/año</li>\n<li>Ahorro en jardinero (menos idas para riego manual): ~$300/mes = $3,600/año</li>\n<li>Menor mortalidad de plantas por riego inadecuado: valor estimado ~$2,000/año</li>\n<li><strong>Ahorro total anual: ~$11,600</strong></li>", f"<li>Ahorro en agua: {datos.RIEGO_AHORRO}</li>\n<li>Menos idas del jardinero para riego manual</li>\n<li>Menor mortalidad de plantas por riego inadecuado</li>", M_ESTAD),
         ("C203", "<strong>Visita técnica.</strong> Medimos el área", f"<strong>Visita técnica.</strong> {datos.VISITA_COSTO} Medimos el área", M_VISITA),
@@ -344,6 +357,162 @@ FILAS = {
         ("C212", "Un costal estándar de tierra negra vegetal en Viveros Terra pesa aproximadamente 25–30 kg y tiene un volumen de 25–30 litros (0.025–0.03 m³). Este peso varía ligeramente según el contenido de humedad al momento del llenado.", "No publicamos el peso porque varía con la humedad; un costal estándar de tierra negra vegetal en Viveros Terra tiene un volumen de 25–30 litros (0.025–0.03 m³).", "Sin peso de costal: el dueño no lo tiene."),
     ),
 }
+
+
+PASTO_I = dinero(P["pasto_instalado_m2"])
+RIEGO_M2 = f"{dinero(R0)}–{dinero(R1)}/m²"
+REFERENCIA = "Estas son alturas de referencia; la disponibilidad se confirma al cotizar"
+APARTE = f"se cotiza aparte ({RIEGO_M2})"
+
+
+def _instalado(m2):
+    return f"Pasto instalado {m2} m² × {PASTO_I} = {dinero(m2 * P['pasto_instalado_m2'])}"
+
+
+_SUBTOTAL_5K = 25 * P["pasto_instalado_m2"] + P["tierra_negra_m3"]
+_SUBTOTAL_20K = 90 * P["pasto_instalado_m2"] + 3 * P["tierra_negra_m3"] + P["diseno"]
+_SUBTOTAL_50K = 160 * P["pasto_instalado_m2"] + P["tierra_negra_camion_8m3"] + P["diseno_completo"]
+
+# Segunda pasada (revisión consolidada de la Etapa 2h). Se aplica después de FILAS, así que "antes" puede ser texto ya corregido.
+REVISION = {
+    "palma-washingtona-tampico": (
+        ("C213", "La palma más vendida de la región: crecimiento rápido, tolerancia total al calor y la sequía, y precio desde $500.", "Crecimiento rápido y tolerancia total al calor y la sequía.", M_VENDIDA),
+        ("C214", "su precio va según cotización, según la altura.", "su precio va según cotización y depende de la altura.", M_REDACCION),
+    ),
+    "palmas-mas-vendidas-tampico-precios": (
+        ("C215", "8 palmas más vendidas en Tampico — precios 2026", "8 palmas para jardines en Tampico con precios 2026", M_VENDIDA),
+        ("C216", "cubre las 8 palmas que más nos piden mes a mes, con precios actualizados a mayo 2026,", "cubre 8 palmas para jardines en Tampico, con precios,", M_POPULAR),
+        ("C217", "1. Palma Washingtona — la más popular de Tampico", "1. Palma Washingtona — crecimiento rápido y tolerancia al calor", M_POPULAR),
+    ),
+    "pasto-sintetico-calor-mexico": (
+        ("C218", "garantía de 5-8 años", f"garantía {GARANTIA_SINTETICO}", M_GARANTIA),
+    ),
+    "riego-automatico-tampico-roi": (
+        ("C219", "ese consumo baja a 12–18 m³ al mes", "ese consumo baja a unos 18 m³ al mes", M_AHORRO),
+        ("C220", "El costo adicional sobre un programador básico es de $3,000–$6,000 MXN.", f"El costo adicional sobre un programador básico va {SEGUN}.", M_EXTRA),
+        ("C300", "un timer de manguera básico ($500–$1,500 MXN) puede", "un timer de manguera básico puede", M_KIT),
+        ("C221", "con números reales basados en proyectos ejecutados en la región Tampico-Madero-Altamira, tarifas de agua actualizadas a 2026 y costos de instalación vigentes.", "con un ejemplo de cálculo para la región Tampico-Madero-Altamira, una tarifa de agua de referencia y los costos de instalación vigentes.", M_SIN_DATO),
+    ),
+    "sistema-riego-automatizado-tampico": (
+        ("C222", "estos sensores pueden ahorrar 30–40% adicional de agua al evitar", "estos sensores ahorran agua adicional al evitar", M_AHORRO),
+        ("C223", "Costos, tipos y en cuánto se paga", "Costos, tipos y cuánto ahorra", M_TITULO),
+        ("C224", "puede ir de $18,000–$48,000", "puede ir de $18,000 a $48,000", M_REDACCION),
+    ),
+    "sistema-riego-automatico-conviene-tampico": (
+        ("C225", "Agregar sensor cuesta $1,500.", f"El sensor se agrega {SEGUN}.", M_EXTRA),
+        ("C226", "(~$3,500 adicionales)", f"({SEGUN})", M_EXTRA),
+        ("C227", "En números reales para Tampico: un jardín residencial promedio de 120 m²", "Como ejemplo para Tampico: un jardín residencial de 120 m²", M_SIN_DATO),
+        ("C228", " <strong>En 12 meses ahorra $1,200 MXN; en 5 años, $6,000+</strong>.", " El ahorro anual depende de tu tarifa y de la temporada.", M_SIN_DATO),
+        ("C229", "<strong>Programador de manguera ($600–$1,200):</strong>", "<strong>Programador de manguera:</strong>", M_KIT),
+        ("C230", "<strong>Aspersores oscilantes con timer ($800–$1,500):</strong>", "<strong>Aspersores oscilantes con timer:</strong>", M_KIT),
+        ("C231", "<strong>Goteo manual con cinta perforada ($300/100 m):</strong>", "<strong>Goteo manual con cinta perforada:</strong>", M_KIT),
+        ("C232", "Árboles y Paisajismo", "Riego", M_KICKER),
+        ("C233", "va de $18,000–$32,000", "va de $18,000 a $32,000", M_REDACCION),
+    ),
+    "tierra-negra-costal-camion-tampico": (
+        ("C234", "Cuándo conviene comprar camión ($1,500/m³)", f"Cuándo conviene comprar camión (8 m³ en {CAMION_8})", M_TIERRA),
+        ("C235", "camión volteo a $1,500/m³", f"camión volteo de 8 m³ en {CAMION_8}", M_TIERRA),
+        ("C236", "¿Cuánto pesa un costal de tierra negra en Tampico?", "¿Qué volumen tiene un costal de tierra negra en Tampico?", M_SIN_PESO),
+        ("C237", "No publicamos el peso porque varía con la humedad; un costal estándar", "Un costal estándar", M_SIN_PESO),
+    ),
+    "cuanto-cuesta-jardin-tampico-precios": (
+        ("C238", "¿Cuánto cuesta un jardín pequeño en Tampico? ($5,000–$15,000 MXN)", "¿Cuánto cuesta un jardín pequeño en Tampico?", M_RANGO),
+        ("C239", "¿Cuánto cuesta un jardín mediano? ($15,000–$50,000 MXN)", "¿Cuánto cuesta un jardín mediano?", M_RANGO),
+        ("C240", "¿Cuánto cuesta un jardín premium? ($50,000–$200,000+ MXN)", "¿Cuánto cuesta un jardín premium?", M_RANGO),
+        ("C241", "(Plan Terra Completo desde $6,500)", f"(Plan Terra Completo, {dinero(P['diseno_completo'])})", M_DISENO),
+        ("C242", "Guía de precios 2026 para jardines en Tampico: desde $5,000 hasta $200,000+ con desglose por componente y 3 casos reales.", "Guía de precios 2026 para jardines en Tampico, con desglose por componente y 3 ejemplos.", M_CASO),
+    ),
+    "jardin-bajo-presupuesto-tampico": (
+        ("C243", "3 paquetes reales de jardín según presupuesto.", "3 paquetes de ejemplo según presupuesto.", M_CASO),
+        ("C244", "tres niveles de inversión reales, con los precios", "tres niveles de inversión, con los precios", M_CASO),
+        ("C245", "<td>Área aproximada</td><td>30–45 m²</td><td>80–120 m²</td><td>150–200 m²</td>", "<td>Área aproximada</td><td>25 m²</td><td>80–90 m²</td><td>150–200 m²</td>", M_PAQUETES),
+        ("C246", "<td>Pasto instalado</td><td>Sí</td><td>Sí</td><td>Sí (premium)</td>", f"<td>Pasto instalado ({PASTO_I}/m²)</td><td>Sí</td><td>Sí</td><td>Sí</td>", M_PAQUETES),
+        ("C247", "<td>Tierra negra</td><td>1–2 m³</td><td>3–5 m³</td><td>6–10 m³</td>", "<td>Tierra negra</td><td>1 m³</td><td>3 m³</td><td>Camión de 8 m³</td>", M_PAQUETES),
+        ("C248", "<td>Plantas ornamentales</td><td>5–8 básicas</td><td>12–15 + 2 palmas</td><td>25+ + 3 palmas medianas</td>", f"<td>Plantas ornamentales</td><td>{SEGUN_CELDA}, con lo que reste</td><td>{SEGUN_CELDA}, con 2 palmas</td><td>{SEGUN_CELDA}, con 3 palmas medianas</td>", M_PAQUETES),
+        ("C249", "<td>Sistema de riego</td><td>No</td><td>Básico (aspersores)</td><td>Automatizado completo</td>", f"<td>Sistema de riego ({RIEGO_M2})</td><td>Se cotiza aparte</td><td>Se cotiza aparte</td><td>Se cotiza aparte</td>", M_PAQUETES),
+        ("C250", "Este es el punto de entrada más popular entre clientes con casas de fraccionamiento", "Es un buen punto de entrada para casas de fraccionamiento", M_POPULAR),
+        ("C251", "<li>30–40 m² de <a href=\"/pasto-en-rollo-tampico\">pasto San Agustín en rollo</a> instalado</li>\n<li>1–2 m³ de tierra negra vegetal para preparar el suelo</li>\n<li>5 a 8 plantas ornamentales básicas de bajo mantenimiento (helechos, croton, ixora, etc.)</li>", f"<li>25 m² de <a href=\"/pasto-en-rollo-tampico\">pasto San Agustín en rollo</a> instalado</li>\n<li>1 m³ de tierra negra vegetal para preparar el suelo</li>\n<li>Plantas ornamentales básicas de bajo mantenimiento (helechos, croton, ixora, etc.) con lo que reste, {SEGUN}</li>", M_PAQUETES),
+        ("C252", f"<li>Pasto 35 m² × $85 = $2,975</li>\n<li>Tierra negra 1.5 m³ = $2,250</li>\n<li>6 plantas: {SEGUN}</li>\n<li>Mano de obra: {SEGUN}</li>\n<li><strong>Total: {SEGUN}</strong> <em>(ajustable según selección de plantas y área exacta)</em></li>", f"<li>{_instalado(25)}</li>\n<li>Tierra negra 1 m³ = {dinero(P['tierra_negra_m3'])}</li>\n<li><strong>Subtotal: {dinero(_SUBTOTAL_5K)}</strong></li>\n<li>Plantas: {SEGUN}, con lo que reste</li>", M_PAQUETES),
+        ("C253", "Para llegar exactamente a $5,000 con este perfil, el ajuste habitual es reducir el área a 25–30 m² o elegir plantas aún más básicas.", "Si tu área es mayor, el ajuste habitual es instalar por etapas o elegir plantas más básicas.", M_PAQUETES),
+        ("C254", "El rango de $15,000 a $25,000 es donde más proyectos completos se resuelven en Tampico. Con este presupuesto ya puedes tener un jardín con carácter: diseño básico, plantas con impacto visual, una o dos palmas y la posibilidad de riego por aspersores en zona de pasto.", "Con este presupuesto ya puedes tener un jardín con carácter: diseño básico, plantas con impacto visual y una o dos palmas. El riego por aspersores se cotiza aparte.", M_PAQUETES),
+        ("C255", "<li>80–100 m² de pasto San Agustín instalado</li>\n<li>3–4 m³ de tierra negra</li>\n<li>12–15 plantas ornamentales de mayor impacto (heliconias, palmeras Areca, bromelias, ixoras grandes)</li>", f"<li>80–90 m² de pasto San Agustín instalado</li>\n<li>3 m³ de tierra negra</li>\n<li>Plantas ornamentales de mayor impacto (heliconias, palmeras Areca, bromelias, ixoras grandes), {SEGUN}</li>", M_PAQUETES),
+        ("C256", "<li>Sistema de riego básico por aspersores para zona de pasto</li>\n<li>Mano de obra especializada</li>", "<li>Mano de obra especializada</li>", M_PAQUETES),
+        ("C257", f"<li>Pasto 90 m² × $85 = $7,650</li>\n<li>Tierra negra 3 m³ = $4,500</li>\n<li>12 plantas + 2 palmas: {SEGUN}</li>\n<li>Diseño Plan Terra Esencial = $3,000</li>\n<li>Riego básico por aspersores: {SEGUN}</li>\n<li>Mano de obra: {SEGUN}</li>\n<li><strong>Total: {SEGUN}</strong> <em>(ajustable reduciendo área o número de plantas)</em></li>", f"<li>{_instalado(90)}</li>\n<li>Tierra negra 3 m³ = {dinero(3 * P['tierra_negra_m3'])}</li>\n<li>Diseño Plan Terra Esencial = {dinero(P['diseno'])}</li>\n<li><strong>Subtotal: {dinero(_SUBTOTAL_20K)}</strong></li>\n<li>Plantas y 2 palmas: {SEGUN}, con lo que reste</li>\n<li>Riego por aspersores: {APARTE}</li>", M_PAQUETES),
+        ("C258", "Este presupuesto funciona como objetivo real para 80–90 m² con diseño. Para 100+ m², el rango sube naturalmente a $25,000–$35,000.", f"Este presupuesto alcanza para 80–90 m² con diseño. Con más área, cada m² adicional de pasto instalado suma desde {PASTO_I}.", M_PAQUETES),
+        ("C259", "con riego que funciona solo, palmas de porte real", "con palmas de porte real", M_PAQUETES),
+        ("C260", "(Plan Terra Completo desde $6,500)", f"(Plan Terra Completo, {dinero(P['diseno_completo'])})", M_DISENO),
+        ("C261", "<li>150–200 m² de pasto San Agustín o variedad premium</li>\n<li>6–10 m³ de tierra negra preparada</li>", "<li>150–200 m² de pasto San Agustín instalado</li>\n<li>Camión de 8 m³ de tierra negra</li>", M_PAQUETES),
+        ("C262", "<li>Sistema de riego automatizado completo con programador digital</li>\n", "", M_PAQUETES),
+        ("C263", f"<li>Pasto 160 m² = $13,600</li>\n<li>Tierra negra, camión de 8 m³ = {CAMION_8}</li>\n<li>25 plantas + 3 palmas medianas: {SEGUN}</li>\n<li>Diseño Plan Terra Completo = $6,500</li>\n<li>Riego automatizado: {SEGUN}</li>\n<li>Árbol ornamental + acabados: {SEGUN}</li>\n<li>Mano de obra: {SEGUN}</li>\n<li><strong>Total: {SEGUN}</strong> <em>(el presupuesto de $50K es el punto de entrada)</em></li>", f"<li>{_instalado(160)}</li>\n<li>Tierra negra, camión de 8 m³ = {CAMION_8}</li>\n<li>Diseño Plan Terra Completo = {dinero(P['diseno_completo'])}</li>\n<li><strong>Subtotal: {dinero(_SUBTOTAL_50K)}</strong></li>\n<li>25 plantas, 3 palmas medianas, árbol ornamental y acabados: {SEGUN}, con lo que reste</li>\n<li>Riego automatizado: {APARTE}</li>", M_PAQUETES),
+        ("C264", "Con $5,000 MXN puedes hacer un jardín mini con pasto + plantas básicas. Con $20,000 MXN obtienes pasto + diseño básico + plantas + tierra. Con $50,000 MXN un proyecto completo con riego automático, palmas, diseño Plan Terra y mantenimiento del primer mes incluido.", f"Con $5,000 MXN puedes hacer un jardín mini de unos 25 m² con pasto instalado y tierra. Con $20,000 MXN obtienes unos 90 m² de pasto instalado, diseño básico y tierra. Con $50,000 MXN, un proyecto de unos 160 m² con pasto instalado, palmas, diseño Plan Terra y mantenimiento del primer mes incluido. El riego {APARTE}.", M_PAQUETES),
+        ("C265", "El de $50,000 con diseño y riego automatizado puede tomar", "El de $50,000 con diseño puede tomar", M_PAQUETES),
+        ("C266", "ajuste del sistema de riego, fertilización inicial", "ajuste del riego si lo instalaste, fertilización inicial", M_PAQUETES),
+    ),
+    "pasto-sintetico-vs-natural-tampico": (
+        ("C267", "<strong>2–3x más al instalar</strong>", "<strong>de 3 a 5 veces más al instalar</strong>", "Comparación con los precios oficiales: sintético instalado contra pasto instalado por m²."),
+    ),
+    "como-ahorrar-agua-jardin-tampico": (
+        ("C268", "<strong>Dato FAO:</strong> Un sistema", "Un sistema", M_SIN_DATO),
+        ("C269", "ha instalado más de 200 sistemas que demuestran ahorros reales en los recibos de agua de sus clientes.", "ha instalado más de 200 sistemas de riego.", M_SIN_DATO),
+    ),
+    "cuidados-palma-del-viajero-ravenala": (
+        ("C270", "En Viveros Terra tenemos registros de palmas del viajero plantadas en Tampico que en 5 años llegaron a los 4 metros de altura — algo que en climas más fríos tardaría 12 o 15 años.", "En el clima de Tampico, la palma del viajero crece mucho más rápido que en climas fríos.", M_SIN_DATO),
+    ),
+    "cuando-plantar-pasto-tampico-calendario": (("C271", "Árboles y Paisajismo", "Pasto", M_KICKER),),
+    "plantas-resistentes-sal-golfo-tampico": (("C272", "Árboles y Paisajismo", "Plantas", M_KICKER),),
+    "framboyan-delonix-regia-tampico": (
+        ("C273", "<td><strong>Flamboyán</strong></td><td><strong>$250</strong></td>", f"<td><strong>Flamboyán</strong></td><td><strong>Desde {dinero(P['flamboyan'])}</strong></td>", "Flamboyán: desde $250, es el ejemplar joven (datos.py)."),
+    ),
+    "tezontle-usos-jardin-tampico": (
+        ("C274", "<td>Camión volteo 5 m³</td>", f"<td>Por camión, {SEGUN}</td>", "Tezontle: solo el costal tiene precio oficial; el camión va según cotización."),
+        ("C275", "<td>Camión volteo 8 m³</td>", f"<td>Por camión, {SEGUN}</td>", "Tezontle: solo el costal tiene precio oficial; el camión va según cotización."),
+        ("C276", "<td>Camión volteo 14 m³</td>", f"<td>Por camión, {SEGUN}</td>", "Tezontle: solo el costal tiene precio oficial; el camión va según cotización."),
+        ("C277", "en presentaciones de costal y camión volteo de 5, 8 y 14 m³.", f"en costal y por camión, {SEGUN}.", "Tezontle: solo el costal tiene precio oficial; el camión va según cotización."),
+    ),
+    "palma-bismarckia-bismarckia-nobilis-tampico": (
+        ("C278", "En Viveros Terra se maneja en alturas de <strong>1 m, 1 a 2 m y 3 a 4 m</strong>, y puede llegar a ser una palma muy grande.", "Puede llegar a ser una palma muy grande.", M_TAMANO),
+        ("C279", "En Viveros Terra se maneja en estas alturas:", f"{REFERENCIA}:", M_TAMANO),
+        ("C280", "Tamaños disponibles y cuánto puede crecer", "Tamaños y cuánto puede crecer", M_TAMANO),
+    ),
+    "palma-cola-de-zorro-wodyetia-bifurcata-tampico": (
+        ("C281", "de altura, se vende en Viveros Terra en tamaños de 1 a más de 5 m y su mantenimiento es bajo.", "de altura y su mantenimiento es bajo.", M_TAMANO),
+        ("C282", "En el catálogo de Viveros Terra la Palma Cola de Zorro se maneja en varias alturas. Adulta", f"{REFERENCIA}. Adulta", M_TAMANO),
+        ("C283", "Tamaños disponibles y cuánto puede crecer", "Tamaños y cuánto puede crecer", M_TAMANO),
+        ("C284", "tamaños disponibles y dónde plantarla", "tamaños y dónde plantarla", M_TAMANO),
+    ),
+    "palma-triangular-dypsis-decaryi-tampico": (
+        ("C285", "Crece de forma lenta a moderada, se maneja en Viveros Terra en alturas de <strong>1 a 4 m</strong> y destaca", "Crece de forma lenta a moderada y destaca", M_TAMANO),
+        ("C286", "En el catálogo de Viveros Terra se maneja en tres alturas:", f"{REFERENCIA}:", M_TAMANO),
+        ("C287", "Tamaños disponibles y cuánto puede crecer", "Tamaños y cuánto puede crecer", M_TAMANO),
+        ("C288", "tamaños de 1 a 4 m y dónde plantarla", "tamaños y dónde plantarla", M_TAMANO),
+        ("C289", "dé presencia al jardín, entre 1 y 4 m en el catálogo de Viveros Terra.", "dé presencia al jardín; la disponibilidad se confirma al cotizar.", M_TAMANO),
+    ),
+    "palma-real-roystonea-regia-tampico": (
+        ("C290", "En Viveros Terra manejamos distintos tamaños según el proyecto:", "Estos son tamaños de referencia; la disponibilidad se confirma al cotizar:", M_TAMANO),
+    ),
+    "palmas-tropicales-jardin-tampico": (
+        ("C291", "Guía visual de las 8 palmas más populares en Tampico:", "Guía visual de 8 palmas para jardines en Tampico:", M_POPULAR),
+        ("C292", "Guía visual de las 8 palmas tropicales más populares en Tampico:", "Guía visual de 8 palmas tropicales para jardines en Tampico:", M_POPULAR),
+        ("C293", "Las palmas más populares para jardines en Tampico son:", "Algunas palmas para jardines en Tampico son:", M_POPULAR),
+        ("C294", "Las 8 palmas más populares en Tampico", "8 palmas para jardines en Tampico", M_POPULAR),
+    ),
+    "palma-kerpis-howea-forsteriana-tampico": (
+        ("C295", "luz, riego, y tamaños.", "luz, riego y tamaños.", M_REDACCION),
+    ),
+    "como-instalar-pasto-sintetico": (
+        ("C296", "\\$139", "$139", M_REDACCION),
+    ),
+    "que-altura-de-pasto-sintetico-elegir": (
+        ("C297", "Toscana 28 ★ · Irlanda 25", "Toscana 28 · Irlanda 25", M_ESTRELLA),
+    ),
+    "cuanto-cuesta-pasto-sintetico-mexico": (
+        ("C298", "<td><strong>Toscana 28</strong> ★</td>", "<td><strong>Toscana 28</strong></td>", M_ESTRELLA),
+    ),
+    "pasto-sintetico-para-perros": (
+        ("C299", "<td><strong>Toscana 28</strong> ★</td>", "<td><strong>Toscana 28</strong></td>", M_ESTRELLA),
+    ),
+}
+FILAS = {slug: FILAS.get(slug, ()) + REVISION.get(slug, ()) for slug in (*FILAS, *(s for s in REVISION if s not in FILAS))}
 
 
 def claves():
