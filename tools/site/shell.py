@@ -19,6 +19,7 @@ ENLACE_RE = re.compile(
 SVC_HERO_RE = re.compile(r"<!-- svc-hero -->.*?<!-- /svc-hero -->", re.S)
 VT_HERO_RE = re.compile(r'<section\b[^>]*class="vt-hero\b')
 TIENDA = '<body class="vt-pagina vt-tienda">'
+PLANTAS = '<body class="vt-pagina vt-plantas">'
 CONTEO_BLOG_RE = re.compile(r'(<span data-vt-conteo="blog">)\d+(</span>)')
 
 
@@ -71,7 +72,7 @@ def aplicar(html, ruta, urls, public=PUBLIC):
     if encontradas != ["footer", "head", "header"]:
         raise ValueError(f"{ruta}: regiones del shell {encontradas}; debe haber head, header y footer, una de cada una")
     partes = {
-        "head": partials.head(urls, legacy="/css/tailwind.css" in html, tienda=TIENDA in html),
+        "head": partials.head(urls, legacy="/css/tailwind.css" in html, tienda=TIENDA in html, plantas=PLANTAS in html),
         "header": partials.header(ctx),
         "footer": partials.footer(ctx),
     }

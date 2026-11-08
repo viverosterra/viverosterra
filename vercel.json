@@ -922,7 +922,7 @@
       ]
     },
     {
-      "source": "/(css|js)/(terra|terra-tienda|legacy-fixes)\\.([0-9a-f]+)\\.(css|js)",
+      "source": "/(css|js)/(terra|terra-tienda|terra-plantas|legacy-fixes)\\.([0-9a-f]+)\\.(css|js)",
       "headers": [
         {
           "key": "Cache-Control",
