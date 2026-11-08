@@ -15,7 +15,6 @@ PAGINAS = ("/", "/pasto-en-rollo-tampico/", "/pasto-sintetico/", "/pasto-sinteti
            "/diseno-jardines-tampico/", "/plantas-palmas-arboles-tampico/", "/catalogo.html", "/blog/",
            "/blog/cuando-regar-pasto-san-agustin-tampico/", "/precios/")
 ANCHOS = (320, 375, 768, 1440)
-# Desbordes conocidos del cuerpo viejo (no del shell, que test_navegador cubre): se anotan, no se esconden.
 # Baja la página de a una pantalla para que carguen las imágenes lazy y vuelve arriba (si no, la captura de página
 # completa las deja vacías).
 CARGAR_LAZY = """async () => {
@@ -26,6 +25,7 @@ CARGAR_LAZY = """async () => {
   const cargas = Array.from(document.images).map((i) => i.complete ? 0 : new Promise((r) => { i.onload = i.onerror = r; }));
   await Promise.race([Promise.all(cargas), new Promise((r) => setTimeout(r, 3000))]);  // las ocultas nunca cargan
 }"""
+# Desbordes conocidos del cuerpo viejo (no del shell, que test_navegador cubre): se anotan, no se esconden.
 CONOCIDOS = {
     "/pasto-sintetico/": "fila de chips de filtro de la tienda a 320 px (Etapa 2)",
 }
