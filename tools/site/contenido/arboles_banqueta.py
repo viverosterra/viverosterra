@@ -60,7 +60,7 @@ CONTENIDO = {
         "kicker": "Tampico · Madero · Altamira",
         "h1": "Árboles para banqueta que no levantan el pavimento",
         "lede": ("Especies de raíz profunda para frentes y camellones: olivo negro, neem, fresno, encino y más. Te los "
-                 "llevamos y los sembramos con garantía de arraigo."),
+                 "llevamos y los sembramos con garantía de arraigo de 30 días, con condiciones."),
         "etiqueta": {"codigo": "Banqueta", "aviso": f"Precios {datos.ANIO}", "nombre": "Árboles para banqueta",
                      "antes": "Precio", "monto": "Por tamaño", "unidad": datos.SEGUN_COTIZACION.lower(),
                      "nota": "Cotiza con la medida de tu banqueta."},
@@ -93,8 +93,7 @@ CONTENIDO = {
 
 PARIDAD = {
     "jsonld": {
-        "LocalBusiness": ("Nodo recortado de main; las páginas apuntan a la entidad única #negocio de la home (como 2d); "
-                          "el grafo completo es de la Etapa 4."),
+        "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {

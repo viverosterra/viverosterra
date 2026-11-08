@@ -55,8 +55,14 @@ class CatalogoDatosTest(unittest.TestCase):
         for viejo, nuevo in cd.CIENTIFICOS_CORREGIDOS.items():
             with self.subTest(viejo=viejo):
                 self.assertNotEqual(viejo, nuevo)
-                self.assertRegex(nuevo, r"^[A-Z][a-z]+ (?:[a-z]+|sp\.)$")
+                self.assertRegex(nuevo, r"^[A-Z][a-z]+ (?:[a-z]+|sp\.)(?: '[A-Z][a-z]+')?$")
         self.assertTrue(set(cd.CIENTIFICOS_CORREGIDOS) - {"Jacaranda mimifolia"} <= publicados)
+
+    def test_sin_var_colgando_y_cultivar_entre_comillas(self):
+        """Un «var.» sin nombre detrás no es un nombre científico; el cultivar va como 'Nana', no en minúsculas sueltas."""
+        for e in cd.ESPECIES:
+            with self.subTest(especie=e["name"]):
+                self.assertNotRegex(e["sc"], r"\bvar\.$|\bnana$")
 
     def test_atributos_iguales_a_pattr_de_main(self):
         por_nombre = {e["name"]: e for e in cd.ESPECIES}
@@ -93,6 +99,7 @@ class CatalogoDatosTest(unittest.TestCase):
                          115)
         self.assertEqual(cd.url_catalogo({"luz": ["media", "sombra"]}), "/catalogo?luz=media,sombra")
         self.assertEqual(cd.url_catalogo(q="Palma real"), "/catalogo?q=Palma%20real")
+        self.assertEqual(cd.url_catalogo(q="Palma Real", agregar="palma-real"), "/catalogo?q=Palma%20Real&add=palma-real")
         self.assertEqual(cd.normalizar("  Árbol  de Flor "), "arbol de flor")
 
     def test_ordenadas_como_el_az_de_main(self):

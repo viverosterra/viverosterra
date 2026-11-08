@@ -343,8 +343,9 @@ class PalmasTest(unittest.TestCase):
     def test_json_ld_con_precios_nuevos(self):
         _h, _m, texto, grafo = pagina("palmas")
         servicio = grafo[0]
-        self.assertEqual(servicio["offers"], {"@type": "AggregateOffer", "lowPrice": "250", "priceCurrency": "MXN",
-                                              "offerCount": "3"})
+        self.assertEqual(servicio["offers"], {
+            "@type": "Offer", "priceSpecification": {"@type": "PriceSpecification", "minPrice": 250, "priceCurrency": "MXN"},
+            "seller": {"@id": "https://www.viverosterra.com/#negocio"}})
         lista = next(n for n in grafo if n["@type"] == "ItemList")["itemListElement"]
         ofertas = {e["item"]["name"]: e["item"]["offers"] for e in lista if "offers" in e["item"]}
         self.assertEqual({n: o["priceSpecification"] for n, o in ofertas.items()},

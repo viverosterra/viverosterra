@@ -67,9 +67,9 @@ SERVICIO = {
                     "industriales"),
     "provider": {"@id": NEGOCIO},
     "areaServed": [{"@type": "State", "name": n} for n in ("Tamaulipas", "Veracruz", "San Luis Potosí")],
-    # Solo las especies con precio publicado cuentan como oferta (las demás, según cotización).
-    "offers": {"@type": "AggregateOffer", "lowPrice": str(P["palma_desde"]), "priceCurrency": "MXN",
-               "offerCount": str(sum(1 for *_e, precio in datos.PALMAS_PROYECTO if precio is not None))},
+    # Precio "desde" del tamaño chico (el mínimo de datos.PALMAS_PROYECTO); las demás, según cotización.
+    "offers": {"@type": "Offer", "priceSpecification": {"@type": "PriceSpecification", "minPrice": P["palma_desde"],
+                                                        "priceCurrency": "MXN"}, "seller": {"@id": NEGOCIO}},
 }
 
 
@@ -300,6 +300,8 @@ PARIDAD = {
         "LocalBusiness": ("El Service apunta por @id a la entidad única #negocio de las demás páginas (el nodo completo "
                           "vive en la home); se retira el LocalBusiness recortado de main. Revisión 2d."),
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección completa es del nodo #negocio.",
+        "AggregateOffer": ("La oferta del Service pasa a Offer con PriceSpecification (minPrice del tamaño chico): "
+                           "«desde $250» es un mínimo, no un rango de ofertas contadas. Revisión 2e."),
     },
     "reemplazos": {
         "Productor directo de palmas para hoteles, fraccionamientos, gobierno e industria": (

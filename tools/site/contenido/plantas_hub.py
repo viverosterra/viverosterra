@@ -93,7 +93,7 @@ CONTENIDO = {
         "h1": "Plantas, palmas y árboles de nuestro vivero en Tampico",
         "lede": (f"{datos.VARIEDADES} variedades para el clima del Golfo: te decimos cuáles van en sol o sombra, cuáles "
                  "aguantan salitre y cuánto crecen. Te las llevamos y, si quieres, las sembramos."),
-        "etiqueta": {"codigo": "Vivero", "aviso": f"Precios {datos.ANIO}", "nombre": "Palmas", "antes": "desde",
+        "etiqueta": {"codigo": "Vivero", "aviso": f"Precios {datos.ANIO}", "nombre": "Areca y coco plumoso", "antes": "desde",
                      "monto": dinero(P["palma_desde"]), "unidad": "tamaño chico",
                      # Flamboyán antes que palma real: "$500 … Flamboyán" lo marcaría test_consistencia ("flamboyán a $500").
                      "filas": (("Flamboyán", f"desde {dinero(P['flamboyan'])}"),
@@ -121,7 +121,7 @@ CONTENIDO = {
     "garantia": pc.GARANTIA,
     "faq": {"titulo": "Todo sobre plantas y palmas en Tampico", "preguntas": PREGUNTAS},
     "guias": {"titulo": "Explora por tipo de planta", "items": (
-        ("Las palmas más vendidas en Tampico", "/blog/palmas-mas-vendidas-tampico-precios"),
+        ("Las palmas más pedidas en Tampico: guía de precios", "/blog/palmas-mas-vendidas-tampico-precios"),
         ("Cómo plantar una palma o un árbol", "/blog/como-plantar-palma-arbol-paso-a-paso-tampico"),
         ("Plantas que resisten la sal del Golfo", "/blog/plantas-resistentes-sal-golfo-tampico"))},
     "relacionados": {"titulo": "Complementa tu proyecto", "items": (
@@ -156,8 +156,7 @@ PARIDAD = {
     "meta": {"og:description": (OG_DESCRIPCION, "Decía «Desde $200»: precio sin confirmar (el dueño solo fijó palmas desde "
                                                 "$250, palma real $500 y flamboyán $250, 2026-11-07).")},
     "jsonld": {
-        "LocalBusiness": ("Nodo recortado de main; las páginas apuntan a la entidad única #negocio de la home (como 2d); "
-                          "el grafo completo es de la Etapa 4."),
+        "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {

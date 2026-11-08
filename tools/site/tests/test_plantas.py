@@ -18,6 +18,9 @@ from contenido import catalogo_datos as cd  # noqa: E402
 from contenido import plantas_comun as pc  # noqa: E402
 
 PUBLIC = paginas.PUBLIC
+# Texto del enlace a la guía del blog (revisión 2e: era «Las palmas más vendidas…»). Es el título de la guía de
+# precios, no una afirmación sobre las tarjetas; fuera de ese enlace «más pedidas» sigue sin ir.
+GUIA_PALMAS = "Las palmas más pedidas en Tampico: guía de precios"
 
 
 def html(ruta):
@@ -69,7 +72,7 @@ class HubTest(unittest.TestCase):
         # La Huasteca del cuadro de datos es el pasto instalado; aquí se prueba la entrega que el dueño no confirmó.
         for viejo in ("Huasteca y zonas", "Pánuco", "grúa", "Más vendidas", "más pedidas", "Martha R.", "Constructora Arce", "gratis",
                       "sin costo", "framboyán", "Framboyán"):
-            self.assertNotIn(viejo, self.h.replace("/blog/framboyan-", ""))
+            self.assertNotIn(viejo, self.h.replace("/blog/framboyan-", "").replace(GUIA_PALMAS, ""))
 
     def test_sin_escenas_de_resort_en_las_fotos(self):
         for slug in pc.FOTOS_SOLO_CATALOGO:
@@ -153,7 +156,7 @@ class SubcategoriasTest(unittest.TestCase):
             for viejo in ("Huasteca y zonas", "Pánuco", "grúa", "Más vendidas", "más pedidas", "gratis", "sin costo",
                           "existencia", "Framboyán", "framboyán"):
                 with self.subTest(ruta=ruta, texto=viejo):
-                    self.assertNotIn(viejo, h)
+                    self.assertNotIn(viejo, h.replace(GUIA_PALMAS, ""))
 
     def test_mensaje_propio_y_firma(self):
         for ruta in SUBCATEGORIAS:
@@ -200,6 +203,50 @@ class CatalogoTest(unittest.TestCase):
     def test_json_ld_itemlist_con_117(self):
         lista = next(n for n in grafo(self.h) if n["@type"] == "ItemList")
         self.assertEqual(lista["numberOfItems"], 117)
+        elementos = lista["itemListElement"]
+        self.assertEqual([e["position"] for e in elementos], list(range(1, 118)))
+        for e in elementos:
+            ancla = e["url"].split("#", 1)[1]
+            with self.subTest(especie=e["name"]):
+                self.assertTrue(e["url"].startswith("https://www.viverosterra.com/catalogo#"))
+                self.assertIn(f'<li class="vt-esp vt-cat" id="{ancla}" ', self.h)
+
+    def test_meta_sin_disponibles_y_h1_sin_punto(self):
+        self.assertIn('<meta property="og:site_name" content="Viveros Terra">', self.h)
+        self.assertNotRegex(self.h, r'<meta property="og:description" content="[^"]*disponibles')
+        self.assertIn('<h1 id="vt-h1">Catálogo de Plantas, Palmas y Árboles en Tampico</h1>', self.h)
+
+
+NEGOCIO = "https://www.viverosterra.com/#negocio"
+
+
+class JsonLdNegocioTest(unittest.TestCase):
+    """Revisión 2e: cada página de plantas nombra la entidad única #negocio por @id (el motivo de paridad del
+    LocalBusiness de main lo dice), y la oferta de palmas es un mínimo con PriceSpecification y seller."""
+
+    def test_webpage_con_about_y_publisher(self):
+        for ruta in ("/plantas-palmas-arboles-tampico", *SUBCATEGORIAS, "/catalogo"):
+            pagina = next(n for n in grafo(html(ruta)) if n["@type"] == "WebPage")
+            with self.subTest(ruta=ruta):
+                self.assertEqual(pagina["@id"], f"https://www.viverosterra.com{ruta}")
+                self.assertEqual(pagina["about"], {"@id": NEGOCIO})
+                self.assertEqual(pagina["publisher"], {"@id": NEGOCIO})
+
+    def test_oferta_de_palmas_con_minimo_y_vendedor(self):
+        producto = next(n for n in grafo(html("/palmas-tropicales-tampico")) if n["@type"] == "Product")
+        self.assertEqual(producto["offers"], {
+            "@type": "Offer", "priceSpecification": {"@type": "PriceSpecification", "minPrice": 250, "priceCurrency": "MXN"},
+            "seller": {"@id": NEGOCIO}})
+
+    def test_garantia_de_30_dias_siempre_con_condiciones(self):
+        """Toda frase que menciona la garantía de arraigo (visible, meta o JSON-LD) dice «con condiciones» o enlaza
+        las condiciones (datos.GARANTIA_PLANTAS dice «ver condiciones»)."""
+        for ruta in ("/plantas-palmas-arboles-tampico", *SUBCATEGORIAS):
+            h = html(ruta)
+            texto = re.sub(r"<[^>]+>", " ", h)
+            for frase in re.findall(r"[^.<>\"]*garantía de arraigo[^.<>\"]*[.\"]?", texto):
+                with self.subTest(ruta=ruta, frase=frase.strip()[:80]):
+                    self.assertRegex(frase, r"condiciones|no aplica")
 
 
 if __name__ == "__main__":

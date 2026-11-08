@@ -5,9 +5,15 @@ especies con foto → tabla de precios (palmas) → "Arma tu lista" (un solo men
 sección después de la portada es opcional según el contenido (el orden no cambia). Sin JS propio."""
 import componentes as c
 import componentes_plantas as cp
+from contenido import plantas_comun as pc
 from plantillas import base
 
 CONTEXTO = "https://schema.org"
+
+
+def pagina_ld(url):
+    """WebPage de la página, ligado por @id a la entidad única #negocio de la home (sin repetir el nodo completo)."""
+    return {"@type": "WebPage", "@id": url, "url": url, "about": {"@id": pc.NEGOCIO}, "publisher": {"@id": pc.NEGOCIO}}
 # La portada lleva la Fig. 01; las especies siguen desde la 02 (una página nunca repite un número de figura).
 
 
@@ -79,6 +85,6 @@ def render(k):
     secciones.append(c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo))
     j = k["jsonld"]
     speakable = {"@type": "SpeakableSpecification", "cssSelector": list(j["speakable"])}
-    grafo = [*j.get("nodos", ()), c.faq_jsonld(k["faq"]["preguntas"]), j["migas"], speakable]
+    grafo = [pagina_ld(k["meta"]["canonical"]), *j.get("nodos", ()), c.faq_jsonld(k["faq"]["preguntas"]), j["migas"], speakable]
     return base.documento(k["meta"], "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),), clase_body="vt-pagina vt-plantas")

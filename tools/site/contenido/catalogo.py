@@ -5,8 +5,9 @@ sin respaldo ("+500 proyectos", "3 estados", "18 años"); la pestaña "Pasto & T
 datos.M2_INSTALADOS; el pasto y los materiales tienen sus páginas, enlazadas abajo); las colecciones (una segunda
 rejilla), el orden "Más vendidas" y la insignia "+ Vendido" (sin dato; pregunta 7); "Cotizar ahora" y "Medida especial"
 por tarjeta (un solo mensaje: la medida especial vive en el diálogo de la lista). Las 117
-especies llevan la foto de main (decisión del dueño, 2026-11-08), en local. Título, descripción y Open Graph
-como estaban: el título dice "con precio" y se reescribe en la Etapa 3 (spec §3.5).
+especies llevan la foto de main (decisión del dueño, 2026-11-08), en local. Título y descripción
+como estaban: el título dice "con precio" y se reescribe en la Etapa 3 (spec §3.5). La descripción de Open Graph pierde
+«disponibles» (PARIDAD["meta"]).
 """
 import datos
 import mensajes_paginas
@@ -17,6 +18,8 @@ P = datos.PRECIOS
 SITE = datos.SITIO
 RUTA = "/catalogo"
 URL = f"{SITE}{RUTA}"
+OG_DESCRIPCION = ("Más de 200 variedades de plantas, palmas y árboles con cotizador integrado, además de pasto y "
+                  "materiales para jardines en Tampico, Madero y Altamira.")
 TITULO = "Catálogo de plantas con precio en Tampico: arma tu lista y cotiza · Viveros Terra"
 IMAGEN = f"{SITE}/img/plantas-tropicales-tampico-viveros.webp"
 META = {
@@ -26,8 +29,7 @@ META = {
     "robots": "index, follow",
     "canonical": URL,
     "og": (("og:type", "website"), ("og:url", URL), ("og:title", TITULO),
-           ("og:description", ("Más de 200 variedades disponibles con cotizador integrado. Plantas, palmas, árboles, pasto "
-                               "y materiales para jardines en Tampico, Madero y Altamira.")),
+           ("og:description", OG_DESCRIPCION),
            ("og:image", IMAGEN), ("og:image:width", "1200"), ("og:image:height", "630"),
            ("og:site_name", "Viveros Terra"), ("og:locale", "es_MX")),
     "twitter": (("twitter:card", "summary_large_image"), ("twitter:title", TITULO), ("twitter:image", IMAGEN)),
@@ -39,7 +41,7 @@ CONTENIDO = {
     "meta": META,
     "migas": (("Inicio", "/"), ("Plantas y palmas", pc.HUB), ("Arma tu lista", None)),
     "cabeza": {
-        "h1": "Catálogo de Plantas, Palmas y Árboles en Tampico.",
+        "h1": "Catálogo de Plantas, Palmas y Árboles en Tampico",
         "lede": ("Especies del vivero con luz, riego y altura. Busca o filtra, añade a tu lista con tamaño y piezas, y "
                  "mándala completa en un solo mensaje de WhatsApp."),
         "precios": (f"{datos.PALMAS_PRECIO}. Flamboyán desde {dinero(P['flamboyan'])}. Las demás especies, según "
@@ -65,6 +67,8 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": {"og:description": (OG_DESCRIPCION, "Decía «Más de 200 variedades disponibles»: afirmación de existencias "
+                                                "sin verificar (el dueño no confirma disponibilidad en línea).")},
     "reemplazos": {
         "Pasto en Rollo Natural": "Pasto en rollo",
         "Materiales & Tierra": "Tierra negra",

@@ -11,6 +11,7 @@ import componentes_plantas as cp
 import datos
 from contenido import catalogo_datos as cd
 from plantillas import base
+from plantillas.hub_categoria import pagina_ld
 
 CONTEXTO = "https://schema.org"
 
@@ -29,7 +30,7 @@ def render(k):
               '</div></section>')
     rejilla = (f'<section class="vt-bloque vt-cat__rejilla" aria-labelledby="vt-h-rejilla"><div class="vt-wrap">'
                f'<h2 id="vt-h-rejilla" class="vt-sr">{k["rejilla"]["titulo"]}</h2>'
-               f'{cp.filtros_catalogo(len(cd.ESPECIES))}{cp.rejilla_catalogo()}</div></section>')
+               f'{cp.filtros_catalogo(len(cd.ESPECIES))}{cp.rejilla_catalogo(tipo=tipo)}</div></section>')
     p = k["pedido"]
     pedido = c.bloque(1, "¿No está?", "vt-h-pedido", p["titulo"], cp.pedido_especial(tipo), lede=p["lede"], tinte=True)
     r = k["relacionados"]
@@ -38,8 +39,12 @@ def render(k):
                 f'<b>Garantía:</b> {datos.GARANTIA_PLANTAS} <a href="/politicas#garantia-plantas">Condiciones</a></p>'
                 '</div></section>')
     j = k["jsonld"]
-    grafo = [{"@type": "ItemList", "name": j["nombre"], "description": j["descripcion"], "url": j["url"],
-              "numberOfItems": len(cd.ESPECIES)}, j["migas"]]
+    # Cada ListItem apunta a su tarjeta (<li id="<slug>"> de componentes_plantas.tarjeta_catalogo).
+    elementos = [{"@type": "ListItem", "position": i, "name": e["name"], "url": f'{j["url"]}#{e["slug"]}'}
+                 for i, e in enumerate(cd.ORDENADAS, 1)]
+    grafo = [pagina_ld(j["url"]),
+             {"@type": "ItemList", "name": j["nombre"], "description": j["descripcion"], "url": j["url"],
+              "numberOfItems": len(elementos), "itemListElement": elementos}, j["migas"]]
     return base.documento(k["meta"], "\n".join((cabeza, rejilla, pedido, otras, garantia)),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},), head_extra=(datos_js(),),
                           tras_main=cp.lista_catalogo(tipo), scripts=("/js/vt-catalogo.js",),

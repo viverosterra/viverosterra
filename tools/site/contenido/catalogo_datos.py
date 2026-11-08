@@ -31,6 +31,10 @@ CIENTIFICOS_CORREGIDOS = {
     "Tecoma Stans": "Tecoma stans",
     "Ficus Elastica": "Ficus elastica",
     "Bahuinia sp.": "Bauhinia sp.",
+    # Revisión 2e: el cultivar va entre comillas simples y sin un «var.» colgando; solo el que el nombre común da.
+    "Nerium oleander nana": "Nerium oleander 'Nana'",
+    "Schefflera arboricola var.": "Schefflera arboricola 'Gold'",  # Aralia Golden
+    "Duranta erecta var.": "Duranta erecta 'Gold'",  # Duranta Golden
 }
 _SAL = "/blog/plantas-resistentes-sal-golfo-tampico"
 # Especies que aguantan salitre, con su fuente publicada (la tabla del artículo o la ficha de main). Pregunta 6 al dueño.
@@ -202,9 +206,11 @@ def cuenta(filtro):
     return sum(1 for e in ESPECIES if coincide(e, filtro))
 
 
-def url_catalogo(filtro=None, q=""):
-    """/catalogo con el filtro en la URL, en el mismo formato que escribirFiltros() de vt-catalogo.js."""
+def url_catalogo(filtro=None, q="", agregar=""):
+    """/catalogo con el filtro en la URL, en el mismo formato que escribirFiltros() de vt-catalogo.js. agregar: slug de
+    la especie cuyo diálogo "Añadir a mi lista" abre vt-catalogo.js al cargar (&add=<slug>)."""
     partes = [f"q={quote(q, safe='')}"] if q else []
     partes += [f"{g}={','.join(quote(v, safe='') for v in (filtro or {})[g])}" for g in GRUPOS
                if (filtro or {}).get(g)]
+    partes += [f"add={quote(agregar, safe='')}"] if agregar else []
     return "/catalogo" + ("?" + "&".join(partes) if partes else "")

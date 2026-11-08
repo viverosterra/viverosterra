@@ -49,7 +49,7 @@ PREGUNTAS = (
      "Están en <a href=\"/arboles-para-banqueta-tampico\">árboles para banqueta</a>."),
     ("¿Hacen entrega de árboles grandes en Tampico?",
      "Sí, entregamos árboles de todos los tamaños en Tampico, Madero y Altamira. Los que sembramos nosotros tienen "
-     "garantía de arraigo de 30 días con el riego que te indicamos."),
+     "garantía de arraigo de 30 días, con condiciones: el riego que te indicamos."),
     pc.PREGUNTA_PAGO,
 )
 
@@ -61,7 +61,7 @@ CONTENIDO = {
         "kicker": "Tampico · Madero · Altamira",
         "h1": "Árboles ornamentales para jardines en Tampico",
         "lede": (f"{FLAMBOYAN}. Árboles de sombra y de flor elegidos para el clima de Tamaulipas: te los llevamos y los "
-                 "sembramos con garantía de arraigo."),
+                 "sembramos con garantía de arraigo de 30 días, con condiciones."),
         "etiqueta": {"codigo": "Árboles", "aviso": f"Precios {datos.ANIO}", "nombre": "Flamboyán",
                      "cientifico": "Delonix regia", "antes": "desde", "monto": dinero(P["flamboyan"]), "unidad": "",
                      "nota": "Los demás árboles, según especie y tamaño."},
@@ -93,8 +93,7 @@ CONTENIDO = {
 
 PARIDAD = {
     "jsonld": {
-        "LocalBusiness": ("Nodo recortado de main; las páginas apuntan a la entidad única #negocio de la home (como 2d); "
-                          "el grafo completo es de la Etapa 4."),
+        "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {

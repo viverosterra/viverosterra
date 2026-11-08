@@ -92,8 +92,7 @@ CONTENIDO = {
 
 PARIDAD = {
     "jsonld": {
-        "LocalBusiness": ("Nodo recortado de main; las páginas apuntan a la entidad única #negocio de la home (como 2d); "
-                          "el grafo completo es de la Etapa 4."),
+        "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {

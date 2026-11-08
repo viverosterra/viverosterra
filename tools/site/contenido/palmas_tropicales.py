@@ -3,7 +3,8 @@
 Precio (decisión del dueño, 2026-11-07): datos.PALMAS_PRECIO (areca y coco plumoso desde $250, palma real desde $500 en
 tamaño chico; el precio sube con la altura) y las demás palmas "según cotización", en la tabla de precios. Las tarjetas
 son las de main, en su orden y con la misma foto (decisión del dueño, 2026-11-08), servida en local. Se agrega la kerpis, que el hub de main mandaba aquí. "Pregunta existencia"
-sale de las respuestas (sin afirmaciones de disponibilidad). Título, descripción y Open Graph como estaban (Etapa 3).
+sale de las respuestas (sin afirmaciones de disponibilidad). Título como estaba (Etapa 3); la descripción
+suma «con condiciones» a la garantía (PARIDAD["meta"]).
 """
 import datos
 import mensajes_paginas
@@ -19,7 +20,7 @@ NOMBRE = "Palmas tropicales"
 MENSAJE = mensajes_paginas.PLANTAS[RUTA]
 TITULO = "Palmas en Tampico: areca y coco plumoso desde $250 · Viveros Terra"
 DESCRIPCION = ("Palmas para jardín, tropicales y exóticas en Tampico, Madero y Altamira. Areca y coco plumoso desde $250 y "
-               "palma real desde $500 en tamaño chico. Entrega y siembra con 30 días de garantía de arraigo.")
+               "palma real desde $500 en tamaño chico. Entrega y siembra con 30 días de garantía de arraigo, con condiciones.")
 META = {"title": TITULO, "description": DESCRIPCION, "robots": "index, follow", "canonical": URL,
         "og": (("og:title", TITULO), ("og:description", DESCRIPCION), ("og:url", URL), ("og:type", "website"))}
 ESPECIES = (
@@ -69,8 +70,8 @@ PREGUNTAS = (
      "Bismarckia, washingtonia y coco plumoso. Una vez que arraigan, solo necesitan riego ocasional. La areca pide riego "
      "más seguido, sobre todo en interior."),
     ("¿Entregan y siembran palmas a domicilio?",
-     "Sí, en Tampico, Ciudad Madero y Altamira. Las palmas que sembramos nosotros tienen 30 días de garantía de arraigo "
-     "con el riego y cuidado que te indicamos."),
+     "Sí, en Tampico, Ciudad Madero y Altamira. Las palmas que sembramos nosotros tienen 30 días de garantía de arraigo, "
+     "con condiciones: el riego y cuidado que te indicamos."),
     ("¿Qué palmas exóticas tienen?",
      "Bismarckia (hoja plateada), licuala (hoja redonda), triangular, cola de pescado, cica circinalis y mascareña o "
      "palma botella. Son difíciles de conseguir en la región: pregúntanos por WhatsApp antes de venir."),
@@ -78,7 +79,7 @@ PREGUNTAS = (
      "Sí. Las que manejamos están elegidas para el clima cálido y húmedo del Golfo. Pregúntanos cuáles van en sol y "
      "cuáles en sombra antes de sembrarlas."),
     ("¿Dónde comprar palmas en Tampico?",
-     f"En el vivero de Viveros Terra: {datos.CALLE}, {datos.COLONIA}, {datos.CIUDAD} ({datos.REFERENCIA.lower()}). "
+     f"En el vivero de Viveros Terra: {datos.CALLE}, {datos.COLONIA}, {datos.CIUDAD} ({datos.REFERENCIA[0].lower()}{datos.REFERENCIA[1:]}). "
      f"Horario: {datos.HORARIO}. O por WhatsApp al 833 326 8008."),
     pc.PREGUNTA_PAGO,
 )
@@ -91,8 +92,8 @@ CONTENIDO = {
         "kicker": "Tampico · Madero · Altamira",
         "h1": "Palmas para jardín en Tampico, tropicales y exóticas",
         "lede": (f"{datos.PALMAS_PRECIO}. También washingtonia, del viajero, bismarckia y exóticas. Te las llevamos y "
-                 "las sembramos con garantía de arraigo."),
-        "etiqueta": {"codigo": "Palmas", "aviso": f"Precios {datos.ANIO}", "nombre": "Palmas", "antes": "desde",
+                 "las sembramos con garantía de arraigo de 30 días, con condiciones."),
+        "etiqueta": {"codigo": "Palmas", "aviso": f"Precios {datos.ANIO}", "nombre": "Areca y coco plumoso", "antes": "desde",
                      "monto": dinero(P["palma_desde"]), "unidad": "tamaño chico",
                      "filas": (("Palma real", f"desde {dinero(P['palma_real'])}"),),
                      "nota": "El precio sube con la altura."},
@@ -125,7 +126,7 @@ CONTENIDO = {
     "guias": {"titulo": "Guías de palmas", "items": (
         ("Palma areca en Tampico: cuidados", "/blog/palma-areca-tampico"),
         ("Palma real: cuidados y crecimiento", "/blog/palma-real-roystonea-regia-tampico"),
-        ("Las palmas más vendidas en Tampico", "/blog/palmas-mas-vendidas-tampico-precios"))},
+        ("Las palmas más pedidas en Tampico: guía de precios", "/blog/palmas-mas-vendidas-tampico-precios"))},
     "relacionados": {"titulo": "Más servicios en Viveros Terra", "items": pc.otras_subcategorias(RUTA)},
     "cierre": {"titulo": "¿Listo para cotizar?",
                "lede": "Dinos qué palma buscas, la altura y la colonia; te respondemos con precio por tamaño.",
@@ -134,8 +135,10 @@ CONTENIDO = {
         "migas": pc.migas_ld(NOMBRE, RUTA),
         "nodos": (
             {"@type": "Product", "name": "Palmas para jardín en Tampico", "brand": {"@type": "Brand", "name": datos.NOMBRE},
-             "offers": {"@type": "AggregateOffer", "lowPrice": str(P["palma_desde"]), "priceCurrency": "MXN",
-                        "offerCount": str(len(CON_PRECIO))}},
+             # Precio "desde" del tamaño chico (areca y coco plumoso), no un precio cerrado ni un conteo de ofertas.
+             "offers": {"@type": "Offer", "priceSpecification": {"@type": "PriceSpecification",
+                                                                 "minPrice": P["palma_desde"], "priceCurrency": "MXN"},
+                        "seller": {"@id": pc.NEGOCIO}}},
             pc.lista_ld(NOMBRE, [s for s, _t, _a in ESPECIES]),
         ),
         "speakable": ("#vt-h1", ".vt-portada .vt-lede", ".vt-faq details:first-child"),
@@ -143,9 +146,12 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": {clave: (DESCRIPCION, "La garantía de 30 días se publica siempre «con condiciones» (regla del dueño); el "
+                                  "resto de la descripción no cambia.") for clave in ("description", "og:description")},
     "jsonld": {
-        "LocalBusiness": ("Nodo recortado de main; las páginas apuntan a la entidad única #negocio de la home (como 2d); "
-                          "el grafo completo es de la Etapa 4."),
+        "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS + " La oferta de palmas lo nombra como seller.",
+        "AggregateOffer": ("Pasa a Offer con PriceSpecification (minPrice del tamaño chico): «desde $250» es un mínimo, "
+                           "no un rango de ofertas contadas (offerCount no tenía respaldo)."),
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {
