@@ -156,12 +156,6 @@ class LimpiezaYMedicionTest(unittest.TestCase):
         html = migrar_shell.migrar(BLOG, "/blog/post")
         self.assertIn("window.VTMedicion&&VTMedicion.whatsapp('calculadora',{label:'a_'+t});", html)
 
-    def test_gracias_real_sin_reglas_sueltas_de_header_y_footer(self):
-        html = migrar_shell.migrar((migrar_shell.PUBLIC / "gracias" / "index.html").read_text(encoding="utf-8"), "/gracias")
-        self.assertNotRegex(html, r"(?m)^\s*(?:header|footer)\s*\{")
-        self.assertIn(".card{", html)
-        self.assertIn("main{flex:1", html)
-
     def test_boton_flotante_fab_de_las_paginas_de_plantas(self):
         pagina = (
             "<html><head><style>.fab{position:fixed;bottom:20px}\n.fab:hover{transform:scale(1.1)}\n.card{color:red}</style>"
