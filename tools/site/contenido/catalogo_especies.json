@@ -1282,9 +1282,9 @@
   "tipo": "Suculenta / Agave",
   "desc": "El agave sin espinas. Sus hojas suaves y arqueadas lo hacen seguro para jardines familiares. Muy resistente al calor. Forma rosetas perfectas muy decorativas.",
   "drive": "1_ymnFLK8cBiSjI0ggLcFd4wFVZxnZmGR",
-  "img": "/img/catalogo/agave-atenuata-tampico.webp",
-  "ancho": 480,
-  "alto": 640
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "arbol-de-la-abundancia",
@@ -1347,9 +1347,9 @@
   "tipo": "Arbusto interior",
   "desc": "Hojas delgadas y elegantes en tonos oscuros. Muy apreciada en diseño de interiores. Su porte esbelto la hace perfecta para espacios modernos y minimalistas.",
   "drive": "1pghtMQSQ4O0-_aJUafx9_M3m8b6GHBxb",
-  "img": "/img/catalogo/aralia-elegantisima-tampico.webp",
-  "ancho": 249,
-  "alto": 500
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "azalea",
@@ -1842,9 +1842,9 @@
   "tipo": "Árbol/Arbusto",
   "desc": "Flores en trompeta gigante colgante con aroma nocturno intenso. Una de las plantas más impresionantes del jardín tropical. Blanco, amarillo y rosa.",
   "drive": "1FB3HEjFyWqyipYuxSyjZIvz3OL28FXWm",
-  "img": "/img/catalogo/floripondio-tampico.webp",
-  "ancho": 480,
-  "alto": 480
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "fornio-phormium",
@@ -1863,9 +1863,9 @@
   "tipo": "Planta arquitectónica",
   "desc": "Hojas largas y erectas como espadas. Efecto arquitectónico y moderno inigualable. Disponible en verde, rojo y variegado. Perfecta para jardines contemporáneos.",
   "drive": "1KYRExkM1w94O6sRBhuUdZTfAbFYyDH5R",
-  "img": "/img/catalogo/fornio-phormium-tampico.webp",
-  "ancho": 480,
-  "alto": 480
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "helecho-boston",
@@ -1996,9 +1996,9 @@
   "tipo": "Trepadora fragante",
   "desc": "Una de las plantas más fragantes. Su aroma es inconfundible y muy agradable. Perfecta para pérgolas y jardines donde se quiere perfume natural.",
   "drive": "1jKlhI0E5sd6zE6081E0Zx_pRgB7b5H3v",
-  "img": "/img/catalogo/jazmin-tampico.webp",
-  "ancho": 480,
-  "alto": 480
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "kalanchoe",
@@ -2124,9 +2124,9 @@
   "tipo": "Cubresuelos",
   "desc": "El mejor cubresuelos para sombra. Muy resistente y de bajo mantenimiento. Sus flores moradas en espigas son muy ornamentales. Ideal bajo árboles.",
   "drive": "1HbGR8_NXgA8Xl6Ku6PfIL4wrCVLMalBZ",
-  "img": "/img/catalogo/pasto-liriope-tampico.webp",
-  "ancho": 320,
-  "alto": 320
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "philodendro-xanadu",
@@ -2325,9 +2325,9 @@
   "tipo": "Arbusto",
   "desc": "Aralia de hojas compuestas muy decorativas. Disponible como árbol de tallos múltiples. Muy resistente y adaptable a interior y exterior. Popular en oficinas y hogares.",
   "drive": "13TbartQTxY8Z7BfkDzzhvGYwvQPToSuT",
-  "img": "/img/catalogo/aralia-shaflera-tampico.webp",
-  "ancho": 480,
-  "alto": 480
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "box-arrayan-pino",
@@ -2417,9 +2417,9 @@
   "tipo": "Tropical florida",
   "desc": "Versión compacta de la heliconia tropical. Sus flores de colores brillantes son muy llamativas. Perfecta para jardines tropicales y macetones de gran tamaño.",
   "drive": "1I0y6eStyk1RVyolv8WJL4Mq3q7kS2l19",
-  "img": "/img/catalogo/heliconia-baby-enana-tampico.webp",
-  "ancho": 343,
-  "alto": 720
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "laurel-de-la-india-formado",

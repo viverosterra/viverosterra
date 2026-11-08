@@ -65,11 +65,11 @@ BLOG_ESPECIE = {
 # mismo día, que sumó crespón astronómica y flamboyán: su original en Drive mide 400×400): se publican a su tamaño, sin
 # agrandar (igual de chicas que con /api/img), y son las primeras a reponer en la sesión de fotos (pregunta 12).
 # (Eucalipto, flor de mayo, orquídea pata de vaca, beucarnea, ixora karla y crespón astronómica también eran chicas: hoy
-# están en FOTOS_RETIRADAS.)
+# están en FOTOS_RETIRADAS, como aralia elegantísima, pasto liriope y heliconia baby enana desde el lote C.)
 FOTOS_CHICAS = frozenset({
     "sauce-lloron", "liquidambar", "nispero", "palma-mascarena", "palma-cocotera", "palma-rubelina", "plumbago",
-    "aralia-elegantisima", "ficus-lyrata-pandurata", "limonaria", "papiro-estrella", "pasto-liriope", "palma-carton",
-    "heliconia-baby-enana", "lapiz-tirucalli", "petunia-silvestre", "flamboyan-tabachin",
+    "ficus-lyrata-pandurata", "limonaria", "papiro-estrella", "palma-carton", "lapiz-tirucalli", "petunia-silvestre",
+    "flamboyan-tabachin",
 })
 # Fotos de terceros que no se publican desde nuestro dominio (revisión del 2026-11-08: lote A del plan 2e y la hoja de
 # contactos de las 117). Sus tarjetas llevan el marcador "sin foto" de componentes_plantas hasta que el dueño mande la
@@ -91,6 +91,15 @@ FOTOS_RETIRADAS = {
     "parota-orejon": "Restos de marca de agua alrededor del recorte",
     "eleagnus": "Logo de otro vivero («Concepto Verde») en la bolsa",
     "crespon-astronomica": "Captura de pantalla: el recorte va dentro de un marco gris",
+    # Segunda revisión (2026-11-08, lote C del plan 2e, con el contraste ecualizado): marcas tenues que no se veían.
+    "agave-atenuata": "Etiqueta con el logo y el sitio de otro vendedor clavada en la maceta",
+    "aralia-elegantisima": "Marca de agua de otro vivero («Concepto Verde») en la bolsa",
+    "aralia-shaflera": "Marca de agua de otro vivero («Concepto Verde») en la maceta",
+    "floripondio": "Marca de agua de otro vivero («Concepto Verde») en la bolsa",
+    "jazmin": "Marca de agua de otro vivero («Concepto Verde») en la bolsa",
+    "fornio-phormium": "Marca de agua tenue de otro vivero («Concepto Verde») sobre las hojas",
+    "pasto-liriope": "Marca de agua tenue de otro vivero («Concepto Verde») en la bolsa",
+    "heliconia-baby-enana": "Marca de agua de otro vivero («redviverista») sobre las hojas",
 }
 # Especies cuya foto el dueño confirmó que se tomó en el vivero: solo ellas llevan "En nuestro vivero" en el pie y en el
 # alt. Empieza vacía a propósito (muchas fotos son de estudio o de bancos de imágenes); la llena el dueño, slug por slug.

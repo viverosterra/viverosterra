@@ -42,7 +42,10 @@ class CatalogoDatosTest(unittest.TestCase):
                 self.assertFalse(cd.tiene_foto(cd.especie(slug)))
         self.assertTrue(cd.tiene_foto(cd.especie("palma-real")))
         for slug in ("eucalipto", "flor-de-mayo", "tronadora", "acacia-negra", "palma-cola-de-pescado", "beucarnea-soyate",
-                     "esparrago-meyeri", "clorofito-liston", "polyalthia", "wudelia-rastrera", "orquidea-pata-de-vaca"):
+                     "esparrago-meyeri", "clorofito-liston", "polyalthia", "wudelia-rastrera", "orquidea-pata-de-vaca",
+                     # lote C: marcas tenues de otros viveros y la etiqueta ajena del agave
+                     "agave-atenuata", "aralia-elegantisima", "aralia-shaflera", "floripondio", "jazmin",
+                     "fornio-phormium", "pasto-liriope", "heliconia-baby-enana"):
             self.assertIn(slug, cd.FOTOS_RETIRADAS)
 
     def test_cada_especie_de_main_sigue_con_su_cientifico_o_la_correccion_declarada(self):
