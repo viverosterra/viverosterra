@@ -121,6 +121,9 @@ class PastoEnRolloTest(unittest.TestCase):
         titulos = [re.sub(r"\s*<span.*", "", h) for h in re.findall(r"<li><h3>(.*?)</h3>", proceso)]
         self.assertEqual([p["name"] for p in pasos], titulos)
         self.assertEqual(len(pasos), 5)
+        # Decisión del dueño (2026-11-07): ningún paso del proceso habla de liquidar el saldo ni de pagos.
+        for paso in pasos:
+            self.assertNotRegex(paso["text"], r"(?i)saldo|liquid|pagas|anticipo")
         for paso in pasos:
             self.assertIn(paso["text"], TEXTO)
         self.assertEqual(MAIN.count('class="vt-pasos"'), 1)

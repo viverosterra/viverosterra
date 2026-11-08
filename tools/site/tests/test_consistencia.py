@@ -22,6 +22,9 @@ PAGINAS = {p: p.read_text(encoding="utf-8") for p in sorted(PUBLIC.rglob("*.html
 TEXTOS = {p: textos_publicos(h) for p, h in PAGINAS.items()}
 LLMS = (PUBLIC / "llms.txt").read_text(encoding="utf-8")
 PRECIOS = datos.PRECIOS
+# Páginas que todavía mencionan la visita sin su costo. Solo puede encoger: diseño, mantenimiento y riego salen de su
+# plantilla en las Tareas 7 a 9 de la Etapa 2c y las quitan de aquí.
+VISITA_COSTO_PENDIENTES = frozenset({"mantenimiento-jardines-tampico/index.html", "sistema-riego-tampico/index.html"})
 
 PROHIBIDAS = (
     ("promesa de respuesta vieja",
@@ -149,6 +152,20 @@ class ConsistenciaTest(unittest.TestCase):
         for archivo in ("catalogo.html", "diseno-jardines-tampico/index.html"):
             with self.subTest(pagina=archivo):
                 self.assertIn("/politicas#garantia-plantas", PAGINAS[PUBLIC / archivo])
+
+    def test_visita_con_costo_segun_la_ubicacion(self):
+        """Decisión del dueño (2026-11-07): la visita para medir o cotizar tiene un costo que depende de la ubicación;
+        cada mención lo dice cerca (datos.VISITA_COSTO o datos.VISITA_COSTO_CORTO) y nada promete traslado sin cargo."""
+        mencion = re.compile(r"\bvisita\s+(?:t[eé]cnica\s+)?para\s+(?:medir|cotizar)", re.I)
+        hallazgos = {}
+        for path, texto in TEXTOS.items():
+            for m in mencion.finditer(texto):
+                if "depende de la ubicación" not in texto[max(0, m.start() - 150):m.end() + 200]:
+                    hallazgos.setdefault(nombre(path), f"…{texto[max(0, m.start() - 60):m.end() + 60]}…")
+            if re.search(r"sin cargo (?:extra )?por traslado", texto, re.I):
+                hallazgos.setdefault(nombre(path), "traslado sin cargo")
+        self.assertEqual({k: v for k, v in hallazgos.items() if k not in VISITA_COSTO_PENDIENTES}, {})
+        self.assertEqual(sorted(VISITA_COSTO_PENDIENTES - set(hallazgos)), [], "ya lo dicen: sácalas de la lista")
 
     def test_home_con_cifras_oficiales(self):
         home = TEXTOS[PUBLIC / "index.html"]

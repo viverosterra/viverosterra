@@ -4,8 +4,14 @@ Sustituyen a las 20 páginas por colonia (las demás redirigen en vercel.json).
 Colonias, municipios y códigos postales verificados con directorios SEPOMEX (septiembre 2026).
 No afirmar obras concretas en una colonia sin foto o dato del dueño.
 """
+import sys
+from pathlib import Path
+
 from common import SECTION_CLOSE, breadcrumb_schema, esc, faq_html, faq_schema, footer, head, jsonld, section_open, wa
 from data import SITE
+
+sys.path.append(str(Path(__file__).resolve().parents[1] / "site"))  # al final: tools/site también tiene un build.py
+import datos  # noqa: E402  (VISITA_COSTO: decisión del dueño 2026-11-07)
 
 BUSINESS_ID = f"{SITE}/#negocio"
 
@@ -32,7 +38,7 @@ ZONAS = {
         ],
         img=("diseno-jardines-tampico-proyecto", 960, 1574, "center 55%"),
         faqs=[
-            ("¿Dan servicio de jardinería en Lomas de Rosales?", "Sí. Atendemos Lomas de Rosales, Lomas de la Aurora y Vista Hermosa en Tampico con instalación de pasto, diseño, riego y mantenimiento. Agendamos una visita para medir y cotizar."),
+            ("¿Dan servicio de jardinería en Lomas de Rosales?", "Sí. Atendemos Lomas de Rosales, Lomas de la Aurora y Vista Hermosa en Tampico con instalación de pasto, diseño, riego y mantenimiento. Agendamos una visita para medir y cotizar. " + datos.VISITA_COSTO),
             ("¿Cuánto cuesta el mantenimiento de jardín en Lomas de Rosales?", "Desde $750 al mes. El precio final depende de los metros del jardín y de la frecuencia de visitas."),
             ("¿Qué riego conviene en un jardín con pendiente?", "Goteo en jardineras y aspersión de bajo caudal en el pasto, con zonas separadas para la parte alta y la baja. Así el agua no escurre y se aprovecha mejor."),
         ],
@@ -87,7 +93,7 @@ ZONAS = {
         img=("riego-pro-01", 960, 640, None),
         faqs=[
             ("¿Atienden jardines en Lomas del Chairel y Colinas de San Gerardo?", "Sí. Atendemos Lomas del Chairel, Colinas de San Gerardo y Flamboyanes en Tampico con pasto, riego, diseño y mantenimiento."),
-            ("¿Qué hago si mi jardín se encharca?", "Revisamos el nivel del terreno y el drenaje. A veces basta con nivelar y mejorar la tierra; en otros casos hace falta un dren. Lo revisamos en la visita para medir."),
+            ("¿Qué hago si mi jardín se encharca?", "Revisamos el nivel del terreno y el drenaje. A veces basta con nivelar y mejorar la tierra; en otros casos hace falta un dren. Lo revisamos en la visita para medir. " + datos.VISITA_COSTO),
             ("¿Necesito tierra negra antes de poner pasto?", "En casas nuevas con suelo de relleno, sí. La tierra negra vegetal cuesta $90 el costal o $1,500 el m³."),
         ],
     ),
@@ -114,7 +120,7 @@ ZONAS = {
         title="Jardinería en Altamira y Lagunas de Miralta: pasto, diseño y mantenimiento",
         h1="Jardinería en Altamira", accent="y Lagunas de Miralta",
         colonias=[("Residencial Lagunas de Miralta", "89605"), ("Altamira Centro", "89600")],
-        lede="Pasto en rollo, diseño, riego y mantenimiento para Residencial Lagunas de Miralta y el resto de Altamira, sin cargo extra por traslado.",
+        lede="Pasto en rollo, diseño, riego y mantenimiento para Residencial Lagunas de Miralta y el resto de Altamira.",
         retos=[
             ("Jardines de fraccionamiento", "En fraccionamientos cerrados coordinamos horarios y acceso con la administración para instalar y dar mantenimiento."),
             ("Áreas verdes amplias", "Para jardines grandes, el riego automático por zonas y un plan de mantenimiento mensual mantienen el pasto parejo."),
@@ -122,7 +128,7 @@ ZONAS = {
         ],
         img=("jardineria-areas-verdes-tampico", 793, 1190, "center 45%"),
         faqs=[
-            ("¿Dan servicio de jardinería en Lagunas de Miralta?", "Sí. Atendemos Residencial Lagunas de Miralta y el resto de Altamira con pasto, diseño, riego y mantenimiento, sin cargo extra por traslado."),
+            ("¿Dan servicio de jardinería en Lagunas de Miralta?", "Sí. Atendemos Residencial Lagunas de Miralta y el resto de Altamira con pasto, diseño, riego y mantenimiento. " + datos.VISITA_COSTO),
             ("¿Cuánto cuesta el mantenimiento de jardín en Altamira?", "Desde $750 al mes. El precio depende de los metros y de la frecuencia de visitas."),
             ("¿Atienden empresas en el puerto industrial de Altamira?", 'Sí. Tenemos REPSE 773725 y factura CFDI 4.0 para contratos de mantenimiento de áreas verdes. Ve el <a href="/mantenimiento-jardines-tampico">servicio de mantenimiento</a>.'),
         ],
@@ -168,7 +174,7 @@ def colonias_html(z):
         f'            <tr><th scope="row">{esc(c)}<span>{esc(z["municipio"])}</span></th><td><strong>{cp}</strong></td></tr>'
         for c, cp in z["colonias"]
     )
-    return f"""<p class="section__intro">Llegamos sin cargo extra por traslado. Si tu colonia está cerca y no aparece, también te atendemos.</p>
+    return f"""<p class="section__intro">{esc(datos.VISITA_COSTO)} Si tu colonia está cerca y no aparece, también te atendemos.</p>
         <div class="table-scroll" tabindex="0" role="region" aria-label="Colonias atendidas">
           <table class="compare-table compare-table--prices num">
             <thead><tr><th scope="col">Colonia</th><th scope="col">Código postal</th></tr></thead>
@@ -242,7 +248,7 @@ def build_zona(slug, z):
   <section class="closing" aria-labelledby="cierre">
     <div class="wrap">
       <h2 id="cierre">Cotiza tu jardín <em>en {esc(z["corto"])}</em></h2>
-      <p>Mándanos tu colonia, el servicio que necesitas, los metros aproximados y una foto. Te respondemos en menos de 1 hora en horario y, si hace falta, agendamos una visita para medir.</p>
+      <p>Mándanos tu colonia, el servicio que necesitas, los metros aproximados y una foto. Te respondemos en menos de 1 hora en horario y, si hace falta, agendamos una visita para medir. {esc(datos.VISITA_COSTO)}</p>
       <div class="closing__actions">
         <a class="btn btn--light" href="{wa(guided(z["corto"]))}" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
         <a class="btn btn--ghost" href="/vivero-tampico">Visitar el vivero</a>

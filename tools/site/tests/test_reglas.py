@@ -30,6 +30,9 @@ PROHIBIDAS = (
 )
 DEPORTES_RE = re.compile(r"p[aá]del|canchas?", re.I)
 PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
+# Decisión del dueño (2026-11-07): no le gusta "liquidas el saldo según lo acordado"; no se escribe ninguna frase sobre
+# liquidar el saldo o el resto (el pago se explica con el anticipo y las formas de pago). Las citas de clientes no cuentan.
+SALDO_RE = re.compile(r"\bliquid(?:as|a|amos|ar|es)\s+el\s+(?:saldo|resto)\b|\bel\s+(?:saldo|resto)\s+se\s+liquida\b", re.I)
 # Decisión del dueño (2026-11-07): no se ofrece crédito a clientes (ni a instaladores ni a constructoras recurrentes).
 CREDITO_CLIENTES_RE = re.compile(r"\bcr[eé]dito\s+(?:para|a)\s+(?:(?:los|sus|nuestros)\s+)?clientes\b", re.I)
 # Decisión del dueño (2026-11-07): la visita para medir tiene costo o depende; nunca "visita sin costo", "visita
@@ -173,6 +176,21 @@ class ReglasDelDuenoTest(unittest.TestCase):
                 hallazgos.append(f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
         self.assertEqual(hallazgos, [])
 
+    def test_sin_liquidar_el_saldo(self):
+        hallazgos = []
+        for path, texto in publicados():
+            for m in SALDO_RE.finditer(texto):
+                hallazgos.append(f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
+        self.assertEqual(hallazgos, [])
+
+    def test_liquidar_el_saldo_se_detecta(self):
+        for sucio in ("Liquidas el saldo según lo acordado en tu cotización", "El resto se liquida según lo acordado",
+                      "liquidamos el saldo", "el saldo se liquida al terminar"):
+            self.assertTrue(SALDO_RE.search(sucio), sucio)
+        for limpio in ("Pagué el resto hasta que lo vi terminado", "Puedes pagar de contado o en mensualidades",
+                       "Liquidambar styraciflua"):
+            self.assertIsNone(SALDO_RE.search(limpio), limpio)
+
     def test_sin_credito_para_clientes(self):
         hallazgos = []
         for path, texto in publicados():
@@ -205,6 +223,8 @@ class ReglasDelDuenoTest(unittest.TestCase):
                       "diagnóstico gratuito", "una visita de diagnóstico sin costo", "diagnósticos de pasto sin costo"):
             self.assertRegex(sucio, VISITA_GRATIS_RE)
         for limpio in ("Agendamos una visita para medir y cotizar", "Cotización gratis por WhatsApp",
+                       "El costo de la visita para cotizar depende de la ubicación del servicio",
+                       "Visita para medir y cotizar: su costo depende de la ubicación",
                        "la reponemos sin costo", "Visítanos en el vivero",
                        "el resto de Altamira, sin cargo extra por traslado", "no cuesta como un pasto de lujo"):
             self.assertNotRegex(limpio, VISITA_GRATIS_RE)

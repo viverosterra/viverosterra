@@ -267,7 +267,7 @@ POR_ARCHIVO = (
      "          <li><strong>Si te interesa:</strong> arrancamos el proyecto en 3–10 días.</li>\n        </ol>",
      "<h3>Qué sigue ahora</h3>\n        <ol>\n"
      f"          <li><strong>En menos de 1 hora en horario</strong> te escribimos por WhatsApp o correo con tu cotización.</li>\n"
-     "          <li><strong>Si hace falta,</strong> agendamos contigo una visita para medir.</li>\n"
+     f"          <li><strong>Si hace falta,</strong> agendamos contigo una visita para medir. {datos.VISITA_COSTO}</li>\n"
      "          <li><strong>En la visita</strong> te damos el precio cerrado y el plan de trabajo.</li>\n        </ol>"),
     ("public/gracias/index.html", "        Hablar ahora por WhatsApp\n", "        Adelantar por WhatsApp\n"),
     ("public/gracias/index.html", "💡 <strong>Tip:</strong> mientras esperas, revisa nuestro", "<strong>Mientras tanto:</strong> revisa nuestro"),

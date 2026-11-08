@@ -80,6 +80,12 @@ class DatosTest(unittest.TestCase):
                                                           r"septiembre|octubre|noviembre|diciembre|vigentes)\b")
         self.assertFalse(hasattr(datos, "VIGENCIA"))
 
+    def test_visita_con_costo_segun_la_ubicacion(self):
+        """Decisión del dueño (2026-11-07): la visita para cotizar tiene costo y depende de la ubicación del servicio."""
+        self.assertEqual(datos.VISITA_COSTO, "El costo de la visita para cotizar depende de la ubicación del servicio; "
+                                             "te lo confirmamos por WhatsApp antes de agendar.")
+        self.assertEqual(datos.VISITA_COSTO_CORTO, "Visita para medir y cotizar: su costo depende de la ubicación")
+
     def test_mensajes_terminan_con_la_firma(self):
         for servicio in datos.MENSAJES:
             with self.subTest(servicio=servicio):

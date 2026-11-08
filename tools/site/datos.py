@@ -73,6 +73,11 @@ GARANTIA_PASTO = ("Si una sección no arraiga en 15 a 20 días, la reponemos sin
 GARANTIA_PLANTAS = "30 días en las plantas que sembramos nosotros, con el riego indicado (ver condiciones)."
 PRIMER_RIEGO = "El primer riego lo haces tú: te enseñamos cómo y te dejamos el protocolo de 20 días."
 ARRAIGO = "15 a 20 días"
+# Decisión del dueño (2026-11-07): la visita para medir y cotizar tiene un costo que depende de la ubicación del
+# servicio. Nunca "visita sin costo" ni "gratis" (test_reglas.py); toda mención de la visita lleva una de estas dos.
+VISITA_COSTO = ("El costo de la visita para cotizar depende de la ubicación del servicio; te lo confirmamos por "
+                "WhatsApp antes de agendar.")
+VISITA_COSTO_CORTO = "Visita para medir y cotizar: su costo depende de la ubicación"
 LLEGADA_PASTO = "una vez por semana, generalmente los viernes"
 ANTICIPO = ("No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos "
             "un anticipo.")
