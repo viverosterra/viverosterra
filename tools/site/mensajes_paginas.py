@@ -58,6 +58,20 @@ MATERIALES = {
                                  "Colonia de entrega: ___\nLes mando foto del espacio."),
 }
 
+# Zonas (Etapa 2g): la plantilla de main de cada zona (tools/pasto/zonas.py, guided()), con los huecos ___. La usan la
+# portada y el cierre y, por RUTAS, el menú, la barra móvil y el pie (antes llevaban el genérico de jardín).
+_ZONA = "Hola, quiero cotizar jardinería en {}.\nColonia: ___\nServicio que necesito: ___\nMetros aprox.: ___\nLes mando foto del espacio."
+ZONAS = {
+    "/jardineria-lomas-de-rosales-tampico": _ZONA.format("Lomas de Rosales"),
+    "/jardineria-country-club-tampico": _ZONA.format("Club Campestre"),
+    "/jardineria-aguila-tampico": _ZONA.format("Águila y Altavista"),
+    "/jardineria-lomas-del-chairel-tampico": _ZONA.format("Lomas del Chairel"),
+    "/jardineria-ciudad-madero": _ZONA.format("Cd. Madero"),
+    "/jardineria-altamira": _ZONA.format("Altamira"),
+}
+# /precios (Etapa 2g): el mensaje del menú (RUTAS) con los huecos de main ("Mi colonia es: ___ y son aprox. ___ m²").
+PRECIOS = "Hola, vi la lista de precios y quiero cotizar.\nColonia: ___\nMetros aprox.: ___"
+
 # Ruta exacta → (mensaje del menú y la barra, mensaje del pie o None para usar el mismo).
 RUTAS = {
     "/blog": ("Hola, vi el blog de Viveros Terra y quiero cotizar", None),
@@ -67,6 +81,7 @@ RUTAS = {
     **{ruta: (texto, None) for ruta, texto in EMPRESAS.items()},
     **{ruta: (texto, None) for ruta, texto in PLANTAS.items()},
     **{ruta: (texto, None) for ruta, texto in MATERIALES.items()},
+    **{ruta: (texto, None) for ruta, texto in ZONAS.items()},
 }
 # Tienda y páginas de envío: el pie conserva su "pregunta"; el menú usa el mensaje de cotizar pasto sintético.
 PIE_TIPO = {
