@@ -1,0 +1,235 @@
+"""Contenido de /plantas-palmas-arboles-tampico (hub de plantas). Plantilla: plantillas/hub_categoria.py.
+
+Precios (decisión del dueño, 2026-11-07): palmas con datos.PALMAS_PRECIO y flamboyán desde $250; nada más. Se retiran los
+"desde" sin confirmar de main (washingtonia, viajero y kerpis $500, cycas $700, palma bambú $1,000, cola de zorro $1,500,
+ficus $200, neem y trueno $300, tabachín $350, laurel $500, tulipán africano $600; preguntas 1–3 al dueño), las dos
+opiniones sin permiso (Martha R., Constructora Arce; pregunta 8), "asesoría sin costo", "más de 18 años" y la entrega en la
+Huasteca. Las fotos de especie dejan /api/img: son las locales del catálogo (contenido/catalogo_especies.json), sin las
+retiradas ni las escenas de plantas_comun.FOTOS_SOLO_CATALOGO, y no se presentan como tomadas en el vivero. Título,
+robots y canonical como estaban (los títulos son de la Etapa 3); la descripción de Open Graph decía "Desde $200"
+(PARIDAD["meta"]).
+"""
+import datos
+import mensajes_paginas
+from componentes import dinero
+from contenido import catalogo_datos as cd
+from contenido import plantas_comun as pc
+
+P = datos.PRECIOS
+SITE = datos.SITIO
+RUTA = pc.HUB
+URL = f"{SITE}{RUTA}"
+TIPO = "plantas"
+MENSAJE = mensajes_paginas.PLANTAS[RUTA]
+FLAMBOYAN = f"Flamboyán desde {dinero(P['flamboyan'])}"
+PALMAS_EN_CATALOGO = cd.cuenta({"cat": ["palmas"]})
+RIEGO = P["riego_m2"]
+OG_DESCRIPCION = ("Más de 200 variedades tropicales adaptadas al clima de Tampico. Palmas desde "
+                  f"{dinero(P['palma_desde'])}. Entrega a domicilio en Tampico, Madero y Altamira.")
+
+META = {
+    "title": "Plantas, palmas y árboles en Tampico: qué sembrar según tu jardín · Viveros Terra",
+    "description": ("Guía de plantas, palmas y árboles para el clima de Tampico: cuáles van en sol o sombra, cuáles "
+                    "aguantan salitre y cuánto crecen. Más de 200 variedades con entrega y siembra."),
+    "robots": "index, follow",
+    "canonical": URL,
+    "og": (("og:type", "website"), ("og:url", URL),
+           ("og:title", "Plantas, palmas y árboles en Tampico: qué sembrar según tu jardín · Viveros Terra"),
+           ("og:description", OG_DESCRIPCION),
+           ("og:image", f"{SITE}/img/paisajismo-alberca-plantas-tampico.webp"), ("og:locale", "es_MX")),
+}
+# Ocho especies con foto publicable. Areca y coco plumoso no van aquí (sus fotos son escenas de alberca y de hotel:
+# plantas_comun.FOTOS_SOLO_CATALOGO); su precio sigue en la portada, la FAQ y /palmas-tropicales-tampico.
+DESTACADAS = (
+    ("palma-real", "La de los proyectos grandes: crece alta y recta.", None),
+    ("palma-washingtona", "Gana altura rápido y aguanta el viento del Golfo.", None),
+    ("palma-viajera-ravenala", "Abanico de alto impacto para entradas y jardines de diseño.", None),
+    ("palma-cica-revoluta", "Muy longeva y de poco mantenimiento; va en maceta o en jardín.", None),
+    ("flamboyan-tabachin", "Floración rojo-naranja y sombra abundante.", None),
+    ("olivo-negro", "El de banqueta: raíz profunda, copa amplia y aguanta el salitre.", None),
+    ("ficus-benjamin", "Árbol de sombra y de seto; se forma con poda.", None),
+    ("bugambilea-envarada", "Ya formada en vara; florece casi todo el año con poca agua.", None),
+)
+PREGUNTAS = (
+    ("¿Cuánto cuestan las palmas en Tampico?",
+     f"{datos.PALMAS_PRECIO}. Las demás palmas (washingtonia, del viajero, kerpis, cola de zorro, cycas, palma bambú y "
+     "las exóticas) se cotizan según su altura: mándanos la que buscas y la altura por WhatsApp."),
+    ("¿Cuánto cuestan los árboles en Tampico?",
+     f"{FLAMBOYAN}. Los demás árboles (neem, ficus, laurel de la India, olivo negro, jacaranda y más) se cotizan según "
+     "la especie y el tamaño del ejemplar."),
+    ("¿Qué palmas crecen mejor en Tampico?",
+     "Las mejor adaptadas al clima cálido y húmedo de Tampico son la washingtonia, la palma del viajero, la cycas "
+     "revoluta y la palma areca para semisombra."),
+    pc.PREGUNTA_ENTREGA,
+    ("¿Qué palmas crecen mejor en el calor de Tampico?",
+     "La washingtonia (crece rápido y tolera el viento del Golfo), la palma del viajero (resiste el calor intenso), la "
+     f"cycas revoluta (muy longeva y de poco mantenimiento) y la areca en semisombra. En el catálogo hay "
+     f"{PALMAS_EN_CATALOGO} especies de palmas."),
+    ("¿Tienen catálogo para ver antes de llamar?",
+     f"Sí: en <a href=\"/catalogo\">Arma tu lista</a> están {len(cd.ESPECIES)} especies con luz, riego y altura. "
+     "Añades las que te interesan con su tamaño y piezas y nos mandas la lista en un solo mensaje de WhatsApp; te "
+     "respondemos con el precio por tamaño."),
+    ("¿Tienen precio de mayoreo para proyectos grandes?",
+     "Sí, para constructoras, arquitectos, hoteles, fraccionamientos y gobierno, con factura CFDI 4.0 y entrega por "
+     "etapas. Las palmas para obra tienen su página: <a href=\"/palmas-mayoreo-proyectos\">palmas para proyectos</a>."),
+    pc.PREGUNTA_PAGO,
+)
+
+CONTENIDO = {
+    "tipo": TIPO,
+    "meta": META,
+    "migas": pc.migas(),
+    "portada": {
+        "kicker": f"Vivero en Cd. Madero · desde {datos.DESDE}",
+        "h1": "Plantas, palmas y árboles de nuestro vivero en Tampico",
+        "lede": (f"{datos.VARIEDADES} variedades para el clima del Golfo: te decimos cuáles van en sol o sombra, cuáles "
+                 "aguantan salitre y cuánto crecen. Te las llevamos y, si quieres, las sembramos."),
+        "etiqueta": {"codigo": "Vivero", "aviso": f"Precios {datos.ANIO}", "nombre": "Palmas", "antes": "desde",
+                     "monto": dinero(P["palma_desde"]), "unidad": "tamaño chico",
+                     # Flamboyán antes que palma real: "$500 … Flamboyán" lo marcaría test_consistencia ("flamboyán a $500").
+                     "filas": (("Flamboyán", f"desde {dinero(P['flamboyan'])}"),
+                               ("Palma real", f"desde {dinero(P['palma_real'])}")),
+                     "nota": "El precio sube con la altura; las demás especies, según cotización."},
+        "mensaje": MENSAJE,
+        "tambien": 'O <a href="/catalogo" data-cta="plantas:catalogo">arma tu lista</a> y mándala en un solo mensaje.',
+        "foto": {"src": "/img/portadas/arboles-tampico-viveros-terra-sm.webp",
+                 "srcset": ("/img/portadas/arboles-tampico-viveros-terra-sm.webp 560w, "
+                            "/img/portadas/arboles-tampico-viveros-terra.webp 960w"),
+                 "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960, "alto": 1280, "numero": 1,
+                 "alt": "Equipo de Viveros Terra sembrando un árbol en un jardín de Tampico",
+                 "lugar": "Siembra de un árbol", "etapa": "Tampico"},
+        "compacta": True,
+    },
+    "necesidad": {"titulo": "¿Qué necesita tu jardín?",
+                  "lede": "Elige por sol, salitre o tamaño y te llevamos al catálogo con el filtro puesto.",
+                  "items": pc.NECESIDADES},
+    "subcategorias": {"titulo": "Palmas, árboles y plantas para Tampico",
+                      "lede": "Cada página dice qué especies van en sol, sombra o cerca del mar.",
+                      "items": pc.SUBCATEGORIAS},
+    "destacadas": {"titulo": "Ocho especies para empezar", "id": "vt-h-destacadas", "rotulo": "Especies",
+                   "lede": pc.LEDE_FOTOS, "items": DESTACADAS},
+    "lista": pc.LISTA,
+    "garantia": pc.GARANTIA,
+    "faq": {"titulo": "Todo sobre plantas y palmas en Tampico", "preguntas": PREGUNTAS},
+    "guias": {"titulo": "Explora por tipo de planta", "items": (
+        ("Las palmas más vendidas en Tampico", "/blog/palmas-mas-vendidas-tampico-precios"),
+        ("Cómo plantar una palma o un árbol", "/blog/como-plantar-palma-arbol-paso-a-paso-tampico"),
+        ("Plantas que resisten la sal del Golfo", "/blog/plantas-resistentes-sal-golfo-tampico"))},
+    "relacionados": {"titulo": "Complementa tu proyecto", "items": (
+        {"titulo": "Pasto en rollo", "href": "/pasto-en-rollo-tampico",
+         "texto": f"San Agustín desde {dinero(P['pasto_solo_m2'])}/m².",
+         "img": "/img/portadas/instalacion-pasto-rollo-san-agustin-tampico-sm.webp", "ancho": 560, "alto": 840},
+        {"titulo": "Diseño de jardines", "href": "/diseno-jardines-tampico",
+         "texto": f"Proyecto desde {dinero(P['diseno'])}.",
+         "img": "/img/portadas/diseno-jardines-tampico-proyecto-sm.webp", "ancho": 560, "alto": 918},
+        {"titulo": "Riego automático", "href": "/sistema-riego-tampico",
+         "texto": f"Instalado desde {dinero(RIEGO[0])}/m².",
+         "img": "/img/portadas/riego-pro-01-sm.webp", "ancho": 560, "alto": 373},
+        {"titulo": "Tierra negra", "href": "/tierra-negra-vegetal-tampico",
+         "texto": f"Costal {dinero(P['tierra_negra_costal'])} · m³ {dinero(P['tierra_negra_m3'])}.",
+         "img": "/img/portadas/camion-tierra-negra-entrega-tampico-sm.webp", "ancho": 560, "alto": 373},
+        {"titulo": "Palmas para proyectos", "href": "/palmas-mayoreo-proyectos",
+         "texto": "Hoteles, fraccionamientos, industria y gobierno: volumen, CFDI 4.0 y entrega por etapas.",
+         "img": "/img/portadas/palmas-reales-mayoreo-vivero-tampico-sm.webp", "ancho": 560, "alto": 841})},
+    "cierre": {"titulo": "¿Ya sabes qué quieres sembrar?",
+               "lede": "Mándanos qué buscas, el tamaño y la colonia; te respondemos con precio por tamaño.",
+               "mensaje": MENSAJE},
+    "jsonld": {
+        "migas": pc.migas_ld(),
+        "nodos": ({"@type": "ItemList", "name": "Plantas, palmas y árboles por subcategoría", "itemListElement": [
+            {"@type": "ListItem", "position": i, "name": s["titulo"], "url": f"{SITE}{s['href']}"}
+            for i, s in enumerate(pc.SUBCATEGORIAS, 1)]},),
+        "speakable": ("#vt-h1", ".vt-portada .vt-lede", ".vt-faq details:first-child"),
+    },
+}
+
+# Especies que el hub de main tenía como tarjeta (encabezado h3) y que el hub nuevo no repite: el hub muestra 8 con foto
+# y cada una de estas sigue en la página que se indica.
+_MOVIDAS = {
+    "Palma Areca": "/palmas-tropicales-tampico (tabla de precios) y /catalogo",
+    "Palma Coco Plumoso": "/palmas-tropicales-tampico (tabla de precios) y /catalogo (Coco Plumoso)",
+    "Palma Kerpis": "/palmas-tropicales-tampico",
+    "Palma Bambú": "/catalogo (Palma Seifrixi Bambú)", "Palma Cola de Zorra": "/catalogo",
+    "Neem": "/arboles-para-banqueta-tampico",
+    "Laurel de la India": "/catalogo (Laurel de la India Formado)",
+    "Ave del Paraíso": "/plantas-para-jardin-tampico (Ave de Paraíso)", "Duranta Cubana": "/plantas-para-jardin-tampico",
+    "Croton": "/plantas-para-jardin-tampico (Croto Petra)",
+}
+
+PARIDAD = {
+    "meta": {"og:description": (OG_DESCRIPCION, "Decía «Desde $200»: precio sin confirmar (el dueño solo fijó palmas desde "
+                                                "$250, palma real $500 y flamboyán $250, 2026-11-07).")},
+    "jsonld": {
+        "LocalBusiness": ("Nodo recortado de main; las páginas apuntan a la entidad única #negocio de la home (como 2d); "
+                          "el grafo completo es de la Etapa 4."),
+        "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
+    },
+    "reemplazos": {
+        "¿Tienen catálogo con precios para ver antes de llamar?": "¿Tienen catálogo para ver antes de llamar?",
+        "¿Cuál es la planta ideal para tu proyecto?": "¿Qué necesita tu jardín?",
+        "Bajo mantenimiento": "¿Qué necesita tu jardín?",
+        "Industria y banquetas": "Árboles para banqueta",
+        "Hotel y comercio": "Palmas para proyectos",
+        "Jardín residencial": "Plantas para jardín",
+        "No sé cuál elegir": "¿Ya sabes qué quieres sembrar?",
+        "El vivero de confianza para proyectos grandes en Tamaulipas": "Palmas para proyectos",
+        "¿Cuál es tu planta?": "¿Ya sabes qué quieres sembrar?",
+        # tarjetas de especie (h3) que siguen en el hub con el nombre del catálogo
+        "Palma del Viajero": "Palma Viajera Ravenala",
+        "Bugambilia": "Bugambilea Envarada",
+        "Cycas Revoluta": "Palma Cica Revoluta",
+        "Ficus benjamina": "Ficus Benjamin",
+        "Flamboyán": "Flamboyán Tabachín",
+    },
+    "retirados": {
+        **{n: f"El hub muestra 8 especies con foto; esta sigue en {d}." for n, d in _MOVIDAS.items()},
+        "+20 árboles más": "Tarjeta que solo enlazaba el catálogo; la cubre «Arma tu lista» (los 25 árboles del catálogo).",
+        "Tabachín": ("Usaba la foto de la Tronadora y el catálogo llama tabachín al flamboyán; no se publica como "
+                     "especie aparte hasta que el dueño diga cuál es (pregunta 2)."),
+        "Trueno": "No está en el catálogo (sin foto ni nombre científico); pregunta 3 al dueño.",
+        "Tulipán Africano": "No está en el catálogo (sin foto ni nombre científico); pregunta 3 al dueño.",
+        "$500,": ("Era «$500,» dentro de la lista de palmas sin confirmar; $500 sigue como el precio de la palma real "
+                  "(datos.PRECIOS_ESPECIE)."),
+        "Lo que dicen quienes ya tienen su jardín": ("Las dos opiniones (Martha R., Constructora Arce) no están en "
+                                                      "datos.OPINIONES ni tienen permiso confirmado (pregunta 8)."),
+        "Jardines con plantas de Viveros Terra": ("Galería sin pies ni datos; las especies con foto, luz, riego y altura "
+                                                  "van en «Ocho especies para empezar»."),
+        "Variedades seleccionadas para el clima de Tampico": ("Sección de beneficios genéricos («asesoría sin costo», "
+                                                              "«más de 18 años»); lo útil va al filtro por necesidad."),
+        "$1,000": "Palma bambú desde $1,000: precio sin confirmar; las palmas sin precio del dueño van según cotización.",
+        "$200": "Ficus benjamina desde $200: precio sin confirmar (pregunta 1 al dueño).",
+        "$200,": "Ficus benjamina desde $200 (con coma en el texto): precio sin confirmar (pregunta 1 al dueño).",
+        "$300": "Neem y trueno desde $300: precios sin confirmar (pregunta 1 al dueño).",
+        "$300,": "Neem y trueno desde $300 (con coma en el texto): precios sin confirmar (pregunta 1 al dueño).",
+        "$350": "Tabachín desde $350: precio sin confirmar y especie dudosa (preguntas 1 y 2 al dueño).",
+        "$350,": "Tabachín desde $350 (con coma en el texto): precio sin confirmar (preguntas 1 y 2 al dueño).",
+        "$600": "Tulipán africano desde $600: precio sin confirmar y especie fuera del catálogo (pregunta 3).",
+        "$700": "Cycas revoluta desde $700: palma sin precio del dueño; va según cotización.",
+        "$700,": "Cycas revoluta desde $700 (con coma en el texto): palma sin precio del dueño; va según cotización.",
+    },
+    "especies": {
+        "reemplazos": {
+            "Palma del Viajero": ("/plantas-palmas-arboles-tampico", "Palma Viajera Ravenala"),
+            "Palma Areca": ("/catalogo", "Palma Areca"),
+            "Palma Coco Plumoso": ("/catalogo", "Coco Plumoso"),
+            "Flamboyán": ("/plantas-palmas-arboles-tampico", "Flamboyán Tabachín"),
+            "Cycas Revoluta": ("/plantas-palmas-arboles-tampico", "Palma Cica Revoluta"),
+            "Palma Kerpis": ("/palmas-tropicales-tampico", "Palma Kerpis"),
+            "Palma Bambú": ("/catalogo", "Palma Seifrixi Bambú"),
+            "Palma Cola de Zorra": ("/catalogo", "Palma Cola de Zorra"),
+            "Ficus benjamina": ("/plantas-palmas-arboles-tampico", "Ficus Benjamin"),
+            "Neem": ("/arboles-para-banqueta-tampico", "Neem"),
+            "Laurel de la India": ("/catalogo", "Laurel de la India Formado"),
+            "Ave del Paraíso": ("/plantas-para-jardin-tampico", "Ave de Paraíso"),
+            "Duranta Cubana": ("/plantas-para-jardin-tampico", "Duranta Cubana"),
+            "Bugambilia": ("/plantas-palmas-arboles-tampico", "Bugambilea Envarada"),
+            "Croton": ("/plantas-para-jardin-tampico", "Croto Petra"),
+        },
+        "retirados": {
+            "Tabachín": ("Usaba la foto de la Tronadora y el catálogo llama tabachín al flamboyán; no se publica como "
+                         "especie aparte hasta que el dueño diga cuál es (pregunta 2)."),
+            "Trueno": "No está en el catálogo (sin foto ni nombre científico); pregunta 3 al dueño.",
+            "Tulipán Africano": "No está en el catálogo (sin foto ni nombre científico); pregunta 3 al dueño.",
+        },
+    },
+}

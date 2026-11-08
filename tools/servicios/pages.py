@@ -17,7 +17,8 @@ DESDE_2007 = ("Desde 2007", "Vivero propio en Cd. Madero")
 VARIEDADES = ("+200", "Variedades en el vivero")
 
 # La home y /pasto-en-rollo-tampico (Etapa 2a), diseño, mantenimiento y riego (Etapa 2c) y mayoreo y palmas para
-# proyectos (Etapa 2d) salen de tools/site/plantillas/: este script ya no las toca. Quedan las de las Etapas 2e a 2g.
+# proyectos (Etapa 2d) y, desde la Etapa 2e, el hub de plantas salen de tools/site/plantillas/: este script ya no las
+# toca. Quedan las de las Etapas 2e a 2g.
 PAGES = {
     "vivero-tampico": dict(
         title="Vivero en Tampico", accent="y Ciudad Madero, desde 2007",
@@ -28,16 +29,6 @@ PAGES = {
         alt="Equipo de Viveros Terra sembrando un árbol en un jardín de Tampico", caption="Siembra de árboles y plantas en Tampico.",
         wa=guided("Hola, quiero visitar el vivero o cotizar plantas.", "Lo que busco", "Tamaño aprox.", foto=False),
         secondary=("https://maps.app.goo.gl/xC4XGL2WeucAjGwAA", "Cómo llegar"),
-    ),
-    "plantas-palmas-arboles-tampico": dict(
-        title="Plantas, palmas y árboles", accent="de nuestro vivero en Tampico",
-        price_pre="Palmas desde", price="$250", price_unit="", price_alt="· plantas y árboles por tamaño",
-        lede="Más de 200 variedades cultivadas para el clima del Golfo. Te las llevamos y, si quieres, las sembramos con garantía de arraigo.",
-        facts=[VARIEDADES, GARANTIA_PLANTAS, ("Entrega", "Tampico, Madero y Altamira")],
-        img="/img/arboles-tampico-viveros-terra.webp",
-        alt="Equipo de Viveros Terra sembrando un árbol y plantas en un jardín", caption="Siembra de árboles y plantas en Tampico.",
-        wa=guided("Hola, quiero cotizar plantas o palmas.", "Plantas que busco", "Tamaño aprox.", "Colonia de entrega"),
-        secondary=("/catalogo", "Ver catálogo"),
     ),
     "plantas-para-jardin-tampico": dict(
         title="Plantas para jardín", accent="que aguantan el calor de Tampico",

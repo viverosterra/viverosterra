@@ -29,7 +29,7 @@ PLANTAS = {
     "/plantas-de-interior-tampico": "plantas-de-interior-tampico/index.html",
     "/catalogo": "catalogo.html",
 }
-PENDIENTES = frozenset(PLANTAS)
+PENDIENTES = frozenset(PLANTAS) - {"/plantas-palmas-arboles-tampico"}
 PERMITIDOS = {dinero(n) for v in datos.PRECIOS.values() for n in (v if isinstance(v, tuple) else (v,))
               if isinstance(n, int)}
 PRECIO_RE = re.compile(r"\$\s?\d[\d,]*\d|\$\s?\d")

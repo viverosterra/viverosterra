@@ -92,9 +92,10 @@ def tarjeta_especie(e, numero, texto, tipo, altura=None):
             f'Agregar<span class="vt-sr"> {nombre}</span> en Arma tu lista</a>{guia_html}</p></li>')
 
 
-def especies(items, tipo):
-    """items: (slug, texto, altura propia de la página o None)."""
-    filas = "".join(tarjeta_especie(cd.especie(s), n, t, tipo, a) for n, (s, t, a) in enumerate(items, 1))
+def especies(items, tipo, primero=1):
+    """items: (slug, texto, altura propia de la página o None). primero: número de la primera figura (2 si la portada
+    ya lleva la Fig. 01)."""
+    filas = "".join(tarjeta_especie(cd.especie(s), n, t, tipo, a) for n, (s, t, a) in enumerate(items, primero))
     return f'<ul class="vt-esps">{filas}</ul>'
 
 

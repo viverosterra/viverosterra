@@ -30,6 +30,7 @@ PAGINAS = (
     ("/sistema-riego-tampico", "sistema-riego-tampico/index.html", "servicio", "sistema_riego"),
     ("/mayoreo-pasto-tampico", "mayoreo-pasto-tampico/index.html", "b2b", "mayoreo_pasto"),
     ("/palmas-mayoreo-proyectos", "palmas-mayoreo-proyectos/index.html", "b2b", "palmas_proyectos"),
+    ("/plantas-palmas-arboles-tampico", "plantas-palmas-arboles-tampico/index.html", "hub_categoria", "plantas_hub"),
     ("/pasto-sintetico", "pasto-sintetico/index.html", "tienda_hub", "tienda"),
     ("/pasto-sintetico/perros", "pasto-sintetico/perros/index.html", "tienda_guia", "perros"),
 ) + _varias("ficha", lambda k: f"/pasto-sintetico/{k}", lambda k: f"pasto-sintetico/{k}/index.html", "ficha") + _varias(
