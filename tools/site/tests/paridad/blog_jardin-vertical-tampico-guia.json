@@ -1,0 +1,64 @@
+{
+ "meta": {
+  "title": "Jardín vertical en Tampico: guía paso a paso · Viveros Terra",
+  "description": "Cómo armar un jardín vertical en Tampico paso a paso: estructura, riego y qué plantas usar en clima cálido-húmedo. Ideal para patios y balcones pequeños.",
+  "robots": "index, follow",
+  "canonical": "https://www.viverosterra.com/blog/jardin-vertical-tampico-guia",
+  "og:type": "article",
+  "og:url": "https://www.viverosterra.com/blog/jardin-vertical-tampico-guia",
+  "og:title": "Jardín vertical en Tampico: guía paso a paso",
+  "og:description": "Estructura, riego y qué plantas usar para un jardín vertical que sí funciona en el clima cálido-húmedo de Tampico. Ideal para patios y balcones pequeños.",
+  "og:image": "https://www.viverosterra.com/img/plantas-ornamentales-tampico-viveros-terra.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "Answer",
+  "Article",
+  "BreadcrumbList",
+  "FAQPage",
+  "ImageObject",
+  "ListItem",
+  "Organization",
+  "Question",
+  "WebPage"
+ ],
+ "encabezados": [
+  "Jardín vertical en Tampico: guía paso a paso",
+  "Respuesta directa",
+  "¿Qué es un jardín vertical y por qué funciona en Tampico?",
+  "Materiales y estructura",
+  "Qué plantas elegir según la exposición al sol",
+  "Sombra o sombra parcial",
+  "Sol directo",
+  "Sistema de riego",
+  "Mantenimiento y errores comunes",
+  "¿Cuánto cuesta armar un jardín vertical en Tampico?",
+  "Preguntas frecuentes",
+  "¿Quieres armar un jardín vertical?",
+  "En este artículo",
+  "¿Quieres plantas para tu jardín vertical?",
+  "También te puede interesar"
+ ],
+ "faq": [
+  "¿Qué plantas funcionan mejor en un jardín vertical en Tampico?",
+  "¿Cómo se riega un jardín vertical?",
+  "¿Un jardín vertical necesita sol directo?",
+  "¿Qué estructura conviene para un jardín vertical: paneles, macetas o palets?",
+  "¿Cuánto cuesta armar un jardín vertical pequeño en Tampico?",
+  "¿Qué estructura conviene: paneles, macetas o palets?"
+ ],
+ "precios": [
+  "$1,500",
+  "$20",
+  "$3,000",
+  "$5",
+  "$50"
+ ],
+ "enlaces": [
+  "/",
+  "/blog",
+  "/blog/diseno-jardines-tampico-guia",
+  "/blog/framboyan-delonix-regia-tampico",
+  "/blog/jardin-bajo-presupuesto-tampico"
+ ]
+}

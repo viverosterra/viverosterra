@@ -23,6 +23,7 @@ class HeadTest(unittest.TestCase):
         urls = {"terra.css": "/css/terra.a.css", "terra-tienda.css": "/css/terra-tienda.b.css",
                 "terra-plantas.css": "/css/terra-plantas.c.css", "terra-materiales.css": "/css/terra-materiales.f.css",
                 "terra-precios.css": "/css/terra-precios.g.css",
+                "terra-blog.css": "/css/terra-blog.g.css",
                 "legacy-fixes.css": "/css/l.d.css",
                 "terra.js": "/js/terra.e.js"}
         self.assertIn('<link rel="stylesheet" href="/css/terra-plantas.c.css">', partials.head(urls, False, plantas=True))
@@ -32,6 +33,8 @@ class HeadTest(unittest.TestCase):
         self.assertNotIn("terra-materiales", partials.head(urls, False, plantas=True))
         self.assertIn('<link rel="stylesheet" href="/css/terra-precios.g.css">', partials.head(urls, False, precios=True))
         self.assertNotIn("terra-precios", partials.head(urls, False, materiales=True))
+        self.assertIn('<link rel="stylesheet" href="/css/terra-blog.g.css">', partials.head(urls, False, blog=True))
+        self.assertNotIn("terra-blog", partials.head(urls, False, precios=True))
 
     def test_region_con_gtag_unico_y_assets_con_hash(self):
         h = partials.head(URLS, legacy=False)

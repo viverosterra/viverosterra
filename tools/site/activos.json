@@ -18,6 +18,9 @@
  "terra-util.css": [
   "/css/terra-util.46e6dbaf75.css"
  ],
+ "terra-blog.css": [
+  "/css/terra-blog.310bc010dc.css"
+ ],
  "legacy-fixes.css": [
   "/css/legacy-fixes.725fd1c858.css",
   "/css/legacy-fixes.6fb87ff99e.css"

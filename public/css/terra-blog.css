@@ -1,0 +1,91 @@
+/* terra-blog.css: artículo e índice del blog (Etapa 2h). Solo se carga en <body class="vt-pagina vt-blog"> (shell.py); todo
+   bajo .vt-blog y con los tokens de terra.css. */
+.vt-blog main .vt-crumbs{margin-bottom:14px}
+/* En línea para que el título largo fluya tras su separador: en flex, el "›" quedaba solo al partirse el renglón. */
+.vt-blog main .vt-crumbs ol{display:block}
+.vt-blog main .vt-crumbs li{display:inline}
+.vt-blog .vt-art__cabeza{padding-block:0 8px}
+.vt-blog .vt-art__cabeza h1{font-size:clamp(2rem,1.3rem + 3vw,4rem);max-width:20ch;margin:8px 0 0}
+.vt-blog .vt-art__dek{max-width:60ch;margin:16px 0 0;font-size:var(--vt-text-lg);color:var(--vt-ink-2)}
+.vt-blog .vt-art__meta{display:flex;flex-wrap:wrap;gap:4px 18px;margin:16px 0 0;font-size:var(--vt-text-sm);color:var(--vt-muted)}
+.vt-blog .vt-art__meta b{color:var(--vt-ink);font-weight:600}
+.vt-blog .vt-art{display:grid;gap:32px;padding-block:24px var(--vt-space-section)}
+.vt-blog .vt-art__cuerpo{min-width:0;max-width:68ch}
+.vt-blog .vt-art__cuerpo h2{font-size:clamp(1.5rem,1.2rem + 1.2vw,2.25rem);line-height:1.15;margin:2.2em 0 .6em}
+.vt-blog .vt-art__cuerpo h3{font-size:1.3125rem;line-height:1.25;margin:1.6em 0 .5em}
+.vt-blog .vt-art__cuerpo h4{font-size:1.0625rem;margin:1.4em 0 .4em}
+.vt-blog .vt-art__cuerpo :is(h2,h3,[id]){scroll-margin-top:calc(var(--vt-head-h) + 16px)}
+.vt-blog .vt-art__cuerpo :is(p,li){color:var(--vt-ink-2);line-height:1.65}
+.vt-blog .vt-art__cuerpo p{margin:0 0 1em}
+.vt-blog .vt-art__cuerpo :is(ul,ol){display:grid;gap:8px;margin:0 0 1.2em;padding-left:1.2em}
+.vt-blog .vt-art__cuerpo li::marker{color:var(--vt-soil)}
+.vt-blog .vt-art__cuerpo img{display:block;width:100%;height:16rem;object-fit:cover;margin:24px 0;border:1px solid var(--vt-line)}
+.vt-blog .vt-art__respuesta{margin:0 0 28px;padding:16px 18px;border:1.5px solid var(--vt-ink);background:var(--vt-card)}
+.vt-blog .vt-art__respuesta-t,.vt-blog .vt-art__cuerpo h2.vt-art__respuesta-t{margin:0 0 6px;font-size:var(--vt-text-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-muted)}
+.vt-blog .vt-art__respuesta p:last-child{margin:0}
+.vt-blog .vt-art__nota{margin:20px 0;padding:14px 16px 14px 18px;border-left:3px solid var(--vt-soil);background:var(--vt-card)}
+.vt-blog .vt-art__nota::before{content:"Nota de campo";content:"Nota de campo" / "";display:block;margin-bottom:4px;font-size:var(--vt-text-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-soil)}
+.vt-blog .vt-art__nota p{margin:0}
+/* Sombra en el borde con contenido oculto: las capas "local" la tapan al llegar al extremo. La tabla es transparente para dejarla ver. */
+.vt-blog .vt-art__tabla{overflow-x:auto;margin:20px 0;background:linear-gradient(to right,var(--vt-card) 30%,transparent) left center/32px 100% no-repeat local,linear-gradient(to left,var(--vt-card) 30%,transparent) right center/32px 100% no-repeat local,linear-gradient(to right,var(--vt-line-strong),transparent) left center/12px 100% no-repeat scroll,linear-gradient(to left,var(--vt-line-strong),transparent) right center/12px 100% no-repeat scroll,var(--vt-card)}
+.vt-blog .vt-art__cuerpo table{width:100%;min-width:30rem;border-collapse:collapse;font-size:var(--vt-text-sm)}
+.vt-blog .vt-art__cuerpo :is(th,td){padding:10px 12px;border:1px solid var(--vt-line);text-align:left;vertical-align:top}
+.vt-blog .vt-art__cuerpo thead th{background:var(--vt-bone-2);font-weight:700}
+.vt-blog .vt-art__cuerpo blockquote{margin:20px 0;padding-left:18px;border-left:3px solid var(--vt-line-strong);font-family:var(--vt-font-serif);font-style:italic}
+.vt-blog .vt-art__sigue{margin-top:32px;padding-top:16px;border-top:1px solid var(--vt-ink)}
+.vt-blog .vt-art__sigue b,.vt-blog .vt-art__indice b{display:block;margin-bottom:8px;font-size:var(--vt-text-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--vt-muted)}
+.vt-blog .vt-art__sigue ul{list-style:none;padding:0}
+.vt-blog .vt-art__sigue li::marker{content:""}
+.vt-blog :is(.vt-art__indice,.vt-art__toc) ol{list-style:none;margin:0;padding:0;font-size:var(--vt-text-sm)}
+.vt-blog .vt-art__cuerpo .vt-art__toc ol{display:block;margin:0;padding:0 0 8px}
+.vt-blog :is(.vt-art__indice,.vt-art__toc) li{border-bottom:1px solid var(--vt-line)}
+.vt-blog main :is(.vt-art__indice,.vt-art__toc) a{display:grid;grid-template-columns:28px minmax(0,1fr);padding:8px 0;color:var(--vt-ink-2);text-decoration:none}
+.vt-blog main :is(.vt-art__indice,.vt-art__toc) a:hover{color:var(--vt-field);text-decoration:underline}
+.vt-blog :is(.vt-art__indice,.vt-art__toc) span{color:var(--vt-muted);font-variant-numeric:tabular-nums}
+.vt-blog .vt-art__toc{margin:0 0 24px;border-block:1px solid var(--vt-ink)}
+.vt-blog .vt-art__toc-t{display:flex;justify-content:space-between;align-items:center;min-height:48px;font-size:var(--vt-text-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-ink);list-style:none;cursor:pointer}
+.vt-blog .vt-art__toc-t::-webkit-details-marker{display:none}
+.vt-blog .vt-art__toc-t::after{content:"+";content:"+" / "";font-size:1.25rem;font-weight:400;letter-spacing:0;color:var(--vt-field)}
+.vt-blog .vt-art__toc[open] .vt-art__toc-t::after{content:"–";content:"–" / ""}
+.vt-blog .vt-art__medio{margin:28px 0;padding:14px 16px;border-top:2px solid var(--vt-ink);background:var(--vt-bone-2)}
+.vt-blog .vt-art__cuerpo .vt-art__medio p{margin:0 0 4px;font-weight:600;color:var(--vt-ink)}
+.vt-blog main .vt-art__medio a,.vt-blog main .vt-art__margen-cta a{color:var(--vt-field);font-weight:600}
+.vt-blog main :is(.vt-art__medio,.vt-art__margen-cta) .vt-flecha{margin-left:6px}
+.vt-blog .vt-art__margen{display:none}
+.vt-blog .vt-art__margen-cta{margin:16px 0 0;font-size:var(--vt-text-sm)}
+.vt-blog .vt-art__producto{padding-block:var(--vt-space-section);background:var(--vt-bone-2)}
+.vt-blog .vt-art__producto-grid{display:grid;gap:56px;align-items:center}
+.vt-blog .vt-art__rel{padding-block:var(--vt-space-section)}
+.vt-blog .vt-art__rel ul,.vt-blog .vt-blog-l,.vt-blog .vt-blog-s{display:grid;gap:20px;margin:24px 0 0;padding:0;list-style:none}
+.vt-blog .vt-art__rel li{padding-top:12px;border-top:2px solid var(--vt-ink)}
+.vt-blog .vt-art__rel h3,.vt-blog .vt-blog-t h3{margin:4px 0 6px;font-size:1.1875rem;line-height:1.25}
+.vt-blog .vt-art__rel-c{margin:0;font-size:var(--vt-text-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--vt-muted)}
+.vt-blog .vt-blog-p{padding-block:0 32px}
+.vt-blog .vt-blog-p__g{display:grid;gap:24px;align-items:center}
+.vt-blog .vt-blog-p img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.vt-blog .vt-blog-p h1{font-size:clamp(2.25rem,1.4rem + 3.4vw,4.5rem);line-height:1;margin:8px 0 12px}
+.vt-blog .vt-blog-p h1 span{display:block}
+.vt-blog .vt-blog-t{position:relative;border-top:1px solid var(--vt-line);padding-top:12px}
+.vt-blog .vt-blog-t img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;margin-bottom:10px}
+.vt-blog .vt-blog-t a::after{content:"";position:absolute;inset:0}
+.vt-blog .vt-blog-t p:not(.vt-art__rel-c){margin:0;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
+.vt-blog .vt-blog-t span{font-size:var(--vt-text-xs);color:var(--vt-muted)}
+.vt-blog .vt-blog-s a{display:grid;padding:12px 0;border-bottom:1px solid var(--vt-line);text-decoration:none}
+.vt-blog .vt-blog-s span{font-size:var(--vt-text-sm);color:var(--vt-muted)}
+.vt-blog .vt-cta{margin-top:16px}
+@media (max-width:639.98px){
+  .vt-blog .vt-art__cuerpo :is(th,td):first-child{position:sticky;left:0;z-index:1;box-shadow:1px 0 0 var(--vt-line)}
+  .vt-blog .vt-art__cuerpo td:first-child{background:var(--vt-card)}
+}
+@media (min-width:640px){
+  .vt-blog .vt-art__cuerpo img{height:20rem}
+  .vt-blog .vt-art__rel ul,.vt-blog .vt-blog-l,.vt-blog .vt-blog-s{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (min-width:1024px){
+  .vt-blog .vt-art{grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:56px}
+  .vt-blog :is(.vt-art__toc,.vt-art__medio){display:none}
+  .vt-blog .vt-art__margen{display:block;position:sticky;top:calc(var(--vt-head-h) + 20px);align-self:start;max-height:calc(100vh - var(--vt-head-h) - 40px);overflow-y:auto}
+  .vt-blog .vt-art__producto-grid{grid-template-columns:7fr 5fr;gap:32px}
+  .vt-blog .vt-art__rel ul,.vt-blog .vt-blog-l,.vt-blog .vt-blog-s{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+  .vt-blog .vt-blog-p__g{grid-template-columns:7fr 5fr}
+}

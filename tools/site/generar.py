@@ -55,11 +55,13 @@ PAGINAS = (
     ("/marmol-blanco-tampico", "marmol-blanco-tampico/index.html", "material", "marmol_blanco"),
     ("/piedra-bola-rio-tampico", "piedra-bola-rio-tampico/index.html", "material", "piedra_bola"),
     ("/precios", "precios/index.html", "precios", "precios"),
+    ("/blog", "blog/index.html", "blog_indice", "blog_indice"),
     ("/pasto-sintetico", "pasto-sintetico/index.html", "tienda_hub", "tienda"),
     ("/pasto-sintetico/perros", "pasto-sintetico/perros/index.html", "tienda_guia", "perros"),
 ) + _varias("ficha", lambda k: f"/pasto-sintetico/{k}", lambda k: f"pasto-sintetico/{k}/index.html", "ficha") + _varias(
     "ciudad", lambda k: f"/pasto-sintetico/envio/{k}", lambda k: f"pasto-sintetico/envio/{k}/index.html", "tienda_guia"
-) + _varias("zona", lambda k: f"/{k}", lambda k: f"{k}/index.html", "zona") + UTILITARIAS
+) + _varias("zona", lambda k: f"/{k}", lambda k: f"{k}/index.html", "zona") + UTILITARIAS + _varias(
+    "articulo", lambda k: f"/blog/{k}", lambda k: f"blog/{k}/index.html", "articulo")
 
 
 def cargar(contenido):

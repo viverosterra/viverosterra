@@ -1,6 +1,6 @@
 """Anclas: cada enlace <a href="#x"> o "/ruta#x" del sitio llega a un id que existe en esa página (Etapa 2g: la lista de
-precios y las zonas cambian de plantilla y otras páginas enlazan /politicas#…, /pasto-sintetico#…). PENDIENTES son los
-índices de tres artículos del blog que ya estaban rotos en main; los arregla la Etapa 2h y la lista solo puede encoger."""
+precios y las zonas cambian de plantilla y otras páginas enlazan /politicas#…, /pasto-sintetico#…). Desde la Etapa 2h el índice de cada
+artículo se arma de los <h2> de su cuerpo: no puede apuntar a un id que no existe."""
 import re
 import sys
 import unittest
@@ -15,16 +15,6 @@ SITIO = "https://www.viverosterra.com"
 ENLACE_RE = re.compile(r'<a\b[^>]*\shref="([^"]*#[^"]+)"')
 ID_RE = re.compile(r'\sid="([^"]+)"')
 SCRIPT_RE = re.compile(r"<script\b(?![^>]*ld\+json)[^>]*>.*?</script>", re.S)
-PENDIENTES = frozenset(
-    f"/blog/{post}#{ancla}"
-    for post, anclas in (
-        ("cuando-plantar-pasto-tampico-calendario",
-         ("como-plantarlos", "el-problema-real", "errores-comunes", "mejores-arboles", "reglas-de-oro")),
-        ("plantas-resistentes-sal-golfo-tampico",
-         ("como-plantarlos", "el-problema-real", "errores-comunes", "mejores-arboles", "reglas-de-oro")),
-        ("sistema-riego-automatico-conviene-tampico",
-         ("como-plantarlos", "el-problema-real", "mejores-arboles", "reglas-de-oro")),
-    ) for ancla in anclas)
 
 
 def rotas(public=PUBLIC):
@@ -46,10 +36,7 @@ def rotas(public=PUBLIC):
 
 class AnclasTest(unittest.TestCase):
     def test_toda_ancla_enlazada_existe(self):
-        self.assertEqual({k: v for k, v in rotas().items() if k not in PENDIENTES}, {})
-
-    def test_pendientes_siguen_rotas(self):
-        self.assertEqual(sorted(PENDIENTES - set(rotas())), [], "ya existen: sácalas de PENDIENTES")
+        self.assertEqual(rotas(), {})
 
 
 if __name__ == "__main__":
