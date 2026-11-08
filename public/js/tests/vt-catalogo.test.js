@@ -51,6 +51,54 @@ test('mensaje de una especie que no está en el catálogo', () => {
   assert.ok(c.mensajeEspecial('').includes('*___*'));
 });
 
+const ESPECIES = {
+  neem: { name: 'Neem', sc: 'Azadirachta indica', sz: ['1 m', '2-3 m'] },
+  'palma-real': { name: 'Palma Real', sc: 'Roystonea regia', sz: ['1 m'] },
+};
+
+function memoria(inicial) {
+  const datos = new Map(inicial ? [[c.CLAVE, inicial]] : []);
+  return { getItem: (k) => (datos.has(k) ? datos.get(k) : null), setItem: (k, v) => datos.set(k, String(v)), datos };
+}
+
+test('validarLista: solo especies del catálogo con tamaño y cantidad válidos; junta repetidos', () => {
+  const buena = { name: 'Neem', sc: 'Azadirachta indica', sz: '1 m', qty: 2 };
+  assert.deepEqual(c.validarLista([buena], ESPECIES), [buena]);
+  assert.deepEqual(c.validarLista({ name: 'Neem' }, ESPECIES), []);
+  assert.deepEqual(c.validarLista(null, ESPECIES), []);
+  assert.deepEqual(c.validarLista([buena], null), []);
+  const malas = [
+    null, 'Neem', { ...buena, name: 'Inventada' }, { ...buena, sc: 'Otra cosa' }, { ...buena, sz: '' },
+    { ...buena, sz: 'x'.repeat(61) }, { ...buena, sz: 3 }, { ...buena, qty: 0 }, { ...buena, qty: 10000 },
+    { ...buena, qty: 1.5 }, { ...buena, qty: '2' }, { ...buena, name: '__proto__' },
+  ];
+  assert.deepEqual(c.validarLista(malas, ESPECIES), []);
+  const juntas = c.validarLista([buena, { ...buena, qty: 7, extra: '<b>' }, { ...buena, sz: ' Medida especial ' }], ESPECIES);
+  assert.deepEqual(juntas, [{ ...buena, qty: 7 }, { ...buena, sz: 'Medida especial' }]);
+});
+
+test('guardarLista y leerLista: ida y vuelta, y sin romper si el almacenamiento falla o trae basura', () => {
+  const m = memoria();
+  const lista = [{ name: 'Palma Real', sc: 'Roystonea regia', sz: '1 m', qty: 3 }];
+  assert.equal(c.guardarLista(m, lista), true);
+  assert.deepEqual(c.leerLista(m, ESPECIES), lista);
+  assert.deepEqual(c.leerLista(memoria('{no es json'), ESPECIES), []);
+  assert.deepEqual(c.leerLista(memoria('{"name":"Neem"}'), ESPECIES), []);
+  assert.deepEqual(c.leerLista(memoria(), ESPECIES), []);
+  const roto = { getItem() { throw new Error('SecurityError'); }, setItem() { throw new Error('QuotaExceededError'); } };
+  assert.equal(c.guardarLista(roto, lista), false);
+  assert.deepEqual(c.leerLista(roto, ESPECIES), []);
+  assert.equal(c.guardarLista(null, lista), false);
+  assert.deepEqual(c.leerLista(null, ESPECIES), []);
+});
+
+test('contarFiltros cuenta las opciones activas (sin la búsqueda) y enLista busca por nombre', () => {
+  assert.equal(c.contarFiltros(c.leerFiltros('?q=palma&luz=media,sombra&uso=salitre')), 3);
+  assert.equal(c.contarFiltros(c.leerFiltros('?q=palma')), 0);
+  assert.equal(c.enLista([{ name: 'Neem' }], 'Neem'), true);
+  assert.equal(c.enLista([], 'Neem'), false);
+});
+
 test('el código no usa innerHTML, window.open ni console', () => {
   const fuente = require('node:fs').readFileSync(require('node:path').join(__dirname, '..', 'vt-catalogo.js'), 'utf8')
     .replace(/\/\*[\s\S]*?\*\//g, '');

@@ -6,6 +6,11 @@
    - El enlace "Cotizar por WhatsApp" de la lista lleva un solo mensaje, el mismo que armaba sendWA() en main (casos en
      public/js/tests/casos-catalogo.json), con data-cta="catalogo:sendWA": terra.js lo mide (generate_lead con el mismo
      cta_id que VTMedicion.whatsapp('sendWA') de main) y lo firma al hacer clic. Sin window.open.
+   - La lista se guarda en sessionStorage en cada pintar() y vuelve al recargar o al regresar de otra página, solo con
+     especies de #vt-catalogo-datos (validarLista). Con la lista llena, el "Cotizar" de la cabecera lleva el mismo
+     mensaje de la lista (sigue midiéndose como <tipo>:header).
+   - /catalogo?q=<nombre>&add=<slug> (el "Agregar en Arma tu lista" de las subcategorías) abre el diálogo de esa especie;
+     un slug desconocido se ignora.
    El texto de las especies llega del HTML (data-*) y de #vt-catalogo-datos; nunca se usa innerHTML.
    Las funciones puras se exportan para node --test. */
 (function (root) {
@@ -14,6 +19,10 @@
   const GRUPOS = ['cat', 'luz', 'tam', 'riego', 'uso'];
   const MAXIMO = 9999;
   const OTRO = '__otro__';
+  const CLAVE = 'vt-catalogo-lista';
+  const PULSO_MS = 200;
+  const MAX_ITEMS = 200;
+  const MAX_TAMANO = 60; // maxlength del campo "Otro tamaño o medida especial"
 
   function normalizar(texto) {
     return String(texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
@@ -48,6 +57,10 @@
     return !q || q.split(' ').every((palabra) => String(d.buscar || '').indexOf(palabra) >= 0);
   }
 
+  function contarFiltros(f) {
+    return GRUPOS.reduce((n, g) => n + (f[g] ? f[g].length : 0), 0);
+  }
+
   function cantidad(valor) {
     return Math.max(1, Math.min(MAXIMO, parseInt(valor, 10) || 1));
   }
@@ -64,6 +77,49 @@
 
   function quitar(lista, i) {
     return lista.filter((_x, j) => j !== i);
+  }
+
+  function enLista(lista, nombre) {
+    return lista.some((x) => x.name === nombre);
+  }
+
+  // Lo guardado en sessionStorage no es de fiar: solo pasan renglones de especies del catálogo (mismo nombre y mismo
+  // científico), con tamaño de texto corto y cantidad entera de 1 a 9999; los repetidos se juntan como en agregar().
+  function validarLista(guardada, especies) {
+    if (!Array.isArray(guardada) || !especies || typeof especies !== 'object') return [];
+    const conocidas = new Map(Object.keys(especies).map((k) => [especies[k].name, especies[k].sc]));
+    return guardada
+      .filter((x) => x && typeof x === 'object' && typeof x.name === 'string' && conocidas.has(x.name)
+        && x.sc === conocidas.get(x.name) && typeof x.sz === 'string' && x.sz.trim() !== ''
+        && x.sz.length <= MAX_TAMANO && Number.isInteger(x.qty) && x.qty >= 1 && x.qty <= MAXIMO)
+      .slice(0, MAX_ITEMS)
+      .reduce((lista, x) => agregar(lista, { name: x.name, sc: x.sc, sz: x.sz.trim(), qty: x.qty }), []);
+  }
+
+  // storage puede faltar o lanzar (modo privado, cuota llena, cookies bloqueadas): la lista sigue en memoria.
+  function guardarLista(storage, lista) {
+    try {
+      storage.setItem(CLAVE, JSON.stringify(lista));
+      return true;
+    } catch (_e) {
+      return false;
+    }
+  }
+
+  function leerLista(storage, especies) {
+    try {
+      return validarLista(JSON.parse(storage.getItem(CLAVE) || '[]'), especies);
+    } catch (_e) {
+      return [];
+    }
+  }
+
+  function almacen(win) {
+    try {
+      return win.sessionStorage;
+    } catch (_e) {
+      return null;
+    }
   }
 
   function plural(n, uno, varios) {
@@ -102,6 +158,9 @@
     const cuenta = caja.querySelector('[data-vt-o="cuenta"]');
     const limpiar = caja.querySelector('[data-vt-limpiar]');
     const vacio = doc.querySelector('[data-vt-vacio]');
+    const vacioWa = vacio && vacio.querySelector('[data-vt-o="vacio-wa"]');
+    const nFiltros = caja.querySelector('[data-vt-o="n-filtros"]');
+    const especial = doc.getElementById('vt-especial-q');
     let filtros = leerFiltros(win.location.search);
 
     function aplicar(escribir) {
@@ -113,9 +172,20 @@
       });
       cuenta.textContent = plural(visibles, 'especie', 'especies');
       if (vacio) vacio.hidden = visibles > 0;
+      if (!visibles) sinResultados();
+      if (nFiltros) nFiltros.textContent = contarFiltros(filtros) ? ' (' + contarFiltros(filtros) + ')' : '';
       limpiar.hidden = !hayFiltros(filtros);
       botones.forEach((b) => b.setAttribute('aria-pressed', String(filtros[b.dataset.vtG].indexOf(b.dataset.vtV) >= 0)));
       if (escribir) win.history.replaceState(null, '', win.location.pathname + escribirFiltros(filtros));
+    }
+
+    // Sin resultados: el WhatsApp lleva lo buscado y el campo de "¿No está?" queda con el mismo texto.
+    function sinResultados() {
+      if (vacioWa) vacioWa.setAttribute('href', WA + encodeURIComponent(mensajeEspecial(filtros.q)));
+      if (especial && filtros.q.trim()) {
+        especial.value = filtros.q.trim();
+        especial.dispatchEvent(new win.Event('input'));
+      }
     }
 
     caja.addEventListener('submit', (e) => e.preventDefault());
@@ -177,9 +247,39 @@
     const enviar = dLista.querySelector('[data-vt-o="enviar"]');
     const items = dLista.querySelector('[data-vt-o="items"]');
     const aviso = barra.querySelector('[data-vt-o="aviso"]');
-    let seleccion = [];
+    const abrirLista = barra.querySelector('[data-vt-abrir-lista]');
+    const botones = Array.from(doc.querySelectorAll('[data-vt-agregar]'));
+    const cabecera = doc.querySelector('.vt-head [data-cta$=":header"]');
+    const cabeceraHref = cabecera ? cabecera.getAttribute('href') : '';
+    const store = almacen(win);
+    const conocida = (slug) => Object.prototype.hasOwnProperty.call(especies, slug);
+    let seleccion = leerLista(store, especies);
     let actual = null;
     let origen = null;
+
+    function marcar(b) {
+      const e = especies[b.dataset.vtAgregar];
+      const en = Boolean(e) && enLista(seleccion, e.name);
+      if (b.dataset.vtEn === String(en)) return;
+      b.dataset.vtEn = String(en);
+      b.classList.toggle('vt-cat__add--en', en);
+      const texto = doc.createElement('span');
+      const nombre = doc.createElement('span');
+      nombre.className = 'vt-sr';
+      nombre.textContent = ' ' + (e ? e.name : '');
+      if (en) texto.append('✓ En tu lista · editar', nombre);
+      else texto.append('+ Añadir', nombre, ' a mi lista');
+      b.replaceChildren(texto);
+    }
+
+    function pulso() {
+      if (typeof win.requestAnimationFrame !== 'function') return;
+      abrirLista.classList.remove('vt-pulso');
+      win.requestAnimationFrame(() => {
+        abrirLista.classList.add('vt-pulso');
+        win.setTimeout(() => abrirLista.classList.remove('vt-pulso'), PULSO_MS);
+      });
+    }
 
     function pintar() {
       barra.hidden = seleccion.length === 0;
@@ -188,11 +288,12 @@
       enviar.hidden = seleccion.length === 0;
       enviar.setAttribute('href', enlaceLista(seleccion));
       items.replaceChildren(...seleccion.map((it, i) => fila(doc, it, i)));
+      botones.forEach(marcar);
+      if (cabecera) cabecera.setAttribute('href', seleccion.length ? enlaceLista(seleccion) : cabeceraHref);
+      guardarLista(store, seleccion);
     }
 
-    doc.addEventListener('click', (e) => {
-      const b = e.target.closest ? e.target.closest('[data-vt-agregar]') : null;
-      if (!b || !especies[b.dataset.vtAgregar]) return;
+    function abrirAgregar(b) {
       actual = especies[b.dataset.vtAgregar];
       origen = b;
       const previo = seleccion.find((x) => x.name === actual.name);
@@ -206,6 +307,11 @@
       dAgregar.returnValue = '';
       dAgregar.showModal();
       sel.focus();
+    }
+
+    doc.addEventListener('click', (e) => {
+      const b = e.target.closest ? e.target.closest('[data-vt-agregar]') : null;
+      if (b && conocida(b.dataset.vtAgregar)) abrirAgregar(b);
     });
     sel.addEventListener('change', () => { cajaOtro.hidden = sel.value !== OTRO; if (!cajaOtro.hidden) otro.focus(); });
     dAgregar.querySelector('[data-vt-menos]').addEventListener('click', () => { n.value = String(cantidad(cantidad(n.value) - 1)); });
@@ -218,6 +324,7 @@
       const qty = cantidad(n.value);
       seleccion = agregar(seleccion, { name: actual.name, sc: actual.sc, sz, qty });
       pintar();
+      pulso();
       aviso.textContent = 'Agregaste ' + actual.name + ' (' + sz + ') × ' + qty + '. Llevas ' + resumen(seleccion) + '.';
     });
     dAgregar.querySelector('[data-vt-cancelar]').addEventListener('click', () => dAgregar.close('cancelar'));
@@ -227,9 +334,14 @@
       actual = null;
       if (origen) origen.focus();
     });
-    barra.querySelector('[data-vt-abrir-lista]').addEventListener('click', () => { pintar(); dLista.showModal(); });
-    dLista.querySelector('[data-vt-cerrar]').addEventListener('click', () => dLista.close());
-    dLista.querySelector('[data-vt-vaciar]').addEventListener('click', () => { seleccion = []; pintar(); dLista.close(); });
+    abrirLista.addEventListener('click', () => { pintar(); dLista.showModal(); });
+    dLista.querySelectorAll('[data-vt-cerrar]').forEach((b) => b.addEventListener('click', () => dLista.close()));
+    dLista.querySelector('[data-vt-vaciar]').addEventListener('click', () => {
+      if (typeof win.confirm === 'function' && !win.confirm('¿Vaciar tu lista? Se quitan todas las plantas.')) return;
+      seleccion = [];
+      pintar();
+      dLista.close();
+    });
     items.addEventListener('click', (e) => {
       const b = e.target.closest('button[data-accion]');
       if (!b) return;
@@ -238,6 +350,17 @@
       pintar();
       if (!seleccion.length) dLista.querySelector('[data-vt-cerrar]').focus();
     });
+    pintar();
+    abrirPedido();
+
+    // ?add=<slug>: se quita de la URL (no se vuelve a abrir al recargar) y, si la especie existe, se abre su diálogo.
+    function abrirPedido() {
+      const slug = new URLSearchParams(win.location.search).get('add');
+      if (slug === null) return;
+      win.history.replaceState(null, '', win.location.pathname + escribirFiltros(leerFiltros(win.location.search)));
+      const b = conocida(slug) ? botones.find((x) => x.dataset.vtAgregar === slug) : null;
+      if (b) abrirAgregar(b);
+    }
   }
 
   function especial(doc) {
@@ -248,14 +371,16 @@
     campo.addEventListener('input', () => enlace.setAttribute('href', WA + encodeURIComponent(mensajeEspecial(campo.value))));
   }
 
-  const api = { GRUPOS, normalizar, leerFiltros, escribirFiltros, hayFiltros, coincide, cantidad, agregar, cambiar,
-    quitar, resumen, mensajeLista, enlaceLista, mensajeEspecial };
+  const api = { GRUPOS, CLAVE, normalizar, leerFiltros, escribirFiltros, hayFiltros, contarFiltros, coincide, cantidad,
+    agregar, cambiar, quitar, enLista, validarLista, guardarLista, leerLista, resumen, mensajeLista, enlaceLista,
+    mensajeEspecial };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
     return;
   }
   root.VTCatalogo = Object.freeze(api);
-  const iniciar = () => { filtrar(document, root); armarLista(document, root); especial(document); };
+  // especial() primero: filtrar() le copia lo buscado cuando no hay resultados y dispara su evento input.
+  const iniciar = () => { especial(document); filtrar(document, root); armarLista(document, root); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
   else iniciar();
 })(typeof window !== 'undefined' ? window : globalThis);

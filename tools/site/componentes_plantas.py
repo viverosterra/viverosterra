@@ -88,7 +88,7 @@ def tarjeta_especie(e, numero, texto, tipo, altura=None):
     guia = cd.BLOG_ESPECIE.get(e["slug"])
     guia_html = (f'<a href="{esc(guia)}">Guía de cuidados<span class="vt-sr"> de {nombre}</span></a>' if guia else "")
     return (f'<li class="vt-esp">{_cabeza(e, numero)}{datos_especie(e, altura)}{precio_especie(e)}<p>{texto}</p>'
-            f'<p class="vt-esp__acciones"><a data-cta="{esc(tipo)}:catalogo" href="{esc(cd.url_catalogo(q=e["name"]))}">'
+            f'<p class="vt-esp__acciones"><a data-cta="{esc(tipo)}:catalogo" href="{esc(cd.url_catalogo(q=e["name"], agregar=e["slug"]))}">'
             # Un solo <span>: el enlace es inline-flex y cada trozo de texto suelto sería otra columna a 375 px.
             f'<span>Agregar<span class="vt-sr"> {nombre}</span> en Arma tu lista</span></a>{guia_html}</p></li>')
 
@@ -135,7 +135,8 @@ def filtros_catalogo(total):
             '<div class="vt-campo"><label for="vt-cat-q">Busca por nombre, uso o luz</label>'
             '<div class="vt-control"><input id="vt-cat-q" type="search" name="q" autocomplete="off" '
             'placeholder="Ej. palma, banqueta, sombra"></div></div>'
-            '<details class="vt-buscador__filtros" data-vt-plegable><summary>Filtros</summary>'
+            '<details class="vt-buscador__filtros" data-vt-plegable><summary><span>Filtros<span data-vt-o="n-filtros">'
+            '</span></span></summary>'
             f'<div class="vt-buscador__grupos">{grupos}</div></details>'
             f'<p class="vt-buscador__n"><span data-vt-o="cuenta" aria-live="polite">{total} especies</span>'
             '<button type="button" class="vt-buscador__limpiar" data-vt-limpiar hidden>Quitar filtros</button></p></form>')
@@ -151,7 +152,8 @@ def tarjeta_catalogo(e, numero, carga="lazy"):
     ficha = (f'<details class="vt-esp__ficha"><summary>Ficha<span class="vt-sr"> de {nombre}</span></summary>'
              f'<p>{esc(e["desc"])}</p><p><b>Tamaños:</b> {esc(", ".join(e["sz"]))}. Otras medidas: pregúntanos.</p>'
              f'{guia_html}</details>')
-    return (f'<li class="vt-esp vt-cat" data-vt-esp="{esc(e["slug"])}" {atributos} data-buscar="{esc(buscar)}">'
+    # id = slug: el ListItem del JSON-LD apunta a /catalogo#<slug> (plantillas/catalogo.py).
+    return (f'<li class="vt-esp vt-cat" id="{esc(e["slug"])}" data-vt-esp="{esc(e["slug"])}" {atributos} data-buscar="{esc(buscar)}">'
             f'{_cabeza(e, numero, carga)}{datos_especie(e)}{precio_especie(e)}{ficha}'
             f'<button type="button" class="vt-btn vt-btn--linea vt-cat__add" data-vt-agregar="{esc(e["slug"])}">'
             # Un solo <span>: .vt-btn es inline-flex con gap y, con el vt-sr como hijo directo, se verían dos espacios.
@@ -171,13 +173,17 @@ def _cargas(lista):
     return salida
 
 
-def rejilla_catalogo(especies_=None):
+def rejilla_catalogo(especies_=None, tipo="catalogo"):
+    """Rejilla y estado sin resultados: un WhatsApp con mensaje_especial(<lo buscado>), que vt-catalogo.js rellena."""
     lista = especies_ or cd.ORDENADAS
     tarjetas = "".join(tarjeta_catalogo(e, n, carga) for n, (e, carga) in enumerate(zip(lista, _cargas(lista)), 1))
     return (f'<ul class="vt-esps vt-esps--cat" data-vt-rejilla aria-label="Especies del catálogo">'
             f'{tarjetas}</ul>'
-            '<p class="vt-cat__vacio" data-vt-vacio hidden>No hay especies con esos filtros. Quita alguno o pídenos la '
-            'que buscas aquí abajo.</p>')
+            '<div class="vt-cat__vacio" data-vt-vacio hidden><p>No hay especies con esos filtros. Quita alguno o '
+            'pregúntanos por la que buscas:</p>'
+            f'<a class="vt-btn vt-btn--wa" data-cta="{esc(tipo)}:solEsp-vacio" data-vt-o="vacio-wa" '
+            f'href="{esc(datos.wa_url(mensaje_especial("")))}" target="_blank" rel="noopener">{WA_GLIFO}'
+            'Preguntar por WhatsApp</a></div>')
 
 
 def lista_catalogo(tipo):
@@ -199,12 +205,14 @@ def lista_catalogo(tipo):
         '<p class="vt-dialogo__botones"><button type="button" class="vt-btn vt-btn--linea" data-vt-cancelar>Cancelar'
         '</button><button type="submit" value="agregar" class="vt-btn vt-btn--tinta">Agregar a mi lista</button></p>'
         '</form></dialog>'
-        '<dialog class="vt-dialogo" id="vt-lista" aria-labelledby="vt-lista-t"><h2 id="vt-lista-t">Mi lista para cotizar'
-        '</h2><p class="vt-promesa" data-vt-o="resumen">Tu lista está vacía.</p><ul class="vt-lista" data-vt-o="items"></ul>'
-        f'<a class="vt-btn vt-btn--wa" data-cta="{esc(tipo)}:sendWA" data-vt-o="enviar" href="{esc(datos.wa_url(""))}" '
-        f'target="_blank" rel="noopener" hidden>{WA_GLIFO}Cotizar por WhatsApp</a>'
-        '<p class="vt-dialogo__botones"><button type="button" class="vt-btn vt-btn--linea" data-vt-vaciar>Vaciar lista'
-        '</button><button type="button" class="vt-btn vt-btn--linea" data-vt-cerrar>Seguir viendo</button></p>'
+        '<dialog class="vt-dialogo" id="vt-lista" aria-labelledby="vt-lista-t"><div class="vt-dialogo__cabeza">'
+        '<h2 id="vt-lista-t">Mi lista para cotizar</h2><button type="button" class="vt-dialogo__x" data-vt-cerrar '
+        'aria-label="Cerrar la lista"><span aria-hidden="true">×</span></button></div>'
+        '<p class="vt-promesa" data-vt-o="resumen">Tu lista está vacía.</p><ul class="vt-lista" data-vt-o="items"></ul>'
+        f'<a class="vt-btn vt-btn--wa vt-lista__enviar" data-cta="{esc(tipo)}:sendWA" data-vt-o="enviar" '
+        f'href="{esc(datos.wa_url(""))}" target="_blank" rel="noopener" hidden>{WA_GLIFO}Cotizar por WhatsApp</a>'
+        '<p class="vt-dialogo__botones"><button type="button" class="vt-btn vt-btn--linea" data-vt-cerrar>Seguir viendo'
+        '</button><button type="button" class="vt-lista__vaciar" data-vt-vaciar>Vaciar lista</button></p>'
         f'<p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p></dialog>'
         '<div class="vt-lista-barra" data-vt-barra-lista hidden><button type="button" class="vt-btn vt-btn--tinta" '
         'data-vt-abrir-lista>Mi lista <b data-vt-o="cuenta-lista">0</b></button>'

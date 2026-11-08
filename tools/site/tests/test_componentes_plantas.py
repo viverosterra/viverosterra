@@ -64,7 +64,7 @@ class ComponentesPlantasTest(unittest.TestCase):
     def test_tarjeta_de_especie_lleva_al_catalogo_y_a_su_guia(self):
         html = cp.especies((("palma-areca", "La más pedida para semisombra.", None),), "plantas")
         self.assertIn('<h3 class="vt-esp__nombre">Palma Areca</h3><p class="vt-esp__sci"><i>Dypsis lutescens</i></p>', html)
-        self.assertIn('data-cta="plantas:catalogo" href="/catalogo?q=Palma%20Areca"', html)
+        self.assertIn('data-cta="plantas:catalogo" href="/catalogo?q=Palma%20Areca&amp;add=palma-areca"', html)
         self.assertIn('href="/blog/palma-areca-tampico"', html)
         self.assertIn('<span class="vt-sr"> Palma Areca</span>', html)
         alto = cp.especies((("palma-areca", "En maceta.", "Hasta 2 m en maceta"),), "plantas")
@@ -89,11 +89,26 @@ class ComponentesPlantasTest(unittest.TestCase):
         self.assertEqual(html.count('<button type="button" class="vt-btn vt-btn--linea vt-cat__add"'), 117)
         self.assertEqual(html.count('loading="eager"'), 4)
         self.assertEqual(html.count('fetchpriority="high"'), 1)
-        olivo = re.search(r'<li class="vt-esp vt-cat" data-vt-esp="olivo-negro"[^>]*>', html).group(0)
+        olivo = re.search(r'<li class="vt-esp vt-cat" id="olivo-negro" data-vt-esp="olivo-negro"[^>]*>', html).group(0)
         for attr in ('data-cat="arboles"', 'data-luz="sol"', 'data-tam="grande"', 'data-riego="moderado"',
                      'data-uso="banqueta salitre"', 'data-buscar="olivo negro bucida buceras'):
             self.assertIn(attr, olivo)
         self.assertNotIn("/api/img", html)
+        self.assertEqual(len(set(re.findall(r'<li class="vt-esp vt-cat" id="([^"]+)"', html))), 117)
+
+    def test_sin_resultados_con_whatsapp_de_lo_buscado(self):
+        vacio = cp.rejilla_catalogo(tipo="catalogo").split("data-vt-vacio", 1)[1]
+        self.assertIn('data-cta="catalogo:solEsp-vacio" data-vt-o="vacio-wa"', vacio)
+        self.assertIn('href="https://wa.me/', vacio)
+
+    def test_lista_con_cerrar_visible_vaciar_discreto_y_whatsapp_a_lo_ancho(self):
+        html = cp.lista_catalogo("catalogo")
+        self.assertIn('class="vt-dialogo__x" data-vt-cerrar aria-label="Cerrar la lista"', html)
+        self.assertIn('class="vt-lista__vaciar" data-vt-vaciar>Vaciar lista', html)
+        self.assertIn('class="vt-btn vt-btn--wa vt-lista__enviar" data-cta="catalogo:sendWA"', html)
+
+    def test_filtros_con_cuenta_en_el_resumen(self):
+        self.assertIn('<summary><span>Filtros<span data-vt-o="n-filtros"></span></span></summary>', cp.filtros_catalogo(117))
 
     def test_enlace_agregar_en_un_solo_span(self):
         """.vt-esp__acciones a es inline-flex: «Agregar» y «en Arma tu lista» sueltos serían dos columnas en celular."""
