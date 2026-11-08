@@ -9,9 +9,11 @@ import datos
 import mensajes_paginas
 
 PUBLIC = Path(__file__).resolve().parents[2] / "public"
-SIN_BARRA = {"tienda", "ciudad", "catalogo"}
+SIN_BARRA = {"tienda", "catalogo"}
 # Formularios y páginas con su propia barra fija de compra (#buybar): dos barras fijas se tapan en celular.
 RUTAS_SIN_BARRA = {"/cuestionario", "/gracias", "/datos-envio", "/pasto-sintetico-tampico"}
+# Páginas de la tienda sin cotizador ni #buybar (Etapa 2b): llevan la barra móvil del shell.
+RUTAS_CON_BARRA = {"/pasto-sintetico/perros"}
 
 _PLANTAS = ("plantas", "plantas", "plantas")
 _MATERIAL = ("material", "plantas", "materiales")
@@ -87,7 +89,7 @@ def contexto(ruta):
         "tipo": tipo,
         "activo": activo,
         "servicio": servicio,
-        "barra": tipo not in SIN_BARRA and ruta not in RUTAS_SIN_BARRA,
+        "barra": (tipo not in SIN_BARRA and ruta not in RUTAS_SIN_BARRA) or ruta in RUTAS_CON_BARRA,
         "mensaje": datos.con_firma(texto),
         "mensaje_pie": datos.con_firma(texto_pie or texto),
     }

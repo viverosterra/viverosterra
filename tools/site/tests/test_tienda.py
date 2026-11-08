@@ -92,6 +92,25 @@ class TiendaPublicadaTest(unittest.TestCase):
 
     def test_vendemos_a_todo_mexico_desde_2012(self):
         self.assertIn(f"desde {datos.SINTETICO_NACIONAL_DESDE}", principal(html("/pasto-sintetico")))
+    def test_ciudad_con_respuesta_tabla_y_encabezados_en_pregunta(self):
+        texto = html("/pasto-sintetico/envio/monterrey")
+        cuerpo = principal(texto)
+        for pregunta in ("¿Cuánto cuesta el envío a Monterrey?", "¿Cuánto tarda en llegar a Monterrey?",
+                         "¿Cuál es la compra mínima?", "¿Cómo elijo el modelo sin ver una muestra?",
+                         "¿Lo instalo yo o lo instalan ustedes?"):
+            self.assertIn(f"<h3>{pregunta}</h3>", cuerpo)
+        self.assertIn("<b>$162/m²</b>", cuerpo)
+        self.assertIn("12 × ≈ $1,667", cuerpo)
+        self.assertIn('href="/pasto-sintetico?estado=nuevo-leon#cotizador"', cuerpo)
+        productos = [n for n in grafo(texto) if n["@type"] == "Product"]
+        self.assertEqual(productos[0]["offers"]["shippingDetails"]["shippingRate"]["value"], "1150")
+
+    def test_perros_sin_el_precio_del_aruba(self):
+        cuerpo = principal(html("/pasto-sintetico/perros"))
+        self.assertIn("<b>$149/m²</b> con Toscana 18", cuerpo)
+        self.assertNotIn("$139", cuerpo)
+        self.assertNotIn("muestra", cuerpo.lower())
+        self.assertIn('href="/blog/pasto-sintetico-para-perros"', cuerpo)
 
 if __name__ == "__main__":
     unittest.main()
