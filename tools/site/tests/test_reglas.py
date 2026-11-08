@@ -34,7 +34,8 @@ PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
 # liquidar el saldo o el resto (el pago se explica con el anticipo y las formas de pago). Las citas de clientes no cuentan.
 SALDO_RE = re.compile(r"\bliquid(?:as|a|amos|ar|es)\s+el\s+(?:saldo|resto)\b|\bel\s+(?:saldo|resto)\s+se\s+liquida\b", re.I)
 # Decisión del dueño (2026-11-07): no se ofrece crédito a clientes (ni a instaladores ni a constructoras recurrentes).
-CREDITO_CLIENTES_RE = re.compile(r"\bcr[eé]dito\s+(?:para|a)\s+(?:(?:los|sus|nuestros)\s+)?clientes\b", re.I)
+CREDITO_CLIENTES_RE = re.compile(r"\bcr[eé]dito\s+(?:para|a)\s+(?:(?:los|sus|nuestros)\s+)?clientes\b"
+                                 r"|\bpago\s+diferido\b|\ba\s+cr[eé]dito\s+para\s+(?:proyectos|empresas|obras?)\b", re.I)
 # Decisión del dueño (2026-11-07): la visita para medir tiene costo o depende; nunca "visita sin costo", "visita
 # gratis", "visita gratuita", "la visita no tiene costo", "sin cargo" ni "no cuesta" (tampoco "vamos a medir sin costo").
 GRATIS = (r"(?:sin\s+(?:costo|cargo)|gratis|gratuit(?:[ao]s?|amente)|no\s+(?:tiene\s+(?:ning[uú]n\s+)?costo|cuesta"
@@ -213,7 +214,8 @@ class ReglasDelDuenoTest(unittest.TestCase):
         self.assertEqual(hallazgos, [])
 
     def test_credito_y_pago_al_terminar_se_detectan_sin_tocar_citas_de_clientes(self):
-        for sucio in ("crédito para clientes recurrentes", "Crédito a clientes recurrentes", "crédito a nuestros clientes"):
+        for sucio in ("crédito para clientes recurrentes", "Crédito a clientes recurrentes", "crédito a nuestros clientes",
+                      "¿Aceptan pago diferido o a crédito para proyectos?", "a crédito para empresas"):
             self.assertRegex(sucio, CREDITO_CLIENTES_RE)
         for limpio in ("mensualidades con tarjeta de crédito", "tarjeta de débito o crédito para tu compra"):
             self.assertNotRegex(limpio, CREDITO_CLIENTES_RE)

@@ -18,9 +18,10 @@ import paginas  # noqa: E402
 from test_reglas import textos_publicos  # noqa: E402
 
 P = datos.PRECIOS
-# Cada página migrada agrega su fila aquí y en SCRIPTS (palmas llega en la tarea siguiente).
-RUTAS = {"mayoreo": "/mayoreo-pasto-tampico"}
-SCRIPTS = {"mayoreo": ["/js/vt-medidor.js", "/js/vt-b2b.js"]}
+RUTAS = {"mayoreo": "/mayoreo-pasto-tampico", "palmas": "/palmas-mayoreo-proyectos"}
+SCRIPTS = {"mayoreo": ["/js/vt-medidor.js", "/js/vt-b2b.js"], "palmas": ["/js/vt-b2b.js"]}
+PRECIOS_VIEJOS_PALMAS = ("$850", "$1,200", "$1,500", "$1,600", "$1,800", "$2,000", "$2,200", "$2,400", "$2,800",
+                         "$3,200", "$4,200", "$90,000", "$150,000", "$180,000", "$180K", "$260K", "$100K")
 
 
 def pagina(clave):
@@ -155,6 +156,51 @@ class MayoreoTest(unittest.TestCase):
         _h, _m, _t, grafo = pagina("mayoreo")
         self.assertEqual([n["@type"] for n in grafo], ["Service", "FAQPage", "BreadcrumbList", "SpeakableSpecification"])
         self.assertEqual(grafo[0]["provider"]["address"]["streetAddress"], datos.CALLE)
+
+
+class PalmasTest(unittest.TestCase):
+    def test_tabla_de_especies_con_los_precios_del_dueno(self):
+        _h, main, _t, _g = pagina("palmas")
+        tabla = main[main.index('id="vt-h-precio"'):main.index("<h3", main.index('id="vt-h-precio"'))]
+        for nombre, cientifico, precio in datos.PALMAS_PROYECTO:
+            fila = re.search(rf'<th scope="row">{re.escape(nombre)}</th>(.*?)</tr>', tabla).group(1)
+            with self.subTest(especie=nombre):
+                self.assertIn(f"<i>{cientifico}</i>", fila)
+                esperado = f"desde ${precio:,} · tamaño chico" if precio else datos.SEGUN_COTIZACION
+                self.assertIn(esperado, fila)
+
+    def test_sin_precios_ni_proyectos_viejos(self):
+        _h, _m, texto, _g = pagina("palmas")
+        for viejo in PRECIOS_VIEJOS_PALMAS + ("Casos anónimos", "bajo NDA", "Lead time", "spec sheet", "+15",
+                                               "fianzas de cumplimiento", "alta en padrón", "80+"):
+            with self.subTest(viejo=viejo):
+                self.assertNotIn(viejo, texto)
+
+    def test_armador_con_todas_las_especies(self):
+        _h, main, _t, _g = pagina("palmas")
+        armador = main[main.index("data-vt-palmas"):]
+        for nombre, _c, _p in datos.PALMAS_PROYECTO:
+            self.assertEqual(armador.count(f'<option value="{nombre}">'), 3)
+        self.assertIn('data-cta="b2b:armador"', armador)
+
+    def test_garantia_de_plantas_condicionada(self):
+        _h, main, _t, _g = pagina("palmas")
+        garantia = main[main.index('id="vt-h-garantia"'):main.index('id="vt-h-faq"')]
+        self.assertIn("/politicas#garantia-plantas", garantia)
+        self.assertIn("sembramos", garantia)
+
+    def test_json_ld_con_precios_nuevos(self):
+        _h, _m, texto, grafo = pagina("palmas")
+        servicio = grafo[0]
+        self.assertEqual(servicio["offers"], {"@type": "AggregateOffer", "lowPrice": "250", "priceCurrency": "MXN",
+                                              "offerCount": "12"})
+        lista = next(n for n in grafo if n["@type"] == "ItemList")["itemListElement"]
+        con_precio = {e["item"]["name"]: e["item"]["offers"]["price"] for e in lista if "offers" in e["item"]}
+        self.assertEqual(con_precio, {"Palma areca": "250", "Coco plumoso": "250", "Palma real": "500"})
+        self.assertEqual(len(lista), 12)
+        self.assertNotIn("InStock", texto)
+        self.assertEqual([n["@type"] for n in grafo],
+                         ["Service", "LocalBusiness", "ItemList", "FAQPage", "BreadcrumbList", "SpeakableSpecification"])
 
 
 if __name__ == "__main__":

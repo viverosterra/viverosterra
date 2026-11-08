@@ -9,7 +9,7 @@ import hero  # noqa: E402
 from pages import PAGES  # noqa: E402
 
 CON_PLANTILLA = ("pasto-en-rollo-tampico", "diseno-jardines-tampico", "mantenimiento-jardines-tampico",
-                 "sistema-riego-tampico", "mayoreo-pasto-tampico")
+                 "sistema-riego-tampico", "mayoreo-pasto-tampico", "palmas-mayoreo-proyectos")
 
 
 class PaginasConPlantillaTest(unittest.TestCase):

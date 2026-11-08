@@ -17,7 +17,7 @@ class GuiaPalmasTest(unittest.TestCase):
         for viejo in ('id="lead"', "lead-cta", "lead-email", "Guía gratuita", "Descargar guía", "Lead Magnet"):
             with self.subTest(viejo=viejo):
                 self.assertNotIn(viejo, html)
-        self.assertIn("Sección 11 · Preguntas frecuentes", html)
+        self.assertIn('id="vt-h-faq"', html)  # la página sigue con sus preguntas (plantilla b2b desde la Etapa 2d)
         self.assertFalse((PUBLIC / "pdf" / "guia-12-palmas-arquitectos.pdf").exists())
 
     def test_ninguna_pagina_enlaza_la_guia(self):
