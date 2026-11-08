@@ -17,8 +17,8 @@ import shell  # noqa: E402
 
 class GenerarTest(unittest.TestCase):
     def test_paginas_registradas_tienen_contexto(self):
-        esperadas = (["/", "/pasto-en-rollo-tampico", "/pasto-sintetico-tampico", "/pasto-sintetico",
-                      "/pasto-sintetico/perros"] + [f"/pasto-sintetico/{m['slug']}" for m in MODELOS]
+        esperadas = (["/", "/pasto-en-rollo-tampico", "/pasto-sintetico-tampico", "/diseno-jardines-tampico",
+                      "/pasto-sintetico", "/pasto-sintetico/perros"] + [f"/pasto-sintetico/{m['slug']}" for m in MODELOS]
                      + [f"/pasto-sintetico/envio/{c['slug']}" for c in CIUDADES])
         self.assertEqual([r for r, *_ in generar.PAGINAS], esperadas)
         for ruta, salida, _p, _c in generar.PAGINAS:

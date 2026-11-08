@@ -11,10 +11,9 @@ from html import escape
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2] / "public"
-# /pasto-en-rollo-tampico trae su simulador desde tools/site/plantillas/servicio.py (Etapa 2a).
+# /pasto-en-rollo-tampico (2a) y /diseno-jardines-tampico (2c) traen su simulador desde tools/site/plantillas/servicio.py.
 PAGES = (
     ("sistema-riego-tampico", "un sistema de riego", 18000),
-    ("diseno-jardines-tampico", "el diseño de mi jardín", 6500),
 )
 SCRIPTS = (
     '<script src="/js/vt-mensualidades.js?v=20261104" defer></script>',

@@ -17,7 +17,8 @@ GARANTIA_PLANTAS = ("30 días", "Garantía de arraigo al sembrarlas nosotros")
 DESDE_2007 = ("Desde 2007", "Vivero propio en Cd. Madero")
 VARIEDADES = ("+200", "Variedades en el vivero")
 
-# /pasto-en-rollo-tampico y la home salen de tools/site/plantillas/ desde la Etapa 2a: este script ya no las toca.
+# La home y /pasto-en-rollo-tampico (Etapa 2a) y /diseno-jardines-tampico (Etapa 2c) salen de tools/site/plantillas/:
+# este script ya no las toca.
 PAGES = {
     "mayoreo-pasto-tampico": dict(
         eyebrow="Constructoras · Fraccionamientos · Industria",
@@ -38,16 +39,6 @@ PAGES = {
         img="/img/mantenimiento-jardines-poda-pasto-tampico.webp", img_pos="center 45%",
         alt="Jardinero de Viveros Terra podando pasto en un jardín de Tampico", caption="Poda y mantenimiento en Tampico.",
         wa=guided("Hola, quiero cotizar mantenimiento de jardín.", "Colonia", "Metros aprox. del jardín", "Casa o empresa"),
-    ),
-    "diseno-jardines-tampico": dict(
-        title="Diseño de jardines", accent="con plan y presupuesto claros",
-        price_pre="Plan Esencial", price="$3,000", price_unit="", price_alt="· Completo $6,500 · Premium desde $18,000",
-        lede="Te entregamos el diseño, la lista de plantas y materiales y el costo de la obra. Si nos contratas para hacerlo, el diseño se descuenta.",
-        facts=[("3 a 5 días", "Entrega del plan Esencial"), ("Se descuenta", "Si contratas la obra"), GARANTIA_PLANTAS],
-        img="/img/diseno-jardines-tampico-proyecto.webp", img_pos="center 55%",
-        alt="Jardín residencial diseñado por Viveros Terra en Tampico", caption="Proyecto de diseño de jardín en Tampico.",
-        wa=guided("Hola, me interesa el diseño de mi jardín.", "Colonia", "Metros aprox.", "Plan que me interesa"),
-        pago_nota="Paga en mensualidades con tarjeta de crédito en cotizaciones desde $2,000.",
     ),
     "sistema-riego-tampico": dict(
         title="Riego automático", accent="para jardines en Tampico",
