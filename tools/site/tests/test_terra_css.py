@@ -110,6 +110,15 @@ class TerraCssTest(unittest.TestCase):
         self.assertIn("display:none", self.regla(".vt-tabla__grupo"))
         self.assertIn(".vt-tabla--especies thead,.vt-tabla__cotiza{display:none}", self.css)
 
+    def test_componentes_de_materiales(self):
+        """Etapa 2f: portada sin foto y apaisada, cierre con la foto de fondo de main, otros materiales con miniatura y
+        "Según cotización" en la tabla sin desbordar a 320 px."""
+        for selector in (".vt-portada--sinfoto .vt-portada__grid", ".vt-portada--apaisada .vt-portada__foto .vt-fig__marco",
+                         ".vt-cierre--foto", ".vt-otros img", ".vt-tabla__p--cotiza"):
+            with self.subTest(selector=selector):
+                self.regla(selector)
+        self.assertIn("opacity:.15", self.regla(".vt-cierre__fondo"))
+        self.assertIn("white-space:normal", self.regla(".vt-tabla__p--cotiza"))
     def test_fuentes_referenciadas_existen(self):
         urls = re.findall(r'url\("(/fonts/[^"]+)"\)', self.css)
         self.assertEqual(len(urls), 2)

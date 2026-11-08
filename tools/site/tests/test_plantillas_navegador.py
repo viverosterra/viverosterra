@@ -27,7 +27,10 @@ PLANTAS = ("/plantas-palmas-arboles-tampico/", "/palmas-tropicales-tampico/", "/
            "/arboles-ornamentales-tampico/", "/arboles-para-banqueta-tampico/", "/plantas-de-interior-tampico/")
 # El servidor local no tiene cleanUrls de Vercel: el catálogo se pide como /catalogo.html (como en test_navegador.py).
 CATALOGO = "/catalogo.html"
-CON_PLANTILLA = PAGINAS + SERVICIOS + EMPRESAS + PLANTAS
+# Etapa 2f: materiales con la plantilla material (portada con o sin foto, calculadora y pedido por correo).
+MATERIALES = ("/tierra-negra-vegetal-tampico/", "/tezontle-rojo-tampico/", "/marmol-blanco-tampico/",
+              "/piedra-bola-rio-tampico/")
+CON_PLANTILLA = PAGINAS + SERVICIOS + EMPRESAS + PLANTAS + MATERIALES
 AXE_PAGINA = """async () => {
   const r = await axe.run(document, { resultTypes: ['violations'] });
   return r.violations.filter((v) => ['serious', 'critical'].includes(v.impact))
@@ -100,7 +103,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
         """Revisión de 2c: a 1024×800 la portada compacta deja el CTA de los servicios de jardín (y, desde 2d, de las
         páginas para empresas) en la primera pantalla."""
         page = self.pagina(1024, 800)
-        for ruta in SERVICIOS + EMPRESAS:
+        for ruta in SERVICIOS + EMPRESAS + MATERIALES:
             page.goto(self.base + ruta, wait_until="load")
             cta = page.locator('.vt-portada [data-hero-cta] .vt-btn--wa').bounding_box()
             with self.subTest(ruta=ruta):
@@ -578,6 +581,125 @@ class PlantillasNavegadorTest(unittest.TestCase):
             with self.subTest(ruta=ruta):
                 self.assertNotIn("/api/img", page.evaluate(lcp))
                 self.assertEqual([u for u in pedidas if "/api/img" in u], [])
+
+    # ---------- Etapa 2f: materiales ----------
+    CALCULOS = (
+        ("/tierra-negra-vegetal-tampico/", "vt-tierra", "87.5", "0.10", "material:cotizarCalculado", "8.8 m³"),
+        ("/tezontle-rojo-tampico/", "vt-tezontle", "50", "0.08", "material:cotizarTezontle", "4 m³"),
+        ("/marmol-blanco-tampico/", "vt-marmol", "50", "6", "material:cotizarMarmol", "250 sacos"),
+        ("/piedra-bola-rio-tampico/", "vt-piedra", "10", None, "material:cotizarPiedra", "1,200 a 1,500 kg"),
+    )
+
+    def test_calculadoras_de_materiales_con_teclado_mensaje_y_generate_lead(self):
+        """La calculadora de main, ahora un enlace medido: con teclado da la cantidad de main, el WhatsApp lleva el
+        resultado y la firma, y el clic manda generate_lead con el mismo cta_id que medía VTMedicion.whatsapp."""
+        for ruta, prefijo, area, capa, cta_id, cantidad in self.CALCULOS:
+            page = self.pagina(1440, 900)
+            page.goto(self.base + ruta, wait_until="load")
+            page.locator(f"#{prefijo}-area").focus()
+            page.keyboard.type(area)
+            if capa:
+                page.locator(f"#{prefijo}-capa").select_option(capa)
+            caja = page.locator("[data-vt-material]")
+            enlace = caja.locator('[data-vt-o="cta"]')
+            mensaje = unquote(enlace.get_attribute("href").split("text=", 1)[1])
+            with self.subTest(ruta=ruta):
+                self.assertEqual(caja.locator('[data-vt-o="cantidad"]').inner_text(), cantidad)
+                self.assertIn(f"Área: {area} m²", mensaje)
+                self.assertTrue(mensaje.endswith("Colonia de entrega: ___\n\n¿Me pueden dar precio de entrega a domicilio en "
+                                                 "Tampico, Madero o Altamira?"))
+                self.assertNotIn("is-vacio", caja.locator(".vt-calc__cantidad").get_attribute("class"))
+            page.evaluate("(a) => a.addEventListener('click', (e) => e.preventDefault())", enlace.element_handle())
+            enlace.click()
+            eventos = page.evaluate(
+                "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+            with self.subTest(ruta=ruta, paso="clic"):
+                self.assertIn(["event", "generate_lead", {"method": "whatsapp", "cta_id": cta_id, "service": "materiales"}],
+                              eventos)
+                self.assertTrue(unquote(enlace.get_attribute("href")).endswith(datos.FIRMA))
+
+    def test_calculadora_de_materiales_sin_area_manda_el_mensaje_de_la_pagina(self):
+        page = self.pagina(375, 812)
+        for ruta, prefijo, area, _capa, _cta, _cantidad in self.CALCULOS:
+            page.goto(self.base + ruta, wait_until="load")
+            campo = page.locator(f"#{prefijo}-area")
+            campo.fill(area)
+            campo.fill("")
+            esperado = datos.con_firma(mensajes_paginas.MATERIALES[ruta.rstrip("/")])
+            href = page.locator('[data-vt-material] [data-vt-o="cta"]').get_attribute("href")
+            with self.subTest(ruta=ruta):
+                self.assertEqual(unquote(href.split("text=", 1)[1]), esperado)
+                self.assertEqual(page.locator('[data-vt-material] [data-vt-o="cantidad"]').inner_text(), "Escribe el área")
+                self.assertIn("is-vacio", page.locator("[data-vt-material] .vt-calc__cantidad").get_attribute("class"))
+
+    def test_pedido_por_correo_de_materiales_valida_y_envia_los_campos_de_main(self):
+        """El formulario de main (nombre, email, detalle) sigue yendo por POST a formsubmit de la cuenta oficial, ahora
+        con honeypot, validación junto a cada campo y generate_lead method "formulario"."""
+        page = self.pagina(375, 812)
+        enviados = []
+        page.route("https://formsubmit.co/**", self.atrapador(enviados))
+        page.goto(self.base + "/marmol-blanco-tampico/", wait_until="load")
+        form = page.locator("#solicitar-pedido form.vt-correo")
+        boton = form.locator('button[type="submit"]')
+        boton.click()
+        self.assertEqual(enviados, [])
+        self.assertEqual(page.evaluate("() => document.activeElement.name"), "nombre")
+        form.locator('[name="nombre"]').fill("Ana")
+        form.locator('[name="email"]').fill("ana@")
+        boton.click()
+        self.assertEqual(page.evaluate("() => document.activeElement.name"), "email")
+        self.assertIn("tu@correo.com", form.locator("#vt-marmol-c-email-error").inner_text())
+        form.locator('[name="email"]').fill("ana@ejemplo.com")
+        form.locator('[name="detalle"]').fill("36 sacos, entrega en Tampico")
+        page.evaluate("() => document.addEventListener('submit', (e) => e.preventDefault(), { once: true })")
+        boton.click()
+        eventos = page.evaluate("() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+        with page.expect_navigation():
+            page.evaluate("() => document.querySelector('#solicitar-pedido form').submit()")
+        metodo, url, cuerpo = enviados[0]
+        campos = dict(parse_qsl(cuerpo, keep_blank_values=True))
+        self.assertEqual((metodo, url), ("POST", f"https://formsubmit.co/{datos.CORREO_FORMULARIOS}"))
+        self.assertEqual({k: campos[k] for k in ("nombre", "email", "detalle", "_subject", "_next", "_honey")},
+                         {"nombre": "Ana", "email": "ana@ejemplo.com", "detalle": "36 sacos, entrega en Tampico",
+                          "_subject": "Pedido desde sitio web - Viveros Terra", "_next": f"{datos.SITIO}/gracias",
+                          "_honey": ""})
+        self.assertIn(["event", "generate_lead", {"method": "formulario", "cta_id": "material:formulario",
+                                                  "service": "materiales"}], eventos)
+
+    def test_calculadoras_de_materiales_con_resultado_largo_no_se_salen_de_la_pantalla(self):
+        """El body recorta con overflow-x: clip, así que scrollWidth no ve lo que se sale: se miden las cajas. El
+        resultado más largo de main ("Camión volteo de 8 m³ o más (según cotización)") no ensancha la columna."""
+        casos = (("/tierra-negra-vegetal-tampico/", "vt-tierra", "87.5", "0.10"),
+                 ("/tierra-negra-vegetal-tampico/", "vt-tierra", "5000", "0.15"),
+                 ("/tezontle-rojo-tampico/", "vt-tezontle", "5000", "0.08"),
+                 ("/marmol-blanco-tampico/", "vt-marmol", "99999", "6"),
+                 ("/piedra-bola-rio-tampico/", "vt-piedra", "99999", None))
+        for ancho in (320, 375, 1024):
+            page = self.pagina(ancho, 812)
+            for ruta, prefijo, area, capa in casos:
+                page.goto(self.base + ruta, wait_until="load")
+                page.locator(f"#{prefijo}-area").fill(area)
+                if capa:
+                    page.locator(f"#{prefijo}-capa").select_option(capa)
+                fuera = page.evaluate("""() => { const sec = document.querySelector('#calculadora .vt-wrap')
+                  .getBoundingClientRect(); return Array.from(document.querySelectorAll('#calculadora .vt-b2b *'))
+                  .filter((e) => { const r = e.getBoundingClientRect(); return r.width && (r.right > sec.right + 0.5
+                  || r.right > innerWidth); }).map((e) => e.tagName + '.' + e.className).slice(0, 5) }""")
+                with self.subTest(ancho=ancho, ruta=ruta, area=area, capa=capa):
+                    self.assertEqual(fuera, [])
+
+    def test_fotos_de_materiales_cargan_sin_deformarse(self):
+        """Las fotos de main, todas: ninguna rota tras desplazar la página (carga lazy) y ninguna estirada."""
+        page = self.pagina(1440, 900)
+        for ruta in MATERIALES:
+            page.goto(self.base + ruta, wait_until="load")
+            page.evaluate("async () => { for (let y = 0; y < document.documentElement.scrollHeight; y += innerHeight) {"
+                          " scrollTo(0, y); await new Promise((r) => setTimeout(r, 60)); } }")
+            page.wait_for_load_state("networkidle")
+            malas = page.evaluate("""() => Array.from(document.querySelectorAll('main img')).filter((i) =>
+              !i.complete || !i.naturalWidth || getComputedStyle(i).objectFit === 'fill').map((i) => i.src)""")
+            with self.subTest(ruta=ruta):
+                self.assertEqual(malas, [])
 
     def test_cls_bajo_0_1_en_movil(self):
         page = self.pagina(375, 812)

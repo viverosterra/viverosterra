@@ -1,4 +1,4 @@
-"""tools/servicios ya no toca las páginas que salen de tools/site/plantillas/ (Etapas 2a, 2c, 2d y 2e)."""
+"""tools/servicios ya no toca las páginas que salen de tools/site/plantillas/ (Etapas 2a, 2c, 2d, 2e y 2f)."""
 import sys
 import unittest
 from pathlib import Path
@@ -11,7 +11,9 @@ from pages import PAGES  # noqa: E402
 CON_PLANTILLA = ("pasto-en-rollo-tampico", "diseno-jardines-tampico", "mantenimiento-jardines-tampico",
                  "sistema-riego-tampico", "mayoreo-pasto-tampico", "palmas-mayoreo-proyectos",
                  "plantas-palmas-arboles-tampico", "palmas-tropicales-tampico", "plantas-para-jardin-tampico",
-                 "arboles-ornamentales-tampico", "arboles-para-banqueta-tampico", "plantas-de-interior-tampico")
+                 "arboles-ornamentales-tampico", "arboles-para-banqueta-tampico", "plantas-de-interior-tampico",
+                 "tierra-negra-vegetal-tampico", "tezontle-rojo-tampico", "marmol-blanco-tampico",
+                 "piedra-bola-rio-tampico")
 
 
 class PaginasConPlantillaTest(unittest.TestCase):

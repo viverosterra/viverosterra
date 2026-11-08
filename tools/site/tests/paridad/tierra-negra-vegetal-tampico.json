@@ -1,0 +1,75 @@
+{
+ "meta": {
+  "title": "Tierra Negra Vegetal Tampico · Costal y Camión Volteo",
+  "description": "Tierra negra vegetal en Tampico. Costal $90 · Tierra preparada $100 · m³ $1,500 · Camión desde $5,000. Entrega a domicilio Madero y Altamira. Cotiza gratis.",
+  "robots": "index, follow",
+  "canonical": "https://www.viverosterra.com/tierra-negra-vegetal-tampico",
+  "og:type": "website",
+  "og:url": "https://www.viverosterra.com/tierra-negra-vegetal-tampico",
+  "og:title": "Tierra Negra Vegetal Tampico · Viveros Terra",
+  "og:description": "Tierra negra vegetal para jardín y pasto en Tampico. Costal $90, tierra preparada $100, m³ $1,500, camión desde $5,000. Cotiza gratis.",
+  "og:image": "https://www.viverosterra.com/img/camion-tierra-negra-entrega-tampico.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "AggregateOffer",
+  "Answer",
+  "Brand",
+  "BreadcrumbList",
+  "FAQPage",
+  "ListItem",
+  "LocalBusiness",
+  "Product",
+  "Question",
+  "SpeakableSpecification"
+ ],
+ "encabezados": [
+  "Tierra negra vegetal por costal o camión",
+  "¿Por qué el suelo de Tampico necesita tierra negra?",
+  "¿Para qué usas la tierra negra?",
+  "Preparación para pasto en rollo",
+  "Cajetes para árboles y palmas",
+  "Mejora de jardines existentes",
+  "Nivelación de terrenos",
+  "Macetas y jardineras grandes",
+  "Proyectos comerciales e industriales",
+  "¿Cuánta tierra negra necesitas?",
+  "Elige el formato para tu proyecto",
+  "Costales de tierra negra",
+  "Tierra Negra Preparada",
+  "A granel — Por m³",
+  "A granel — Camión volteo",
+  "Así luce la tierra negra de Viveros Terra",
+  "Lo que dicen nuestros clientes",
+  "Todo sobre tierra negra en Tampico",
+  "Escríbenos para cotizar"
+ ],
+ "faq": [
+  "¿Cuánto cuesta un camión de tierra negra en Tampico?",
+  "¿Para qué sirve la tierra negra vegetal?",
+  "¿Cuánta tierra negra necesito para preparar mi jardín?",
+  "¿Entregan tierra negra a domicilio en Tampico?",
+  "¿Cuánta tierra negra necesito para mi jardín?",
+  "¿Qué diferencia hay entre tierra negra y tierra común de Tampico?",
+  "¿El pasto arraiga mejor con tierra negra?",
+  "¿Entregan tierra negra a domicilio en toda la zona de Tampico?",
+  "¿Se puede usar tierra negra para macetas y jardineras?",
+  "¿Dan factura CFDI por la tierra negra?"
+ ],
+ "precios": [
+  "$1,500",
+  "$100",
+  "$3,500",
+  "$5,000",
+  "$5,200",
+  "$8,000",
+  "$90"
+ ],
+ "enlaces": [
+  "/blog/diseno-jardines-tampico-guia",
+  "/catalogo",
+  "/pasto-en-rollo-tampico",
+  "/plantas-palmas-arboles-tampico",
+  "/tezontle-rojo-tampico"
+ ]
+}

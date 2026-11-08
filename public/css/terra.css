@@ -418,7 +418,9 @@
 @media (min-width:640px) and (max-width:1023px){.vt-medidor{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.vt-medidor__form{grid-row:span 2}}
 @media (min-width:1024px){.vt-medidor{grid-template-columns:4fr 4fr 4fr;gap:32px;align-items:start}}
 /* Empresas (Etapa 2d): cotizador de pasto por volumen y armador de palmas (vt-b2b.js) */
-.vt-b2b{display:grid;gap:24px}
+.vt-b2b{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+/* El resultado largo de la calculadora ("Camión volteo de 8 m³ o más (según cotización)") parte renglón en vez de ensanchar la columna. */
+.vt-b2b .vt-etiqueta__fila b{white-space:normal;text-align:right}
 .vt-b2b__form{display:grid;gap:16px;align-content:start}
 .vt-b2b__form>.vt-btn{justify-self:start}
 .vt-b2b [hidden]{display:none}
@@ -601,3 +603,22 @@
 @media (min-width:1024px){.vt-relacionados{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}}
 @media (min-width:1024px){.vt-cierre__grid{grid-template-columns:7fr 4fr;gap:64px;align-items:end}}
 @media (prefers-reduced-motion:reduce){.vt-flecha,.vt-faq summary::after,.vt-tarjeta,.vt-indice__ir{transition:none}.vt-tarjeta:hover{transform:none}}
+/* ---------- materiales (Etapa 2f) ---------- */
+/* Portada sin foto: tezontle y piedra bola no tienen foto de portada en main y no se agrega ninguna (regla del dueño). */
+.vt-portada--sinfoto .vt-portada__grid{grid-template-columns:minmax(0,1fr)}
+/* Cierre con la foto que main ponía detrás del CTA final: decorativa (alt=""), al 15 % (en main, del 15 al 20 %). */
+.vt-cierre--foto{position:relative;isolation:isolate;overflow:hidden}
+.vt-cierre__fondo{position:absolute;inset:0;z-index:-1;width:100%;height:100%;object-fit:cover;opacity:.15}
+/* Otros materiales: miniatura de 48 px (las fotos de main miden de 194 a 821 px: no se agrandan), nombre y precios.
+   Toda la tarjeta abre el enlace; el foco se marca en la tarjeta. */
+.vt-otros{display:flex;flex-wrap:wrap;gap:12px;list-style:none}
+.vt-otros li{position:relative;display:flex;align-items:center;gap:12px;min-height:64px;padding:8px 16px 8px 8px;border:1px solid var(--vt-line);background:var(--vt-card)}
+.vt-otros img{width:48px;height:48px;object-fit:cover}
+.vt-otros a{color:var(--vt-ink);font-weight:700;text-decoration:none}
+.vt-otros a::after{content:"";position:absolute;inset:0}
+.vt-otros li:has(a:focus-visible){outline:2px solid var(--vt-field-deep);outline-offset:2px}
+.vt-otros small{display:block;font-size:var(--vt-text-sm);color:var(--vt-muted)}
+/* Portada con foto apaisada (tierra negra, 3:2): no se recorta a 4:5 en escritorio. */
+.vt-portada--apaisada .vt-portada__foto .vt-fig__marco{aspect-ratio:3/2}
+/* "Según cotización" en la tabla de presentaciones: más chico y en dos renglones si no cabe a 320 px. */
+.vt-tabla__p--cotiza{font-size:17px;white-space:normal}

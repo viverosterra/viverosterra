@@ -1,0 +1,2670 @@
+{
+ "origen": "main (4169785), antes de la Etapa 2f: calcular*() y cotizar*() de cada página, ejecutados en node",
+ "calculadoras": {
+  "tierra-negra": {
+   "capas": [
+    {
+     "value": "0.05",
+     "text": "5 cm — Mejora superficial"
+    },
+    {
+     "value": "0.08",
+     "text": "8 cm — Preparación para pasto Recomendado"
+    },
+    {
+     "value": "0.10",
+     "text": "10 cm — Preparación profunda"
+    },
+    {
+     "value": "0.15",
+     "text": "15 cm — Terreno muy pobre"
+    }
+   ],
+   "casos": [
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "0.1 m³",
+      "res-formato": "3 costales ($270)",
+      "res-costales": "3 costales",
+      "btn-cotizar-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 0.5 m²\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "0.1 m³",
+      "res-formato": "3 costales ($270)",
+      "res-costales": "3 costales",
+      "btn-cotizar-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 0.5 m²\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "0.1 m³",
+      "res-formato": "3 costales ($270)",
+      "res-costales": "3 costales",
+      "btn-cotizar-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 0.5 m²\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "0.1 m³",
+      "res-formato": "3 costales ($270)",
+      "res-costales": "3 costales",
+      "btn-cotizar-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 0.5 m²\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "0.1 m³",
+      "res-formato": "3 costales ($270)",
+      "res-costales": "3 costales",
+      "btn-cotizar-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 1 m²\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "0.1 m³",
+      "res-formato": "3 costales ($270)",
+      "res-costales": "3 costales",
+      "btn-cotizar-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 1 m²\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "0.1 m³",
+      "res-formato": "3 costales ($270)",
+      "res-costales": "3 costales",
+      "btn-cotizar-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 1 m²\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "0.2 m³",
+      "res-formato": "6 costales ($540)",
+      "res-costales": "6 costales",
+      "btn-cotizar-text": "Cotizar 0.2 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 1 m²\nCantidad: 0.2 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "0.4 m³",
+      "res-formato": "12 costales ($1,080)",
+      "res-costales": "12 costales",
+      "btn-cotizar-text": "Cotizar 0.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 7 m²\nCantidad: 0.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "0.6 m³",
+      "res-formato": "18 costales ($1,620)",
+      "res-costales": "18 costales",
+      "btn-cotizar-text": "Cotizar 0.6 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 7 m²\nCantidad: 0.6 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "0.8 m³",
+      "res-formato": "23 costales ($2,070)",
+      "res-costales": "23 costales",
+      "btn-cotizar-text": "Cotizar 0.8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 7 m²\nCantidad: 0.8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "1.1 m³",
+      "res-formato": "32 costales ($2,880)",
+      "res-costales": "32 costales",
+      "btn-cotizar-text": "Cotizar 1.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 7 m²\nCantidad: 1.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "0.5 m³",
+      "res-formato": "15 costales ($1,350)",
+      "res-costales": "15 costales",
+      "btn-cotizar-text": "Cotizar 0.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 10 m²\nCantidad: 0.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "0.8 m³",
+      "res-formato": "23 costales ($2,070)",
+      "res-costales": "23 costales",
+      "btn-cotizar-text": "Cotizar 0.8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 10 m²\nCantidad: 0.8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "1 m³",
+      "res-formato": "29 costales ($2,610)",
+      "res-costales": "29 costales",
+      "btn-cotizar-text": "Cotizar 1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 10 m²\nCantidad: 1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "1.5 m³",
+      "res-formato": "43 costales ($3,870)",
+      "res-costales": "43 costales",
+      "btn-cotizar-text": "Cotizar 1.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 10 m²\nCantidad: 1.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "0.7 m³",
+      "res-formato": "20 costales ($1,800)",
+      "res-costales": "20 costales",
+      "btn-cotizar-text": "Cotizar 0.7 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 12.5 m²\nCantidad: 0.7 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "1 m³",
+      "res-formato": "29 costales ($2,610)",
+      "res-costales": "29 costales",
+      "btn-cotizar-text": "Cotizar 1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 12.5 m²\nCantidad: 1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "1.3 m³",
+      "res-formato": "38 costales ($3,420)",
+      "res-costales": "38 costales",
+      "btn-cotizar-text": "Cotizar 1.3 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 12.5 m²\nCantidad: 1.3 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "1.9 m³",
+      "res-formato": "1.9 m³ suelto (~$2,850)",
+      "res-costales": "~55 costales",
+      "btn-cotizar-text": "Cotizar 1.9 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 12.5 m²\nCantidad: 1.9 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "1 m³",
+      "res-formato": "29 costales ($2,610)",
+      "res-costales": "29 costales",
+      "btn-cotizar-text": "Cotizar 1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 18.75 m²\nCantidad: 1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "1.5 m³",
+      "res-formato": "43 costales ($3,870)",
+      "res-costales": "43 costales",
+      "btn-cotizar-text": "Cotizar 1.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 18.75 m²\nCantidad: 1.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "1.9 m³",
+      "res-formato": "1.9 m³ suelto (~$2,850)",
+      "res-costales": "~55 costales",
+      "btn-cotizar-text": "Cotizar 1.9 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 18.75 m²\nCantidad: 1.9 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "2.9 m³",
+      "res-formato": "2.9 m³ suelto (~$4,350)",
+      "res-costales": "~83 costales",
+      "btn-cotizar-text": "Cotizar 2.9 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 18.75 m²\nCantidad: 2.9 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "1.5 m³",
+      "res-formato": "43 costales ($3,870)",
+      "res-costales": "43 costales",
+      "btn-cotizar-text": "Cotizar 1.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 30 m²\nCantidad: 1.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "2.4 m³",
+      "res-formato": "2.4 m³ suelto (~$3,600)",
+      "res-costales": "~69 costales",
+      "btn-cotizar-text": "Cotizar 2.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 30 m²\nCantidad: 2.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "3 m³",
+      "res-formato": "3 m³ suelto (~$4,500)",
+      "res-costales": "~86 costales",
+      "btn-cotizar-text": "Cotizar 3 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 30 m²\nCantidad: 3 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "4.5 m³",
+      "res-formato": "4.5 m³ suelto (~$6,750)",
+      "res-costales": "~129 costales",
+      "btn-cotizar-text": "Cotizar 4.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 30 m²\nCantidad: 4.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "2.5 m³",
+      "res-formato": "2.5 m³ suelto (~$3,750)",
+      "res-costales": "~72 costales",
+      "btn-cotizar-text": "Cotizar 2.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 50 m²\nCantidad: 2.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "4 m³",
+      "res-formato": "4 m³ suelto (~$6,000)",
+      "res-costales": "~115 costales",
+      "btn-cotizar-text": "Cotizar 4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 50 m²\nCantidad: 4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "5 m³",
+      "res-formato": "5 m³ suelto (~$7,500)",
+      "res-costales": "~143 costales",
+      "btn-cotizar-text": "Cotizar 5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 50 m²\nCantidad: 5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "7.5 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~215 costales",
+      "btn-cotizar-text": "Cotizar 7.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 50 m²\nCantidad: 7.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "4 m³",
+      "res-formato": "4 m³ suelto (~$6,000)",
+      "res-costales": "~115 costales",
+      "btn-cotizar-text": "Cotizar 4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 80 m²\nCantidad: 4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "6.4 m³",
+      "res-formato": "6.4 m³ suelto (~$9,600)",
+      "res-costales": "~183 costales",
+      "btn-cotizar-text": "Cotizar 6.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 80 m²\nCantidad: 6.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "8 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~229 costales",
+      "btn-cotizar-text": "Cotizar 8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 80 m²\nCantidad: 8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "12 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~343 costales",
+      "btn-cotizar-text": "Cotizar 12 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 80 m²\nCantidad: 12 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "4.4 m³",
+      "res-formato": "4.4 m³ suelto (~$6,600)",
+      "res-costales": "~126 costales",
+      "btn-cotizar-text": "Cotizar 4.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 87.5 m²\nCantidad: 4.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "7 m³",
+      "res-formato": "7 m³ suelto (~$10,500)",
+      "res-costales": "~200 costales",
+      "btn-cotizar-text": "Cotizar 7 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 87.5 m²\nCantidad: 7 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "8.8 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~252 costales",
+      "btn-cotizar-text": "Cotizar 8.8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 87.5 m²\nCantidad: 8.8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "13.2 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~378 costales",
+      "btn-cotizar-text": "Cotizar 13.2 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 87.5 m²\nCantidad: 13.2 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "5 m³",
+      "res-formato": "5 m³ suelto (~$7,500)",
+      "res-costales": "~143 costales",
+      "btn-cotizar-text": "Cotizar 5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 100 m²\nCantidad: 5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "8 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~229 costales",
+      "btn-cotizar-text": "Cotizar 8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 100 m²\nCantidad: 8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "10 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~286 costales",
+      "btn-cotizar-text": "Cotizar 10 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 100 m²\nCantidad: 10 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "15 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~429 costales",
+      "btn-cotizar-text": "Cotizar 15 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 100 m²\nCantidad: 15 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "7 m³",
+      "res-formato": "7 m³ suelto (~$10,500)",
+      "res-costales": "~200 costales",
+      "btn-cotizar-text": "Cotizar 7 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 140 m²\nCantidad: 7 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "11.3 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~323 costales",
+      "btn-cotizar-text": "Cotizar 11.3 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 140 m²\nCantidad: 11.3 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "14 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~400 costales",
+      "btn-cotizar-text": "Cotizar 14 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 140 m²\nCantidad: 14 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "21 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~600 costales",
+      "btn-cotizar-text": "Cotizar 21 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 140 m²\nCantidad: 21 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "10 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~286 costales",
+      "btn-cotizar-text": "Cotizar 10 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 200 m²\nCantidad: 10 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "16 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~458 costales",
+      "btn-cotizar-text": "Cotizar 16 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 200 m²\nCantidad: 16 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "20 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~572 costales",
+      "btn-cotizar-text": "Cotizar 20 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 200 m²\nCantidad: 20 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "30 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~858 costales",
+      "btn-cotizar-text": "Cotizar 30 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 200 m²\nCantidad: 30 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "16.7 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~478 costales",
+      "btn-cotizar-text": "Cotizar 16.7 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 333 m²\nCantidad: 16.7 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "26.7 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~763 costales",
+      "btn-cotizar-text": "Cotizar 26.7 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 333 m²\nCantidad: 26.7 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "33.4 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~955 costales",
+      "btn-cotizar-text": "Cotizar 33.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 333 m²\nCantidad: 33.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "50 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~1429 costales",
+      "btn-cotizar-text": "Cotizar 50 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 333 m²\nCantidad: 50 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "res-m3": "50 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~1429 costales",
+      "btn-cotizar-text": "Cotizar 50 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 1000 m²\nCantidad: 50 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "res-m3": "80 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~2286 costales",
+      "btn-cotizar-text": "Cotizar 80 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 1000 m²\nCantidad: 80 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "res-m3": "100 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~2858 costales",
+      "btn-cotizar-text": "Cotizar 100 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 1000 m²\nCantidad: 100 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "0.15"
+     },
+     "visibles": {
+      "res-m3": "150 m³",
+      "res-formato": "Camión volteo 8m³+ (~desde $5,000)",
+      "res-costales": "~4286 costales",
+      "btn-cotizar-text": "Cotizar 150 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tierra negra vegetal.\n\nResultado de la calculadora:\nÁrea: 1000 m²\nCantidad: 150 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    }
+   ]
+  },
+  "tezontle": {
+   "capas": [
+    {
+     "value": "0.06",
+     "text": "Control de maleza (6 cm)"
+    },
+    {
+     "value": "0.08",
+     "text": "Control de maleza intenso (8 cm)"
+    },
+    {
+     "value": "0.10",
+     "text": "Senderos transitables (10 cm)"
+    },
+    {
+     "value": "0.05",
+     "text": "Decorativo/arriates (5 cm)"
+    },
+    {
+     "value": "0.04",
+     "text": "Capa en macetas (4 cm)"
+    }
+   ],
+   "casos": [
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "0.1 m³",
+      "tez-res-formato": "4 costales",
+      "tez-res-costales": "~4 costales",
+      "tez-btn-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 0.5 m²\nUso: Control de maleza (6 cm)\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "0.1 m³",
+      "tez-res-formato": "4 costales",
+      "tez-res-costales": "~4 costales",
+      "tez-btn-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 0.5 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "0.1 m³",
+      "tez-res-formato": "4 costales",
+      "tez-res-costales": "~4 costales",
+      "tez-btn-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 0.5 m²\nUso: Senderos transitables (10 cm)\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "0.1 m³",
+      "tez-res-formato": "4 costales",
+      "tez-res-costales": "~4 costales",
+      "tez-btn-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 0.5 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "0.1 m³",
+      "tez-res-formato": "4 costales",
+      "tez-res-costales": "~4 costales",
+      "tez-btn-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 0.5 m²\nUso: Capa en macetas (4 cm)\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "0.1 m³",
+      "tez-res-formato": "4 costales",
+      "tez-res-costales": "~4 costales",
+      "tez-btn-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 1 m²\nUso: Control de maleza (6 cm)\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "0.1 m³",
+      "tez-res-formato": "4 costales",
+      "tez-res-costales": "~4 costales",
+      "tez-btn-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 1 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "0.1 m³",
+      "tez-res-formato": "4 costales",
+      "tez-res-costales": "~4 costales",
+      "tez-btn-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 1 m²\nUso: Senderos transitables (10 cm)\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "0.1 m³",
+      "tez-res-formato": "4 costales",
+      "tez-res-costales": "~4 costales",
+      "tez-btn-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 1 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "0.1 m³",
+      "tez-res-formato": "4 costales",
+      "tez-res-costales": "~4 costales",
+      "tez-btn-text": "Cotizar 0.1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 1 m²\nUso: Capa en macetas (4 cm)\nCantidad: 0.1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "0.5 m³",
+      "tez-res-formato": "19 costales",
+      "tez-res-costales": "~19 costales",
+      "tez-btn-text": "Cotizar 0.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 7 m²\nUso: Control de maleza (6 cm)\nCantidad: 0.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "0.6 m³",
+      "tez-res-formato": "23 costales",
+      "tez-res-costales": "~23 costales",
+      "tez-btn-text": "Cotizar 0.6 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 7 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 0.6 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "0.8 m³",
+      "tez-res-formato": "30 costales",
+      "tez-res-costales": "~30 costales",
+      "tez-btn-text": "Cotizar 0.8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 7 m²\nUso: Senderos transitables (10 cm)\nCantidad: 0.8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "0.4 m³",
+      "tez-res-formato": "15 costales",
+      "tez-res-costales": "~15 costales",
+      "tez-btn-text": "Cotizar 0.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 7 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 0.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "0.3 m³",
+      "tez-res-formato": "12 costales",
+      "tez-res-costales": "~12 costales",
+      "tez-btn-text": "Cotizar 0.3 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 7 m²\nUso: Capa en macetas (4 cm)\nCantidad: 0.3 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "0.6 m³",
+      "tez-res-formato": "23 costales",
+      "tez-res-costales": "~23 costales",
+      "tez-btn-text": "Cotizar 0.6 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 10 m²\nUso: Control de maleza (6 cm)\nCantidad: 0.6 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "0.8 m³",
+      "tez-res-formato": "30 costales",
+      "tez-res-costales": "~30 costales",
+      "tez-btn-text": "Cotizar 0.8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 10 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 0.8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "1 m³",
+      "tez-res-formato": "38 costales",
+      "tez-res-costales": "~38 costales",
+      "tez-btn-text": "Cotizar 1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 10 m²\nUso: Senderos transitables (10 cm)\nCantidad: 1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "0.5 m³",
+      "tez-res-formato": "19 costales",
+      "tez-res-costales": "~19 costales",
+      "tez-btn-text": "Cotizar 0.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 10 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 0.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "0.4 m³",
+      "tez-res-formato": "15 costales",
+      "tez-res-costales": "~15 costales",
+      "tez-btn-text": "Cotizar 0.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 10 m²\nUso: Capa en macetas (4 cm)\nCantidad: 0.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "0.8 m³",
+      "tez-res-formato": "30 costales",
+      "tez-res-costales": "~30 costales",
+      "tez-btn-text": "Cotizar 0.8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 12.5 m²\nUso: Control de maleza (6 cm)\nCantidad: 0.8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "1 m³",
+      "tez-res-formato": "38 costales",
+      "tez-res-costales": "~38 costales",
+      "tez-btn-text": "Cotizar 1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 12.5 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "1.3 m³",
+      "tez-res-formato": "1.3 m³ suelto",
+      "tez-res-costales": "~49 costales",
+      "tez-btn-text": "Cotizar 1.3 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 12.5 m²\nUso: Senderos transitables (10 cm)\nCantidad: 1.3 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "0.7 m³",
+      "tez-res-formato": "26 costales",
+      "tez-res-costales": "~26 costales",
+      "tez-btn-text": "Cotizar 0.7 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 12.5 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 0.7 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "0.5 m³",
+      "tez-res-formato": "19 costales",
+      "tez-res-costales": "~19 costales",
+      "tez-btn-text": "Cotizar 0.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 12.5 m²\nUso: Capa en macetas (4 cm)\nCantidad: 0.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "1.2 m³",
+      "tez-res-formato": "1.2 m³ suelto",
+      "tez-res-costales": "~45 costales",
+      "tez-btn-text": "Cotizar 1.2 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 18.75 m²\nUso: Control de maleza (6 cm)\nCantidad: 1.2 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "1.5 m³",
+      "tez-res-formato": "1.5 m³ suelto",
+      "tez-res-costales": "~56 costales",
+      "tez-btn-text": "Cotizar 1.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 18.75 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 1.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "1.9 m³",
+      "tez-res-formato": "1.9 m³ suelto",
+      "tez-res-costales": "~71 costales",
+      "tez-btn-text": "Cotizar 1.9 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 18.75 m²\nUso: Senderos transitables (10 cm)\nCantidad: 1.9 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "1 m³",
+      "tez-res-formato": "38 costales",
+      "tez-res-costales": "~38 costales",
+      "tez-btn-text": "Cotizar 1 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 18.75 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 1 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "0.8 m³",
+      "tez-res-formato": "30 costales",
+      "tez-res-costales": "~30 costales",
+      "tez-btn-text": "Cotizar 0.8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 18.75 m²\nUso: Capa en macetas (4 cm)\nCantidad: 0.8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "1.8 m³",
+      "tez-res-formato": "1.8 m³ suelto",
+      "tez-res-costales": "~67 costales",
+      "tez-btn-text": "Cotizar 1.8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 30 m²\nUso: Control de maleza (6 cm)\nCantidad: 1.8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "2.4 m³",
+      "tez-res-formato": "2.4 m³ suelto",
+      "tez-res-costales": "~89 costales",
+      "tez-btn-text": "Cotizar 2.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 30 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 2.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "3 m³",
+      "tez-res-formato": "3 m³ suelto",
+      "tez-res-costales": "~112 costales",
+      "tez-btn-text": "Cotizar 3 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 30 m²\nUso: Senderos transitables (10 cm)\nCantidad: 3 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "1.5 m³",
+      "tez-res-formato": "1.5 m³ suelto",
+      "tez-res-costales": "~56 costales",
+      "tez-btn-text": "Cotizar 1.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 30 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 1.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "1.2 m³",
+      "tez-res-formato": "1.2 m³ suelto",
+      "tez-res-costales": "~45 costales",
+      "tez-btn-text": "Cotizar 1.2 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 30 m²\nUso: Capa en macetas (4 cm)\nCantidad: 1.2 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "3 m³",
+      "tez-res-formato": "3 m³ suelto",
+      "tez-res-costales": "~112 costales",
+      "tez-btn-text": "Cotizar 3 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 50 m²\nUso: Control de maleza (6 cm)\nCantidad: 3 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "4 m³",
+      "tez-res-formato": "4 m³ suelto",
+      "tez-res-costales": "~149 costales",
+      "tez-btn-text": "Cotizar 4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 50 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "5 m³",
+      "tez-res-formato": "5 m³ suelto",
+      "tez-res-costales": "~186 costales",
+      "tez-btn-text": "Cotizar 5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 50 m²\nUso: Senderos transitables (10 cm)\nCantidad: 5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "2.5 m³",
+      "tez-res-formato": "2.5 m³ suelto",
+      "tez-res-costales": "~93 costales",
+      "tez-btn-text": "Cotizar 2.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 50 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 2.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "2 m³",
+      "tez-res-formato": "2 m³ suelto",
+      "tez-res-costales": "~75 costales",
+      "tez-btn-text": "Cotizar 2 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 50 m²\nUso: Capa en macetas (4 cm)\nCantidad: 2 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "4.8 m³",
+      "tez-res-formato": "4.8 m³ suelto",
+      "tez-res-costales": "~178 costales",
+      "tez-btn-text": "Cotizar 4.8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 80 m²\nUso: Control de maleza (6 cm)\nCantidad: 4.8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "6.4 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~238 costales",
+      "tez-btn-text": "Cotizar 6.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 80 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 6.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "8 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~297 costales",
+      "tez-btn-text": "Cotizar 8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 80 m²\nUso: Senderos transitables (10 cm)\nCantidad: 8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "4 m³",
+      "tez-res-formato": "4 m³ suelto",
+      "tez-res-costales": "~149 costales",
+      "tez-btn-text": "Cotizar 4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 80 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "3.2 m³",
+      "tez-res-formato": "3.2 m³ suelto",
+      "tez-res-costales": "~119 costales",
+      "tez-btn-text": "Cotizar 3.2 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 80 m²\nUso: Capa en macetas (4 cm)\nCantidad: 3.2 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "5.3 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~197 costales",
+      "tez-btn-text": "Cotizar 5.3 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 87.5 m²\nUso: Control de maleza (6 cm)\nCantidad: 5.3 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "7 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~260 costales",
+      "tez-btn-text": "Cotizar 7 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 87.5 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 7 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "8.8 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~326 costales",
+      "tez-btn-text": "Cotizar 8.8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 87.5 m²\nUso: Senderos transitables (10 cm)\nCantidad: 8.8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "4.4 m³",
+      "tez-res-formato": "4.4 m³ suelto",
+      "tez-res-costales": "~163 costales",
+      "tez-btn-text": "Cotizar 4.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 87.5 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 4.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "3.5 m³",
+      "tez-res-formato": "3.5 m³ suelto",
+      "tez-res-costales": "~130 costales",
+      "tez-btn-text": "Cotizar 3.5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 87.5 m²\nUso: Capa en macetas (4 cm)\nCantidad: 3.5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "6 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~223 costales",
+      "tez-btn-text": "Cotizar 6 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 100 m²\nUso: Control de maleza (6 cm)\nCantidad: 6 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "8 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~297 costales",
+      "tez-btn-text": "Cotizar 8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 100 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "10 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~371 costales",
+      "tez-btn-text": "Cotizar 10 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 100 m²\nUso: Senderos transitables (10 cm)\nCantidad: 10 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "5 m³",
+      "tez-res-formato": "5 m³ suelto",
+      "tez-res-costales": "~186 costales",
+      "tez-btn-text": "Cotizar 5 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 100 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 5 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "4 m³",
+      "tez-res-formato": "4 m³ suelto",
+      "tez-res-costales": "~149 costales",
+      "tez-btn-text": "Cotizar 4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 100 m²\nUso: Capa en macetas (4 cm)\nCantidad: 4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "8.4 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~312 costales",
+      "tez-btn-text": "Cotizar 8.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 140 m²\nUso: Control de maleza (6 cm)\nCantidad: 8.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "11.3 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~419 costales",
+      "tez-btn-text": "Cotizar 11.3 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 140 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 11.3 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "14 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~519 costales",
+      "tez-btn-text": "Cotizar 14 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 140 m²\nUso: Senderos transitables (10 cm)\nCantidad: 14 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "7 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~260 costales",
+      "tez-btn-text": "Cotizar 7 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 140 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 7 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "5.7 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~212 costales",
+      "tez-btn-text": "Cotizar 5.7 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 140 m²\nUso: Capa en macetas (4 cm)\nCantidad: 5.7 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "12 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~445 costales",
+      "tez-btn-text": "Cotizar 12 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 200 m²\nUso: Control de maleza (6 cm)\nCantidad: 12 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "16 m³",
+      "tez-res-formato": "2 camiones 14 m³",
+      "tez-res-costales": "~593 costales",
+      "tez-btn-text": "Cotizar 16 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 200 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 16 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "20 m³",
+      "tez-res-formato": "2 camiones 14 m³",
+      "tez-res-costales": "~741 costales",
+      "tez-btn-text": "Cotizar 20 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 200 m²\nUso: Senderos transitables (10 cm)\nCantidad: 20 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "10 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~371 costales",
+      "tez-btn-text": "Cotizar 10 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 200 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 10 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "8 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~297 costales",
+      "tez-btn-text": "Cotizar 8 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 200 m²\nUso: Capa en macetas (4 cm)\nCantidad: 8 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "20 m³",
+      "tez-res-formato": "2 camiones 14 m³",
+      "tez-res-costales": "~741 costales",
+      "tez-btn-text": "Cotizar 20 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 333 m²\nUso: Control de maleza (6 cm)\nCantidad: 20 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "26.7 m³",
+      "tez-res-formato": "2 camiones 14 m³",
+      "tez-res-costales": "~989 costales",
+      "tez-btn-text": "Cotizar 26.7 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 333 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 26.7 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "33.4 m³",
+      "tez-res-formato": "3 camiones 14 m³",
+      "tez-res-costales": "~1238 costales",
+      "tez-btn-text": "Cotizar 33.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 333 m²\nUso: Senderos transitables (10 cm)\nCantidad: 33.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "16.7 m³",
+      "tez-res-formato": "2 camiones 14 m³",
+      "tez-res-costales": "~619 costales",
+      "tez-btn-text": "Cotizar 16.7 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 333 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 16.7 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "13.4 m³",
+      "tez-res-formato": "Camión 14 m³",
+      "tez-res-costales": "~497 costales",
+      "tez-btn-text": "Cotizar 13.4 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 333 m²\nUso: Capa en macetas (4 cm)\nCantidad: 13.4 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "0.06"
+     },
+     "visibles": {
+      "tez-res-m3": "60 m³",
+      "tez-res-formato": "5 camiones 14 m³",
+      "tez-res-costales": "~2223 costales",
+      "tez-btn-text": "Cotizar 60 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 1000 m²\nUso: Control de maleza (6 cm)\nCantidad: 60 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "0.08"
+     },
+     "visibles": {
+      "tez-res-m3": "80 m³",
+      "tez-res-formato": "6 camiones 14 m³",
+      "tez-res-costales": "~2963 costales",
+      "tez-btn-text": "Cotizar 80 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 1000 m²\nUso: Control de maleza intenso (8 cm)\nCantidad: 80 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "0.10"
+     },
+     "visibles": {
+      "tez-res-m3": "100 m³",
+      "tez-res-formato": "8 camiones 14 m³",
+      "tez-res-costales": "~3704 costales",
+      "tez-btn-text": "Cotizar 100 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 1000 m²\nUso: Senderos transitables (10 cm)\nCantidad: 100 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "0.05"
+     },
+     "visibles": {
+      "tez-res-m3": "50 m³",
+      "tez-res-formato": "4 camiones 14 m³",
+      "tez-res-costales": "~1852 costales",
+      "tez-btn-text": "Cotizar 50 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 1000 m²\nUso: Decorativo/arriates (5 cm)\nCantidad: 50 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "0.04"
+     },
+     "visibles": {
+      "tez-res-m3": "40 m³",
+      "tez-res-formato": "3 camiones 14 m³",
+      "tez-res-costales": "~1482 costales",
+      "tez-btn-text": "Cotizar 40 m³ por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar tezontle rojo.\n\nResultado de la calculadora:\nÁrea: 1000 m²\nUso: Capa en macetas (4 cm)\nCantidad: 40 m³\n\n¿Me pueden dar precio de entrega a domicilio en Tampico?"
+    }
+   ]
+  },
+  "marmol": {
+   "capas": [
+    {
+     "value": "3",
+     "text": "3 cm — Decorativo/macetas"
+    },
+    {
+     "value": "4",
+     "text": "4 cm — Estándar arriates Recomendado"
+    },
+    {
+     "value": "5",
+     "text": "5 cm — Senderos/alberca"
+    },
+    {
+     "value": "6",
+     "text": "6 cm — Alta densidad/tráfico"
+    }
+   ],
+   "casos": [
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 2,
+      "res-precio": "$500",
+      "res-peso": "40 kg",
+      "res-nota": "2 sacos cubre 0.5 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 2 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 0.5 m²\nCapa: 3 cm\nCantidad: 2 sacos\nPrecio estimado: $500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 2,
+      "res-precio": "$500",
+      "res-peso": "40 kg",
+      "res-nota": "2 sacos cubre 0.5 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 2 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 0.5 m²\nCapa: 4 cm\nCantidad: 2 sacos\nPrecio estimado: $500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 2,
+      "res-precio": "$500",
+      "res-peso": "40 kg",
+      "res-nota": "2 sacos para 0.5 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 2 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 0.5 m²\nCapa: 5 cm\nCantidad: 2 sacos\nPrecio estimado: $500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 0.5,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 3,
+      "res-precio": "$750",
+      "res-peso": "60 kg",
+      "res-nota": "3 sacos para 0.5 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 3 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 0.5 m²\nCapa: 6 cm\nCantidad: 3 sacos\nPrecio estimado: $750\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 3,
+      "res-precio": "$750",
+      "res-peso": "60 kg",
+      "res-nota": "3 sacos cubre 1 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 3 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 1 m²\nCapa: 3 cm\nCantidad: 3 sacos\nPrecio estimado: $750\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 3,
+      "res-precio": "$750",
+      "res-peso": "60 kg",
+      "res-nota": "3 sacos cubre 1 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 3 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 1 m²\nCapa: 4 cm\nCantidad: 3 sacos\nPrecio estimado: $750\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 4,
+      "res-precio": "$1,000",
+      "res-peso": "80 kg",
+      "res-nota": "4 sacos para 1 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 4 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 1 m²\nCapa: 5 cm\nCantidad: 4 sacos\nPrecio estimado: $1,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 5,
+      "res-precio": "$1,250",
+      "res-peso": "100 kg",
+      "res-nota": "5 sacos para 1 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 5 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 1 m²\nCapa: 6 cm\nCantidad: 5 sacos\nPrecio estimado: $1,250\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 21,
+      "res-precio": "$5,250",
+      "res-peso": "420 kg",
+      "res-nota": "21 sacos cubre 7 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 21 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 7 m²\nCapa: 3 cm\nCantidad: 21 sacos\nPrecio estimado: $5,250\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 21,
+      "res-precio": "$5,250",
+      "res-peso": "420 kg",
+      "res-nota": "21 sacos cubre 7 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 21 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 7 m²\nCapa: 4 cm\nCantidad: 21 sacos\nPrecio estimado: $5,250\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 28,
+      "res-precio": "$7,000",
+      "res-peso": "560 kg",
+      "res-nota": "28 sacos para 7 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 28 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 7 m²\nCapa: 5 cm\nCantidad: 28 sacos\nPrecio estimado: $7,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 7,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 35,
+      "res-precio": "$8,750",
+      "res-peso": "700 kg",
+      "res-nota": "35 sacos para 7 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 35 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 7 m²\nCapa: 6 cm\nCantidad: 35 sacos\nPrecio estimado: $8,750\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 30,
+      "res-precio": "$7,500",
+      "res-peso": "600 kg",
+      "res-nota": "30 sacos cubre 10 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 30 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 10 m²\nCapa: 3 cm\nCantidad: 30 sacos\nPrecio estimado: $7,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 30,
+      "res-precio": "$7,500",
+      "res-peso": "600 kg",
+      "res-nota": "30 sacos cubre 10 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 30 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 10 m²\nCapa: 4 cm\nCantidad: 30 sacos\nPrecio estimado: $7,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 40,
+      "res-precio": "$10,000",
+      "res-peso": "800 kg",
+      "res-nota": "40 sacos para 10 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 40 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 10 m²\nCapa: 5 cm\nCantidad: 40 sacos\nPrecio estimado: $10,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 10,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 50,
+      "res-precio": "$12,500",
+      "res-peso": "1000 kg",
+      "res-nota": "50 sacos para 10 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 50 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 10 m²\nCapa: 6 cm\nCantidad: 50 sacos\nPrecio estimado: $12,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 38,
+      "res-precio": "$9,500",
+      "res-peso": "760 kg",
+      "res-nota": "38 sacos cubre 12.5 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 38 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 12.5 m²\nCapa: 3 cm\nCantidad: 38 sacos\nPrecio estimado: $9,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 38,
+      "res-precio": "$9,500",
+      "res-peso": "760 kg",
+      "res-nota": "38 sacos cubre 12.5 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 38 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 12.5 m²\nCapa: 4 cm\nCantidad: 38 sacos\nPrecio estimado: $9,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 50,
+      "res-precio": "$12,500",
+      "res-peso": "1000 kg",
+      "res-nota": "50 sacos para 12.5 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 50 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 12.5 m²\nCapa: 5 cm\nCantidad: 50 sacos\nPrecio estimado: $12,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 12.5,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 63,
+      "res-precio": "$15,750",
+      "res-peso": "1260 kg",
+      "res-nota": "63 sacos para 12.5 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 63 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 12.5 m²\nCapa: 6 cm\nCantidad: 63 sacos\nPrecio estimado: $15,750\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 57,
+      "res-precio": "$14,250",
+      "res-peso": "1140 kg",
+      "res-nota": "57 sacos cubre 18.75 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 57 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 18.75 m²\nCapa: 3 cm\nCantidad: 57 sacos\nPrecio estimado: $14,250\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 57,
+      "res-precio": "$14,250",
+      "res-peso": "1140 kg",
+      "res-nota": "57 sacos cubre 18.75 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 57 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 18.75 m²\nCapa: 4 cm\nCantidad: 57 sacos\nPrecio estimado: $14,250\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 75,
+      "res-precio": "$18,750",
+      "res-peso": "1500 kg",
+      "res-nota": "75 sacos para 18.75 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 75 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 18.75 m²\nCapa: 5 cm\nCantidad: 75 sacos\nPrecio estimado: $18,750\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 18.75,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 94,
+      "res-precio": "$23,500",
+      "res-peso": "1880 kg",
+      "res-nota": "94 sacos para 18.75 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 94 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 18.75 m²\nCapa: 6 cm\nCantidad: 94 sacos\nPrecio estimado: $23,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 90,
+      "res-precio": "$22,500",
+      "res-peso": "1800 kg",
+      "res-nota": "90 sacos cubre 30 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 90 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 30 m²\nCapa: 3 cm\nCantidad: 90 sacos\nPrecio estimado: $22,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 90,
+      "res-precio": "$22,500",
+      "res-peso": "1800 kg",
+      "res-nota": "90 sacos cubre 30 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 90 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 30 m²\nCapa: 4 cm\nCantidad: 90 sacos\nPrecio estimado: $22,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 120,
+      "res-precio": "$30,000",
+      "res-peso": "2400 kg",
+      "res-nota": "120 sacos para 30 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 120 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 30 m²\nCapa: 5 cm\nCantidad: 120 sacos\nPrecio estimado: $30,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 30,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 150,
+      "res-precio": "$37,500",
+      "res-peso": "3000 kg",
+      "res-nota": "150 sacos para 30 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 150 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 30 m²\nCapa: 6 cm\nCantidad: 150 sacos\nPrecio estimado: $37,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 150,
+      "res-precio": "$37,500",
+      "res-peso": "3000 kg",
+      "res-nota": "150 sacos cubre 50 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 150 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 50 m²\nCapa: 3 cm\nCantidad: 150 sacos\nPrecio estimado: $37,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 150,
+      "res-precio": "$37,500",
+      "res-peso": "3000 kg",
+      "res-nota": "150 sacos cubre 50 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 150 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 50 m²\nCapa: 4 cm\nCantidad: 150 sacos\nPrecio estimado: $37,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 200,
+      "res-precio": "$50,000",
+      "res-peso": "4000 kg",
+      "res-nota": "200 sacos para 50 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 200 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 50 m²\nCapa: 5 cm\nCantidad: 200 sacos\nPrecio estimado: $50,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 50,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 250,
+      "res-precio": "$62,500",
+      "res-peso": "5000 kg",
+      "res-nota": "250 sacos para 50 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 250 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 50 m²\nCapa: 6 cm\nCantidad: 250 sacos\nPrecio estimado: $62,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 240,
+      "res-precio": "$60,000",
+      "res-peso": "4800 kg",
+      "res-nota": "240 sacos cubre 80 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 240 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 80 m²\nCapa: 3 cm\nCantidad: 240 sacos\nPrecio estimado: $60,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 240,
+      "res-precio": "$60,000",
+      "res-peso": "4800 kg",
+      "res-nota": "240 sacos cubre 80 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 240 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 80 m²\nCapa: 4 cm\nCantidad: 240 sacos\nPrecio estimado: $60,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 320,
+      "res-precio": "$80,000",
+      "res-peso": "6400 kg",
+      "res-nota": "320 sacos para 80 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 320 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 80 m²\nCapa: 5 cm\nCantidad: 320 sacos\nPrecio estimado: $80,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 80,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 400,
+      "res-precio": "$100,000",
+      "res-peso": "8000 kg",
+      "res-nota": "400 sacos para 80 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 400 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 80 m²\nCapa: 6 cm\nCantidad: 400 sacos\nPrecio estimado: $100,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 263,
+      "res-precio": "$65,750",
+      "res-peso": "5260 kg",
+      "res-nota": "263 sacos cubre 87.5 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 263 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 87.5 m²\nCapa: 3 cm\nCantidad: 263 sacos\nPrecio estimado: $65,750\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 263,
+      "res-precio": "$65,750",
+      "res-peso": "5260 kg",
+      "res-nota": "263 sacos cubre 87.5 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 263 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 87.5 m²\nCapa: 4 cm\nCantidad: 263 sacos\nPrecio estimado: $65,750\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 350,
+      "res-precio": "$87,500",
+      "res-peso": "7000 kg",
+      "res-nota": "350 sacos para 87.5 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 350 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 87.5 m²\nCapa: 5 cm\nCantidad: 350 sacos\nPrecio estimado: $87,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 87.5,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 438,
+      "res-precio": "$109,500",
+      "res-peso": "8760 kg",
+      "res-nota": "438 sacos para 87.5 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 438 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 87.5 m²\nCapa: 6 cm\nCantidad: 438 sacos\nPrecio estimado: $109,500\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 300,
+      "res-precio": "$75,000",
+      "res-peso": "6000 kg",
+      "res-nota": "300 sacos cubre 100 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 300 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 100 m²\nCapa: 3 cm\nCantidad: 300 sacos\nPrecio estimado: $75,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 300,
+      "res-precio": "$75,000",
+      "res-peso": "6000 kg",
+      "res-nota": "300 sacos cubre 100 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 300 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 100 m²\nCapa: 4 cm\nCantidad: 300 sacos\nPrecio estimado: $75,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 400,
+      "res-precio": "$100,000",
+      "res-peso": "8000 kg",
+      "res-nota": "400 sacos para 100 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 400 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 100 m²\nCapa: 5 cm\nCantidad: 400 sacos\nPrecio estimado: $100,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 100,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 500,
+      "res-precio": "$125,000",
+      "res-peso": "10000 kg",
+      "res-nota": "500 sacos para 100 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 500 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 100 m²\nCapa: 6 cm\nCantidad: 500 sacos\nPrecio estimado: $125,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 420,
+      "res-precio": "$105,000",
+      "res-peso": "8400 kg",
+      "res-nota": "420 sacos cubre 140 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 420 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 140 m²\nCapa: 3 cm\nCantidad: 420 sacos\nPrecio estimado: $105,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 420,
+      "res-precio": "$105,000",
+      "res-peso": "8400 kg",
+      "res-nota": "420 sacos cubre 140 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 420 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 140 m²\nCapa: 4 cm\nCantidad: 420 sacos\nPrecio estimado: $105,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 560,
+      "res-precio": "$140,000",
+      "res-peso": "11200 kg",
+      "res-nota": "560 sacos para 140 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 560 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 140 m²\nCapa: 5 cm\nCantidad: 560 sacos\nPrecio estimado: $140,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 140,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 700,
+      "res-precio": "$175,000",
+      "res-peso": "14000 kg",
+      "res-nota": "700 sacos para 140 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 700 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 140 m²\nCapa: 6 cm\nCantidad: 700 sacos\nPrecio estimado: $175,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 600,
+      "res-precio": "$150,000",
+      "res-peso": "12000 kg",
+      "res-nota": "600 sacos cubre 200 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 600 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 200 m²\nCapa: 3 cm\nCantidad: 600 sacos\nPrecio estimado: $150,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 600,
+      "res-precio": "$150,000",
+      "res-peso": "12000 kg",
+      "res-nota": "600 sacos cubre 200 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 600 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 200 m²\nCapa: 4 cm\nCantidad: 600 sacos\nPrecio estimado: $150,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 800,
+      "res-precio": "$200,000",
+      "res-peso": "16000 kg",
+      "res-nota": "800 sacos para 200 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 800 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 200 m²\nCapa: 5 cm\nCantidad: 800 sacos\nPrecio estimado: $200,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 200,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 1000,
+      "res-precio": "$250,000",
+      "res-peso": "20000 kg",
+      "res-nota": "1000 sacos para 200 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 1000 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 200 m²\nCapa: 6 cm\nCantidad: 1000 sacos\nPrecio estimado: $250,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 999,
+      "res-precio": "$249,750",
+      "res-peso": "19980 kg",
+      "res-nota": "999 sacos cubre 333 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 999 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 333 m²\nCapa: 3 cm\nCantidad: 999 sacos\nPrecio estimado: $249,750\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 999,
+      "res-precio": "$249,750",
+      "res-peso": "19980 kg",
+      "res-nota": "999 sacos cubre 333 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 999 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 333 m²\nCapa: 4 cm\nCantidad: 999 sacos\nPrecio estimado: $249,750\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 1332,
+      "res-precio": "$333,000",
+      "res-peso": "26640 kg",
+      "res-nota": "1332 sacos para 333 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 1332 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 333 m²\nCapa: 5 cm\nCantidad: 1332 sacos\nPrecio estimado: $333,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 333,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 1665,
+      "res-precio": "$416,250",
+      "res-peso": "33300 kg",
+      "res-nota": "1665 sacos para 333 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 1665 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 333 m²\nCapa: 6 cm\nCantidad: 1665 sacos\nPrecio estimado: $416,250\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "3"
+     },
+     "visibles": {
+      "res-sacos": 3000,
+      "res-precio": "$750,000",
+      "res-peso": "60000 kg",
+      "res-nota": "3000 sacos cubre 1000 m² con capa de 3 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 3000 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 1000 m²\nCapa: 3 cm\nCantidad: 3000 sacos\nPrecio estimado: $750,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "4"
+     },
+     "visibles": {
+      "res-sacos": 3000,
+      "res-precio": "$750,000",
+      "res-peso": "60000 kg",
+      "res-nota": "3000 sacos cubre 1000 m² con capa de 4 cm. A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 3000 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 1000 m²\nCapa: 4 cm\nCantidad: 3000 sacos\nPrecio estimado: $750,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "5"
+     },
+     "visibles": {
+      "res-sacos": 4000,
+      "res-precio": "$1,000,000",
+      "res-peso": "80000 kg",
+      "res-nota": "4000 sacos para 1000 m² con capa de 5 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 4000 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 1000 m²\nCapa: 5 cm\nCantidad: 4000 sacos\nPrecio estimado: $1,000,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    },
+    {
+     "entrada": {
+      "area": 1000,
+      "capa": "6"
+     },
+     "visibles": {
+      "res-sacos": 5000,
+      "res-precio": "$1,250,000",
+      "res-peso": "100000 kg",
+      "res-nota": "5000 sacos para 1000 m² con capa de 6 cm (alta densidad). A $250 c/u.",
+      "btn-cotizar-text": "Cotizar 5000 sacos por WhatsApp"
+     },
+     "mensaje": "Hola, quiero cotizar mármol blanco decorativo.\n\nDatos de mi proyecto:\nÁrea: 1000 m²\nCapa: 6 cm\nCantidad: 5000 sacos\nPrecio estimado: $1,250,000\n\n¿Pueden confirmar disponibilidad y precio de entrega a domicilio en Tampico?"
+    }
+   ]
+  }
+ }
+}

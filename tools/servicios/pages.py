@@ -17,8 +17,8 @@ DESDE_2007 = ("Desde 2007", "Vivero propio en Cd. Madero")
 VARIEDADES = ("+200", "Variedades en el vivero")
 
 # La home y /pasto-en-rollo-tampico (Etapa 2a), diseño, mantenimiento y riego (Etapa 2c) y mayoreo y palmas para
-# proyectos (Etapa 2d) y, desde la Etapa 2e, el hub de plantas y sus cinco subcategorías salen de tools/site/plantillas/:
-# este script ya no las toca. Quedan el vivero (Etapa 3) y los materiales (Etapas 2f y 2g).
+# proyectos (Etapa 2d), el hub de plantas y sus cinco subcategorías (Etapa 2e) y, desde la Etapa 2f, los cuatro
+# materiales salen de tools/site/plantillas/: este script ya no las toca. Queda el vivero (Etapa 3).
 PAGES = {
     "vivero-tampico": dict(
         title="Vivero en Tampico", accent="y Ciudad Madero, desde 2007",
@@ -29,37 +29,5 @@ PAGES = {
         alt="Equipo de Viveros Terra sembrando un árbol en un jardín de Tampico", caption="Siembra de árboles y plantas en Tampico.",
         wa=guided("Hola, quiero visitar el vivero o cotizar plantas.", "Lo que busco", "Tamaño aprox.", foto=False),
         secondary=("https://maps.app.goo.gl/xC4XGL2WeucAjGwAA", "Cómo llegar"),
-    ),
-    "tierra-negra-vegetal-tampico": dict(
-        title="Tierra negra vegetal", accent="por costal o camión",
-        price_pre="Costal", price="$90", price_unit="", price_alt="· preparada $100 · m³ $1,500 · camión desde $5,000",
-        lede="Tierra negra con materia orgánica para pasto, jardineras y siembra. Recoges en el vivero o te la llevamos en Tampico, Madero y Altamira.",
-        facts=[("$1,500", "Por metro cúbico"), ("Desde $5,000", "Camión volteo"), ("Entrega", "Tampico, Madero y Altamira")],
-        img="/img/camion-tierra-negra-entrega-tampico.webp",
-        alt="Camión de Viveros Terra entregando tierra negra en Tampico", caption="Entrega de tierra negra en Tampico.",
-        wa=guided("Hola, quiero cotizar tierra negra.", "Costales o camión", "Cantidad", "Colonia de entrega", foto=False),
-    ),
-    "tezontle-rojo-tampico": dict(
-        title="Tezontle rojo", accent="por costal, m³ o camión",
-        price_pre="Costal", price="$200", price_unit="", price_alt="· también por m³ y camión de 14 m³",
-        lede="Tezontle volcánico para drenaje de macetas, jardineras y decoración. Recoges en el vivero o te lo llevamos con factura.",
-        facts=[("14 m³", "Camión volteo"), ("CFDI 4.0", "Factura disponible"), ("Entrega", "Tampico, Madero y Altamira")],
-        wa=guided("Hola, quiero cotizar tezontle rojo.", "Costales o camión", "Cantidad", "Colonia de entrega", foto=False),
-    ),
-    "marmol-blanco-tampico": dict(
-        title="Mármol blanco", accent="para jardines y andadores",
-        price_pre="Saco", price="$250", price_unit="", price_alt="· 3 sacos cubren 1 m²",
-        lede="Grava de mármol blanco para arriates, andadores y bordes de alberca. Venta por saco o por volumen con entrega en Tampico, Madero y Altamira.",
-        facts=[("20 kg", "Por saco aprox."), ("3 sacos", "Por metro cuadrado"), ("Entrega", "Tampico, Madero y Altamira")],
-        img="/img/marmol-blanco-alberca-palmera-tampico.webp", img_pos="center 60%",
-        alt="Mármol blanco decorativo junto a una alberca con palmera", caption="Mármol blanco junto a alberca en Tampico.",
-        wa=guided("Hola, quiero cotizar mármol blanco.", "Metros a cubrir", "Colonia de entrega"),
-    ),
-    "piedra-bola-rio-tampico": dict(
-        title="Piedra bola de río", accent="para jardines y senderos",
-        price_pre="Precio", price="por medida", price_unit="", price_alt="· chica, mediana y grande",
-        lede="Piedra de río natural para senderos, jardines secos y decoración. Venta por costal o camión con entrega en Tampico y la zona.",
-        facts=[("3 medidas", "Chica, mediana y grande"), ("Costal o camión", "Según tu proyecto"), ("Entrega", "Tampico, Madero y Altamira")],
-        wa=guided("Hola, quiero cotizar piedra bola de río.", "Medida", "Metros a cubrir", "Colonia de entrega"),
     ),
 }

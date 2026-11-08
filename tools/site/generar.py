@@ -38,6 +38,10 @@ PAGINAS = (
     ("/arboles-para-banqueta-tampico", "arboles-para-banqueta-tampico/index.html", "hub_categoria", "arboles_banqueta"),
     ("/plantas-de-interior-tampico", "plantas-de-interior-tampico/index.html", "hub_categoria", "plantas_interior"),
     ("/catalogo", "catalogo.html", "catalogo", "catalogo"),
+    ("/tierra-negra-vegetal-tampico", "tierra-negra-vegetal-tampico/index.html", "material", "tierra_negra"),
+    ("/tezontle-rojo-tampico", "tezontle-rojo-tampico/index.html", "material", "tezontle_rojo"),
+    ("/marmol-blanco-tampico", "marmol-blanco-tampico/index.html", "material", "marmol_blanco"),
+    ("/piedra-bola-rio-tampico", "piedra-bola-rio-tampico/index.html", "material", "piedra_bola"),
     ("/pasto-sintetico", "pasto-sintetico/index.html", "tienda_hub", "tienda"),
     ("/pasto-sintetico/perros", "pasto-sintetico/perros/index.html", "tienda_guia", "perros"),
 ) + _varias("ficha", lambda k: f"/pasto-sintetico/{k}", lambda k: f"pasto-sintetico/{k}/index.html", "ficha") + _varias(

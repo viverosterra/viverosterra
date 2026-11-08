@@ -43,6 +43,20 @@ PLANTAS = {
                                      "Luz del lugar (mucha o poca): ___\nColonia: ___\nLes mando foto del espacio."),
 }
 
+# Materiales (Etapa 2f): la plantilla de main de cada portada (tools/servicios/pages.py, guided()), con los huecos ___:
+# el formato de datos.MENSAJES["materiales"] (material, cantidad y colonia de entrega) con el material ya escrito. La usan
+# la portada, el cierre y la calculadora mientras no tiene área y, por RUTAS, el menú, la barra móvil y el pie.
+MATERIALES = {
+    "/tierra-negra-vegetal-tampico": ("Hola, quiero cotizar tierra negra.\nCostales o camión: ___\nCantidad: ___\n"
+                                      "Colonia de entrega: ___"),
+    "/tezontle-rojo-tampico": ("Hola, quiero cotizar tezontle rojo.\nCostales o camión: ___\nCantidad: ___\n"
+                               "Colonia de entrega: ___"),
+    "/marmol-blanco-tampico": ("Hola, quiero cotizar mármol blanco.\nMetros a cubrir: ___\nColonia de entrega: ___\n"
+                               "Les mando foto del espacio."),
+    "/piedra-bola-rio-tampico": ("Hola, quiero cotizar piedra bola de río.\nMedida: ___\nMetros a cubrir: ___\n"
+                                 "Colonia de entrega: ___\nLes mando foto del espacio."),
+}
+
 # Ruta exacta → (mensaje del menú y la barra, mensaje del pie o None para usar el mismo).
 RUTAS = {
     "/blog": ("Hola, vi el blog de Viveros Terra y quiero cotizar", None),
@@ -51,6 +65,7 @@ RUTAS = {
     **{ruta: (texto, None) for ruta, texto in SERVICIOS.items()},
     **{ruta: (texto, None) for ruta, texto in EMPRESAS.items()},
     **{ruta: (texto, None) for ruta, texto in PLANTAS.items()},
+    **{ruta: (texto, None) for ruta, texto in MATERIALES.items()},
 }
 # Tienda y páginas de envío: el pie conserva su "pregunta"; el menú usa el mensaje de cotizar pasto sintético.
 PIE_TIPO = {
