@@ -1,0 +1,165 @@
+{
+ "/tierra-negra-vegetal-tampico": {
+  "fotos": [
+   {
+    "src": "/img/portadas/camion-tierra-negra-entrega-tampico-sm.webp",
+    "srcset": "/img/portadas/camion-tierra-negra-entrega-tampico-sm.webp 560w, /img/portadas/camion-tierra-negra-entrega-tampico.webp 960w",
+    "alt": "Camión de Viveros Terra entregando tierra negra en Tampico"
+   },
+   {
+    "src": "/img/tierra-negra-preparacion-pasto-tampico.webp",
+    "srcset": null,
+    "alt": "Tierra negra vegetal preparada para instalar pasto en jardín de Tampico"
+   },
+   {
+    "src": "/img/tierra-negra-camion-volteo-tampico.webp",
+    "srcset": null,
+    "alt": "Entrega de tierra negra en camión volteo en Tampico"
+   },
+   {
+    "src": "/img/tierra-negra-suministro-jardin-tampico.webp",
+    "srcset": null,
+    "alt": "Tierra negra orgánica de alta calidad para jardines en Tampico"
+   },
+   {
+    "src": "/img/camion-tierra-negra-descarga-tampico.webp",
+    "srcset": null,
+    "alt": "Camión Terra descargando tierra negra en proyecto de jardinería Tampico"
+   },
+   {
+    "src": "/img/tierra-negra-vegetal-costales-tampico.webp",
+    "srcset": null,
+    "alt": "Costales de tierra negra vegetal Viveros Terra Tampico"
+   },
+   {
+    "src": "/img/tierra-negra-sacos-viveros-terra.webp",
+    "srcset": null,
+    "alt": "Tierra negra vegetal en sacos Viveros Terra para jardín"
+   },
+   {
+    "src": "/img/camion-tierra-negra-entrega-tampico.webp",
+    "srcset": null,
+    "alt": ""
+   }
+  ],
+  "formulario": {
+   "_subject": "Pedido desde sitio web - Viveros Terra",
+   "_next": "https://www.viverosterra.com/gracias",
+   "_captcha": "false",
+   "nombre": "",
+   "email": "",
+   "detalle": ""
+  }
+ },
+ "/tezontle-rojo-tampico": {
+  "fotos": [
+   {
+    "src": "/img/tezontle-rojo-jardin-tampico-sendero.webp",
+    "srcset": null,
+    "alt": "Jardín residencial con tezontle rojo y pasto en Tampico"
+   },
+   {
+    "src": "/img/tezontle-rojo-jardin-lateral-tampico.webp",
+    "srcset": null,
+    "alt": "Sendero lateral de tezontle rojo en jardín de Tampico"
+   },
+   {
+    "src": "/img/tezontle-rojo-bordillo-jardin-tampico.webp",
+    "srcset": null,
+    "alt": "Tezontle rojo con bordillo decorativo en jardín residencial Tampico"
+   },
+   {
+    "src": "/img/tezontle-rojo-bordillo-jardin-tampico.webp",
+    "srcset": null,
+    "alt": ""
+   }
+  ],
+  "formulario": {
+   "_subject": "Pedido desde sitio web - Viveros Terra",
+   "_next": "https://www.viverosterra.com/gracias",
+   "_captcha": "false",
+   "nombre": "",
+   "email": "",
+   "detalle": ""
+  }
+ },
+ "/marmol-blanco-tampico": {
+  "fotos": [
+   {
+    "src": "/img/portadas/marmol-blanco-alberca-palmera-tampico-sm.webp",
+    "srcset": "/img/portadas/marmol-blanco-alberca-palmera-tampico-sm.webp 560w, /img/portadas/marmol-blanco-alberca-palmera-tampico.webp 900w",
+    "alt": "Mármol blanco decorativo junto a una alberca con palmera"
+   },
+   {
+    "src": "/img/marmol-blanco-alberca-palmera-tampico.webp",
+    "srcset": null,
+    "alt": "Mármol blanco decorativo alrededor de alberca con palmera en Tampico"
+   },
+   {
+    "src": "/img/marmol-blanco-arriate-suculentas-tampico.webp",
+    "srcset": null,
+    "alt": "Mármol blanco como borde decorativo con suculentas en jardín"
+   },
+   {
+    "src": "/img/marmol-blanco-maceta-decorativa-tampico.webp",
+    "srcset": null,
+    "alt": "Mármol blanco en maceta decorativa con suculenta para interior"
+   },
+   {
+    "src": "/img/marmol-blanco-saco-costal-tampico.webp",
+    "srcset": null,
+    "alt": "Saco de mármol blanco 20kg $250 — Viveros Terra Tampico"
+   },
+   {
+    "src": "/img/tezontle-rojo-jardin-tampico-sendero.webp",
+    "srcset": null,
+    "alt": "Tezontle rojo"
+   },
+   {
+    "src": "/img/tierra-negra-camion-volteo-tampico.webp",
+    "srcset": null,
+    "alt": "Tierra negra"
+   },
+   {
+    "src": "/img/jardin-residencial-pasto-san-agustin-tampico.webp",
+    "srcset": null,
+    "alt": ""
+   }
+  ],
+  "formulario": {
+   "_subject": "Pedido desde sitio web - Viveros Terra",
+   "_next": "https://www.viverosterra.com/gracias",
+   "_captcha": "false",
+   "nombre": "",
+   "email": "",
+   "detalle": ""
+  }
+ },
+ "/piedra-bola-rio-tampico": {
+  "fotos": [
+   {
+    "src": "/img/jardin-residencial-plantas-pasto-tampico.webp",
+    "srcset": null,
+    "alt": ""
+   },
+   {
+    "src": "/img/tezontle-rojo-jardin-tampico-sendero.webp",
+    "srcset": null,
+    "alt": "Tezontle rojo"
+   },
+   {
+    "src": "/img/tierra-negra-camion-volteo-tampico.webp",
+    "srcset": null,
+    "alt": "Tierra negra"
+   }
+  ],
+  "formulario": {
+   "_subject": "Pedido desde sitio web - Viveros Terra",
+   "_next": "https://www.viverosterra.com/gracias",
+   "_captcha": "false",
+   "nombre": "",
+   "email": "",
+   "detalle": ""
+  }
+ }
+}
