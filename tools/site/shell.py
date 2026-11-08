@@ -76,7 +76,7 @@ def aplicar(html, ruta, urls, public=PUBLIC):
     if encontradas != ["footer", "head", "header"]:
         raise ValueError(f"{ruta}: regiones del shell {encontradas}; debe haber head, header y footer, una de cada una")
     partes = {
-        "head": partials.head(urls, legacy="/css/tailwind.css" in html, tienda=TIENDA in html, plantas=PLANTAS in html,
+        "head": partials.head(urls, tienda=TIENDA in html, plantas=PLANTAS in html,
                               materiales=MATERIALES in html, precios=PRECIOS in html, util=UTIL in html, blog=BLOG in html),
         "header": partials.header(ctx),
         "footer": partials.footer(ctx),

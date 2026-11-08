@@ -922,7 +922,7 @@
       ]
     },
     {
-      "source": "/(css|js)/(terra|terra-tienda|terra-plantas|terra-materiales|terra-precios|terra-util|terra-blog|legacy-fixes)\\.([0-9a-f]+)\\.(css|js)",
+      "source": "/(css|js)/(terra|terra-tienda|terra-plantas|terra-materiales|terra-precios|terra-util|terra-blog)\\.([0-9a-f]+)\\.(css|js)",
       "headers": [
         {
           "key": "Cache-Control",

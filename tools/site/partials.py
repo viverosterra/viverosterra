@@ -68,8 +68,8 @@ def region(nombre, cuerpo):
 FUENTE_PRINCIPAL = "/fonts/archivo-latin.woff2"
 
 
-def head(urls, legacy, tienda=False, plantas=False, materiales=False, precios=False, util=False, blog=False):
-    """Favicon, geo de la tienda, fuente principal precargada, CSS del shell (y legacy-fixes en páginas con Tailwind),
+def head(urls, tienda=False, plantas=False, materiales=False, precios=False, util=False, blog=False):
+    """Favicon, geo de la tienda, fuente principal precargada, CSS del shell,
     GA4 una sola vez y terra.js diferido. Con tienda=True (páginas <body class="vt-pagina vt-tienda">), también
     terra-tienda.css. Con plantas=True (páginas <body class="vt-pagina vt-plantas">, Etapa 2e), terra-plantas.css. Con
     materiales=True (<body class="vt-pagina vt-materiales">, Etapa 2f), terra-materiales.css. Con precios=True
@@ -82,8 +82,6 @@ def head(urls, legacy, tienda=False, plantas=False, materiales=False, precios=Fa
         f'<meta name="geo.placename" content="{datos.CIUDAD}">',
         f'<link rel="preload" href="{FUENTE_PRINCIPAL}" as="font" type="font/woff2" crossorigin>',
     ]
-    if legacy:
-        lineas.append(f'<link rel="stylesheet" href="{urls["legacy-fixes.css"]}">')
     lineas += [
         f'<link rel="stylesheet" href="{urls["terra.css"]}">',
     ]

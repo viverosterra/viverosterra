@@ -36,7 +36,6 @@ class ShellTest(unittest.TestCase):
         html = shell.aplicar(PAGINA, "/blog/palma-areca-tampico", URLS)
         self.assertIn('<header class="vt-head" data-vt-tipo="blog"', html)
         self.assertIn('<footer class="vt-foot">', html)
-        self.assertIn("/css/legacy-fixes.0123456789.css", html)
         self.assertEqual(html.count("googletagmanager.com/gtag/js"), 1)
 
     def test_idempotente(self):

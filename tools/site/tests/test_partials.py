@@ -26,18 +26,18 @@ class HeadTest(unittest.TestCase):
                 "terra-blog.css": "/css/terra-blog.g.css",
                 "legacy-fixes.css": "/css/l.d.css",
                 "terra.js": "/js/terra.e.js"}
-        self.assertIn('<link rel="stylesheet" href="/css/terra-plantas.c.css">', partials.head(urls, False, plantas=True))
+        self.assertIn('<link rel="stylesheet" href="/css/terra-plantas.c.css">', partials.head(urls, plantas=True))
         self.assertNotIn("terra-plantas", partials.head(urls, False))
-        self.assertNotIn("terra-tienda", partials.head(urls, False, plantas=True))
-        self.assertIn('<link rel="stylesheet" href="/css/terra-materiales.f.css">', partials.head(urls, False, materiales=True))
-        self.assertNotIn("terra-materiales", partials.head(urls, False, plantas=True))
-        self.assertIn('<link rel="stylesheet" href="/css/terra-precios.g.css">', partials.head(urls, False, precios=True))
-        self.assertNotIn("terra-precios", partials.head(urls, False, materiales=True))
-        self.assertIn('<link rel="stylesheet" href="/css/terra-blog.g.css">', partials.head(urls, False, blog=True))
-        self.assertNotIn("terra-blog", partials.head(urls, False, precios=True))
+        self.assertNotIn("terra-tienda", partials.head(urls, plantas=True))
+        self.assertIn('<link rel="stylesheet" href="/css/terra-materiales.f.css">', partials.head(urls, materiales=True))
+        self.assertNotIn("terra-materiales", partials.head(urls, plantas=True))
+        self.assertIn('<link rel="stylesheet" href="/css/terra-precios.g.css">', partials.head(urls, precios=True))
+        self.assertNotIn("terra-precios", partials.head(urls, materiales=True))
+        self.assertIn('<link rel="stylesheet" href="/css/terra-blog.g.css">', partials.head(urls, blog=True))
+        self.assertNotIn("terra-blog", partials.head(urls, precios=True))
 
     def test_region_con_gtag_unico_y_assets_con_hash(self):
-        h = partials.head(URLS, legacy=False)
+        h = partials.head(URLS)
         self.assertTrue(h.startswith("<!-- vt:head -->\n") and h.endswith("\n<!-- /vt:head -->"))
         self.assertEqual(h.count("googletagmanager.com/gtag/js?id=G-RMZCVJ734M"), 1)
         self.assertEqual(h.count("gtag('config','G-RMZCVJ734M')"), 1)
@@ -46,17 +46,13 @@ class HeadTest(unittest.TestCase):
         self.assertNotIn("legacy-fixes", h)
 
     def test_geo_y_fuente_principal_precargada(self):
-        h = partials.head(URLS, legacy=False)
+        h = partials.head(URLS)
         self.assertIn('<meta name="geo.region" content="MX-TAM">', h)
         self.assertIn('<meta name="geo.placename" content="Ciudad Madero">', h)
         self.assertIn('<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>', h)
         self.assertLess(h.index("archivo-latin.woff2"), h.index("terra.0123456789.css"))
         for obsoleta in ("keywords", "last-modified", "ai-content-declaration", '"language"'):
             self.assertNotIn(obsoleta, h)
-
-    def test_legacy_fixes_solo_con_tailwind_y_antes_de_terra(self):
-        h = partials.head(URLS, legacy=True)
-        self.assertLess(h.index("legacy-fixes.0123456789.css"), h.index("terra.0123456789.css"))
 
 
 class HeaderTest(unittest.TestCase):
