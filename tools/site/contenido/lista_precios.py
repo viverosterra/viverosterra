@@ -48,13 +48,14 @@ SERVICIOS = (
     MANTENIMIENTO,
     {"nombre": "Diseño de jardín, Plan Terra Esencial", "href": "/diseno-jardines-tampico", "unidad": "proyecto",
      "precio": P["diseno"],
-     "detalle": "Visita, propuesta de diseño y lista de materiales. Entrega en 3 a 5 días hábiles."},
+     "detalle": "Propuesta visual remota con tus fotos y lista de plantas. Entrega en 3 a 5 días hábiles."},
     {"nombre": "Diseño de jardín, Plan Terra Completo", "href": "/diseno-jardines-tampico", "unidad": "proyecto",
      "precio": P["diseno_completo"],
      "detalle": "Diseño detallado, fichas de plantas, cuantificación de materiales y manual de cuidados."},
     {"nombre": "Diseño de jardín, Plan Terra Premium", "href": "/diseno-jardines-tampico", "unidad": "proyecto",
      "precio": P["diseno_premium"], "desde": True,
-     "detalle": "Proyecto ejecutivo con seguimiento. El costo del diseño se descuenta si contratas la obra."},
+     "detalle": ("Proyecto ejecutivo con seguimiento. Se descuenta en proyectos de más de "
+                 f"{dinero(P['diseno_premium_descuento_desde'])}.")},
     RIEGO,
     PODA,
 )
@@ -63,8 +64,8 @@ MATERIALES = (
      "precio": P["tierra_negra_costal"], "detalle": "Recoges en el vivero o te la llevamos."},
     {"nombre": "Tierra negra vegetal", "href": "/tierra-negra-vegetal-tampico", "unidad": "m³",
      "precio": P["tierra_negra_m3"], "detalle": "A granel."},
-    *({"nombre": "Tierra negra vegetal en camión volteo", "href": "/tierra-negra-vegetal-tampico",
-       "unidad": f"camión de {m3} m³", "precio": precio, "detalle": "Descarga en tu domicilio u obra."}
+    *({"nombre": f"Tierra negra vegetal · camión de {m3} m³", "href": "/tierra-negra-vegetal-tampico",
+       "unidad": "camión", "precio": precio, "detalle": "Camión volteo: descarga en tu domicilio u obra."}
       for m3, precio in datos.TIERRA_CAMIONES),
     {"nombre": "Tierra preparada", "href": "/tierra-negra-vegetal-tampico", "unidad": "costal",
      "precio": P["tierra_preparada_costal"], "detalle": "Con hojarasca y abono."},

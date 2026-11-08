@@ -68,12 +68,12 @@ def porcentaje_plazo(plazo):
 
 
 def tabla_mensualidades():
-    """Plazo | Desde (contado) | Total frente a contado: los montos mínimos y la fórmula de tools/pasto/mensualidades.py."""
+    """Plazo | Compra mínima | Total frente a contado: los montos mínimos y la fórmula de tools/pasto/mensualidades.py."""
     filas = "".join(f'<tr><th scope="row">{p} mensualidades</th><td>{c.dinero(mensualidades.minimo_de(p))}</td>'
                     f'<td><b>+{porcentaje_plazo(p):.1f}%</b></td></tr>' for p in mensualidades.PLAZOS)
     return ('<table class="vt-tabla vt-tabla--compacta"><caption>Mensualidades con tarjeta de crédito: monto mínimo de '
             'contado por plazo y cuánto más es el total a plazos.</caption><thead><tr><th scope="col">Plazo</th>'
-            '<th scope="col">Desde (contado)</th><th scope="col">Total frente a contado</th></tr></thead>'
+            '<th scope="col">Compra mínima</th><th scope="col">Total frente a contado</th></tr></thead>'
             f'<tbody>{filas}</tbody></table>')
 
 

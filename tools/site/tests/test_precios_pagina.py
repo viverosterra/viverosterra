@@ -15,6 +15,7 @@ import generar  # noqa: E402
 import paginas  # noqa: E402
 import paridad  # noqa: E402
 from componentes import dinero  # noqa: E402
+import data  # noqa: E402  (tools/pasto, en sys.path gracias a componentes)
 
 P = datos.PRECIOS
 HTML = (paginas.PUBLIC / "precios" / "index.html").read_text(encoding="utf-8")
@@ -71,8 +72,8 @@ class PreciosTest(unittest.TestCase):
         seccion = HTML.split('id="materiales"', 1)[1].split('id="plantas"', 1)[0]
         for m3, precio in datos.TIERRA_CAMIONES:
             with self.subTest(camion=m3):
-                self.assertIn(f'<td class="vt-tabla__u">camión de {m3} m³</td><td class="vt-tabla__p">{dinero(precio)}</td>',
-                              seccion)
+                self.assertRegex(seccion, rf'Tierra negra vegetal · camión de {m3} m³</a>.{{0,200}}'
+                                 rf'camión</td><td class="vt-tabla__p">{re.escape(dinero(precio))}</td>')
         self.assertRegex(seccion, r'Tierra preparada.{0,200}costal</td><td class="vt-tabla__p">'
                          + re.escape(dinero(P["tierra_preparada_costal"])))
         self.assertRegex(seccion, re.escape(datos.MARMOL_CONDICION) + r'.{0,120}saco</td><td class="vt-tabla__p">'
@@ -108,9 +109,40 @@ class PreciosTest(unittest.TestCase):
         self.assertFalse(any("Piedra" in n for n in nombres))
         marmol = next(o for o in catalogo["itemListElement"] if o["name"].startswith("Mármol"))
         self.assertEqual(marmol["price"], str(P["marmol_saco"]))
+        self.assertEqual(marmol["description"], datos.MARMOL_CONDICION)
         tezontle = next(o for o in catalogo["itemListElement"] if o["name"].startswith("Tezontle"))
         self.assertEqual(tezontle["priceSpecification"]["minPrice"], datos.PRECIOS["tezontle_costal"])
         self.assertNotIn("InStock", HTML)
+
+    def test_lo_que_es_desde_va_con_minprice_y_sin_price(self):
+        """Un price exacto en una oferta "desde" le diría a Google un precio cerrado que no existe."""
+        catalogo = next(n for n in grafo() if n["@type"] == "OfferCatalog")
+        ofertas = {o["name"]: o for o in catalogo["itemListElement"]}
+        desde = {"Pasto San Agustín instalado": P["pasto_instalado_m2"], "Mantenimiento de jardín mensual": P["mantenimiento_mes"],
+                 f"Pasto San Agustín al mayoreo, desde {P['pasto_mayoreo_minimo_m2']} m²": P["pasto_mayoreo_m2"],
+                 "Diseño de jardín, Plan Terra Premium": P["diseno_premium"],
+                 "Pasto sintético, material en rollo": min(m["rollo"] for m in data.MODELOS),
+                 "Tezontle rojo, costal": P["tezontle_costal"], "Palmas, tamaño chico": P["palma_desde"]}
+        for nombre, precio in desde.items():
+            with self.subTest(nombre=nombre):
+                self.assertNotIn("price", ofertas[nombre])
+                self.assertEqual(ofertas[nombre]["priceSpecification"]["minPrice"], precio)
+                self.assertNotIn("price", ofertas[nombre]["priceSpecification"])
+        for nombre in ("Pasto San Agustín en rollo, solo el pasto", "Diseño de jardín, Plan Terra Esencial"):
+            with self.subTest(nombre=nombre):
+                self.assertIn("price", ofertas[nombre])
+
+    def test_planes_de_diseno_dicen_lo_que_incluyen(self):
+        """Plan Esencial: remoto, sin visita. Premium: se descuenta solo en proyectos grandes, con el umbral de datos.py."""
+        seccion = paridad.texto(HTML.split('id="servicios"', 1)[1].split('id="sintetico"', 1)[0])
+        self.assertIn("Propuesta visual remota con tus fotos y lista de plantas. Entrega en 3 a 5 días hábiles.", seccion)
+        self.assertNotIn("Visita, propuesta", seccion)
+        self.assertIn(f"Se descuenta en proyectos de más de {dinero(P['diseno_premium_descuento_desde'])}.", seccion)
+
+    def test_portada_enlaza_a_mensualidades_y_tabla_dice_compra_minima(self):
+        self.assertIn('<a href="#mensualidades">Hasta 12 mensualidades con tarjeta · ver plazos</a>', HTML)
+        self.assertIn('<th scope="col">Compra mínima</th>', HTML)
+        self.assertNotIn("Desde (contado)", HTML)
 
     def test_garantias_con_su_condicion(self):
         self.assertIn("en las plantas que sembramos nosotros", HTML)

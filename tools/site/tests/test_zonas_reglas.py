@@ -40,6 +40,8 @@ SIN_PRECIO_RE = re.compile(r"piedra bola[^.$]{0,40}\$\s?\d|tezontle[^.$]{0,60}(?
 # Palabras del dueño para el mármol (2026-11-08): "sujeto a disponibilidad" solo junto a su precio, y solo en /precios.
 MARMOL_CONDICION_RE = re.compile(re.escape(datos.MARMOL_CONDICION), re.I)
 JUNTO_AL_PRECIO = 120  # caracteres
+# El precio escrito o, en el Offer del JSON-LD (description junto a price), su price.
+MARMOL_PRECIO_RE = re.compile(re.escape(dinero(datos.PRECIOS["marmol_saco"])) + rf'|"price":\s*"?{datos.PRECIOS["marmol_saco"]}\b')
 # La única frase con "sin costo" que aprobó el dueño (spec, Decisiones: garantía de pasto ligada a sus condiciones).
 GARANTIA_PASTO = "la reponemos sin costo"
 SIN_VERIFICAR = (
@@ -81,8 +83,7 @@ def fallas(ruta):
     if ruta == "/precios":
         salida += [f"“sujeto a disponibilidad” lejos del precio: …{texto[max(0, m.start() - 40):m.end()]}…"
                    for m in MARMOL_CONDICION_RE.finditer(texto)
-                   if dinero(datos.PRECIOS["marmol_saco"])
-                   not in texto[max(0, m.start() - JUNTO_AL_PRECIO):m.end() + JUNTO_AL_PRECIO]]
+                   if not MARMOL_PRECIO_RE.search(texto[max(0, m.start() - JUNTO_AL_PRECIO):m.end() + JUNTO_AL_PRECIO])]
         limpio = MARMOL_CONDICION_RE.sub(" ", limpio)
     salida += [f"{regla}: {m.group(0)}" for regla, patron in SIN_VERIFICAR for m in re.finditer(patron, limpio, re.I)]
     cuerpo = paridad.principal(html)

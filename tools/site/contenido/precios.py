@@ -56,11 +56,16 @@ PREGUNTAS = (
 )
 
 
-def _oferta(nombre, precio, ruta, unidad=None, desde=False):
-    """Offer del catálogo con el seller por @id a #negocio; con unidad, su UnitPriceSpecification (minPrice si es
-    "desde"). Solo precios de datos.py: nunca InStock."""
-    o = {"@type": "Offer", "name": nombre, "price": str(precio), "priceCurrency": "MXN", "url": f"{SITE}{ruta}",
-         "seller": NEGOCIO}
+def _oferta(nombre, precio, ruta, unidad=None, desde=False, descripcion=None):
+    """Offer del catálogo con el seller por @id a #negocio; con unidad, su UnitPriceSpecification. Si es "desde" el
+    precio va solo como minPrice (como materiales_comun.oferta: un price exacto diría otra cosa), así que "desde" pide
+    unidad. Solo precios de datos.py: nunca InStock."""
+    o = {"@type": "Offer", "name": nombre}
+    if not desde:
+        o["price"] = str(precio)
+    if descripcion:
+        o["description"] = descripcion
+    o.update({"priceCurrency": "MXN", "url": f"{SITE}{ruta}", "seller": NEGOCIO})
     if unidad:
         spec = {"@type": "UnitPriceSpecification", "priceCurrency": "MXN", "unitText": unidad}
         spec.update({"minPrice": precio} if desde else {"price": str(precio)})
@@ -72,18 +77,20 @@ CATALOGO = {
     "@type": "OfferCatalog", "@id": f"{URL}#lista", "name": "Lista de precios de Viveros Terra",
     "itemListElement": [
         _oferta("Pasto San Agustín en rollo, solo el pasto", P["pasto_solo_m2"], "/pasto-en-rollo-tampico", "m²"),
-        _oferta("Pasto San Agustín instalado", P["pasto_instalado_m2"], "/pasto-en-rollo-tampico", "m²"),
+        _oferta("Pasto San Agustín instalado", P["pasto_instalado_m2"], "/pasto-en-rollo-tampico", "m²", desde=True),
         _oferta(f"Pasto San Agustín al mayoreo, desde {P['pasto_mayoreo_minimo_m2']} m²", P["pasto_mayoreo_m2"],
-                "/mayoreo-pasto-tampico", "m²"),
-        _oferta("Mantenimiento de jardín mensual", P["mantenimiento_mes"], "/mantenimiento-jardines-tampico", "mes"),
+                "/mayoreo-pasto-tampico", "m²", desde=True),
+        _oferta("Mantenimiento de jardín mensual", P["mantenimiento_mes"], "/mantenimiento-jardines-tampico", "mes",
+                desde=True),
         _oferta("Diseño de jardín, Plan Terra Esencial", P["diseno"], "/diseno-jardines-tampico"),
         _oferta("Diseño de jardín, Plan Terra Completo", P["diseno_completo"], "/diseno-jardines-tampico"),
-        _oferta("Diseño de jardín, Plan Terra Premium", P["diseno_premium"], "/diseno-jardines-tampico"),
-        _oferta("Pasto sintético, material en rollo", lp.SINTETICO_MIN, "/pasto-sintetico", "m²"),
+        _oferta("Diseño de jardín, Plan Terra Premium", P["diseno_premium"], "/diseno-jardines-tampico", "proyecto",
+                desde=True),
+        _oferta("Pasto sintético, material en rollo", lp.SINTETICO_MIN, "/pasto-sintetico", "m²", desde=True),
         _oferta("Tierra negra vegetal, costal", P["tierra_negra_costal"], "/tierra-negra-vegetal-tampico"),
         _oferta("Tezontle rojo, costal", P["tezontle_costal"], "/tezontle-rojo-tampico", "costal", desde=True),
-        _oferta("Mármol blanco, saco", P["marmol_saco"], "/marmol-blanco-tampico"),
-        _oferta("Palmas, tamaño chico", P["palma_desde"], "/palmas-tropicales-tampico"),
+        _oferta("Mármol blanco, saco", P["marmol_saco"], "/marmol-blanco-tampico", descripcion=datos.MARMOL_CONDICION),
+        _oferta("Palmas, tamaño chico", P["palma_desde"], "/palmas-tropicales-tampico", "pieza", desde=True),
     ],
 }
 
@@ -109,7 +116,8 @@ CONTENIDO = {
                      "filas": (("Instalado", f"desde {INSTALADO}/m²"), ("Mantenimiento", f"desde {MANTENIMIENTO}/mes"),
                                ("Pasto sintético", f"desde {SINTETICO}/m²"))},
         "mensaje": MENSAJE,
-        "tambien": f'<a href="#pasto">Ver la lista</a> · factura {datos.FACTURA} · REPSE {datos.REPSE}',
+        "tambien": (f'<a href="#pasto">Ver la lista</a> · <a href="#mensualidades">Hasta {max(mensualidades.PLAZOS)} '
+                    f'mensualidades con tarjeta · ver plazos</a> · factura {datos.FACTURA} · REPSE {datos.REPSE}'),
         "foto": {"src": f"{IMG}-sm.webp", "srcset": f"{IMG}-sm.webp 560w, {IMG}.webp 960w",
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960, "alto": 1185, "numero": 1,
                  "alt": "Trabajador de Viveros Terra descargando pasto San Agustín en rollo de la camioneta",

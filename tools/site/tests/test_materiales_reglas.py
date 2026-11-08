@@ -99,7 +99,7 @@ def fallas(ruta):
     if ruta == "/marmol-blanco-tampico":
         salida += [f"“sujeto a disponibilidad” lejos del precio: …{texto[max(0, m.start() - 40):m.end()]}…"
                    for m in MARMOL_CONDICION_RE.finditer(texto)
-                   if "$250" not in texto[max(0, m.start() - JUNTO_AL_PRECIO):m.end() + JUNTO_AL_PRECIO]]
+                   if not re.search(r'\$250|"price":\s*"?250\b', texto[max(0, m.start() - JUNTO_AL_PRECIO):m.end() + JUNTO_AL_PRECIO])]
         limpio = MARMOL_CONDICION_RE.sub(" ", texto)
     limpio = limpio.replace(datos.SIN_MINIMO, " ")
     salida += [f"{regla}: {m.group(0)}" for regla, patron in SIN_VERIFICAR for m in re.finditer(patron, limpio, re.I)]
@@ -207,6 +207,7 @@ class MaterialesReglasTest(unittest.TestCase):
         self.assertEqual((oferta["price"], oferta["priceCurrency"]), (250, "MXN"))
         self.assertEqual(oferta["priceSpecification"]["price"], 250)
         self.assertEqual(oferta["seller"], {"@id": f"{datos.SITIO}/#negocio"})
+        self.assertEqual(oferta["description"], datos.MARMOL_CONDICION)
         self.assertNotIn("availability", oferta)
 
     def test_tierra_negra_con_preparada_y_camiones(self):
