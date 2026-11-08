@@ -1,6 +1,6 @@
-"""Precio en mensualidades con tarjeta de crédito (Clip).
+"""Precio en mensualidades con tarjeta de crédito (procesador de pagos).
 
-Misma fórmula que la calculadora de Clip: la comisión del plazo se suma a la estándar
+Misma fórmula que la calculadora del procesador de pagos: la comisión del plazo se suma a la estándar
 y el IVA se aplica sobre ambas. Viveros Terra recibe el contado íntegro.
 Mantener igual a public/js/vt-mensualidades.js (paridad en test_mensualidades.py y vt-mensualidades.test.js, con los
 casos de public/js/tests/casos-mensualidades.json).

@@ -19,7 +19,8 @@ INSTALAR = ("Sí. Sobre tierra compactada se fija con clavos cada 20 a 30 cm. So
 DEVOLVER = ("Sí, dentro de 7 días, nuevo y sin cortar. Los cortes a medida no tienen devolución. El envío de regreso lo "
             "paga el cliente.")
 ENTREGA = ("Llega en 3 a 5 días hábiles después de confirmar el pago, con guía de rastreo. El mínimo para envío "
-           "nacional es 25 m². En el showroom de Cd. Madero puedes comprar desde 2 m².")
+           f"nacional es {data.MIN_NACIONAL_M2} m². En el showroom de Cd. Madero puedes comprar desde "
+           f"{data.MIN_SHOWROOM_M2} m².")
 PASOS = (
     {"titulo": "Cotiza aquí", "quien": "tu", "cuando": "Hoy",
      "texto": "Pon tus m² y tu estado. Mándanos la cotización por WhatsApp."},
@@ -108,8 +109,8 @@ def contenido(m):
         "etiqueta": {
             "codigo": f"Sintético · {m['n']:02d}/09", "aviso": "Con IVA", "nombre": m["nombre"],
             "antes": f"Rollo de {data.ROLLO_M2} m² · desde", "monto": dinero(m["rollo"]), "unidad": "/m²",
-            "filas": (("Envío", "por rollo, según tu estado"), ("Mínimo nacional", "25 m²"),
-                      ("En showroom", "desde 2 m²")),
+            "filas": (("Envío", "por rollo, según tu estado"), ("Mínimo nacional", f"{data.MIN_NACIONAL_M2} m²"),
+                      ("En showroom", f"desde {data.MIN_SHOWROOM_M2} m²")),
             "nota": f'<span data-landed-slug="{m["slug"]}" aria-live="polite"></span>',
         },
         "para_quien": {"titulo": f"Para quién es el {m['nombre']}", "resumen": m["resumen"],

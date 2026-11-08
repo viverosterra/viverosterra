@@ -58,7 +58,7 @@ FAQS = [
      "registro REPSE 773725 para contratos con empresas."),
     ("¿Por qué algunos precios dicen «desde»?",
      "Porque el total depende de los metros, del estado del terreno y del acceso a la obra. En la visita medimos y te "
-     "damos el precio cerrado antes de empezar. La visita no tiene costo."),
+     "damos el precio cerrado antes de empezar."),
     ("¿Cuánto cuesta el pasto sintético en Tampico?",
      f"El material cuesta desde ${SINTETICO_MIN}/m² en rollo completo y el pasto instalado de ${SINTETICO_INSTALADO[0]} "
      f"a ${SINTETICO_INSTALADO[1]}/m² según el modelo, con material y colocación. La preparación del terreno se cotiza aparte."),

@@ -32,7 +32,7 @@ ZONAS = {
         ],
         img=("diseno-jardines-tampico-proyecto", 960, 1574, "center 55%"),
         faqs=[
-            ("¿Dan servicio de jardinería en Lomas de Rosales?", "Sí. Atendemos Lomas de Rosales, Lomas de la Aurora y Vista Hermosa en Tampico con instalación de pasto, diseño, riego y mantenimiento. La visita para medir no tiene costo."),
+            ("¿Dan servicio de jardinería en Lomas de Rosales?", "Sí. Atendemos Lomas de Rosales, Lomas de la Aurora y Vista Hermosa en Tampico con instalación de pasto, diseño, riego y mantenimiento. Agendamos una visita para medir y cotizar."),
             ("¿Cuánto cuesta el mantenimiento de jardín en Lomas de Rosales?", "Desde $750 al mes. El precio final depende de los metros del jardín y de la frecuencia de visitas."),
             ("¿Qué riego conviene en un jardín con pendiente?", "Goteo en jardineras y aspersión de bajo caudal en el pasto, con zonas separadas para la parte alta y la baja. Así el agua no escurre y se aprovecha mejor."),
         ],

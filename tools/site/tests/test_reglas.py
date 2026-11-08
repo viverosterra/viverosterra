@@ -33,8 +33,9 @@ PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
 # Decisión del dueño (2026-11-07): no se ofrece crédito a clientes (ni a instaladores ni a constructoras recurrentes).
 CREDITO_CLIENTES_RE = re.compile(r"\bcr[eé]dito\s+(?:para|a)\s+(?:(?:los|sus|nuestros)\s+)?clientes\b", re.I)
 # Decisión del dueño (2026-11-07): la visita para medir tiene costo o depende; nunca "visita sin costo", "visita
-# gratis" ni "visita gratuita" (tampoco "vamos a medir sin costo").
-GRATIS = r"(?:sin\s+costo|gratis|gratuit(?:[ao]s?|amente))"
+# gratis", "visita gratuita", "la visita no tiene costo", "sin cargo" ni "no cuesta" (tampoco "vamos a medir sin costo").
+GRATIS = (r"(?:sin\s+(?:costo|cargo)|gratis|gratuit(?:[ao]s?|amente)|no\s+(?:tiene\s+(?:ning[uú]n\s+)?costo|cuesta"
+          r"|se\s+cobra|cobramos|te\s+cobramos))")
 VISITA_GRATIS_RE = re.compile(
     rf"\bvisit\w*\b\W+(?:\w+\W+){{0,4}}?{GRATIS}\b|\b(?:medir|medimos|medici[oó]n|diagn[oó]sticos?)\W+(?:\w+\W+){{0,2}}?{GRATIS}\b"
     rf"|\b{GRATIS}\W+(?:\w+\W+){{0,2}}?visitas?\b", re.I)
@@ -199,10 +200,13 @@ class ReglasDelDuenoTest(unittest.TestCase):
         for sucio in ("Agendamos una visita sin costo", "Visita técnica gratuita", "vamos a medir sin costo",
                       "Visita y medición Sin costo", "visita gratis",
                       "ofrece visita de diagnóstico y cotización gratuita", "visita el terreno gratuitamente",
+                      "La visita para medir no tiene costo", "La visita no tiene costo", "la visita no cuesta",
+                      "visita de diagnóstico sin cargo", "medir no te cobramos", "Sin cargo, una visita",
                       "diagnóstico gratuito", "una visita de diagnóstico sin costo", "diagnósticos de pasto sin costo"):
             self.assertRegex(sucio, VISITA_GRATIS_RE)
         for limpio in ("Agendamos una visita para medir y cotizar", "Cotización gratis por WhatsApp",
-                       "la reponemos sin costo", "Visítanos en el vivero"):
+                       "la reponemos sin costo", "Visítanos en el vivero",
+                       "el resto de Altamira, sin cargo extra por traslado", "no cuesta como un pasto de lujo"):
             self.assertNotRegex(limpio, VISITA_GRATIS_RE)
 
     def test_deportes_solo_se_marcan_con_sintetico(self):
