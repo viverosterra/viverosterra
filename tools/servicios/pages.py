@@ -16,20 +16,9 @@ GARANTIA_PLANTAS = ("30 días", "Garantía de arraigo al sembrarlas nosotros")
 DESDE_2007 = ("Desde 2007", "Vivero propio en Cd. Madero")
 VARIEDADES = ("+200", "Variedades en el vivero")
 
-# La home y /pasto-en-rollo-tampico (Etapa 2a), y diseño, mantenimiento y riego (Etapa 2c) salen de
-# tools/site/plantillas/: este script ya no las toca. Quedan las páginas de las Etapas 2d a 2g.
+# La home y /pasto-en-rollo-tampico (Etapa 2a), diseño, mantenimiento y riego (Etapa 2c) y mayoreo de pasto (Etapa 2d)
+# salen de tools/site/plantillas/: este script ya no las toca. Quedan palmas para proyectos (2d) y las de 2e a 2g.
 PAGES = {
-    "mayoreo-pasto-tampico": dict(
-        eyebrow="Constructoras · Fraccionamientos · Industria",
-        title="Pasto al mayoreo", accent="para obras y fraccionamientos",
-        price_pre="Desde", price="$60", price_unit="/m²", price_alt="· pedidos de 500 m² o más",
-        lede="Pasto San Agustín en rollo para constructoras, desarrolladoras, hoteles e industria. Entregas por etapas según el avance de la obra.",
-        facts=[("500 m²", "Pedido mínimo de mayoreo"), ("CFDI 4.0", "Factura y REPSE 773725"), ("Por etapas", "Entregas según el avance de obra")],
-        img="/img/instalacion-pasto-rollo-san-agustin-tampico.webp", img_pos="center 40%",
-        alt="Cuadrilla instalando pasto San Agustín en rollo", caption="Pasto San Agustín cortado para obra.",
-        wa=guided("Hola, necesito pasto al mayoreo para un proyecto.", "Empresa", "Ubicación de la obra", "Metros totales", "Fecha de entrega", foto=False),
-        cta="Cotizar mayoreo",
-    ),
     "vivero-tampico": dict(
         title="Vivero en Tampico", accent="y Ciudad Madero, desde 2007",
         price_pre="Palmas desde", price="$250", price_unit="", price_alt="· pasto $85/m² · plantas por tamaño",

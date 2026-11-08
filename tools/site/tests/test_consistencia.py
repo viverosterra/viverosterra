@@ -202,9 +202,10 @@ class ConsistenciaTest(unittest.TestCase):
         self.assertIn("Recibes el precio del pasto, la entrega y la instalación por separado.",
                       TEXTOS[PUBLIC / "pasto-en-rollo-tampico" / "index.html"])
         self.assertEqual(TEXTOS[PUBLIC / "pasto-en-rollo-tampico" / "index.html"].count("Cortado para tu pedido"), 2)
-        palmas = TEXTOS[PUBLIC / "palmas-mayoreo-proyectos" / "index.html"]
-        self.assertEqual(palmas.count("Para proyectos solicitamos un anticipo al confirmar y el resto se acuerda contra "
-                                      "avances de obra; te lo detallamos en la cotización."), 2)
+        # Etapa 2d: la misma frase del dueño en las dos páginas para empresas, en el FAQ visible y en su FAQPage.
+        for pagina in ("mayoreo-pasto-tampico", "palmas-mayoreo-proyectos"):
+            with self.subTest(pagina=pagina):
+                self.assertEqual(TEXTOS[PUBLIC / pagina / "index.html"].count(datos.ANTICIPO_PROYECTOS), 2)
 
     def test_same_as_igual_a_redes_oficiales(self):
         oficiales = {url for _, url in datos.REDES}

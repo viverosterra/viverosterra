@@ -1,0 +1,161 @@
+"""Mayoreo de pasto y palmas para proyectos salen de la plantilla b2b (Etapa 2d): secuencia del spec §3.3, clientes con
+nombre y REPSE verificable, un mensaje de compras por paquete, precios de datos.py (mayoreo nunca a $60 con menos de
+500 m²; palmas con los precios del dueño y el resto según cotización), anticipo sin porcentaje ni crédito, cotizadores
+con su JS y JSON-LD de lo visible. /empresas es de la Etapa 3: mientras tanto nadie la enlaza."""
+import json
+import re
+import sys
+import unittest
+from pathlib import Path
+from urllib.parse import unquote
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+import datos  # noqa: E402
+import mensajes_paginas  # noqa: E402
+import paginas  # noqa: E402
+from test_reglas import textos_publicos  # noqa: E402
+
+P = datos.PRECIOS
+# Cada página migrada agrega su fila aquí y en SCRIPTS (palmas llega en la tarea siguiente).
+RUTAS = {"mayoreo": "/mayoreo-pasto-tampico"}
+SCRIPTS = {"mayoreo": ["/js/vt-medidor.js", "/js/vt-b2b.js"]}
+
+
+def pagina(clave):
+    html = (paginas.PUBLIC / RUTAS[clave].strip("/") / "index.html").read_text(encoding="utf-8")
+    main = re.search(r'<main id="main">(.*)</main>', html, re.S).group(1)
+    grafo = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', html, re.S).group(1))["@graph"]
+    return html, main, textos_publicos(html), grafo
+
+
+def mensajes_de(html, patron):
+    return [unquote(t) for t in re.findall(rf'data-cta="{patron}" href="https://wa\.me/\d+\?text=([^"]+)"', html)]
+
+
+class ComunTest(unittest.TestCase):
+    def test_orden_de_secciones_del_spec(self):
+        orden = ('class="vt-crumbs"', "<h1", 'class="vt-etiqueta"', 'data-cta="b2b:hero"', 'id="vt-h-prueba"',
+                 'class="vt-logos"', "padrón público de la STPS", 'id="vt-h-precio"', "data-hero-cta data-wa",
+                 'id="vt-h-docs"', 'id="vt-h-opciones"', 'id="vt-h-proceso"', 'id="vt-h-garantia"', 'id="vt-h-faq"',
+                 'id="vt-h-cobertura"', 'id="vt-h-rel"', 'class="vt-cierre"')
+        for clave in RUTAS:
+            _h, main, _t, _g = pagina(clave)
+            with self.subTest(pagina=clave):
+                posiciones = [main.index(m) for m in orden]
+                self.assertEqual(posiciones, sorted(posiciones))
+                self.assertEqual(len(re.findall(r"<h1\b", main)), 1)
+                self.assertEqual(main.count('class="vt-pasos"'), 1)
+
+    def test_sin_css_viejo_formularios_ni_parches_de_servicios(self):
+        for clave in RUTAS:
+            html, _m, _t, _g = pagina(clave)
+            with self.subTest(pagina=clave):
+                self.assertNotRegex(html, r"fonts\.googleapis|/css/(?:tailwind|design-system|servicios|legacy-fixes)")
+                for viejo in ("svc-hero", "<form", "<style", "cta-submit", "calc-cta", "window.open", "Sección 1",
+                              "sticky-cta", "faq-btn"):
+                    self.assertNotIn(viejo, html)
+                self.assertIn('<body class="vt-pagina">', html)
+
+    def test_scripts_del_cotizador_en_orden(self):
+        for clave, esperados in SCRIPTS.items():
+            html, _m, _t, _g = pagina(clave)
+            propios = [s for s in re.findall(r'<script src="([^"]+)" defer></script>', html) if "/terra." not in s]
+            with self.subTest(pagina=clave):
+                self.assertEqual(propios, esperados)
+
+    def test_clientes_con_nombre_y_repse_verificable(self):
+        for clave in RUTAS:
+            _h, main, _t, _g = pagina(clave)
+            prueba = main[main.index('id="vt-h-prueba"'):main.index('id="vt-h-precio"')]
+            with self.subTest(pagina=clave):
+                for cliente in datos.CLIENTES_B2B:
+                    self.assertRegex(prueba, rf'alt="{re.escape(cliente)}"|>{re.escape(cliente)}</li>')
+                self.assertIn(f'REPSE {datos.REPSE} · <a href="{datos.REPSE_PADRON}"', prueba)
+
+    def test_portada_cierre_y_shell_con_la_plantilla_de_compras(self):
+        for clave, ruta in RUTAS.items():
+            html, _m, _t, _g = pagina(clave)
+            esperado = datos.con_firma(mensajes_paginas.EMPRESAS[ruta])
+            with self.subTest(pagina=clave):
+                for seccion in ("hero", "cierre", "barra", "footer"):
+                    self.assertEqual(set(mensajes_de(html, f"b2b:{seccion}")), {esperado}, seccion)
+
+    def test_tres_paquetes_cada_uno_con_su_mensaje(self):
+        for clave in RUTAS:
+            html, _m, _t, _g = pagina(clave)
+            mensajes = [mensajes_de(html, f"b2b:opcion-{i}") for i in (1, 2, 3)]
+            with self.subTest(pagina=clave):
+                self.assertTrue(all(len(m) == 1 for m in mensajes))
+                planos = [m[0] for m in mensajes]
+                self.assertEqual(len(set(planos)), 3)
+                for m in planos:
+                    self.assertIn("Empresa", m)
+                    self.assertTrue(m.endswith(datos.FIRMA))
+                self.assertEqual(mensajes_de(html, "b2b:opcion-4"), [])
+
+    def test_anticipo_sin_porcentaje_ni_credito(self):
+        for clave in RUTAS:
+            _h, _m, texto, _g = pagina(clave)
+            with self.subTest(pagina=clave):
+                self.assertEqual(texto.count(datos.ANTICIPO_PROYECTOS), 2)  # FAQ visible y FAQPage
+                self.assertNotRegex(texto, r"(?i)pago diferido|a crédito|\d+ ?% de anticipo")
+
+    def test_empresas_todavia_sin_enlace(self):
+        """/empresas es de la Etapa 3 (spec §3.5): hasta entonces ninguna página la enlaza."""
+        for path in paginas.PUBLIC.rglob("*.html"):
+            with self.subTest(pagina=str(path.relative_to(paginas.PUBLIC))):
+                self.assertNotRegex(path.read_text(encoding="utf-8"), r'href="/empresas(?:[/"#?])')
+
+    def test_las_paginas_para_empresas_se_enlazan_entre_si(self):
+        for clave, ruta in RUTAS.items():
+            _h, main, _t, _g = pagina(clave)
+            rel = main[main.index('id="vt-h-rel"'):main.index('class="vt-cierre"')]
+            otros = [r for r in RUTAS.values() if r != ruta]
+            with self.subTest(pagina=clave):
+                for destino in otros + ["/mantenimiento-jardines-tampico", "/sistema-riego-tampico"]:
+                    self.assertIn(f'href="{destino}"', rel)
+                self.assertNotIn(f'href="{ruta}"', rel)
+
+    def test_faq_y_json_ld_dicen_lo_mismo(self):
+        for clave in RUTAS:
+            _h, main, _t, grafo = pagina(clave)
+            visibles = [re.sub(r"<[^>]+>", "", q) for q in re.findall(r"<summary>(.*?)</summary>", main)]
+            faq = next(n for n in grafo if n["@type"] == "FAQPage")
+            with self.subTest(pagina=clave):
+                self.assertEqual([q["name"] for q in faq["mainEntity"]], visibles)
+                self.assertGreaterEqual(len(visibles), 8)
+
+
+class MayoreoTest(unittest.TestCase):
+    def test_precio_y_minimo_de_datos(self):
+        _h, main, texto, _g = pagina("mayoreo")
+        portada = main[:main.index('id="vt-h-prueba"')]
+        self.assertIn(f"<b>${P['pasto_mayoreo_m2']}</b>", portada)
+        self.assertIn(f"{P['pasto_mayoreo_minimo_m2']} m²", portada)
+        self.assertIn(f"a partir de {P['pasto_mayoreo_minimo_m2']} m²", texto)
+
+    def test_con_menos_de_500_m2_nunca_a_60(self):
+        _h, main, texto, _g = pagina("mayoreo")
+        minimo, mayoreo, solo = P["pasto_mayoreo_minimo_m2"], P["pasto_mayoreo_m2"], P["pasto_solo_m2"]
+        fila = re.search(rf'<th scope="row">Menos de {minimo} m²</th>(.*?)</tr>', main).group(1)
+        self.assertIn(f"${solo}", fila)
+        self.assertNotIn(f"${mayoreo}", fila)
+        self.assertNotRegex(texto, rf"(?:menos de|bajo) {minimo} m²[^.]{{0,40}}\${mayoreo}\b")
+        self.assertIn(f'&quot;minimo&quot;:{minimo}', main)
+
+    def test_opinion_real_de_una_constructora(self):
+        _h, main, _t, _g = pagina("mayoreo")
+        cita, nombre, detalle = datos.OPINIONES_PASTO_EN_ROLLO[1]
+        self.assertIn(f"<p>“{cita}”</p>", main)
+        self.assertIn(f"<b>{nombre}</b><span>{detalle}</span>", main)
+
+    def test_json_ld_como_estaba_publicado(self):
+        _h, _m, _t, grafo = pagina("mayoreo")
+        self.assertEqual([n["@type"] for n in grafo], ["Service", "FAQPage", "BreadcrumbList", "SpeakableSpecification"])
+        self.assertEqual(grafo[0]["provider"]["address"]["streetAddress"], datos.CALLE)
+
+
+if __name__ == "__main__":
+    unittest.main()
