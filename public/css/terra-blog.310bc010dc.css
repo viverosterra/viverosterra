@@ -46,6 +46,7 @@
 .vt-blog .vt-art__medio{margin:28px 0;padding:14px 16px;border-top:2px solid var(--vt-ink);background:var(--vt-bone-2)}
 .vt-blog .vt-art__cuerpo .vt-art__medio p{margin:0 0 4px;font-weight:600;color:var(--vt-ink)}
 .vt-blog main .vt-art__medio a,.vt-blog main .vt-art__margen-cta a{color:var(--vt-field);font-weight:600}
+.vt-blog main :is(.vt-art__medio,.vt-art__margen-cta) .vt-flecha{margin-left:6px}
 .vt-blog .vt-art__margen{display:none}
 .vt-blog .vt-art__margen-cta{margin:16px 0 0;font-size:var(--vt-text-sm)}
 .vt-blog .vt-art__producto{padding-block:var(--vt-space-section);background:var(--vt-bone-2)}
