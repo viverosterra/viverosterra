@@ -4,9 +4,9 @@
    - [data-vt-volumen]: m² totales de la obra → precio por volumen con VTMedidor.calcular (vt-medidor.js): mayoreo desde
      el mínimo y, con menos, solo pasto con su aviso. Los modos y precios llegan en data-modos, escritos desde datos.py.
    - [data-vt-palmas]: especie, altura y cantidad por renglón (hasta 8) → un solo mensaje con toda la lista.
-   - [data-vt-correo]: cotización por correo para compras (formsubmit). Valida junto a cada campo, manda generate_lead con
-     method "formulario" y recibe del cotizador o del armador los m² o la lista, la empresa, la obra y la fecha (cada campo
-     mientras el visitante no haya escrito otra cosa en él).
+   - [data-vt-correo]: cotización por correo para compras y, desde 2f, el pedido de materiales (formsubmit). Valida
+     junto a cada campo, manda generate_lead con method "formulario" y recibe del cotizador o del armador los m² o la
+     lista, la empresa, la obra y la fecha (cada campo mientras el visitante no haya escrito otra cosa en él).
    Los botones son enlaces de WhatsApp con data-cta: terra.js los mide (generate_lead) y los firma al hacer clic. Sin JS, el
    botón manda la plantilla de compras de la página (data-mensaje) y el formulario usa la validación del navegador. Las
    funciones puras se exportan para node --test. */
@@ -81,15 +81,20 @@
   }
 
   const MENSAJE_REQUERIDO = 'Escribe este dato para enviar la solicitud.';
-  const MENSAJE_CORREO = 'Revisa el correo: debe verse como compras@tuempresa.com.';
+  const EJEMPLO_CORREO = 'compras@tuempresa.com';
+  const MENSAJE_CORREO = `Revisa el correo: debe verse como ${EJEMPLO_CORREO}.`;
   const CORREO_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-  // valores: {name: texto}; requeridos: names obligatorios en el orden del formulario. Devuelve {name: mensaje}.
-  function erroresCorreo(valores, requeridos) {
+  // valores: {name: texto}; requeridos: names obligatorios en el orden del formulario; correos: {name: ejemplo} de los
+  // campos de correo (el ejemplo es su placeholder; sin argumento, el campo "correo" de las páginas para empresas; desde
+  // 2f también el "email" del pedido de materiales). Devuelve {name: mensaje}.
+  function erroresCorreo(valores, requeridos, correos = { correo: EJEMPLO_CORREO }) {
     const errores = {};
     requeridos.forEach((n) => { if (!String(valores[n] == null ? '' : valores[n]).trim()) errores[n] = MENSAJE_REQUERIDO; });
-    const correo = String(valores.correo == null ? '' : valores.correo).trim();
-    if (!errores.correo && correo && !CORREO_RE.test(correo)) errores.correo = MENSAJE_CORREO;
+    Object.keys(correos).forEach((n) => {
+      const correo = String(valores[n] == null ? '' : valores[n]).trim();
+      if (!errores[n] && correo && !CORREO_RE.test(correo)) errores[n] = `Revisa el correo: debe verse como ${correos[n]}.`;
+    });
     return errores;
   }
 
@@ -128,16 +133,18 @@
       else c.removeAttribute('aria-invalid');
     };
     const valores = () => Object.fromEntries(campos.map((c) => [c.name, c.value]));
+    const correos = Object.fromEntries(campos.filter((c) => c.type === 'email')
+      .map((c) => [c.name, c.placeholder || EJEMPLO_CORREO]));
     PRELLENABLES.forEach((n) => {
       const c = form.querySelector(`[name="${n}"]`);
       if (c) c.addEventListener('input', () => { c.dataset.vtPropio = c.value ? '1' : ''; });
     });
     form.addEventListener('input', (e) => {
       const c = e.target;
-      if (c.getAttribute && c.getAttribute('aria-invalid') === 'true') pintar(c, erroresCorreo(valores(), requeridos)[c.name]);
+      if (c.getAttribute && c.getAttribute('aria-invalid') === 'true') pintar(c, erroresCorreo(valores(), requeridos, correos)[c.name]);
     });
     form.addEventListener('submit', (e) => {
-      const errores = erroresCorreo(valores(), requeridos);
+      const errores = erroresCorreo(valores(), requeridos, correos);
       campos.forEach((c) => pintar(c, errores[c.name]));
       const malos = campos.filter((c) => errores[c.name]);
       if (malos.length) {

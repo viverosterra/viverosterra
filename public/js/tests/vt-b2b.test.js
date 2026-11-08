@@ -70,3 +70,8 @@ test('prellenado del formulario: m² del cotizador y lista del armador', () => {
     { empresa: 'Constructora Norte', proyecto: 'Fracc. en Altamira', fecha: 'marzo' });
   assert.deepStrictEqual(B.prellenadoObra({ empresa: '', obra: '', fecha: '' }), { empresa: '', proyecto: '', fecha: '' });
 });
+test('pedido de materiales (2f): el campo email se valida con el ejemplo de su placeholder', () => {
+  const e = B.erroresCorreo({ nombre: 'Ana', email: 'ana@' }, ['nombre', 'email'], { email: 'tu@correo.com' });
+  assert.deepStrictEqual(e, { email: 'Revisa el correo: debe verse como tu@correo.com.' });
+  assert.strictEqual(B.erroresCorreo({ correo: 'a@' }, []).correo, 'Revisa el correo: debe verse como compras@tuempresa.com.');
+});
