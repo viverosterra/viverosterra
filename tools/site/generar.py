@@ -22,6 +22,8 @@ def _varias(modulo, ruta_de, archivo_de, plantilla):
 
 # Etapa 2i: páginas utilitarias (legales, formularios, protocolo, vivero y 404).
 UTILITARIAS = (
+    ("/politicas", "politicas/index.html", "legal", "politicas"),
+    ("/politica-privacidad", "politica-privacidad/index.html", "legal", "politica_privacidad"),
 )
 
 PAGINAS = (
