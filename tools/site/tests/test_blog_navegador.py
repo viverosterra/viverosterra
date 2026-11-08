@@ -100,6 +100,36 @@ class BlogNavegadorTest(unittest.TestCase):
         self.assertTrue(pagina.evaluate(SALIDOS_DEL_MAIN))
         pagina.close()
 
+    def test_foto_del_articulo_con_el_recorte_de_produccion(self):
+        for ancho, alto in ((375, 256), (768, 320), (1440, 320)):
+            pagina = self.nav.new_page(viewport={"width": ancho, "height": 900})
+            pagina.goto(f"{self.base}/blog/palmas-mas-vendidas-tampico-precios/", wait_until="load")
+            caja = pagina.evaluate("""() => { const i = document.querySelector('.vt-art__cuerpo img');
+              return [Math.round(i.getBoundingClientRect().height), getComputedStyle(i).objectFit]; }""")
+            self.assertEqual(caja, [alto, "cover"], f"a {ancho}px")
+            pagina.close()
+
+    def test_el_cordel_de_la_etiqueta_no_cruza_el_texto(self):
+        for ancho in (320, 375, 768):
+            pagina = self.nav.new_page(viewport={"width": ancho, "height": 900})
+            pagina.goto(f"{self.base}/blog/pasto-san-agustin-instalacion-mantenimiento/", wait_until="load")
+            aire = pagina.evaluate("""() => {
+              const marco = document.querySelector('.vt-art__producto .vt-etiqueta-x--cordel');
+              const cordel = getComputedStyle(marco, '::before');
+              const arriba = marco.getBoundingClientRect().bottom - parseFloat(cordel.bottom) - parseFloat(cordel.height);
+              return arriba - document.querySelector('.vt-art__producto .vt-promesa').getBoundingClientRect().bottom; }""")
+            self.assertGreaterEqual(aire, 8, f"a {ancho}px")
+            pagina.close()
+
+    def test_las_migas_no_se_pegan_a_la_etiqueta_de_categoria(self):
+        for ruta in ("/blog/", "/blog/palma-areca-tampico/"):
+            pagina = self.nav.new_page(viewport={"width": 375, "height": 812})
+            pagina.goto(self.base + ruta, wait_until="load")
+            aire = pagina.evaluate("""() => document.querySelector('main .vt-kicker').getBoundingClientRect().top
+              - document.querySelector('main .vt-crumbs').getBoundingClientRect().bottom""")
+            self.assertGreaterEqual(aire, 12, ruta)
+            pagina.close()
+
     def test_consola_limpia_en_el_indice_y_la_muestra(self):
         errores = []
         pagina = self.nav.new_page(viewport={"width": 1440, "height": 900})
