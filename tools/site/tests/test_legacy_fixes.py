@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 PUBLIC = Path(__file__).resolve().parents[3] / "public"
-HOJAS = ("tailwind.css", "design-system.css", "servicios.css", "legacy-fixes.css")
+HOJAS = ("tailwind.css", "design-system.css", "legacy-fixes.css")
 UTILIDAD = re.compile(
     r"^(?:(?:sm|md|lg|xl|hover|focus|group-hover):)*-?(?:p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|w|h|min-h|max-w|text|bg|"
     r"border|rounded|gap|space|grid|col|row|flex|items|justify|font|leading|tracking|opacity|shadow|z|top|left|right|"

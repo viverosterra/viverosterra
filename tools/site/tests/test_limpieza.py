@@ -27,6 +27,11 @@ class LimpiezaTest(unittest.TestCase):
                     if "tienda-pasto.css" in p.read_text(encoding="utf-8")]
         self.assertEqual(con_hoja, [])
 
+    def test_tools_servicios_y_servicios_css_retirados(self):
+        """Etapa 2i: /vivero-tampico era la última página que salía de tools/servicios y usaba servicios.css."""
+        self.assertFalse((RAIZ / "tools" / "servicios").exists())
+        self.assertFalse((RAIZ / "public" / "css" / "servicios.css").exists())
+
     def test_ds_store_y_pycache_fuera_de_git(self):
         versionados = subprocess.run(["git", "ls-files"], cwd=RAIZ, capture_output=True, text=True, check=True).stdout
         self.assertNotIn(".DS_Store", versionados)
