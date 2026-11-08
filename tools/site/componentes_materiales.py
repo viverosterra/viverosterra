@@ -151,8 +151,8 @@ FILAS = {
     "piedra-bola": (),
 }
 NOTAS = {
-    "tierra-negra": ("m² × grosor de la capa = m³, redondeado hacia arriba. Costal ≈ 20 kg. El camión volteo y la "
-                     "entrega se cotizan según tu colonia."),
+    "tierra-negra": ("m² × grosor de la capa = m³, redondeado hacia arriba. El camión volteo y la entrega se cotizan "
+                     "según tu colonia."),
     "tezontle": "m² × grosor de la capa = m³, redondeado hacia arriba. El m³ y el camión se cotizan según tu colonia.",
     "marmol": "3 sacos por m² con capa de 3 a 4 cm; 4 con 5 cm y 5 con 6 cm. El precio por saco se cotiza.",
     "piedra-bola": ("Con piedra mediana y capa de 8 a 10 cm se usan de 120 a 150 kg por m². Para chica o grande, "

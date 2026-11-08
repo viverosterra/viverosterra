@@ -26,8 +26,7 @@ MATERIALES = {
     "/marmol-blanco-tampico": "marmol-blanco-tampico/index.html",
     "/piedra-bola-rio-tampico": "piedra-bola-rio-tampico/index.html",
 }
-PENDIENTES = frozenset({"/tierra-negra-vegetal-tampico", "/tezontle-rojo-tampico", "/marmol-blanco-tampico",
-                        "/piedra-bola-rio-tampico"})
+PENDIENTES = frozenset({"/tezontle-rojo-tampico", "/marmol-blanco-tampico", "/piedra-bola-rio-tampico"})
 CAPTURA = json.loads(paridad_materiales.CAPTURA.read_text(encoding="utf-8"))
 PERMITIDOS = {dinero(n) for v in datos.PRECIOS.values() for n in (v if isinstance(v, tuple) else (v,))
               if isinstance(n, int)}
