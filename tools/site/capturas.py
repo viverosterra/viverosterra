@@ -14,7 +14,8 @@ import servidor  # noqa: E402
 PAGINAS = ("/", "/pasto-en-rollo-tampico/", "/pasto-sintetico/", "/pasto-sintetico/toscana-28/",
            "/pasto-sintetico/envio/monterrey/", "/pasto-sintetico/perros/", "/pasto-sintetico-tampico/",
            "/diseno-jardines-tampico/", "/plantas-palmas-arboles-tampico/", "/catalogo.html", "/blog/",
-           "/blog/cuando-regar-pasto-san-agustin-tampico/", "/precios/")
+           "/blog/cuando-regar-pasto-san-agustin-tampico/", "/blog/palma-areca-tampico/",
+           "/blog/cuanto-cuesta-jardin-tampico-precios/", "/blog/jardines-temporada-lluvias-tampico/", "/precios/")
 ANCHOS = (320, 375, 768, 1024, 1440)
 # Baja la página de a una pantalla para que carguen las imágenes lazy y vuelve arriba (si no, la captura de página
 # completa las deja vacías).
