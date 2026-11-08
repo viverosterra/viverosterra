@@ -46,6 +46,30 @@ QUIETO = """() => new Promise((r) => requestAnimationFrame(() => requestAnimatio
   () => r(document.getAnimations().every((a) => a.playState !== 'running')))))"""
 BORDE_DERECHO = """() => Math.max(...Array.from(document.querySelectorAll('.vt-head__bar, .vt-foot, [data-vt-bar]'))
   .map((e) => e.getBoundingClientRect().right)) - document.documentElement.clientWidth"""
+# Encabezado a un ancho dado: lista de problemas (vacía si cabe). El CTA entero dentro de la pantalla, el menú sin
+# encimarse con el logo ni con el CTA y cada etiqueta del menú en un solo renglón.
+ENCABEZADO_CABE = """() => {
+  const vw = document.documentElement.clientWidth, mal = [];
+  const caja = (s) => document.querySelector(s).getBoundingClientRect();
+  const bar = caja('.vt-head__bar'), cta = caja('.vt-head__cta'), logo = caja('.vt-head__logo');
+  if (bar.right > vw + 1) mal.push('barra sale ' + Math.round(bar.right - vw) + 'px');
+  if (cta.left < 0 || cta.right > vw + 1) mal.push('CTA sale ' + Math.round(cta.right - vw) + 'px');
+  const nav = document.querySelector('.vt-nav');
+  if (getComputedStyle(nav).display !== 'none') {
+    const n = nav.getBoundingClientRect();
+    if (n.left < logo.right - 1 || n.right > cta.left + 1) mal.push('menú encimado');
+    const tops = Array.from(nav.querySelectorAll('.vt-nav__top'));
+    if (tops.length !== 6) mal.push(tops.length + ' entradas en el menú');
+    for (const t of tops) {
+      // solo el texto: el chevron SVG del botón tiene otra altura y no cuenta como renglón
+      const texto = document.createTreeWalker(t, NodeFilter.SHOW_TEXT).nextNode(), r = document.createRange();
+      r.selectNodeContents(texto);
+      if (new Set(Array.from(r.getClientRects(), (c) => Math.round(c.top))).size > 1) mal.push(texto.data + ' en 2 renglones');
+    }
+  }
+  return mal;
+}"""
+ANCHOS_ENCABEZADO = (*range(320, 980, 40), *range(980, 1441, 20), *range(1520, 1921, 80))
 
 
 @unittest.skipIf(sync_playwright is None, "Playwright no está instalado: python3 -m pip install playwright==1.48.0")
@@ -205,6 +229,16 @@ class NavegadorTest(unittest.TestCase):
                 with self.subTest(ruta=ruta, ancho=ancho):
                     self.assertLessEqual(page.evaluate(BORDE_DERECHO), 1)
 
+
+    def test_encabezado_cabe_en_todos_los_anchos(self):
+        # A 1100–1139px el botón "Cotizar por WhatsApp" se salía hasta 30px de la pantalla en las 108 páginas.
+        page = self.pagina()
+        for ruta in ("/", "/pasto-en-rollo-tampico/"):
+            page.goto(self.base + ruta, wait_until="load")
+            for ancho in ANCHOS_ENCABEZADO:
+                page.set_viewport_size({"width": ancho, "height": 900})
+                with self.subTest(ruta=ruta, ancho=ancho):
+                    self.assertEqual(page.evaluate(ENCABEZADO_CABE), [])
 
 if __name__ == "__main__":
     unittest.main()

@@ -90,12 +90,12 @@
 .vt-nav__panel li{margin:0;padding:0}
 .vt-nav__panel a{display:block;padding:10px 16px;font:400 var(--vt-text-sm)/1.3 var(--vt-font-sans);color:var(--vt-ink);text-decoration:none}
 .vt-nav__panel a:hover,.vt-nav__panel a[aria-current="page"]{background:var(--vt-field-100);color:var(--vt-field-deep)}
-/* domicilio y horario: dos renglones fijos (nowrap); solo desde 1440px, donde caben junto al menú completo */
+/* domicilio y horario (nowrap) solo desde 1440px; de 1100 a 1199px el CTA dice "Cotizar": el largo no cabe */
 .vt-head__meta{display:none;flex:none;margin:0;white-space:nowrap;font-size:var(--vt-text-xs);line-height:1.25;color:var(--vt-muted);text-align:right}
 .vt-head__meta b{display:block;font-weight:600;color:var(--vt-ink)}
 .vt-head__cta{margin-left:auto;min-height:44px;padding:0 12px;font-size:15px}
 .vt-head__cta-corto{display:none}
-@media (max-width:420px){.vt-head__cta-largo{display:none}.vt-head__cta-corto{display:inline}}
+@media (max-width:420px),(min-width:1100px) and (max-width:1199px){.vt-head__cta-largo{display:none}.vt-head__cta-corto{display:inline}}
 @media (max-width:359px){.vt-head__logo img{width:100px}.vt-head__cta{padding:0 10px}}
 .vt-burger{display:grid;place-items:center;flex:none;width:44px;height:44px;margin:0;padding:0;border:1px solid var(--vt-line-ui);border-radius:var(--vt-radius);background:none;color:var(--vt-ink);cursor:pointer}
 .vt-burger svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
