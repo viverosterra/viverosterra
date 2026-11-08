@@ -1,5 +1,6 @@
 """Reglas del dueño en las páginas de plantas (Etapa 2e): precios solo de datos.py, regla de palmas, flamboyán, garantía
-con condiciones, sin afirmaciones sin verificar, fotos locales con pie y sin /api/img.
+con condiciones, sin afirmaciones sin verificar, fotos locales con pie y sin /api/img, y "En nuestro vivero" solo en las
+fotos que el dueño confirmó (catalogo_datos.FOTOS_VIVERO_CONFIRMADAS).
 
 PENDIENTES lista las páginas que todavía no salen de su plantilla: solo puede encoger (cada tarea de migración saca las
 suyas) y al cerrar la Etapa 2e queda vacía."""
@@ -15,6 +16,7 @@ import datos  # noqa: E402
 import paginas  # noqa: E402
 import paridad  # noqa: E402
 from componentes import dinero  # noqa: E402
+from contenido import catalogo_datos as cd  # noqa: E402
 from test_b2b import PRECIOS_VIEJOS_PALMAS  # noqa: E402
 
 PUBLIC = paginas.PUBLIC
@@ -48,6 +50,11 @@ SIN_VERIFICAR = (
 )
 FIGURA_CATALOGO_RE = re.compile(r"<figure\b(?:(?!</figure>).)*?/img/catalogo/(?:(?!</figure>).)*?</figure>", re.S)
 PIE_RE = re.compile(r"<figcaption>(.*?)</figcaption>", re.S)
+PIE_FORMATO_RE = re.compile(r"Fig\. \d{2,3} · (.+?)(?: · (En nuestro vivero))?")
+
+
+def del_vivero_confirmadas():
+    return {cd.especie(s)["name"] for s in cd.FOTOS_VIVERO_CONFIRMADAS}
 
 
 def html_de(ruta):
@@ -78,10 +85,16 @@ def fallas(ruta):
     figuras = FIGURA_CATALOGO_RE.findall(html)
     if len(figuras) != imagenes:
         salida.append(f"{imagenes - len(figuras)} fotos del catálogo sin <figure>")
+    confirmadas = del_vivero_confirmadas()
     for f in figuras:
         pie = paridad.texto(PIE_RE.search(f).group(1)) if PIE_RE.search(f) else ""
-        if not re.fullmatch(r"Fig\. \d{2,3} · .+ · En nuestro vivero", pie):
+        m = PIE_FORMATO_RE.fullmatch(pie)
+        if not m:
             salida.append(f"pie de foto fuera de formato: {pie!r}")
+        elif m.group(2) and m.group(1) not in confirmadas:
+            salida.append(f"«En nuestro vivero» sin foto confirmada por el dueño: {m.group(1)}")
+        if "en el vivero" in f and (not m or m.group(1) not in confirmadas):
+            salida.append(f"alt que dice «en el vivero» sin foto confirmada: {pie!r}")
     for img in re.findall(r"<img\b[^>]*>", paridad.principal(html)):
         if not all(f' {a}="' in img for a in ("width", "height", "alt")):
             salida.append(f"imagen sin width/height/alt: {img[:80]}")
