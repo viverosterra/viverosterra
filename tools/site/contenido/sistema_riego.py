@@ -128,10 +128,11 @@ FIGURAS = (
      "alt": "Técnico de Viveros Terra revisando aspersores en el área verde de una planta industrial.",
      "lugar": "Riego en una planta industrial", "etapa": "Prueba y calibración"},
     {"src": f"{OBRA}/riego-aspersor-emergente-pasto.webp", "ancho": 640, "alto": 1423, "numero": 3,
-     "alt": "Aspersor emergente regando pasto San Agustín.", "lugar": "Aspersor emergente en pasto",
+     "alt": "Aspersor sobre elevador regando philodendron en una jardinera.", "lugar": "Aspersor en jardinera",
      "etapa": "Tampico"},
     {"src": f"{OBRA}/riego-goteo-philodendron.webp", "ancho": 640, "alto": 1423, "numero": 4,
-     "alt": "Goteo instalado al pie de un philodendron.", "lugar": "Goteo en plantas ornamentales",
+     "alt": "Aspersor emergente regando helechos en una jardinera junto a la banqueta.",
+     "lugar": "Aspersor emergente en jardinera",
      "etapa": "Tampico"},
 )
 
