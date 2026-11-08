@@ -25,6 +25,8 @@ ESPERADO = {
                "cifras": ("$3,000", "$6,500", "desde $18,000", "en proyectos de más de $150,000")},
     "mantenimiento": {"ruta": "/mantenimiento-jardines-tampico", "extra": ('id="vt-h-incluye"',), "ld": BASE_LD,
                       "cifras": ("$750", "según cotización", "Por cotización")},
+    "riego": {"ruta": "/sistema-riego-tampico", "extra": ('id="vt-h-precio"',), "ld": BASE_LD | {"HowTo"},
+              "cifras": ("$180", "$320", "$18,000 a $32,000", datos.RIEGO_AHORRO)},
 }
 
 
@@ -190,6 +192,27 @@ class MantenimientoTest(unittest.TestCase):
 
     def test_opiniones_de_main_textuales(self):
         opiniones_textuales(self, "mantenimiento", datos.OPINIONES_MANTENIMIENTO)
+
+
+class RiegoTest(unittest.TestCase):
+    def test_un_mensaje_por_tipo_de_sistema(self):
+        html, _m, texto, grafo = pagina("riego")
+        sistemas = mensajes_de(html, r"servicio-riego:opcion-\d")
+        self.assertIn("aspersores emergentes", sistemas[0])
+        self.assertIn("goteo", sistemas[1])
+        self.assertIn("campo deportivo", sistemas[2])
+        self.assertNotIn("$15,000", texto)  # 100 m² × $180 = $18,000
+        self.assertEqual(len(next(n for n in grafo if n["@type"] == "HowTo")["step"]), 5)
+
+    def test_visita_con_costo_y_campos_deportivos(self):
+        _h, _m, texto, _g = pagina("riego")
+        self.assertIn(datos.VISITA_COSTO, texto)
+        self.assertIn("campos deportivos con pasto natural", texto)  # decisión del dueño: sí es servicio
+        # Respuesta del dueño (2026-11-07): "+200 sistemas de riego" es cierto y vuelve.
+        self.assertIn(f"{datos.SISTEMAS_RIEGO} sistemas de riego", texto)
+
+    def test_opiniones_de_main_textuales(self):
+        opiniones_textuales(self, "riego", datos.OPINIONES_RIEGO)
 
 
 if __name__ == "__main__":

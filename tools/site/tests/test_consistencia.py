@@ -22,9 +22,8 @@ PAGINAS = {p: p.read_text(encoding="utf-8") for p in sorted(PUBLIC.rglob("*.html
 TEXTOS = {p: textos_publicos(h) for p, h in PAGINAS.items()}
 LLMS = (PUBLIC / "llms.txt").read_text(encoding="utf-8")
 PRECIOS = datos.PRECIOS
-# Páginas que todavía mencionan la visita sin su costo. Solo puede encoger: diseño, mantenimiento y riego salen de su
-# plantilla en las Tareas 7 a 9 de la Etapa 2c y las quitan de aquí.
-VISITA_COSTO_PENDIENTES = frozenset({"sistema-riego-tampico/index.html"})
+# Páginas que todavía mencionan la visita sin su costo. Debe quedar vacía y solo puede encoger.
+VISITA_COSTO_PENDIENTES = frozenset()
 
 PROHIBIDAS = (
     ("promesa de respuesta vieja",

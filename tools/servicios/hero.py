@@ -76,10 +76,6 @@ def hero_html(cfg):
     else:
         klass += " svc-hero--nomedia"
     secondary = cfg.get("secondary", ("tel:8333268008", "Llamar 833 326 8008"))
-    pay = ""
-    if cfg.get("pago_nota"):
-        # el ancla #sim-titulo la pone tools/servicios/simulador.py (solo en las páginas con pago_nota)
-        pay = f'\n      <p class="svc-hero__pay">{e(cfg["pago_nota"])} <a href="#sim-titulo">Calcula tu plan</a></p>'
     return f"""<!-- svc-hero -->
 <section class="{klass}" aria-labelledby="svc-titulo">
   <div class="svc-hero__wrap">
@@ -87,7 +83,7 @@ def hero_html(cfg):
       <p class="svc-hero__eyebrow">{e(cfg.get("eyebrow", "Tampico · Madero · Altamira"))}</p>
       <h1 class="svc-hero__title" id="svc-titulo">{title}</h1>
       <p class="svc-hero__price">{price}</p>
-      <p class="svc-hero__lede">{cfg["lede"]}</p>{pay}
+      <p class="svc-hero__lede">{cfg["lede"]}</p>
       <div class="svc-hero__ctas">
         <a class="svc-hero__cta svc-hero__cta--wa" href="{wa_link(cfg["wa"])}" target="_blank" rel="noopener">{WA_ICON}{e(cfg.get("cta", "Cotizar por WhatsApp"))}</a>
         <a class="svc-hero__cta svc-hero__cta--ghost" href="{secondary[0]}">{e(secondary[1])}</a>
@@ -107,8 +103,6 @@ def apply(slug, cfg):
     html = path.read_text(encoding="utf-8")
     if not HERO_RE.search(html):
         raise SystemExit(f"{slug}: no encontré la portada")
-    if cfg.get("pago_nota") and 'id="sim-titulo"' not in html:
-        raise SystemExit(f"{slug}: pago_nota enlaza a #sim-titulo; corre primero tools/servicios/simulador.py")
     html = HERO_RE.sub(lambda _m: hero_html(cfg), html, count=1)
     if CSS_LINK.split("?")[0] not in html:
         html = html.replace("</head>", f"{CSS_LINK}\n</head>", 1)

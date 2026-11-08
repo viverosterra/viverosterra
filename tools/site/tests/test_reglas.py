@@ -52,11 +52,11 @@ VISITA_PENDIENTES = frozenset()
 SENASICA_RE = re.compile(r"\bSENASICA\b", re.I)
 AMORTIZA_RE = re.compile(r"\bse\s+(?:amortiza|paga\s+sol[oa])\s+en\s+(?:\d+\s*(?:–|-|a)\s*)?\d+\s+meses\b", re.I)
 SENASICA_PENDIENTES = frozenset({
-    "sistema-riego-tampico/index.html", "mayoreo-pasto-tampico/index.html", "vivero-tampico/index.html",
+    "mayoreo-pasto-tampico/index.html", "vivero-tampico/index.html",
     "marmol-blanco-tampico/index.html", "tezontle-rojo-tampico/index.html", "palmas-mayoreo-proyectos/index.html",
 })
 AMORTIZA_PENDIENTES = frozenset({
-    "sistema-riego-tampico/index.html", "blog/sistema-riego-automatico-conviene-tampico/index.html",
+    "blog/sistema-riego-automatico-conviene-tampico/index.html",
     "blog/sistema-riego-automatizado-tampico/index.html",
 })
 
