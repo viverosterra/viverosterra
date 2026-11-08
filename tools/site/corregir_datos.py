@@ -349,14 +349,27 @@ def _escribir_si_cambia(path, nuevo, cambiados):
         cambiados.add(path)
 
 
+def con_plantilla():
+    """Rutas ("public/…") de las páginas que salen de tools/site/generar.py: su texto vive en tools/site/contenido/ y
+    ya trae las correcciones, así que los reemplazos por archivo de su HTML viejo no aplican (Etapas 2a y 2c)."""
+    import generar  # noqa: E402  (solo aquí: generar importa las plantillas)
+    return {f"public/{salida}" for _r, salida, _p, _c in generar.PAGINAS}
+
+
+def vigentes(entradas):
+    """Las entradas (rel, …) de POR_ARCHIVO o ELEMENTOS cuyo archivo sigue escrito a mano."""
+    fuera = con_plantilla()
+    return tuple(e for e in entradas if e[0] not in fuera)
+
+
 def main():
     cambiados = set()
     for path in archivos_globales():
         _escribir_si_cambia(path, corregir_texto(path.read_text(encoding="utf-8")), cambiados)
-    for rel, viejo, nuevo in POR_ARCHIVO:
+    for rel, viejo, nuevo in vigentes(POR_ARCHIVO):
         path = RAIZ / rel
         _escribir_si_cambia(path, reemplazar(path.read_text(encoding="utf-8"), viejo, nuevo, rel), cambiados)
-    for rel, patron in ELEMENTOS:
+    for rel, patron in vigentes(ELEMENTOS):
         path = RAIZ / rel
         _escribir_si_cambia(path, quitar_elementos(path.read_text(encoding="utf-8"), patron), cambiados)
     print(f"{len(cambiados)} archivos corregidos")

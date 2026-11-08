@@ -81,6 +81,20 @@ class HerramientasTest(unittest.TestCase):
                 una = c.reemplazar(f"a {viejo} b", viejo, nuevo, rel)
                 self.assertEqual(c.reemplazar(una, viejo, nuevo, rel), una)
 
+    def test_no_toca_paginas_con_plantilla(self):
+        """Etapas 2a y 2c: el HTML de esas páginas sale de su contenido; sus reemplazos viejos ya no aplican."""
+        fuera = c.con_plantilla()
+        for rel in ("public/index.html", "public/pasto-en-rollo-tampico/index.html",
+                    "public/diseno-jardines-tampico/index.html", "public/sistema-riego-tampico/index.html"):
+            self.assertIn(rel, fuera)
+        for rel, *_resto in c.vigentes(c.POR_ARCHIVO) + c.vigentes(c.ELEMENTOS):
+            self.assertNotIn(rel, fuera)
+
+    def test_cada_reemplazo_vigente_encuentra_su_texto_o_su_correccion(self):
+        for rel, viejo, nuevo in c.vigentes(c.POR_ARCHIVO):
+            with self.subTest(archivo=rel, viejo=viejo[:60]):
+                c.reemplazar((c.RAIZ / rel).read_text(encoding="utf-8"), viejo, nuevo, rel)
+
 
 if __name__ == "__main__":
     unittest.main()
