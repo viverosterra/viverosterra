@@ -1,0 +1,24 @@
+/* terra-precios.css: hoja de /precios (Etapa 2g). Solo se carga en <body class="vt-pagina vt-precios"> (shell.py);
+   todo bajo .vt-precios y con los tokens de terra.css. */
+
+/* Tablas de varias columnas (pasto sintético por modelo y mensualidades): en celular siguen siendo tabla, compacta, en
+   vez de una tarjeta por renglón (9 modelos apilaban ~1,400 px). Los precios a la derecha, con cifras tabulares. */
+.vt-precios .vt-tabla--compacta td{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.vt-precios .vt-tabla--compacta thead th:not(:first-child){text-align:right}
+.vt-precios .vt-tabla--compacta tbody th a{font-weight:700}
+@media (max-width:640px){
+  .vt-precios .vt-tabla--compacta :is(th,td){padding:10px 8px;font-size:var(--vt-text-sm)}
+  .vt-precios .vt-tabla--compacta thead th{font-size:11px;letter-spacing:.02em}
+}
+
+/* Lista de precios: el precio queda en el mismo renglón que la unidad (como en materiales) y el "según cotización" de la
+   poda, debajo del precio, sin cortar la columna. */
+.vt-precios .vt-tabla--precios :is(th,td){vertical-align:baseline}
+@media (max-width:640px){
+  .vt-precios .vt-tabla--precios tr{align-items:baseline}
+  .vt-precios .vt-tabla--precios td{grid-row:2}
+}
+
+/* Anclas (#pasto, #mensualidades, #garantia-plantas…): al llegar desde otra página o desde "Ver la lista", la sección no
+   queda bajo el menú fijo. */
+.vt-precios :is(section,li)[id]{scroll-margin-top:72px}

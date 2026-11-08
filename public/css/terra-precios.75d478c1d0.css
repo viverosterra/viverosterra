@@ -1,0 +1,13 @@
+.vt-precios .vt-tabla--compacta td{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.vt-precios .vt-tabla--compacta thead th:not(:first-child){text-align:right}
+.vt-precios .vt-tabla--compacta tbody th a{font-weight:700}
+@media (max-width:640px){
+.vt-precios .vt-tabla--compacta :is(th,td){padding:10px 8px;font-size:var(--vt-text-sm)}
+.vt-precios .vt-tabla--compacta thead th{font-size:11px;letter-spacing:.02em}
+}
+.vt-precios .vt-tabla--precios :is(th,td){vertical-align:baseline}
+@media (max-width:640px){
+.vt-precios .vt-tabla--precios tr{align-items:baseline}
+.vt-precios .vt-tabla--precios td{grid-row:2}
+}
+.vt-precios :is(section,li)[id]{scroll-margin-top:72px}
