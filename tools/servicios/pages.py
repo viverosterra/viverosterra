@@ -16,20 +16,9 @@ GARANTIA_PLANTAS = ("30 días", "Garantía de arraigo al sembrarlas nosotros")
 DESDE_2007 = ("Desde 2007", "Vivero propio en Cd. Madero")
 VARIEDADES = ("+200", "Variedades en el vivero")
 
-# La home y /pasto-en-rollo-tampico (Etapa 2a), y diseño, mantenimiento y riego (Etapa 2c) salen de
-# tools/site/plantillas/: este script ya no las toca. Quedan las páginas de las Etapas 2d a 2g.
+# La home y /pasto-en-rollo-tampico (Etapa 2a), diseño, mantenimiento y riego (Etapa 2c) y mayoreo y palmas para
+# proyectos (Etapa 2d) salen de tools/site/plantillas/: este script ya no las toca. Quedan las de las Etapas 2e a 2g.
 PAGES = {
-    "mayoreo-pasto-tampico": dict(
-        eyebrow="Constructoras · Fraccionamientos · Industria",
-        title="Pasto al mayoreo", accent="para obras y fraccionamientos",
-        price_pre="Desde", price="$60", price_unit="/m²", price_alt="· pedidos de 500 m² o más",
-        lede="Pasto San Agustín en rollo para constructoras, desarrolladoras, hoteles e industria. Entregas por etapas según el avance de la obra.",
-        facts=[("500 m²", "Pedido mínimo de mayoreo"), ("CFDI 4.0", "Factura y REPSE 773725"), ("Por etapas", "Entregas según el avance de obra")],
-        img="/img/instalacion-pasto-rollo-san-agustin-tampico.webp", img_pos="center 40%",
-        alt="Cuadrilla instalando pasto San Agustín en rollo", caption="Pasto San Agustín cortado para obra.",
-        wa=guided("Hola, necesito pasto al mayoreo para un proyecto.", "Empresa", "Ubicación de la obra", "Metros totales", "Fecha de entrega", foto=False),
-        cta="Cotizar mayoreo",
-    ),
     "vivero-tampico": dict(
         title="Vivero en Tampico", accent="y Ciudad Madero, desde 2007",
         price_pre="Palmas desde", price="$250", price_unit="", price_alt="· pasto $85/m² · plantas por tamaño",
@@ -78,17 +67,6 @@ PAGES = {
         img="/img/palma-real-jardin-residencial-tampico.webp", img_pos="center 30%",
         alt="Palma real sembrada en un jardín residencial de Tampico", caption="Palma real en un jardín de Tampico.",
         wa=guided("Hola, quiero cotizar palmas.", "Palma que me interesa", "Altura aprox.", "Colonia de entrega"),
-    ),
-    "palmas-mayoreo-proyectos": dict(
-        eyebrow="Constructoras · Hoteles · Gobierno",
-        title="Palmas al mayoreo", accent="para proyectos en Tampico",
-        price_pre="Precio", price="por volumen", price_unit="", price_alt="· según especie, altura y cantidad",
-        lede="Suministro de palmas y árboles para constructoras, desarrolladoras, hoteles y gobierno en Tamaulipas, Veracruz y San Luis Potosí.",
-        facts=[("CFDI 4.0", "Factura emitida el día del pago"), ("3 estados", "Tamaulipas, Veracruz y SLP"), ("30 días", "Garantía de arraigo en siembra propia")],
-        img="/img/palmas-reales-mayoreo-vivero-tampico.webp", img_pos="center 35%",
-        alt="Palmas reales en el vivero listas para proyecto", caption="Palmas en vivero para proyectos.",
-        wa=guided("Hola, necesito palmas al mayoreo para un proyecto.", "Empresa", "Especies y cantidad", "Ubicación de la obra", "Fecha de entrega", foto=False),
-        cta="Cotizar mayoreo",
     ),
     "arboles-ornamentales-tampico": dict(
         title="Árboles ornamentales", accent="para jardines en Tampico",

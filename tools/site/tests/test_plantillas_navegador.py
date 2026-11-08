@@ -3,11 +3,12 @@ Se saltan sin Playwright (python3 -m pip install playwright==1.48.0)."""
 import sys
 import unittest
 from pathlib import Path
-from urllib.parse import unquote
+from urllib.parse import parse_qsl, unquote
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import datos  # noqa: E402
+import mensajes_paginas  # noqa: E402
 import servidor  # noqa: E402
 
 try:
@@ -19,7 +20,9 @@ AXE = Path(__file__).resolve().parents[1] / "vendor" / "axe.min.js"
 PAGINAS = ("/", "/pasto-en-rollo-tampico/")
 # Etapa 2c: servicios de jardín con la plantilla de servicio (sin Medidor).
 SERVICIOS = ("/diseno-jardines-tampico/", "/mantenimiento-jardines-tampico/", "/sistema-riego-tampico/")
-CON_PLANTILLA = PAGINAS + SERVICIOS
+# Etapa 2d: páginas para empresas con la plantilla b2b (cotizador por volumen y armador de palmas).
+EMPRESAS = ("/mayoreo-pasto-tampico/", "/palmas-mayoreo-proyectos/")
+CON_PLANTILLA = PAGINAS + SERVICIOS + EMPRESAS
 AXE_PAGINA = """async () => {
   const r = await axe.run(document, { resultTypes: ['violations'] });
   return r.violations.filter((v) => ['serious', 'critical'].includes(v.impact))
@@ -89,9 +92,10 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 self.assertLessEqual(etiqueta["y"] + etiqueta["height"], alto)
 
     def test_cta_en_la_primera_pantalla_a_1024(self):
-        """Revisión de 2c: a 1024×800 la portada compacta deja el CTA de los servicios de jardín en la primera pantalla."""
+        """Revisión de 2c: a 1024×800 la portada compacta deja el CTA de los servicios de jardín (y, desde 2d, de las
+        páginas para empresas) en la primera pantalla."""
         page = self.pagina(1024, 800)
-        for ruta in SERVICIOS:
+        for ruta in SERVICIOS + EMPRESAS:
             page.goto(self.base + ruta, wait_until="load")
             cta = page.locator('.vt-portada [data-hero-cta] .vt-btn--wa').bounding_box()
             with self.subTest(ruta=ruta):
@@ -231,6 +235,204 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 self.assertEqual(page.input_value("[data-sim-monto]"), monto)
                 self.assertGreaterEqual(page.locator("[data-sim-list] .sim-plan").count(), 4)
                 self.assertIn("text=", page.get_attribute("[data-sim-wa]", "href"))
+
+    def mensaje(self, caja):
+        return unquote(caja.locator('[data-vt-o="cta"]').get_attribute("href").split("text=", 1)[1])
+
+    def test_cotizador_por_volumen_nunca_da_mayoreo_bajo_500_m2(self):
+        page = self.pagina()
+        page.goto(self.base + "/mayoreo-pasto-tampico/", wait_until="load")
+        caja = page.locator("[data-vt-volumen]")
+        generico = datos.con_firma(mensajes_paginas.EMPRESAS["/mayoreo-pasto-tampico"])
+        self.assertEqual(self.mensaje(caja), generico)
+        caja.locator('[data-vt-campo="m2"]').fill("320")
+        self.assertEqual(caja.locator('[data-vt-o="monto"]').inner_text(), "$27,200")
+        self.assertIn("Te faltan 180 m²", caja.locator('[data-vt-o="aviso"]').inner_text())
+        self.assertIn("solo el pasto San Agustín", self.mensaje(caja))
+        caja.locator('[data-vt-campo="m2"]').fill("1,200")
+        caja.locator('[data-vt-campo="empresa"]').fill("Mi empresa")
+        self.assertEqual(caja.locator('[data-vt-o="monto"]').inner_text(), "$72,000")
+        self.assertFalse(caja.locator('[data-vt-o="aviso"]').is_visible())
+        mensaje = self.mensaje(caja)
+        self.assertIn("m² totales: 1,200 m²", mensaje)
+        self.assertIn("Estimado de la web: desde $72,000 con IVA (desde $60/m²)", mensaje)
+        self.assertIn("Empresa: Mi empresa", mensaje)
+        caja.locator('[data-vt-campo="m2"]').fill("")
+        self.assertEqual(caja.locator('[data-vt-o="monto"]').inner_text(), "—")
+        self.assertEqual(self.mensaje(caja), generico)
+
+    def test_armador_de_palmas_arma_un_solo_mensaje(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/palmas-mayoreo-proyectos/", wait_until="load")
+        caja = page.locator("[data-vt-palmas]")
+        self.assertEqual(self.mensaje(caja), datos.con_firma(mensajes_paginas.EMPRESAS["/palmas-mayoreo-proyectos"]))
+        caja.locator("#pal-especie-1").select_option("Palma real")
+        caja.locator("#pal-altura-1").fill("3")
+        caja.locator("#pal-cantidad-1").fill("40")
+        caja.locator("#pal-especie-2").select_option("Coco plumoso")
+        caja.locator("#pal-cantidad-2").fill("20")
+        self.assertEqual(caja.locator('[data-vt-o="resumen"]').inner_text(), "2 especies · 60 piezas")
+        mensaje = self.mensaje(caja)
+        self.assertIn("- 40 × Palma real, altura aprox.: 3 m\n- 20 × Coco plumoso, altura aprox.: ___", mensaje)
+        # "Agregar otra especie" aparece con JS, crea renglones con labels propios y se oculta en el octavo.
+        agregar = caja.locator("[data-vt-agregar]")
+        for n in range(4, 9):
+            agregar.click()
+            self.assertEqual(page.evaluate("() => document.activeElement.id"), f"pal-especie-{n}")
+            self.assertEqual(caja.locator(f'label[for="pal-cantidad-{n}"]').count(), 1)
+        self.assertFalse(agregar.is_visible())
+        self.assertEqual(caja.locator("#pal-especie-8").input_value(), "")
+        sobra = page.evaluate("() => document.documentElement.scrollWidth - document.documentElement.clientWidth")
+        self.assertLessEqual(sobra, 1)
+
+    def test_clic_en_los_cotizadores_de_empresas_manda_generate_lead(self):
+        for ruta, cta in (("/mayoreo-pasto-tampico/", "b2b:cotizador"), ("/palmas-mayoreo-proyectos/", "b2b:armador"),
+                          ("/palmas-mayoreo-proyectos/", "b2b:opcion-2")):
+            page = self.pagina()
+            page.add_init_script("window.open = () => null;")
+            page.goto(self.base + ruta, wait_until="load")
+            boton = page.locator(f'[data-cta="{cta}"]')
+            page.evaluate("(b) => b.addEventListener('click', (e) => e.preventDefault())", boton.element_handle())
+            boton.click()
+            eventos = page.evaluate(
+                "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+            with self.subTest(ruta=ruta, cta=cta):
+                self.assertIn(["event", "generate_lead", {"method": "whatsapp", "cta_id": cta, "service": "empresas"}],
+                              eventos)
+                self.assertTrue(unquote(boton.get_attribute("href").split("text=", 1)[1]).endswith(datos.FIRMA))
+
+    def test_barra_movil_se_esconde_con_el_cotizador_a_la_vista(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/mayoreo-pasto-tampico/", wait_until="load")
+        page.locator("[data-vt-volumen] .vt-etiqueta").scroll_into_view_if_needed()
+        page.wait_for_function("() => document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
+        page.locator("#vt-h-faq").scroll_into_view_if_needed()
+        page.wait_for_function("() => !document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
+
+    @staticmethod
+    def atrapador(enviados):
+        """Responde en lugar de formsubmit y guarda método, URL y cuerpo de cada envío."""
+        def atrapar(route):
+            enviados.append((route.request.method, route.request.url, route.request.post_data or ""))
+            route.fulfill(status=200, content_type="text/html", body="<p>ok</p>")
+        return atrapar
+
+    def test_formulario_por_correo_valida_y_envia_a_la_cuenta_oficial(self):
+        """Respuesta del dueño (2026-11-08): las páginas B2B conservan la cotización por correo para compras. Sin los
+        obligatorios no se envía (mensaje junto a cada campo y foco en el primero); completo, sale por POST a formsubmit
+        de viverosterra@hotmail.com con generate_lead method "formulario"."""
+        for ruta, clave, cantidad in (("/mayoreo-pasto-tampico/", "mayoreo", "1,200 m²"),
+                                      ("/palmas-mayoreo-proyectos/", "palmas", "40 palma real de 3 m")):
+            page = self.pagina(375, 812)
+            enviados = []
+
+            page.route("https://formsubmit.co/**", self.atrapador(enviados))
+            page.goto(self.base + ruta, wait_until="load")
+            form = page.locator("form.vt-correo")
+            boton = form.locator('button[type="submit"]')
+            boton.click()
+            with self.subTest(ruta=ruta, paso="vacío"):
+                self.assertEqual(enviados, [])
+                self.assertEqual(page.evaluate("() => document.activeElement.name"), "empresa")
+                for nombre in ("empresa", "nombre", "correo", "proyecto", "cantidad"):
+                    self.assertEqual(form.locator(f'[name="{nombre}"]').get_attribute("aria-invalid"), "true")
+                    ident = form.locator(f'[name="{nombre}"]').get_attribute("id")
+                    self.assertTrue(form.locator(f"#{ident}-error").is_visible())
+                self.assertIsNone(form.locator('[name="telefono"]').get_attribute("aria-invalid"))
+                self.assertIn("Faltan 5 datos", form.locator('[data-vt-o="correo-estado"]').inner_text())
+            form.locator('[name="empresa"]').fill("Constructora Ejemplo")
+            form.locator('[name="nombre"]').fill("Compras")
+            form.locator('[name="correo"]').fill("compras@")
+            form.locator('[name="proyecto"]').fill("Fraccionamiento en Altamira")
+            form.locator('[name="cantidad"]').fill(cantidad)
+            boton.click()
+            with self.subTest(ruta=ruta, paso="correo inválido"):
+                self.assertEqual(enviados, [])
+                self.assertEqual(page.evaluate("() => document.activeElement.name"), "correo")
+            form.locator('[name="correo"]').fill("compras@ejemplo.com")
+            # Se detiene el envío una vez para leer el dataLayer antes de salir de la página; luego se envía de verdad.
+            page.evaluate("() => document.addEventListener('submit', (e) => e.preventDefault(), { once: true })")
+            boton.click()
+            eventos = page.evaluate(
+                "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+            with page.expect_navigation():
+                page.evaluate("() => document.querySelector('form.vt-correo').submit()")
+            with self.subTest(ruta=ruta, paso="enviado"):
+                self.assertEqual(len(enviados), 1)
+                metodo, url, cuerpo = enviados[0]
+                self.assertEqual((metodo, url), ("POST", f"https://formsubmit.co/{datos.CORREO_FORMULARIOS}"))
+                campos = dict(parse_qsl(cuerpo, keep_blank_values=True))
+                self.assertEqual(campos["empresa"], "Constructora Ejemplo")
+                self.assertEqual(campos["cantidad"], cantidad)
+                self.assertEqual(campos["_honey"], "")
+                self.assertEqual(campos["_next"], f"{datos.SITIO}/gracias")
+                self.assertTrue(campos["_subject"].startswith("Cotización empresa · "))
+                self.assertIn(["event", "generate_lead", {"method": "formulario", "cta_id": f"{clave}:formulario",
+                                                          "service": "empresas"}], eventos)
+
+    def test_cotizador_y_armador_prellenan_el_formulario_por_correo(self):
+        page = self.pagina()
+        page.goto(self.base + "/mayoreo-pasto-tampico/", wait_until="load")
+        page.locator('[data-vt-volumen] [data-vt-campo="m2"]').fill("1,200")
+        campo = page.locator('form.vt-correo [name="cantidad"]')
+        self.assertEqual(campo.input_value(), "1,200 m²")
+        campo.fill("1,500 m² en dos etapas")
+        page.locator('[data-vt-volumen] [data-vt-campo="m2"]').fill("800")
+        self.assertEqual(campo.input_value(), "1,500 m² en dos etapas")  # lo que escribe el visitante no se pisa
+        # Empresa, obra y fecha del cotizador también pasan al formulario (la obra a "Proyecto y ubicación").
+        form = page.locator("form.vt-correo")
+        page.locator("#may-empresa").fill("Constructora Norte")
+        page.locator("#may-obra").fill("Fraccionamiento en Altamira")
+        page.locator("#may-fecha").fill("marzo")
+        self.assertEqual([form.locator(f'[name="{n}"]').input_value() for n in ("empresa", "proyecto", "fecha")],
+                         ["Constructora Norte", "Fraccionamiento en Altamira", "marzo"])
+        form.locator('[name="empresa"]').fill("Constructora Norte SA de CV")
+        page.locator("#may-empresa").fill("Otra")
+        self.assertEqual(form.locator('[name="empresa"]').input_value(), "Constructora Norte SA de CV")
+        self.assertEqual(form.locator('[name="proyecto"]').input_value(), "Fraccionamiento en Altamira")
+        page.goto(self.base + "/palmas-mayoreo-proyectos/", wait_until="load")
+        page.locator("#pal-especie-1").select_option("Palma real")
+        page.locator("#pal-altura-1").fill("3")
+        page.locator("#pal-cantidad-1").fill("40")
+        page.locator("#pal-obra").fill("Hotel en Madero")
+        self.assertEqual(page.locator('form.vt-correo [name="cantidad"]').input_value(),
+                         "- 40 × Palma real, altura aprox.: 3 m")
+        self.assertEqual(page.locator('form.vt-correo [name="proyecto"]').input_value(), "Hotel en Madero")
+
+    def test_campo_con_error_no_queda_bajo_el_menu(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/mayoreo-pasto-tampico/", wait_until="load")
+        page.locator('form.vt-correo button[type="submit"]').click()
+        menu = page.evaluate("() => document.querySelector('.vt-head').getBoundingClientRect().bottom")
+        campo = page.evaluate("() => document.activeElement.closest('.vt-campo').getBoundingClientRect().top")
+        self.assertEqual(page.evaluate("() => document.activeElement.name"), "empresa")
+        self.assertGreaterEqual(campo, menu)
+
+    def test_tabla_de_palmas_en_celular_y_completa_en_escritorio(self):
+        visibles = """() => Array.from(document.querySelectorAll('.vt-tabla--especies tbody tr'))
+          .filter((tr) => tr.offsetParent !== null).map((tr) => tr.querySelector('b').textContent)"""
+        con_precio = [n for n, _c, p in datos.PALMAS_PROYECTO if p is not None]
+        otras = len(datos.PALMAS_PROYECTO) - len(con_precio)
+        for ancho, esperado in ((375, con_precio + [f"Otras {otras} especies"]),
+                                (1440, [n for n, _c, _p in datos.PALMAS_PROYECTO])):
+            page = self.pagina(ancho, 900)
+            page.goto(self.base + "/palmas-mayoreo-proyectos/", wait_until="load")
+            with self.subTest(ancho=ancho):
+                self.assertEqual(page.evaluate(visibles), esperado)
+
+    def test_logos_sin_huerfano_en_celular(self):
+        """7 clientes a 375–430 px: 2 columnas y el último a todo lo ancho, sin una celda suelta."""
+        for ancho in (375, 430):
+            page = self.pagina(ancho, 900)
+            page.goto(self.base + "/mayoreo-pasto-tampico/", wait_until="load")
+            cajas = page.evaluate("""() => Array.from(document.querySelectorAll('.vt-logos li'))
+              .map((li) => { const r = li.getBoundingClientRect(); return [Math.round(r.top), Math.round(r.width)]; })""")
+            filas = {}
+            for top, w in cajas:
+                filas.setdefault(top, []).append(w)
+            with self.subTest(ancho=ancho):
+                anchos = sorted({sum(ws) for ws in filas.values()})
+                self.assertLessEqual(anchos[-1] - anchos[0], 2)  # cada renglón llena el ancho
 
     def test_cls_bajo_0_1_en_movil(self):
         page = self.pagina(375, 812)

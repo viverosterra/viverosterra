@@ -34,7 +34,8 @@ PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
 # liquidar el saldo o el resto (el pago se explica con el anticipo y las formas de pago). Las citas de clientes no cuentan.
 SALDO_RE = re.compile(r"\bliquid(?:as|a|amos|ar|es)\s+el\s+(?:saldo|resto)\b|\bel\s+(?:saldo|resto)\s+se\s+liquida\b", re.I)
 # Decisión del dueño (2026-11-07): no se ofrece crédito a clientes (ni a instaladores ni a constructoras recurrentes).
-CREDITO_CLIENTES_RE = re.compile(r"\bcr[eé]dito\s+(?:para|a)\s+(?:(?:los|sus|nuestros)\s+)?clientes\b", re.I)
+CREDITO_CLIENTES_RE = re.compile(r"\bcr[eé]dito\s+(?:para|a)\s+(?:(?:los|sus|nuestros)\s+)?clientes\b"
+                                 r"|\bpago\s+diferido\b|\ba\s+cr[eé]dito\s+para\s+(?:proyectos|empresas|obras?)\b", re.I)
 # Decisión del dueño (2026-11-07): la visita para medir tiene costo o depende; nunca "visita sin costo", "visita
 # gratis", "visita gratuita", "la visita no tiene costo", "sin cargo" ni "no cuesta" (tampoco "vamos a medir sin costo").
 GRATIS = (r"(?:sin\s+(?:costo|cargo)|gratis|gratuit(?:[ao]s?|amente)|no\s+(?:tiene\s+(?:ning[uú]n\s+)?costo|cuesta"
@@ -102,6 +103,12 @@ def archivos_fuente():
 WA_RE = re.compile(r"(?:wa\.me|api\.whatsapp\.com/send\?phone=)/?([^\s\"'`?&<>]*)")
 TEXTO_WA_RE = re.compile(r"wa\.me/\d+\?(?:[^\"'`\s<>]*&)?text=([^\"'`\s<>&]*)")
 NUMERO = "528333268008"
+# Páginas con formulario por correo a formsubmit: cuestionario, materiales y, desde 2d, las dos páginas para empresas.
+CON_FORMULARIO_CORREO = ("cuestionario.html", "marmol-blanco-tampico/index.html", "piedra-bola-rio-tampico/index.html",
+                         "tezontle-rojo-tampico/index.html", "tierra-negra-vegetal-tampico/index.html",
+                         "mayoreo-pasto-tampico/index.html", "palmas-mayoreo-proyectos/index.html")
+MINIMO_ESPECIE_RE = re.compile(r"\b50\s+(?:ejemplares|palmas|piezas)?\s*(?:de\s+la\s+misma\s+especie|por\s+especie)\b"
+                               r"|\b50\s+por\s+especie\b", re.I)
 CORREO_RE = re.compile(r"(?:mailto:|formsubmit\.co/(?:ajax/)?)([\w.+-]+@[\w.-]+)")
 
 
@@ -174,6 +181,19 @@ class ReglasDelDuenoTest(unittest.TestCase):
                     hallazgos.append(f"{path.relative_to(PUBLIC)} · form a {accion}")
         self.assertEqual(hallazgos, [])
 
+    def test_formularios_por_correo_solo_donde_el_dueno_los_quiere(self):
+        """Respuesta del dueño (2026-11-08): las páginas para empresas conservan un formulario por correo para compras
+        (además de WhatsApp). La home y pasto en rollo siguen sin formulario (test_inicio, test_pasto_en_rollo)."""
+        con_formulario = sorted(str(path.relative_to(PUBLIC)) for path, fuente in archivos_fuente()
+                                if path.suffix == ".html" and re.search(r'<form\b[^>]*\baction="https://formsubmit\.co/',
+                                                                        fuente))
+        self.assertEqual(con_formulario, sorted(CON_FORMULARIO_CORREO))
+
+    def test_sin_minimo_fijo_por_especie(self):
+        """Respuesta del dueño (2026-11-08): no hay mínimo fijo por especie (main decía "50 ejemplares")."""
+        hallazgos = [f"{p.relative_to(PUBLIC)}" for p, texto in publicados() if MINIMO_ESPECIE_RE.search(texto)]
+        self.assertEqual(hallazgos, [])
+
     def test_sin_padel_ni_canchas_en_pasto_sintetico(self):
         hallazgos = []
         for path, texto in publicados():
@@ -213,7 +233,8 @@ class ReglasDelDuenoTest(unittest.TestCase):
         self.assertEqual(hallazgos, [])
 
     def test_credito_y_pago_al_terminar_se_detectan_sin_tocar_citas_de_clientes(self):
-        for sucio in ("crédito para clientes recurrentes", "Crédito a clientes recurrentes", "crédito a nuestros clientes"):
+        for sucio in ("crédito para clientes recurrentes", "Crédito a clientes recurrentes", "crédito a nuestros clientes",
+                      "¿Aceptan pago diferido o a crédito para proyectos?", "a crédito para empresas"):
             self.assertRegex(sucio, CREDITO_CLIENTES_RE)
         for limpio in ("mensualidades con tarjeta de crédito", "tarjeta de débito o crédito para tu compra"):
             self.assertNotRegex(limpio, CREDITO_CLIENTES_RE)

@@ -27,6 +27,42 @@ class ParidadTest(unittest.TestCase):
                 with self.subTest(ruta=ruta, entrada=viejo):
                     self.assertIn(viejo, conocidos)
 
+    def test_cambios_de_meta_declarados_son_de_la_captura(self):
+        """PARIDAD["meta"] solo nombra claves que la página publicaba, con un valor distinto al de la captura."""
+        for ruta, _salida, _plantilla, contenido in generar.PAGINAS:
+            cambios = generar.cargar(contenido).PARIDAD.get("meta", {})
+            captura = json.loads((paridad.CAPTURAS / f"{paridad.nombre_captura(ruta)}.json").read_text(encoding="utf-8"))
+            for clave, (nuevo, _motivo) in cambios.items():
+                with self.subTest(ruta=ruta, clave=clave):
+                    self.assertIn(clave, captura["meta"])
+                    self.assertNotEqual(captura["meta"][clave], nuevo)
+
+    def test_tipos_de_json_ld_retirados_son_de_la_captura(self):
+        """PARIDAD["jsonld"] solo nombra tipos que la página publicaba y que ya no salen (si vuelven, sobra el motivo)."""
+        for ruta, _salida, _plantilla, contenido in generar.PAGINAS:
+            motivos = generar.cargar(contenido).PARIDAD.get("jsonld", {})
+            captura = json.loads((paridad.CAPTURAS / f"{paridad.nombre_captura(ruta)}.json").read_text(encoding="utf-8"))
+            actuales = paridad.extraer(paridad.archivo(ruta).read_text(encoding="utf-8"))["jsonld_tipos"]
+            for tipo in motivos:
+                with self.subTest(ruta=ruta, tipo=tipo):
+                    self.assertIn(tipo, captura["jsonld_tipos"])
+                    self.assertNotIn(tipo, actuales)
+
+    def test_tipos_retirados(self):
+        self.assertEqual(paridad.tipos_retirados(["A", "B"], ["A"]), ["B"])
+        self.assertEqual(paridad.tipos_retirados(["A", "B"], ["A"], {"B": "pasa a una referencia por @id al nodo"}), [])
+        self.assertEqual(paridad.tipos_retirados(["A", "B"], ["A"], {"B": "corto"}), ["B"])
+
+    def test_meta_distinta(self):
+        viejo = {"title": "T", "description": "Desde $850"}
+        self.assertEqual(paridad.meta_distinta(viejo, dict(viejo)), [])
+        nuevo = {"title": "T", "description": "Desde $250"}
+        self.assertEqual(paridad.meta_distinta(viejo, nuevo), ["description: 'Desde $850' → 'Desde $250'"])
+        motivo = "Precio corregido por el dueño el 2026-11-07"
+        self.assertEqual(paridad.meta_distinta(viejo, nuevo, {"description": ("Desde $250", motivo)}), [])
+        self.assertEqual(len(paridad.meta_distinta(viejo, nuevo, {"description": ("Desde $300", motivo)})), 1)
+        self.assertEqual(len(paridad.meta_distinta(viejo, nuevo, {"description": ("Desde $250", "corto")})), 1)
+
     def test_opiniones_de_la_home_se_conservan(self):
         """Decisión del dueño (2026-11-07): las opiniones con nombre de la home son reales; no se pueden retirar."""
         mapa = generar.cargar("inicio").PARIDAD

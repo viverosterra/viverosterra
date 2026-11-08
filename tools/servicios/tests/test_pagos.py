@@ -1,4 +1,4 @@
-"""tools/servicios ya no toca las páginas que salen de tools/site/plantillas/ (Etapas 2a y 2c)."""
+"""tools/servicios ya no toca las páginas que salen de tools/site/plantillas/ (Etapas 2a, 2c y 2d)."""
 import sys
 import unittest
 from pathlib import Path
@@ -9,7 +9,7 @@ import hero  # noqa: E402
 from pages import PAGES  # noqa: E402
 
 CON_PLANTILLA = ("pasto-en-rollo-tampico", "diseno-jardines-tampico", "mantenimiento-jardines-tampico",
-                 "sistema-riego-tampico")
+                 "sistema-riego-tampico", "mayoreo-pasto-tampico", "palmas-mayoreo-proyectos")
 
 
 class PaginasConPlantillaTest(unittest.TestCase):
@@ -19,7 +19,7 @@ class PaginasConPlantillaTest(unittest.TestCase):
                 self.assertNotIn(slug, PAGES)
 
     def test_la_portada_ya_no_lleva_linea_de_pago_ni_ancla_al_simulador_viejo(self):
-        cfg = dict(PAGES["mayoreo-pasto-tampico"], img=None)
+        cfg = dict(PAGES["vivero-tampico"], img=None)
         html = hero.hero_html(cfg)
         self.assertNotIn("svc-hero__pay", html)
         self.assertNotIn("#sim-titulo", html)

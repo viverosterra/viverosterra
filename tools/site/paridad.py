@@ -3,7 +3,10 @@
 Antes de migrar se congela lo que la página publicaba (`capturar`): meta (título, descripción, robots, canonical, Open
 Graph), tipos del JSON-LD, encabezados h1–h3, preguntas frecuentes, precios y enlaces internos del <main>. Después,
 tests/test_paridad.py exige que cada elemento siga en la página nueva o que el contenido diga a dónde fue
-(PARIDAD["reemplazos"]) o por qué se retiró (PARIDAD["retirados"]).
+(PARIDAD["reemplazos"]) o por qué se retiró (PARIDAD["retirados"]). La meta no cambia salvo que el contenido declare el
+valor nuevo y el motivo (PARIDAD["meta"]: {clave: (valor nuevo, motivo)}; desde 2d, para no publicar un precio que el
+dueño corrigió). Un tipo del JSON-LD solo deja de salir con su motivo (PARIDAD["jsonld"]: {tipo: motivo}; desde la
+revisión 2d, cuando un nodo suelto pasa a ser una referencia por @id a la entidad única #negocio).
 
 Uso:
   python3 tools/site/paridad.py capturar /pasto-en-rollo-tampico   (congela tests/paridad/pasto-en-rollo-tampico.json)
@@ -113,6 +116,21 @@ def faltantes(viejos, nuevos, mapa):
     return salida
 
 
+def meta_distinta(viejo, nuevo, cambios=None):
+    """Claves de la meta que cambiaron sin un cambio declarado con su valor nuevo exacto y un motivo escrito."""
+    cambios = cambios or {}
+    salida = []
+    for clave, valor in viejo.items():
+        actual = nuevo.get(clave)
+        if actual == valor:
+            continue
+        declarado = cambios.get(clave)
+        if declarado and declarado[0] == actual and len(declarado[1]) > 20:
+            continue
+        salida.append(f"{clave}: {valor!r} → {actual!r}")
+    return salida
+
+
 def nombre_captura(ruta):
     return "index" if ruta == "/" else ruta.strip("/").replace("/", "_")
 
@@ -141,10 +159,15 @@ def comparar(ruta, mapa, public=paginas.PUBLIC, capturas=CAPTURAS):
     nuevo = extraer(html)
     nuevo["enlaces"] = enlaces(html)
     resultado = {c: faltantes(viejo[c], nuevo[c], mapa) for c in CATEGORIAS}
-    resultado["meta"] = [f"{k}: {v!r} → {nuevo['meta'].get(k)!r}" for k, v in viejo["meta"].items()
-                         if nuevo["meta"].get(k) != v]
-    resultado["jsonld_tipos"] = sorted(set(viejo["jsonld_tipos"]) - set(nuevo["jsonld_tipos"]))
+    resultado["meta"] = meta_distinta(viejo["meta"], nuevo["meta"], mapa.get("meta"))
+    resultado["jsonld_tipos"] = tipos_retirados(viejo["jsonld_tipos"], nuevo["jsonld_tipos"], mapa.get("jsonld"))
     return resultado
+
+
+def tipos_retirados(viejos, nuevos, motivos=None):
+    """Tipos del JSON-LD que ya no salen y no tienen un motivo escrito (PARIDAD["jsonld"])."""
+    motivos = motivos or {}
+    return sorted(t for t in set(viejos) - set(nuevos) if len(motivos.get(t, "")) <= 20)
 
 
 def main(argv):

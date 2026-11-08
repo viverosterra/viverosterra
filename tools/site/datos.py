@@ -65,6 +65,7 @@ PRECIOS = {
     "poda": 500,
     "flamboyan": 250,
     "palma_desde": 250,
+    "palma_real": 500,
     "tierra_negra_costal": 90,
     "tierra_negra_m3": 1500,
     "tezontle_costal": 200,
@@ -94,6 +95,13 @@ MANTENIMIENTO_PREMIUM = SEGUN_COTIZACION
 # (test_reglas.py).
 SISTEMAS_RIEGO = "+200"
 PROYECTOS_B2B = "+200"
+# Empresas (Etapa 2d). Cómo se paga un proyecto (decisión del dueño): anticipo al confirmar y el resto contra avances de
+# obra, sin porcentaje y sin crédito. La misma frase en mayoreo y en palmas para proyectos (test_consistencia.py).
+ANTICIPO_PROYECTOS = ("Para proyectos solicitamos un anticipo al confirmar y el resto se acuerda contra avances de obra; "
+                      "te lo detallamos en la cotización.")
+# Padrón público del REPSE de la STPS, donde cualquiera consulta el folio. (La ruta /Publico que cita llms.txt responde
+# 404: se corrige con llms.txt en la Etapa 4.)
+REPSE_PADRON = "https://repse.stps.gob.mx/"
 LLEGADA_PASTO = "una vez por semana, generalmente los viernes"
 ANTICIPO = ("No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos "
             "un anticipo.")
@@ -104,6 +112,24 @@ RESPUESTA_PRECIO_PASTO = (
     f"del terreno, la colocación y una garantía de arraigo de {ARRAIGO}. En pedidos de "
     f"{PRECIOS['pasto_mayoreo_minimo_m2']} m² o más, el mayoreo cuesta desde ${PRECIOS['pasto_mayoreo_m2']}/m². "
     f"Precios {ANIO}, con IVA, para Tampico, Ciudad Madero y Altamira."
+)
+
+# Palmas y especies para proyectos (nombre, nombre científico, precio "desde" o None). Decisión del dueño (2026-11-07):
+# areca y coco plumoso desde $250 y palma real desde $500 en su tamaño más chico; el precio sube con la altura. Las demás,
+# "según cotización" (SEGUN_COTIZACION): no se inventa ningún precio. Cycas, bambú y yucca se piden junto con las palmas.
+PALMAS_PROYECTO = (
+    ("Palma areca", "Dypsis lutescens", PRECIOS["palma_desde"]),
+    ("Coco plumoso", "Syagrus romanzoffiana", PRECIOS["palma_desde"]),
+    ("Palma real", "Roystonea regia", PRECIOS["palma_real"]),
+    ("Palma washingtonia", "Washingtonia robusta", None),
+    ("Palma del viajero", "Ravenala madagascariensis", None),
+    ("Palma cola de zorro", "Wodyetia bifurcata", None),
+    ("Palma triángulo", "Dypsis decaryi", None),
+    ("Palma kerpis", "Hyophorbe lagenicaulis", None),
+    ("Palma bambú", "Chamaedorea seifrizii", None),
+    ("Cycas revoluta", "Cycas revoluta", None),
+    ("Bambú tarro", "Bambusa vulgaris", None),
+    ("Yucca rostrata", "Yucca rostrata", None),
 )
 
 # Permiso del dueño (2026-11-07) para mostrarlos con nombre y logo. Renault (cliente real, permiso del dueño) va con su

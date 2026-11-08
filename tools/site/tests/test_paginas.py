@@ -103,6 +103,17 @@ class ContextoTest(unittest.TestCase):
         self.assertEqual(sorted(mensajes_paginas.SERVICIOS), ["/diseno-jardines-tampico", "/mantenimiento-jardines-tampico",
                                                               "/sistema-riego-tampico"])
 
+    def test_empresas_con_su_mensaje_en_menu_barra_y_pie(self):
+        """Etapa 2d: mayoreo y palmas para proyectos llevan en el menú, la barra y el pie su plantilla de compras."""
+        for ruta, texto in mensajes_paginas.EMPRESAS.items():
+            ctx = paginas.contexto(ruta)
+            with self.subTest(ruta=ruta):
+                self.assertEqual(ctx["mensaje"], datos.con_firma(texto))
+                self.assertEqual(ctx["mensaje_pie"], ctx["mensaje"])
+                self.assertIn("Empresa: ___", texto)
+                self.assertIn("Obra y ubicación: ___", texto)
+        self.assertEqual(sorted(mensajes_paginas.EMPRESAS), ["/mayoreo-pasto-tampico", "/palmas-mayoreo-proyectos"])
+
     def test_ruta_desconocida_falla(self):
         with self.assertRaises(KeyError):
             paginas.contexto("/no-existe")

@@ -1,0 +1,50 @@
+{
+ "meta": {
+  "title": "Pasto al mayoreo en Tampico desde $60/m² para constructoras · Viveros Terra",
+  "description": "Pasto San Agustín en rollo al mayoreo desde $60/m² en pedidos de 500 m² o más, para constructoras y proyectos en Tampico. Factura CFDI, factura CFDI, entrega por etapas. Viveros Terra, desde 2007.",
+  "robots": "index, follow",
+  "canonical": "https://www.viverosterra.com/mayoreo-pasto-tampico",
+  "og:type": "website",
+  "og:url": "https://www.viverosterra.com/mayoreo-pasto-tampico",
+  "og:title": "Pasto al Mayoreo en Tampico para Constructoras · Viveros Terra",
+  "og:description": "Pasto San Agustín en rollo al mayoreo desde $60/m² en pedidos de 500 m² o más, para constructoras y proyectos en Tampico. Factura CFDI, factura CFDI, entrega por etapas.",
+  "og:image": "https://www.viverosterra.com/img/pasto-en-rollo-san-agustin-tampico.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "Answer",
+  "BreadcrumbList",
+  "FAQPage",
+  "ListItem",
+  "LocalBusiness",
+  "PostalAddress",
+  "Question",
+  "Service",
+  "SpeakableSpecification"
+ ],
+ "encabezados": [
+  "Pasto al mayoreo para obras y fraccionamientos",
+  "Pasto en rollo al mayoreo para constructoras y proyectos",
+  "Ventajas para tu empresa u obra",
+  "Precio preferencial por volumen",
+  "Factura CFDI 4.0",
+  "Entrega por etapas según obra",
+  "Pasto fresco garantizado",
+  "Clientes que confían en Viveros Terra",
+  "Proceso de cotización",
+  "Preguntas frecuentes — Mayoreo B2B",
+  "Viveros Terra · Tampico"
+ ],
+ "faq": [
+  "¿Cuál es el pedido mínimo para mayoreo de pasto en Tampico?",
+  "¿Facturan CFDI para constructoras?",
+  "¿Pueden entregar pasto fuera de Tampico?",
+  "¿Cómo funciona la entrega por etapas para obras?"
+ ],
+ "precios": [
+  "$60"
+ ],
+ "enlaces": [
+  "/pasto-en-rollo-tampico"
+ ]
+}

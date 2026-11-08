@@ -103,6 +103,17 @@ class DatosTest(unittest.TestCase):
         self.assertEqual(nombres, ["Daniela M.", "Ing. Roberto S.", "Carolina R.", "Ing. Gerardo M.", "Roberto C.",
                                    "María V."])
 
+    def test_datos_de_empresas_etapa_2d(self):
+        self.assertEqual(datos.ANTICIPO_PROYECTOS, "Para proyectos solicitamos un anticipo al confirmar y el resto se "
+                                                   "acuerda contra avances de obra; te lo detallamos en la cotización.")
+        self.assertNotIn("%", datos.ANTICIPO_PROYECTOS)
+        self.assertEqual(datos.REPSE_PADRON, "https://repse.stps.gob.mx/")
+        self.assertEqual(len(datos.PALMAS_PROYECTO), 12)
+        con_precio = {n: p for n, _sci, p in datos.PALMAS_PROYECTO if p is not None}
+        self.assertEqual(con_precio, {"Palma areca": 250, "Coco plumoso": 250, "Palma real": 500})
+        self.assertEqual((datos.PRECIOS["palma_desde"], datos.PRECIOS["palma_real"]), (250, 500))
+        self.assertEqual(len({n for n, _s, _p in datos.PALMAS_PROYECTO}), 12)
+
     def test_mensajes_terminan_con_la_firma(self):
         for servicio in datos.MENSAJES:
             with self.subTest(servicio=servicio):

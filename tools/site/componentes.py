@@ -6,6 +6,7 @@ verifica); los atributos (href, src, alt, data-*) se escapan aquí. Todo número
 mensualidades es la de tools/pasto/mensualidades.py (la misma de public/js/vt-mensualidades.js): aquí no se reimplementa.
 """
 import html as html_mod
+import json
 import math
 import re
 import sys
@@ -243,6 +244,23 @@ def tabla_comparativa(columnas, filas, caption):
             f'<tbody>{cuerpo}</tbody></table>')
 
 
+def tabla_especies(filas, caption, grupo):
+    """Especies con su precio: el nombre científico en cursiva bajo el común (sin columna propia). filas: nombre,
+    cientifico, precio (texto) y cotiza (True si va "según cotización"). En celular las que se cotizan se juntan en un
+    solo renglón (grupo: nombre y precio) para no apilar una tarjeta por especie; desde 768 px la tabla va completa.
+    Cada vista oculta la otra con display:none, así el lector de pantalla lee lo mismo que se ve."""
+    def fila(clase, nombre, detalle, precio):
+        atributo = f' class="{clase}"' if clase else ""
+        return (f'<tr{atributo}><th scope="row"><b>{nombre}</b><span>{detalle}</span></th>'
+                f'<td class="vt-tabla__p">{precio}</td></tr>')
+    cuerpo = "".join(fila("vt-tabla__cotiza" if cotiza else "", nombre, f"<i>{cientifico}</i>", precio)
+                     for nombre, cientifico, precio, cotiza in filas)
+    cuerpo += fila("vt-tabla__grupo", *grupo)
+    return (f'<table class="vt-tabla vt-tabla--especies"><caption>{caption}</caption><thead><tr><th scope="col">Especie'
+            '</th><th scope="col" class="vt-tabla__p">Precio</th></tr></thead>'
+            f'<tbody>{cuerpo}</tbody></table>')
+
+
 def linea_mensualidad(contado):
     """Plazo más largo disponible para un precio de contado, con la fórmula oficial (tools/pasto/mensualidades.py, la
     misma de vt-mensualidades.js): "o en 12 mensualidades de ≈ $1,852 con tarjeta de crédito (total $22,220)"."""
@@ -262,7 +280,8 @@ def _precio_opcion(o):
         return (f'<p class="vt-modo__precio">{desde}<span class="vt-precio-marca">{dinero(o["precio"])}</span> '
                 f'{o["unidad"]} <small>{o["detalle"]}</small>{mes}</p>')
     if "precio_texto" in o:
-        return f'<p class="vt-modo__precio">{o["precio_texto"]} <small>{o["detalle"]}</small></p>'
+        detalle = f' <small>{o["detalle"]}</small>' if o.get("detalle") else ""
+        return f'<p class="vt-modo__precio">{o["precio_texto"]}{detalle}</p>'
     return ""
 
 
@@ -276,7 +295,7 @@ def opciones(items, tipo):
     filas = []
     for i, o in enumerate(items, 1):
         clase = "vt-modo vt-modo--rec" if o.get("rec") else "vt-modo"
-        puntos = "".join(f"<li>{x}</li>" for x in o["puntos"])
+        puntos = "".join(f"<li><span>{x}</span></li>" for x in o["puntos"])  # una celda del grid de .vt-checks
         nota_html = f'<p class="vt-promesa">{o["nota"]}</p>' if o.get("nota") else ""
         filas.append(f'<li class="{clase}"><p class="vt-modo__n">{o["rotulo"]}</p><h3>{o["titulo"]}</h3>'
                      f'{_precio_opcion(o)}<ul class="vt-checks">{puntos}</ul>{nota_html}'
@@ -553,6 +572,230 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
         f'<a class="vt-btn vt-btn--wa" data-cta="{tipo}:medidor" data-vt-o="cta" href="{esc(datos.wa_url(generico))}" '
         f'target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp<span class="vt-flecha" aria-hidden="true">→'
         f'</span></a></div></div></div>')
+
+
+# ---------- empresas: cotizador por volumen y armador de palmas (public/js/vt-b2b.js; casos en casos-b2b.json) ----------
+M2_MAXIMO = 1_000_000  # más que esto no es una obra: el cotizador vuelve al mensaje de la página
+ALTURA_MAXIMA = 40
+CANTIDAD_MAXIMA = 100_000
+FILAS_PALMAS = 3  # renglones al cargar; vt-b2b.js agrega hasta 8
+MILES_RE = re.compile(r"^\d{1,3}(?:,\d{3})+(?:\.\d+)?$")
+DECIMAL_RE = re.compile(r"^\d+(?:\.\d+)?$")
+ALTURA_RE = re.compile(r"^\s*(\d+(?:[.,]\d+)?)")
+CANTIDAD_RE = re.compile(r"^\s*(\d+)")
+VACIO_VOLUMEN = {"medida": "Escribe los m² de tu obra", "monto": "—",
+                 "calc": (f"Desde {MINIMO_MAYOREO} m², mayoreo desde ${P['pasto_mayoreo_m2']}/m²; con menos, "
+                          f"${P['pasto_solo_m2']}/m² (solo pasto). Con IVA.")}
+VACIO_PALMAS = "Elige especie y cantidad"
+OTRA_ESPECIE = "Otra especie (la escribo en el chat)"
+
+
+def _hueco(valor):
+    return (valor or "").strip() or "___"
+
+
+def leer_m2(texto):
+    """m² escritos por el visitante (como leerM2 de vt-b2b.js): "1,200" y "1200" son 1200, "12,5" es 12.5 y "800 m²" es
+    800. Devuelve 0 si no es un número mayor que 0 y hasta M2_MAXIMO."""
+    t = re.sub(r"\s|m²|m2", "", str(texto or ""), flags=re.I)
+    t = t.replace(",", "") if MILES_RE.match(t) else t.replace(",", ".", 1)
+    if not DECIMAL_RE.match(t):
+        return 0
+    n = float(t)
+    return n if 0 < n <= M2_MAXIMO else 0
+
+
+def calculo_volumen(m2):
+    """La regla del Medidor para el pasto de obra: mayoreo desde el mínimo y, con menos, solo pasto con su aviso."""
+    return calculo_medidor(m2, 1, "mayoreo")
+
+
+def textos_volumen(r, empresa="", obra="", fecha=""):
+    """Etiqueta y mensaje de compras para el resultado `r` de calculo_volumen."""
+    desde = "desde " if r["desde"] else ""
+    m2 = formato_m2(r["m2"])
+    mensaje = "\n".join((f"Hola, quiero cotizar {r['texto']} para un proyecto.", f"m² totales: {m2} m²",
+                         f"Estimado de la web: {desde}{dinero(r['total'])} con IVA ({desde}${r['precio']}/m²)",
+                         f"Empresa: {_hueco(empresa)}", f"Obra y ubicación: {_hueco(obra)}",
+                         f"Fecha de la primera entrega: {_hueco(fecha)}"))
+    return {"medida": f"{m2} m²", "monto": dinero(r["total"]),
+            "calc": (f"{m2} m² × {desde}${r['precio']}/m², con IVA. Solo pasto: la entrega por etapas y la instalación "
+                     "se cotizan con tu obra."),
+            "mensaje": mensaje}
+
+
+def leer_altura(texto):
+    m = ALTURA_RE.match(str(texto or ""))
+    n = redondear(float(m.group(1).replace(",", ".")) * 10) / 10 if m else 0
+    return n if 0 < n <= ALTURA_MAXIMA else 0
+
+
+def leer_cantidad(texto):
+    m = CANTIDAD_RE.match(str(texto or ""))
+    n = int(m.group(1)) if m else 0
+    return n if 0 < n <= CANTIDAD_MAXIMA else 0
+
+
+def linea_palma(especie, altura="", cantidad=""):
+    """Renglón del mensaje: "- 40 × Palma real, altura aprox.: 3 m"; sin especie no hay renglón."""
+    especie = (especie or "").strip()
+    if not especie:
+        return ""
+    n, alto = leer_cantidad(cantidad), leer_altura(altura)
+    return f"- {n or '___'} × {especie}, altura aprox.: {f'{formato_m2(alto)} m' if alto else '___'}"
+
+
+def mensaje_palmas(filas, empresa="", obra="", fecha=""):
+    """Un solo mensaje con toda la lista. filas: (especie, altura, cantidad) como los escribió el visitante. Sin
+    renglones devuelve "" (el botón se queda con el mensaje de la página)."""
+    lineas = [x for x in (linea_palma(*f) for f in filas) if x]
+    if not lineas:
+        return ""
+    return "\n".join(("Hola, quiero cotizar palmas para un proyecto.", *lineas, f"Empresa: {_hueco(empresa)}",
+                      f"Obra y ubicación: {_hueco(obra)}", f"Fecha de entrega: {_hueco(fecha)}"))
+
+
+def resumen_palmas(filas):
+    """Lo que dice la etiqueta: "2 especies · 60 piezas" (o "cantidad por definir")."""
+    con_especie = [f for f in filas if (f[0] or "").strip()]
+    if not con_especie:
+        return VACIO_PALMAS
+    n = len(con_especie)
+    piezas = sum(leer_cantidad(f[2]) for f in con_especie)
+    especies = f"{n} {'especie' if n == 1 else 'especies'}"
+    return f"{especies} · {piezas:,} piezas" if piezas else f"{especies} · cantidad por definir"
+
+
+def _campo(ident, campo, etiqueta, placeholder, unidad="", modo=None):
+    """Campo con su label visible; modo="decimal" o "numeric" pone el teclado numérico."""
+    teclado = f' inputmode="{modo}"' if modo else ' type="text"'
+    sufijo = f"<span>{unidad}</span>" if unidad else ""
+    return (f'<div class="vt-campo"><label for="{esc(ident)}">{etiqueta}</label><div class="vt-control"><input '
+            f'id="{esc(ident)}" data-vt-campo="{esc(campo)}"{teclado} placeholder="{esc(placeholder)}" '
+            f'autocomplete="off">{sufijo}</div></div>')
+
+
+def _datos_obra(prefijo):
+    return (_campo(f"{prefijo}-empresa", "empresa", "Empresa (opcional)", "Ej. tu razón social")
+            + _campo(f"{prefijo}-obra", "obra", "Obra y ubicación (opcional)", "Ej. fraccionamiento en Altamira")
+            + _campo(f"{prefijo}-fecha", "fecha", "Fecha aprox. de entrega (opcional)", "Ej. marzo"))
+
+
+def _boton_cta(tipo, seccion, mensaje):
+    return (f'<a class="vt-btn vt-btn--wa" data-cta="{esc(tipo)}:{seccion}" data-vt-o="cta" '
+            f'href="{esc(datos.wa_url(mensaje))}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp'
+            '<span class="vt-flecha" aria-hidden="true">→</span></a>')
+
+
+def cotizador_volumen(prefijo, tipo, mensaje):
+    """Pasto para obra: m² totales → precio por volumen (la regla del Medidor: mayoreo desde el mínimo; con menos, solo
+    pasto y el aviso) → etiqueta → WhatsApp con m², estimado, empresa, obra y fecha. Los precios viajan en data-modos
+    (de MODOS_MEDIDOR, es decir de datos.py) y vt-b2b.js calcula con VTMedidor.calcular de vt-medidor.js."""
+    generico = datos.con_firma(mensaje)
+    modos = {k: {kk: v for kk, v in MODOS_MEDIDOR[k].items() if kk != "opcion"} for k in ("mayoreo", "solo")}
+    return (
+        f'<div class="vt-b2b" data-vt-volumen data-hero-cta data-wa="{esc(datos.TELEFONO_WA)}" '
+        f'data-mensaje="{esc(generico)}" data-modos="{esc(json.dumps(modos, ensure_ascii=False, separators=(",", ":")))}">'
+        '<div class="vt-b2b__form" role="group" aria-label="Cotizador de pasto por volumen">'
+        f'{_campo(f"{prefijo}-m2", "m2", "m² totales de la obra", "Ej. 1,200", "m²", "decimal")}{_datos_obra(prefijo)}'
+        '</div><div class="vt-etiqueta-x"><div class="vt-etiqueta vt-medidor__res" role="status">'
+        '<p class="vt-etiqueta__cod"><span>Tu etiqueta</span><span>Estimado</span></p>'
+        f'<p class="vt-etiqueta__nombre" data-vt-o="m2">{VACIO_VOLUMEN["medida"]}</p>'
+        '<p class="vt-etiqueta__sci">Stenotaphrum secundatum</p>'
+        f'<p class="vt-etiqueta__precio is-vacio"><small data-vt-o="rotulo">{MODOS_MEDIDOR["mayoreo"]["rotulo"]}</small>'
+        f'<b data-vt-o="monto">{VACIO_VOLUMEN["monto"]}</b><span>con IVA</span></p>'
+        f'<p class="vt-medidor__calc" data-vt-o="calc">{VACIO_VOLUMEN["calc"]}</p>'
+        '<p class="vt-medidor__aviso" data-vt-o="aviso" hidden></p>'
+        f'{_boton_cta(tipo, "cotizador", generico)}</div></div></div>')
+
+
+def _fila_palma(prefijo, n, especies):
+    opciones = "".join(f'<option value="{esc(nombre)}">{nombre} ({cientifico})</option>'
+                       for nombre, cientifico, _precio in especies)
+    return (f'<li class="vt-b2b__fila" data-vt-fila><div class="vt-campo"><label for="{prefijo}-especie-{n}">Especie'
+            f'</label><div class="vt-control"><select id="{prefijo}-especie-{n}" data-vt-campo="especie">'
+            f'<option value="">Elige una especie</option>{opciones}<option value="Otra especie">{OTRA_ESPECIE}</option>'
+            f'</select></div></div>{_campo(f"{prefijo}-altura-{n}", "altura", "Altura aprox.", "Ej. 3", "m", "decimal")}'
+            f'{_campo(f"{prefijo}-cantidad-{n}", "cantidad", "Cantidad", "Ej. 20", "pzas", "numeric")}</li>')
+
+
+def armador_palmas(prefijo, tipo, mensaje, especies=datos.PALMAS_PROYECTO):
+    """Palmas para obra: especie, altura y cantidad por renglón → un solo WhatsApp con la lista, empresa, obra y fecha.
+    Sin precio total: depende de la altura de cada ejemplar y se da por escrito en la cotización."""
+    generico = datos.con_firma(mensaje)
+    filas = "".join(_fila_palma(prefijo, n, especies) for n in range(1, FILAS_PALMAS + 1))
+    return (
+        f'<div class="vt-b2b" data-vt-palmas data-hero-cta data-wa="{esc(datos.TELEFONO_WA)}" '
+        f'data-mensaje="{esc(generico)}">'
+        '<div class="vt-b2b__form" role="group" aria-label="Lista de palmas para cotizar">'
+        f'<ol class="vt-b2b__filas" data-vt-filas>{filas}</ol>'
+        '<button type="button" class="vt-btn vt-btn--linea" data-vt-agregar hidden>Agregar otra especie</button>'
+        f'{_datos_obra(prefijo)}</div><div class="vt-etiqueta-x"><div class="vt-etiqueta" role="status">'
+        '<p class="vt-etiqueta__cod"><span>Tu lista</span><span>Para cotizar</span></p>'
+        f'<p class="vt-etiqueta__nombre" data-vt-o="resumen">{VACIO_PALMAS}</p>'
+        '<p class="vt-b2b__msg" data-vt-o="lista"></p>'
+        '<p class="vt-medidor__calc">El precio depende de la especie, la altura y la cantidad: te lo damos por escrito '
+        'en la cotización.</p>'
+        f'{_boton_cta(tipo, "armador", generico)}</div></div></div>')
+
+
+def repse():
+    """REPSE verificable: el folio y el padrón público de la STPS donde se consulta."""
+    return (f'<p class="vt-promesa">REPSE {datos.REPSE} · <a href="{esc(datos.REPSE_PADRON)}" target="_blank" '
+            'rel="noopener">consulta el folio en el padrón público de la STPS</a></p>')
+
+
+# ---------- empresas: cotización por correo para compras (respuesta del dueño, 2026-11-08) ----------
+# El mismo endpoint de formsubmit que los materiales. vt-b2b.js valida en el navegador (mensajes junto a cada campo),
+# manda generate_lead con method "formulario" y prellena m² o la lista desde el cotizador; sin JS, el navegador valida
+# los required y el formulario se envía igual.
+FORMULARIO_ACCION = f"https://formsubmit.co/{datos.CORREO_FORMULARIOS}"
+FORMULARIO_GRACIAS = f"{datos.SITIO}/gracias"
+
+
+def _campo_correo(prefijo, nombre, etiqueta, tipo="text", requerido=True, completar="off", placeholder="",
+                  multilinea=False, ancho=False, modo=None):
+    ident = f"{prefijo}-c-{nombre}"
+    error = f"{ident}-error"
+    texto = etiqueta if requerido else f"{etiqueta} (opcional)"
+    comunes = (f'id="{esc(ident)}" name="{esc(nombre)}"' + ("" if multilinea else f' type="{tipo}"')
+               + (" required" if requerido else "") + (f' inputmode="{modo}"' if modo else "")
+               + f' autocomplete="{completar}" placeholder="{esc(placeholder)}" aria-describedby="{esc(error)}"')
+    control = f"<textarea {comunes} rows=\"3\"></textarea>" if multilinea else f"<input {comunes}>"
+    clase = "vt-campo vt-correo__ancho" if ancho or multilinea else "vt-campo"
+    return (f'<div class="{clase}"><label for="{esc(ident)}">{texto}</label><div class="vt-control">{control}</div>'
+            f'<p class="vt-correo__error" id="{esc(error)}" hidden></p></div>')
+
+
+def formulario_correo(prefijo, f):
+    """Cotización por correo para departamentos de compras. f: pagina (asunto), cta (cta_id de GA4), cantidad
+    (etiqueta, ejemplo, multilínea y, opcional, inputmode) para m² o la lista de palmas, y aviso (privacidad, debajo del
+    botón). El cotizador de la página prellena cantidad, empresa, proyecto y fecha."""
+    etiqueta, ejemplo, multilinea, *modo = f["cantidad"]
+    campos = (
+        _campo_correo(prefijo, "empresa", "Empresa", completar="organization", placeholder="Razón social"),
+        _campo_correo(prefijo, "nombre", "Nombre", completar="name", placeholder="Quién recibe la cotización"),
+        _campo_correo(prefijo, "correo", "Correo", "email", completar="email", placeholder="compras@tuempresa.com"),
+        _campo_correo(prefijo, "telefono", "Teléfono", "tel", False, "tel", "833 000 0000"),
+        _campo_correo(prefijo, "proyecto", "Proyecto y ubicación", placeholder="Ej. fraccionamiento en Altamira",
+                      ancho=True),
+        _campo_correo(prefijo, "cantidad", etiqueta, placeholder=ejemplo, multilinea=multilinea, ancho=True,
+                      modo=modo[0] if modo else None),
+        _campo_correo(prefijo, "fecha", "Fecha estimada de entrega", requerido=False, placeholder="Ej. marzo"),
+        _campo_correo(prefijo, "mensaje", "Mensaje", requerido=False, multilinea=True,
+                      placeholder="Especificaciones, etapas de la obra o datos de facturación"),
+    )
+    return (
+        f'<form class="vt-correo" action="{esc(FORMULARIO_ACCION)}" method="POST" data-vt-correo data-hero-cta '
+        f'data-cta-form="{esc(f["cta"])}">'
+        f'<input type="hidden" name="_subject" value="Cotización empresa · {esc(f["pagina"])}">'
+        f'<input type="hidden" name="_next" value="{esc(FORMULARIO_GRACIAS)}">'
+        '<input type="hidden" name="_captcha" value="false">'
+        '<input class="vt-correo__miel" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">'
+        f'<div class="vt-correo__campos">{"".join(campos)}</div>'
+        '<div class="vt-correo__pie"><button type="submit" class="vt-btn vt-btn--tinta">Enviar solicitud por correo'
+        '</button><p class="vt-correo__estado" role="status" data-vt-o="correo-estado"></p>'
+        f'<p class="vt-correo__aviso">{f["aviso"]}</p></div></form>')
 
 
 # ---------- portada (primer pantallazo: qué, dónde, precio y CTA) ----------

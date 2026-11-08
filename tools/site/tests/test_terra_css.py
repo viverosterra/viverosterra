@@ -77,6 +77,7 @@ class TerraCssTest(unittest.TestCase):
                  ("--vt-tag-ink", "--vt-tag"), ("--vt-field-deep", "--vt-field-100"),
                  # componentes del cuerpo (Etapa 2)
                  ("--vt-soil", "--vt-bone"), ("--vt-soil", "--vt-bone-2"), ("--vt-soil", "--vt-card"),
+                 ("--vt-soil", "--vt-soil-100"), ("--vt-ink", "--vt-soil-100"), ("--vt-on-dark", "--vt-ink-2"),
                  ("--vt-muted", "--vt-bone-2"), ("--vt-ink-2", "--vt-bone-2"), ("--vt-card", "--vt-soil"),
                  ("--vt-on-dark-2", "--vt-field-deep"), ("--vt-tag", "--vt-field-deep"), ("--vt-ink", "--vt-field-100")]
         for texto, fondo in pares:
@@ -90,6 +91,24 @@ class TerraCssTest(unittest.TestCase):
         datos = activos.minificar_css(self.css).encode("utf-8")
         self.assertLess(len(gzip.compress(datos, mtime=0)), 10 * 1024)
         self.assertLess(len(datos), 48 * 1024)
+
+    def test_cotizadores_de_empresas(self):
+        """Etapa 2d: [hidden] gana a .vt-btn (el botón "Agregar otra especie" sale oculto sin JS) y el select del armador
+        de palmas usa el mismo control que los campos."""
+        self.assertIn(".vt-b2b [hidden]{display:none}", self.css)
+        self.assertIn(".vt-control select{", self.css)
+        self.assertIn("@media (min-width:1024px){.vt-b2b{grid-template-columns:7fr 5fr", self.css)
+
+    def test_revision_2d_de_empresas(self):
+        """Botón del formulario en tinta, error con fondo, campo con error fuera del menú fijo, CTA de cada paquete
+        alineado abajo y la tabla de palmas agrupada en celular."""
+        self.assertIn("background:var(--vt-ink)", self.regla(".vt-btn--tinta"))
+        self.assertIn("background:var(--vt-soil-100)", self.regla('.vt-control:has([aria-invalid="true"])'))
+        self.assertIn("scroll-margin-top:", self.regla(".vt-correo .vt-campo"))
+        self.assertIn("flex-direction:column", self.regla(".vt-modo"))
+        self.assertIn("margin-top:auto", self.regla(".vt-modo .vt-btn"))
+        self.assertIn("display:none", self.regla(".vt-tabla__grupo"))
+        self.assertIn(".vt-tabla--especies thead,.vt-tabla__cotiza{display:none}", self.css)
 
     def test_fuentes_referenciadas_existen(self):
         urls = re.findall(r'url\("(/fonts/[^"]+)"\)', self.css)
