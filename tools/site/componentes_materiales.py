@@ -142,3 +142,140 @@ def datos_js(clave):
     return {"clave": clave, **{k: cfg[k] for k in PARA_JS if k in cfg}}
 
 
+VACIO = {"cantidad": "Escribe el área", "fila": "—"}
+# Filas de la etiqueta por calculadora: (rótulo, salida). La nota va aparte.
+FILAS = {
+    "tierra-negra": (("Presentación sugerida", "presentacion"), ("Equivalente en costales", "equivalente")),
+    "tezontle": (("Presentación sugerida", "presentacion"), ("Costales equivalentes", "equivalente")),
+    "marmol": (("Peso aproximado", "peso"),),
+    "piedra-bola": (),
+}
+NOTAS = {
+    "tierra-negra": ("m² × grosor de la capa = m³, redondeado hacia arriba. Costal ≈ 20 kg. El camión volteo y la "
+                     "entrega se cotizan según tu colonia."),
+    "tezontle": "m² × grosor de la capa = m³, redondeado hacia arriba. El m³ y el camión se cotizan según tu colonia.",
+    "marmol": "3 sacos por m² con capa de 3 a 4 cm; 4 con 5 cm y 5 con 6 cm. El precio por saco se cotiza.",
+    "piedra-bola": ("Con piedra mediana y capa de 8 a 10 cm se usan de 120 a 150 kg por m². Para chica o grande, "
+                    "escríbenos la medida y te calculamos."),
+}
+
+
+def _select(prefijo, cfg):
+    opciones = "".join(f'<option value="{esc(v)}"{" selected" if v == cfg["elegida"] else ""}>{t}</option>'
+                       for v, t in cfg["capas"])
+    return (f'<div class="vt-campo"><label for="{esc(prefijo)}-capa">{cfg["etiqueta_capa"]}</label>'
+            f'<div class="vt-control"><select id="{esc(prefijo)}-capa" data-vt-campo="capa">{opciones}</select></div></div>')
+
+
+def calculadora(prefijo, tipo, clave, mensaje, nombre):
+    """Área (y capa) → etiqueta con la cantidad, la presentación sugerida y su equivalente → WhatsApp con el resultado.
+    Empieza vacía: sin área, el botón manda el mensaje de la página (data-mensaje, con firma). data-cta conserva el
+    cta_id que medía main con VTMedicion.whatsapp (p. ej. material:cotizarCalculado)."""
+    cfg = CALCULADORAS[clave]
+    generico = datos.con_firma(mensaje)
+    capa = _select(prefijo, cfg) if "capas" in cfg else ""
+    filas = "".join(f'<p class="vt-etiqueta__fila"><span>{rotulo}</span><b data-vt-o="{salida}">{VACIO["fila"]}</b></p>'
+                    for rotulo, salida in FILAS[clave])
+    nota_dinamica = '<p class="vt-medidor__calc" data-vt-o="nota" hidden></p>' if clave == "marmol" else ""
+    return (
+        f'<div class="vt-b2b" data-vt-material data-hero-cta data-wa="{esc(datos.TELEFONO_WA)}" '
+        f'data-mensaje="{esc(generico)}" data-material="{esc(json.dumps(datos_js(clave), ensure_ascii=False, separators=(",", ":")))}">'
+        f'<div class="vt-b2b__form" role="group" aria-label="Calculadora de {esc(nombre)}">'
+        f'{c._campo(f"{prefijo}-area", "area", "Área a cubrir", "Ej. 30", "m²", "decimal")}{capa}</div>'
+        '<div class="vt-etiqueta-x"><div class="vt-etiqueta vt-medidor__res" role="status">'
+        '<p class="vt-etiqueta__cod"><span>Tu cálculo</span><span>Aproximado</span></p>'
+        f'<p class="vt-etiqueta__nombre" data-vt-o="cantidad">{VACIO["cantidad"]}</p>{filas}{nota_dinamica}'
+        f'<p class="vt-medidor__calc">{NOTAS[clave]}</p>'
+        f'<a class="vt-btn vt-btn--wa" data-cta="{esc(tipo)}:{cfg["cta"]}" data-vt-o="cta" '
+        f'href="{esc(datos.wa_url(generico))}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp'
+        '<span class="vt-flecha" aria-hidden="true">→</span></a></div></div></div>')
+
+
+# ---------- precio por presentación ----------
+def precio_texto(precio, desde=False):
+    """"$90", "desde $200" o "Según cotización" (None: el precio no está en datos.py)."""
+    if precio is None:
+        return datos.SEGUN_COTIZACION
+    return f"{'desde ' if desde else ''}{c.dinero(precio)}"
+
+
+def presentaciones(filas, caption):
+    """Tabla Presentación | Unidad | Precio. filas: nombre, detalle, unidad, precio (número de datos.PRECIOS o None) y,
+    opcional, desde. None se escribe "según cotización": nunca se inventa un precio."""
+    cuerpo = "".join(
+        f'<tr><th scope="row"><b>{f["nombre"]}</b><span>{f["detalle"]}</span></th><td class="vt-tabla__u">{f["unidad"]}'
+        f'</td><td class="vt-tabla__p{"" if f["precio"] else " vt-tabla__p--cotiza"}">{precio_texto(f["precio"], f.get("desde"))}'
+        '</td></tr>' for f in filas)
+    return (f'<table class="vt-tabla vt-tabla--precios"><caption>{caption}</caption><thead><tr>'
+            '<th scope="col">Presentación</th><th scope="col">Unidad</th><th scope="col" class="vt-tabla__p">Precio</th>'
+            f'</tr></thead><tbody>{cuerpo}</tbody></table>')
+
+
+# ---------- otros materiales ----------
+def otros(items, enlaces=()):
+    """Los otros materiales (nombre, precios de datos.py y, solo donde main la tenía, su miniatura) y una línea de enlaces
+    a páginas relacionadas. items: titulo, href, texto y, opcional, img (src, ancho, alto)."""
+    filas = []
+    for i in items:
+        foto = (f'<img src="{esc(i["img"]["src"])}" width="{i["img"]["ancho"]}" height="{i["img"]["alto"]}" alt="" '
+                'loading="lazy" decoding="async">' if i.get("img") else "")
+        filas.append(f'<li>{foto}<div><a href="{esc(i["href"])}">{i["titulo"]}</a><small>{i["texto"]}</small></div></li>')
+    linea = ""
+    if enlaces:
+        partes = " · ".join(f'<a href="{esc(h)}">{t}</a>' for t, h in enlaces)
+        linea = f'<p class="vt-promesa vt-mt">También: {partes}.</p>'
+    return f'<ul class="vt-otros">{"".join(filas)}</ul>{linea}'
+
+
+# ---------- portada y cierre ----------
+def portada(p, tipo, migas_items):
+    """Como componentes.portada, con dos variantes: sin foto (tezontle y piedra bola no tenían foto de portada en main y
+    no se agrega ninguna) y con foto apaisada (la de tierra negra mide 3:2; se muestra 3:2 y no recortada a 4:5)."""
+    if p.get("foto") and p["foto"]["alto"] >= p["foto"]["ancho"]:
+        return c.portada(p, tipo, migas_items)
+    clases = ["vt-portada"] + (["vt-portada--compacta"] if p.get("compacta") else [])
+    clases.append("vt-portada--apaisada" if p.get("foto") else "vt-portada--sinfoto")
+    foto = f'<div class="vt-portada__foto">{c.figura(p["foto"], principal=True)}</div>' if p.get("foto") else ""
+    return (f'<section class="{" ".join(clases)}" aria-labelledby="vt-h1"><div class="vt-wrap">{c.migas(migas_items)}'
+            f'<div class="vt-portada__grid"><div><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1>'
+            f'<p class="vt-lede">{p["lede"]}</p><div class="vt-portada__trato">{c.etiqueta(p["etiqueta"])}<div>'
+            f'{c.fila_cta(p["mensaje"], tipo, "hero", hero=True)}<p class="vt-portada__tambien">{p["tambien"]}</p></div>'
+            f'</div></div>{foto}</div>{c.cuadro_datos()}</div></section>')
+
+
+def cierre(ci, mensaje, tipo):
+    """CTA final (componentes.cierre) con, si main la tenía, su foto de fondo decorativa (alt="")."""
+    html = c.cierre(ci["titulo"], ci["lede"], mensaje, tipo)
+    f = ci.get("fondo")
+    if not f:
+        return html
+    fondo = (f'<img class="vt-cierre__fondo" src="{esc(f["src"])}" width="{f["ancho"]}" height="{f["alto"]}" alt="" '
+             'loading="lazy" decoding="async">')
+    return html.replace('<section class="vt-cierre"', '<section class="vt-cierre vt-cierre--foto"', 1).replace(
+        '<div class="vt-wrap vt-cierre__grid">', f'{fondo}<div class="vt-wrap vt-cierre__grid">', 1)
+
+
+# ---------- pedido por correo (el formulario de main: mismos campos y destino, más honeypot y medición) ----------
+ASUNTO = "Pedido desde sitio web - Viveros Terra"  # el de main: el dueño filtra sus correos por él
+
+
+def formulario_pedido(prefijo, cta, ejemplo_detalle, aviso):
+    """Formulario a formsubmit de viverosterra@hotmail.com con los campos de main (nombre, email, detalle), _next a
+    /gracias, sin captcha y con honeypot _honey. vt-b2b.js lo valida junto a cada campo y manda generate_lead con method
+    "formulario" y cta_id `cta`; sin JS, el navegador valida los required y se envía igual."""
+    campos = (
+        c._campo_correo(prefijo, "nombre", "Nombre", completar="name", placeholder="Tu nombre"),
+        c._campo_correo(prefijo, "email", "Correo", "email", completar="email", placeholder="tu@correo.com"),
+        c._campo_correo(prefijo, "detalle", "¿Qué necesitas?", requerido=False, multilinea=True,
+                        placeholder=ejemplo_detalle),
+    )
+    return (
+        f'<form class="vt-correo" id="order-form" action="{esc(c.FORMULARIO_ACCION)}" method="POST" data-vt-correo '
+        f'data-cta-form="{esc(cta)}"><input type="hidden" name="_subject" value="{esc(ASUNTO)}">'
+        f'<input type="hidden" name="_next" value="{esc(c.FORMULARIO_GRACIAS)}">'
+        '<input type="hidden" name="_captcha" value="false">'
+        '<input class="vt-correo__miel" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">'
+        f'<div class="vt-correo__campos">{"".join(campos)}</div>'
+        '<div class="vt-correo__pie"><button type="submit" class="vt-btn vt-btn--tinta">Enviar solicitud de pedido'
+        '</button><p class="vt-correo__estado" role="status" data-vt-o="correo-estado"></p>'
+        f'<p class="vt-correo__aviso">{aviso}</p></div></form>')
