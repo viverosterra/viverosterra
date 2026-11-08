@@ -31,8 +31,8 @@ class PrecioTest(unittest.TestCase):
         ), "Precios 2026 con IVA.")
         self.assertIn('<th scope="col">Unidad</th>', html)
         self.assertIn('<a href="/pasto-en-rollo-tampico">Pasto instalado</a>', html)
-        self.assertIn('<td class="vt-tabla__p"><small>desde</small>$120</td>', html)
-        self.assertIn("<small>desde</small>$500<small>según cotización</small>", html)
+        self.assertIn('<td class="vt-tabla__p"><small class="vt-tabla__desde">desde</small>$120</td>', html)
+        self.assertIn('<small class="vt-tabla__desde">desde</small>$500<small>según cotización</small>', html)
         self.assertIn('<td class="vt-tabla__p vt-tabla__p--cotiza">Según cotización</td>', html)
         self.assertEqual(html.count("<tr>"), 4)
 
@@ -69,9 +69,10 @@ class GarantiasYColoniasTest(unittest.TestCase):
         self.assertIn('href="/politicas#garantia-plantas"', html)
 
     def test_colonias_con_codigo_postal(self):
-        html = cz.colonias((("Águila", "89230"),), "Tampico", "Colonias")
-        self.assertIn("Águila<br><small>Tampico</small>", html)
-        self.assertRegex(html, r'<td data-col="CÓDIGO POSTAL">89230</td>')
+        html = cz.colonias((("Águila", "89230"),), "Colonias de Tampico")
+        self.assertIn("<li><b>Águila</b><span>CP 89230</span></li>", html)
+        self.assertIn("Colonias de Tampico", html)
+        self.assertNotIn("<small>", html)
 
 
 if __name__ == "__main__":

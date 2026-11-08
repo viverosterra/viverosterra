@@ -7,8 +7,10 @@ datos.SEGUN_COTIZACION (precio None): m³ y camión de tezontle, piedra bola (a 
 que no son el flamboyán (regla del dueño, como en 2e y 2f: no se inventa). Sin pesos de costal.
 """
 import componentes as c  # primero: agrega tools/pasto al sys.path (data)
+import componentes_zonas as cz
 import data
 import datos
+import mensajes_paginas
 from contenido import materiales_comun as mc
 
 dinero = c.dinero
@@ -40,10 +42,14 @@ RIEGO = {"nombre": "Sistema de riego automático", "href": "/sistema-riego-tampi
          "detalle": "Aspersión o goteo con programador. Se cotiza después de medir y revisar la presión."}
 # Poda de palmas y árboles (decisión del dueño, 2026-11-07): "desde $500, según cotización". Su página es de la Etapa 3,
 # así que el renglón no enlaza.
-PODA = {"nombre": "Poda de palmas y árboles", "unidad": "árbol o palma", "precio": P["poda"], "desde": True,
-        "cotiza": True,
-        "detalle": ("El precio depende del tamaño del árbol o la palma y de los residuos que se generan. Mándanos fotos "
-                    "y ubicación por WhatsApp.")}
+def poda(mensaje, cta):
+    """Renglón de la poda con el enlace "mándanos fotos": en cada zona lleva el mensaje de esa zona."""
+    enlace = cz.enlace_wa("Mándanos fotos y ubicación por WhatsApp", mensaje, cta)
+    return {"nombre": "Poda de palmas y árboles", "unidad": "árbol o palma", "precio": P["poda"], "desde": True,
+            "cotiza": True,
+            "detalle": f"El precio depende del tamaño del árbol o la palma y de los residuos que se generan. {enlace}."}
+
+
 SERVICIOS = (
     MANTENIMIENTO,
     {"nombre": "Diseño de jardín, Plan Terra Esencial", "href": "/diseno-jardines-tampico", "unidad": "proyecto",
@@ -57,7 +63,7 @@ SERVICIOS = (
      "detalle": ("Proyecto ejecutivo con seguimiento. Se descuenta en proyectos de más de "
                  f"{dinero(P['diseno_premium_descuento_desde'])}.")},
     RIEGO,
-    PODA,
+    poda(mensajes_paginas.PRECIOS_SECCIONES["poda"], "precios:poda"),
 )
 MATERIALES = (
     {"nombre": "Tierra negra vegetal", "href": "/tierra-negra-vegetal-tampico", "unidad": "costal",
@@ -88,19 +94,22 @@ PLANTAS = (
     {"nombre": "Plantas de jardín e interior", "href": "/plantas-para-jardin-tampico", "unidad": "pieza",
      "precio": None, "detalle": f"Más de {datos.VARIEDADES.lstrip('+')} variedades en el vivero."},
 )
-# Las 6 zonas: los servicios de jardín de main (tools/pasto/zonas.py) más la poda, con precios de datos.py.
-ZONA = (
-    {"nombre": "Pasto San Agustín instalado", "href": "/pasto-en-rollo-tampico", "unidad": "m²",
-     "precio": P["pasto_instalado_m2"], "desde": True,
-     "detalle": f"Preparación básica del suelo y garantía de arraigo de {datos.ARRAIGO}."},
-    dict(MANTENIMIENTO, detalle="Poda, fertilización, control de plagas y revisión del riego."),
-    {"nombre": "Diseño de jardín", "href": "/diseno-jardines-tampico", "unidad": "proyecto", "precio": P["diseno"],
-     "desde": True, "detalle": "Plan Esencial; se descuenta si contratas la obra."},
-    dict(RIEGO, nombre="Riego automático", detalle="Aspersión o goteo con programador."),
-    {"nombre": "Pasto sintético en Tampico", "href": "/pasto-sintetico-tampico", "unidad": "m² instalado",
-     "precio": P["sintetico_instalado_m2"][0], "desde": True,
-     "detalle": (f"Venta en showroom desde {data.MIN_SHOWROOM_M2} m² o instalación con material y colocación.")},
-    {"nombre": "Palmas", "href": "/palmas-tropicales-tampico", "unidad": "pieza", "precio": P["palma_desde"],
-     "desde": True, "detalle": "Areca y coco plumoso en tamaño chico; se cotizan por tamaño y volumen."},
-    PODA,
-)
+# Las 6 zonas: los servicios de jardín de main (tools/pasto/zonas.py) y la poda, con precios de datos.py. Cada zona publica
+# 4 renglones en el orden de lo que pide (contenido/zona.py); la lista completa está en /precios.
+FILAS_ZONA = {
+    "pasto": {"nombre": "Pasto San Agustín instalado", "href": "/pasto-en-rollo-tampico", "unidad": "m²",
+              "precio": P["pasto_instalado_m2"], "desde": True,
+              "detalle": f"Preparación básica del suelo y garantía de arraigo de {datos.ARRAIGO}."},
+    "mantenimiento": dict(MANTENIMIENTO, detalle="Poda, fertilización, control de plagas y revisión del riego."),
+    "diseno": {"nombre": "Diseño de jardín", "href": "/diseno-jardines-tampico", "unidad": "proyecto",
+               "precio": P["diseno"], "desde": True, "detalle": "Plan Esencial; se descuenta si contratas la obra."},
+    "riego": dict(RIEGO, nombre="Riego automático", detalle="Aspersión o goteo con programador."),
+    "palmas": {"nombre": "Palmas", "href": "/palmas-tropicales-tampico", "unidad": "pieza", "precio": P["palma_desde"],
+               "desde": True, "detalle": "Areca y coco plumoso en tamaño chico; se cotizan por tamaño y volumen."},
+}
+
+
+def filas_zona(claves, ruta):
+    """Los renglones de la zona, en su orden; la poda lleva el mensaje de esa zona."""
+    filas = {**FILAS_ZONA, "poda": poda(mensajes_paginas.PODA_ZONAS[ruta], "zona:poda")}
+    return tuple(filas[k] for k in claves)

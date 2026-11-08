@@ -27,6 +27,7 @@ MANTENIMIENTO, DISENO = dinero(P["mantenimiento_mes"]), dinero(P["diseno"])
 SINTETICO = dinero(lp.SINTETICO_MIN)
 SINT_MIN, SINT_MAX = (dinero(x) for x in P["sintetico_instalado_m2"])
 MENSAJE = mensajes_paginas.PRECIOS
+COTIZAR = mensajes_paginas.PRECIOS_SECCIONES
 TITULO = "Precios de jardinería en Tampico 2026: pasto, diseño y mantenimiento | Viveros Terra"
 DESCRIPCION = (f"Pasto San Agustín {SOLO}/m² o instalado desde {INSTALADO}/m², mantenimiento desde {MANTENIMIENTO}/mes, "
                f"diseño desde {DISENO} y pasto sintético desde {SINTETICO}/m². Precios con IVA en Tampico, Madero y "
@@ -123,28 +124,35 @@ CONTENIDO = {
                  "alt": "Trabajador de Viveros Terra descargando pasto San Agustín en rollo de la camioneta",
                  "lugar": "Pasto San Agustín en rollo", "etapa": "Recién cortado"},
     },
+    "saltos": (("Pasto", "pasto"), ("Servicios", "servicios"), ("Sintético", "sintetico"), ("Materiales", "materiales"),
+               ("Plantas", "plantas"), ("Mensualidades", "mensualidades"), ("Garantías", "garantias")),
     "secciones": (
         {"id": "pasto", "rotulo": "Pasto natural", "titulo": 'Pasto San Agustín <span class="vt-serif">en rollo</span>',
          "filas": lp.PASTO, "concepto": "Producto", "caption": f"Precios {datos.ANIO} con IVA.",
+         "cotizar": ("Cotizar pasto por WhatsApp", COTIZAR["pasto"]),
          "nota": ("Solo el pasto: recoges en el vivero o se cobra la entrega según tu colonia. "
                   '<a href="/protocolo-cuidados-pasto-san-agustin">Protocolo de riego y garantía</a>.')},
         {"id": "servicios", "rotulo": "Servicios", "titulo": 'Mantenimiento, diseño <span class="vt-serif">y riego</span>',
          "filas": lp.SERVICIOS, "concepto": "Servicio", "caption": f"Precios {datos.ANIO} con IVA.",
-         "nota": f"Cotiza por WhatsApp. Contratos con empresas con factura y REPSE {datos.REPSE}."},
+         "cotizar": ("Cotizar un servicio por WhatsApp", COTIZAR["servicios"]),
+         "nota": f"Contratos con empresas con factura y REPSE {datos.REPSE}."},
         {"id": "sintetico", "rotulo": "Pasto sintético",
          "titulo": 'Pasto sintético <span class="vt-serif">por modelo</span>', "modelos": True,
          "lede": (f"Material por m² según cuánto compres. Instalado en Tampico, Madero y Altamira de {SINT_MIN} a "
                   f"{SINT_MAX}/m² con material y colocación."),
+         "cotizar": ("Cotizar pasto sintético por WhatsApp", COTIZAR["sintetico"]),
          "nota": (f"Cortes de {data.MIN_SHOWROOM_M2} a 9 m² solo en el showroom. Envío a todo México desde "
                   f"{data.MIN_NACIONAL_M2} m²; el flete se cobra por rollo según tu estado. "
                   '<a href="/pasto-sintetico">Ver la tienda</a> · <a href="/pasto-sintetico-tampico">Instalación en '
                   "Tampico</a>")},
         {"id": "materiales", "rotulo": "Materiales", "titulo": 'Tierra, tezontle <span class="vt-serif">y piedra</span>',
          "filas": lp.MATERIALES, "concepto": "Material", "caption": f"Precios {datos.ANIO} con IVA.",
+         "cotizar": ("Cotizar materiales por WhatsApp", COTIZAR["materiales"]),
          "nota": ("Recoges en el vivero de Cd. Madero o te lo llevamos en Tampico, Madero y Altamira. "
                   f"{datos.CONDICIONES_MATERIALES}")},
         {"id": "plantas", "rotulo": "Vivero", "titulo": 'Plantas, palmas <span class="vt-serif">y árboles</span>',
          "filas": lp.PLANTAS, "concepto": "Planta", "caption": f"Precios {datos.ANIO} con IVA.",
+         "cotizar": ("Cotizar plantas por WhatsApp", COTIZAR["plantas"]),
          "nota": ('Arma tu lista en el <a href="/catalogo">catálogo</a> y mándala por WhatsApp. '
                   f"{datos.GARANTIA_PLANTAS.replace(' (ver condiciones)', '')} "
                   '<a href="/politicas#garantia-plantas">Ver condiciones</a>.')},

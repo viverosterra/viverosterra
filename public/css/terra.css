@@ -590,6 +590,8 @@
 .vt-sectores b{font-size:var(--vt-text-base);color:var(--vt-ink)}
 @media (min-width:768px){.vt-zonas,.vt-sectores{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}}
 @media (min-width:1024px){.vt-zonas,.vt-sectores{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.vt-colonias li{grid-template-columns:1fr auto;align-items:baseline}
+@media (min-width:1024px){.vt-colonias{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .vt-relacionados{display:grid;gap:20px;list-style:none}
 .vt-tarjeta{position:relative;display:flex;flex-direction:column;border:1px solid var(--vt-line);background:var(--vt-card);box-shadow:var(--vt-sombra-card);transition:transform var(--vt-duration-normal) var(--vt-ease-out)}
 .vt-tarjeta:hover{transform:translateY(-3px)}
@@ -622,3 +624,12 @@
 .vt-portada--apaisada .vt-portada__foto .vt-fig__marco{aspect-ratio:3/2}
 /* "Según cotización" en la tabla de presentaciones: más chico y en dos renglones si no cabe a 320 px. */
 .vt-tabla__p--cotiza{font-size:17px;white-space:normal}
+/* Lista de precios de zonas y /precios (componentes_zonas.lista): tabla legible en pantallas anchas, precio y unidad en la
+   misma línea base y el "desde" junto al número. */
+.vt-tabla--lista{max-width:56rem}
+.vt-tabla--lista th,.vt-tabla--lista td{vertical-align:baseline}
+.vt-tabla__p .vt-tabla__desde{display:inline;margin-right:4px}
+.vt-tabla--lista tr{align-items:baseline}
+.vt-bloque[id]{scroll-margin-top:calc(var(--vt-head-h) + 16px)}
+.vt-cotizar{font-weight:700}
+.vt-cotizar a{display:inline-block;margin-right:20px;padding:18px 0 8px}

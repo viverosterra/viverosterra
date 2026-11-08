@@ -13,6 +13,7 @@ import datos
 import mensajes_paginas
 from componentes import dinero
 from contenido import lista_precios
+from contenido import materiales_comun as mc
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -43,7 +44,8 @@ FOTOS = {
                                  "Jardín con pasto San Agustín atendido por Viveros Terra", "Pasto San Agustín",
                                  "Jardín atendido"),
     "jardineria-altamira": ("jardineria-areas-verdes-tampico", 793, 1190,
-                            "Jardín con pasto San Agustín atendido por Viveros Terra", "Áreas verdes", "Jardín atendido"),
+                            "Áreas verdes con pasto San Agustín atendidas por Viveros Terra", "Áreas verdes",
+                            "Jardín atendido"),
 }
 
 ZONAS = {
@@ -54,6 +56,7 @@ ZONAS = {
         colonias=(("Lomas de Rosales", "89100"), ("Lomas de la Aurora", "89100"), ("Vista Hermosa", "89119")),
         lede=("Pasto en rollo, diseño, riego y mantenimiento para las casas de Lomas de Rosales, Lomas de la Aurora y "
               "Vista Hermosa, en Tampico."),
+        servicios=("pasto", "diseno", "riego", "mantenimiento"),
         retos=(
             ("Terrenos en pendiente", "En la loma el agua de riego y de lluvia escurre. El riego por goteo y las "
              "jardineras escalonadas evitan que se lave la tierra y el pasto se seque en la parte alta."),
@@ -65,7 +68,7 @@ ZONAS = {
         faqs=(
             ("¿Dan servicio de jardinería en Lomas de Rosales?",
              "Sí. Atendemos Lomas de Rosales, Lomas de la Aurora y Vista Hermosa en Tampico con instalación de pasto, "
-             f"diseño, riego y mantenimiento. Agendamos una visita para medir y cotizar. {datos.VISITA_COSTO}"),
+             "diseño, riego y mantenimiento. Mándanos tu colonia y los metros aproximados y te cotizamos."),
             ("¿Cuánto cuesta el mantenimiento de jardín en Lomas de Rosales?",
              f"Desde {MANTENIMIENTO} al mes. El precio final depende de los metros del jardín y de la frecuencia de "
              "visitas."),
@@ -81,6 +84,7 @@ ZONAS = {
         colonias=(("Club Campestre", "89217"), ("Country Club", "89218"), ("Sierra Morena", "89210")),
         lede=("Instalación de pasto, diseño de jardín, riego automático y mantenimiento para las casas de Club "
               "Campestre, Country Club y Sierra Morena, en Tampico."),
+        servicios=("riego", "pasto", "mantenimiento", "diseno"),
         retos=(
             ("Jardines grandes", "En lotes amplios, el riego automático por zonas ahorra agua y tiempo. Lo diseñamos "
              "según el pasto, las jardineras y la presión de tu casa."),
@@ -94,8 +98,7 @@ ZONAS = {
              "Sí. Atendemos Club Campestre, Country Club y Sierra Morena en Tampico con pasto en rollo, diseño, riego "
              "automático y mantenimiento."),
             ("¿Cuánto cuesta un sistema de riego automático?",
-             f"De {RIEGO} por m², según el tipo de sistema. Medimos y revisamos la presión en la visita. "
-             f"{datos.VISITA_COSTO}"),
+             f"De {RIEGO} por m², según el tipo de sistema. Medimos y revisamos la presión en la visita."),
             ("¿Pueden encargarse del jardín todo el año?",
              f"Sí. El mantenimiento cuesta desde {MANTENIMIENTO} al mes; la frecuencia la fijamos contigo según tu plan y "
              f"lo que necesita tu jardín: {lista_precios.FRECUENCIAS}."),
@@ -108,6 +111,7 @@ ZONAS = {
         colonias=(("Águila", "89230"), ("Altavista", "89240"), ("Petrolera", "89110"), ("Campbell", "89260")),
         lede=("Pasto, poda de árboles, diseño y mantenimiento para las casas de Águila, Altavista, Petrolera y "
               "Campbell, en Tampico."),
+        servicios=("poda", "pasto", "mantenimiento", "diseno"),
         retos=(
             ("Árboles grandes y sombra", "Son colonias con árboles maduros. El pasto San Agustín aguanta media sombra, "
              "pero bajo copas cerradas conviene plantas de sombra o cubresuelos."),
@@ -135,6 +139,7 @@ ZONAS = {
         colonias=(("Lomas del Chairel", "89360"), ("Colinas de San Gerardo", "89367"), ("Flamboyanes", "89330")),
         lede=("Pasto en rollo, riego, diseño y mantenimiento para las casas cerca de la laguna del Chairel: Lomas del "
               "Chairel, Colinas de San Gerardo y Flamboyanes."),
+        servicios=("riego", "pasto", "diseno", "mantenimiento"),
         retos=(
             ("Humedad y lluvias", "Cerca de la laguna el suelo tarda más en secar. Un buen drenaje y tierra bien "
              "preparada evitan hongos y encharcamientos en el pasto."),
@@ -149,7 +154,7 @@ ZONAS = {
              "y mantenimiento."),
             ("¿Qué hago si mi jardín se encharca?",
              "Revisamos el nivel del terreno y el drenaje. A veces basta con nivelar y mejorar la tierra; en otros "
-             f"casos hace falta un dren. Lo revisamos en la visita para medir. {datos.VISITA_COSTO}"),
+             "casos hace falta un dren. Lo revisamos contigo en tu jardín."),
             ("¿Necesito tierra negra antes de poner pasto?",
              f"En casas nuevas con suelo de relleno, sí. La tierra negra vegetal cuesta "
              f"{dinero(P['tierra_negra_costal'])} el costal o {dinero(P['tierra_negra_m3'])} el m³."),
@@ -163,6 +168,8 @@ ZONAS = {
                   ("Ampliación Unidad Nacional", "89510")),
         lede=("Nuestro vivero está en Ciudad Madero. Instalamos pasto, diseñamos y damos mantenimiento en Playa "
               "Miramar, Jardín 20 de Noviembre y el resto de la ciudad."),
+        servicios=("pasto", "palmas", "diseno", "mantenimiento"),
+        kicker_sin_cp=True,
         retos=(
             ("Brisa y salitre cerca de la playa", "En Miramar el viento trae sal. Recomendamos plantas y palmas que la "
              "toleran, como coco plumoso, washingtonia y cubresuelos costeros."),
@@ -189,6 +196,7 @@ ZONAS = {
         h1="Jardinería en Altamira", accent="y Lagunas de Miralta",
         colonias=(("Residencial Lagunas de Miralta", "89605"), ("Altamira Centro", "89600")),
         lede="Pasto en rollo, diseño, riego y mantenimiento para Residencial Lagunas de Miralta y el resto de Altamira.",
+        servicios=("pasto", "riego", "mantenimiento", "diseno"),
         retos=(
             ("Jardines de fraccionamiento", "En fraccionamientos cerrados coordinamos horarios y acceso con la "
              "administración para instalar y dar mantenimiento."),
@@ -200,7 +208,7 @@ ZONAS = {
         faqs=(
             ("¿Dan servicio de jardinería en Lagunas de Miralta?",
              "Sí. Atendemos Residencial Lagunas de Miralta y el resto de Altamira con pasto, diseño, riego y "
-             f"mantenimiento. {datos.VISITA_COSTO}"),
+             "mantenimiento."),
             ("¿Cuánto cuesta el mantenimiento de jardín en Altamira?",
              f"Desde {MANTENIMIENTO} al mes. El precio depende de los metros y de la frecuencia de visitas."),
             ("¿Atienden empresas en el puerto industrial de Altamira?",
@@ -247,7 +255,7 @@ def contenido(slug):
         "migas": (("Inicio", "/"), (f"Jardinería en {z['nombre']}", None)),
         "portada": {
             "compacta": True,
-            "kicker": f"{z['municipio']}, Tamaulipas · CP {cps}",
+            "kicker": f"{z['municipio']}, Tamaulipas" + ("" if z.get("kicker_sin_cp") else f" · CP {cps}"),
             "h1": f'{z["h1"]} <span class="vt-serif">{z["accent"]}</span>',
             "lede": z["lede"],
             "etiqueta": {"codigo": f"Zona · {corto}", "aviso": "Con IVA", "nombre": "Pasto instalado",
@@ -261,17 +269,18 @@ def contenido(slug):
         "precios": {
             "titulo": 'Servicios y precios <span class="vt-serif">con IVA</span>',
             "lede": f"Lo que hacemos en {corto}, con el precio de la lista oficial.",
-            "filas": lista_precios.ZONA, "caption": f"Precios {datos.ANIO} con IVA.",
-            "nota": f'{datos.ANTICIPO} <a href="/precios">Ver la lista completa</a>.',
+            "filas": lista_precios.filas_zona(z["servicios"], f"/{slug}"), "caption": f"Precios {datos.ANIO} con IVA.",
+            "cotizar": (f"Cotizar en {corto}", mensaje),
+            "nota": datos.ANTICIPO,
         },
         "retos": {"titulo": 'Lo que pide un jardín <span class="vt-serif">en esta zona</span>',
                   "items": tuple({"titulo": t, "texto": x} for t, x in z["retos"])},
         "colonias": {"titulo": f'Colonias que atendemos <span class="vt-serif">en {corto}</span>',
-                     "lede": f"{datos.VISITA_COSTO} Si tu colonia está cerca y no aparece, también te atendemos.",
+                     "lede": "Si tu colonia está cerca y no aparece, también te atendemos.",
                      "items": z["colonias"], "municipio": z["municipio"]},
         "faq": {"titulo": f'Preguntas frecuentes <span class="vt-serif">en {corto}</span>', "preguntas": preguntas},
         "cobertura": {"titulo": "Otras zonas donde trabajamos",
-                      "lede": "Cada zona tiene su página con sus colonias; fuera de ellas atendemos por proyecto.",
+                      "lede": "También trabajamos en estas zonas.",
                       "zonas": _otras(slug), "por_proyecto": datos.ZONAS_POR_PROYECTO},
         "cierre": {"titulo": f'Cotiza tu jardín <span class="vt-serif">en {corto}</span>',
                    "lede": ("Mándanos tu colonia, el servicio que necesitas, los metros aproximados y una foto. "
@@ -289,17 +298,27 @@ def contenido(slug):
                                 "address": {"@type": "PostalAddress", "addressLocality": z["municipio"],
                                             "postalCode": cp, "addressRegion": "Tamaulipas", "addressCountry": "MX"}}
                                for c, cp in z["colonias"]],
-                "offers": {"@type": "AggregateOffer", "priceCurrency": "MXN", "lowPrice": str(P["pasto_instalado_m2"]),
-                           "unitText": "m²"},
+                "offers": mc.oferta(f"{url}#precios", "m²", desde=P["pasto_instalado_m2"],
+                                    nombre="Pasto San Agustín instalado"),
             },
         },
     }
 
 
+MOTIVO_AGGREGATE = ("AggregateOffer no admite unitText: el “desde” por m² pasa a Offer con UnitPriceSpecification y minPrice, "
+                    "con el mismo precio de datos.py.")
+
+
 def paridad(slug):
     """Madero: "A minutos del vivero" pasa a "El vivero está en Ciudad Madero" (sin distancias ni tiempos)."""
     reemplazos = {"A minutos del vivero": "El vivero está en Ciudad Madero"} if slug == "jardineria-ciudad-madero" else {}
-    return {"reemplazos": reemplazos, "retirados": {}}
+    motivo = "Renglón que la zona ya no publica (solo sus 4 servicios principales): sigue en /precios, enlazada desde la tabla."
+    servicios = ZONAS[slug]["servicios"]
+    fuera = [P["sintetico_instalado_m2"][0]]  # el sintético no es de los 4 de ninguna zona
+    fuera += [] if "palmas" in servicios else [P["palma_desde"]]
+    fuera += [] if "riego" in servicios else list(P["riego_m2"])
+    return {"reemplazos": reemplazos, "retirados": {dinero(n): motivo for n in fuera},
+            "jsonld": {"AggregateOffer": MOTIVO_AGGREGATE}}
 
 
 def pagina(slug):

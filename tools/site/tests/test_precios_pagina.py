@@ -7,11 +7,13 @@ import re
 import sys
 import unittest
 from pathlib import Path
+from urllib.parse import unquote
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import datos  # noqa: E402
 import generar  # noqa: E402
+import mensajes_paginas  # noqa: E402
 import paginas  # noqa: E402
 import paridad  # noqa: E402
 from componentes import dinero  # noqa: E402
@@ -80,7 +82,7 @@ class PreciosTest(unittest.TestCase):
                          + re.escape(dinero(P["marmol_saco"])))
         self.assertIn('<td class="vt-tabla__u">a granel</td><td class="vt-tabla__p vt-tabla__p--cotiza">'
                       f'{datos.SEGUN_COTIZACION}</td>', seccion)
-        self.assertRegex(seccion, r'Tezontle rojo.{0,200}costal</td><td class="vt-tabla__p"><small>desde</small>'
+        self.assertRegex(seccion, r'Tezontle rojo.{0,200}costal</td><td class="vt-tabla__p"><small class="vt-tabla__desde">desde</small>'
                          + re.escape(dinero(P["tezontle_costal"])))
         self.assertIn(datos.CONDICIONES_MATERIALES, paridad.texto(seccion))
         for retirado in ("Chica, mediana y grande", "Saco de unos 20 kg", "20 kg", "por medida", "camión desde"):
@@ -138,6 +140,33 @@ class PreciosTest(unittest.TestCase):
         self.assertIn("Propuesta visual remota con tus fotos y lista de plantas. Entrega en 3 a 5 días hábiles.", seccion)
         self.assertNotIn("Visita, propuesta", seccion)
         self.assertIn(f"Se descuenta en proyectos de más de {dinero(P['diseno_premium_descuento_desde'])}.", seccion)
+
+    def test_indice_con_las_anclas_de_cada_seccion(self):
+        nav = re.search(r'<nav class="vt-saltos".*?</nav>', HTML, re.S).group(0)
+        self.assertEqual(re.findall(r'href="#([^"]+)"', nav),
+                         ["pasto", "servicios", "sintetico", "materiales", "plantas", "mensualidades", "garantias"])
+        self.assertLess(HTML.index('id="vt-h1"'), HTML.index('class="vt-saltos"'))
+        self.assertLess(HTML.index('class="vt-saltos"'), HTML.index('id="pasto"'))
+
+    def test_cada_seccion_cotiza_con_su_mensaje_y_se_mide(self):
+        for seccion, siguiente in (("pasto", "servicios"), ("servicios", "sintetico"), ("sintetico", "materiales"),
+                                   ("materiales", "plantas"), ("plantas", "mensualidades")):
+            bloque = HTML.split(f'id="{seccion}"', 1)[1].split(f'id="{siguiente}"', 1)[0]
+            mensajes = re.findall(rf'data-cta="precios:{seccion}"[^>]*href="https://wa\.me/\d+\?text=([^"]+)"', bloque)
+            with self.subTest(seccion=seccion):
+                self.assertEqual([unquote(m) for m in mensajes], [datos.con_firma(mensajes_paginas.PRECIOS_SECCIONES[seccion])])
+        self.assertEqual(len(set(mensajes_paginas.PRECIOS_SECCIONES.values())), len(mensajes_paginas.PRECIOS_SECCIONES))
+
+    def test_poda_pide_fotos_con_su_mensaje(self):
+        m = re.search(r'data-cta="precios:poda"[^>]*href="https://wa\.me/\d+\?text=([^"]+)"[^>]*>Mándanos fotos', HTML)
+        self.assertEqual(unquote(m.group(1)), datos.con_firma(mensajes_paginas.PRECIOS_SECCIONES["poda"]))
+
+    def test_menu_y_barra_con_el_mensaje_de_la_portada(self):
+        esperado = datos.con_firma(mensajes_paginas.PRECIOS)
+        for lugar in ("hero", "header", "barra"):
+            with self.subTest(lugar=lugar):
+                m = re.search(rf'data-cta="precios:{lugar}"[^>]*href="https://wa\.me/\d+\?text=([^"]+)"', HTML)
+                self.assertEqual(unquote(m.group(1)), esperado)
 
     def test_portada_enlaza_a_mensualidades_y_tabla_dice_compra_minima(self):
         self.assertIn('<a href="#mensualidades">Hasta 12 mensualidades con tarjeta · ver plazos</a>', HTML)

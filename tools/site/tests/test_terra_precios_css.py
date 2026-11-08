@@ -35,7 +35,20 @@ class TerraPreciosCssTest(unittest.TestCase):
 
     def test_tablas_compactas_y_anclas_bajo_el_menu(self):
         self.assertIn(".vt-precios .vt-tabla--compacta td{text-align:right;", self.css)
-        self.assertIn(".vt-precios :is(section,li)[id]{scroll-margin-top:72px}", self.css)
+        self.assertIn(".vt-precios :is(section,li)[id]{scroll-margin-top:calc(var(--vt-head-h) + 16px)}", self.css)
+
+    def test_indice_se_desliza_en_celular_y_el_simulador_ocupa_el_ancho(self):
+        self.assertRegex(self.css, r"\.vt-saltos ul\{display:flex;[^}]*overflow-x:auto")
+        self.assertIn("@media (max-width:640px){.vt-precios .vt-sim .vt-btn{width:100%}}", self.css)
+
+    def test_reglas_compartidas_con_las_zonas_en_terra_css(self):
+        """La lista de precios y las anclas también viven en las zonas, que no cargan esta hoja."""
+        terra = (HOJA.parent / "terra.css").read_text(encoding="utf-8")
+        for regla in (".vt-tabla--lista{max-width:56rem}", ".vt-tabla__p .vt-tabla__desde{display:inline",
+                      ".vt-bloque[id]{scroll-margin-top:calc(var(--vt-head-h) + 16px)}",
+                      ".vt-colonias li{grid-template-columns:1fr auto"):
+            with self.subTest(regla=regla):
+                self.assertIn(regla, terra)
 
     def test_presupuesto(self):
         datos = activos.minificar_css(self.css).encode("utf-8")

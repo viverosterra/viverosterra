@@ -83,7 +83,7 @@ class ContextoTest(unittest.TestCase):
         firma = "\n\n" + datos.FIRMA
         self.assertEqual(paginas.contexto("/catalogo")["mensaje"], "Hola, vi el catálogo y quiero cotizar una planta" + firma)
         precios = paginas.contexto("/precios")
-        self.assertEqual(precios["mensaje"], "Hola, vi la lista de precios y quiero cotizar" + firma)
+        self.assertEqual(precios["mensaje"], "Hola, vi la lista de precios y quiero cotizar.\nColonia: ___\nMetros aprox.: ___" + firma)
         self.assertEqual(precios["mensaje_pie"], "Hola, tengo una pregunta sobre precios" + firma)
         for ruta in ("/pasto-sintetico", "/pasto-sintetico/toscana-28", "/pasto-sintetico/envio/cdmx"):
             with self.subTest(ruta=ruta):

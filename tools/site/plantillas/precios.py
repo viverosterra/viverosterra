@@ -1,5 +1,5 @@
 """Plantilla de la lista de precios (spec §3.3): ruta visible → H1 con la respuesta directa, la vigencia y el precio
-ancla en la etiqueta, y CTA → una tabla por línea (pasto natural, servicios, pasto sintético por modelo, materiales y
+ancla en la etiqueta, y CTA → índice de secciones (fichas) → una tabla por línea (pasto natural, servicios, pasto sintético por modelo, materiales y
 plantas), cada una con columna Unidad y generada de datos.py → mensualidades (plazos, mínimos, total frente a contado,
 aviso del banco, anticipo y el simulador de vt-simulador.js) → garantías con anclas estables (#garantia-pasto,
 #garantia-plantas) → preguntas → CTA final. Las secciones conservan sus id de main (#pasto, #servicios, #sintetico,
@@ -14,9 +14,10 @@ CLASE_BODY = "vt-pagina vt-precios"
 SCRIPTS = ("/js/vt-mensualidades.js", "/js/vt-simulador.js")
 
 
-def _seccion(s, numero):
+def _seccion(s, numero, tipo):
     cuerpo = cz.tabla_sintetico() if s.get("modelos") else cz.lista(s["filas"], s["caption"], s["concepto"])
-    cuerpo += f'<p class="vt-promesa">{s["nota"]}</p>'
+    texto, mensaje = s["cotizar"]
+    cuerpo += cz.cotizar(texto, mensaje, f"{tipo}:{s['id']}") + f'<p class="vt-promesa">{s["nota"]}</p>'
     return c.bloque(numero, s["rotulo"], f"vt-h-{s['id']}", s["titulo"], cuerpo, lede=s.get("lede"),
                     tinte=numero % 2 == 0, id_seccion=s["id"])
 
@@ -30,10 +31,10 @@ def _pago(p, numero, tipo):
 
 def render(k):
     tipo = k["tipo"]
-    secciones = [c.portada(k["portada"], tipo, k["migas"])]
+    secciones = [c.portada(k["portada"], tipo, k["migas"]), cz.saltos(k["saltos"])]
     numero = 0
     for numero, s in enumerate(k["secciones"], 1):
-        secciones.append(_seccion(s, numero))
+        secciones.append(_seccion(s, numero, tipo))
     g, f, ci = k["garantias"], k["faq"], k["cierre"]
     secciones += [
         _pago(k["pago"], numero + 1, tipo),

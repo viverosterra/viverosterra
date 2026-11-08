@@ -26,7 +26,7 @@ def _celda(f):
     valor = f["precio"]
     if valor is None:
         return f'<td class="vt-tabla__p vt-tabla__p--cotiza">{SEGUN}</td>'
-    desde = "<small>desde</small>" if f.get("desde") else ""
+    desde = '<small class="vt-tabla__desde">desde</small>' if f.get("desde") else ""
     cotiza = f"<small>{SEGUN.lower()}</small>" if f.get("cotiza") else ""
     return f'<td class="vt-tabla__p">{desde}{precio_texto(valor)}{cotiza}</td>'
 
@@ -39,15 +39,15 @@ def lista(filas, caption, concepto="Servicio"):
         nombre = f'<a href="{esc(f["href"])}">{f["nombre"]}</a>' if f.get("href") else f["nombre"]
         cuerpo.append(f'<tr><th scope="row"><b>{nombre}</b><span>{f["detalle"]}</span></th>'
                       f'<td class="vt-tabla__u">{f["unidad"]}</td>{_celda(f)}</tr>')
-    return (f'<table class="vt-tabla vt-tabla--precios"><caption>{caption}</caption><thead><tr>'
+    return (f'<table class="vt-tabla vt-tabla--precios vt-tabla--lista"><caption>{caption}</caption><thead><tr>'
             f'<th scope="col">{concepto}</th><th scope="col">Unidad</th><th scope="col" class="vt-tabla__p">Precio</th>'
             f'</tr></thead><tbody>{"".join(cuerpo)}</tbody></table>')
 
 
-def colonias(items, municipio, caption):
-    """Colonias que se atienden con su código postal (verificados con SEPOMEX, tools/site/contenido/zona.py)."""
-    filas = tuple((f"{nombre}<br><small>{municipio}</small>", cp) for nombre, cp in items)
-    return c.tabla_comparativa(("Colonia", "Código postal"), filas, caption)
+def colonias(items, caption):
+    """Lista compacta de colonias y su código postal (verificados con SEPOMEX, tools/site/contenido/zona.py)."""
+    filas = "".join(f"<li><b>{nombre}</b><span>CP {cp}</span></li>" for nombre, cp in items)
+    return f'<ul class="vt-sectores vt-colonias">{filas}</ul><p class="vt-promesa">{caption}</p>'
 
 
 def tabla_sintetico(modelos=None):
@@ -75,6 +75,23 @@ def tabla_mensualidades():
             'contado por plazo y cuánto más es el total a plazos.</caption><thead><tr><th scope="col">Plazo</th>'
             '<th scope="col">Compra mínima</th><th scope="col">Total frente a contado</th></tr></thead>'
             f'<tbody>{filas}</tbody></table>')
+
+
+def enlace_wa(texto, mensaje, cta):
+    """Enlace de texto a WhatsApp con su propio mensaje: terra.js lo mide por data-cta (generate_lead) como los botones."""
+    href = esc(datos.wa_url(datos.con_firma(mensaje)))
+    return f'<a data-cta="{esc(cta)}" href="{href}" target="_blank" rel="noopener">{texto}</a>'
+
+
+def cotizar(texto, mensaje, cta, despues=""):
+    """Renglón "Cotizar…" al final de una lista de precios; despues: HTML que sigue en el mismo renglón."""
+    return f'<p class="vt-cotizar">{enlace_wa(texto, mensaje, cta)}{despues}</p>'
+
+
+def saltos(items):
+    """Índice de la página (texto, ancla) en una fila de fichas que se desliza en celular."""
+    filas = "".join(f'<li><a href="#{esc(ancla)}">{texto}</a></li>' for texto, ancla in items)
+    return f'<nav class="vt-saltos" aria-label="Secciones de la lista de precios"><div class="vt-wrap"><ul>{filas}</ul></div></nav>'
 
 
 def garantias(items):
