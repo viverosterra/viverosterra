@@ -166,6 +166,7 @@
       console.warn('[tienda] No se pudo guardar la cotización en este navegador; se conserva mientras la página esté abierta.');
     }
     renderCount();
+    document.dispatchEvent(new CustomEvent('vt:lista'));
   }
 
   function upsertItem(state, item) {
@@ -367,6 +368,19 @@
     track('add_to_cart', { item_id: model.slug, quantity: qty });
   }
 
+  /* Botones "+ Agregar" de la comparativa de la ficha: cada uno trae su modelo en data-agregar (JSON). */
+  function initAgregar() {
+    $$('[data-agregar]').forEach((btn) => btn.addEventListener('click', () => {
+      try {
+        const model = JSON.parse(btn.dataset.agregar);
+        if (isValidModel(model)) addItem(model, ROLLO_M2);
+        else console.error('[tienda] Botón de agregar sin precios completos:', btn.dataset.agregar);
+      } catch (err) {
+        console.error('[tienda] Botón de agregar con datos inválidos:', err.message);
+      }
+    }));
+  }
+
   /* ---------- Quote module (ficha y hub) ---------- */
   function initQuote(models) {
     const inp = $('#m2');
@@ -455,9 +469,11 @@
         ? `Con ${faltan} m² más llegas a rollo completo y pagas ${money(model.rollo)}/m² en lugar de ${money(model.t2)}/m². El envío cuesta lo mismo.`
         : '';
 
+      const otros = memoryState.items.filter((it) => it.slug !== model.slug);
       const msg = [
         `Hola, quiero cotizar el pasto sintético ${model.nombre}.`,
         Number.isFinite(m2) ? `Necesito ${m2} m².` : '',
+        otros.length ? `También en mi lista: ${otros.map((it) => `${it.nombre} (${it.m2} m²)`).join(', ')}.` : '',
         estado ? estadoLabel(estado) + '.' : '¿Me ayudan a calcular el envío a mi ciudad?',
         !error && estado ? `Total estimado en la web: ${money(estado === PICKUP ? q.material : q.total)}.` : '',
         contado ? planLine(contado) : '',
@@ -468,6 +484,8 @@
 
     update();
     initPlanInputs(update);
+    // Lo que se agrega a la lista (tarjetas, vecinos, selector) viaja también en el mensaje del cotizador.
+    document.addEventListener('vt:lista', update);
     return {
       selectModel(slug) {
         if (!modelSel || !models.some((m) => m.slug === slug)) return;
@@ -557,6 +575,7 @@
     initToast();
     initGallery();
     initBuybar();
+    initAgregar();
     const models = readModels();
     const quote = initQuote(models);
     window.VTTienda = Object.freeze({
