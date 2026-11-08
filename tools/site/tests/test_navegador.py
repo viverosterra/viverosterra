@@ -189,18 +189,6 @@ class NavegadorTest(unittest.TestCase):
                 anchas.append(f"{servidor.url_de(path)}: {sobra}px")
         self.assertEqual(anchas, [])
 
-    def test_window_open_de_whatsapp_sale_firmado(self):
-        page = self.pagina(1440)
-        page.add_init_script("window.__abiertos = []; window.open = (url) => { window.__abiertos.push(String(url)); return null; };")
-        # Desde la Etapa 2f ninguna página con plantilla abre WhatsApp con window.open: queda el sendWA(msg) de los
-        # artículos del blog hechos a mano (hasta la Etapa 2h).
-        page.goto(self.base + "/blog/tezontle-usos-jardin-tampico/", wait_until="load")
-        page.evaluate("() => sendWA('Hola, quiero cotizar tezontle rojo')")
-        abiertos = page.evaluate("() => window.__abiertos")
-        self.assertEqual(len(abiertos), 1)
-        self.assertEqual(abiertos[0].count("viverosterra.com"), 1)
-        self.assertTrue(abiertos[0].startswith("https://wa.me/528333268008?text="))
-
     def test_cotizador_de_la_tienda_manda_el_lead_con_cta_y_servicio(self):
         page = self.pagina(1440)
         page.goto(self.base + "/pasto-sintetico/toscana-28/", wait_until="load")

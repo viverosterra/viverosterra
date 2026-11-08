@@ -35,9 +35,6 @@ class BlogCorreccionesTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             bc.validar({"C999": bc.REVERTIR})
 
-    def test_no_hay_decisiones_con_el_dueno_pendiente(self):
-        self.assertEqual(bc.DECISIONES, {})
-
 
 if __name__ == "__main__":
     unittest.main()

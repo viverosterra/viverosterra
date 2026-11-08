@@ -8,8 +8,8 @@ repiten en enlaces y relacionados) y no exige coincidencia.
 
 Cada fila es (clave, antes, después, motivo). La clave ("C042", o "T03" en TODOS) es literal y no se renumera: es el nombre con
 el que el dueño revisa la fila. Cuando conteste, su respuesta es una línea en DECISIONES y una nueva extracción
-(`python3 tools/site/extraer_blog.py escribir`, luego el build). Si la respuesta restituye un precio, va también en datos.PRECIOS:
-test_blog_reglas lo exige.
+(`python3 tools/site/extraer_blog.py escribir`, luego el build). Si la respuesta restituye un precio, va también en datos.PRECIOS
+y la especie sale de ESPECIE_SIN_PRECIO_RE: test_blog_reglas lo exige.
 """
 import datos
 from componentes import dinero
