@@ -59,7 +59,6 @@ PRECIOS = {
     "diseno_completo": 6500,
     "diseno_premium": 18000,
     "diseno_premium_descuento_desde": 150000,
-    "mantenimiento_premium_mes": 1800,
     "riego_m2": (180, 320),
     "sintetico_instalado_m2": (385, 650),
     "sintetico_tienda_m2": 139,
@@ -86,6 +85,12 @@ VISITA_COSTO_CORTO = "Visita para medir y cotizar: su costo depende de la ubicac
 # plan y lo que necesita el jardín (decisión del dueño).
 RIEGO_AHORRO = "hasta 40%"
 FRECUENCIAS_MANTENIMIENTO = ("semanal", "cada 15 días", "cada 21 días", "mensual")
+# El plan de mantenimiento residencial premium se cotiza: no tiene precio "desde" (decisión del dueño, 2026-11-07).
+MANTENIMIENTO_PREMIUM = "según cotización"
+# Cifras confirmadas por el dueño (2026-11-07). No se publican el registro SENASICA ni "se amortiza en 18–24 meses"
+# (test_reglas.py).
+SISTEMAS_RIEGO = "+200"
+PROYECTOS_B2B = "+200"
 LLEGADA_PASTO = "una vez por semana, generalmente los viernes"
 ANTICIPO = ("No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos "
             "un anticipo.")
@@ -133,9 +138,8 @@ OPINIONES_PASTO_EN_ROLLO = (
      "facturaron sin problema y respetaron el calendario de entrega por etapas. Ya son nuestro proveedor recurrente.",
      "Arq. Patricia L.", "Constructora · Altamira · Proyecto 2,400 m²"),
 )
-# Opiniones con nombre que publicaban en main las páginas de diseño, mantenimiento y riego antes de la Etapa 2c, textuales.
-# PENDIENTE DEL DUEÑO: confirmar que son reales y que hay permiso (plan 2c, "Lo que aporta el dueño"). Si alguna no lo
-# es, se borra de aquí y su encabezado pasa a PARIDAD["retirados"] con el motivo; nunca se edita ni se inventa otra.
+# Opiniones reales con nombre que publicaban en main las páginas de diseño, mantenimiento y riego antes de la Etapa 2c,
+# textuales; el dueño confirmó que son reales y que hay permiso (2026-11-07). Nunca se editan ni se inventan otras.
 OPINIONES_DISENO = (
     ("Contratamos el Plan Completo para remodelar el jardín de la casa. Hicieron la visita, nos preguntaron qué nos "
      "gustaba y qué no, y la propuesta visual que nos mandaron fue exactamente lo que teníamos en mente. El manual de "

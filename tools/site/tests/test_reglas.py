@@ -45,6 +45,21 @@ VISITA_GRATIS_RE = re.compile(
 # Páginas que todavía lo dicen. Debe quedar vacía: ninguna página pública promete la visita, la medición ni el
 # diagnóstico gratis. Esta lista solo puede encoger; no se agregan páginas nuevas.
 VISITA_PENDIENTES = frozenset()
+# Decisión del dueño (2026-11-07): no se publica el registro o certificación SENASICA ni que el riego "se amortiza" o
+# "se paga solo en 18–24 meses". Las páginas que todavía lo dicen salen de su plantilla o se corrigen en su etapa
+# (diseño, mantenimiento y riego en la 2c; mayoreo, vivero y materiales en la 2d–2g; los blogs de riego en la Etapa 3;
+# el certificado fitosanitario SADER/SENASICA de palmas lo confirma el dueño). Solo puede encoger.
+SENASICA_RE = re.compile(r"\bSENASICA\b", re.I)
+AMORTIZA_RE = re.compile(r"\bse\s+(?:amortiza|paga\s+sol[oa])\s+en\s+(?:\d+\s*(?:–|-|a)\s*)?\d+\s+meses\b", re.I)
+SENASICA_PENDIENTES = frozenset({
+    "diseno-jardines-tampico/index.html", "mantenimiento-jardines-tampico/index.html",
+    "sistema-riego-tampico/index.html", "mayoreo-pasto-tampico/index.html", "vivero-tampico/index.html",
+    "marmol-blanco-tampico/index.html", "tezontle-rojo-tampico/index.html", "palmas-mayoreo-proyectos/index.html",
+})
+AMORTIZA_PENDIENTES = frozenset({
+    "sistema-riego-tampico/index.html", "blog/sistema-riego-automatico-conviene-tampico/index.html",
+    "blog/sistema-riego-automatizado-tampico/index.html",
+})
 
 
 def sin_valores_css(css):
@@ -213,6 +228,24 @@ class ReglasDelDuenoTest(unittest.TestCase):
                 con.setdefault(path.relative_to(PUBLIC).as_posix(), f"…{texto[max(0, m.start() - 40):m.end() + 20]}…")
         self.assertEqual({k: v for k, v in con.items() if k not in VISITA_PENDIENTES}, {})
         self.assertEqual(sorted(VISITA_PENDIENTES - set(con)), [], "ya no lo dicen: sácalas de VISITA_PENDIENTES")
+
+    def test_sin_senasica_ni_amortizacion_del_riego(self):
+        for regla, patron, pendientes in (("SENASICA", SENASICA_RE, SENASICA_PENDIENTES),
+                                          ("amortización", AMORTIZA_RE, AMORTIZA_PENDIENTES)):
+            con = {}
+            for path, texto in publicados():
+                for m in patron.finditer(texto):
+                    con.setdefault(path.relative_to(PUBLIC).as_posix(), f"…{texto[max(0, m.start() - 40):m.end() + 20]}…")
+            with self.subTest(regla=regla):
+                self.assertEqual({k: v for k, v in con.items() if k not in pendientes}, {})
+                self.assertEqual(sorted(pendientes - set(con)), [], "ya no lo dicen: sácalas de la lista")
+
+    def test_senasica_y_amortizacion_se_detectan(self):
+        for sucio in ("Certificación SENASICA", "registro Senasica", "se amortiza en 18–24 meses",
+                      "Se paga solo en 18-24 meses", "se paga sola en 24 meses", "se amortiza en 18 a 24 meses"):
+            self.assertTrue(SENASICA_RE.search(sucio) or AMORTIZA_RE.search(sucio), sucio)
+        for limpio in ("Ahorra hasta 40% de agua", "se paga en mensualidades con tarjeta de crédito"):
+            self.assertFalse(SENASICA_RE.search(limpio) or AMORTIZA_RE.search(limpio), limpio)
 
     def test_visita_gratis_se_detecta(self):
         for sucio in ("Agendamos una visita sin costo", "Visita técnica gratuita", "vamos a medir sin costo",

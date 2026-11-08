@@ -90,7 +90,11 @@ class DatosTest(unittest.TestCase):
         p = datos.PRECIOS
         self.assertEqual((p["diseno"], p["diseno_completo"], p["diseno_premium"]), (3000, 6500, 18000))
         self.assertEqual(p["diseno_premium_descuento_desde"], 150000)
-        self.assertEqual((p["mantenimiento_mes"], p["mantenimiento_premium_mes"]), (750, 1800))
+        self.assertEqual(p["mantenimiento_mes"], 750)
+        # Respuestas del dueño (2026-11-07): el premium se cotiza; +200 sistemas de riego y +200 proyectos B2B.
+        self.assertNotIn("mantenimiento_premium_mes", p)
+        self.assertEqual(datos.MANTENIMIENTO_PREMIUM, "según cotización")
+        self.assertEqual((datos.SISTEMAS_RIEGO, datos.PROYECTOS_B2B), ("+200", "+200"))
         self.assertEqual(datos.RIEGO_AHORRO, "hasta 40%")
         self.assertEqual(datos.FRECUENCIAS_MANTENIMIENTO, ("semanal", "cada 15 días", "cada 21 días", "mensual"))
         nombres = [n for grupo in (datos.OPINIONES_DISENO, datos.OPINIONES_MANTENIMIENTO, datos.OPINIONES_RIEGO)
