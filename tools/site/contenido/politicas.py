@@ -29,7 +29,7 @@ SECCIONES = (
         ("p", "<strong>Cobertura:</strong> enviamos pasto sintético a <strong>todo México</strong> por paquetería."),
         ("ul", (
             "<strong>Tiempo de entrega:</strong> sale de Cd. Madero en 1 a 2 días hábiles y llega de 3 a 5 días hábiles "
-            "después de confirmar tu pedido, según el destino.",
+            "después de confirmar tu pago, según el destino.",
             f"<strong>Costo de envío:</strong> se cobra por cada rollo enviado, según el destino. Como referencia, va de "
             f"aproximadamente {FLETE_MIN} a {FLETE_MAX} por rollo. El costo exacto se confirma con tu código postal antes "
             "de pagar.",
@@ -113,7 +113,9 @@ SECCIONES = (
             f"{datos.FACTURACION} Emitimos <strong>factura {datos.FACTURA}</strong> para personas físicas y morales.",
             "Formas de pago: transferencia bancaria, efectivo y link de pago (tarjeta de débito o crédito). La tarjeta en "
             "una sola exhibición paga el precio de contado.",
-            f"{datos.ANTICIPO} La fecha de embarque te la confirmamos por WhatsApp.",
+            "<strong>Pasto sintético con envío nacional:</strong> se paga por adelantado, por transferencia, link de pago "
+            "con tarjeta o mensualidades. Cuando recibimos tu pago te confirmamos la fecha de embarque por WhatsApp.",
+            f"<strong>Demás pedidos y servicios:</strong> {datos.ANTICIPO}",
             "Todos los precios de material incluyen IVA.",
         )),
     )},

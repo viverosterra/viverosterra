@@ -30,7 +30,7 @@ GENERALES = (
 ESPECIFICAS = {
     "/politicas": (
         ("devolución en la meta", lambda h: "devoluciones (7 días)" in h and "(30 días)" not in h),
-        ("anticipo", lambda h: datos.ANTICIPO in h and "al confirmarse el pago" not in h),
+        ("anticipo", lambda h: datos.ANTICIPO in h and "al confirmarse el pago" not in h and "se paga por adelantado" in h),
         ("total y mensualidad antes del link", lambda h: "el total y el monto de cada mensualidad" in h),
         ("efectivo y precio de contado con tarjeta", lambda h: "transferencia bancaria, efectivo" in h
          and "una sola exhibición paga el precio de contado" in h),
