@@ -38,6 +38,15 @@ META = {
         ("og:description", DESCRIPCION_OG),
         ("og:image", f"{SITE}/img/camion-tierra-negra-entrega-tampico.webp"),
         ("og:locale", "es_MX"),
+        ("og:site_name", datos.NOMBRE),
+    ),
+    # Twitter Card como estaba publicada en main.
+    "twitter": (
+        ("twitter:card", "summary_large_image"),
+        ("twitter:title", "Tierra Negra Vegetal Tampico · Viveros Terra"),
+        ("twitter:description", "Tierra negra vegetal para jardín y pasto. Costal o camión volteo. Entrega Tampico, "
+                                "Madero, Altamira."),
+        ("twitter:image", f"{SITE}/img/camion-tierra-negra-entrega-tampico.webp"),
     ),
 }
 
@@ -168,11 +177,11 @@ CONTENIDO = {
         "lede": f"Precios {datos.ANIO}. Lo que no tiene precio publicado se cotiza por escrito antes de que confirmes.",
         "caption": "Tierra negra vegetal por presentación",
         "filas": (
-            {"nombre": "Costal de tierra negra", "detalle": "Recoger o a domicilio, sin mínimo",
+            {"nombre": "Costal de tierra negra", "detalle": "Recoger o a domicilio",
              "unidad": "costal", "precio": P["tierra_negra_costal"]},
             {"nombre": "Tierra negra preparada", "detalle": "Costal con hojarasca y abono, para macetas",
              "unidad": "costal", "precio": None},
-            {"nombre": "A granel por m³", "detalle": "Desde 1 m³, entregada en tu domicilio", "unidad": "m³",
+            {"nombre": "A granel por m³", "detalle": "Entregada en tu domicilio", "unidad": "m³",
              "precio": P["tierra_negra_m3"]},
             {"nombre": "Camión volteo", "detalle": "8 m³ o más, por etapas y con factura", "unidad": "camión",
              "precio": None},
@@ -200,8 +209,9 @@ CONTENIDO = {
             ("Tierra negra vegetal orgánica para jardines, pasto en rollo y plantas en Tampico. Venta por costal, por m³ y "
              "en camión volteo con entrega a domicilio en Ciudad Madero y Altamira."),
             f"{SITE}/img/camion-tierra-negra-entrega-tampico.jpg",
-            ofertas={"@type": "AggregateOffer", "lowPrice": str(P["tierra_negra_costal"]),
-                     "highPrice": str(P["tierra_negra_m3"])}),
+            ofertas=(mc.oferta(f"{URL}#precio", "costal", precio=P["tierra_negra_costal"]),
+                     mc.oferta(f"{URL}#precio", "m³", precio=P["tierra_negra_m3"]))),
+        "negocio": mc.NEGOCIO,
         "migas": MIGAS_LD,
         "speakable": mc.SPEAKABLE,
     },
@@ -231,7 +241,9 @@ PARIDAD = {
         "$5,200": mc.MOTIVO_PRECIO,
         "$8,000": mc.MOTIVO_PRECIO,
     },
-    "jsonld": {"LocalBusiness": mc.MOTIVO_LOCALBUSINESS},
+    "jsonld": {"LocalBusiness": mc.MOTIVO_LOCALBUSINESS,
+               "AggregateOffer": ("Pasa a dos Offer con su UnitPriceSpecification (costal $90 y m³ $1,500, de "
+                                  "datos.py): cada precio con su unidad, en vez de un rango sin unidad.")},
     # Cifras que main publicaba y no salen (paridad.py no las captura: se declaran aquí).
     "cifras": {"Costal ≈ 20 kg / Costales de 30–40 kg": mc.MOTIVO_PESO_COSTAL},
 }

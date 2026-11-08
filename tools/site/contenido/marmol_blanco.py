@@ -2,7 +2,7 @@
 tools/site/plantillas/material.py, con la calculadora de main (calcularMarmol) como función pura, sin su precio.
 
 El saco a $250 (y el $750–$1,250 por m²) no está en datos.py: el precio va "según cotización" en la etiqueta, la tabla,
-la calculadora, el JSON-LD (sin Offer) y el título (pregunta 1 al dueño). La comparativa pierde el tezontle a $120 (en
+la calculadora, el JSON-LD (sin Product: sin precio no hay oferta) y el título (pregunta 1 al dueño). La comparativa pierde el tezontle a $120 (en
 datos.py es desde $200) y los precios por m²; la FAQ ya no dice que el tezontle es "más barato" (el precio del
 mármol no está en datos.py). Sin “Calidad importada”, “premium”, “hasta 8°C”, “cantidad sin límite”,
 “el mejor” ni “gratis”. Las 8 fotos de main, en su orden (el alt del saco ya no dice $250). Título, descripción y Open
@@ -11,7 +11,7 @@ Graph sin el $250 ni el “gratis” (PARIDAD["meta"]); HowTo de los 4 pasos com
 import datos
 import mensajes_paginas
 from componentes import dinero
-from componentes_materiales import ejemplo
+from componentes_materiales import calculo, ejemplo
 from contenido import materiales_comun as mc
 
 P = datos.PRECIOS
@@ -38,8 +38,21 @@ META = {
         ("og:description", DESCRIPCION_OG),
         ("og:image", f"{SITE}/img/marmol-blanco-alberca-palmera-tampico.webp"),
         ("og:locale", "es_MX"),
+        ("og:site_name", datos.NOMBRE),
+    ),
+    # Twitter Card de main sin el $250 por saco (no está en datos.py) ni el “Cotiza gratis” (regla del dueño).
+    "twitter": (
+        ("twitter:card", "summary_large_image"),
+        ("twitter:title", "Mármol Blanco para Jardín Tampico · Viveros Terra"),
+        ("twitter:description", "Mármol blanco decorativo en Tampico. 3 sacos = 1 m². Entrega a domicilio. Cotiza por "
+                                "WhatsApp."),
+        ("twitter:image", f"{SITE}/img/marmol-blanco-alberca-palmera-tampico.webp"),
     ),
 }
+# Guía rápida: los sacos por m² que da la calculadora (3 hasta 4 cm, 4 con 5 cm y 5 con 6 cm), no una regla aparte.
+GUIA = tuple((uso, f"{capa} cm", f"{calculo('marmol', 1, capa)['por_m2']} sacos")
+             for uso, capa in (("Macetas o decorativo", 3), ("Arriates (estándar)", 4), ("Alberca o terraza", 5),
+                               ("Sendero transitado", 6)))
 PORTADA_FOTO = {
     "src": "/img/portadas/marmol-blanco-alberca-palmera-tampico-sm.webp",
     "srcset": ("/img/portadas/marmol-blanco-alberca-palmera-tampico-sm.webp 560w, "
@@ -62,7 +75,7 @@ USOS = (
     {"titulo": "Senderos y caminos", "texto": "Caminos firmes y permeables dentro del jardín, con un brillo natural que se "
      "luce de noche con iluminación.", "puntos": ("4 a 5 sacos por m² (capa de 5 a 6 cm)",)},
     {"titulo": "Arriates de plantas", "texto": "Cubierta blanca alrededor de arbustos, helechos y plantas ornamentales: "
-     "contrasta con el verde.", "puntos": ("3 sacos por m² (capa estándar)",)},
+     "contrasta con el verde.", "puntos": ("3 sacos por m² (capa de 3 a 4 cm)",)},
     {"titulo": "Borde y zona de alberca", "texto": "Alrededor de la alberca refleja la luz del agua y se siente fresco.",
      "puntos": ("3 a 4 sacos por m² (capa de 4 a 5 cm)",)},
     {"titulo": "Terrazas y azoteas", "texto": "Jardín seco de bajo mantenimiento para azoteas y terrazas, sobre membrana.",
@@ -135,12 +148,12 @@ CONTENIDO = {
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
         "h1": "Mármol blanco <em>para jardines y andadores</em>",
-        "lede": ("Grava de mármol blanco triturado de 1 a 3 cm para arriates, andadores y bordes de alberca: 3 sacos de "
+        "lede": (f"Grava de mármol blanco triturado de {mc.MARMOL_MEDIDA} para arriates, andadores y bordes de alberca: 3 sacos de "
                  "unos 20 kg cubren 1 m². El precio por saco o por volumen se cotiza con la entrega a tu colonia en "
                  "Tampico, Madero y Altamira."),
-        "etiqueta": {"codigo": "Mármol blanco", "aviso": "1 a 3 cm", "nombre": "Saco ≈ 20 kg", "antes": "cubren 1 m²",
-                     "monto": "3 sacos", "unidad": "capa de 3 a 4 cm",
-                     "filas": (("Precio por saco", SEGUN), ("20 sacos o más", "por volumen")),
+        "etiqueta": {"codigo": "Mármol blanco", "aviso": mc.MARMOL_MEDIDA, "nombre": mc.SACO_MARMOL,
+                     "antes": "cubren 1 m²", "monto": "3 sacos", "unidad": "capa de 3 a 4 cm",
+                     "filas": (("Precio por saco", SEGUN), ("Precio por volumen", SEGUN)),
                      "nota": "Te damos el precio por escrito con la entrega."},
         "mensaje": MENSAJE,
         "tambien": 'O <a href="#calculadora" data-cta="material:calculadora">calcula cuántos sacos necesitas</a>.',
@@ -152,8 +165,8 @@ CONTENIDO = {
         "subtitulo": "Mármol blanco triturado para senderos y bordes de jardín",
         "parrafos": (
             ("El mármol blanco triturado es piedra natural para senderos, bordes de arriate y caminerías: contrasta con "
-             "el pasto San Agustín, refleja la luz y da sensación de amplitud. Tamaños de 1 a 3 cm, por saco o por "
-             "volumen."),
+             "el pasto San Agustín, refleja la luz y da sensación de amplitud. Tamaños de "
+             f"{mc.MARMOL_MEDIDA}, por saco o por volumen."),
             ("En el clima de Tampico no pierde su color con el sol ni con las lluvias de temporada y no necesita "
              "mantenimiento especial."),
         ),
@@ -163,22 +176,19 @@ CONTENIDO = {
     },
     "precio": {
         "titulo": "¿Cuánto cuesta el mármol blanco en Tampico?",
-        "lede": "Una sola presentación: el saco de red de unos 20 kg. Su precio y el de volumen te los damos por escrito.",
+        "lede": "Una sola presentación: el saco de unos 20 kg. Su precio y el de volumen te los damos por escrito.",
         "caption": "Mármol blanco por presentación",
         "figura": FIGURA_SACO,
         "filas": (
-            {"nombre": "Saco de mármol blanco", "detalle": "Saco de red ≈ 20 kg, piedra lavada y calibrada · sin mínimo",
-             "unidad": "saco", "precio": None},
-            {"nombre": "1 m² con capa de 3 a 4 cm", "detalle": "3 sacos", "unidad": "m²", "precio": None},
-            {"nombre": "Pedidos de 20 sacos o más", "detalle": "Se cotizan por volumen", "unidad": "volumen",
+            {"nombre": mc.SACO_MARMOL, "detalle": "3 sacos por m² con capa de 3 a 4 cm", "unidad": "saco",
              "precio": None},
         ),
-        "nota": "Recoges en el vivero o te lo llevamos; la entrega se cotiza según tu colonia.",
+        "nota": ("20 sacos o más: por volumen se cotiza aparte. Recoges en el vivero o te lo llevamos; la entrega se "
+                 "cotiza según tu colonia."),
         "tablas": (
             {"titulo": "Guía rápida de sacos por uso", "caption": "Sacos por m² según el uso y la capa",
              "columnas": ("Uso", "Capa", "Sacos por m²"),
-             "filas": (("Macetas o decorativo", "3 cm", "3 sacos"), ("Arriates (estándar)", "4 cm", "3 a 4 sacos"),
-                       ("Alberca o terraza", "5 cm", "4 sacos"), ("Sendero transitado", "6 cm", "4 a 5 sacos"))},
+             "filas": GUIA},
             {"titulo": "Mármol blanco, tezontle o piedra bola", "caption": "¿Cuál elegir?",
              "columnas": ("Característica", "Mármol blanco", "Tezontle rojo", "Piedra bola"),
              "filas": (("Precio por saco o costal", SEGUN, f"desde {dinero(P['tezontle_costal'])}", SEGUN),
@@ -198,7 +208,8 @@ CONTENIDO = {
                     "howto": "Cómo instalar mármol blanco en tu jardín",
                     "nota": "¿Prefieres que lo instalemos nosotros? Lo cotizamos junto con el material."},
     "faq": {"titulo": "Todo sobre mármol blanco en Tampico", "preguntas": PREGUNTAS},
-    "otros": {"titulo": "Otros materiales decorativos",
+    # Antes del CTA final: en main sus dos miniaturas van antes de la foto del cierre y el orden de las fotos no cambia.
+    "otros": {"titulo": "Otros materiales decorativos", "antes_del_cierre": True,
               "items": mc.otros(RUTA, ("/tezontle-rojo-tampico", "/tierra-negra-vegetal-tampico",
                                        "/piedra-bola-rio-tampico"), con_miniatura=True),
               "enlaces": (("Arma tu lista de plantas", "/catalogo"),)},
@@ -207,11 +218,7 @@ CONTENIDO = {
                "fondo": {"src": "/img/jardin-residencial-pasto-san-agustin-tampico.webp", "ancho": 1280, "alto": 720}},
     "pedido": mc.pedido("Ejemplo: 36 sacos de mármol blanco, entrega en Tampico"),
     "jsonld": {
-        "producto": mc.producto(
-            "Mármol Blanco Decorativo para Jardín en Tampico",
-            ("Piedra mármol blanca decorativa para jardines en Tampico. Saco de aproximadamente 20 kg; con 3 sacos se "
-             "cubre 1 m² con capa estándar de 3 a 4 cm. Entrega a domicilio en Tampico, Ciudad Madero y Altamira."),
-            f"{SITE}/img/piedra-marmol-blanca-decorativa-jardin-tampico.webp"),
+        "negocio": mc.NEGOCIO,
         "migas": MIGAS_LD,
         "speakable": mc.SPEAKABLE,
     },
@@ -240,8 +247,10 @@ PARIDAD = {
         "$600": mc.MOTIVO_PRECIO,
     },
     "jsonld": {
-        "Offer": ("El Offer publicaba el saco a $250, que no está en datos.py: el Product queda sin oferta hasta que el "
+        "Offer": ("El Offer publicaba el saco a $250, que no está en datos.py: sin oferta no sale el Product hasta que el "
                   "dueño confirme el precio (pregunta 1)."),
         "LocalBusiness": mc.MOTIVO_LOCALBUSINESS,
+        "Product": mc.MOTIVO_SIN_PRODUCTO,
+        "Brand": "Iba dentro del Product, que ya no sale (sin precio en datos.py; revisión 2f).",
     },
 }

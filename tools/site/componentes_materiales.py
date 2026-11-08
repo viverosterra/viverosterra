@@ -10,6 +10,7 @@ con piedra mediana y capa de 8 a 10 cm). Los precios salen de datos.PRECIOS; lo 
 """
 import json
 import math
+import re
 
 import componentes as c
 import datos
@@ -18,7 +19,8 @@ from partials import WA_GLIFO, esc
 P = datos.PRECIOS
 SEGUN = datos.SEGUN_COTIZACION.lower()
 AREA_MAXIMA = 100_000  # m²; más que esto no es un jardín: la calculadora vuelve al mensaje de la página
-CIERRE_MENSAJE = "¿Me pueden dar precio de entrega a domicilio en Tampico?"
+CIERRE_MENSAJE = "¿Me pueden dar precio de entrega a domicilio en Tampico, Madero o Altamira?"
+COLONIA = "Colonia de entrega: ___"  # como en el mensaje de cada página: la colonia decide el costo de entrega
 CAMION_TIERRA = f"Camión volteo de 8 m³ o más ({SEGUN})"
 
 # clave → factores de main, precios de datos.py, texto del mensaje, capas (valor, texto) y la capa elegida al cargar.
@@ -62,6 +64,15 @@ def numero_js(x):
     return str(int(x)) if x.is_integer() else repr(x)
 
 
+_MILES_RE = re.compile(r"\B(?=(\d{3})+(?!\d))")
+
+
+def miles(x):
+    """Como miles() de vt-materiales.js: "3750" → "3,750" y 1250.5 → "1,250.5" (separa miles sin redondear)."""
+    entero, punto, decimales = numero_js(x).partition(".")
+    return _MILES_RE.sub(",", entero) + (punto + decimales if punto else "")
+
+
 def leer_area(texto):
     """m² escritos por el visitante (como leerArea de vt-materiales.js y leer_m2 de las empresas): "1,200" y "1200" son
     1200, "12,5" es 12.5 y "80 m²" es 80. Devuelve 0 si no es un número mayor que 0 y hasta AREA_MAXIMA."""
@@ -94,39 +105,40 @@ def calculo(clave, area, capa=0):
 
 
 def _mensaje(cfg, titulo, lineas):
-    return "\n".join((f"Hola, quiero cotizar {cfg['texto']}.", "", titulo, *lineas, "", CIERRE_MENSAJE))
+    return "\n".join((f"Hola, quiero cotizar {cfg['texto']}.", "", titulo, *lineas, COLONIA, "", CIERRE_MENSAJE))
 
 
 def textos(clave, area, capa, r, uso=""):
-    """Lo que muestra la etiqueta y el mensaje de WhatsApp. Iguales a los de main salvo lo que pide el dueño: el camión de
-    tierra negra sin el "desde $5,000" que no está en datos.py, el mármol sin el precio de $250 por saco y los tres con
-    la misma pregunta de cierre (sin "confirmar disponibilidad")."""
+    """Lo que muestra la etiqueta y el mensaje de WhatsApp. Iguales a los de main salvo lo que pide el dueño o la
+    revisión: el camión de tierra negra sin el "desde $5,000" que no está en datos.py, el mármol sin el precio de $250
+    por saco, miles con coma ("3,750 sacos"), la capa en el mensaje de tierra negra y, en los cuatro, la colonia por
+    llenar y la misma pregunta de cierre (sin "confirmar disponibilidad"). Los números son los mismos de main."""
     cfg = CALCULADORAS[clave]
-    a = numero_js(area)
+    a = miles(area)
     if clave in ("tierra-negra", "tezontle"):
-        m3, costales = numero_js(r["m3"]), r["costales"]
+        m3, costales = miles(r["m3"]), miles(r["costales"])
         if clave == "tierra-negra":
-            presentacion = {"costales": f"{costales} costales ({c.dinero(costales * cfg['precio_costal'])})",
+            presentacion = {"costales": f"{costales} costales ({c.dinero(r['costales'] * cfg['precio_costal'])})",
                             "m3": f"{m3} m³ suelto (~{c.dinero(r['m3'] * cfg['precio_m3'])})",
                             "camion": CAMION_TIERRA}[r["tramo"]]
             equivalente = f"{costales} costales" if r["tramo"] == "costales" else f"~{costales} costales"
-            lineas = (f"Área: {a} m²", f"Cantidad: {m3} m³")
+            lineas = (f"Área: {a} m²", f"Capa: {round(capa * 100)} cm", f"Cantidad: {m3} m³")
         else:
             presentacion = {"costales": f"{costales} costales", "m3": f"{m3} m³ suelto", "camion": "Camión 14 m³",
-                            "camiones": f"{r['camiones']} camiones 14 m³"}[r["tramo"]]
+                            "camiones": f"{miles(r['camiones'])} camiones 14 m³"}[r["tramo"]]
             equivalente = f"~{costales} costales"
             lineas = (f"Área: {a} m²", f"Uso: {uso}", f"Cantidad: {m3} m³")
         return {"cantidad": f"{m3} m³", "presentacion": presentacion, "equivalente": equivalente,
                 "mensaje": _mensaje(cfg, "Resultado de la calculadora:", lineas)}
     if clave == "marmol":
-        sacos, g = r["sacos"], numero_js(capa)
+        sacos, g = miles(r["sacos"]), numero_js(capa)
         nota = (f"{sacos} sacos cubren {a} m² con capa de {g} cm." if capa <= 4
                 else f"{sacos} sacos para {a} m² con capa de {g} cm (alta densidad).")
         lineas = (f"Área: {a} m²", f"Capa: {g} cm", f"Cantidad: {sacos} sacos")
-        return {"cantidad": f"{sacos} sacos", "peso": f"{r['kg']} kg", "nota": nota,
+        return {"cantidad": f"{sacos} sacos", "peso": f"{miles(r['kg'])} kg", "nota": nota,
                 "mensaje": _mensaje(cfg, "Datos de mi proyecto:", lineas)}
     minimo, maximo = r["kg"]
-    cantidad = f"{minimo:,} a {maximo:,} kg"
+    cantidad = f"{miles(minimo)} a {miles(maximo)} kg"
     lineas = (f"Área: {a} m²", f"Medida: {cfg['medida']}", f"Cantidad aprox.: {cantidad}")
     return {"cantidad": cantidad, "mensaje": _mensaje(cfg, "Resultado de la calculadora:", lineas)}
 
@@ -155,8 +167,8 @@ NOTAS = {
                      "según tu colonia."),
     "tezontle": "m² × grosor de la capa = m³, redondeado hacia arriba. El m³ y el camión se cotizan según tu colonia.",
     "marmol": "3 sacos por m² con capa de 3 a 4 cm; 4 con 5 cm y 5 con 6 cm. El precio por saco se cotiza.",
-    "piedra-bola": ("Con piedra mediana y capa de 8 a 10 cm se usan de 120 a 150 kg por m². Para chica o grande, "
-                    "escríbenos la medida y te calculamos."),
+    "piedra-bola": ("Con piedra mediana y capa de 8 a 10 cm se usan de 120 a 150 kg por m²; para chica o grande, dinos "
+                    "la medida. Mándanos los kg y la colonia: te decimos cuántos costales o si conviene camión."),
 }
 
 
@@ -168,8 +180,9 @@ def _select(prefijo, cfg):
 
 
 def calculadora(prefijo, tipo, clave, mensaje, nombre):
-    """Área (y capa) → etiqueta con la cantidad, la presentación sugerida y su equivalente → WhatsApp con el resultado.
-    Empieza vacía: sin área, el botón manda el mensaje de la página (data-mensaje, con firma). data-cta conserva el
+    """Área (y capa) → etiqueta con la cantidad en banda, la presentación sugerida y su equivalente → WhatsApp con el
+    resultado. Solo el resultado (cantidad, filas y nota de mármol) es role="status": la nota fija y el botón no se
+    vuelven a leer en cada tecla. Empieza vacía: sin área, el botón manda el mensaje de la página (data-mensaje, con firma). data-cta conserva el
     cta_id que medía main con VTMedicion.whatsapp (p. ej. material:cotizarCalculado)."""
     cfg = CALCULADORAS[clave]
     generico = datos.con_firma(mensaje)
@@ -182,9 +195,10 @@ def calculadora(prefijo, tipo, clave, mensaje, nombre):
         f'data-mensaje="{esc(generico)}" data-material="{esc(json.dumps(datos_js(clave), ensure_ascii=False, separators=(",", ":")))}">'
         f'<div class="vt-b2b__form" role="group" aria-label="Calculadora de {esc(nombre)}">'
         f'{c._campo(f"{prefijo}-area", "area", "Área a cubrir", "Ej. 30", "m²", "decimal")}{capa}</div>'
-        '<div class="vt-etiqueta-x"><div class="vt-etiqueta vt-medidor__res" role="status">'
+        '<div class="vt-etiqueta-x"><div class="vt-etiqueta vt-medidor__res">'
         '<p class="vt-etiqueta__cod"><span>Tu cálculo</span><span>Aproximado</span></p>'
-        f'<p class="vt-etiqueta__nombre" data-vt-o="cantidad">{VACIO["cantidad"]}</p>{filas}{nota_dinamica}'
+        '<div class="vt-calc__res" role="status"><p class="vt-etiqueta__precio vt-calc__cantidad is-vacio">'
+        f'<small>Necesitas</small><b data-vt-o="cantidad">{VACIO["cantidad"]}</b></p>{filas}{nota_dinamica}</div>'
         f'<p class="vt-medidor__calc">{NOTAS[clave]}</p>'
         f'<a class="vt-btn vt-btn--wa" data-cta="{esc(tipo)}:{cfg["cta"]}" data-vt-o="cta" '
         f'href="{esc(datos.wa_url(generico))}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp'

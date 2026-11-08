@@ -9,9 +9,14 @@
 (function (root) {
   'use strict';
   const AREA_MAXIMA = 100000;
-  const CIERRE = '¿Me pueden dar precio de entrega a domicilio en Tampico?';
+  const CIERRE = '¿Me pueden dar precio de entrega a domicilio en Tampico, Madero o Altamira?';
+  const COLONIA = 'Colonia de entrega: ___';
   const dinero = (n) => '$' + Math.round(n).toLocaleString('es-MX');
-  const miles = (n) => n.toLocaleString('es-MX');
+  // "3750" → "3,750" y "1250.5" → "1,250.5": separa miles sin redondear los decimales (igual que miles() en Python).
+  function miles(n) {
+    const [entero, decimales] = String(n).split('.');
+    return entero.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (decimales === undefined ? '' : `.${decimales}`);
+  }
   const enlace = (wa, texto) => `https://wa.me/${wa}?text=${encodeURIComponent(texto)}`;
 
   // "1,200" y "1200" son 1200; "12,5" es 12.5; "80 m²" es 80. 0 si no es un número mayor que 0 y hasta AREA_MAXIMA.
@@ -44,40 +49,43 @@
     return { kg: [Math.round(area * cfg.kg_m2[0]), Math.round(area * cfg.kg_m2[1])] };
   }
 
+  // Mensaje de WhatsApp: el resultado, la colonia por llenar y la pregunta de cierre (las cuatro calculadoras).
+  const mensaje = (cfg, titulo, lineas) =>
+    [`Hola, quiero cotizar ${cfg.texto}.`, '', titulo, ...lineas, COLONIA, '', CIERRE].join('\n');
+
   function textos(cfg, area, capa, r, uso) {
-    const a = String(area);
+    const a = miles(area);
     if (cfg.clave === 'tierra-negra' || cfg.clave === 'tezontle') {
-      const m3 = String(r.m3);
-      const c = r.costales;
+      const m3 = miles(r.m3);
+      const c = miles(r.costales);
       let presentacion;
       let equivalente = `~${c} costales`;
       let lineas;
       if (cfg.clave === 'tierra-negra') {
-        presentacion = { costales: `${c} costales (${dinero(c * cfg.precio_costal)})`,
+        presentacion = { costales: `${c} costales (${dinero(r.costales * cfg.precio_costal)})`,
           m3: `${m3} m³ suelto (~${dinero(r.m3 * cfg.precio_m3)})`,
           camion: 'Camión volteo de 8 m³ o más (según cotización)' }[r.tramo];
         if (r.tramo === 'costales') equivalente = `${c} costales`;
-        lineas = [`Área: ${a} m²`, `Cantidad: ${m3} m³`];
+        lineas = [`Área: ${a} m²`, `Capa: ${Math.round(capa * 100)} cm`, `Cantidad: ${m3} m³`];
       } else {
         presentacion = { costales: `${c} costales`, m3: `${m3} m³ suelto`, camion: 'Camión 14 m³',
-          camiones: `${r.camiones} camiones 14 m³` }[r.tramo];
+          camiones: `${miles(r.camiones)} camiones 14 m³` }[r.tramo];
         lineas = [`Área: ${a} m²`, `Uso: ${uso}`, `Cantidad: ${m3} m³`];
       }
-      const mensaje = [`Hola, quiero cotizar ${cfg.texto}.`, '', 'Resultado de la calculadora:', ...lineas, '', CIERRE].join('\n');
-      return { cantidad: `${m3} m³`, presentacion, equivalente, mensaje };
+      return { cantidad: `${m3} m³`, presentacion, equivalente,
+        mensaje: mensaje(cfg, 'Resultado de la calculadora:', lineas) };
     }
     if (cfg.clave === 'marmol') {
       const g = String(capa);
-      const nota = capa <= 4 ? `${r.sacos} sacos cubren ${a} m² con capa de ${g} cm.`
-        : `${r.sacos} sacos para ${a} m² con capa de ${g} cm (alta densidad).`;
-      const mensaje = [`Hola, quiero cotizar ${cfg.texto}.`, '', 'Datos de mi proyecto:', `Área: ${a} m²`, `Capa: ${g} cm`,
-        `Cantidad: ${r.sacos} sacos`, '', CIERRE].join('\n');
-      return { cantidad: `${r.sacos} sacos`, peso: `${r.kg} kg`, nota, mensaje };
+      const s = miles(r.sacos);
+      const nota = capa <= 4 ? `${s} sacos cubren ${a} m² con capa de ${g} cm.`
+        : `${s} sacos para ${a} m² con capa de ${g} cm (alta densidad).`;
+      return { cantidad: `${s} sacos`, peso: `${miles(r.kg)} kg`, nota,
+        mensaje: mensaje(cfg, 'Datos de mi proyecto:', [`Área: ${a} m²`, `Capa: ${g} cm`, `Cantidad: ${s} sacos`]) };
     }
     const cantidad = `${miles(r.kg[0])} a ${miles(r.kg[1])} kg`;
-    const mensaje = [`Hola, quiero cotizar ${cfg.texto}.`, '', 'Resultado de la calculadora:', `Área: ${a} m²`,
-      'Medida: mediana (capa de 8 a 10 cm)', `Cantidad aprox.: ${cantidad}`, '', CIERRE].join('\n');
-    return { cantidad, mensaje };
+    return { cantidad, mensaje: mensaje(cfg, 'Resultado de la calculadora:',
+      [`Área: ${a} m²`, `Medida: ${cfg.medida}`, `Cantidad aprox.: ${cantidad}`]) };
   }
 
   // Estado vacío: el que escribió el HTML (componentes_materiales.VACIO); se lee al arrancar para no repetir textos.
@@ -91,6 +99,7 @@
     const nota = salida('nota');
     function actualizar() {
       const a = leerArea(area.value);
+      salida('cantidad').parentElement.classList.toggle('is-vacio', !a);
       if (!a) {
         nombres.forEach((n) => { salida(n).textContent = vacio[n]; });
         if (nota) nota.hidden = true;
@@ -109,7 +118,7 @@
     actualizar();
   }
 
-  const api = { leerArea, calcular, textos, enlace, CIERRE };
+  const api = { leerArea, calcular, textos, enlace, miles, CIERRE, COLONIA };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
     return;

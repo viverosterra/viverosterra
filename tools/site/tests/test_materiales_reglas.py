@@ -45,6 +45,9 @@ SIN_VERIFICAR = (
                             r"|del 60\s?% al 95\s?%|hasta 8\s?°C|productor directo"),
     ("opiniones sin permiso", r"Ricardo O\.|Laura P\.|Patricia H\.|David M\."),
     ("En nuestro vivero", r"en nuestro vivero"),
+    # Revisión 2f: términos comerciales que el dueño no ha confirmado (mínimo de compra, calidad de la piedra).
+    ("término comercial sin confirmar", r"\bsin m[ií]nimo\b|\b(?:desde|a partir de) 1 m(?:³|3)\b|\blavada\b"
+                                        r"|\bcalibrad[ao]\b|saco de red"),
 )
 
 
@@ -112,10 +115,37 @@ class MaterialesReglasTest(unittest.TestCase):
                       "Ricardo O.", "En nuestro vivero", "Disponible en cantidad sin límite", "más vendido"):
             with self.subTest(frase=frase):
                 self.assertTrue(any(re.search(patron, frase, re.I) for _r, patron in SIN_VERIFICAR))
+        for frase in ("Recoger o a domicilio, sin mínimo", "Desde 1 m³, entregada", "A partir de 1 m³",
+                      "piedra lavada y calibrada", "Saco de red ≈ 20 kg"):
+            with self.subTest(frase=frase):
+                self.assertTrue(any(re.search(patron, frase, re.I) for _r, patron in SIN_VERIFICAR))
         for frase in ("Saco ≈ 20 kg a $250", "camión desde $5,000", "Tierra preparada $100"):
             with self.subTest(frase=frase):
                 self.assertTrue(SIN_PRECIO_RE.search(frase))
         self.assertFalse(any(re.search(patron, "desde 2007 · 15 a 20 días de arraigo", re.I) for _r, patron in SIN_VERIFICAR))
+
+
+    def test_guia_del_marmol_con_la_regla_de_la_calculadora(self):
+        """La guía rápida y los usos dicen los mismos sacos por m² que calcula la calculadora (3 hasta 4 cm, 4 con 5 cm
+        y 5 con 6 cm)."""
+        import componentes_materiales as cm
+        from contenido import marmol_blanco as mb
+        guia = next(t for t in mb.CONTENIDO["precio"]["tablas"] if t["titulo"].startswith("Guía"))
+        for _uso, capa, sacos in guia["filas"]:
+            with self.subTest(capa=capa):
+                self.assertEqual(sacos, f"{cm.calculo('marmol', 1, int(capa.split()[0]))['por_m2']} sacos")
+        self.assertEqual([f["nombre"] for f in mb.CONTENIDO["precio"]["filas"]], ["Saco ≈ 20 kg"])
+
+    def test_medidas_de_una_sola_fuente(self):
+        """La piedra de río de la comparativa del tezontle es la de su página (2 a 20 cm, tres medidas) y la capa contra
+        maleza del tezontle es la de la calculadora (6 a 8 cm) en la tarjeta de uso y en la pregunta."""
+        tezontle, piedra = html_de("/tezontle-rojo-tampico"), html_de("/piedra-bola-rio-tampico")
+        self.assertIn("2 a 20 cm (tres medidas)", tezontle)
+        self.assertNotIn("5 a 15 cm", tezontle)
+        self.assertNotIn("5 a 8 cm de capa", tezontle)
+        self.assertIn("De 6 a 8 cm para control de maleza", tezontle)
+        for medida in ("2 a 5 cm", "6 a 12 cm", "12 a 20 cm"):
+            self.assertIn(medida, piedra)
 
 
 if __name__ == "__main__":

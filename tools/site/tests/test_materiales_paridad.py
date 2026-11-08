@@ -3,6 +3,7 @@ en public/js/tests/casos-materiales.json ejecutando el JS de main) en Python (co
 (public/js/vt-materiales.js; vt-materiales.test.js corre los mismos casos). Las únicas diferencias con main son las que
 pide el dueño y se aplican aquí a lo que publicaba main antes de comparar (esperado_de_main)."""
 import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -17,22 +18,42 @@ CASOS = json.loads((Path(__file__).resolve().parents[3] / "public" / "js" / "tes
 CAMION_MAIN = "Camión volteo 8m³+ (~desde $5,000)"
 
 
+GRUPO_RE = re.compile(r"(?<![\d.,])\d{4,}")
+
+
+def agrupar(texto):
+    """Miles con coma en lo que publicaba main ("~4286 costales" → "~4,286 costales"); los precios ya la traían."""
+    return GRUPO_RE.sub(lambda m: f"{int(m.group(0)):,}", texto)
+
+
+def mensaje_de_main(clave, mensaje, capa):
+    """El mensaje de main con los cambios declarados: miles con coma, sin "Precio estimado" (mármol), la capa en el de
+    tierra negra, la colonia por llenar antes de la pregunta y la pregunta de cierre con Madero y Altamira."""
+    lineas = [agrupar(x) for x in mensaje.split("\n") if not x.startswith("Precio estimado: ")]
+    lineas[-1] = cm.CIERRE_MENSAJE
+    lineas.insert(len(lineas) - 2, cm.COLONIA)
+    if clave == "tierra-negra":
+        area = next(i for i, x in enumerate(lineas) if x.startswith("Área: "))
+        lineas.insert(area + 1, f"Capa: {round(float(capa) * 100)} cm")
+    return "\n".join(lineas)
+
+
 def esperado_de_main(clave, caso):
     """Lo que mostraba y mandaba main, con los cambios declarados: el camión de tierra negra sin el "desde $5,000" (no
-    está en datos.py), el mármol sin "$250 c/u" ni "Precio estimado" (no está en datos.py), "cubren" en vez de "cubre"
-    y la pregunta de cierre del mármol igual a la de los otros dos (sin "confirmar disponibilidad")."""
-    v, m = caso["visibles"], caso["mensaje"]
+    está en datos.py), el mármol sin "$250 c/u" ni "Precio estimado" (no está en datos.py), "cubren" en vez de "cubre",
+    miles con coma en área, kg, sacos y costales (revisión 2f) y el mensaje de mensaje_de_main. Los números no cambian."""
+    v, capa = caso["visibles"], caso["entrada"]["capa"]
+    m = mensaje_de_main(clave, caso["mensaje"], capa)
     if clave == "tierra-negra":
-        return {"cantidad": v["res-m3"], "presentacion": v["res-formato"].replace(CAMION_MAIN, cm.CAMION_TIERRA),
-                "equivalente": v["res-costales"], "mensaje": m}
+        return {"cantidad": agrupar(v["res-m3"]),
+                "presentacion": agrupar(v["res-formato"].replace(CAMION_MAIN, cm.CAMION_TIERRA)),
+                "equivalente": agrupar(v["res-costales"]), "mensaje": m}
     if clave == "tezontle":
-        return {"cantidad": v["tez-res-m3"], "presentacion": v["tez-res-formato"], "equivalente": v["tez-res-costales"],
-                "mensaje": m}
-    lineas = [x for x in m.split("\n") if not x.startswith("Precio estimado: ")]
-    lineas[-1] = cm.CIERRE_MENSAJE
-    return {"cantidad": f"{v['res-sacos']} sacos", "peso": v["res-peso"],
-            "nota": v["res-nota"].replace(" sacos cubre ", " sacos cubren ").replace(" A $250 c/u.", ""),
-            "mensaje": "\n".join(lineas)}
+        return {"cantidad": agrupar(v["tez-res-m3"]), "presentacion": agrupar(v["tez-res-formato"]),
+                "equivalente": agrupar(v["tez-res-costales"]), "mensaje": m}
+    return {"cantidad": f"{v['res-sacos']:,} sacos", "peso": agrupar(v["res-peso"]),
+            "nota": agrupar(v["res-nota"].replace(" sacos cubre ", " sacos cubren ").replace(" A $250 c/u.", "")),
+            "mensaje": m}
 
 
 class MaterialesParidadTest(unittest.TestCase):
@@ -59,6 +80,31 @@ class MaterialesParidadTest(unittest.TestCase):
         """7 m² × 10 cm daba 0.8 m³ en main (7 × 0.1 × 10 = 7.000000000000001 y Math.ceil sube): se conserva igual."""
         self.assertEqual(cm.calculo("tierra-negra", 7, 0.1)["m3"], 0.8)
         self.assertEqual(cm.calculo("tezontle", 333, 0.1)["m3"], 33.4)
+
+    def test_son_los_195_casos_de_main(self):
+        self.assertEqual(sum(len(c["casos"]) for c in CASOS["calculadoras"].values()), 195)
+
+    def test_miles_con_coma_en_lo_visible_y_en_el_mensaje(self):
+        """Revisión 2f: "3,750 sacos" y "75,000 kg" en vez de "3750 sacos" y "75000 kg"; los decimales no se redondean."""
+        t = cm.textos("marmol", 1250, 4, cm.calculo("marmol", 1250, 4))
+        self.assertEqual((t["cantidad"], t["peso"]), ("3,750 sacos", "75,000 kg"))
+        self.assertEqual(t["nota"], "3,750 sacos cubren 1,250 m² con capa de 4 cm.")
+        self.assertIn("Área: 1,250 m²\nCapa: 4 cm\nCantidad: 3,750 sacos", t["mensaje"])
+        t = cm.textos("tezontle", 5000, 0.08, cm.calculo("tezontle", 5000, 0.08), "x")
+        self.assertEqual((t["cantidad"], t["equivalente"]), ("400 m³", "~14,815 costales"))
+        self.assertEqual([cm.miles(x) for x in (999, 1000, 1250.5, 100000, 0.1)],
+                         ["999", "1,000", "1,250.5", "100,000", "0.1"])
+
+    def test_mensaje_con_la_colonia_y_cierre_de_la_zona(self):
+        """Los cuatro mensajes con resultado conservan "Colonia de entrega: ___" (como el de la página) antes de la
+        pregunta, que nombra Tampico, Madero y Altamira; el de tierra negra lleva también la capa."""
+        for clave, capa in (("tierra-negra", 0.08), ("tezontle", 0.06), ("marmol", 5), ("piedra-bola", 0)):
+            mensaje = cm.textos(clave, 30, capa, cm.calculo(clave, 30, capa), "Control de maleza (6 cm)")["mensaje"]
+            with self.subTest(clave=clave):
+                self.assertTrue(mensaje.endswith(f"\n{cm.COLONIA}\n\n{cm.CIERRE_MENSAJE}"))
+                self.assertIn("en Tampico, Madero o Altamira?", mensaje)
+        tierra = cm.textos("tierra-negra", 30, 0.15, cm.calculo("tierra-negra", 30, 0.15))["mensaje"]
+        self.assertIn("Área: 30 m²\nCapa: 15 cm\nCantidad: 4.5 m³", tierra)
 
     def test_piedra_bola_con_la_regla_de_su_pregunta(self):
         """Piedra bola no tenía calculadora: su pregunta frecuente decía 1,200 a 1,500 kg para 10 m² (120 a 150 kg/m²)."""

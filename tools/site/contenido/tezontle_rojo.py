@@ -22,6 +22,7 @@ SEGUN = datos.SEGUN_COTIZACION
 MENSAJE = mensajes_paginas.MATERIALES[RUTA]
 MIGAS, MIGAS_LD = mc.migas(RUTA, "Tezontle rojo")
 
+DESCRIPCION_OG = "Tezontle rojo volcánico en Tampico. Costal, m³ y camión volteo 14 m³ con entrega a domicilio."
 META = {
     "title": "Tezontle Rojo Tampico · Control de Maleza y Decoración",
     "description": ("Tezontle rojo en Tampico. Costal desde $200 · Por m³ · Camión volteo 14 m³. Control de maleza y "
@@ -32,10 +33,18 @@ META = {
         ("og:type", "website"),
         ("og:url", URL),
         ("og:title", "Tezontle Rojo Tampico · Control de Maleza y Decoración"),
-        ("og:description", ("Tezontle rojo volcánico en Tampico. Costal, m³ y camión volteo 14 m³ con entrega a "
-                            "domicilio. El rojo perfecto para tu jardín.")),
+        ("og:description", DESCRIPCION_OG),
         ("og:image", f"{SITE}/img/tezontle-rojo-jardin-tampico-sendero.webp"),
         ("og:locale", "es_MX"),
+        ("og:site_name", datos.NOMBRE),
+    ),
+    # Twitter Card como estaba publicada en main.
+    "twitter": (
+        ("twitter:card", "summary_large_image"),
+        ("twitter:title", "Tezontle Rojo Tampico · Viveros Terra"),
+        ("twitter:description", "Tezontle rojo en Tampico. Costal, m³ y camión volteo. Control de maleza y decoración "
+                                "duradera."),
+        ("twitter:image", f"{SITE}/img/tezontle-rojo-jardin-tampico-sendero.webp"),
     ),
 }
 FIGURAS = (
@@ -48,8 +57,9 @@ FIGURAS = (
      "etapa": "Arriate"},
 )
 USOS = (
-    {"titulo": "Control de maleza", "texto": "Capa de 6 a 8 cm sobre membrana antigerminante: ayuda a controlar la "
-     "maleza sin herbicidas.", "puntos": ("5 a 8 cm de capa",)},
+    {"titulo": "Control de maleza", "texto": (f"Capa de {mc.TEZONTLE_CAPA_MALEZA} sobre membrana antigerminante: ayuda "
+                                               "a controlar la maleza sin herbicidas."),
+     "puntos": (f"{mc.TEZONTLE_CAPA_MALEZA} de capa",)},
     {"titulo": "Senderos y caminos", "texto": "Caminos decorativos dentro del jardín: permeables, firmes y de aspecto "
      "tropical.", "puntos": ("8 a 10 cm compactado",)},
     {"titulo": "Arriates de plantas", "texto": "Cubierta roja alrededor de arbustos y plantas ornamentales: contrasta con "
@@ -98,8 +108,9 @@ PREGUNTAS = (
      "Para ayudar a controlar la maleza sin herbicidas, hacer senderos y caminos decorativos, cubrir arriates, mejorar el "
      "drenaje en suelos arcillosos y como acabado decorativo que contrasta con el verde del pasto y las plantas."),
     ("¿Cuántos centímetros de tezontle se ponen?",
-     "De 5 a 8 cm para control de maleza y arriates; de 8 a 10 cm compactados para senderos; de 3 a 4 cm como capa en "
-     "macetas y jardineras. Sobre membrana antigerminante funciona mejor contra la maleza."),
+     f"De {mc.TEZONTLE_CAPA_MALEZA} para control de maleza y de 5 a 6 cm en arriates; de 8 a 10 cm compactados para "
+     "senderos; de 3 a 4 cm como capa en macetas y jardineras. Sobre membrana antigerminante funciona mejor contra la "
+     "maleza."),
     ("¿Cuánto dura el tezontle en un jardín?",
      "Es roca volcánica: no se desintegra ni se va con las lluvias de Tampico. Solo requiere rastrillarlo de vez en "
      "cuando para renivelarlo si se desplaza."),
@@ -157,9 +168,9 @@ CONTENIDO = {
         "lede": f"Precios {datos.ANIO}. Lo que no tiene precio publicado se cotiza por escrito antes de que confirmes.",
         "caption": "Tezontle rojo por presentación",
         "filas": (
-            {"nombre": "Por costal", "detalle": "Sin mínimo · recoger o a domicilio", "unidad": "costal",
+            {"nombre": "Por costal", "detalle": "Recoger o a domicilio", "unidad": "costal",
              "precio": P["tezontle_costal"], "desde": True},
-            {"nombre": "Por m³ suelto", "detalle": "A partir de 1 m³, entregado en tu domicilio", "unidad": "m³",
+            {"nombre": "Por m³ suelto", "detalle": "Entregado en tu domicilio", "unidad": "m³",
              "precio": None},
             {"nombre": "Camión volteo de 14 m³", "detalle": "Descarga en tu domicilio u obra, con factura",
              "unidad": "camión", "precio": None},
@@ -171,7 +182,7 @@ CONTENIDO = {
             "columnas": ("Característica", "Tezontle rojo", "Mármol blanco", "Piedra de río"),
             "filas": (("Color", "Rojo terracota", "Blanco", "Gris o beige natural"),
                       ("Origen", "Roca volcánica", "Mármol triturado", "Piedra de río"),
-                      ("Tamaño", "2 a 5 cm", "1 a 3 cm", "5 a 15 cm"),
+                      ("Tamaño", mc.TEZONTLE_MEDIDA, mc.MARMOL_MEDIDA, f"{mc.PIEDRA_BOLA_RANGO} (tres medidas)"),
                       ("Drenaje", "Excelente (poroso)", "Bueno", "Excelente"),
                       ("Estilo", "Rústico, mexicano", "Minimalista", "Natural, zen"),
                       ("Precio por costal", f"desde {COSTAL}", SEGUN, SEGUN),
@@ -201,13 +212,18 @@ CONTENIDO = {
             (f"Tezontle rojo volcánico decorativo para jardines en Tampico. Costal desde {COSTAL}. Uso en senderos, "
              "bordes, arriates y macetas. Entrega a domicilio en Tampico, Madero y Altamira."),
             f"{SITE}/img/tezontle-rojo-jardin-tampico-sendero.jpg", sku="VT-TEZ-001",
-            ofertas={"@type": "Offer", "price": str(P["tezontle_costal"]), "url": f"{URL}#solicitar-pedido"}),
+            ofertas=(mc.oferta(f"{URL}#solicitar-pedido", "costal", desde=P["tezontle_costal"]),)),
+        "negocio": mc.NEGOCIO,
         "migas": MIGAS_LD,
         "speakable": mc.SPEAKABLE,
     },
 }
 
 PARIDAD = {
+    "meta": {
+        "og:description": (DESCRIPCION_OG, "Sin “El rojo perfecto para tu jardín”: superlativo sin respaldo (revisión "
+                                           "2f); el resto queda igual."),
+    },
     "reemplazos": {
         "Elige el formato para tu proyecto": "¿Cuánto cuesta el tezontle rojo en Tampico?",
         "Por costal": "¿Cuánto cuesta el tezontle rojo en Tampico?",

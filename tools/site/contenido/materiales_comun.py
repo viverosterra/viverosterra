@@ -15,11 +15,20 @@ TIPO = "material"
 NEGOCIO = {"@id": f"{SITE}/#negocio"}
 CAMION = f"camión {SEGUN}"
 
+# Medidas: una sola fuente para las cuatro páginas (piedra bola, comparativas, etiquetas y usos).
+PIEDRA_BOLA_MEDIDAS = (("Chica", "2 a 5 cm"), ("Mediana", "6 a 12 cm"), ("Grande", "12 a 20 cm"))
+PIEDRA_BOLA_RANGO = "2 a 20 cm"  # de la chica a la grande
+TEZONTLE_MEDIDA = "2 a 5 cm"
+MARMOL_MEDIDA = "1 a 3 cm"
+# Capa de tezontle para control de maleza: la de la calculadora ("Control de maleza (6 cm)" e "intenso (8 cm)").
+TEZONTLE_CAPA_MALEZA = "6 a 8 cm"
+SACO_MARMOL = "Saco ≈ 20 kg"
+
 RESUMEN = {
     "/tierra-negra-vegetal-tampico": (f"Costal {dinero(P['tierra_negra_costal'])} · m³ {dinero(P['tierra_negra_m3'])} · "
                                       f"{CAMION}"),
     "/tezontle-rojo-tampico": f"Costal desde {dinero(P['tezontle_costal'])} · m³ y camión de 14 m³ {SEGUN}",
-    "/marmol-blanco-tampico": f"Saco de 20 kg {SEGUN} · 3 sacos por m²",
+    "/marmol-blanco-tampico": f"{SACO_MARMOL} · precio {SEGUN} · 3 sacos por m²",
     "/piedra-bola-rio-tampico": f"Chica, mediana y grande · {SEGUN}",
 }
 NOMBRES = {
@@ -78,15 +87,23 @@ def migas(ruta, nombre):
     return visibles, ld
 
 
-def producto(nombre, descripcion, imagen, sku=None, ofertas=None):
-    """Product del JSON-LD con la marca de main; las ofertas solo con precios de datos.py y sin "InStock"."""
+def producto(nombre, descripcion, imagen, sku=None, ofertas=()):
+    """Product del JSON-LD con la marca de main y sus ofertas (oferta()). Solo para lo que tiene precio en datos.py:
+    sin precio no hay Product (mármol y piedra bola), así no queda un producto sin oferta."""
     nodo = {"@type": "Product", "name": nombre, "description": descripcion,
             "brand": {"@type": "Brand", "name": datos.NOMBRE}, "image": imagen}
     if sku:
         nodo["sku"] = sku
-    if ofertas:
-        nodo["offers"] = {**ofertas, "priceCurrency": "MXN", "seller": NEGOCIO}
+    nodo["offers"] = ofertas[0] if len(ofertas) == 1 else list(ofertas)
     return nodo
+
+
+def oferta(url, unidad, precio=None, desde=None):
+    """Offer con su precio por unidad (UnitPriceSpecification) de datos.py: precio exacto o, si es "desde", minPrice.
+    Sin "InStock" (no hay dato de existencias) y con el seller por @id a #negocio."""
+    spec = {"@type": "UnitPriceSpecification", "priceCurrency": "MXN", "unitText": unidad}
+    spec.update({"price": precio} if desde is None else {"minPrice": desde})
+    return {"@type": "Offer", "url": url, "priceCurrency": "MXN", "priceSpecification": spec, "seller": NEGOCIO}
 
 
 SPEAKABLE = ("#vt-h1", ".vt-portada .vt-lede", ".vt-faq summary")
@@ -94,6 +111,8 @@ SPEAKABLE = ("#vt-h1", ".vt-portada .vt-lede", ".vt-faq summary")
 # Motivos de paridad que se repiten en las cuatro páginas.
 MOTIVO_PRECIO = ("No está en datos.PRECIOS: regla del dueño, va “según cotización” y nunca se inventa (pregunta al "
                  "dueño en el plan 2f).")
+MOTIVO_SIN_PRODUCTO = ("Sin precio en datos.py no hay oferta, y un Product sin oferta no sirve: la página queda como "
+                       "WebPage ligada a #negocio hasta que el dueño dé el precio (revisión 2f).")
 MOTIVO_LOCALBUSINESS = ("El seller del Product apunta por @id a la entidad única #negocio (el nodo completo vive en la "
                         "home), en vez de un LocalBusiness suelto, como en 2d y 2e.")
 MOTIVO_AUTOR = ("Bloque de autor con “+18 años” y “Productor directo” (sin respaldo en datos.py); la entidad y el autor "

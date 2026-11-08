@@ -5,7 +5,7 @@ Main no publicaba precio (solo el JSON-LD, con un Offer de $350 e "InStock" que 
 Main tampoco tenía calculadora: la nueva multiplica el área por los 120 a 150 kg por m² que decía su propia pregunta
 frecuente (pregunta 6 al dueño). Las opiniones de Patricia H. y David M. no tienen permiso del dueño y se retiran. Sin
 foto de portada (main no la tenía); sus 3 fotos en su orden: la del CTA final y, después, las dos miniaturas de otros
-materiales (por eso "otros" va tras el cierre). Título y descripción como estaban; el Open Graph pierde el “gratis”.
+materiales (los otros materiales van tras el cierre, como en las demás páginas). Título y descripción como estaban; el Open Graph pierde el “gratis”.
 """
 import datos
 import mensajes_paginas
@@ -16,6 +16,7 @@ SITE = datos.SITIO
 RUTA = "/piedra-bola-rio-tampico"
 URL = f"{SITE}{RUTA}"
 SEGUN = datos.SEGUN_COTIZACION
+CHICA, MEDIANA, GRANDE = (m for _n, m in mc.PIEDRA_BOLA_MEDIDAS)
 MENSAJE = mensajes_paginas.MATERIALES[RUTA]
 MIGAS, MIGAS_LD = mc.migas(RUTA, "Piedra bola de río")
 DESCRIPCION_OG = ("Piedra bola de río natural en Tampico para jardines, senderos y decoración. Pequeña, mediana y "
@@ -33,17 +34,20 @@ META = {
         ("og:description", DESCRIPCION_OG),
         ("og:image", f"{SITE}/img/jardin-residencial-plantas-pasto-tampico.webp"),
         ("og:locale", "es_MX"),
+        ("og:site_name", datos.NOMBRE),
     ),
+    "twitter": (("twitter:card", "summary_large_image"),),  # como estaba publicada en main
 }
 USOS = (
-    {"titulo": "Senderos y caminos", "texto": "Piedra mediana para caminos decorativos: deja pasar el agua, resiste y pide "
-     "poco mantenimiento.", "puntos": ("Mediana, 6 a 12 cm",)},
-    {"titulo": "Jardines zen y japoneses", "texto": "Piedra bola mediana con arena o gravilla y vegetación minimalista.",
-     "puntos": ("Mediana",)},
+    {"titulo": "Senderos y caminos", "texto": ("Piedra mediana para caminos decorativos: deja pasar el agua, resiste y "
+     'pide poco mantenimiento. <a href="/diseno-jardines-tampico">Ver diseño de jardines</a>.'),
+     "puntos": (f"Mediana, {MEDIANA}",)},
+    {"titulo": "Jardines zen y japoneses", "texto": ("Piedra bola mediana con arena o gravilla y vegetación minimalista. "
+     '<a href="/plantas-palmas-arboles-tampico">Ver plantas y palmas</a>.'), "puntos": ("Mediana",)},
     {"titulo": "Cubierta decorativa de suelo", "texto": "Piedra chica sobre camas de plantas y arriates: ayuda contra la "
-     "maleza, mejora el drenaje y da un aspecto limpio.", "puntos": ("Chica, 2 a 5 cm",)},
+     "maleza, mejora el drenaje y da un aspecto limpio.", "puntos": (f"Chica, {CHICA}",)},
     {"titulo": "Fuentes y estanques", "texto": "Piedra grande en la base de fuentes, bordes de estanques y elementos de "
-     "agua.", "puntos": ("Grande, 12 a 20 cm",)},
+     "agua.", "puntos": (f"Grande, {GRANDE}",)},
     {"titulo": "Borduras y delimitadores", "texto": "Piedra grande colocada de canto para delimitar zonas, arriates y "
      "senderos.", "puntos": ("Grande",)},
     {"titulo": "Contraste con tezontle", "texto": ("Piedra bola gris con tezontle rojo, un contraste bicolor para "
@@ -54,8 +58,8 @@ PREGUNTAS = (
      "Para cubrir el suelo de jardines y áreas verdes, hacer senderos y caminos, delimitar arriates, diseñar jardines zen "
      "o japoneses, decorar fuentes y estanques y dar acabados naturales en exteriores."),
     ("¿En qué tamaños se vende la piedra bola de río en Tampico?",
-     "En tres medidas: chica (2 a 5 cm), para cubrir suelo y borduras; mediana (6 a 12 cm), para senderos y decoración; "
-     "y grande (12 a 20 cm), para puntos focales y fuentes. Se pueden combinar en la misma entrega."),
+     f"En tres medidas: chica ({CHICA}), para cubrir suelo y borduras; mediana ({MEDIANA}), para senderos y "
+     f"decoración; y grande ({GRANDE}), para puntos focales y fuentes. Se pueden combinar en la misma entrega."),
     ("¿La piedra bola de río necesita mantenimiento?",
      "Casi ninguno: limpieza ocasional con agua a presión si junta polvo o lodo y reponer lo que se desplace con las "
      "lluvias o el uso. No pierde su aspecto con el tiempo."),
@@ -83,8 +87,7 @@ CONTENIDO = {
                  "el precio se cotiza según la medida y el volumen, con entrega en Tampico, Madero y Altamira."),
         "etiqueta": {"codigo": "Piedra bola", "aviso": "Por medida", "nombre": "Chica, mediana y grande", "antes": "",
                      "monto": "3 medidas", "unidad": "costal o camión",
-                     "filas": (("Chica", "2 a 5 cm"), ("Mediana", "6 a 12 cm"), ("Grande", "12 a 20 cm"),
-                               ("Precio", SEGUN)),
+                     "filas": (*mc.PIEDRA_BOLA_MEDIDAS, ("Precio", SEGUN)),
                      "nota": "Te damos el precio por escrito con la entrega."},
         "mensaje": MENSAJE,
         "tambien": 'O <a href="#calculadora" data-cta="material:calculadora">calcula cuántos kg necesitas</a>.',
@@ -94,7 +97,7 @@ CONTENIDO = {
         "titulo": "¿Qué es la piedra bola de río y para qué sirve en jardines?",
         "parrafos": (
             ("Es una roca natural de río, ovalada y lisa, pulida por la corriente del agua. En jardinería se usa como "
-             "elemento decorativo y como cubierta de suelo que ayuda contra la maleza y mejora el drenaje. La tenemos en "
+             "elemento decorativo y como cubierta de suelo que ayuda contra la maleza y mejora el drenaje. Se vende en "
              "tres medidas para casas, comercios y proyectos de paisajismo en Tampico."),
         ),
     },
@@ -103,11 +106,11 @@ CONTENIDO = {
         "lede": "El precio depende de la medida y del volumen: te lo damos por escrito antes de que confirmes.",
         "caption": "Piedra bola de río por medida",
         "filas": (
-            {"nombre": "Chica", "detalle": "2 a 5 cm · cubierta de suelo y borduras", "unidad": "costal o camión",
+            {"nombre": "Chica", "detalle": f"{CHICA} · cubierta de suelo y borduras", "unidad": "costal o camión",
              "precio": None},
-            {"nombre": "Mediana", "detalle": "6 a 12 cm · senderos y decoración", "unidad": "costal o camión",
+            {"nombre": "Mediana", "detalle": f"{MEDIANA} · senderos y decoración", "unidad": "costal o camión",
              "precio": None},
-            {"nombre": "Grande", "detalle": "12 a 20 cm · fuentes y puntos focales", "unidad": "costal o camión",
+            {"nombre": "Grande", "detalle": f"{GRANDE} · fuentes y puntos focales", "unidad": "costal o camión",
              "precio": None},
         ),
         "nota": "El costo de entrega se cotiza según tu colonia y el volumen.",
@@ -121,16 +124,12 @@ CONTENIDO = {
     "cierre": {"titulo": "¿Qué proyecto tienes en mente con piedra bola de río?",
                "lede": "Dinos la medida, el área y tu colonia y te mandamos el precio con la entrega.",
                "fondo": {"src": "/img/jardin-residencial-plantas-pasto-tampico.webp", "ancho": 933, "alto": 1400}},
-    "otros": {"titulo": "Otros materiales decorativos", "tras_cierre": True,
+    "otros": {"titulo": "Otros materiales decorativos",
               "items": mc.otros(RUTA, ("/tezontle-rojo-tampico", "/tierra-negra-vegetal-tampico", "/marmol-blanco-tampico"),
                                 con_miniatura=True)},
     "pedido": mc.pedido("Ejemplo: piedra bola mediana para 10 m², entrega en Altamira"),
     "jsonld": {
-        "producto": mc.producto(
-            "Piedra Bola de Río para Jardín Tampico",
-            ("Piedra bola de río natural para jardines en Tampico, en medida chica, mediana y grande. Por costal y camión "
-             "volteo, con entrega a domicilio en Tampico, Madero y Altamira."),
-            f"{SITE}/img/piedra-marmol-blanca-decorativa-jardin-tampico.webp", sku="VT-PIE-001"),
+        "negocio": mc.NEGOCIO,
         "migas": MIGAS_LD,
         "speakable": mc.SPEAKABLE,
     },
@@ -144,8 +143,10 @@ PARIDAD = {
         "/piedra-bola-rio-tampico": "Era el enlace de la página a sí misma en “Otros materiales”; ahí va el mármol blanco.",
     },
     "jsonld": {
-        "Offer": ("El Offer publicaba $350 e “InStock”: ni el precio está en datos.py ni hay dato de existencias. El "
-                  "Product queda sin oferta hasta que el dueño dé el precio (pregunta 2)."),
+        "Offer": ("El Offer publicaba $350 e “InStock”: ni el precio está en datos.py ni hay dato de existencias. Sin "
+                  "oferta no sale el Product hasta que el dueño dé el precio (pregunta 2)."),
         "LocalBusiness": mc.MOTIVO_LOCALBUSINESS,
+        "Product": mc.MOTIVO_SIN_PRODUCTO,
+        "Brand": "Iba dentro del Product, que ya no sale (sin precio en datos.py; revisión 2f).",
     },
 }

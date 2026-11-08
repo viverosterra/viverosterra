@@ -606,7 +606,9 @@ class PlantillasNavegadorTest(unittest.TestCase):
             with self.subTest(ruta=ruta):
                 self.assertEqual(caja.locator('[data-vt-o="cantidad"]').inner_text(), cantidad)
                 self.assertIn(f"Área: {area} m²", mensaje)
-                self.assertTrue(mensaje.endswith("¿Me pueden dar precio de entrega a domicilio en Tampico?"))
+                self.assertTrue(mensaje.endswith("Colonia de entrega: ___\n\n¿Me pueden dar precio de entrega a domicilio en "
+                                                 "Tampico, Madero o Altamira?"))
+                self.assertNotIn("is-vacio", caja.locator(".vt-calc__cantidad").get_attribute("class"))
             page.evaluate("(a) => a.addEventListener('click', (e) => e.preventDefault())", enlace.element_handle())
             enlace.click()
             eventos = page.evaluate(
@@ -628,6 +630,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
             with self.subTest(ruta=ruta):
                 self.assertEqual(unquote(href.split("text=", 1)[1]), esperado)
                 self.assertEqual(page.locator('[data-vt-material] [data-vt-o="cantidad"]').inner_text(), "Escribe el área")
+                self.assertIn("is-vacio", page.locator("[data-vt-material] .vt-calc__cantidad").get_attribute("class"))
 
     def test_pedido_por_correo_de_materiales_valida_y_envia_los_campos_de_main(self):
         """El formulario de main (nombre, email, detalle) sigue yendo por POST a formsubmit de la cuenta oficial, ahora

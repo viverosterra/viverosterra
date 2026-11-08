@@ -16,18 +16,29 @@ const CFG = {
 const CAMION_MAIN = 'Camión volteo 8m³+ (~desde $5,000)';
 const CAMION = 'Camión volteo de 8 m³ o más (según cotización)';
 
-// Igual que esperado_de_main de tests/test_materiales_paridad.py.
-function esperadoDeMain(clave, { visibles: v, mensaje: m }) {
+// Igual que agrupar, mensaje_de_main y esperado_de_main de tests/test_materiales_paridad.py.
+const agrupar = (t) => t.replace(/(?<![\d.,])\d{4,}/g, (n) => Number(n).toLocaleString('en-US'));
+function mensajeDeMain(clave, m, capa) {
+  const lineas = m.split('\n').filter((x) => !x.startsWith('Precio estimado: ')).map(agrupar);
+  lineas[lineas.length - 1] = M.CIERRE;
+  lineas.splice(lineas.length - 2, 0, M.COLONIA);
   if (clave === 'tierra-negra') {
-    return { cantidad: v['res-m3'], presentacion: v['res-formato'].replace(CAMION_MAIN, CAMION), equivalente: v['res-costales'], mensaje: m };
+    lineas.splice(lineas.findIndex((x) => x.startsWith('Área: ')) + 1, 0, `Capa: ${Math.round(Number(capa) * 100)} cm`);
+  }
+  return lineas.join('\n');
+}
+function esperadoDeMain(clave, { entrada, visibles: v, mensaje }) {
+  const m = mensajeDeMain(clave, mensaje, entrada.capa);
+  if (clave === 'tierra-negra') {
+    return { cantidad: agrupar(v['res-m3']), presentacion: agrupar(v['res-formato'].replace(CAMION_MAIN, CAMION)),
+      equivalente: agrupar(v['res-costales']), mensaje: m };
   }
   if (clave === 'tezontle') {
-    return { cantidad: v['tez-res-m3'], presentacion: v['tez-res-formato'], equivalente: v['tez-res-costales'], mensaje: m };
+    return { cantidad: agrupar(v['tez-res-m3']), presentacion: agrupar(v['tez-res-formato']),
+      equivalente: agrupar(v['tez-res-costales']), mensaje: m };
   }
-  const lineas = m.split('\n').filter((x) => !x.startsWith('Precio estimado: '));
-  lineas[lineas.length - 1] = M.CIERRE;
-  return { cantidad: `${v['res-sacos']} sacos`, peso: v['res-peso'],
-    nota: v['res-nota'].replace(' sacos cubre ', ' sacos cubren ').replace(' A $250 c/u.', ''), mensaje: lineas.join('\n') };
+  return { cantidad: `${agrupar(String(v['res-sacos']))} sacos`, peso: agrupar(v['res-peso']),
+    nota: agrupar(v['res-nota'].replace(' sacos cubre ', ' sacos cubren ').replace(' A $250 c/u.', '')), mensaje: m };
 }
 
 test('mismos resultados que main en cada caso de casos-materiales.json', () => {
@@ -57,4 +68,21 @@ test('el mensaje es texto plano y termina con la misma pregunta en las cuatro ca
     assert.ok(t.mensaje.endsWith(M.CIERRE));
     assert.doesNotMatch(t.mensaje, /<|\$250|disponibilidad/);
   }
+});
+
+test('miles con coma en kg, sacos, costales y área, sin redondear decimales', () => {
+  assert.deepStrictEqual([999, 1000, 1250.5, 100000, 0.1].map(M.miles), ['999', '1,000', '1,250.5', '100,000', '0.1']);
+  const cfg = CFG.marmol;
+  const t = M.textos(cfg, 1250, 4, M.calcular(cfg, 1250, 4));
+  assert.deepStrictEqual([t.cantidad, t.peso, t.nota], ['3,750 sacos', '75,000 kg', '3,750 sacos cubren 1,250 m² con capa de 4 cm.']);
+});
+
+test('con resultado, el mensaje conserva la colonia por llenar y la tierra negra manda la capa', () => {
+  for (const cfg of Object.values(CFG)) {
+    const capa = cfg.clave === 'marmol' ? 5 : 0.08;
+    assert.ok(M.textos(cfg, 30, capa, M.calcular(cfg, 30, capa), 'x').mensaje.endsWith(`\n${M.COLONIA}\n\n${M.CIERRE}`));
+  }
+  assert.match(M.CIERRE, /Tampico, Madero o Altamira\?$/);
+  const cfg = CFG['tierra-negra'];
+  assert.match(M.textos(cfg, 30, 0.15, M.calcular(cfg, 30, 0.15)).mensaje, /Área: 30 m²\nCapa: 15 cm\nCantidad: 4.5 m³/);
 });

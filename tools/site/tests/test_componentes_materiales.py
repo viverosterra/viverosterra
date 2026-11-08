@@ -21,9 +21,28 @@ class CalculadoraTest(unittest.TestCase):
         self.html = cm.calculadora("vt-tierra", "material", "tierra-negra", MENSAJE, "tierra negra")
 
     def test_empieza_vacia_y_manda_el_mensaje_de_la_pagina_firmado(self):
-        self.assertIn('data-vt-o="cantidad">Escribe el área</p>', self.html)
+        self.assertIn('data-vt-o="cantidad">Escribe el área</b>', self.html)
         href = unescape(re.search(r'data-vt-o="cta" href="([^"]*)"', self.html).group(1))
         self.assertEqual(unquote(href.split("text=", 1)[1]), datos.con_firma(MENSAJE))
+
+    def test_cantidad_en_banda_y_status_solo_en_el_resultado(self):
+        """Revisión 2f: la cantidad va en la banda de la etiqueta y role="status" envuelve solo el resultado (cantidad,
+        filas y nota de mármol): ni la nota fija ni el botón se vuelven a anunciar."""
+        self.assertEqual(self.html.count('role="status"'), 1)
+        status = re.search(r'<div class="vt-calc__res" role="status">(.*?)</div>', self.html, re.S).group(1)
+        self.assertIn('class="vt-etiqueta__precio vt-calc__cantidad is-vacio"', status)
+        self.assertIn('data-vt-o="presentacion"', status)
+        self.assertIn('data-vt-o="equivalente"', status)
+        self.assertNotIn('data-vt-o="cta"', status)
+        self.assertNotIn(cm.NOTAS["tierra-negra"], status)
+        marmol = cm.calculadora("vt-marmol", "material", "marmol", MENSAJE, "mármol blanco")
+        status = re.search(r'role="status">(.*?)</div>', marmol, re.S).group(1)
+        self.assertIn('data-vt-o="peso"', status)
+        self.assertIn('data-vt-o="nota"', status)
+
+    def test_piedra_bola_pide_los_kg_y_la_colonia(self):
+        self.assertIn("Mándanos los kg y la colonia: te decimos cuántos costales o si conviene camión.",
+                      cm.calculadora("vt-piedra", "material", "piedra-bola", MENSAJE, "piedra bola"))
 
     def test_cta_con_el_cta_id_que_media_main(self):
         self.assertIn('data-cta="material:cotizarCalculado"', self.html)

@@ -1,6 +1,7 @@
 """Copias con hash de los assets del shell, para servirlas con caché inmutable de un año.
 
-La fuente vive sin hash (public/css/terra.css, terra-tienda.css, terra-plantas.css, legacy-fixes.css, public/js/terra.js) y el build
+La fuente vive sin hash (public/css/terra.css, terra-tienda.css, terra-plantas.css, terra-materiales.css,
+legacy-fixes.css, public/js/terra.js) y el build
 publica <nombre>.<10 hex>.<ext> al lado; las hojas CSS van minificadas (sin comentarios ni sangría). Se conservan dos
 copias por asset: la actual y la que sirve producción (la que enlazan las páginas de `main`), para que el HTML que quedó
 en caché justo después de un deploy no pida un archivo borrado. Cuáles son se guarda en tools/site/activos.json
@@ -20,6 +21,7 @@ FUENTES = {
     "terra.css": "css/terra.css",
     "terra-tienda.css": "css/terra-tienda.css",
     "terra-plantas.css": "css/terra-plantas.css",
+    "terra-materiales.css": "css/terra-materiales.css",
     "legacy-fixes.css": "css/legacy-fixes.css",
     "terra.js": "js/terra.js",
 }
