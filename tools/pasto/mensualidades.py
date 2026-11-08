@@ -2,7 +2,8 @@
 
 Misma fórmula que la calculadora de Clip: la comisión del plazo se suma a la estándar
 y el IVA se aplica sobre ambas. Viveros Terra recibe el contado íntegro.
-Mantener igual a public/js/vt-mensualidades.js (prueba de paridad en test_mensualidades.py).
+Mantener igual a public/js/vt-mensualidades.js (paridad en test_mensualidades.py y vt-mensualidades.test.js, con los
+casos de public/js/tests/casos-mensualidades.json).
 """
 import math
 
@@ -12,6 +13,12 @@ TASAS = {3: 0.0457, 6: 0.0757, 9: 0.1107, 12: 0.1277}
 PLAZOS = (3, 6, 9, 12)
 # (monto mínimo de contado, plazos que aplican desde ese monto), de mayor a menor
 UMBRALES = ((15000, (3, 6, 9, 12)), (5000, (3, 6)), (2000, (3,)))
+
+
+def redondear(x):
+    """Igual que Math.round de JavaScript para valores positivos: los .5 suben (round() de Python los lleva al par y
+    daba $1 menos que vt-mensualidades.js en mensualidades como 1,666.5)."""
+    return int(math.floor(x + 0.5))
 
 
 def plazos_disponibles(contado):
@@ -30,7 +37,7 @@ def planes(contado):
     out = []
     for plazo in PLAZOS:
         total = total_a_plazos(contado, plazo)
-        out.append({"plazo": plazo, "total": total, "mensualidad": round(total / plazo),
+        out.append({"plazo": plazo, "total": total, "mensualidad": redondear(total / plazo),
                     "diferencia": total - math.ceil(contado), "disponible": plazo in disponibles})
     return out
 

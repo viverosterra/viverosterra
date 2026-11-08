@@ -1,6 +1,8 @@
+import json
 import unittest
+from pathlib import Path
 
-from mensualidades import PLAZOS, planes, plazos_disponibles
+from mensualidades import PLAZOS, planes, plazos_disponibles, redondear
 
 
 class MensualidadesTest(unittest.TestCase):
@@ -49,3 +51,17 @@ class ParidadJSTest(unittest.TestCase):
         self.assertEqual(js_tasas, TASAS)
         for minimo, plazos in UMBRALES:
             self.assertIn(f"[{minimo}, [{', '.join(map(str, plazos))}]]", src)
+
+
+class ParidadConJavaScriptTest(unittest.TestCase):
+    """Mismos casos que public/js/tests/vt-mensualidades.test.js (casos-mensualidades.json)."""
+
+    def test_mensualidad_igual_a_math_round(self):
+        ruta = Path(__file__).resolve().parents[3] / "public" / "js" / "tests" / "casos-mensualidades.json"
+        for contado, plazo, total, mensualidad in json.loads(ruta.read_text(encoding="utf-8"))["casos"]:
+            p = next(x for x in planes(contado) if x["plazo"] == plazo)
+            with self.subTest(contado=contado, plazo=plazo):
+                self.assertEqual((p["total"], p["mensualidad"]), (total, mensualidad))
+
+    def test_redondear_sube_los_medios(self):
+        self.assertEqual([redondear(x) for x in (958.5, 1666.5, 2.5, 0.49)], [959, 1667, 3, 0])

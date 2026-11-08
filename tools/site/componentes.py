@@ -24,9 +24,7 @@ ETIQUETAS_PERMITIDAS = frozenset({"a", "b", "i", "em", "strong", "br", "small", 
 
 
 # ---------- utilidades ----------
-def redondear(x):
-    """Igual que Math.round de JavaScript para valores positivos (round() de Python lleva los .5 al par)."""
-    return int(math.floor(x + 0.5))
+redondear = mensualidades.redondear  # Math.round de JavaScript: la misma función que usan las mensualidades
 
 
 def dinero(n):
