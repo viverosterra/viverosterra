@@ -59,6 +59,16 @@ class FuncionesTest(unittest.TestCase):
                              [("/img/catalogo/uno-tampico.webp", 480, 600), ("/img/catalogo/dos-tampico.webp", 480, 720)])
             self.assertNotIn("img", entrada[0])
 
+    def test_actualizar_no_baja_las_retiradas_y_las_deja_sin_foto(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            pedidas = []
+            salida, nuevas = f.actualizar(({"slug": "fea", "drive": "4" * 33, "img": "/img/catalogo/fea-tampico.webp"},),
+                                          Path(tmp), bajar=lambda url: pedidas.append(url) or b"jpg",
+                                          convertir=lambda _b: webp_vp8x(480, 720), retiradas={"fea": "marca de agua"})
+            self.assertEqual((nuevas, pedidas), (0, []))
+            self.assertEqual([(e["img"], e["ancho"], e["alto"]) for e in salida], [(None, None, None)])
+            self.assertFalse((Path(tmp) / "fea-tampico.webp").exists())
+
     def test_un_error_dice_que_especie_fallo(self):
         def falla(_url):
             raise ValueError("HTTP 404")
@@ -82,10 +92,13 @@ class FuncionesTest(unittest.TestCase):
             self.assertGreater(salida.getpixel((240, 300))[3], 200)
 
 
+CON_FOTO = tuple(e for e in cd.ESPECIES if e["slug"] not in cd.FOTOS_RETIRADAS)
+
+
 class FotosPublicadasTest(unittest.TestCase):
     def test_cada_especie_con_su_foto_local(self):
         """480 px de ancho, salvo las fotos chicas declaradas (no se agrandan; pregunta 12 al dueño)."""
-        for e in cd.ESPECIES:
+        for e in CON_FOTO:
             archivo = PUBLIC / e["img"].lstrip("/") if e["img"] else None
             with self.subTest(especie=e["slug"]):
                 self.assertEqual(e["img"], f.ruta_local(e["slug"]))
@@ -99,7 +112,22 @@ class FotosPublicadasTest(unittest.TestCase):
 
     def test_sin_fotos_sobrantes(self):
         publicadas = {p.name for p in (PUBLIC / "img" / "catalogo").glob("*.webp")}
-        self.assertEqual(publicadas, {f"{e['slug']}-tampico.webp" for e in cd.ESPECIES})
+        self.assertEqual(publicadas, {f"{e['slug']}-tampico.webp" for e in CON_FOTO})
+
+    def test_fotos_retiradas_no_se_publican(self):
+        """Fotos de terceros (marca de agua, captura de buscador, logo ajeno): ni archivo, ni ruta en el JSON, ni en una
+        página publicada."""
+        rutas = {f.ruta_local(s) for s in cd.FOTOS_RETIRADAS}
+        for slug in cd.FOTOS_RETIRADAS:
+            e = cd.especie(slug)
+            with self.subTest(especie=slug):
+                self.assertFalse((PUBLIC / f.ruta_local(slug).lstrip("/")).exists())
+                self.assertEqual((e["img"], e["ancho"], e["alto"]), (None, None, None))
+        for pagina in PUBLIC.rglob("*.html"):
+            html = pagina.read_text(encoding="utf-8")
+            for ruta in rutas:
+                with self.subTest(pagina=str(pagina.relative_to(PUBLIC)), ruta=ruta):
+                    self.assertNotIn(ruta, html)
 
 
 if __name__ == "__main__":

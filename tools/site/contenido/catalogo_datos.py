@@ -2,7 +2,7 @@
 
 catalogo_especies.json se extrajo una vez del arreglo `plants` de public/catalogo.html de main (plan 2e, Tarea 4) y desde
 ahí es la fuente: nombre, nombre científico, tamaños, insignias, luz, riego, altura, flor, mantenimiento, tipo,
-descripción y la foto local (img, ancho y alto, que escribe tools/site/fotos_catalogo.py). `drive` guarda el id de Google
+descripción y la foto local (img, ancho y alto, que escribe tools/site/fotos_catalogo.py; null en las FOTOS_RETIRADAS). `drive` guarda el id de Google
 Drive de donde salió la foto: solo lo lee fotos_catalogo.py; ninguna página lo publica. Va en JSON por volumen (117
 especies), como los cuerpos del blog de la Etapa 2h.
 
@@ -64,12 +64,37 @@ BLOG_ESPECIE = {
 # Fotos de Drive de menos de 480 px de ancho (medidas en el prototipo del plan 2e, 2026-11-08, y en la descarga real del
 # mismo día, que sumó crespón astronómica y flamboyán: su original en Drive mide 400×400): se publican a su tamaño, sin
 # agrandar (igual de chicas que con /api/img), y son las primeras a reponer en la sesión de fotos (pregunta 12).
+# (Eucalipto, flor de mayo, orquídea pata de vaca, beucarnea, ixora karla y crespón astronómica también eran chicas: hoy
+# están en FOTOS_RETIRADAS.)
 FOTOS_CHICAS = frozenset({
-    "sauce-lloron", "liquidambar", "nispero", "eucalipto", "flor-de-mayo", "orquidea-pata-de-vaca", "palma-mascarena",
-    "palma-cocotera", "palma-rubelina", "plumbago", "aralia-elegantisima", "beucarnea-soyate", "ficus-lyrata-pandurata",
-    "ixora-karla", "limonaria", "papiro-estrella", "pasto-liriope", "palma-carton", "heliconia-baby-enana",
-    "lapiz-tirucalli", "petunia-silvestre", "crespon-astronomica", "flamboyan-tabachin",
+    "sauce-lloron", "liquidambar", "nispero", "palma-mascarena", "palma-cocotera", "palma-rubelina", "plumbago",
+    "aralia-elegantisima", "ficus-lyrata-pandurata", "limonaria", "papiro-estrella", "pasto-liriope", "palma-carton",
+    "heliconia-baby-enana", "lapiz-tirucalli", "petunia-silvestre", "flamboyan-tabachin",
 })
+# Fotos de terceros que no se publican desde nuestro dominio (revisión del 2026-11-08: lote A del plan 2e y la hoja de
+# contactos de las 117). Sus tarjetas llevan el marcador "sin foto" de componentes_plantas hasta que el dueño mande la
+# foto propia (fotos_catalogo.py no las vuelve a bajar). Clave: slug; valor: el motivo.
+FOTOS_RETIRADAS = {
+    "eucalipto": "Marca de agua de Shutterstock",
+    "flor-de-mayo": "Marca de agua de Shutterstock",
+    "tronadora": "Marca de agua de Dreamstime",
+    "acacia-negra": "Logo de una universidad y licencia Creative Commons sobre la foto",
+    "palma-cola-de-pescado": "Captura de Google Imágenes (botón «Visit» y título recortado)",
+    "beucarnea-soyate": "Logo de otro vivero sobre la foto",
+    "esparrago-meyeri": "Marca de agua de un sitio de venta en línea",
+    "clorofito-liston": "Logo de una tienda en línea en la maceta",
+    "polyalthia": "Marca de agua de un banco de imágenes en mosaico",
+    "wudelia-rastrera": "Marca de agua de otro vivero («redviverista»)",
+    "orquidea-pata-de-vaca": "Recorte con el cuadriculado de transparencia falso pegado en la foto",
+    "ixora-karla": "Marca de agua de otro vivero («redviverista»)",
+    "lluvia-de-oro": "Marca de agua en mosaico diagonal de un banco de imágenes",
+    "parota-orejon": "Restos de marca de agua alrededor del recorte",
+    "eleagnus": "Logo de otro vivero («Concepto Verde») en la bolsa",
+    "crespon-astronomica": "Captura de pantalla: el recorte va dentro de un marco gris",
+}
+# Especies cuya foto el dueño confirmó que se tomó en el vivero: solo ellas llevan "En nuestro vivero" en el pie y en el
+# alt. Empieza vacía a propósito (muchas fotos son de estudio o de bancos de imágenes); la llena el dueño, slug por slug.
+FOTOS_VIVERO_CONFIRMADAS = frozenset()
 # Altura adulta: (clave, etiqueta, máximo en cm o None).
 TAMANOS = (("chica", "Hasta 1.5 m", 150), ("mediana", "De 1.5 a 5 m", 500), ("grande", "Más de 5 m", None))
 
@@ -95,6 +120,14 @@ ORDENADAS = tuple(sorted(ESPECIES, key=lambda e: normalizar(e["name"])))
 
 def especie(clave):
     return POR_SLUG[clave]
+
+
+def tiene_foto(e):
+    return bool(e.get("img")) and e["slug"] not in FOTOS_RETIRADAS
+
+
+def foto_del_vivero(e):
+    return tiene_foto(e) and e["slug"] in FOTOS_VIVERO_CONFIRMADAS
 
 
 def _sin_etiquetas(texto):

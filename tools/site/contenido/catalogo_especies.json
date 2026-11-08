@@ -71,9 +71,9 @@
   "tipo": "Árbol florido banqueta",
   "desc": "Árbol de floración espectacular en verano. Sus racimos de flores cubren toda la copa. Muy popular en jardines residenciales y avenidas por su espectacular belleza.",
   "drive": "1eTgwu_mJpK3v1ZHjuTR1lm3t5F68sqXS",
-  "img": "/img/catalogo/crespon-astronomica-tampico.webp",
-  "ancho": 400,
-  "alto": 400
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "lluvia-de-oro",
@@ -96,9 +96,9 @@
   "tipo": "Árbol florido",
   "desc": "Uno de los árboles de flor más llamativos. Sus racimos de flores amarillas intensas cubren el árbol entero en primavera. Perfecto para jardines y banquetas.",
   "drive": "1CIZhdd22WzC5E3IWT_ZakMjKVQcXrCiL",
-  "img": "/img/catalogo/lluvia-de-oro-tampico.webp",
-  "ancho": 480,
-  "alto": 569
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "flamboyan-tabachin",
@@ -342,9 +342,9 @@
   "tipo": "Árbol rápido crecimiento",
   "desc": "Árbol de crecimiento muy rápido. Su aroma mentolado es muy agradable. Excelente para cortinas rompevientos y proyectos que necesitan sombra rápida.",
   "drive": "1AEPUs8_RX60NicSnC_C1GbhwHpyPn8Bk",
-  "img": "/img/catalogo/eucalipto-tampico.webp",
-  "ancho": 146,
-  "alto": 280
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "parota-orejon",
@@ -365,9 +365,9 @@
   "tipo": "Árbol gigante",
   "desc": "Uno de los árboles más grandes de México. Copa muy amplia que da sombra abundante. Muy resistente al calor y sequía. Ideal para proyectos de gran escala.",
   "drive": "1oCDAXja-z-1EG8ocItcR2l5PwEliKsmV",
-  "img": "/img/catalogo/parota-orejon-tampico.webp",
-  "ancho": 480,
-  "alto": 336
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "acacia-negra",
@@ -390,9 +390,9 @@
   "tipo": "Árbol banqueta",
   "desc": "Árbol de rápido crecimiento y bajo mantenimiento. Sus flores amarillas son muy ornamentales. Excelente para banquetas y camellones. Muy resistente al calor.",
   "drive": "1mRiIS7Gv2eQhK2kNAqfLYhfIqYXR1w89",
-  "img": "/img/catalogo/acacia-negra-tampico.webp",
-  "ancho": 480,
-  "alto": 640
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "ficus-benjamin",
@@ -435,9 +435,9 @@
   "tipo": "Árbol florido",
   "desc": "Árbol de flores amarillas trompeta muy llamativas. Florece casi todo el año. Muy resistente al calor y sequía. Árbol nacional de Trinidad y Tobago.",
   "drive": "19ecEa8ReXUZzeiEShv16SWlrsThQFyO8",
-  "img": "/img/catalogo/tronadora-tampico.webp",
-  "ancho": 480,
-  "alto": 434
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "huizache",
@@ -506,9 +506,9 @@
   "tipo": "Árbol columnar banqueta",
   "desc": "Árbol de porte columnar muy elegante. Sus hojas onduladas son muy ornamentales. Excelente para banquetas, ya que crece hacia arriba sin invadir espacio lateral.",
   "drive": "1Lqal7lZ1jiIHERml2bIUmy0aGzziWc98",
-  "img": "/img/catalogo/polyalthia-tampico.webp",
-  "ancho": 480,
-  "alto": 811
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "flor-de-mayo",
@@ -531,9 +531,9 @@
   "tipo": "Árbol florido banqueta",
   "desc": "El árbol más fragante del trópico. Sus flores de cinco pétalos en blanco, rosa y amarillo son icónicas. Muy resistente al calor y la sequía.",
   "drive": "1O813sCMGAr6p_C0PLC9s1BZpKb1cGAaO",
-  "img": "/img/catalogo/flor-de-mayo-tampico.webp",
-  "ancho": 238,
-  "alto": 280
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "hule",
@@ -579,9 +579,9 @@
   "tipo": "Árbol florido banqueta",
   "desc": "Árbol de flores similares a orquídeas muy llamativas. Sus hojas en forma de pezuña de vaca son únicas. Una de las floaciones más elegantes de la región.",
   "drive": "17r2f7WY8RvJfFCN53aLpeFuHAdPrN1CA",
-  "img": "/img/catalogo/orquidea-pata-de-vaca-tampico.webp",
-  "ancho": 360,
-  "alto": 360
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "ceiba",
@@ -815,9 +815,9 @@
   "tipo": "Palma",
   "desc": "Palma de hojas con forma de cola de pez única. Sus folíolos irregulares le dan una textura muy especial. Muy decorativa en jardines tropicales y exteriores.",
   "drive": "1DkGR-wrPQ47YYaIsg9ZoI2Z82mi79--G",
-  "img": "/img/catalogo/palma-cola-de-pescado-tampico.webp",
-  "ancho": 480,
-  "alto": 680
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "palma-mascarena",
@@ -1435,9 +1435,9 @@
   "tipo": "Árbol suculento",
   "desc": "El pata de elefante. Su tronco hinchado almacena agua. Follaje largo y ondulado muy ornamental. Muy resistente a la sequía. Codiciado en jardines modernos.",
   "drive": "1nbuXOmnGL0QYOkUBH-Q_nM1_ptydvn-k",
-  "img": "/img/catalogo/beucarnea-soyate-tampico.webp",
-  "ancho": 381,
-  "alto": 492
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "box-arrayan-bola",
@@ -1774,9 +1774,9 @@
   "tipo": "Interior / Exterior",
   "desc": "Tallos erectos muy densos como plumas verdes. Más compacto que el springery. Ideal para composiciones en maceta y jardines sombreados.",
   "drive": "131sDbYulpLdMr646jxYTvFH4xk29Z45n",
-  "img": "/img/catalogo/esparrago-meyeri-tampico.webp",
-  "ancho": 480,
-  "alto": 363
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "eugenia",
@@ -1975,9 +1975,9 @@
   "tipo": "Arbusto florido",
   "desc": "Arbusto de floración continua en tonos naranja-rojo. Sus flores en racimos compactos se mantienen casi todo el año. Perfecta para setos con color.",
   "drive": "13PLyS4DeHVOA0gu12D_4sRZ3PAilnrPM",
-  "img": "/img/catalogo/ixora-karla-tampico.webp",
-  "ancho": 455,
-  "alto": 720
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "jazmin",
@@ -2211,9 +2211,9 @@
   "tipo": "Cubresuelos",
   "desc": "Cubresuelos de flores amarillas que florece casi todo el año. Crece muy rápido. Perfecta para taludes, bordes y jardines de bajo mantenimiento.",
   "drive": "1MbNqUWWXlah_79CoinEswxFJWJteXvGg",
-  "img": "/img/catalogo/wudelia-rastrera-tampico.webp",
-  "ancho": 480,
-  "alto": 433
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "mussaenda",
@@ -2556,9 +2556,9 @@
   "tipo": "Arbusto seto",
   "desc": "Arbusto de hojas plateadas brillantes muy decorativo. Resistente al calor, sequía y vientos. Excelente para setos mixtos y jardines de bajo mantenimiento.",
   "drive": "1sdu-rL3XG1rbigjcF9PX8N6yKZjcaDpC",
-  "img": "/img/catalogo/eleagnus-tampico.webp",
-  "ancho": 480,
-  "alto": 480
+  "img": null,
+  "ancho": null,
+  "alto": null
  },
  {
   "slug": "dracena-marginata",
@@ -2695,8 +2695,8 @@
   "tipo": "Interior / Colgante",
   "desc": "Planta colgante con hojas verdes y blancas rayadas. Purificadora de aire muy eficiente. Produce pequeñas plantas bebé colgantes muy decorativas. Clásica e indestructible.",
   "drive": "1LFzD4F1wfpi1au082xJ6oI6DEIvERAOk",
-  "img": "/img/catalogo/clorofito-liston-tampico.webp",
-  "ancho": 480,
-  "alto": 720
+  "img": null,
+  "ancho": null,
+  "alto": null
  }
 ]

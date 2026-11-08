@@ -29,6 +29,22 @@ class CatalogoDatosTest(unittest.TestCase):
                 self.assertTrue(e["sz"] and all(isinstance(t, str) for t in e["sz"]))
                 self.assertNotIn("<", e["luz"] + e["desc"])
 
+    def test_fotos_retiradas_y_confirmadas_declaradas(self):
+        """FOTOS_RETIRADAS: especies reales, cada una con su motivo; FOTOS_VIVERO_CONFIRMADAS (las llena el dueño): especies
+        reales con foto. Ninguna foto chica está retirada (la lista de chicas es de fotos publicadas)."""
+        self.assertIsInstance(cd.FOTOS_VIVERO_CONFIRMADAS, frozenset)
+        self.assertLessEqual(set(cd.FOTOS_RETIRADAS), set(cd.POR_SLUG))
+        self.assertLessEqual(cd.FOTOS_VIVERO_CONFIRMADAS, set(cd.POR_SLUG) - set(cd.FOTOS_RETIRADAS))
+        self.assertFalse(cd.FOTOS_CHICAS & set(cd.FOTOS_RETIRADAS))
+        for slug, motivo in cd.FOTOS_RETIRADAS.items():
+            with self.subTest(especie=slug):
+                self.assertGreater(len(motivo), 10)
+                self.assertFalse(cd.tiene_foto(cd.especie(slug)))
+        self.assertTrue(cd.tiene_foto(cd.especie("palma-real")))
+        for slug in ("eucalipto", "flor-de-mayo", "tronadora", "acacia-negra", "palma-cola-de-pescado", "beucarnea-soyate",
+                     "esparrago-meyeri", "clorofito-liston", "polyalthia", "wudelia-rastrera", "orquidea-pata-de-vaca"):
+            self.assertIn(slug, cd.FOTOS_RETIRADAS)
+
     def test_cada_especie_de_main_sigue_con_su_cientifico_o_la_correccion_declarada(self):
         por_nombre = {e["name"]: e for e in cd.ESPECIES}
         for nombre, cientifico in CAPTURA["/catalogo"]["especies"]:

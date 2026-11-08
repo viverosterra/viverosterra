@@ -1,7 +1,8 @@
 """Fotos del catálogo en local (Etapa 2e): baja una vez de Google Drive la foto de cada especie y la publica como
 public/img/catalogo/<slug>-tampico.webp (480 px de ancho o el de la foto si es más chica, WebP calidad 72), con su ancho
 y alto en contenido/catalogo_especies.json. Sustituye al proxy /api/img en el catálogo y el hub (el proxy se borra en la
-Etapa 5). Una foto chica nunca se agranda: las 23 que miden menos de 480 px están en catalogo_datos.FOTOS_CHICAS.
+Etapa 5). Una foto chica nunca se agranda: las que miden menos de 480 px están en catalogo_datos.FOTOS_CHICAS. Las de
+catalogo_datos.FOTOS_RETIRADAS (fotos de terceros) no se bajan ni se publican: quedan con img, ancho y alto en null.
 
 Uso (una vez; requiere red y Pillow): python3 tools/site/fotos_catalogo.py
 No reescribe las fotos que ya existen (solo vuelve a leer su tamaño). Cada descarga se valida: respuesta 200 de
@@ -92,12 +93,17 @@ def dimensiones_webp(datos):
     raise ValueError(f"WebP desconocido: {tipo!r}")
 
 
-def actualizar(especies, destino=DESTINO, bajar=descargar, convertir=a_webp):
-    """Lista nueva de especies con img, ancho y alto (no muta la de entrada) y cuántas fotos se bajaron."""
+def actualizar(especies, destino=DESTINO, bajar=descargar, convertir=a_webp, retiradas=None):
+    """Lista nueva de especies con img, ancho y alto (no muta la de entrada) y cuántas fotos se bajaron. Las retiradas
+    (por omisión catalogo_datos.FOTOS_RETIRADAS) quedan sin foto y no se bajan."""
+    retiradas = cd.FOTOS_RETIRADAS if retiradas is None else retiradas
     destino = Path(destino)
     destino.mkdir(parents=True, exist_ok=True)
     salida, nuevas = [], 0
     for e in especies:
+        if e["slug"] in retiradas:
+            salida.append({**e, "img": None, "ancho": None, "alto": None})
+            continue
         archivo = destino / f"{e['slug']}-tampico.webp"
         if not archivo.exists():
             try:
@@ -113,7 +119,8 @@ def actualizar(especies, destino=DESTINO, bajar=descargar, convertir=a_webp):
 def main():
     especies, nuevas = actualizar(cd.cargar())
     cd.ARCHIVO.write_text(json.dumps(especies, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    print(f"{nuevas} fotos nuevas · {len(especies)} especies con foto local en public/img/catalogo")
+    con_foto = sum(1 for e in especies if e["img"])
+    print(f"{nuevas} fotos nuevas · {con_foto} de {len(especies)} especies con foto local en public/img/catalogo")
 
 
 if __name__ == "__main__":
