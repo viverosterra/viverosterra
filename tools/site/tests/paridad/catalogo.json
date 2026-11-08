@@ -1,0 +1,36 @@
+{
+ "meta": {
+  "title": "Catálogo de plantas con precio en Tampico: arma tu lista y cotiza · Viveros Terra",
+  "description": "Más de 200 variedades de plantas, palmas, árboles y pasto en Tampico. Cotizador, filtros por categoría y entrega a domicilio. Viveros Terra.",
+  "robots": "index, follow",
+  "canonical": "https://www.viverosterra.com/catalogo",
+  "og:type": "website",
+  "og:url": "https://www.viverosterra.com/catalogo",
+  "og:title": "Catálogo de plantas con precio en Tampico: arma tu lista y cotiza · Viveros Terra",
+  "og:description": "Más de 200 variedades disponibles con cotizador integrado. Plantas, palmas, árboles, pasto y materiales para jardines en Tampico, Madero y Altamira.",
+  "og:image": "https://www.viverosterra.com/img/plantas-tropicales-tampico-viveros.webp",
+  "og:image:width": "1200",
+  "og:image:height": "630",
+  "og:site_name": "Viveros Terra",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "BreadcrumbList",
+  "ItemList",
+  "ListItem"
+ ],
+ "encabezados": [
+  "Catálogo de Plantas, Palmas y Árboles en Tampico.",
+  "¿No encontraste lo que buscas?",
+  "Pasto en Rollo Natural",
+  "Materiales & Tierra",
+  "¿Necesitas pasto o material especial?",
+  "${p.name}"
+ ],
+ "faq": [],
+ "precios": [],
+ "enlaces": [
+  "/pasto-sintetico",
+  "/politicas"
+ ]
+}

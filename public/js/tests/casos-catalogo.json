@@ -1,0 +1,1302 @@
+{
+ "origen": "public/catalogo.html de main (b32e503), antes de la Etapa 2e",
+ "atributos": [
+  {
+   "name": "Olivo Negro",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Encino Siempreverde",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Crespón Astronómica",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Lluvia de Oro",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Flamboyán Tabachín",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Neem",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Jacaranda",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palo de Rosa Guayacán",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Fresno",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "otro",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Sauce Llorón",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "abundante",
+   "flor": "sinflor",
+   "mant": "otro",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Magnolia",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "otro",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Liquidambar",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Níspero",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Eucalipto",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Parota Orejon",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Acacia Negra",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Ficus Benjamin",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "otro",
+   "uso": []
+  },
+  {
+   "name": "Tronadora",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Huizache",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Sabino Ahuehuete",
+   "luz": [
+    "sol"
+   ],
+   "riego": "abundante",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Polyalthia",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Flor de Mayo",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Hule",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Orquídea Pata de Vaca",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "banqueta"
+   ]
+  },
+  {
+   "name": "Ceiba",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Coco Plumoso",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Cola de Zorra",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Real",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Areca",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "otro",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Palma Washingtona",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Cica Revoluta",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Kerpis",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Bismarkia",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Cola de Pescado",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Mascareña",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Triangular",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Cocotera",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Estrella",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Palma Seifrixi Bambú",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Palma Licuala",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "otro",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Palma Datilera",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Rubelina",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Viajera Ravenala",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma de Madagascar",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Ave de Paraíso",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Monstera Piñanona",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Sansiviera",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Bambú Tarro",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "otro",
+   "uso": []
+  },
+  {
+   "name": "Palma ZZ Plant",
+   "luz": [
+    "media"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Agapando",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Bugambilea Mini Morada",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Bugambilea Envarada",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Plumbago",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Agave Atenuata",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Árbol de la Abundancia",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Aralia Golden",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Aralia Elegantísima",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Azalea",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "otro",
+   "uso": []
+  },
+  {
+   "name": "Adelfa Enana",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Adenium Rosa del Desierto",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Beucarnea Soyate",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Box Arrayán Bola",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "otro",
+   "uso": []
+  },
+  {
+   "name": "Cactus Órgano",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Casuarina",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Cipres Italiano",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Citronella",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Cola de Caballo",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "abundante",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Copa de Oro",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Croto Petra",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Croto Tornillo",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Cuna de Moisés",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Duranta Cubana",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Duranta Golden",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Duranta Zafiro",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Esparrago Springery",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Esparrago Meyeri",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Eugenia",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Ficus Lyrata Pandurata",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Floripondio",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "otro",
+   "uso": []
+  },
+  {
+   "name": "Fornio Phormium",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Helecho Boston",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "otro",
+   "uso": []
+  },
+  {
+   "name": "Helecho Macho",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Helecho Peine",
+   "luz": [
+    "sombra"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Hoja Elegante Alocasia",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "otro",
+   "uso": []
+  },
+  {
+   "name": "Ixora Karla",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Jazmín",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Kalanchoe",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Limonaria",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Papiro Egipcio",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "abundante",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Papiro Estrella",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "abundante",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Pasto Dianela",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Pasto Liriope",
+   "luz": [
+    "media"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Philodendro Xanadu",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Sansiviera Variegada",
+   "luz": [
+    "media"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Uva de Playa",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Wudelia Rastrera",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Mussaenda",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "otro",
+   "uso": []
+  },
+  {
+   "name": "Floripondio",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "otro",
+   "uso": []
+  },
+  {
+   "name": "Palma Cica Circinalis",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Palma Cartón",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Arbusto de Playa",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Aralia Shaflera",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Box Arrayán Pino",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "otro",
+   "uso": []
+  },
+  {
+   "name": "Aspidistra",
+   "luz": [
+    "media"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Tradescantia Barquilla Morada",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Heliconia Baby Enana",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Laurel de la India Formado",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Clavo Enano Pittosporum",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Lirio Persa",
+   "luz": [
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Dracena Compacta",
+   "luz": [
+    "media"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Galatea Amoena",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "otro",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Eleagnus",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Dracena Marginata",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  },
+  {
+   "name": "Lápiz Tirucalli",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Moneda Enredadera",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Petunia Silvestre",
+   "luz": [
+    "sol"
+   ],
+   "riego": "poco",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Podocarpus Japanese Yew",
+   "luz": [
+    "media",
+    "sol"
+   ],
+   "riego": "moderado",
+   "flor": "sinflor",
+   "mant": "bajo",
+   "uso": []
+  },
+  {
+   "name": "Clorofito Listón",
+   "luz": [
+    "media"
+   ],
+   "riego": "moderado",
+   "flor": "conflor",
+   "mant": "bajo",
+   "uso": [
+    "interior"
+   ]
+  }
+ ],
+ "mensajes": [
+  {
+   "lista": [
+    {
+     "name": "Palma Areca",
+     "sc": "Dypsis lutescens",
+     "sz": "1 m",
+     "qty": 3
+    }
+   ],
+   "mensaje": "Hola Viveros Terra\n\nQuisiera cotizar lo siguiente:\n\n• Palma Areca (1 m) × 3\n\nTotal: 1 variedad, 3 unidades\n\n¿Pueden darme precio y disponibilidad?"
+  },
+  {
+   "lista": [
+    {
+     "name": "Olivo Negro",
+     "sc": "Bucida buceras",
+     "sz": "2-3 m",
+     "qty": 10
+    },
+    {
+     "name": "Duranta Cubana",
+     "sc": "Duranta erecta",
+     "sz": "Medida especial",
+     "qty": 1
+    }
+   ],
+   "mensaje": "Hola Viveros Terra\n\nQuisiera cotizar lo siguiente:\n\n• Olivo Negro (2-3 m) × 10\n• Duranta Cubana (Medida especial) × 1\n\nTotal: 2 variedades, 11 unidades\n\n¿Pueden darme precio y disponibilidad?"
+  }
+ ]
+}
