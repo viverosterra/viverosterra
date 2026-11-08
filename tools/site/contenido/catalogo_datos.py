@@ -61,13 +61,14 @@ BLOG_ESPECIE = {
     "bugambilea-mini-morada": "/blog/buganvilia-tampico-cuidados-floracion",
     "bugambilea-envarada": "/blog/buganvilia-tampico-cuidados-floracion",
 }
-# Fotos de Drive de menos de 480 px de ancho (medidas en el prototipo del plan 2e, 2026-11-08): se publican a su tamaño,
-# sin agrandar (igual de chicas que con /api/img), y son las primeras a reponer en la sesión de fotos (pregunta 12).
+# Fotos de Drive de menos de 480 px de ancho (medidas en el prototipo del plan 2e, 2026-11-08, y en la descarga real del
+# mismo día, que sumó crespón astronómica y flamboyán: su original en Drive mide 400×400): se publican a su tamaño, sin
+# agrandar (igual de chicas que con /api/img), y son las primeras a reponer en la sesión de fotos (pregunta 12).
 FOTOS_CHICAS = frozenset({
     "sauce-lloron", "liquidambar", "nispero", "eucalipto", "flor-de-mayo", "orquidea-pata-de-vaca", "palma-mascarena",
     "palma-cocotera", "palma-rubelina", "plumbago", "aralia-elegantisima", "beucarnea-soyate", "ficus-lyrata-pandurata",
     "ixora-karla", "limonaria", "papiro-estrella", "pasto-liriope", "palma-carton", "heliconia-baby-enana",
-    "lapiz-tirucalli", "petunia-silvestre",
+    "lapiz-tirucalli", "petunia-silvestre", "crespon-astronomica", "flamboyan-tabachin",
 })
 # Altura adulta: (clave, etiqueta, máximo en cm o None).
 TAMANOS = (("chica", "Hasta 1.5 m", 150), ("mediana", "De 1.5 a 5 m", 500), ("grande", "Más de 5 m", None))
