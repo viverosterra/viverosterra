@@ -191,10 +191,7 @@ POR_ARCHIVO = (
      'Desde <strong>$350</strong></span><span class="svc-hero__price-alt">crespón $350 · jacaranda $450 · flamboyán $500</span>',
      f'Desde <strong>${P["flamboyan"]}</strong></span><span class="svc-hero__price-alt">flamboyán ${P["flamboyan"]} · '
      'crespón $350 · jacaranda $450</span>'),
-    ("tools/servicios/pages.py",
-     'price_pre="Desde", price="$350", price_unit="", price_alt="· crespón $350 · jacaranda $450 · flamboyán $500",',
-     f'price_pre="Desde", price="${P["flamboyan"]}", price_unit="", price_alt="· flamboyán ${P["flamboyan"]} · crespón $350 '
-     '· jacaranda $450",'),
+    # (La portada de tools/servicios/pages.py ya no existe: desde 2e la página sale de contenido/arboles_ornamentales.py.)
     # Garantía de plantas siempre con su condición.
     ("public/catalogo.html",
      "</svg>Garantía de arraigo 30 días</span>",
