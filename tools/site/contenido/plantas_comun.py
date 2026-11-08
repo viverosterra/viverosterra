@@ -102,7 +102,3 @@ def lista_ld(nombre, especies_):
         {"@type": "ListItem", "position": i, "name": f"{cd.especie(s)['name']} ({cd.especie(s)['sc']})"}
         for i, s in enumerate(especies_, 1)]}
 
-
-def fotos_no_publicables(items):
-    """Slugs de items (slug, texto, altura) cuya foto no se puede usar en una página de categoría (vacío = todas bien)."""
-    return [s for s, _t, _a in items if not cd.tiene_foto(cd.especie(s)) or s in FOTOS_SOLO_CATALOGO]

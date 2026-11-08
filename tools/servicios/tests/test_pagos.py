@@ -10,7 +10,8 @@ from pages import PAGES  # noqa: E402
 
 CON_PLANTILLA = ("pasto-en-rollo-tampico", "diseno-jardines-tampico", "mantenimiento-jardines-tampico",
                  "sistema-riego-tampico", "mayoreo-pasto-tampico", "palmas-mayoreo-proyectos",
-                 "plantas-palmas-arboles-tampico")
+                 "plantas-palmas-arboles-tampico", "palmas-tropicales-tampico", "plantas-para-jardin-tampico",
+                 "arboles-ornamentales-tampico", "arboles-para-banqueta-tampico", "plantas-de-interior-tampico")
 
 
 class PaginasConPlantillaTest(unittest.TestCase):
