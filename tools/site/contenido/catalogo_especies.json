@@ -1311,7 +1311,7 @@
   "slug": "aralia-golden",
   "cat": "plantas",
   "name": "Aralia Golden",
-  "sc": "Schefflera arboricola 'Gold'",
+  "sc": "Schefflera arboricola",
   "sz": [
    "20-25 cm",
    "80 cm"
@@ -1694,7 +1694,7 @@
   "slug": "duranta-golden",
   "cat": "plantas",
   "name": "Duranta Golden",
-  "sc": "Duranta erecta 'Gold'",
+  "sc": "Duranta erecta",
   "sz": [
    "30 cm",
    "40-60 cm"

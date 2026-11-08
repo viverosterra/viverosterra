@@ -33,8 +33,8 @@ CIENTIFICOS_CORREGIDOS = {
     "Bahuinia sp.": "Bauhinia sp.",
     # Revisión 2e: el cultivar va entre comillas simples y sin un «var.» colgando; solo el que el nombre común da.
     "Nerium oleander nana": "Nerium oleander 'Nana'",
-    "Schefflera arboricola var.": "Schefflera arboricola 'Gold'",  # Aralia Golden
-    "Duranta erecta var.": "Duranta erecta 'Gold'",  # Duranta Golden
+    "Schefflera arboricola var.": "Schefflera arboricola",  # Aralia Golden
+    "Duranta erecta var.": "Duranta erecta",  # Duranta Golden
 }
 _SAL = "/blog/plantas-resistentes-sal-golfo-tampico"
 # Especies que aguantan salitre, con su fuente publicada (la tabla del artículo o la ficha de main). Pregunta 6 al dueño.

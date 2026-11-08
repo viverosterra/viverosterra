@@ -126,7 +126,7 @@ CONTENIDO = {
     "guias": {"titulo": "Guías de palmas", "items": (
         ("Palma areca en Tampico: cuidados", "/blog/palma-areca-tampico"),
         ("Palma real: cuidados y crecimiento", "/blog/palma-real-roystonea-regia-tampico"),
-        ("Las palmas más pedidas en Tampico: guía de precios", "/blog/palmas-mas-vendidas-tampico-precios"))},
+        ("Guía de precios de palmas en Tampico", "/blog/palmas-mas-vendidas-tampico-precios"))},
     "relacionados": {"titulo": "Más servicios en Viveros Terra", "items": pc.otras_subcategorias(RUTA)},
     "cierre": {"titulo": "¿Listo para cotizar?",
                "lede": "Dinos qué palma buscas, la altura y la colonia; te respondemos con precio por tamaño.",

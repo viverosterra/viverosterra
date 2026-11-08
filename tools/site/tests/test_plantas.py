@@ -20,7 +20,7 @@ from contenido import plantas_comun as pc  # noqa: E402
 PUBLIC = paginas.PUBLIC
 # Texto del enlace a la guía del blog (revisión 2e: era «Las palmas más vendidas…»). Es el título de la guía de
 # precios, no una afirmación sobre las tarjetas; fuera de ese enlace «más pedidas» sigue sin ir.
-GUIA_PALMAS = "Las palmas más pedidas en Tampico: guía de precios"
+GUIA_PALMAS = "Guía de precios de palmas en Tampico"
 
 
 def html(ruta):
