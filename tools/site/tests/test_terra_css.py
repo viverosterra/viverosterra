@@ -1,7 +1,12 @@
 import gzip
 import re
+import sys
 import unittest
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+import activos  # noqa: E402
 
 PUBLIC = Path(__file__).resolve().parents[3] / "public"
 TERRA = PUBLIC / "css" / "terra.css"
@@ -81,7 +86,8 @@ class TerraCssTest(unittest.TestCase):
     def test_presupuesto(self):
         # Spec §8.2: meta de 10 KB con gzip. Desde la Etapa 2 terra.css también trae los componentes del cuerpo y
         # sustituye, en cada página migrada, ~70 KB de CSS viejo (tailwind, design-system, servicios y <style>).
-        datos = self.css.encode("utf-8")
+        # Se mide la copia publicada (activos.minificar_css: sin comentarios ni sangría), que es la que se transfiere.
+        datos = activos.minificar_css(self.css).encode("utf-8")
         self.assertLess(len(gzip.compress(datos, mtime=0)), 10 * 1024)
         self.assertLess(len(datos), 48 * 1024)
 

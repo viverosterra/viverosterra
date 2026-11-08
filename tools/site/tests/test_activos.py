@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import sys
 import tempfile
 import unittest
@@ -21,6 +22,7 @@ class ActivosTest(unittest.TestCase):
         self.registro = Path(tmp.name) / "activos.json"
         self.escribir(".vt-a{}")
         (self.pub / "css" / "legacy-fixes.css").write_text(".pt-0{}", encoding="utf-8")
+        (self.pub / "css" / "terra-tienda.css").write_text(".vt-tienda .vt-x{}", encoding="utf-8")
         (self.pub / "js" / "terra.js").write_text("void 0;", encoding="utf-8")
 
     def escribir(self, css):
@@ -50,7 +52,7 @@ class ActivosTest(unittest.TestCase):
 
     def test_publicar_copia_la_fuente(self):
         urls = self.publicar()
-        self.assertEqual((self.pub / urls["terra.css"].lstrip("/")).read_text(encoding="utf-8"), ".vt-a{}")
+        self.assertEqual((self.pub / urls["terra.css"].lstrip("/")).read_text(encoding="utf-8"), ".vt-a{}\n")
         self.assertTrue((self.pub / "css" / "terra.css").exists())
 
     def test_conserva_la_que_enlazan_las_paginas_aunque_sea_la_mas_vieja(self):
@@ -108,6 +110,16 @@ class ActivosTest(unittest.TestCase):
         self.escribir(".vt-b{}")
         self.escribir(".vt-a{}")
         self.assertEqual(antes, activos.urls(self.pub)["terra.css"])
+
+    def test_css_publicado_sin_comentarios_ni_sangria_y_con_las_mismas_reglas(self):
+        css = "/* nota */\n.vt-a{\n  content:\"a  b\";\n  margin:0 auto}\n\n@media (min-width:768px){\n  .vt-b{x:y}\n}\n"
+        self.assertEqual(activos.minificar_css(css),
+                         '.vt-a{\ncontent:"a  b";\nmargin:0 auto}\n@media (min-width:768px){\n.vt-b{x:y}\n}\n')
+        terra = (activos.PUBLIC / "css" / "terra.css").read_text(encoding="utf-8")
+
+        def reglas(texto):
+            return [r.strip() for r in re.findall(r"[^{}]+\{", re.sub(r"/\*.*?\*/", "", texto, flags=re.S))]
+        self.assertEqual(reglas(activos.minificar_css(terra)), reglas(terra))
 
     def test_registro_del_repo_coincide_con_lo_publicado(self):
         registro = json.loads(activos.REGISTRO.read_text(encoding="utf-8"))

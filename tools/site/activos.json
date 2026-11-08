@@ -1,11 +1,14 @@
 {
  "terra.css": [
-  "/css/terra.ed57f9f3b4.css",
-  "/css/terra.3eaa08fd32.css"
+  "/css/terra.ef14a60738.css",
+  "/css/terra.ed57f9f3b4.css"
+ ],
+ "terra-tienda.css": [
+  "/css/terra-tienda.244094046d.css"
  ],
  "legacy-fixes.css": [
-  "/css/legacy-fixes.6fb87ff99e.css",
-  "/css/legacy-fixes.9bebda7992.css"
+  "/css/legacy-fixes.725fd1c858.css",
+  "/css/legacy-fixes.6fb87ff99e.css"
  ],
  "terra.js": [
   "/js/terra.fb37c1434f.js",

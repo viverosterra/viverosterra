@@ -198,6 +198,7 @@
 .vt-pagina img{display:block;max-width:100%;height:auto}
 .vt-pagina main a:not(.vt-btn){color:var(--vt-field);text-underline-offset:3px;text-decoration-thickness:1px}
 .vt-pagina main a:not(.vt-btn):hover{color:var(--vt-field-deep)}
+.vt-pagina main .vt-cierre a:not(.vt-btn){color:var(--vt-on-dark)}
 .vt-pagina main :focus-visible{outline:2px solid var(--vt-field);outline-offset:2px}
 .vt-pagina main h1,.vt-pagina main h2,.vt-pagina main h3{margin:0;font-weight:800;line-height:1.02;letter-spacing:-.012em;font-variation-settings:"wdth" var(--vt-wdth-tight);text-wrap:balance}
 .vt-pagina main p{margin:0 0 1em}
@@ -450,6 +451,16 @@
 .vt-sim .sim-plan__more{display:block;color:var(--vt-muted)}
 .vt-sim .sim-plan.is-selected{border-color:var(--vt-field);background:var(--vt-field-100)}
 .vt-sim .sim-plan.is-disabled{opacity:.55;cursor:not-allowed}
+
+/* ---------- formas de contratar (máx. 3, cada una con su mensaje) ---------- */
+.vt-modos{display:grid;gap:20px;list-style:none}
+@media (min-width:768px){.vt-modos{grid-template-columns:repeat(auto-fit,minmax(0,1fr))}}
+.vt-modo{display:grid;gap:14px;align-content:start;padding:24px 20px;border:1px solid var(--vt-line);background:var(--vt-card)}
+.vt-modo--rec{border:1.5px solid var(--vt-field)}
+.vt-pagina main .vt-modo p{margin:0}
+.vt-pagina main .vt-modo__n{font-size:var(--vt-text-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-muted)}
+.vt-modo__precio small{display:block;margin-top:4px;font-size:var(--vt-text-sm);color:var(--vt-muted)}
+.vt-modo .vt-btn{width:100%}
 
 /* ---------- proceso NOSOTROS / TÚ / JUNTOS ---------- */
 .vt-pasos{counter-reset:paso;display:grid;list-style:none;border-top:1px solid var(--vt-ink)}

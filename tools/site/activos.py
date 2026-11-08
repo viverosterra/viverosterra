@@ -1,7 +1,7 @@
 """Copias con hash de los assets del shell, para servirlas con caché inmutable de un año.
 
-La fuente vive sin hash (public/css/terra.css, public/css/legacy-fixes.css, public/js/terra.js) y el build publica
-<nombre>.<10 hex>.<ext> al lado. Se conservan dos
+La fuente vive sin hash (public/css/terra.css, terra-tienda.css, legacy-fixes.css, public/js/terra.js) y el build
+publica <nombre>.<10 hex>.<ext> al lado; las hojas CSS van minificadas (sin comentarios ni sangría). Se conservan dos
 copias por asset: la actual y la que sirve producción (la que enlazan las páginas de `main`), para que el HTML que quedó
 en caché justo después de un deploy no pida un archivo borrado. Cuáles son se guarda en tools/site/activos.json
 ({clave: [actual, servida]}), versionado: así el build no depende de fechas de archivo (cambian con cada checkout o
@@ -18,9 +18,22 @@ PUBLIC = Path(__file__).resolve().parents[2] / "public"
 REGISTRO = Path(__file__).resolve().parent / "activos.json"
 FUENTES = {
     "terra.css": "css/terra.css",
+    "terra-tienda.css": "css/terra-tienda.css",
     "legacy-fixes.css": "css/legacy-fixes.css",
     "terra.js": "js/terra.js",
 }
+
+
+def minificar_css(texto):
+    """Sin comentarios, sin sangría ni renglones vacíos. No toca nada dentro de una regla: es seguro con cadenas,
+    url(), calc() y valores con espacios, y no necesita dependencias."""
+    sin_comentarios = re.sub(r"/\*.*?\*/", "", texto, flags=re.S)
+    return "".join(linea.strip() + "\n" for linea in sin_comentarios.splitlines() if linea.strip())
+
+
+def publicado(rel, bruto):
+    """Bytes de la copia con hash: las hojas CSS van minificadas; el JS va tal cual."""
+    return minificar_css(bruto.decode("utf-8")).encode("utf-8") if rel.endswith(".css") else bruto
 
 
 def _con_hash(rel, contenido):
@@ -36,7 +49,7 @@ def _patron(rel):
 def urls(public=PUBLIC):
     """URL pública con hash de cada asset del shell, sin escribir nada."""
     public = Path(public)
-    return {clave: "/" + _con_hash(rel, (public / rel).read_bytes()) for clave, rel in FUENTES.items()}
+    return {clave: "/" + _con_hash(rel, publicado(rel, (public / rel).read_bytes())) for clave, rel in FUENTES.items()}
 
 
 def _html_de_main(public):
@@ -89,7 +102,7 @@ def publicar(public=PUBLIC, registro=REGISTRO):
             if patron.fullmatch(copia.name) and copia not in conservar:
                 copia.unlink()
         if not destino.exists():
-            destino.write_bytes(fuente.read_bytes())
+            destino.write_bytes(publicado(rel, fuente.read_bytes()))
     if nuevas != anteriores:
         registro.write_text(json.dumps(nuevas, indent=1) + "\n", encoding="utf-8")
     return resultado
