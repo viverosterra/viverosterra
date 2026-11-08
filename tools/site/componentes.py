@@ -101,9 +101,10 @@ def etiqueta(e, cordel=True):
     envoltorio lleva la sombra y, con cordel=True, el cordel que cuelga del ojal (solo en escritorio)."""
     filas = "".join(f'<p class="vt-etiqueta__fila"><span>{t}</span><b>{v}</b></p>' for t, v in e.get("filas", ()))
     nota = f'<p class="vt-etiqueta__nota">{e["nota"]}</p>' if e.get("nota") else ""
+    sci = f'<p class="vt-etiqueta__sci">{e["cientifico"]}</p>' if e.get("cientifico") else ""
     return (f'<div class="vt-etiqueta-x{" vt-etiqueta-x--cordel" if cordel else ""}"><div class="vt-etiqueta">'
             f'<p class="vt-etiqueta__cod"><span>{e["codigo"]}</span><span>{e["aviso"]}</span></p>'
-            f'<p class="vt-etiqueta__nombre">{e["nombre"]}</p><p class="vt-etiqueta__sci">{e["cientifico"]}</p>'
+            f'<p class="vt-etiqueta__nombre">{e["nombre"]}</p>{sci}'
             f'<p class="vt-etiqueta__precio"><small>{e["antes"]}</small><b>{e["monto"]}</b><span>{e["unidad"]}</span></p>'
             f'{filas}{nota}</div></div>')
 
@@ -223,6 +224,21 @@ def tabla_comparativa(columnas, filas, caption):
                      f'{"".join(celda(esc(texto_plano(c)), v) for c, v in zip(columnas[1:], f[1:]))}</tr>' for f in filas)
     return (f'<table class="vt-tabla vt-tabla--comparar"><caption>{caption}</caption><thead><tr>{cabeza}</tr></thead>'
             f'<tbody>{cuerpo}</tbody></table>')
+
+
+def opciones(items, tipo):
+    """Formas de contratar (máx. 3, spec §3.3), cada una con su precio "desde", lo que incluye, su nota y su propio
+    mensaje de WhatsApp. items: rotulo, titulo, precio (número), unidad, detalle, puntos, nota, mensaje, rec."""
+    filas = []
+    for i, o in enumerate(items, 1):
+        clase = "vt-modo vt-modo--rec" if o.get("rec") else "vt-modo"
+        puntos = "".join(f"<li>{x}</li>" for x in o["puntos"])
+        nota_html = f'<p class="vt-promesa">{o["nota"]}</p>' if o.get("nota") else ""
+        filas.append(f'<li class="{clase}"><p class="vt-modo__n">{o["rotulo"]}</p><h3>{o["titulo"]}</h3>'
+                     f'<p class="vt-modo__precio">desde <span class="vt-precio-marca">{dinero(o["precio"])}</span> '
+                     f'{o["unidad"]} <small>{o["detalle"]}</small></p><ul class="vt-checks">{puntos}</ul>{nota_html}'
+                     f'{boton_wa(o["mensaje"], f"{tipo}:opcion-{i}")}</li>')
+    return f'<ul class="vt-modos">{"".join(filas)}</ul>'
 
 
 def relacionados(items):
