@@ -222,7 +222,7 @@ CONTENIDO = {
         "datos": (("Dirección", datos.CALLE, f"{datos.COLONIA}, {datos.CP} Cd. Madero"),
                   ("Horario", "Lun a vie 9 a 18 h", "Sábado 9 a 14 h"),
                   ("Instalación", "Tampico, Madero", "y Altamira"),
-                  ("Envío del material", "Local según tu colonia; te lo cotizamos.", "Nacional en 3 a 5 días hábiles")),
+                  ("Envío del material", "Local, por colonia", "Te lo cotizamos · nacional en 3 a 5 días hábiles")),
         "mapas": (("Cómo llegar con Google Maps", datos.MAPS_URL), ("Abrir en Apple Maps", APPLE_MAPS)),
     },
     "cierre": {
