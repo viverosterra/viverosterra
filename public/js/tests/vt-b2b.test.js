@@ -44,3 +44,26 @@ test('el mensaje de palmas es texto plano: un renglón por especie y los huecos 
   assert.deepStrictEqual(renglones.slice(-3), ['Empresa: ___', 'Obra y ubicación: ___', 'Fecha de entrega: ___']);
   assert.doesNotMatch(m, /</);
 });
+
+test('formulario por correo: obligatorios vacíos y correo inválido', () => {
+  const requeridos = ['empresa', 'nombre', 'correo', 'proyecto', 'cantidad'];
+  const vacio = B.erroresCorreo({}, requeridos);
+  assert.deepStrictEqual(Object.keys(vacio), requeridos);
+  const malo = B.erroresCorreo({ empresa: 'A', nombre: 'B', correo: 'compras@', proyecto: 'C', cantidad: '1,200 m²' }, requeridos);
+  assert.deepStrictEqual(Object.keys(malo), ['correo']);
+  assert.match(malo.correo, /correo/);
+  const bien = B.erroresCorreo({ empresa: 'A', nombre: 'B', correo: 'compras@empresa.com.mx', proyecto: 'C', cantidad: '3' }, requeridos);
+  assert.deepStrictEqual(bien, {});
+  assert.deepStrictEqual(B.erroresCorreo({ correo: '  ' }, ['correo']), { correo: B.MENSAJE_REQUERIDO });
+});
+
+test('formulario por correo: generate_lead con method formulario', () => {
+  assert.deepStrictEqual(B.eventoFormulario('palmas:formulario', 'empresas'),
+    { nombre: 'generate_lead', params: { method: 'formulario', cta_id: 'palmas:formulario', service: 'empresas' } });
+});
+
+test('prellenado del formulario: m² del cotizador y lista del armador', () => {
+  assert.strictEqual(B.prellenadoVolumen(1200), '1,200 m²');
+  assert.strictEqual(B.prellenadoVolumen(0), '');
+  assert.strictEqual(B.prellenadoPalmas([['Palma real', '3', '40'], ['', '', '']]), '- 40 × Palma real, altura aprox.: 3 m');
+});

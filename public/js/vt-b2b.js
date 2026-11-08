@@ -4,8 +4,11 @@
    - [data-vt-volumen]: m² totales de la obra → precio por volumen con VTMedidor.calcular (vt-medidor.js): mayoreo desde
      el mínimo y, con menos, solo pasto con su aviso. Los modos y precios llegan en data-modos, escritos desde datos.py.
    - [data-vt-palmas]: especie, altura y cantidad por renglón (hasta 8) → un solo mensaje con toda la lista.
+   - [data-vt-correo]: cotización por correo para compras (formsubmit). Valida junto a cada campo, manda generate_lead con
+     method "formulario" y recibe del cotizador o del armador los m² o la lista (si el visitante no escribió otra cosa).
    Los botones son enlaces de WhatsApp con data-cta: terra.js los mide (generate_lead) y los firma al hacer clic. Sin JS, el
-   botón manda la plantilla de compras de la página (data-mensaje). Las funciones puras se exportan para node --test. */
+   botón manda la plantilla de compras de la página (data-mensaje) y el formulario usa la validación del navegador. Las
+   funciones puras se exportan para node --test. */
 (function (root) {
   'use strict';
   const M2_MAXIMO = 1000000;
@@ -76,6 +79,69 @@
     return piezas ? `${especies} · ${piezas.toLocaleString('es-MX')} piezas` : `${especies} · cantidad por definir`;
   }
 
+  const MENSAJE_REQUERIDO = 'Escribe este dato para enviar la solicitud.';
+  const MENSAJE_CORREO = 'Revisa el correo: debe verse como compras@tuempresa.com.';
+  const CORREO_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  // valores: {name: texto}; requeridos: names obligatorios en el orden del formulario. Devuelve {name: mensaje}.
+  function erroresCorreo(valores, requeridos) {
+    const errores = {};
+    requeridos.forEach((n) => { if (!String(valores[n] == null ? '' : valores[n]).trim()) errores[n] = MENSAJE_REQUERIDO; });
+    const correo = String(valores.correo == null ? '' : valores.correo).trim();
+    if (!errores.correo && correo && !CORREO_RE.test(correo)) errores.correo = MENSAJE_CORREO;
+    return errores;
+  }
+
+  function eventoFormulario(ctaId, servicio) {
+    return { nombre: 'generate_lead', params: { method: 'formulario', cta_id: ctaId, service: servicio } };
+  }
+
+  const prellenadoVolumen = (m2) => (m2 ? `${formatoM2(m2)} m²` : '');
+  const prellenadoPalmas = (filas) => filas.map(lineaPalma).filter(Boolean).join('\n');
+
+  // Lleva m² o la lista al campo "cantidad" del formulario por correo mientras el visitante no lo haya escrito él.
+  function prellenar(texto) {
+    const campo = document.querySelector('[data-vt-correo] [name="cantidad"]');
+    if (campo && !campo.dataset.vtPropio) campo.value = texto;
+  }
+
+  function iniciarCorreo(form, win) {
+    form.noValidate = true;
+    const campos = Array.from(form.querySelectorAll('.vt-correo__campos [name]'));
+    const requeridos = campos.filter((c) => c.required).map((c) => c.name);
+    const estado = form.querySelector('[data-vt-o="correo-estado"]');
+    const cantidad = form.querySelector('[name="cantidad"]');
+    const pintar = (c, mensaje) => {
+      const p = form.querySelector(`#${c.id}-error`);
+      p.textContent = mensaje || '';
+      p.hidden = !mensaje;
+      if (mensaje) c.setAttribute('aria-invalid', 'true');
+      else c.removeAttribute('aria-invalid');
+    };
+    const valores = () => Object.fromEntries(campos.map((c) => [c.name, c.value]));
+    if (cantidad) cantidad.addEventListener('input', () => { cantidad.dataset.vtPropio = cantidad.value ? '1' : ''; });
+    form.addEventListener('input', (e) => {
+      const c = e.target;
+      if (c.getAttribute && c.getAttribute('aria-invalid') === 'true') pintar(c, erroresCorreo(valores(), requeridos)[c.name]);
+    });
+    form.addEventListener('submit', (e) => {
+      const errores = erroresCorreo(valores(), requeridos);
+      campos.forEach((c) => pintar(c, errores[c.name]));
+      const malos = campos.filter((c) => errores[c.name]);
+      if (malos.length) {
+        e.preventDefault();
+        estado.textContent = malos.length === 1 ? 'Falta 1 dato: revisa el campo marcado.'
+          : `Faltan ${malos.length} datos: revisa los campos marcados.`;
+        malos[0].focus();
+        return;
+      }
+      estado.textContent = 'Enviando tu solicitud…';
+      const head = document.querySelector('.vt-head');
+      const ev = eventoFormulario(form.dataset.ctaForm, (head && head.dataset.vtServicio) || 'empresas');
+      if (typeof win.gtag === 'function') win.gtag('event', ev.nombre, ev.params);
+    });
+  }
+
   function camposObra(caja) {
     const valor = (n) => caja.querySelector(`[data-vt-campo="${n}"]`).value;
     return { empresa: valor('empresa'), obra: valor('obra'), fecha: valor('fecha') };
@@ -97,6 +163,7 @@
         salida('aviso').textContent = '';
         salida('aviso').hidden = true;
         salida('cta').setAttribute('href', enlace(caja.dataset.wa, caja.dataset.mensaje));
+        prellenar('');
         return;
       }
       const r = calcular(m2, 1, 'mayoreo', modos);
@@ -109,6 +176,7 @@
       salida('aviso').textContent = r.aviso;
       salida('aviso').hidden = !r.aviso;
       salida('cta').setAttribute('href', enlace(caja.dataset.wa, t.mensaje));
+      prellenar(prellenadoVolumen(m2));
     }
     caja.addEventListener('input', actualizar);
     actualizar();
@@ -128,6 +196,7 @@
       salida('resumen').textContent = resumenPalmas(f);
       salida('lista').textContent = f.map(lineaPalma).filter(Boolean).join('\n');
       salida('cta').setAttribute('href', enlace(caja.dataset.wa, mensaje || caja.dataset.mensaje));
+      prellenar(prellenadoPalmas(f));
     }
     // Copia del último renglón, vacía y con ids nuevos (cada label sigue apuntando a su control).
     function otraFila() {
@@ -148,13 +217,15 @@
     actualizar();
   }
 
-  const api = { leerM2, textosVolumen, leerAltura, leerCantidad, lineaPalma, mensajePalmas, resumenPalmas, enlace };
+  const api = { leerM2, textosVolumen, leerAltura, leerCantidad, lineaPalma, mensajePalmas, resumenPalmas, enlace,
+    erroresCorreo, eventoFormulario, prellenadoVolumen, prellenadoPalmas, MENSAJE_REQUERIDO };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
     return;
   }
   root.VTB2B = Object.freeze(api);
   const arrancar = () => {
+    document.querySelectorAll('[data-vt-correo]').forEach((f) => iniciarCorreo(f, root));
     if (root.VTMedidor) document.querySelectorAll('[data-vt-volumen]').forEach((c) => iniciarVolumen(c, root.VTMedidor.calcular));
     document.querySelectorAll('[data-vt-palmas]').forEach(iniciarPalmas);
   };

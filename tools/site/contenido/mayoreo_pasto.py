@@ -66,7 +66,7 @@ PREGUNTAS = (
      'instalado (<a href="/pasto-en-rollo-tampico">pasto en rollo</a>).'),
     ("¿Facturan CFDI para constructoras?",
      f"Sí, emitimos factura {datos.FACTURA} para constructoras, empresas y cualquier cliente que requiera comprobante "
-     "fiscal, el día del pago. Solo necesitamos tu RFC y datos fiscales al momento de la compra."),
+     "fiscal. Solo necesitamos tu RFC y datos fiscales al momento de la compra."),
     ("¿Pueden entregar pasto fuera de Tampico?",
      f"Sí. Además de Tampico, Ciudad Madero y Altamira, atendemos proyectos en {datos.ZONAS_POR_PROYECTO}. Para "
      "proyectos fuera del área metropolitana cotizamos el flete por separado según la distancia y el volumen."),
@@ -114,7 +114,7 @@ PAQUETES = (
     {"rotulo": "Paquete 1 · Solo pasto", "titulo": "Pasto de mayoreo para tu cuadrilla", "precio": MAYOREO,
      "unidad": "/m²", "detalle": f"en pedidos de {MINIMO} m² o más",
      "puntos": ("Pasto San Agustín cortado para tu pedido", "Entregas parciales según el avance de la obra",
-                f"Factura {datos.FACTURA} el día del pago"),
+                f"Factura {datos.FACTURA} para persona física o moral"),
      "mensaje": ("Hola, quiero cotizar pasto San Agustín al mayoreo (solo pasto).\nEmpresa: ___\nObra y ubicación: ___\n"
                  "m² totales: ___\nEntregas (fechas o etapas): ___")},
     {"rotulo": "Paquete 2 · Instalado", "titulo": "Pasto instalado en obra", "precio_texto": datos.SEGUN_COTIZACION,
@@ -189,6 +189,12 @@ CONTENIDO = {
         "caption": "Con IVA. El cotizador estima solo el pasto; la entrega y la instalación se cotizan con tu obra.",
         "titulo_cotizador": "Calcula tu obra por m²",
         "cotizador": "volumen",
+    },
+    "formulario": {
+        "titulo": "¿Compras prefiere correo? Pide la cotización por escrito",
+        "lede": b2b_comun.LEDE_CORREO,
+        "pagina": "Mayoreo de pasto", "cta": "mayoreo:formulario",
+        "cantidad": ("m² totales de la obra", "Ej. 1,200 m²", False),
     },
     "documentacion": {
         "titulo": "Documentación para compras",

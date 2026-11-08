@@ -103,6 +103,12 @@ def archivos_fuente():
 WA_RE = re.compile(r"(?:wa\.me|api\.whatsapp\.com/send\?phone=)/?([^\s\"'`?&<>]*)")
 TEXTO_WA_RE = re.compile(r"wa\.me/\d+\?(?:[^\"'`\s<>]*&)?text=([^\"'`\s<>&]*)")
 NUMERO = "528333268008"
+# Páginas con formulario por correo a formsubmit: cuestionario, materiales y, desde 2d, las dos páginas para empresas.
+CON_FORMULARIO_CORREO = ("cuestionario.html", "marmol-blanco-tampico/index.html", "piedra-bola-rio-tampico/index.html",
+                         "tezontle-rojo-tampico/index.html", "tierra-negra-vegetal-tampico/index.html",
+                         "mayoreo-pasto-tampico/index.html", "palmas-mayoreo-proyectos/index.html")
+MINIMO_ESPECIE_RE = re.compile(r"\b50\s+(?:ejemplares|palmas|piezas)?\s*(?:de\s+la\s+misma\s+especie|por\s+especie)\b"
+                               r"|\b50\s+por\s+especie\b", re.I)
 CORREO_RE = re.compile(r"(?:mailto:|formsubmit\.co/(?:ajax/)?)([\w.+-]+@[\w.-]+)")
 
 
@@ -173,6 +179,19 @@ class ReglasDelDuenoTest(unittest.TestCase):
             for accion in re.findall(r'<form\b[^>]*\baction="([^"]*)"', fuente, re.I):
                 if accion and "formsubmit.co" not in accion:
                     hallazgos.append(f"{path.relative_to(PUBLIC)} · form a {accion}")
+        self.assertEqual(hallazgos, [])
+
+    def test_formularios_por_correo_solo_donde_el_dueno_los_quiere(self):
+        """Respuesta del dueño (2026-11-08): las páginas para empresas conservan un formulario por correo para compras
+        (además de WhatsApp). La home y pasto en rollo siguen sin formulario (test_inicio, test_pasto_en_rollo)."""
+        con_formulario = sorted(str(path.relative_to(PUBLIC)) for path, fuente in archivos_fuente()
+                                if path.suffix == ".html" and re.search(r'<form\b[^>]*\baction="https://formsubmit\.co/',
+                                                                        fuente))
+        self.assertEqual(con_formulario, sorted(CON_FORMULARIO_CORREO))
+
+    def test_sin_minimo_fijo_por_especie(self):
+        """Respuesta del dueño (2026-11-08): no hay mínimo fijo por especie (main decía "50 ejemplares")."""
+        hallazgos = [f"{p.relative_to(PUBLIC)}" for p, texto in publicados() if MINIMO_ESPECIE_RE.search(texto)]
         self.assertEqual(hallazgos, [])
 
     def test_sin_padel_ni_canchas_en_pasto_sintetico(self):

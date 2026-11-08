@@ -1,6 +1,7 @@
 """Plantilla para empresas (spec §3.3, B2B): ruta visible → H1 por segmento con el precio por volumen y su mínimo en la
 etiqueta → CTA con la plantilla de compras y la promesa → clientes con nombre y logo, REPSE verificable y fotos FIG. →
-escalas, capacidad y tiempos con su cotizador (pasto por volumen o armador de palmas) → documentación (CFDI, REPSE,
+escalas, capacidad y tiempos con su cotizador (pasto por volumen o armador de palmas) → cotización por correo para
+compras (respuesta del dueño, 2026-11-08: además de WhatsApp; el cotizador le prellena m² o la lista) → documentación (CFDI, REPSE,
 anticipo y avances, entregas) → paquetes por obra (máx. 3, cada uno con su mensaje) → proceso NOSOTROS / TÚ → garantía
 con condiciones → preguntas de compras → cobertura → otras páginas para empresas → CTA final. Sin ficha descargable:
 no hay un PDF real (spec §3.3). Páginas: /mayoreo-pasto-tampico (contenido/mayoreo_pasto.py) y
@@ -32,6 +33,12 @@ def _escalas(k, numero):
                     id_seccion="precio")
 
 
+def _correo(k, numero):
+    f = k["formulario"]
+    return c.bloque(numero, "Por correo", "vt-h-correo", f["titulo"], c.formulario_correo(k["prefijo"], f),
+                    lede=f["lede"], id_seccion="cotizacion-correo")
+
+
 def _documentacion(k, numero):
     d = k["documentacion"]
     return c.bloque(numero, "Documentación", "vt-h-docs", d["titulo"], c.fichas(d["items"]), lede=d.get("lede"),
@@ -54,13 +61,13 @@ def _cobertura(k, numero):
 def render(k):
     tipo = k["tipo"]
     p, g, f, r, ci = k["proceso"], k["garantia"], k["faq"], k["relacionados"], k["cierre"]
-    secciones = [c.portada(k["portada"], tipo, k["migas"]), _prueba(k, 1), _escalas(k, 2), _documentacion(k, 3),
-                 _paquetes(k, 4),
-                 c.bloque(5, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]), lede=p["lede"]),
-                 c.garantia(dict(g, numero=6, id_titulo="vt-h-garantia", rotulo="Garantía")),
-                 c.bloque_dos(7, "Preguntas de compras", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]), tinte=True),
-                 _cobertura(k, 8),
-                 c.bloque(9, "Para empresas", "vt-h-rel", r["titulo"], c.relacionados(r["items"]), tinte=True),
+    secciones = [c.portada(k["portada"], tipo, k["migas"]), _prueba(k, 1), _escalas(k, 2), _correo(k, 3),
+                 _documentacion(k, 4), _paquetes(k, 5),
+                 c.bloque(6, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]), lede=p["lede"]),
+                 c.garantia(dict(g, numero=7, id_titulo="vt-h-garantia", rotulo="Garantía")),
+                 c.bloque_dos(8, "Preguntas de compras", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]), tinte=True),
+                 _cobertura(k, 9),
+                 c.bloque(10, "Para empresas", "vt-h-rel", r["titulo"], c.relacionados(r["items"]), tinte=True),
                  c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo)]
     j = k["jsonld"]
     speakable = [{"@type": "SpeakableSpecification", "cssSelector": list(j["speakable"])}]

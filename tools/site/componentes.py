@@ -727,6 +727,56 @@ def repse():
             'rel="noopener">consulta el folio en el padrón público de la STPS</a></p>')
 
 
+# ---------- empresas: cotización por correo para compras (respuesta del dueño, 2026-11-08) ----------
+# El mismo endpoint de formsubmit que los materiales. vt-b2b.js valida en el navegador (mensajes junto a cada campo),
+# manda generate_lead con method "formulario" y prellena m² o la lista desde el cotizador; sin JS, el navegador valida
+# los required y el formulario se envía igual.
+FORMULARIO_ACCION = f"https://formsubmit.co/{datos.CORREO_FORMULARIOS}"
+FORMULARIO_GRACIAS = f"{datos.SITIO}/gracias"
+
+
+def _campo_correo(prefijo, nombre, etiqueta, tipo="text", requerido=True, completar="off", placeholder="",
+                  multilinea=False, ancho=False):
+    ident = f"{prefijo}-c-{nombre}"
+    error = f"{ident}-error"
+    texto = etiqueta if requerido else f"{etiqueta} (opcional)"
+    comunes = (f'id="{esc(ident)}" name="{esc(nombre)}"' + ("" if multilinea else f' type="{tipo}"')
+               + (" required" if requerido else "") + f' autocomplete="{completar}" placeholder="{esc(placeholder)}" '
+               f'aria-describedby="{esc(error)}"')
+    control = f"<textarea {comunes} rows=\"3\"></textarea>" if multilinea else f"<input {comunes}>"
+    clase = "vt-campo vt-correo__ancho" if ancho or multilinea else "vt-campo"
+    return (f'<div class="{clase}"><label for="{esc(ident)}">{texto}</label><div class="vt-control">{control}</div>'
+            f'<p class="vt-correo__error" id="{esc(error)}" hidden></p></div>')
+
+
+def formulario_correo(prefijo, f):
+    """Cotización por correo para departamentos de compras. f: pagina (asunto), cta (cta_id de GA4) y cantidad
+    (etiqueta, ejemplo, multilínea) para m² o la lista de palmas, que el cotizador de la página prellena."""
+    etiqueta, ejemplo, multilinea = f["cantidad"]
+    campos = (
+        _campo_correo(prefijo, "empresa", "Empresa", completar="organization", placeholder="Razón social"),
+        _campo_correo(prefijo, "nombre", "Nombre", completar="name", placeholder="Quién recibe la cotización"),
+        _campo_correo(prefijo, "correo", "Correo", "email", completar="email", placeholder="compras@tuempresa.com"),
+        _campo_correo(prefijo, "telefono", "Teléfono", "tel", False, "tel", "833 000 0000"),
+        _campo_correo(prefijo, "proyecto", "Proyecto y ubicación", placeholder="Ej. fraccionamiento en Altamira",
+                      ancho=True),
+        _campo_correo(prefijo, "cantidad", etiqueta, placeholder=ejemplo, multilinea=multilinea, ancho=True),
+        _campo_correo(prefijo, "fecha", "Fecha estimada de entrega", requerido=False, placeholder="Ej. marzo"),
+        _campo_correo(prefijo, "mensaje", "Mensaje", requerido=False, multilinea=True,
+                      placeholder="Especificaciones, etapas de la obra o datos de facturación"),
+    )
+    return (
+        f'<form class="vt-correo" action="{esc(FORMULARIO_ACCION)}" method="POST" data-vt-correo data-hero-cta '
+        f'data-cta-form="{esc(f["cta"])}">'
+        f'<input type="hidden" name="_subject" value="Cotización empresa · {esc(f["pagina"])}">'
+        f'<input type="hidden" name="_next" value="{esc(FORMULARIO_GRACIAS)}">'
+        '<input type="hidden" name="_captcha" value="false">'
+        '<input class="vt-correo__miel" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">'
+        f'<div class="vt-correo__campos">{"".join(campos)}</div>'
+        '<div class="vt-correo__pie"><button type="submit" class="vt-btn vt-btn--linea">Enviar solicitud por correo'
+        '</button><p class="vt-correo__estado" role="status" data-vt-o="correo-estado"></p></div></form>')
+
+
 # ---------- portada (primer pantallazo: qué, dónde, precio y CTA) ----------
 def portada(p, tipo, migas_items=None):
     """p: kicker, h1, lede, etiqueta, mensaje, tambien y foto; opcional compacta (a 1024–1199 px la etiqueta va en su

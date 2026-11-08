@@ -429,6 +429,20 @@
 .vt-pagina main .vt-b2b__msg{margin-top:8px;white-space:pre-line;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
 @media (min-width:640px){.vt-b2b__fila{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr)}.vt-b2b__fila>.vt-campo:first-child{grid-column:auto}}
 @media (min-width:1024px){.vt-b2b{grid-template-columns:7fr 5fr;gap:48px;align-items:start}}
+/* Empresas: cotización por correo para compras (respuesta del dueño, 2026-11-08; vt-b2b.js valida y prellena) */
+.vt-correo{display:grid;gap:20px;max-width:880px}
+.vt-correo__campos{display:grid;gap:16px}
+.vt-correo .vt-control input{font-size:16px;font-weight:500}
+.vt-control textarea{flex:1;width:100%;min-width:0;min-height:96px;padding:12px;border:0;background:transparent;font:500 16px/1.4 var(--vt-font-sans);color:var(--vt-ink);resize:vertical}
+.vt-control textarea:focus{outline:none}
+.vt-control:has([aria-invalid="true"]){border-color:var(--vt-soil);border-width:2px}
+.vt-pagina main .vt-correo__error{margin:0;font-size:var(--vt-text-sm);font-weight:600;color:var(--vt-soil)}
+.vt-correo__error::before{content:"! "}
+.vt-correo [hidden]{display:none}
+.vt-correo__miel{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.vt-correo__pie{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.vt-pagina main .vt-correo__estado{margin:0;font-size:var(--vt-text-sm);font-weight:600}
+@media (min-width:768px){.vt-correo__campos{grid-template-columns:repeat(2,minmax(0,1fr))}.vt-correo__ancho{grid-column:1/-1}}
 
 /* ---------- precios con columna Unidad y mensualidades ---------- */
 .vt-tabla{width:100%;border-collapse:collapse;border:1px solid var(--vt-line);background:var(--vt-card)}

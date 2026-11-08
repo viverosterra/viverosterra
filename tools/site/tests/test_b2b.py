@@ -20,6 +20,13 @@ from test_reglas import textos_publicos  # noqa: E402
 P = datos.PRECIOS
 RUTAS = {"mayoreo": "/mayoreo-pasto-tampico", "palmas": "/palmas-mayoreo-proyectos"}
 SCRIPTS = {"mayoreo": ["/js/vt-medidor.js", "/js/vt-b2b.js"], "palmas": ["/js/vt-b2b.js"]}
+# Respuesta del dueño (2026-11-08): las páginas B2B conservan un formulario por correo para departamentos de compras,
+# además de WhatsApp, al mismo endpoint de formsubmit que usan los materiales.
+FORMULARIO = f"https://formsubmit.co/{datos.CORREO_FORMULARIOS}"
+PAGINA_FORMULARIO = {"mayoreo": "Mayoreo de pasto", "palmas": "Palmas para proyectos"}
+# Sin mínimo fijo por especie (respuesta del dueño 3) ni promesas de logística o factura que el dueño no confirmó.
+SIN_CONFIRMAR = ("50 por especie", "50 ejemplares", "por especie mínimo", "el día del pago", "maniobra incluida",
+                 "maniobra en obra va incluida")
 PRECIOS_VIEJOS_PALMAS = ("$850", "$1,200", "$1,500", "$1,600", "$1,800", "$2,000", "$2,200", "$2,400", "$2,800",
                          "$3,200", "$4,200", "$90,000", "$150,000", "$180,000", "$180K", "$260K", "$100K")
 
@@ -39,7 +46,7 @@ class ComunTest(unittest.TestCase):
     def test_orden_de_secciones_del_spec(self):
         orden = ('class="vt-crumbs"', "<h1", 'class="vt-etiqueta"', 'data-cta="b2b:hero"', 'id="vt-h-prueba"',
                  'class="vt-logos"', "padrón público de la STPS", 'id="vt-h-precio"', "data-hero-cta data-wa",
-                 'id="vt-h-docs"', 'id="vt-h-opciones"', 'id="vt-h-proceso"', 'id="vt-h-garantia"', 'id="vt-h-faq"',
+                 'id="vt-h-correo"', 'id="vt-h-docs"', 'id="vt-h-opciones"', 'id="vt-h-proceso"', 'id="vt-h-garantia"', 'id="vt-h-faq"',
                  'id="vt-h-cobertura"', 'id="vt-h-rel"', 'class="vt-cierre"')
         for clave in RUTAS:
             _h, main, _t, _g = pagina(clave)
@@ -54,9 +61,12 @@ class ComunTest(unittest.TestCase):
             html, _m, _t, _g = pagina(clave)
             with self.subTest(pagina=clave):
                 self.assertNotRegex(html, r"fonts\.googleapis|/css/(?:tailwind|design-system|servicios|legacy-fixes)")
-                for viejo in ("svc-hero", "<form", "<style", "cta-submit", "calc-cta", "window.open", "Sección 1",
+                for viejo in ("svc-hero", "<style", "cta-submit", "calc-cta", "window.open", "Sección 1",
                               "sticky-cta", "faq-btn"):
                     self.assertNotIn(viejo, html)
+                # Respuesta del dueño (2026-11-08): un solo formulario, el de cotización por correo para compras.
+                self.assertEqual(len(re.findall(r"<form\b", html)), 1)
+                self.assertIn(f'<form class="vt-correo" action="{FORMULARIO}" method="POST"', html)
                 self.assertIn('<body class="vt-pagina">', html)
 
     def test_scripts_del_cotizador_en_orden(self):
@@ -102,6 +112,35 @@ class ComunTest(unittest.TestCase):
             with self.subTest(pagina=clave):
                 self.assertEqual(texto.count(datos.ANTICIPO_PROYECTOS), 2)  # FAQ visible y FAQPage
                 self.assertNotRegex(texto, r"(?i)pago diferido|a crédito|\d+ ?% de anticipo")
+
+    def test_formulario_por_correo_para_compras(self):
+        for clave in RUTAS:
+            _h, main, _t, _g = pagina(clave)
+            form = main[main.index('<form class="vt-correo"'):main.index("</form>") + 7]
+            with self.subTest(pagina=clave):
+                self.assertIn(f'data-cta-form="{clave}:formulario"', form)
+                self.assertIn(f'<input type="hidden" name="_subject" value="Cotización empresa · '
+                              f'{PAGINA_FORMULARIO[clave]}">', form)
+                self.assertIn(f'<input type="hidden" name="_next" value="{datos.SITIO}/gracias">', form)
+                self.assertIn('<input type="hidden" name="_captcha" value="false">', form)
+                self.assertRegex(form, r'<input class="vt-correo__miel" type="text" name="_honey" tabindex="-1" '
+                                       r'autocomplete="off" aria-hidden="true">')
+                campos = re.findall(r'<(?:input|textarea)\b[^>]*\bid="([^"]+)"', form)
+                self.assertEqual(len(campos), 8)
+                for ident in campos:
+                    self.assertIn(f'<label for="{ident}">', form)
+                requeridos = re.findall(r'name="(\w+)"[^>]*\brequired', form)
+                self.assertEqual(requeridos, ["empresa", "nombre", "correo", "proyecto", "cantidad"])
+                self.assertIn('type="email"', form)
+                self.assertIn('type="tel"', form)
+                self.assertIn('data-hero-cta', form)  # la barra móvil no tapa los campos
+
+    def test_sin_minimo_por_especie_ni_promesas_sin_confirmar(self):
+        for clave in RUTAS:
+            _h, _m, texto, _g = pagina(clave)
+            for frase in SIN_CONFIRMAR:
+                with self.subTest(pagina=clave, frase=frase):
+                    self.assertNotIn(frase.lower(), texto.lower())
 
     def test_empresas_todavia_sin_enlace(self):
         """/empresas es de la Etapa 3 (spec §3.5): hasta entonces ninguna página la enlaza."""
@@ -166,7 +205,7 @@ class PalmasTest(unittest.TestCase):
             fila = re.search(rf'<th scope="row">{re.escape(nombre)}</th>(.*?)</tr>', tabla).group(1)
             with self.subTest(especie=nombre):
                 self.assertIn(f"<i>{cientifico}</i>", fila)
-                esperado = f"desde ${precio:,} · tamaño chico" if precio else datos.SEGUN_COTIZACION
+                esperado = f"desde ${precio:,} · tamaño chico" if precio else "Según cotización por altura y volumen"
                 self.assertIn(esperado, fila)
 
     def test_sin_precios_ni_proyectos_viejos(self):
@@ -182,6 +221,24 @@ class PalmasTest(unittest.TestCase):
         for nombre, _c, _p in datos.PALMAS_PROYECTO:
             self.assertEqual(armador.count(f'<option value="{nombre}">'), 3)
         self.assertIn('data-cta="b2b:armador"', armador)
+
+    def test_fotos_de_especies_del_vivero(self):
+        """Respuesta del dueño (2026-11-08): las fotos de especies son de su vivero y el pie lo dice."""
+        _h, main, _t, _g = pagina("palmas")
+        for especie in ("Coco plumoso", "Palma areca"):
+            with self.subTest(especie=especie):
+                self.assertRegex(main, rf"<b>Fig\. \d\d</b> · {especie}</span><span>En nuestro vivero</span>")
+
+    def test_precios_de_palmas_solo_los_del_dueno(self):
+        """Respuesta del dueño (2026-11-08): los precios por talla de proyecto ($850–$4,200) no son reales."""
+        for clave in RUTAS:
+            _h, _m, texto, _g = pagina(clave)
+            for viejo in PRECIOS_VIEJOS_PALMAS:
+                with self.subTest(pagina=clave, viejo=viejo):
+                    self.assertNotIn(viejo, texto)
+        _h, _m, texto, _g = pagina("palmas")
+        self.assertIn("el precio sube con la altura", texto)
+        self.assertIn("Según cotización por altura y volumen", texto)
 
     def test_garantia_de_plantas_condicionada(self):
         _h, main, _t, _g = pagina("palmas")

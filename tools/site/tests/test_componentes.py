@@ -280,6 +280,26 @@ class EmpresasTest(unittest.TestCase):
         self.assertIn(f"REPSE {datos.REPSE}", html)
         self.assertIn(f'href="{datos.REPSE_PADRON}" target="_blank" rel="noopener"', html)
 
+    def test_formulario_por_correo_para_compras(self):
+        """Respuesta del dueño (2026-11-08): formulario por correo para compras, además de WhatsApp."""
+        f = {"pagina": "Mayoreo de pasto", "cta": "mayoreo:formulario",
+             "cantidad": ("m² totales de la obra", "Ej. 1,200 m²", False)}
+        html = c.formulario_correo("may", f)
+        self.assertIn(f'action="https://formsubmit.co/{datos.CORREO_FORMULARIOS}" method="POST"', html)
+        self.assertIn('data-vt-correo data-hero-cta data-cta-form="mayoreo:formulario"', html)
+        self.assertIn('value="Cotización empresa · Mayoreo de pasto"', html)
+        self.assertIn(f'name="_next" value="{datos.SITIO}/gracias"', html)
+        self.assertIn('name="_honey"', html)
+        self.assertIn('<label for="may-c-cantidad">m² totales de la obra</label>', html)
+        self.assertIn('<input id="may-c-cantidad" name="cantidad" type="text"', html)
+        self.assertIn('aria-describedby="may-c-correo-error"', html)
+        self.assertIn('<p class="vt-correo__error" id="may-c-correo-error" hidden></p>', html)
+        self.assertIn('<button type="submit"', html)
+        self.assertIn('role="status"', html)
+        lista = c.formulario_correo("pal", dict(f, cantidad=("Lista de palmas", "Ej. 40 palma real de 3 m", True)))
+        self.assertIn('<textarea id="pal-c-cantidad" name="cantidad"', lista)
+        self.assertEqual(lista.count("<textarea"), 2)
+
 
 class EscapeTest(unittest.TestCase):
     def test_bloque_y_figura_escapan_atributos(self):

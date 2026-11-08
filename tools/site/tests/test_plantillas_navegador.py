@@ -3,7 +3,7 @@ Se saltan sin Playwright (python3 -m pip install playwright==1.48.0)."""
 import sys
 import unittest
 from pathlib import Path
-from urllib.parse import unquote
+from urllib.parse import parse_qsl, unquote
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -308,6 +308,83 @@ class PlantillasNavegadorTest(unittest.TestCase):
         page.wait_for_function("() => document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
         page.locator("#vt-h-faq").scroll_into_view_if_needed()
         page.wait_for_function("() => !document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
+
+    @staticmethod
+    def atrapador(enviados):
+        """Responde en lugar de formsubmit y guarda método, URL y cuerpo de cada envío."""
+        def atrapar(route):
+            enviados.append((route.request.method, route.request.url, route.request.post_data or ""))
+            route.fulfill(status=200, content_type="text/html", body="<p>ok</p>")
+        return atrapar
+
+    def test_formulario_por_correo_valida_y_envia_a_la_cuenta_oficial(self):
+        """Respuesta del dueño (2026-11-08): las páginas B2B conservan la cotización por correo para compras. Sin los
+        obligatorios no se envía (mensaje junto a cada campo y foco en el primero); completo, sale por POST a formsubmit
+        de viverosterra@hotmail.com con generate_lead method "formulario"."""
+        for ruta, clave, cantidad in (("/mayoreo-pasto-tampico/", "mayoreo", "1,200 m²"),
+                                      ("/palmas-mayoreo-proyectos/", "palmas", "40 palma real de 3 m")):
+            page = self.pagina(375, 812)
+            enviados = []
+
+            page.route("https://formsubmit.co/**", self.atrapador(enviados))
+            page.goto(self.base + ruta, wait_until="load")
+            form = page.locator("form.vt-correo")
+            boton = form.locator('button[type="submit"]')
+            boton.click()
+            with self.subTest(ruta=ruta, paso="vacío"):
+                self.assertEqual(enviados, [])
+                self.assertEqual(page.evaluate("() => document.activeElement.name"), "empresa")
+                for nombre in ("empresa", "nombre", "correo", "proyecto", "cantidad"):
+                    self.assertEqual(form.locator(f'[name="{nombre}"]').get_attribute("aria-invalid"), "true")
+                    ident = form.locator(f'[name="{nombre}"]').get_attribute("id")
+                    self.assertTrue(form.locator(f"#{ident}-error").is_visible())
+                self.assertIsNone(form.locator('[name="telefono"]').get_attribute("aria-invalid"))
+                self.assertIn("Faltan 5 datos", form.locator('[data-vt-o="correo-estado"]').inner_text())
+            form.locator('[name="empresa"]').fill("Constructora Ejemplo")
+            form.locator('[name="nombre"]').fill("Compras")
+            form.locator('[name="correo"]').fill("compras@")
+            form.locator('[name="proyecto"]').fill("Fraccionamiento en Altamira")
+            form.locator('[name="cantidad"]').fill(cantidad)
+            boton.click()
+            with self.subTest(ruta=ruta, paso="correo inválido"):
+                self.assertEqual(enviados, [])
+                self.assertEqual(page.evaluate("() => document.activeElement.name"), "correo")
+            form.locator('[name="correo"]').fill("compras@ejemplo.com")
+            # Se detiene el envío una vez para leer el dataLayer antes de salir de la página; luego se envía de verdad.
+            page.evaluate("() => document.addEventListener('submit', (e) => e.preventDefault(), { once: true })")
+            boton.click()
+            eventos = page.evaluate(
+                "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+            with page.expect_navigation():
+                page.evaluate("() => document.querySelector('form.vt-correo').submit()")
+            with self.subTest(ruta=ruta, paso="enviado"):
+                self.assertEqual(len(enviados), 1)
+                metodo, url, cuerpo = enviados[0]
+                self.assertEqual((metodo, url), ("POST", f"https://formsubmit.co/{datos.CORREO_FORMULARIOS}"))
+                campos = dict(parse_qsl(cuerpo, keep_blank_values=True))
+                self.assertEqual(campos["empresa"], "Constructora Ejemplo")
+                self.assertEqual(campos["cantidad"], cantidad)
+                self.assertEqual(campos["_honey"], "")
+                self.assertEqual(campos["_next"], f"{datos.SITIO}/gracias")
+                self.assertTrue(campos["_subject"].startswith("Cotización empresa · "))
+                self.assertIn(["event", "generate_lead", {"method": "formulario", "cta_id": f"{clave}:formulario",
+                                                          "service": "empresas"}], eventos)
+
+    def test_cotizador_y_armador_prellenan_el_formulario_por_correo(self):
+        page = self.pagina()
+        page.goto(self.base + "/mayoreo-pasto-tampico/", wait_until="load")
+        page.locator('[data-vt-volumen] [data-vt-campo="m2"]').fill("1,200")
+        campo = page.locator('form.vt-correo [name="cantidad"]')
+        self.assertEqual(campo.input_value(), "1,200 m²")
+        campo.fill("1,500 m² en dos etapas")
+        page.locator('[data-vt-volumen] [data-vt-campo="m2"]').fill("800")
+        self.assertEqual(campo.input_value(), "1,500 m² en dos etapas")  # lo que escribe el visitante no se pisa
+        page.goto(self.base + "/palmas-mayoreo-proyectos/", wait_until="load")
+        page.locator("#pal-especie-1").select_option("Palma real")
+        page.locator("#pal-altura-1").fill("3")
+        page.locator("#pal-cantidad-1").fill("40")
+        self.assertEqual(page.locator('form.vt-correo [name="cantidad"]').input_value(),
+                         "- 40 × Palma real, altura aprox.: 3 m")
 
     def test_cls_bajo_0_1_en_movil(self):
         page = self.pagina(375, 812)

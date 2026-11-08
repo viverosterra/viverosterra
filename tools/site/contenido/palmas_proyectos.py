@@ -22,6 +22,9 @@ RUTA = "/palmas-mayoreo-proyectos"
 URL = f"{SITE}{RUTA}"
 OBRA = "/img/obra"
 DESDE, REAL = dinero(P["palma_desde"]), dinero(P["palma_real"])
+# Respuesta del dueño (2026-11-08): los precios por talla de proyecto de main ($850–$4,200) no son reales. Solo se publican
+# areca y coco plumoso desde $250 y palma real desde $500 en tamaño chico; todo lo demás, con esta frase.
+SEGUN_ALTURA = "Según cotización por altura y volumen"
 MENSAJE = mensajes_paginas.EMPRESAS[RUTA]
 OG_IMAGEN = f"{SITE}/img/jardin-diseno-paisajismo-pasto-san-agustin-tampico-og.webp"
 DESCRIPCION = (f"Productor directo de palmas para proyectos B2B. 12 especies; areca y coco plumoso desde {DESDE}. "
@@ -99,7 +102,7 @@ PREGUNTAS = (
      "prende, la reponemos sin costo. No cubre falta o exceso de riego, daños por terceros ni clima extremo. "
      '<a href="/politicas#garantia-plantas">Ver condiciones</a>.'),
     ("¿Tienen factura?",
-     f"Sí. {datos.FACTURA} emitida el día del pago, para persona física o moral, con tus datos fiscales validados "
+     f"Sí. {datos.FACTURA} para persona física o moral, con tus datos fiscales validados "
      "antes de la entrega."),
     ("¿Cuánto tarda la entrega?",
      "Depende de la especie, la altura y el destino: el plazo va por escrito en la cotización, con el calendario de "
@@ -121,8 +124,8 @@ PASOS = (
     {"titulo": "Anticipo y calendario", "quien": "juntos", "cuando": "Al confirmar",
      "texto": "Confirmas con un anticipo y fijamos juntos las fechas de entrega según el avance de la obra."},
     {"titulo": "Entrega en obra", "quien": "nosotros", "cuando": "En cada etapa",
-     "texto": ("En Tampico, Madero y Altamira la maniobra en obra va incluida; fuera de la zona, el flete se cotiza por "
-               "ruta.")},
+     "texto": ("Entregamos en obra en Tampico, Madero y Altamira; fuera de la zona, el flete se cotiza por ruta. La "
+               "maniobra y las fechas te las confirmamos por escrito con la cotización.")},
     {"titulo": "Siembra con garantía", "quien": "nosotros", "cuando": "Si la contratas",
      "texto": ("Si las sembramos nosotros, la garantía de arraigo de 30 días aplica con el riego indicado; te dejamos la "
                "guía de cuidado por escrito.")},
@@ -133,29 +136,29 @@ FIGURAS = (
      "alt": "Palmas en costal listas para entrega en el patio del vivero.", "lugar": "Patio del vivero",
      "etapa": "Palmas para entrega"},
     {"src": "/img/especie-coco-plumoso-tampico.webp", "ancho": 466, "alto": 700, "numero": 3,
-     "alt": "Coco plumoso (Syagrus romanzoffiana) para proyecto.", "lugar": "Coco plumoso",
-     "etapa": f"Desde {DESDE}, tamaño chico"},
+     "alt": "Coco plumoso (Syagrus romanzoffiana) en nuestro vivero.", "lugar": "Coco plumoso",
+     "etapa": "En nuestro vivero"},
     {"src": "/img/especie-palma-areca-tampico.webp", "ancho": 700, "alto": 525, "numero": 4,
-     "alt": "Palma areca (Dypsis lutescens) para proyecto.", "lugar": "Palma areca",
-     "etapa": f"Desde {DESDE}, tamaño chico"},
+     "alt": "Palma areca (Dypsis lutescens) en nuestro vivero.", "lugar": "Palma areca",
+     "etapa": "En nuestro vivero"},
 )
 
 PAQUETES = (
     {"rotulo": "Paquete 1 · Fraccionamientos", "titulo": "Áreas comunes, camellones y casa muestra",
-     "precio_texto": datos.SEGUN_COTIZACION, "detalle": "según especies, alturas y cantidad",
+     "precio_texto": SEGUN_ALTURA, "detalle": "según especies, alturas y cantidad",
      "puntos": ("Washingtonia y areca para accesos y camellones", "Entregas por etapas: la casa muestra primero",
                 "Siembra con nuestra cuadrilla y garantía de 30 días con el riego indicado"),
      "mensaje": ("Hola, quiero cotizar palmas para un fraccionamiento.\nEmpresa: ___\n"
                  "Áreas (accesos, camellones, casa muestra): ___\nEspecies y cantidad: ___\nUbicación: ___\n"
                  "Fecha de entrega: ___")},
     {"rotulo": "Paquete 2 · Hoteles y comercios", "titulo": "Palmas de imagen para hoteles y comercios",
-     "precio_texto": datos.SEGUN_COTIZACION, "detalle": "según especies, alturas y cantidad", "rec": True,
+     "precio_texto": SEGUN_ALTURA, "detalle": "según especies, alturas y cantidad", "rec": True,
      "puntos": ("Palma real, coco plumoso y areca", "Especies para el clima de la costa del Golfo",
                 'Diseño del área con el <a href="/diseno-jardines-tampico">Plan Terra</a>, si lo necesitas'),
      "mensaje": ("Hola, quiero cotizar palmas para un hotel o comercio.\nEmpresa: ___\nEspecies y cantidad: ___\n"
                  "Altura aprox.: ___\nUbicación: ___\nFecha de entrega: ___")},
     {"rotulo": "Paquete 3 · Industria y gobierno", "titulo": "Perímetros y áreas públicas de bajo mantenimiento",
-     "precio_texto": datos.SEGUN_COTIZACION, "detalle": "según especies, alturas y cantidad",
+     "precio_texto": SEGUN_ALTURA, "detalle": "según especies, alturas y cantidad",
      "puntos": ("Washingtonia y cycas para perímetros", f"REPSE {datos.REPSE} y factura {datos.FACTURA}",
                 '<a href="/mantenimiento-jardines-tampico">Mantenimiento</a> después de la entrega'),
      "mensaje": ("Hola, quiero cotizar palmas para una nave industrial o un área pública.\nEmpresa o institución: ___\n"
@@ -181,7 +184,7 @@ CONTENIDO = {
             "codigo": "Palmas · 01", "aviso": "Con IVA", "nombre": "Palma areca y coco plumoso",
             "cientifico": "Dypsis lutescens · Syagrus romanzoffiana", "antes": "Tamaño chico · desde", "monto": DESDE,
             "unidad": "c/u",
-            "filas": (("Palma real, tamaño chico", f"desde {REAL}"), ("Otras especies y alturas", datos.SEGUN_COTIZACION)),
+            "filas": (("Palma real, tamaño chico", f"desde {REAL}"), ("Otras especies y alturas", "Según cotización")),
         },
         "mensaje": MENSAJE,
         "tambien": f'REPSE {datos.REPSE} · factura {datos.FACTURA} · <a href="#precio">arma tu lista de palmas</a>',
@@ -203,15 +206,20 @@ CONTENIDO = {
     "escalas": {
         "titulo": "¿Cuánto cuestan las palmas para proyecto?",
         "lede": (f"Areca y coco plumoso desde {DESDE} y palma real desde {REAL} en tamaño chico, con IVA. El precio sube "
-                 "con la altura y se ajusta por cantidad; las demás especies, "
-                 f"{datos.SEGUN_COTIZACION.lower()}. Precios {datos.ANIO}."),
+                 f"con la altura; las demás especies, {SEGUN_ALTURA.lower()}. Precios {datos.ANIO}."),
         "columnas": ("Especie", "Nombre científico", "Precio"),
-        "filas": tuple((n, f"<i>{sci}</i>", f"desde {dinero(p)} · tamaño chico" if p else datos.SEGUN_COTIZACION)
+        "filas": tuple((n, f"<i>{sci}</i>", f"desde {dinero(p)} · tamaño chico" if p else SEGUN_ALTURA)
                        for n, sci, p in datos.PALMAS_PROYECTO),
         "caption": ("El precio de cada ejemplar depende de su altura: la cotización por escrito lleva especie, altura, "
                     "cantidad y precio."),
         "titulo_cotizador": "Arma tu lista de palmas",
         "cotizador": "palmas",
+    },
+    "formulario": {
+        "titulo": "¿Compras prefiere correo? Manda tu lista de palmas",
+        "lede": b2b_comun.LEDE_CORREO,
+        "pagina": "Palmas para proyectos", "cta": "palmas:formulario",
+        "cantidad": ("Lista de palmas (especie, altura y cantidad)", "Ej. 40 palma real de 3 m, 120 areca", True),
     },
     "documentacion": {
         "titulo": "Documentación completa para tu compra empresarial.",
@@ -239,7 +247,7 @@ CONTENIDO = {
     },
     "faq": {"titulo": "Preguntas frecuentes de compradores B2B.", "preguntas": PREGUNTAS},
     "cobertura": dict(b2b_comun.COBERTURA, titulo="Enviamos palmas a toda la región.",
-                      lede=("Entrega en obra en la zona conurbada, con maniobra incluida; en el resto de Tamaulipas, el "
+                      lede=("Entrega en obra en la zona conurbada; en el resto de Tamaulipas, el "
                             "norte de Veracruz y San Luis Potosí, por proyecto y con flete por ruta.")),
     "relacionados": {"titulo": "Otras soluciones para empresas", "items": b2b_comun.relacionados(RUTA)},
     "cierre": {
@@ -286,8 +294,8 @@ PARIDAD = {
             "Diferenciadores sin dato: “productor directo” queda en la descripción; la logística pasa a la cobertura y "
             "al proceso, y la documentación a su sección."),
         "Productor directo": "Queda en la descripción; “capacidad sin agotar stock” no está en datos.py.",
-        "Logística regional": ("Pasa a la cobertura y al paso “Entrega en obra” (maniobra incluida en la zona "
-                               "conurbada); “transportes propios y red de fleteros” queda como pregunta al dueño."),
+        "Logística regional": ("Pasa a la cobertura y al paso “Entrega en obra”; la maniobra, “transportes propios y "
+                               "red de fleteros” quedan por escrito en la cotización (el dueño no los publicó)."),
         "Documentación B2B": "Pasa a la sección de documentación (CFDI, REPSE, anticipo y avances, entregas).",
         "Hecho para tres tipos de comprador.": (
             "Las tres personas llevaban citas ficticias entre comillas; sus necesidades pasan a los 3 paquetes por obra "
@@ -317,8 +325,8 @@ PARIDAD = {
         "¿Aceptan pago diferido / a crédito para proyectos?": CREDITO,
         "¿Aceptan pago diferido o a crédito para proyectos?": CREDITO,
         "Formulario de cotización": (
-            "El formulario no mandaba correo: armaba un WhatsApp y pedía correo y teléfono obligatorios. Lo sustituyen "
-            "el armador de palmas y el CTA final (WhatsApp, como en el resto del sitio; pregunta al dueño)."),
+            "El formulario no mandaba correo: armaba un WhatsApp. Lo sustituyen el armador de palmas y, por respuesta del "
+            "dueño (2026-11-08), la cotización por correo para compras (formsubmit, como los materiales)."),
         "Viveros Terra · Tampico": (
             "Bloque de autor; la entidad y el autor son de la Etapa 4. “+200 proyectos B2B” pasa al título de clientes."),
         **{pr: PRECIO_VIEJO for pr in ("$850", "$1,200", "$1,500", "$1,600", "$1,800", "$2,000", "$2,200", "$2,400",

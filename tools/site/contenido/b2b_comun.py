@@ -13,7 +13,7 @@ PADRON = f'<a href="{datos.REPSE_PADRON}" target="_blank" rel="noopener">padrón
 
 DOCUMENTACION = (
     {"titulo": f"Factura {datos.FACTURA}",
-     "texto": "Para persona física o moral, emitida el día del pago. Solo necesitamos tu RFC y tus datos fiscales."},
+     "texto": "Para persona física o moral. Solo necesitamos tu RFC y tus datos fiscales."},
     {"titulo": f"REPSE {datos.REPSE}",
      "texto": f"Registro de la STPS para prestar servicios especializados a empresas. Consulta el folio en el {PADRON}."},
     {"titulo": "Anticipo y avances de obra",
@@ -22,6 +22,9 @@ DOCUMENTACION = (
     {"titulo": "Entregas por etapas",
      "texto": "Un pedido global con entregas parciales en las fechas que tu obra necesita, para que cada entrega llegue fresca."},
 )
+# Cotización por correo (respuesta del dueño, 2026-11-08): compras que no usan WhatsApp mandan su solicitud por escrito.
+LEDE_CORREO = (f"Para departamentos de compras que piden la cotización por escrito. {datos.PROMESA} "
+               f"({datos.HORARIO}); si prefieres, el mismo detalle va por WhatsApp.")
 PREGUNTA_PAGO = ("¿Cómo se paga un proyecto?",
                  f"{datos.ANTICIPO_PROYECTOS} Cada pago lleva su factura {datos.FACTURA}.")
 PREGUNTA_REPSE = ("¿Están dados de alta en el REPSE?",
