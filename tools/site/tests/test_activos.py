@@ -24,6 +24,7 @@ class ActivosTest(unittest.TestCase):
         self.escribir(".vt-a{}")
         (self.pub / "css" / "legacy-fixes.css").write_text(".pt-0{}", encoding="utf-8")
         (self.pub / "css" / "terra-tienda.css").write_text(".vt-tienda .vt-x{}", encoding="utf-8")
+        (self.pub / "css" / "terra-plantas.css").write_text(".vt-plantas .vt-x{}", encoding="utf-8")
         (self.pub / "js" / "terra.js").write_text("void 0;", encoding="utf-8")
 
     def escribir(self, css):
@@ -120,7 +121,7 @@ class ActivosTest(unittest.TestCase):
         def colapsado(texto):
             """Todo el texto sin comentarios y con los espacios en blanco reducidos a uno: selectores y declaraciones."""
             return " ".join(re.sub(r"/\*.*?\*/", "", texto, flags=re.S).split())
-        for hoja in ("terra.css", "terra-tienda.css"):
+        for hoja in ("terra.css", "terra-tienda.css", "terra-plantas.css"):
             fuente = (activos.PUBLIC / "css" / hoja).read_text(encoding="utf-8")
             with self.subTest(hoja=hoja):
                 self.assertEqual(colapsado(activos.minificar_css(fuente)), colapsado(fuente))

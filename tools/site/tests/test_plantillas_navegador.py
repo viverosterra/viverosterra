@@ -22,7 +22,12 @@ PAGINAS = ("/", "/pasto-en-rollo-tampico/")
 SERVICIOS = ("/diseno-jardines-tampico/", "/mantenimiento-jardines-tampico/", "/sistema-riego-tampico/")
 # Etapa 2d: páginas para empresas con la plantilla b2b (cotizador por volumen y armador de palmas).
 EMPRESAS = ("/mayoreo-pasto-tampico/", "/palmas-mayoreo-proyectos/")
-CON_PLANTILLA = PAGINAS + SERVICIOS + EMPRESAS
+# Etapa 2e: hub y subcategorías con hub_categoria (portada con etiqueta) y el catálogo (sin portada).
+PLANTAS = ("/plantas-palmas-arboles-tampico/", "/palmas-tropicales-tampico/", "/plantas-para-jardin-tampico/",
+           "/arboles-ornamentales-tampico/", "/arboles-para-banqueta-tampico/", "/plantas-de-interior-tampico/")
+# El servidor local no tiene cleanUrls de Vercel: el catálogo se pide como /catalogo.html (como en test_navegador.py).
+CATALOGO = "/catalogo.html"
+CON_PLANTILLA = PAGINAS + SERVICIOS + EMPRESAS + PLANTAS
 AXE_PAGINA = """async () => {
   const r = await axe.run(document, { resultTypes: ['violations'] });
   return r.violations.filter((v) => ['serious', 'critical'].includes(v.impact))
@@ -62,7 +67,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
         script = AXE.read_text(encoding="utf-8")
         for ancho in (375, 1440):
             page = self.pagina(ancho)
-            for ruta in CON_PLANTILLA:
+            for ruta in CON_PLANTILLA + (CATALOGO,):
                 page.goto(self.base + ruta, wait_until="load")
                 page.add_script_tag(content=script)
                 with self.subTest(ruta=ruta, ancho=ancho):
@@ -113,10 +118,10 @@ class PlantillasNavegadorTest(unittest.TestCase):
         page.locator("details[data-vt-plegable] summary").click()
         self.assertFalse(page.locator("details[data-vt-plegable]").evaluate("d => d.open"))
 
-    def test_sin_desbordar_en_cuatro_anchos(self):
-        for ancho in (320, 375, 768, 1024, 1440):
+    def test_sin_desbordar_de_320_a_1920(self):
+        for ancho in (320, 375, 768, 1024, 1440, 1920):
             page = self.pagina(ancho)
-            for ruta in CON_PLANTILLA:
+            for ruta in CON_PLANTILLA + (CATALOGO,):
                 page.goto(self.base + ruta, wait_until="load")
                 sobra = page.evaluate("() => document.documentElement.scrollWidth - document.documentElement.clientWidth")
                 with self.subTest(ruta=ruta, ancho=ancho):
@@ -434,9 +439,149 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 anchos = sorted({sum(ws) for ws in filas.values()})
                 self.assertLessEqual(anchos[-1] - anchos[0], 2)  # cada renglón llena el ancho
 
+    def test_catalogo_precio_cta_y_buscador_en_el_primer_pantallazo_movil(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + CATALOGO, wait_until="load")
+        for selector in (".vt-cat__precios", ".vt-cat__cabeza [data-hero-cta] .vt-btn--wa"):
+            caja = page.locator(selector).bounding_box()
+            with self.subTest(selector=selector):
+                self.assertLessEqual(caja["y"] + caja["height"], 812)
+        self.assertLessEqual(page.locator("#vt-cat-q").bounding_box()["y"], 812 * 1.5)
+
+    def test_catalogo_con_teclado_arma_un_solo_mensaje(self):
+        page = self.pagina(1440, 900)
+        page.goto(self.base + CATALOGO, wait_until="load")
+        page.locator("#vt-cat-q").focus()
+        page.keyboard.type("palma real")
+        self.assertEqual(page.locator('[data-vt-o="cuenta"]').inner_text(), "1 especie")
+        self.assertIn("q=palma%20real", page.url)
+        boton = page.locator('[data-vt-agregar="palma-real"]')
+        boton.focus()
+        page.keyboard.press("Enter")
+        self.assertTrue(page.locator("#vt-agregar").evaluate("d => d.open"))
+        self.assertEqual(page.evaluate("() => document.activeElement.id"), "vt-agregar-tam")
+        page.keyboard.press("Tab")
+        page.keyboard.press("Tab")
+        page.keyboard.press("Tab")  # menos, cantidad, más
+        page.keyboard.press("Tab")
+        page.keyboard.press("Tab")  # Cancelar, Agregar
+        page.keyboard.press("Enter")
+        self.assertFalse(page.locator("#vt-agregar").evaluate("d => d.open"))
+        self.assertEqual(page.evaluate("() => document.activeElement.dataset.vtAgregar"), "palma-real")
+        page.locator("#vt-cat-q").fill("olivo")
+        page.locator('[data-vt-agregar="olivo-negro"]').click()
+        page.locator("#vt-agregar-n").fill("10")
+        page.locator('#vt-agregar button[value="agregar"]').click()
+        self.assertIn("2", page.locator('[data-vt-o="cuenta-lista"]').inner_text())
+        page.locator("[data-vt-abrir-lista]").click()
+        enviar = page.locator('#vt-lista [data-vt-o="enviar"]')
+        mensaje = unquote(enviar.get_attribute("href").split("text=", 1)[1])
+        self.assertIn("• Palma Real (", mensaje)
+        self.assertIn("• Olivo Negro (", mensaje)
+        self.assertIn("Total: 2 variedades, 11 unidades", mensaje)
+        self.assertEqual(page.locator('#vt-lista a[href^="https://wa.me/"]').count(), 1)
+        page.evaluate("(a) => a.addEventListener('click', (e) => e.preventDefault())", enviar.element_handle())
+        enviar.click()
+        eventos = page.evaluate("() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+        self.assertIn(["event", "generate_lead", {"method": "whatsapp", "cta_id": "catalogo:sendWA", "service": "plantas"}],
+                      eventos)
+        self.assertTrue(unquote(enviar.get_attribute("href")).endswith(datos.FIRMA))
+
+    def test_agregar_desde_una_subcategoria_abre_el_dialogo_y_la_lista_sobrevive_la_recarga(self):
+        page = self.pagina(375, 812)
+        errores = []
+        page.on("pageerror", lambda e: errores.append(str(e)))
+        page.goto(self.base + "/palmas-tropicales-tampico/", wait_until="load")
+        href = page.locator('.vt-esp__acciones a[href*="add=palma-real"]').get_attribute("href")
+        self.assertEqual(href, "/catalogo?q=Palma%20Real&add=palma-real")
+        page.goto(self.base + href.replace("/catalogo", CATALOGO, 1), wait_until="load")
+        self.assertTrue(page.locator("#vt-agregar").evaluate("d => d.open"))
+        self.assertEqual(page.locator('#vt-agregar [data-vt-o="nombre"]').inner_text(), "Palma Real")
+        self.assertNotIn("add=", page.url)
+        self.assertIn("q=Palma%20Real", page.url)
+        page.locator("#vt-agregar-n").fill("3")
+        page.locator('#vt-agregar button[value="agregar"]').click()
+        boton = page.locator('[data-vt-agregar="palma-real"]')
+        self.assertEqual(boton.text_content(), "✓ En tu lista · editar Palma Real")  # el nombre, solo para lectores
+        cabecera = page.locator('.vt-head [data-cta="catalogo:header"]')
+        self.assertIn("• Palma Real (", unquote(cabecera.get_attribute("href")))
+        page.reload(wait_until="load")
+        self.assertFalse(page.locator("#vt-agregar").evaluate("d => d.open"))
+        self.assertEqual(page.locator('[data-vt-o="cuenta-lista"]').inner_text(), "1")
+        self.assertEqual(page.locator('[data-vt-agregar="palma-real"]').text_content(), "✓ En tu lista · editar Palma Real")
+        page.locator("[data-vt-abrir-lista]").click()
+        page.once("dialog", lambda d: d.dismiss())
+        page.locator("[data-vt-vaciar]").click()
+        self.assertEqual(page.locator('[data-vt-o="cuenta-lista"]').inner_text(), "1")  # confirm() cancelado
+        page.once("dialog", lambda d: d.accept())
+        page.locator("[data-vt-vaciar]").click()
+        self.assertTrue(page.locator("[data-vt-barra-lista]").is_hidden())
+        self.assertNotIn("text=Hola%20Viveros%20Terra%0A%0AQuisiera", cabecera.get_attribute("href"))
+        self.assertEqual(errores, [])
+
+    def test_slug_desconocido_y_almacenamiento_roto_no_rompen_el_catalogo(self):
+        page = self.pagina(1440, 900)
+        errores = []
+        page.on("pageerror", lambda e: errores.append(str(e)))
+        page.add_init_script("""sessionStorage.setItem('vt-catalogo-lista', '[{"name":"Inventada","sc":"x","sz":"1 m","qty":2}]');""")
+        for consulta in ("?add=__proto__", "?add=no-existe", "?add="):
+            page.goto(self.base + CATALOGO + consulta, wait_until="load")
+            with self.subTest(consulta=consulta):
+                self.assertFalse(page.locator("#vt-agregar").evaluate("d => d.open"))
+                self.assertTrue(page.locator("[data-vt-barra-lista]").is_hidden())
+                self.assertNotIn("add=", page.url)
+        self.assertEqual(errores, [])
+
+    def test_sin_resultados_ofrece_whatsapp_con_lo_buscado(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + CATALOGO, wait_until="load")
+        page.locator("#vt-cat-q").fill("baobab enano")
+        self.assertTrue(page.locator("[data-vt-vacio]").is_visible())
+        wa = unquote(page.locator('[data-vt-o="vacio-wa"]').get_attribute("href"))
+        self.assertIn("Busco: *baobab enano*", wa)
+        self.assertEqual(page.locator("#vt-especial-q").input_value(), "baobab enano")
+        self.assertIn("Busco: *baobab enano*", unquote(page.locator('[data-cta="catalogo:solEsp"]').get_attribute("href")))
+
+    def test_filtros_cuentan_los_activos_y_la_etiqueta_muestra_la_especie_en_celular(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + CATALOGO + "?luz=sol&uso=salitre", wait_until="load")
+        self.assertEqual(page.locator(".vt-buscador__filtros summary").inner_text(), "Filtros (2)")
+        page.goto(self.base + "/plantas-palmas-arboles-tampico/", wait_until="load")
+        nombre = page.locator(".vt-portada .vt-etiqueta__nombre")
+        self.assertTrue(nombre.is_visible())
+        self.assertEqual(nombre.inner_text(), "Areca y coco plumoso")
+
+    def test_filtro_del_hub_llega_al_catalogo_con_el_mismo_conteo(self):
+        page = self.pagina(1440, 900)
+        page.goto(self.base + "/plantas-palmas-arboles-tampico/", wait_until="load")
+        enlace = page.locator('a[data-cta="plantas:necesidad-salitre"]')
+        conteo = enlace.locator(".vt-necesidad__n").inner_text()
+        href = enlace.get_attribute("href")
+        self.assertEqual(href, "/catalogo?uso=salitre")
+        page.goto(self.base + href.replace("/catalogo", CATALOGO, 1), wait_until="load")
+        self.assertEqual(page.locator('[data-vt-o="cuenta"]').inner_text(), conteo)
+        self.assertEqual(page.locator('[data-vt-g="uso"][data-vt-v="salitre"]').get_attribute("aria-pressed"), "true")
+        page.locator("[data-vt-limpiar]").click()
+        self.assertEqual(page.locator('[data-vt-o="cuenta"]').inner_text(), "117 especies")
+        self.assertTrue(page.url.endswith(CATALOGO))
+
+    def test_lcp_de_plantas_sin_api_img(self):
+        lcp = """() => new Promise((listo) => { let ultimo = null;
+          new PerformanceObserver((l) => { const e = l.getEntries(); ultimo = e[e.length - 1]; })
+            .observe({ type: 'largest-contentful-paint', buffered: true });
+          setTimeout(() => listo(ultimo ? (ultimo.url || ultimo.element.tagName) : ''), 1500); })"""
+        page = self.pagina(375, 812)
+        for ruta in PLANTAS + (CATALOGO,):
+            pedidas = []
+            page.on("request", lambda r: pedidas.append(r.url))
+            page.goto(self.base + ruta, wait_until="load")
+            with self.subTest(ruta=ruta):
+                self.assertNotIn("/api/img", page.evaluate(lcp))
+                self.assertEqual([u for u in pedidas if "/api/img" in u], [])
+
     def test_cls_bajo_0_1_en_movil(self):
         page = self.pagina(375, 812)
-        for ruta in CON_PLANTILLA:
+        for ruta in CON_PLANTILLA + (CATALOGO,):
             page.goto(self.base + ruta, wait_until="load")
             with self.subTest(ruta=ruta):
                 self.assertLess(page.evaluate(CLS), 0.1)

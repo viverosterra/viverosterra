@@ -68,10 +68,11 @@ def region(nombre, cuerpo):
 FUENTE_PRINCIPAL = "/fonts/archivo-latin.woff2"
 
 
-def head(urls, legacy, tienda=False):
+def head(urls, legacy, tienda=False, plantas=False):
     """Favicon, geo de la tienda, fuente principal precargada, CSS del shell (y legacy-fixes en páginas con Tailwind),
     GA4 una sola vez y terra.js diferido. Con tienda=True (páginas <body class="vt-pagina vt-tienda">), también
-    terra-tienda.css. Las meta keywords, last-modified, ai-content-declaration y language ya no se usan: no se
+    terra-tienda.css. Con plantas=True (páginas <body class="vt-pagina vt-plantas">, Etapa 2e), terra-plantas.css.
+    Las meta keywords, last-modified, ai-content-declaration y language ya no se usan: no se
     reponen."""
     lineas = [
         '<link rel="icon" type="image/png" href="/img/logo-viveros-terra-tampico.png">',
@@ -86,6 +87,8 @@ def head(urls, legacy, tienda=False):
     ]
     if tienda:
         lineas.append(f'<link rel="stylesheet" href="{urls["terra-tienda.css"]}">')
+    if plantas:
+        lineas.append(f'<link rel="stylesheet" href="{urls["terra-plantas.css"]}">')
     lineas += [
         f'<script async src="https://www.googletagmanager.com/gtag/js?id={datos.GA4_ID}"></script>',
         "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"

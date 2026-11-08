@@ -1,0 +1,721 @@
+{
+ "/plantas-palmas-arboles-tampico": {
+  "especies": [
+   [
+    "Palma Washingtona",
+    ""
+   ],
+   [
+    "Palma del Viajero",
+    ""
+   ],
+   [
+    "Palma Areca",
+    ""
+   ],
+   [
+    "Cycas Revoluta",
+    ""
+   ],
+   [
+    "Palma Kerpis",
+    ""
+   ],
+   [
+    "Palma Coco Plumoso",
+    ""
+   ],
+   [
+    "Palma Bambú",
+    ""
+   ],
+   [
+    "Palma Cola de Zorra",
+    ""
+   ],
+   [
+    "Ficus benjamina",
+    ""
+   ],
+   [
+    "Flamboyán",
+    ""
+   ],
+   [
+    "Neem",
+    ""
+   ],
+   [
+    "Tabachín",
+    ""
+   ],
+   [
+    "Trueno",
+    ""
+   ],
+   [
+    "Laurel de la India",
+    ""
+   ],
+   [
+    "Tulipán Africano",
+    ""
+   ],
+   [
+    "Ave del Paraíso",
+    ""
+   ],
+   [
+    "Duranta Cubana",
+    ""
+   ],
+   [
+    "Bugambilia",
+    ""
+   ],
+   [
+    "Croton",
+    ""
+   ]
+  ],
+  "blog": []
+ },
+ "/palmas-tropicales-tampico": {
+  "especies": [
+   [
+    "Palma Areca",
+    "Dypsis lutescens"
+   ],
+   [
+    "Coco Plumoso",
+    "Syagrus romanzoffiana"
+   ],
+   [
+    "Palma Real",
+    "Roystonea regia"
+   ],
+   [
+    "Palma del Viajero",
+    "Ravenala madagascariensis"
+   ],
+   [
+    "Palma Washingtona",
+    "Washingtonia robusta"
+   ],
+   [
+    "Palma Bismarkia",
+    "Bismarckia nobilis"
+   ],
+   [
+    "Palma Licuala",
+    "Licuala grandis"
+   ],
+   [
+    "Palma Triangular",
+    "Dypsis decaryi"
+   ],
+   [
+    "Palma Cola de Pescado",
+    "Caryota sp."
+   ],
+   [
+    "Palma Cica Circinalis",
+    "Cycas circinalis"
+   ],
+   [
+    "Palma Mascareña",
+    "Hyophorbe lagenicaulis"
+   ]
+  ],
+  "blog": []
+ },
+ "/plantas-para-jardin-tampico": {
+  "especies": [
+   [
+    "Ave de Paraíso",
+    "Strelitzia reginae"
+   ],
+   [
+    "Bugambilea Envarada",
+    "Bougainvillea sp."
+   ],
+   [
+    "Duranta Cubana",
+    "Duranta erecta"
+   ],
+   [
+    "Croto Petra",
+    "Codiaeum variegatum"
+   ],
+   [
+    "Agave Atenuata",
+    "Agave attenuata"
+   ],
+   [
+    "Plumbago",
+    "Plumbago auriculata"
+   ]
+  ],
+  "blog": []
+ },
+ "/arboles-ornamentales-tampico": {
+  "especies": [
+   [
+    "Flamboyán Tabachín",
+    "Delonix regia"
+   ],
+   [
+    "Crespón Astronómica",
+    "Lagerstroemia indica"
+   ],
+   [
+    "Palo de Rosa Guayacán",
+    "Tabebuia rosea"
+   ],
+   [
+    "Jacaranda",
+    "Jacaranda mimifolia"
+   ],
+   [
+    "Lluvia de Oro",
+    "Cassia fistula"
+   ],
+   [
+    "Olivo Negro",
+    "Bucida buceras"
+   ]
+  ],
+  "blog": []
+ },
+ "/arboles-para-banqueta-tampico": {
+  "especies": [
+   [
+    "Olivo Negro",
+    "Bucida buceras"
+   ],
+   [
+    "Polyalthia",
+    "Polyalthia longifolia"
+   ],
+   [
+    "Neem",
+    "Azadirachta indica"
+   ],
+   [
+    "Fresno",
+    "Fraxinus sp."
+   ],
+   [
+    "Crespón Astronómica",
+    "Lagerstroemia indica"
+   ],
+   [
+    "Tronadora",
+    "Tecoma stans"
+   ]
+  ],
+  "blog": []
+ },
+ "/plantas-de-interior-tampico": {
+  "especies": [
+   [
+    "Ficus Lyrata Pandurata",
+    "Ficus lyrata"
+   ],
+   [
+    "Monstera Piñanona",
+    "Monstera deliciosa"
+   ],
+   [
+    "ZZ Plant",
+    "Zamioculcas zamiifolia"
+   ],
+   [
+    "Sansiviera",
+    "Sansevieria trifasciata"
+   ],
+   [
+    "Palma Areca",
+    "Dypsis lutescens"
+   ],
+   [
+    "Dracena Compacta",
+    "Dracaena deremensis"
+   ]
+  ],
+  "blog": []
+ },
+ "/catalogo": {
+  "especies": [
+   [
+    "Olivo Negro",
+    "Bucida Buceras"
+   ],
+   [
+    "Encino Siempreverde",
+    "Quercus Virginiana"
+   ],
+   [
+    "Crespón Astronómica",
+    "Lagerstroemia Indica"
+   ],
+   [
+    "Lluvia de Oro",
+    "Cassia Fistula"
+   ],
+   [
+    "Flamboyán Tabachín",
+    "Delonix Regia"
+   ],
+   [
+    "Neem",
+    "Azadirachta indica"
+   ],
+   [
+    "Jacaranda",
+    "Jacaranda Mimisfolia"
+   ],
+   [
+    "Palo de Rosa Guayacán",
+    "Tabubeia Rosea"
+   ],
+   [
+    "Fresno",
+    "Fraxinus sp."
+   ],
+   [
+    "Sauce Llorón",
+    "Salix babylonica"
+   ],
+   [
+    "Magnolia",
+    "Magnolia grandiflora"
+   ],
+   [
+    "Liquidambar",
+    "Liquidambar styraciflua"
+   ],
+   [
+    "Níspero",
+    "Eriobotrya japonica"
+   ],
+   [
+    "Eucalipto",
+    "Eucalyptus sp."
+   ],
+   [
+    "Parota Orejon",
+    "Enterolobium cyclocarpum"
+   ],
+   [
+    "Acacia Negra",
+    "Acacia melanoxylon"
+   ],
+   [
+    "Ficus Benjamin",
+    "Ficus benjamina"
+   ],
+   [
+    "Tronadora",
+    "Tecoma Stans"
+   ],
+   [
+    "Huizache",
+    "Acacia farnesiana"
+   ],
+   [
+    "Sabino Ahuehuete",
+    "Taxodium mucronatum"
+   ],
+   [
+    "Polyalthia",
+    "Polyalthia longifolia"
+   ],
+   [
+    "Flor de Mayo",
+    "Plumeria sp."
+   ],
+   [
+    "Hule",
+    "Ficus Elastica"
+   ],
+   [
+    "Orquídea Pata de Vaca",
+    "Bahuinia sp."
+   ],
+   [
+    "Ceiba",
+    "Ceiba pentandra"
+   ],
+   [
+    "Coco Plumoso",
+    "Syagrus romanzoffiana"
+   ],
+   [
+    "Palma Cola de Zorra",
+    "Wodyetia bifurcata"
+   ],
+   [
+    "Palma Real",
+    "Roystonea regia"
+   ],
+   [
+    "Palma Areca",
+    "Dypsis lutescens"
+   ],
+   [
+    "Palma Washingtona",
+    "Washingtonia robusta"
+   ],
+   [
+    "Palma Cica Revoluta",
+    "Cycas revoluta"
+   ],
+   [
+    "Palma Kerpis",
+    "Chamaedorea sp."
+   ],
+   [
+    "Palma Bismarkia",
+    "Bismarckia nobilis"
+   ],
+   [
+    "Palma Cola de Pescado",
+    "Caryota sp."
+   ],
+   [
+    "Palma Mascareña",
+    "Hyophorbe lagenicaulis"
+   ],
+   [
+    "Palma Triangular",
+    "Dypsis decaryi"
+   ],
+   [
+    "Palma Cocotera",
+    "Cocos nucifera"
+   ],
+   [
+    "Palma Estrella",
+    "Rhapis excelsa"
+   ],
+   [
+    "Palma Seifrixi Bambú",
+    "Chamaedorea seifrizii"
+   ],
+   [
+    "Palma Licuala",
+    "Licuala grandis"
+   ],
+   [
+    "Palma Datilera",
+    "Phoenix dactylifera"
+   ],
+   [
+    "Palma Rubelina",
+    "Phoenix roebelenii"
+   ],
+   [
+    "Palma Viajera Ravenala",
+    "Ravenala madagascariensis"
+   ],
+   [
+    "Palma de Madagascar",
+    "Pachypodium lamerei"
+   ],
+   [
+    "Ave de Paraíso",
+    "Strelitzia reginae"
+   ],
+   [
+    "Monstera Piñanona",
+    "Monstera deliciosa"
+   ],
+   [
+    "Sansiviera",
+    "Sansevieria trifasciata"
+   ],
+   [
+    "Bambú Tarro",
+    "Bambusa vulgaris"
+   ],
+   [
+    "Palma ZZ Plant",
+    "Zamioculcas zamiifolia"
+   ],
+   [
+    "Agapando",
+    "Agapanthus africanus"
+   ],
+   [
+    "Bugambilea Mini Morada",
+    "Bougainvillea sp."
+   ],
+   [
+    "Bugambilea Envarada",
+    "Bougainvillea sp."
+   ],
+   [
+    "Plumbago",
+    "Plumbago auriculata"
+   ],
+   [
+    "Agave Atenuata",
+    "Agave attenuata"
+   ],
+   [
+    "Árbol de la Abundancia",
+    "Pachira aquatica"
+   ],
+   [
+    "Aralia Golden",
+    "Schefflera arboricola var."
+   ],
+   [
+    "Aralia Elegantísima",
+    "Schefflera elegantissima"
+   ],
+   [
+    "Azalea",
+    "Rhododendron sp."
+   ],
+   [
+    "Adelfa Enana",
+    "Nerium oleander nana"
+   ],
+   [
+    "Adenium Rosa del Desierto",
+    "Adenium obesum"
+   ],
+   [
+    "Beucarnea Soyate",
+    "Beaucarnea recurvata"
+   ],
+   [
+    "Box Arrayán Bola",
+    "Buxus sempervirens"
+   ],
+   [
+    "Cactus Órgano",
+    "Stenocereus sp."
+   ],
+   [
+    "Casuarina",
+    "Casuarina equisetifolia"
+   ],
+   [
+    "Cipres Italiano",
+    "Cupressus sempervirens"
+   ],
+   [
+    "Citronella",
+    "Cymbopogon nardus"
+   ],
+   [
+    "Cola de Caballo",
+    "Equisetum hyemale"
+   ],
+   [
+    "Copa de Oro",
+    "Solandra maxima"
+   ],
+   [
+    "Croto Petra",
+    "Codiaeum variegatum"
+   ],
+   [
+    "Croto Tornillo",
+    "Codiaeum sp."
+   ],
+   [
+    "Cuna de Moisés",
+    "Spathiphyllum sp."
+   ],
+   [
+    "Duranta Cubana",
+    "Duranta erecta"
+   ],
+   [
+    "Duranta Golden",
+    "Duranta erecta var."
+   ],
+   [
+    "Duranta Zafiro",
+    "Duranta erecta"
+   ],
+   [
+    "Esparrago Springery",
+    "Asparagus densiflorus"
+   ],
+   [
+    "Esparrago Meyeri",
+    "Asparagus meyeri"
+   ],
+   [
+    "Eugenia",
+    "Syzygium sp."
+   ],
+   [
+    "Ficus Lyrata Pandurata",
+    "Ficus lyrata"
+   ],
+   [
+    "Floripondio",
+    "Brugmansia sp."
+   ],
+   [
+    "Fornio Phormium",
+    "Phormium tenax"
+   ],
+   [
+    "Helecho Boston",
+    "Nephrolepis exaltata"
+   ],
+   [
+    "Helecho Macho",
+    "Dryopteris sp."
+   ],
+   [
+    "Helecho Peine",
+    "Blechnum sp."
+   ],
+   [
+    "Hoja Elegante Alocasia",
+    "Alocasia macrorrhiza"
+   ],
+   [
+    "Ixora Karla",
+    "Ixora javanica"
+   ],
+   [
+    "Jazmín",
+    "Jasminum sp."
+   ],
+   [
+    "Kalanchoe",
+    "Kalanchoe blossfeldiana"
+   ],
+   [
+    "Limonaria",
+    "Murraya paniculata"
+   ],
+   [
+    "Papiro Egipcio",
+    "Cyperus papyrus"
+   ],
+   [
+    "Papiro Estrella",
+    "Cyperus alternifolius"
+   ],
+   [
+    "Pasto Dianela",
+    "Dianella tasmanica"
+   ],
+   [
+    "Pasto Liriope",
+    "Liriope muscari"
+   ],
+   [
+    "Philodendro Xanadu",
+    "Thaumatophyllum xanadu"
+   ],
+   [
+    "Sansiviera Variegada",
+    "Sansevieria trifasciata"
+   ],
+   [
+    "Uva de Playa",
+    "Coccoloba uvifera"
+   ],
+   [
+    "Wudelia Rastrera",
+    "Wedelia trilobata"
+   ],
+   [
+    "Mussaenda",
+    "Mussaenda sp."
+   ],
+   [
+    "Palma Cica Circinalis",
+    "Cycas circinalis"
+   ],
+   [
+    "Palma Cartón",
+    "Zamia furfuracea"
+   ],
+   [
+    "Arbusto de Playa",
+    "Scaevola taccada"
+   ],
+   [
+    "Aralia Shaflera",
+    "Schefflera arboricola"
+   ],
+   [
+    "Box Arrayán Pino",
+    "Buxus sempervirens"
+   ],
+   [
+    "Aspidistra",
+    "Aspidistra elatior"
+   ],
+   [
+    "Tradescantia Barquilla Morada",
+    "Tradescantia spathacea"
+   ],
+   [
+    "Heliconia Baby Enana",
+    "Heliconia sp."
+   ],
+   [
+    "Laurel de la India Formado",
+    "Ficus microcarpa"
+   ],
+   [
+    "Clavo Enano Pittosporum",
+    "Pittosporum tobira"
+   ],
+   [
+    "Lirio Persa",
+    "Iris sp."
+   ],
+   [
+    "Dracena Compacta",
+    "Dracaena deremensis"
+   ],
+   [
+    "Galatea Amoena",
+    "Calathea amoena"
+   ],
+   [
+    "Eleagnus",
+    "Elaeagnus pungens"
+   ],
+   [
+    "Dracena Marginata",
+    "Dracaena marginata"
+   ],
+   [
+    "Lápiz Tirucalli",
+    "Euphorbia tirucalli"
+   ],
+   [
+    "Moneda Enredadera",
+    "Dichondra argentea"
+   ],
+   [
+    "Petunia Silvestre",
+    "Ruellia simplex"
+   ],
+   [
+    "Podocarpus Japanese Yew",
+    "Podocarpus macrophyllus"
+   ],
+   [
+    "Clorofito Listón",
+    "Chlorophytum comosum"
+   ]
+  ],
+  "blog": []
+ }
+}

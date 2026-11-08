@@ -17,7 +17,8 @@ DESDE_2007 = ("Desde 2007", "Vivero propio en Cd. Madero")
 VARIEDADES = ("+200", "Variedades en el vivero")
 
 # La home y /pasto-en-rollo-tampico (Etapa 2a), diseño, mantenimiento y riego (Etapa 2c) y mayoreo y palmas para
-# proyectos (Etapa 2d) salen de tools/site/plantillas/: este script ya no las toca. Quedan las de las Etapas 2e a 2g.
+# proyectos (Etapa 2d) y, desde la Etapa 2e, el hub de plantas y sus cinco subcategorías salen de tools/site/plantillas/:
+# este script ya no las toca. Quedan el vivero (Etapa 3) y los materiales (Etapas 2f y 2g).
 PAGES = {
     "vivero-tampico": dict(
         title="Vivero en Tampico", accent="y Ciudad Madero, desde 2007",
@@ -28,63 +29,6 @@ PAGES = {
         alt="Equipo de Viveros Terra sembrando un árbol en un jardín de Tampico", caption="Siembra de árboles y plantas en Tampico.",
         wa=guided("Hola, quiero visitar el vivero o cotizar plantas.", "Lo que busco", "Tamaño aprox.", foto=False),
         secondary=("https://maps.app.goo.gl/xC4XGL2WeucAjGwAA", "Cómo llegar"),
-    ),
-    "plantas-palmas-arboles-tampico": dict(
-        title="Plantas, palmas y árboles", accent="de nuestro vivero en Tampico",
-        price_pre="Palmas desde", price="$250", price_unit="", price_alt="· plantas y árboles por tamaño",
-        lede="Más de 200 variedades cultivadas para el clima del Golfo. Te las llevamos y, si quieres, las sembramos con garantía de arraigo.",
-        facts=[VARIEDADES, GARANTIA_PLANTAS, ("Entrega", "Tampico, Madero y Altamira")],
-        img="/img/arboles-tampico-viveros-terra.webp",
-        alt="Equipo de Viveros Terra sembrando un árbol y plantas en un jardín", caption="Siembra de árboles y plantas en Tampico.",
-        wa=guided("Hola, quiero cotizar plantas o palmas.", "Plantas que busco", "Tamaño aprox.", "Colonia de entrega"),
-        secondary=("/catalogo", "Ver catálogo"),
-    ),
-    "plantas-para-jardin-tampico": dict(
-        title="Plantas para jardín", accent="que aguantan el calor de Tampico",
-        price_pre="Precio", price="por tamaño", price_unit="", price_alt="· cotiza con una foto de tu espacio",
-        lede="Ornamentales, tropicales y de cobertura elegidas para sol, humedad y salitre. Te decimos cuáles van en sol y cuáles en sombra.",
-        facts=[VARIEDADES, GARANTIA_PLANTAS, ("Asesoría", "Sin costo, por WhatsApp")],
-        img="/img/jardin-residencial-tropical-tampico.webp",
-        alt="Jardín residencial con plantas tropicales en Tampico", caption="Jardín con plantas tropicales en Tampico.",
-        wa=guided("Hola, quiero cotizar plantas para mi jardín.", "El lugar es de sol o de sombra", "Metros aprox.", "Colonia"),
-        secondary=("/catalogo", "Ver catálogo"),
-    ),
-    "plantas-de-interior-tampico": dict(
-        title="Plantas de interior", accent="para casas y oficinas en Tampico",
-        price_pre="Precio", price="por tamaño", price_unit="", price_alt="· cotiza con una foto del lugar",
-        lede="Pothos, sansevieria, aglaonema, monstera y más, adaptadas al calor y la humedad de Tampico. Entrega a domicilio.",
-        facts=[VARIEDADES, ("Poca luz", "Opciones para interiores"), ("Entrega", "Tampico, Madero y Altamira")],
-        img="/img/plantas-ornamentales-tampico-viveros-terra.webp",
-        alt="Plantas de interior en macetas del vivero Viveros Terra", caption="Plantas de interior del vivero.",
-        wa=guided("Hola, quiero plantas de interior.", "Casa u oficina", "Luz del lugar (mucha o poca)", "Colonia"),
-        secondary=("/catalogo", "Ver catálogo"),
-    ),
-    "palmas-tropicales-tampico": dict(
-        title="Palmas para jardín en Tampico,", accent="tropicales y exóticas",
-        price_pre="Desde", price="$250", price_unit="", price_alt="en tamaño chico; el precio sube con la altura",
-        lede="Areca y coco plumoso desde $250 y palma real desde $500 en su tamaño más chico. También washingtonia, del viajero, bismarckia y exóticas. Te las llevamos y las sembramos con garantía de arraigo.",
-        facts=[GARANTIA_PLANTAS, ("$500", "Palma real desde, tamaño chico"), ("Entrega y siembra", "Tampico, Madero y Altamira")],
-        img="/img/palma-real-jardin-residencial-tampico.webp", img_pos="center 30%",
-        alt="Palma real sembrada en un jardín residencial de Tampico", caption="Palma real en un jardín de Tampico.",
-        wa=guided("Hola, quiero cotizar palmas.", "Palma que me interesa", "Altura aprox.", "Colonia de entrega"),
-    ),
-    "arboles-ornamentales-tampico": dict(
-        title="Árboles ornamentales", accent="para jardines en Tampico",
-        price_pre="Desde", price="$250", price_unit="", price_alt="· flamboyán $250 · crespón $350 · jacaranda $450",
-        lede="Árboles de sombra y de flor elegidos para el clima de Tamaulipas. Te los llevamos y los sembramos con garantía de arraigo.",
-        facts=[GARANTIA_PLANTAS, ("Entrega y siembra", "Tampico, Madero y Altamira"), VARIEDADES],
-        img="/img/arboles-tampico-viveros-terra.webp",
-        alt="Equipo de Viveros Terra sembrando un árbol ornamental en Tampico", caption="Siembra de un árbol ornamental en Tampico.",
-        wa=guided("Hola, quiero cotizar árboles.", "Árbol que me interesa", "Altura aprox.", "Colonia de entrega"),
-    ),
-    "arboles-para-banqueta-tampico": dict(
-        title="Árboles para banqueta", accent="que no levantan el pavimento",
-        price_pre="Precio", price="por tamaño", price_unit="", price_alt="· cotiza con la medida de tu banqueta",
-        lede="Siete especies de raíz controlada para frentes y camellones: olivo negro, polyalthia, neem, fresno, crespón y más.",
-        facts=[("7 especies", "De raíz que no daña la banqueta"), GARANTIA_PLANTAS, ("Entrega y siembra", "Tampico, Madero y Altamira")],
-        img="/img/arboles-vivero-tampico-mayoreo.webp", img_pos="center 40%",
-        alt="Árboles jóvenes en el vivero listos para sembrar en banqueta", caption="Árboles en el vivero de Viveros Terra.",
-        wa=guided("Hola, quiero árboles para mi banqueta.", "Ancho de la banqueta", "Cuántos árboles", "Colonia"),
     ),
     "tierra-negra-vegetal-tampico": dict(
         title="Tierra negra vegetal", accent="por costal o camión",

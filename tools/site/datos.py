@@ -131,6 +131,26 @@ PALMAS_PROYECTO = (
     ("Bambú tarro", "Bambusa vulgaris", None),
     ("Yucca rostrata", "Yucca rostrata", None),
 )
+# Plantas (Etapa 2e). Los únicos precios de plantas que dio el dueño (2026-11-07): areca y coco plumoso desde $250 y
+# palma real desde $500 en su tamaño más chico (el precio sube con la altura) y flamboyán desde $250. Ninguna otra
+# especie lleva precio: va SEGUN_COTIZACION (nunca los $850–$4,200 de main ni los "desde" sin confirmar del hub viejo).
+# Clave: el nombre de la especie como sale en el catálogo (tools/site/contenido/catalogo_especies.json).
+PRECIOS_ESPECIE = {
+    "Palma Areca": PRECIOS["palma_desde"],
+    "Coco Plumoso": PRECIOS["palma_desde"],
+    "Palma Real": PRECIOS["palma_real"],
+    "Flamboyán Tabachín": PRECIOS["flamboyan"],
+}
+PALMAS_PRECIO = (f"Areca y coco plumoso desde ${PRECIOS['palma_desde']}, palma real desde ${PRECIOS['palma_real']} en "
+                 "tamaño chico; el precio sube con la altura")
+# "Desde" de cada subcategoría de plantas: solo un precio de PRECIOS; None = SEGUN_COTIZACION (no se inventa).
+DESDE_PLANTAS = {
+    "/palmas-tropicales-tampico": PRECIOS["palma_desde"],
+    "/plantas-para-jardin-tampico": None,
+    "/arboles-ornamentales-tampico": PRECIOS["flamboyan"],
+    "/arboles-para-banqueta-tampico": None,
+    "/plantas-de-interior-tampico": None,
+}
 
 # Permiso del dueño (2026-11-07) para mostrarlos con nombre y logo. Renault (cliente real, permiso del dueño) va con su
 # nombre en texto: no hay logo en public/img/clientes y no se inventa uno.
