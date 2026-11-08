@@ -89,7 +89,8 @@ def tarjeta_especie(e, numero, texto, tipo, altura=None):
     guia_html = (f'<a href="{esc(guia)}">Guía de cuidados<span class="vt-sr"> de {nombre}</span></a>' if guia else "")
     return (f'<li class="vt-esp">{_cabeza(e, numero)}{datos_especie(e, altura)}{precio_especie(e)}<p>{texto}</p>'
             f'<p class="vt-esp__acciones"><a data-cta="{esc(tipo)}:catalogo" href="{esc(cd.url_catalogo(q=e["name"]))}">'
-            f'Agregar<span class="vt-sr"> {nombre}</span> en Arma tu lista</a>{guia_html}</p></li>')
+            # Un solo <span>: el enlace es inline-flex y cada trozo de texto suelto sería otra columna a 375 px.
+            f'<span>Agregar<span class="vt-sr"> {nombre}</span> en Arma tu lista</span></a>{guia_html}</p></li>')
 
 
 def especies(items, tipo, primero=1):

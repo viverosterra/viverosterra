@@ -95,6 +95,11 @@ class ComponentesPlantasTest(unittest.TestCase):
             self.assertIn(attr, olivo)
         self.assertNotIn("/api/img", html)
 
+    def test_enlace_agregar_en_un_solo_span(self):
+        """.vt-esp__acciones a es inline-flex: «Agregar» y «en Arma tu lista» sueltos serían dos columnas en celular."""
+        html = cp.tarjeta_especie(cd.especie("palma-kerpis"), 2, "Texto.", "plantas")
+        self.assertIn('"><span>Agregar<span class="vt-sr"> Palma Kerpis</span> en Arma tu lista</span></a>', html)
+
     def test_boton_anadir_con_un_solo_espacio_visible(self):
         """.vt-btn es inline-flex con gap: si el nombre para lectores de pantalla (vt-sr) queda como hijo directo, el
         gap se suma dos veces y se ven dos espacios entre «Añadir» y «a mi lista». El texto va en un solo <span>."""
