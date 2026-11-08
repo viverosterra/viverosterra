@@ -30,15 +30,6 @@ PAGES = {
         wa=guided("Hola, quiero visitar el vivero o cotizar plantas.", "Lo que busco", "Tamaño aprox.", foto=False),
         secondary=("https://maps.app.goo.gl/xC4XGL2WeucAjGwAA", "Cómo llegar"),
     ),
-    "marmol-blanco-tampico": dict(
-        title="Mármol blanco", accent="para jardines y andadores",
-        price_pre="Saco", price="$250", price_unit="", price_alt="· 3 sacos cubren 1 m²",
-        lede="Grava de mármol blanco para arriates, andadores y bordes de alberca. Venta por saco o por volumen con entrega en Tampico, Madero y Altamira.",
-        facts=[("20 kg", "Por saco aprox."), ("3 sacos", "Por metro cuadrado"), ("Entrega", "Tampico, Madero y Altamira")],
-        img="/img/marmol-blanco-alberca-palmera-tampico.webp", img_pos="center 60%",
-        alt="Mármol blanco decorativo junto a una alberca con palmera", caption="Mármol blanco junto a alberca en Tampico.",
-        wa=guided("Hola, quiero cotizar mármol blanco.", "Metros a cubrir", "Colonia de entrega"),
-    ),
     "piedra-bola-rio-tampico": dict(
         title="Piedra bola de río", accent="para jardines y senderos",
         price_pre="Precio", price="por medida", price_unit="", price_alt="· chica, mediana y grande",

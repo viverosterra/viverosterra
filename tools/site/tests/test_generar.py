@@ -22,8 +22,9 @@ class GenerarTest(unittest.TestCase):
                       "/palmas-mayoreo-proyectos", "/plantas-palmas-arboles-tampico", "/palmas-tropicales-tampico",
                       "/plantas-para-jardin-tampico", "/arboles-ornamentales-tampico",
                       "/arboles-para-banqueta-tampico", "/plantas-de-interior-tampico", "/catalogo",
-                      "/tierra-negra-vegetal-tampico", "/tezontle-rojo-tampico", "/pasto-sintetico",
-                      "/pasto-sintetico/perros"] + [f"/pasto-sintetico/{m['slug']}" for m in MODELOS]
+                      "/tierra-negra-vegetal-tampico", "/tezontle-rojo-tampico", "/marmol-blanco-tampico",
+                      "/pasto-sintetico", "/pasto-sintetico/perros"]
+                     + [f"/pasto-sintetico/{m['slug']}" for m in MODELOS]
                      + [f"/pasto-sintetico/envio/{c['slug']}" for c in CIUDADES])
         self.assertEqual([r for r, *_ in generar.PAGINAS], esperadas)
         for ruta, salida, _p, _c in generar.PAGINAS:

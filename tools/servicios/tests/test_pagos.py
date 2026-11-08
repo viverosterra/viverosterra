@@ -12,7 +12,7 @@ CON_PLANTILLA = ("pasto-en-rollo-tampico", "diseno-jardines-tampico", "mantenimi
                  "sistema-riego-tampico", "mayoreo-pasto-tampico", "palmas-mayoreo-proyectos",
                  "plantas-palmas-arboles-tampico", "palmas-tropicales-tampico", "plantas-para-jardin-tampico",
                  "arboles-ornamentales-tampico", "arboles-para-banqueta-tampico", "plantas-de-interior-tampico",
-                 "tierra-negra-vegetal-tampico", "tezontle-rojo-tampico")
+                 "tierra-negra-vegetal-tampico", "tezontle-rojo-tampico", "marmol-blanco-tampico")
 
 
 class PaginasConPlantillaTest(unittest.TestCase):
