@@ -225,6 +225,62 @@ class MedidorTest(unittest.TestCase):
         self.assertEqual(html.count("aria-live"), 0)
 
 
+class EmpresasTest(unittest.TestCase):
+    def test_cotizador_por_volumen_empieza_vacio_con_los_precios_de_datos(self):
+        html = c.cotizador_volumen("may", "b2b", "Hola, quiero cotizar pasto al mayoreo.")
+        self.assertIn('data-vt-volumen data-hero-cta', html)  # la barra móvil se esconde con el cotizador a la vista
+        self.assertIn('data-cta="b2b:cotizador"', html)
+        self.assertIn('<label for="may-m2">m² totales de la obra</label>', html)
+        self.assertIn('id="may-m2" data-vt-campo="m2" inputmode="decimal"', html)
+        self.assertIn(f">{c.VACIO_VOLUMEN['medida']}<", html)
+        self.assertIn('class="vt-etiqueta__precio is-vacio"', html)
+        self.assertIn('&quot;mayoreo&quot;:{&quot;precio&quot;:60,&quot;desde&quot;:true,&quot;minimo&quot;:500', html)
+        self.assertIn('&quot;solo&quot;:{&quot;precio&quot;:85', html)
+        self.assertNotIn("instalado", html.split("data-modos=")[1].split('"')[1])
+        enlace = re.search(r'data-vt-o="cta" href="([^"]+)"', html).group(1)
+        self.assertTrue(unquote(enlace.split("text=", 1)[1].replace("&amp;", "&")).endswith(datos.FIRMA))
+        for campo in ("empresa", "obra", "fecha"):
+            self.assertIn(f'data-vt-campo="{campo}" type="text"', html)
+
+    def test_volumen_con_menos_de_500_m2_nunca_a_precio_de_mayoreo(self):
+        for m2 in (1, 250, 499.9):
+            with self.subTest(m2=m2):
+                r = c.calculo_volumen(m2)
+                self.assertEqual(r["precio"], datos.PRECIOS["pasto_solo_m2"])
+                self.assertIn("Te faltan", r["aviso"])
+        self.assertEqual(c.calculo_volumen(500)["precio"], datos.PRECIOS["pasto_mayoreo_m2"])
+
+    def test_armador_de_palmas_con_las_especies_de_datos_y_labels(self):
+        html = c.armador_palmas("pal", "b2b", "Hola, quiero cotizar palmas.")
+        self.assertEqual(html.count("data-vt-fila>"), c.FILAS_PALMAS)
+        for n in range(1, c.FILAS_PALMAS + 1):
+            for campo in ("especie", "altura", "cantidad"):
+                self.assertIn(f'<label for="pal-{campo}-{n}">', html)
+                self.assertIn(f'id="pal-{campo}-{n}"', html)
+        for nombre, cientifico, _precio in datos.PALMAS_PROYECTO:
+            self.assertIn(f'<option value="{nombre}">{nombre} ({cientifico})</option>', html)
+        self.assertIn(c.OTRA_ESPECIE, html)
+        self.assertIn('data-vt-palmas data-hero-cta', html)
+        self.assertIn('data-vt-agregar hidden', html)  # sin JS no se ofrece un botón que no hace nada
+        self.assertIn('data-cta="b2b:armador"', html)
+        self.assertNotRegex(html, r"\$\d")  # sin precio total: depende de la altura
+
+    def test_mensaje_y_resumen_de_palmas(self):
+        filas = [("Palma real", "3", "40"), ("Coco plumoso", "", ""), ("", "5", "10")]
+        self.assertEqual(c.mensaje_palmas(filas, "Mi empresa").split("\n"), [
+            "Hola, quiero cotizar palmas para un proyecto.", "- 40 × Palma real, altura aprox.: 3 m",
+            "- ___ × Coco plumoso, altura aprox.: ___", "Empresa: Mi empresa", "Obra y ubicación: ___",
+            "Fecha de entrega: ___"])
+        self.assertEqual(c.resumen_palmas(filas), "2 especies · 40 piezas")
+        self.assertEqual(c.mensaje_palmas([("", "", "")]), "")
+        self.assertEqual(c.resumen_palmas([("", "", "")]), c.VACIO_PALMAS)
+
+    def test_repse_verificable(self):
+        html = c.repse()
+        self.assertIn(f"REPSE {datos.REPSE}", html)
+        self.assertIn(f'href="{datos.REPSE_PADRON}" target="_blank" rel="noopener"', html)
+
+
 class EscapeTest(unittest.TestCase):
     def test_bloque_y_figura_escapan_atributos(self):
         html = c.bloque(1, "R", 'a"b', "T", "", id_seccion='c"d')
