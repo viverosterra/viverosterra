@@ -12,7 +12,6 @@ from data import MODELOS, SITE
 from feed import build_feed
 from precios import build_precios
 from sitemap import upsert
-from zonas import ZONAS, build_zona
 
 ROOT = Path(__file__).resolve().parents[2] / "public" / "pasto-sintetico"
 HERRAMIENTAS_SITIO = Path(__file__).resolve().parents[1] / "site"
@@ -40,8 +39,6 @@ def aplicar_shell(paths):
 def main():
     ESCRITAS.clear()
     write(ROOT.parent / "precios" / "index.html", build_precios())
-    for slug, zona in ZONAS.items():
-        write(ROOT.parent / slug / "index.html", build_zona(slug, zona))
     (ROOT.parent / "feed-pasto-sintetico.xml").write_text(build_feed(), encoding="utf-8")
     upsert([f"{SITE}/pasto-sintetico", f"{SITE}/pasto-sintetico/perros"]
            + [f"{SITE}/pasto-sintetico/envio/{c['slug']}" for c in CIUDADES]

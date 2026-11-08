@@ -28,7 +28,7 @@ from componentes import dinero  # noqa: E402
 PUBLIC = paginas.PUBLIC
 ZONAS = tuple(ruta for _nombre, ruta in datos.ZONAS)
 PAGINAS = ZONAS + ("/precios",)
-PENDIENTES = frozenset(PAGINAS)
+PENDIENTES = frozenset({"/precios"})
 CAPTURA = json.loads(paridad_zonas.CAPTURA.read_text(encoding="utf-8"))
 PERMITIDOS = ({dinero(n) for v in datos.PRECIOS.values() for n in (v if isinstance(v, tuple) else (v,))}
               | {dinero(m[k]) for m in data.MODELOS for k in ("t1", "t2", "rollo")}
