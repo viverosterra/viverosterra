@@ -29,24 +29,19 @@ class CatalogoDatosTest(unittest.TestCase):
                 self.assertTrue(e["sz"] and all(isinstance(t, str) for t in e["sz"]))
                 self.assertNotIn("<", e["luz"] + e["desc"])
 
-    def test_fotos_retiradas_y_confirmadas_declaradas(self):
-        """FOTOS_RETIRADAS: especies reales, cada una con su motivo; FOTOS_VIVERO_CONFIRMADAS (las llena el dueño): especies
-        reales con foto. Ninguna foto chica está retirada (la lista de chicas es de fotos publicadas)."""
+    def test_fotos_como_en_main_por_decision_del_dueno(self):
+        """Decisión del dueño (2026-11-08): ninguna foto se retira (FOTOS_RETIRADAS vacía) y las 117 especies tienen la
+        foto de main. FOTOS_POR_REVISAR guarda, para la etapa de fotos, las 24 halladas con marca o logo ajeno, cada una
+        con lo que se vio. FOTOS_VIVERO_CONFIRMADAS (las llena el dueño): especies reales con foto."""
+        self.assertEqual(cd.FOTOS_RETIRADAS, {})
+        self.assertTrue(all(cd.tiene_foto(e) for e in cd.ESPECIES))
         self.assertIsInstance(cd.FOTOS_VIVERO_CONFIRMADAS, frozenset)
-        self.assertLessEqual(set(cd.FOTOS_RETIRADAS), set(cd.POR_SLUG))
-        self.assertLessEqual(cd.FOTOS_VIVERO_CONFIRMADAS, set(cd.POR_SLUG) - set(cd.FOTOS_RETIRADAS))
-        self.assertFalse(cd.FOTOS_CHICAS & set(cd.FOTOS_RETIRADAS))
-        for slug, motivo in cd.FOTOS_RETIRADAS.items():
+        self.assertLessEqual(cd.FOTOS_VIVERO_CONFIRMADAS, set(cd.POR_SLUG))
+        self.assertEqual(len(cd.FOTOS_POR_REVISAR), 24)
+        for slug, motivo in cd.FOTOS_POR_REVISAR.items():
             with self.subTest(especie=slug):
+                self.assertIn(slug, cd.POR_SLUG)
                 self.assertGreater(len(motivo), 10)
-                self.assertFalse(cd.tiene_foto(cd.especie(slug)))
-        self.assertTrue(cd.tiene_foto(cd.especie("palma-real")))
-        for slug in ("eucalipto", "flor-de-mayo", "tronadora", "acacia-negra", "palma-cola-de-pescado", "beucarnea-soyate",
-                     "esparrago-meyeri", "clorofito-liston", "polyalthia", "wudelia-rastrera", "orquidea-pata-de-vaca",
-                     # lote C: marcas tenues de otros viveros y la etiqueta ajena del agave
-                     "agave-atenuata", "aralia-elegantisima", "aralia-shaflera", "floripondio", "jazmin",
-                     "fornio-phormium", "pasto-liriope", "heliconia-baby-enana"):
-            self.assertIn(slug, cd.FOTOS_RETIRADAS)
 
     def test_cada_especie_de_main_sigue_con_su_cientifico_o_la_correccion_declarada(self):
         por_nombre = {e["name"]: e for e in cd.ESPECIES}

@@ -2,9 +2,7 @@
 
 Precio (decisión del dueño, 2026-11-07): datos.PALMAS_PRECIO (areca y coco plumoso desde $250, palma real desde $500 en
 tamaño chico; el precio sube con la altura) y las demás palmas "según cotización", en la tabla de precios. Las tarjetas
-llevan foto publicable del catálogo: areca y coco plumoso siguen en la tabla y en /catalogo, pero sin tarjeta, porque sus
-fotos son escenas de alberca y de hotel (plantas_comun.FOTOS_SOLO_CATALOGO); la cola de pescado igual, porque su foto
-está retirada (captura de Google Imágenes). Se agrega la kerpis, que el hub de main mandaba aquí. "Pregunta existencia"
+son las de main, en su orden y con la misma foto (decisión del dueño, 2026-11-08), servida en local. Se agrega la kerpis, que el hub de main mandaba aquí. "Pregunta existencia"
 sale de las respuestas (sin afirmaciones de disponibilidad). Título, descripción y Open Graph como estaban (Etapa 3).
 """
 import datos
@@ -25,12 +23,18 @@ DESCRIPCION = ("Palmas para jardín, tropicales y exóticas en Tampico, Madero y
 META = {"title": TITULO, "description": DESCRIPCION, "robots": "index, follow", "canonical": URL,
         "og": (("og:title", TITULO), ("og:description", DESCRIPCION), ("og:url", URL), ("og:type", "website"))}
 ESPECIES = (
+    ("palma-areca", "Para interiores y semisombra: tallos múltiples y follaje elegante para hoteles, "
+     "oficinas y jardines residenciales.", None),
+    ("coco-plumoso", "Tronco estilizado y follaje plumoso arqueado; aguanta el calor costero. Para entradas y jardines "
+     "amplios.", None),
     ("palma-real", "La de los proyectos grandes y las avenidas: crece alta, recta y rápido.", None),
     ("palma-viajera-ravenala", "Abanico de alto impacto para entradas y jardines de diseño.", None),
     ("palma-washingtona", "La que gana altura más rápido; aguanta el viento del Golfo.", None),
     ("palma-bismarkia", "Hoja plateada en abanico: pieza exclusiva para jardines amplios.", None),
     ("palma-licuala", "Hoja redonda y plisada; va en semisombra.", None),
     ("palma-triangular", "Las hojas salen en tres filas y forman un triángulo; muy decorativa.", None),
+    ("palma-cola-de-pescado", "Hojas con forma de cola de pez y folíolos irregulares: textura muy decorativa en jardines "
+     "tropicales.", None),
     ("palma-cica-circinalis", "Cica de hojas largas y arqueadas, de poco mantenimiento.", None),
     ("palma-mascarena", "Palma botella: tronco abultado y copa compacta, para jardines chicos.", None),
     ("palma-kerpis", "Elegante y de copa ligera, para jardines residenciales y entradas.", None),
@@ -152,10 +156,6 @@ PARIDAD = {
     "especies": {
         "reemplazos": {
             "Palma del Viajero": ("/palmas-tropicales-tampico", "Palma Viajera Ravenala"),
-            # Siguen en la tabla de precios de esta página (con su precio) y con tarjeta en el catálogo.
-            "Palma Areca": ("/catalogo", "Palma Areca"),
-            "Coco Plumoso": ("/catalogo", "Coco Plumoso"),
-            "Palma Cola de Pescado": ("/catalogo", "Palma Cola de Pescado"),
         },
         "retirados": {},
     },

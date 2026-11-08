@@ -4,8 +4,8 @@ Se retiran de main: la cabecera con "Productor directo", "Actualizado con dispon
 sin respaldo ("+500 proyectos", "3 estados", "18 años"); la pestaña "Pasto & Tierra" (sus "+200,000 m²" contradicen
 datos.M2_INSTALADOS; el pasto y los materiales tienen sus páginas, enlazadas abajo); las colecciones (una segunda
 rejilla), el orden "Más vendidas" y la insignia "+ Vendido" (sin dato; pregunta 7); "Cotizar ahora" y "Medida especial"
-por tarjeta (un solo mensaje: la medida especial vive en el diálogo de la lista). Las especies de
-catalogo_datos.FOTOS_RETIRADAS siguen con su tarjeta y el marcador «Foto pendiente». Título, descripción y Open Graph
+por tarjeta (un solo mensaje: la medida especial vive en el diálogo de la lista). Las 117
+especies llevan la foto de main (decisión del dueño, 2026-11-08), en local. Título, descripción y Open Graph
 como estaban: el título dice "con precio" y se reescribe en la Etapa 3 (spec §3.5).
 """
 import datos

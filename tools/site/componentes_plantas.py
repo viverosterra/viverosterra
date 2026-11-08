@@ -5,9 +5,9 @@ los datos de especies se escapan aquí. Precios solo de datos.PRECIOS_ESPECIE y 
 componentes.py, que ya pasa de 800 renglones.
 
 Fotos: el pie es "Fig. NN · <especie>"; solo las especies de catalogo_datos.FOTOS_VIVERO_CONFIRMADAS (las confirma el
-dueño) dicen "En nuestro vivero" en el pie y en el alt. Las de catalogo_datos.FOTOS_RETIRADAS (fotos de terceros) llevan
-un marcador "sin foto" del mismo 4:5: superficie verde clara con la reja del plano, la inicial y la etiqueta "Foto
-pendiente"."""
+dueño) dicen "En nuestro vivero" en el pie y en el alt. Las de catalogo_datos.FOTOS_RETIRADAS (hoy ninguna, por
+decisión del dueño) llevarían un marcador "sin foto" del mismo 4:5: superficie verde clara con la reja del plano, la
+inicial y la etiqueta "Foto pendiente"."""
 import componentes as c
 import datos
 from contenido import catalogo_datos as cd

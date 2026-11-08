@@ -42,7 +42,10 @@ class ComponentesPlantasTest(unittest.TestCase):
         return next(n for n, e in enumerate(cd.ORDENADAS, 1) if e["slug"] == slug)
 
     def test_foto_retirada_lleva_el_marcador_sin_foto(self):
-        html = cp.foto_especie(cd.especie("tronadora"), 7)
+        """El mecanismo sigue para la etapa de fotos; hoy FOTOS_RETIRADAS está vacía (decisión del dueño, 2026-11-08)."""
+        self.assertIn('<img src="/img/catalogo/tronadora-tampico.webp"', cp.foto_especie(cd.especie("tronadora"), 7))
+        with mock.patch.object(cd, "FOTOS_RETIRADAS", {"tronadora": "Prueba del marcador"}):
+            html = cp.foto_especie(cd.especie("tronadora"), 7)
         self.assertNotIn("<img", html)
         self.assertNotIn("/img/catalogo/", html)
         self.assertIn('<svg class="vt-esp__sinfoto" width="480" height="600" viewBox="0 0 480 600" role="img" '

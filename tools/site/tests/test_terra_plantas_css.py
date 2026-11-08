@@ -44,7 +44,7 @@ class TerraPlantasCssTest(unittest.TestCase):
         self.assertLess(len(gzip.compress(datos, mtime=0)), 4 * 1024)
 
     def test_marcador_sin_foto_con_la_misma_proporcion_que_las_fotos(self):
-        """Las especies sin foto (catalogo_datos.FOTOS_RETIRADAS) ocupan el mismo 4:5 que las fotos: sin salto de diseño."""
+        """Las especies sin foto (catalogo_datos.FOTOS_RETIRADAS, hoy vacía) ocuparían el mismo 4:5 que las fotos: sin salto de diseño."""
         self.assertRegex(self.css, r"\.vt-plantas \.vt-esp__sinfoto\{[^}]*aspect-ratio:4/5")
         for clase in ("vt-sinfoto-reja", "vt-sinfoto-letra", "vt-sinfoto-tag", "vt-sinfoto-tagtexto"):
             self.assertIn(f".vt-plantas .vt-esp__sinfoto .{clase}{{", self.css)

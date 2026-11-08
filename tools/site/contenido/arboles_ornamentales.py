@@ -1,9 +1,7 @@
 """Contenido de /arboles-ornamentales-tampico (subcategoría del hub de plantas). Plantilla: plantillas/hub_categoria.py.
 
-Seis especies con foto publicable del catálogo (contenido/catalogo_especies.json); luz, riego y altura salen de ahí, igual
-que en el catálogo. Crespón astronómica y lluvia de oro de main siguen en /catalogo pero no aquí: sus fotos están en
-catalogo_datos.FOTOS_RETIRADAS (captura de pantalla y marca de agua) y la hoja de ruta pide foto real en cada especie de
-una subcategoría; las sustituyen magnolia y ficus benjamín. Precio: solo "Flamboyán desde $250" (datos.PRECIOS_ESPECIE);
+Las seis especies de main, en su orden, con la foto del catálogo (contenido/catalogo_especies.json; decisión del dueño,
+2026-11-08: las fotos quedan como están); luz, riego y altura salen de ahí, igual que en el catálogo. Precio: solo "Flamboyán desde $250" (datos.PRECIOS_ESPECIE);
 crespón $350, jacaranda $450 y olivo negro $600 de main se retiran (sin confirmar; pregunta 1 al dueño). "Instalación con
 grúa" se retira de la respuesta de entrega hasta que el dueño la confirme (pregunta 9). Título, descripción y Open Graph
 como estaban (Etapa 3).
@@ -28,10 +26,11 @@ META = {"title": TITULO, "description": DESCRIPCION, "robots": "index, follow", 
 ESPECIES = (
     ("flamboyan-tabachin", "El más espectacular del trópico: flores rojo-naranja que cubren la copa y sombra abundante.",
      None),
+    ("crespon-astronomica", "Floración en verano con racimos rosa, lila o blanco; muy usado en jardines y avenidas.",
+     None),
     ("palo-de-rosa-guayacan", "Flores rosa brillante que cubren el árbol antes que las hojas.", None),
     ("jacaranda", "Floración morada única para jardines amplios.", None),
-    ("magnolia", "Flores blancas de aroma intenso; muy apreciada en jardines formales.", None),
-    ("ficus-benjamin", "Follaje brillante y copa densa: sombra y privacidad; se forma con poda.", None),
+    ("lluvia-de-oro", "Racimos de flores amarillas que cubren el árbol en primavera; para jardines y camellones.", None),
     ("olivo-negro", "Sombra amplia y resistente al calor y al salitre; también va en banqueta.", None),
 )
 PREGUNTAS = (
@@ -110,10 +109,7 @@ PARIDAD = {
         "$600": "Olivo negro desde $600: precio sin confirmar por el dueño (pregunta 1); va según cotización.",
     },
     "especies": {
-        "reemplazos": {
-            "Crespón Astronómica": ("/catalogo", "Crespón Astronómica"),
-            "Lluvia de Oro": ("/catalogo", "Lluvia de Oro"),
-        },
+        "reemplazos": {},
         "retirados": {},
     },
 }

@@ -4,8 +4,8 @@ Precios (decisión del dueño, 2026-11-07): palmas con datos.PALMAS_PRECIO y fla
 "desde" sin confirmar de main (washingtonia, viajero y kerpis $500, cycas $700, palma bambú $1,000, cola de zorro $1,500,
 ficus $200, neem y trueno $300, tabachín $350, laurel $500, tulipán africano $600; preguntas 1–3 al dueño), las dos
 opiniones sin permiso (Martha R., Constructora Arce; pregunta 8), "asesoría sin costo", "más de 18 años" y la entrega en la
-Huasteca. Las fotos de especie dejan /api/img: son las locales del catálogo (contenido/catalogo_especies.json), sin las
-retiradas ni las escenas de plantas_comun.FOTOS_SOLO_CATALOGO, y no se presentan como tomadas en el vivero. Título,
+Huasteca. Las tarjetas de especie son las de main con la misma foto (decisión del dueño, 2026-11-08), servida en local desde
+contenido/catalogo_especies.json en vez de /api/img, y no se presentan como tomadas en el vivero. Título,
 robots y canonical como estaban (los títulos son de la Etapa 3); la descripción de Open Graph decía "Desde $200"
 (PARIDAD["meta"]).
 """
@@ -38,17 +38,26 @@ META = {
            ("og:description", OG_DESCRIPCION),
            ("og:image", f"{SITE}/img/paisajismo-alberca-plantas-tampico.webp"), ("og:locale", "es_MX")),
 }
-# Ocho especies con foto publicable. Areca y coco plumoso no van aquí (sus fotos son escenas de alberca y de hotel:
-# plantas_comun.FOTOS_SOLO_CATALOGO); su precio sigue en la portada, la FAQ y /palmas-tropicales-tampico.
+# Las tarjetas de especie del hub de main, en su orden y con su foto (decisión del dueño, 2026-11-08: las fotos quedan
+# como están). Sin los "desde" sin confirmar; tabachín, trueno y tulipán africano siguen fuera (sus tarjetas solo
+# afirmaban precios sin confirmar; preguntas 1–3 al dueño).
 DESTACADAS = (
-    ("palma-real", "La de los proyectos grandes: crece alta y recta.", None),
-    ("palma-washingtona", "Gana altura rápido y aguanta el viento del Golfo.", None),
-    ("palma-viajera-ravenala", "Abanico de alto impacto para entradas y jardines de diseño.", None),
-    ("palma-cica-revoluta", "Muy longeva y de poco mantenimiento; va en maceta o en jardín.", None),
+    ("palma-washingtona", "Gana altura rápido y aguanta el viento del Golfo; para entradas y banquetas.", None),
+    ("palma-viajera-ravenala", "Abanico de alto impacto para entradas, hoteles y jardines de diseño.", None),
+    ("palma-areca", "Para interior y semisombra: oficinas, lobbies y jardines residenciales.", None),
+    ("palma-cica-revoluta", "Muy longeva y de poco mantenimiento; va en maceta o en jardín formal.", None),
+    ("palma-kerpis", "Elegante y resistente, para jardines residenciales con sombra parcial.", None),
+    ("coco-plumoso", "Follaje plumoso arqueado para jardines amplios y entradas.", None),
+    ("palma-seifrixi-bambu", "Para interior y semisombra en espacios grandes: efecto tropical.", None),
+    ("palma-cola-de-zorra", "Especie de alto impacto visual para jardines exclusivos.", None),
+    ("ficus-benjamin", "Árbol de sombra y de seto; se forma con poda y va en jardineras.", None),
     ("flamboyan-tabachin", "Floración rojo-naranja y sombra abundante.", None),
-    ("olivo-negro", "El de banqueta: raíz profunda, copa amplia y aguanta el salitre.", None),
-    ("ficus-benjamin", "Árbol de sombra y de seto; se forma con poda.", None),
-    ("bugambilea-envarada", "Ya formada en vara; florece casi todo el año con poca agua.", None),
+    ("neem", "Sombra rápida, muy resistente y de bajo mantenimiento.", None),
+    ("laurel-de-la-india-formado", "Sombra abundante y crecimiento rápido; muy ornamental.", None),
+    ("ave-de-paraiso", "Flor naranja y azul de máximo impacto para jardines y hoteles.", None),
+    ("duranta-cubana", "Setos vivos que crecen rápido; muy resistente al calor.", None),
+    ("bugambilea-envarada", "Para bardas y enredaderas; florece casi todo el año con muy poca agua.", None),
+    ("croto-petra", "Color intenso todo el año para orlas, arriates y jardines tropicales.", None),
 )
 PREGUNTAS = (
     ("¿Cuánto cuestan las palmas en Tampico?",
@@ -106,7 +115,7 @@ CONTENIDO = {
     "subcategorias": {"titulo": "Palmas, árboles y plantas para Tampico",
                       "lede": "Cada página dice qué especies van en sol, sombra o cerca del mar.",
                       "items": pc.SUBCATEGORIAS},
-    "destacadas": {"titulo": "Ocho especies para empezar", "id": "vt-h-destacadas", "rotulo": "Especies",
+    "destacadas": {"titulo": "Palmas, árboles y plantas con su ficha", "id": "vt-h-destacadas", "rotulo": "Especies",
                    "lede": pc.LEDE_FOTOS, "items": DESTACADAS},
     "lista": pc.LISTA,
     "garantia": pc.GARANTIA,
@@ -143,19 +152,6 @@ CONTENIDO = {
     },
 }
 
-# Especies que el hub de main tenía como tarjeta (encabezado h3) y que el hub nuevo no repite: el hub muestra 8 con foto
-# y cada una de estas sigue en la página que se indica.
-_MOVIDAS = {
-    "Palma Areca": "/palmas-tropicales-tampico (tabla de precios) y /catalogo",
-    "Palma Coco Plumoso": "/palmas-tropicales-tampico (tabla de precios) y /catalogo (Coco Plumoso)",
-    "Palma Kerpis": "/palmas-tropicales-tampico",
-    "Palma Bambú": "/catalogo (Palma Seifrixi Bambú)", "Palma Cola de Zorra": "/catalogo",
-    "Neem": "/arboles-para-banqueta-tampico",
-    "Laurel de la India": "/catalogo (Laurel de la India Formado)",
-    "Ave del Paraíso": "/plantas-para-jardin-tampico (Ave de Paraíso)", "Duranta Cubana": "/plantas-para-jardin-tampico",
-    "Croton": "/plantas-para-jardin-tampico (Croto Petra)",
-}
-
 PARIDAD = {
     "meta": {"og:description": (OG_DESCRIPCION, "Decía «Desde $200»: precio sin confirmar (el dueño solo fijó palmas desde "
                                                 "$250, palma real $500 y flamboyán $250, 2026-11-07).")},
@@ -180,9 +176,13 @@ PARIDAD = {
         "Cycas Revoluta": "Palma Cica Revoluta",
         "Ficus benjamina": "Ficus Benjamin",
         "Flamboyán": "Flamboyán Tabachín",
+        "Palma Coco Plumoso": "Coco Plumoso",
+        "Palma Bambú": "Palma Seifrixi Bambú",
+        "Laurel de la India": "Laurel de la India Formado",
+        "Ave del Paraíso": "Ave de Paraíso",
+        "Croton": "Croto Petra",
     },
     "retirados": {
-        **{n: f"El hub muestra 8 especies con foto; esta sigue en {d}." for n, d in _MOVIDAS.items()},
         "+20 árboles más": "Tarjeta que solo enlazaba el catálogo; la cubre «Arma tu lista» (los 25 árboles del catálogo).",
         "Tabachín": ("Usaba la foto de la Tronadora y el catálogo llama tabachín al flamboyán; no se publica como "
                      "especie aparte hasta que el dueño diga cuál es (pregunta 2)."),
@@ -193,7 +193,7 @@ PARIDAD = {
         "Lo que dicen quienes ya tienen su jardín": ("Las dos opiniones (Martha R., Constructora Arce) no están en "
                                                       "datos.OPINIONES ni tienen permiso confirmado (pregunta 8)."),
         "Jardines con plantas de Viveros Terra": ("Galería sin pies ni datos; las especies con foto, luz, riego y altura "
-                                                  "van en «Ocho especies para empezar»."),
+                                                  "van en «Palmas, árboles y plantas con su ficha»."),
         "Variedades seleccionadas para el clima de Tampico": ("Sección de beneficios genéricos («asesoría sin costo», "
                                                               "«más de 18 años»); lo útil va al filtro por necesidad."),
         "$1,000": "Palma bambú desde $1,000: precio sin confirmar; las palmas sin precio del dueño van según cotización.",
@@ -210,20 +210,15 @@ PARIDAD = {
     "especies": {
         "reemplazos": {
             "Palma del Viajero": ("/plantas-palmas-arboles-tampico", "Palma Viajera Ravenala"),
-            "Palma Areca": ("/catalogo", "Palma Areca"),
-            "Palma Coco Plumoso": ("/catalogo", "Coco Plumoso"),
+            "Palma Coco Plumoso": ("/plantas-palmas-arboles-tampico", "Coco Plumoso"),
             "Flamboyán": ("/plantas-palmas-arboles-tampico", "Flamboyán Tabachín"),
             "Cycas Revoluta": ("/plantas-palmas-arboles-tampico", "Palma Cica Revoluta"),
-            "Palma Kerpis": ("/palmas-tropicales-tampico", "Palma Kerpis"),
-            "Palma Bambú": ("/catalogo", "Palma Seifrixi Bambú"),
-            "Palma Cola de Zorra": ("/catalogo", "Palma Cola de Zorra"),
+            "Palma Bambú": ("/plantas-palmas-arboles-tampico", "Palma Seifrixi Bambú"),
             "Ficus benjamina": ("/plantas-palmas-arboles-tampico", "Ficus Benjamin"),
-            "Neem": ("/arboles-para-banqueta-tampico", "Neem"),
-            "Laurel de la India": ("/catalogo", "Laurel de la India Formado"),
-            "Ave del Paraíso": ("/plantas-para-jardin-tampico", "Ave de Paraíso"),
-            "Duranta Cubana": ("/plantas-para-jardin-tampico", "Duranta Cubana"),
+            "Laurel de la India": ("/plantas-palmas-arboles-tampico", "Laurel de la India Formado"),
+            "Ave del Paraíso": ("/plantas-palmas-arboles-tampico", "Ave de Paraíso"),
             "Bugambilia": ("/plantas-palmas-arboles-tampico", "Bugambilea Envarada"),
-            "Croton": ("/plantas-para-jardin-tampico", "Croto Petra"),
+            "Croton": ("/plantas-palmas-arboles-tampico", "Croto Petra"),
         },
         "retirados": {
             "Tabachín": ("Usaba la foto de la Tronadora y el catálogo llama tabachín al flamboyán; no se publica como "

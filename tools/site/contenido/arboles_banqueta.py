@@ -1,9 +1,7 @@
 """Contenido de /arboles-para-banqueta-tampico (subcategoría del hub de plantas). Plantilla: plantillas/hub_categoria.py.
 
-Seis especies de banqueta con foto publicable del catálogo. Polyalthia, crespón astronómica y tronadora de main siguen en
-/catalogo pero no aquí: sus fotos están en catalogo_datos.FOTOS_RETIRADAS (marcas de agua y captura de pantalla) y la
-hoja de ruta pide foto real en cada especie de una subcategoría; las sustituyen encino siempreverde, magnolia y
-liquidambar, que el catálogo también marca para banqueta. Sin precio propio (datos.DESDE_PLANTAS: según cotización): se
+Las seis especies de banqueta de main, en su orden y con la foto del catálogo (decisión del dueño, 2026-11-08: las
+fotos quedan como están), servida en local. Sin precio propio (datos.DESDE_PLANTAS: según cotización): se
 retiran olivo negro $600, polyalthia $400, neem y crespón $350 (sin confirmar; pregunta 1 al dueño) y la "asesoría de
 plantación incluida". Título, descripción y Open Graph como estaban (Etapa 3).
 """
@@ -25,11 +23,12 @@ META = {"title": TITULO, "description": DESCRIPCION, "robots": "index, follow", 
 ESPECIES = (
     ("olivo-negro", "El árbol de banqueta más recomendado en Tampico: raíz profunda, copa amplia y aguanta el salitre.",
      None),
+    ("polyalthia", "Columnar: crece hacia arriba sin invadir a los lados; para banquetas angostas y avenidas.", None),
     ("neem", "Crece rápido, con follaje denso; muy resistente al calor y la sequía.", None),
     ("fresno", "Follaje frondoso para sombra; muy usado en banquetas y camellones.", None),
-    ("encino-siempreverde", "Muy longevo y resistente: sombra densa todo el año.", None),
-    ("magnolia", "Flores blancas de aroma intenso para frentes amplios.", None),
-    ("liquidambar", "Hojas estrelladas que cambian de color; para banquetas anchas y parques.", None),
+    ("crespon-astronomica", "El más colorido para avenidas: sus racimos cubren la copa en verano; con poda correcta no "
+     "daña la banqueta.", None),
+    ("tronadora", "Flores amarillas de trompeta casi todo el año; aguanta el calor. Para camellones y banquetas.", None),
 )
 PREGUNTAS = (
     ("¿Qué árboles son seguros para banquetas en Tampico?",
@@ -108,11 +107,7 @@ PARIDAD = {
         "$600,": "Olivo negro desde $600: precio sin confirmar por el dueño (pregunta 1); va según cotización.",
     },
     "especies": {
-        "reemplazos": {
-            "Polyalthia": ("/catalogo", "Polyalthia"),
-            "Crespón Astronómica": ("/catalogo", "Crespón Astronómica"),
-            "Tronadora": ("/catalogo", "Tronadora"),
-        },
+        "reemplazos": {},
         "retirados": {},
     },
 }

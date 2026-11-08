@@ -1,8 +1,7 @@
 """Contenido de /plantas-para-jardin-tampico (subcategoría del hub de plantas). Plantilla: plantillas/hub_categoria.py.
 
-Seis especies con foto publicable del catálogo. Agave atenuata de main sigue en /catalogo pero no aquí: su foto trae la
-etiqueta con el logo de otro vendedor (catalogo_datos.FOTOS_RETIRADAS) y la hoja de ruta pide foto real en cada especie
-de una subcategoría; la sustituye la adelfa enana, también de poco riego. Sin precio propio (datos.DESDE_PLANTAS: según
+Las seis especies de main, en su orden y con la foto del catálogo (decisión del dueño, 2026-11-08: las fotos quedan
+como están), servida en local. Sin precio propio (datos.DESDE_PLANTAS: según
 cotización): se retira el "equipar un jardín desde $3,000–$8,000" (estimado sin confirmar por el dueño) y la "cotización
 sin costo"; el diseño tiene su precio oficial en /diseno-jardines-tampico. "Todas disponibles" sale (sin afirmaciones de
 disponibilidad). Título ("+74 Variedades"), descripción y Open Graph como estaban (Etapa 3).
@@ -29,8 +28,9 @@ ESPECIES = (
     ("bugambilea-envarada", "Ya formada en vara; florece casi todo el año con poca agua y aguanta el salitre.", None),
     ("duranta-cubana", "La de los setos rápidos: follaje dorado que se forma con poda.", None),
     ("croto-petra", "Hojas de colores todo el año; aguanta el salitre de Madero.", None),
+    ("agave-atenuata", "El agave sin espinas, seguro en jardines familiares: rosetas decorativas que aguantan la sequía "
+     "y el calor.", None),
     ("plumbago", "Flores azul cielo casi todo el año; buena para bordes y cercas.", None),
-    ("adelfa-enana", "Compacta y florida, muy resistente al calor y a la sequía.", None),
 )
 PREGUNTAS = (
     ("¿Qué plantas son mejores para jardines en Tampico?",
@@ -109,7 +109,7 @@ PARIDAD = {
                    "según cotización."),
     },
     "especies": {
-        "reemplazos": {"Agave Atenuata": ("/catalogo", "Agave Atenuata")},
+        "reemplazos": {},
         "retirados": {},
     },
 }

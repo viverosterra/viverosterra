@@ -2,7 +2,7 @@
 
 catalogo_especies.json se extrajo una vez del arreglo `plants` de public/catalogo.html de main (plan 2e, Tarea 4) y desde
 ahí es la fuente: nombre, nombre científico, tamaños, insignias, luz, riego, altura, flor, mantenimiento, tipo,
-descripción y la foto local (img, ancho y alto, que escribe tools/site/fotos_catalogo.py; null en las FOTOS_RETIRADAS). `drive` guarda el id de Google
+descripción y la foto local (img, ancho y alto, que escribe tools/site/fotos_catalogo.py; null en las FOTOS_RETIRADAS, hoy ninguna). `drive` guarda el id de Google
 Drive de donde salió la foto: solo lo lee fotos_catalogo.py; ninguna página lo publica. Va en JSON por volumen (117
 especies), como los cuerpos del blog de la Etapa 2h.
 
@@ -64,17 +64,17 @@ BLOG_ESPECIE = {
 # Fotos de Drive de menos de 480 px de ancho (medidas en el prototipo del plan 2e, 2026-11-08, y en la descarga real del
 # mismo día, que sumó crespón astronómica y flamboyán: su original en Drive mide 400×400): se publican a su tamaño, sin
 # agrandar (igual de chicas que con /api/img), y son las primeras a reponer en la sesión de fotos (pregunta 12).
-# (Eucalipto, flor de mayo, orquídea pata de vaca, beucarnea, ixora karla y crespón astronómica también eran chicas: hoy
-# están en FOTOS_RETIRADAS, como aralia elegantísima, pasto liriope y heliconia baby enana desde el lote C.)
 FOTOS_CHICAS = frozenset({
-    "sauce-lloron", "liquidambar", "nispero", "palma-mascarena", "palma-cocotera", "palma-rubelina", "plumbago",
-    "ficus-lyrata-pandurata", "limonaria", "papiro-estrella", "palma-carton", "lapiz-tirucalli", "petunia-silvestre",
-    "flamboyan-tabachin",
+    "sauce-lloron", "liquidambar", "nispero", "eucalipto", "flor-de-mayo", "orquidea-pata-de-vaca", "palma-mascarena",
+    "palma-cocotera", "palma-rubelina", "plumbago", "aralia-elegantisima", "beucarnea-soyate", "ficus-lyrata-pandurata",
+    "ixora-karla", "limonaria", "papiro-estrella", "pasto-liriope", "palma-carton", "heliconia-baby-enana",
+    "lapiz-tirucalli", "petunia-silvestre", "crespon-astronomica", "flamboyan-tabachin",
 })
-# Fotos de terceros que no se publican desde nuestro dominio (revisión del 2026-11-08: lote A del plan 2e y la hoja de
-# contactos de las 117). Sus tarjetas llevan el marcador "sin foto" de componentes_plantas hasta que el dueño mande la
-# foto propia (fotos_catalogo.py no las vuelve a bajar). Clave: slug; valor: el motivo.
-FOTOS_RETIRADAS = {
+# Fotos de terceros halladas en la revisión del 2026-11-08 (lote A del plan 2e y la hoja de contactos de las 117). Por
+# decisión del dueño (2026-11-08: «No elimines o cambies las fotos, déjalas así como están; en otra etapa trabajamos los
+# cambios de fotos») siguen publicadas como en main: esta lista es solo el pendiente para la etapa de fotos y no quita
+# ninguna. Clave: slug; valor: lo que se vio.
+FOTOS_POR_REVISAR = {
     "eucalipto": "Marca de agua de Shutterstock",
     "flor-de-mayo": "Marca de agua de Shutterstock",
     "tronadora": "Marca de agua de Dreamstime",
@@ -101,6 +101,9 @@ FOTOS_RETIRADAS = {
     "pasto-liriope": "Marca de agua tenue de otro vivero («Concepto Verde») en la bolsa",
     "heliconia-baby-enana": "Marca de agua de otro vivero («redviverista») sobre las hojas",
 }
+# Fotos que no se publican (el marcador "sin foto" de componentes_plantas y fotos_catalogo.py no las baja). Vacía por
+# decisión del dueño (2026-11-08): los cambios de fotos van en otra etapa (FOTOS_POR_REVISAR es el pendiente).
+FOTOS_RETIRADAS = {}
 # Especies cuya foto el dueño confirmó que se tomó en el vivero: solo ellas llevan "En nuestro vivero" en el pie y en el
 # alt. Empieza vacía a propósito (muchas fotos son de estudio o de bancos de imágenes); la llena el dueño, slug por slug.
 FOTOS_VIVERO_CONFIRMADAS = frozenset()

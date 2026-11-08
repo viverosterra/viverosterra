@@ -1,5 +1,6 @@
-"""Páginas de plantas con plantilla (Etapa 2e): secuencia del spec, precios de datos.py, fotos de especie publicables
-(ni FOTOS_RETIRADAS ni las escenas de plantas_comun.FOTOS_SOLO_CATALOGO), mensajes, enlaces y JSON-LD."""
+"""Páginas de plantas con plantilla (Etapa 2e): secuencia del spec, precios de datos.py, fotos de especie como en main
+(decisión del dueño, 2026-11-08: FOTOS_RETIRADAS y plantas_comun.FOTOS_SOLO_CATALOGO vacías), mensajes, enlaces y
+JSON-LD."""
 import json
 import re
 import sys
@@ -74,6 +75,24 @@ class HubTest(unittest.TestCase):
         for slug in pc.FOTOS_SOLO_CATALOGO:
             self.assertNotIn(f"/img/catalogo/{slug}-tampico.webp", self.h)
 
+    # Fotos de Drive de las tarjetas del hub de main (/api/img?id=…), en su orden; la de "Tabachín" (la foto de la
+    # tronadora) no va: esa tarjeta solo afirmaba un precio sin confirmar.
+    FOTOS_MAIN = ("12Q_2nhBba8CGei_eHrUAUSZognx9OP6O", "157tCw_yF6zs2npPx4BmisT-vMu7-Hca0",
+                  "1f9yY6hRqr0lf47QeunWBgNR_RXqZHHZM", "1Pp66DaLg1hg0YvVA6ZUxpT8hkgmCcdKJ",
+                  "1rD9tgujODXJ03znMkru4eB1wvMuardSJ", "1VQ2urkzIqBFO4rZeKHQpe-c3X9TViVWJ",
+                  "1-FRocM765ANJ2RYgxf7KKoKpno23TwwO", "1kIwetkOcVkm7Wb7xvVaEeMcvAdl_nDMO",
+                  "1pqmt1VfOkeKrpoETiYFwsXwA58WHEjdu", "1aSLqV6wIrI5GjRUoKH1WWfrA9LVjNhLC",
+                  "1FavAREwVmwV-ePnTOILuldS15VbjNkbj", "1yO3frSlCRK5EfSBueH7_UFE56o6vnL4b",
+                  "1AP3FbBUp3js1lZnSHmw8QPFemXzBkXww", "1DaHl79oILg8OBCpYUSTVNAHAP1DH_IQl",
+                  "1PQHRsGnbn6G5-0s93wNV9B8iLp_AHf5Y", "1Wg2HzkOME_lMfSEbODYp0P9EAiX0ir08")
+
+    def test_tarjetas_con_las_fotos_de_main_en_su_orden(self):
+        """Decisión del dueño (2026-11-08): las fotos de especie quedan como en main (la misma foto de Drive, en local)."""
+        por_drive = {e["drive"]: e["slug"] for e in cd.ESPECIES}
+        esperadas = [f"/img/catalogo/{por_drive[i]}-tampico.webp" for i in self.FOTOS_MAIN]
+        tarjetas = re.findall(r'<li class="vt-esp"><figure class="vt-esp__foto"><img src="([^"]+)"', self.h)
+        self.assertEqual(tarjetas, esperadas)
+
     def test_figuras_sin_numero_repetido(self):
         numeros = re.findall(r"<figcaption>(?:<span>)?<b>Fig\. (\d+)</b>", self.h)
         self.assertGreater(len(numeros), 8)
@@ -96,9 +115,8 @@ class SubcategoriasTest(unittest.TestCase):
                 self.assertIn('<li><a href="/plantas-palmas-arboles-tampico">Plantas y palmas</a></li>', html(ruta))
 
     def test_cada_especie_con_foto_publicable(self):
-        """La hoja de ruta pide foto real en cada especie: foto local del catálogo, nunca el marcador «Foto pendiente», ni
-        una retirada, ni una escena de FOTOS_SOLO_CATALOGO; el pie no dice «En nuestro vivero» (FOTOS_VIVERO_CONFIRMADAS
-        está vacía hasta que el dueño confirme)."""
+        """Cada especie con su foto local del catálogo (la de main), nunca el marcador «Foto pendiente»; el pie no dice
+        «En nuestro vivero» (FOTOS_VIVERO_CONFIRMADAS está vacía hasta que el dueño confirme)."""
         for ruta in SUBCATEGORIAS:
             h = html(ruta)
             tarjetas = re.findall(r'<li class="vt-esp">(.*?)</li>', h, re.S)
@@ -173,8 +191,10 @@ class CatalogoTest(unittest.TestCase):
                       "setTab(", "Más vendidas", "gratis", "sin costo"):
             self.assertNotIn(viejo, self.h)
 
-    def test_fotos_retiradas_con_marcador_y_sin_decir_del_vivero(self):
-        self.assertEqual(self.h.count("Foto pendiente"), len(cd.FOTOS_RETIRADAS))
+    def test_las_117_con_foto_y_sin_decir_del_vivero(self):
+        """Decisión del dueño (2026-11-08): ninguna tarjeta queda con «Foto pendiente»."""
+        self.assertEqual(self.h.count("Foto pendiente"), 0)
+        self.assertEqual(self.h.count('src="/img/catalogo/'), 117)
         self.assertNotIn("En nuestro vivero", self.h)
 
     def test_json_ld_itemlist_con_117(self):

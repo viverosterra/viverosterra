@@ -1,6 +1,7 @@
 """Fotos del catálogo en local (Etapa 2e): funciones puras de fotos_catalogo.py sin red y fotos publicadas."""
 import importlib.util
 import io
+import json
 import sys
 import tempfile
 import unittest
@@ -9,9 +10,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import fotos_catalogo as f  # noqa: E402
+import paridad_plantas as pp  # noqa: E402
 from contenido import catalogo_datos as cd  # noqa: E402
 
 PUBLIC = Path(__file__).resolve().parents[3] / "public"
+CAPTURA = json.loads(pp.CAPTURA.read_text(encoding="utf-8"))
 
 
 def webp_vp8x(ancho, alto):
@@ -114,20 +117,15 @@ class FotosPublicadasTest(unittest.TestCase):
         publicadas = {p.name for p in (PUBLIC / "img" / "catalogo").glob("*.webp")}
         self.assertEqual(publicadas, {f"{e['slug']}-tampico.webp" for e in CON_FOTO})
 
-    def test_fotos_retiradas_no_se_publican(self):
-        """Fotos de terceros (marca de agua, captura de buscador, logo ajeno): ni archivo, ni ruta en el JSON, ni en una
-        página publicada."""
-        rutas = {f.ruta_local(s) for s in cd.FOTOS_RETIRADAS}
-        for slug in cd.FOTOS_RETIRADAS:
-            e = cd.especie(slug)
-            with self.subTest(especie=slug):
-                self.assertFalse((PUBLIC / f.ruta_local(slug).lstrip("/")).exists())
-                self.assertEqual((e["img"], e["ancho"], e["alto"]), (None, None, None))
-        for pagina in PUBLIC.rglob("*.html"):
-            html = pagina.read_text(encoding="utf-8")
-            for ruta in rutas:
-                with self.subTest(pagina=str(pagina.relative_to(PUBLIC)), ruta=ruta):
-                    self.assertNotIn(ruta, html)
+    def test_cada_especie_con_foto_en_main_tiene_su_archivo_local(self):
+        """Decisión del dueño (2026-11-08): las fotos quedan como en main. Cada especie del catálogo de main (todas
+        tenían foto de Drive) tiene su archivo local y su ruta en el JSON; ninguna queda sin foto."""
+        for nombre, _cientifico in CAPTURA["/catalogo"]["especies"]:
+            e = cd.especie(cd.slug(nombre))
+            with self.subTest(especie=e["slug"]):
+                self.assertTrue(e["drive"])
+                self.assertEqual(e["img"], f.ruta_local(e["slug"]))
+                self.assertTrue((PUBLIC / f.ruta_local(e["slug"]).lstrip("/")).is_file())
 
 
 if __name__ == "__main__":

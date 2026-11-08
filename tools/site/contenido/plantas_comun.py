@@ -1,21 +1,19 @@
 """Lo que comparten las páginas de plantas (Etapa 2e): garantía con condiciones, filtro por necesidad, índice de
 subcategorías, preguntas de entrega y pago, migas y nodos de JSON-LD. Solo datos.
 
-Fotos de especie: el hub y las subcategorías solo usan fotos publicables del catálogo (catalogo_datos.tiene_foto) y nunca
-las de FOTOS_SOLO_CATALOGO (escenas de hotel o alberca de estilo publicitario: siguen en su tarjeta del catálogo, pero no
-representan al vivero en una página de categoría). Ninguna foto se presenta como tomada en el vivero salvo las de
-catalogo_datos.FOTOS_VIVERO_CONFIRMADAS (vacía hasta que el dueño confirme)."""
+Fotos de especie: el hub y las subcategorías usan las fotos locales del catálogo (catalogo_datos.tiene_foto), las mismas
+que main, salvo las de FOTOS_SOLO_CATALOGO (hoy ninguna, por decisión del dueño). Ninguna foto se presenta como tomada
+en el vivero salvo las de catalogo_datos.FOTOS_VIVERO_CONFIRMADAS (vacía hasta que el dueño confirme)."""
 import datos
 from contenido import catalogo_datos as cd
 
 SITE = datos.SITIO
 HUB = "/plantas-palmas-arboles-tampico"
 NEGOCIO = f"{SITE}/#negocio"  # la entidad única de las demás páginas (el nodo completo vive en la home)
-# Clave: slug; valor: por qué no va en el hub ni en las subcategorías (revisión del 2026-11-08, lote C del plan 2e).
-FOTOS_SOLO_CATALOGO = {
-    "coco-plumoso": "Escena de hotel de playa con alberca (foto de banco de imágenes)",
-    "palma-areca": "Macetas junto a una alberca de diseño (escena publicitaria, no del vivero)",
-}
+# Clave: slug; valor: por qué no va en el hub ni en las subcategorías. Vacía por decisión del dueño (2026-11-08): las
+# fotos quedan como en main y los cambios de fotos van en otra etapa (la revisión del lote C marcó coco plumoso, escena
+# de hotel con alberca, y palma areca, macetas junto a una alberca de diseño).
+FOTOS_SOLO_CATALOGO = {}
 LEDE_FOTOS = "Luz, riego y altura de la ficha del catálogo. Fotos de referencia de cada especie."
 
 GARANTIA = {

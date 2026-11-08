@@ -1,8 +1,7 @@
 """Contenido de /plantas-de-interior-tampico (subcategoría del hub de plantas). Plantilla: plantillas/hub_categoria.py.
 
-Seis especies con foto publicable del catálogo. La palma areca de main sigue en /catalogo y en /palmas-tropicales-tampico
-(tabla de precios) pero sin tarjeta aquí: su foto es una escena de alberca (plantas_comun.FOTOS_SOLO_CATALOGO); la
-sustituye la palma seifrixi bambú, de interior. Ficus lyrata conserva la altura en interior que publicaba main. Sin
+Las seis especies de main, en su orden y con la foto del catálogo (decisión del dueño, 2026-11-08: las fotos quedan
+como están), servida en local; la palma areca conserva la altura en interior que publicaba main. Ficus lyrata conserva la altura en interior que publicaba main. Sin
 precio propio (datos.DESDE_PLANTAS: según cotización). Salen "más de 30 especies" (cifra sin respaldo: va el conteo real
 del catálogo), "entregamos e instalamos… con seguimiento", "todas disponibles" y la lista de químicos que eliminaría cada
 planta. Título, descripción y Open Graph como estaban (Etapa 3; la consolidación de plantas de interior también).
@@ -28,7 +27,8 @@ ESPECIES = (
     ("monstera-pinanona", "Hojas grandes y recortadas; tropical y fácil de cuidar.", None),
     ("palma-zz-plant", "Aguanta poca luz y riego cada 2 a 3 semanas.", None),
     ("sansiviera", "Muy resistente: tolera olvidos de riego y el aire acondicionado.", None),
-    ("palma-seifrixi-bambu", "Tallos como de bambú; aguanta poca luz y el aire acondicionado de oficinas.", None),
+    ("palma-areca", "Palma de interior de tallos múltiples y follaje plumoso para hoteles y oficinas.",
+     "Hasta 2 m en interior"),
     ("dracena-compacta", "Follaje denso y de bajo mantenimiento.", None),
 )
 PREGUNTAS = (
@@ -104,7 +104,6 @@ PARIDAD = {
     "especies": {
         "reemplazos": {
             "ZZ Plant": ("/plantas-de-interior-tampico", "Palma ZZ Plant"),
-            "Palma Areca": ("/catalogo", "Palma Areca"),
         },
         "retirados": {},
     },
