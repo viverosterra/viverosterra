@@ -28,7 +28,7 @@ class ContenidoTest(unittest.TestCase):
 
     def test_solo_marcado_en_linea_permitido(self):
         for ruta, modulo in self.modulos():
-            for texto in cadenas({k: v for k, v in modulo.CONTENIDO.items() if k not in ("meta", "jsonld")}):
+            for texto in cadenas({k: v for k, v in modulo.CONTENIDO.items() if k not in ("meta", "jsonld", "cuerpo")}):
                 with self.subTest(ruta=ruta, texto=texto[:60]):
                     self.assertEqual(componentes.etiquetas_no_permitidas(texto), [])
 

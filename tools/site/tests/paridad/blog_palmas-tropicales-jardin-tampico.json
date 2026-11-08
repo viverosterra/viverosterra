@@ -1,0 +1,59 @@
+{
+ "meta": {
+  "title": "Las 8 Palmas Más Espectaculares para Jardines en Tampico",
+  "description": "Guía visual de las 8 palmas más populares en Tampico: tamaños, cuidados, precios y cuál es la correcta para tu espacio. Por el vivero productor directo.",
+  "robots": "index, follow",
+  "canonical": "https://www.viverosterra.com/blog/palmas-tropicales-jardin-tampico",
+  "og:type": "article",
+  "og:url": "https://www.viverosterra.com/blog/palmas-tropicales-jardin-tampico",
+  "og:title": "Las 8 palmas más espectaculares para jardines en Tampico (y cuál es la correcta para ti)",
+  "og:description": "Guía visual de las 8 palmas tropicales más populares en Tampico: tamaños, cuidados, precios y para qué tipo de jardín funciona cada una. Por el vivero productor directo en Tamaulipas.",
+  "og:image": "https://www.viverosterra.com/img/plantas-ornamentales-tampico-viveros-terra.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "Article",
+  "BreadcrumbList",
+  "ListItem",
+  "Organization"
+ ],
+ "encabezados": [
+  "Las 8 palmas más espectaculares para jardines en Tampico (y cuál es la correcta para ti)",
+  "Respuesta directa",
+  "Por qué las palmas dominan los jardines en Tampico",
+  "Las 8 palmas más populares en Tampico",
+  "1. Palma del Viajero (Ravenala madagascariensis)",
+  "2. Palma Coco Plumoso (Syagrus romanzoffiana)",
+  "3. Palma Areca (Dypsis lutescens)",
+  "4. Cycas revoluta (Cica japónica)",
+  "5. Palma Real (Roystonea regia)",
+  "6. Palma Washingtona (Washingtonia robusta)",
+  "7. Palma Kerpis (Howea forsteriana)",
+  "8. Palma de Sago / Cycas circinalis",
+  "¿Cómo elegir la palma correcta para tu jardín?",
+  "Cuidados básicos que aplican a todas las palmas en Tampico",
+  "Preguntas frecuentes",
+  "¿Tienes un proyecto en Tampico?",
+  "En este artículo",
+  "¿Listo para cotizar?",
+  "También te puede interesar"
+ ],
+ "faq": [
+  "¿Qué palma crece más rápido en Tampico?",
+  "¿Qué palma resiste mejor el viento costero de Tampico?",
+  "¿Qué palma necesita menos mantenimiento en Tampico?",
+  "¿Cada cuánto se fertilizan las palmas en Tampico?",
+  "¿Cuánto cuesta una palma del viajero en Tampico?"
+ ],
+ "precios": [
+  "$4,500",
+  "$800"
+ ],
+ "enlaces": [
+  "/",
+  "/blog",
+  "/blog/arboles-para-sembrar-en-banqueta",
+  "/blog/cuidados-palma-del-viajero-ravenala",
+  "/blog/ficus-elastica-cuidados-tampico"
+ ]
+}

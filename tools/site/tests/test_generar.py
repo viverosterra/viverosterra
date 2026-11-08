@@ -10,6 +10,7 @@ import activos  # noqa: E402
 import componentes  # noqa: E402,F401  (agrega tools/pasto al path)
 import datos  # noqa: E402
 import generar  # noqa: E402
+from contenido import articulo  # noqa: E402
 from ciudades import CIUDADES  # noqa: E402
 from data import MODELOS  # noqa: E402
 import paginas  # noqa: E402
@@ -24,10 +25,11 @@ class GenerarTest(unittest.TestCase):
                       "/plantas-para-jardin-tampico", "/arboles-ornamentales-tampico",
                       "/arboles-para-banqueta-tampico", "/plantas-de-interior-tampico", "/catalogo",
                       "/tierra-negra-vegetal-tampico", "/tezontle-rojo-tampico", "/marmol-blanco-tampico",
-                      "/piedra-bola-rio-tampico", "/precios", "/pasto-sintetico", "/pasto-sintetico/perros"]
+                      "/piedra-bola-rio-tampico", "/precios", "/blog", "/pasto-sintetico", "/pasto-sintetico/perros"]
                      + [f"/pasto-sintetico/{m['slug']}" for m in MODELOS]
                      + [f"/pasto-sintetico/envio/{c['slug']}" for c in CIUDADES]
-                     + [ruta for _nombre, ruta in datos.ZONAS])
+                     + [ruta for _nombre, ruta in datos.ZONAS]
+                     + [f"/blog/{slug}" for slug in articulo.CLAVES])
         self.assertEqual([r for r, *_ in generar.PAGINAS], esperadas)
         for ruta, salida, _p, _c in generar.PAGINAS:
             paginas.contexto(ruta)

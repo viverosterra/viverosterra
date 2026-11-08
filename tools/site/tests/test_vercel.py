@@ -10,7 +10,7 @@ import activos  # noqa: E402
 import paginas  # noqa: E402
 
 VERCEL = paginas.PUBLIC.parent / "vercel.json"
-HASH = r"/(css|js)/(terra|terra-tienda|terra-plantas|terra-materiales|terra-precios|legacy-fixes)\.([0-9a-f]+)\.(css|js)"
+HASH = r"/(css|js)/(terra|terra-tienda|terra-plantas|terra-materiales|terra-precios|terra-blog|legacy-fixes)\.([0-9a-f]+)\.(css|js)"
 GENERAL_JS_CSS = r"/(.*)\.(js|css)"
 IMAGENES = r"/(.*)\.(png|jpg|jpeg|webp|gif|svg|ico)"
 FUENTES = r"/(.*)\.(woff2|woff|ttf)"

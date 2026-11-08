@@ -1,0 +1,67 @@
+{
+ "meta": {
+  "title": "Cómo se miden las plantas: altura, cepellón, ancho de fronda y grosor · Viveros Terra",
+  "description": "Cómo se mide la altura de una planta: desde la base del cepellón hasta la hoja más alta. Aprende las 4 mediciones que importan al cotizar.",
+  "robots": "index, follow",
+  "canonical": "https://www.viverosterra.com/blog/como-medir-plantas-altura-cepellon",
+  "og:type": "article",
+  "og:url": "https://www.viverosterra.com/blog/como-medir-plantas-altura-cepellon",
+  "og:title": "Cómo se miden las plantas: altura, cepellón, ancho de fronda y grosor | Viveros Terra",
+  "og:description": "Cómo se mide la altura de una planta: desde la base del cepellón hasta la hoja más alta. Aprende las 4 mediciones que importan al cotizar.",
+  "og:image": "https://www.viverosterra.com/img/plantas-ornamentales-tampico-viveros-terra.webp",
+  "og:image:width": "1200",
+  "og:image:height": "630",
+  "og:locale": "es_MX",
+  "og:site_name": "Viveros Terra"
+ },
+ "jsonld_tipos": [
+  "Answer",
+  "Article",
+  "BreadcrumbList",
+  "FAQPage",
+  "ImageObject",
+  "ListItem",
+  "Organization",
+  "Question"
+ ],
+ "encabezados": [
+  "Cómo se miden las plantas: altura, cepellón, ancho de fronda y grosor",
+  "Las 4 mediciones que importan al comprar plantas",
+  "1. Altura total",
+  "2. Tamaño del cepellón",
+  "3. Grosor del tallo o tronco (DAP)",
+  "4. Ancho de fronda o copa",
+  "Por qué especificar todas las medidas al cotizar",
+  "Ejemplos correctos vs. incompletos",
+  "Cuál medida importa más según el uso",
+  "Preguntas frecuentes",
+  "¿La altura de una planta incluye el cepellón?",
+  "¿Cuál es la diferencia entre fronda y copa en plantas?",
+  "¿Por qué dos plantas de la misma altura tienen precios distintos?",
+  "¿Qué es DAP en árboles?",
+  "¿Se puede pedir un tamaño específico de cepellón en Viveros Terra?",
+  "Especifica medidas para tu cotización",
+  "Artículos relacionados",
+  "Las 8 palmas más espectaculares para jardines en Tampico",
+  "Palma del Viajero: Guía Completa",
+  "Cómo Diseñar Tu Jardín en Tampico: Guía Paso a Paso"
+ ],
+ "faq": [
+  "¿La altura de una planta incluye el cepellón?",
+  "¿Cuál es la diferencia entre fronda y copa en plantas?",
+  "¿Por qué dos plantas de la misma altura tienen precios distintos?",
+  "¿Qué es DAP en árboles?",
+  "¿Se puede pedir un tamaño específico de cepellón en Viveros Terra?"
+ ],
+ "precios": [],
+ "enlaces": [
+  "/",
+  "/blog",
+  "/blog/cuidados-palma-del-viajero-ravenala",
+  "/blog/diseno-jardines-tampico-guia",
+  "/blog/palmas-tropicales-jardin-tampico",
+  "/catalogo",
+  "/palmas-tropicales-tampico",
+  "/plantas-palmas-arboles-tampico"
+ ]
+}
