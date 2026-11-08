@@ -6,7 +6,8 @@ La calculadora es la de main línea por línea (calcularTierra, calcularTezontle
 redondeos): calculo() y textos() dan lo mismo que public/js/vt-materiales.js en los casos congelados de main
 (public/js/tests/casos-materiales.json; tests/test_materiales_paridad.py y vt-materiales.test.js). Piedra bola no tenía
 calculadora: la suya multiplica el área por los kg por m² que publicaba su propia pregunta frecuente (120 a 150 kg por m²
-con piedra mediana y capa de 8 a 10 cm). Los precios salen de datos.PRECIOS; lo que no está ahí va "según cotización".
+con capa de 8 a 10 cm; se vende a granel, sin medidas). Los precios salen de datos.PRECIOS; lo que no está ahí va "según
+cotización".
 """
 import json
 import math
@@ -21,7 +22,19 @@ SEGUN = datos.SEGUN_COTIZACION.lower()
 AREA_MAXIMA = 100_000  # m²; más que esto no es un jardín: la calculadora vuelve al mensaje de la página
 CIERRE_MENSAJE = "¿Me pueden dar precio de entrega a domicilio en Tampico, Madero o Altamira?"
 COLONIA = "Colonia de entrega: ___"  # como en el mensaje de cada página: la colonia decide el costo de entrega
-CAMION_TIERRA = f"Camión volteo de 8 m³ o más ({SEGUN})"
+# Camiones de tierra negra de datos.TIERRA_CAMIONES (5, 8 y 14 m³). Main sugería "Camión volteo 8m³+ (~desde $5,000)"
+# arriba de 7 m³; el "desde $5,000" no lo confirmó el dueño: se sugiere el camión de la tabla donde cabe la cantidad.
+CAMIONES_TIERRA = datos.TIERRA_CAMIONES
+
+
+def camion_tierra(m3):
+    """Camión sugerido para m³ de tierra negra (más de 7, el tramo "camion" de main): el de 8 m³, el de 14 o, si no
+    cabe en uno, camiones de 14 m³ con su precio de datos.py."""
+    for capacidad, precio in CAMIONES_TIERRA[1:]:
+        if m3 <= capacidad:
+            return f"Camión volteo de {capacidad} m³ ({c.dinero(precio)})"
+    capacidad, precio = CAMIONES_TIERRA[-1]
+    return f"{miles(math.ceil(m3 / capacidad))} camiones volteo de {capacidad} m³ ({c.dinero(precio)} c/u)"
 
 # clave → factores de main, precios de datos.py, texto del mensaje, capas (valor, texto) y la capa elegida al cargar.
 # Los textos de las capas de tezontle son los de main tal cual: van en el mensaje ("Uso: …").
@@ -29,6 +42,7 @@ CALCULADORAS = {
     "tierra-negra": {
         "texto": "tierra negra vegetal", "costal_m3": 0.035,
         "precio_costal": P["tierra_negra_costal"], "precio_m3": P["tierra_negra_m3"],
+        "camiones": [list(x) for x in datos.TIERRA_CAMIONES[1:]],
         "etiqueta_capa": "Grosor de la capa", "elegida": "0.08",
         "capas": (("0.05", "5 cm · mejora superficial"), ("0.08", "8 cm · preparación para pasto (recomendado)"),
                   ("0.10", "10 cm · preparación profunda"), ("0.15", "15 cm · terreno muy pobre")),
@@ -43,19 +57,20 @@ CALCULADORAS = {
         "cta": "cotizarTezontle",
     },
     "marmol": {
-        "texto": "mármol blanco decorativo", "kg_saco": 20,
+        "texto": "mármol blanco decorativo", "kg_saco": 20, "precio_saco": P["marmol_saco"],
         "etiqueta_capa": "Grosor de la capa", "elegida": "4",
         "capas": (("3", "3 cm · decorativo o macetas"), ("4", "4 cm · arriates (recomendado)"),
                   ("5", "5 cm · senderos o alberca"), ("6", "6 cm · alta densidad o tráfico")),
         "cta": "cotizarMarmol",
     },
     "piedra-bola": {
-        "texto": "piedra bola de río", "kg_m2": (120, 150), "medida": "mediana (capa de 8 a 10 cm)",
+        "texto": "piedra bola de río", "kg_m2": (120, 150), "capa_texto": "8 a 10 cm",
         "cta": "cotizarPiedra",
     },
 }
 # Lo que lee vt-materiales.js en data-material: sin textos de la página ni capas (esas van en el <select>).
-PARA_JS = ("costal_m3", "camion_m3", "precio_costal", "precio_m3", "kg_saco", "kg_m2", "medida", "texto")
+PARA_JS = ("costal_m3", "camion_m3", "precio_costal", "precio_m3", "camiones", "kg_saco", "precio_saco", "kg_m2",
+           "capa_texto", "texto")
 
 
 def numero_js(x):
@@ -99,7 +114,7 @@ def calculo(clave, area, capa=0):
     if clave == "marmol":
         por_m2 = 3 if capa <= 4 else 4 if capa <= 5 else 5
         sacos = math.ceil(area * por_m2)
-        return {"sacos": sacos, "kg": sacos * cfg["kg_saco"], "por_m2": por_m2}
+        return {"sacos": sacos, "kg": sacos * cfg["kg_saco"], "por_m2": por_m2, "total": sacos * cfg["precio_saco"]}
     minimo, maximo = cfg["kg_m2"]
     return {"kg": (c.redondear(area * minimo), c.redondear(area * maximo))}
 
@@ -110,17 +125,19 @@ def _mensaje(cfg, titulo, lineas):
 
 def textos(clave, area, capa, r, uso=""):
     """Lo que muestra la etiqueta y el mensaje de WhatsApp. Iguales a los de main salvo lo que pide el dueño o la
-    revisión: el camión de tierra negra sin el "desde $5,000" que no está en datos.py, el mármol sin el precio de $250
-    por saco, miles con coma ("3,750 sacos"), la capa en el mensaje de tierra negra y, en los cuatro, la colonia por
-    llenar y la misma pregunta de cierre (sin "confirmar disponibilidad"). Los números son los mismos de main."""
+    revisión: el camión de tierra negra con su tamaño y precio de datos.py en vez del "desde $5,000" (camion_tierra),
+    miles con coma ("3,750 sacos"), la capa en el mensaje de tierra negra y, en los cuatro, la colonia por llenar y la
+    misma pregunta de cierre (sin "confirmar disponibilidad"). El mármol vuelve a dar el total a $250 el saco
+    (datos.PRECIOS). Los números son los mismos de main."""
     cfg = CALCULADORAS[clave]
     a = miles(area)
     if clave in ("tierra-negra", "tezontle"):
         m3, costales = miles(r["m3"]), miles(r["costales"])
         if clave == "tierra-negra":
-            presentacion = {"costales": f"{costales} costales ({c.dinero(r['costales'] * cfg['precio_costal'])})",
-                            "m3": f"{m3} m³ suelto (~{c.dinero(r['m3'] * cfg['precio_m3'])})",
-                            "camion": CAMION_TIERRA}[r["tramo"]]
+            presentacion = (f"{costales} costales ({c.dinero(r['costales'] * cfg['precio_costal'])})"
+                            if r["tramo"] == "costales" else
+                            f"{m3} m³ suelto (~{c.dinero(r['m3'] * cfg['precio_m3'])})" if r["tramo"] == "m3" else
+                            camion_tierra(r["m3"]))
             equivalente = f"{costales} costales" if r["tramo"] == "costales" else f"~{costales} costales"
             lineas = (f"Área: {a} m²", f"Capa: {round(capa * 100)} cm", f"Cantidad: {m3} m³")
         else:
@@ -131,15 +148,16 @@ def textos(clave, area, capa, r, uso=""):
         return {"cantidad": f"{m3} m³", "presentacion": presentacion, "equivalente": equivalente,
                 "mensaje": _mensaje(cfg, "Resultado de la calculadora:", lineas)}
     if clave == "marmol":
-        sacos, g = miles(r["sacos"]), numero_js(capa)
-        nota = (f"{sacos} sacos cubren {a} m² con capa de {g} cm." if capa <= 4
-                else f"{sacos} sacos para {a} m² con capa de {g} cm (alta densidad).")
-        lineas = (f"Área: {a} m²", f"Capa: {g} cm", f"Cantidad: {sacos} sacos")
-        return {"cantidad": f"{sacos} sacos", "peso": f"{miles(r['kg'])} kg", "nota": nota,
+        sacos, g, total = miles(r["sacos"]), numero_js(capa), c.dinero(r["total"])
+        precio = f" A {c.dinero(cfg['precio_saco'])} c/u."
+        nota = (f"{sacos} sacos cubren {a} m² con capa de {g} cm.{precio}" if capa <= 4
+                else f"{sacos} sacos para {a} m² con capa de {g} cm (alta densidad).{precio}")
+        lineas = (f"Área: {a} m²", f"Capa: {g} cm", f"Cantidad: {sacos} sacos", f"Precio estimado: {total}")
+        return {"cantidad": f"{sacos} sacos", "total": total, "peso": f"{miles(r['kg'])} kg", "nota": nota,
                 "mensaje": _mensaje(cfg, "Datos de mi proyecto:", lineas)}
     minimo, maximo = r["kg"]
     cantidad = f"{miles(minimo)} a {miles(maximo)} kg"
-    lineas = (f"Área: {a} m²", f"Medida: {cfg['medida']}", f"Cantidad aprox.: {cantidad}")
+    lineas = (f"Área: {a} m²", f"Capa: {cfg['capa_texto']}", f"Cantidad aprox.: {cantidad}")
     return {"cantidad": cantidad, "mensaje": _mensaje(cfg, "Resultado de la calculadora:", lineas)}
 
 
@@ -159,16 +177,16 @@ VACIO = {"cantidad": "Escribe el área", "fila": "—"}
 FILAS = {
     "tierra-negra": (("Presentación sugerida", "presentacion"), ("Equivalente en costales", "equivalente")),
     "tezontle": (("Presentación sugerida", "presentacion"), ("Costales equivalentes", "equivalente")),
-    "marmol": (("Peso aproximado", "peso"),),
+    "marmol": (("Total orientativo", "total"), ("Peso aproximado", "peso")),
     "piedra-bola": (),
 }
 NOTAS = {
-    "tierra-negra": ("m² × grosor de la capa = m³, redondeado hacia arriba. El camión volteo y la entrega se cotizan "
-                     "según tu colonia."),
+    "tierra-negra": f"m² × grosor de la capa = m³, redondeado hacia arriba. {datos.ENTREGA_COBRO}",
     "tezontle": "m² × grosor de la capa = m³, redondeado hacia arriba. El m³ y el camión se cotizan según tu colonia.",
-    "marmol": "3 sacos por m² con capa de 3 a 4 cm; 4 con 5 cm y 5 con 6 cm. El precio por saco se cotiza.",
-    "piedra-bola": ("Con piedra mediana y capa de 8 a 10 cm se usan de 120 a 150 kg por m²; para chica o grande, dinos "
-                    "la medida. Mándanos los kg y la colonia: te decimos cuántos costales o si conviene camión."),
+    "marmol": (f"3 sacos por m² con capa de 3 a 4 cm; 4 con 5 cm y 5 con 6 cm. Saco a {c.dinero(P['marmol_saco'])}, "
+               f"{datos.MARMOL_CONDICION}; la entrega se cobra aparte. Peso con sacos de ≈ 20 kg."),
+    "piedra-bola": ("Con capa de 8 a 10 cm se usan de 120 a 150 kg por m². Se vende a granel: mándanos los kg y la "
+                    "colonia y te damos el precio con la entrega."),
 }
 
 

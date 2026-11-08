@@ -3,9 +3,9 @@
    equivalente → WhatsApp con el resultado. La lógica es la de main (calcularTierra, calcularTezontle y calcularMarmol,
    que abrían WhatsApp con window.open), línea por línea, incluidos sus redondeos; casos congelados en
    tests/casos-materiales.json y la misma lógica en tools/site/componentes_materiales.py (paridad Python–JS). Los precios
-   y los factores llegan en data-material, escrito desde datos.py: aquí no vive ningún precio. El botón es un enlace de
-   WhatsApp con data-cta (terra.js lo mide como generate_lead y lo firma al hacer clic); sin área válida manda el mensaje
-   de la página (data-mensaje). Las funciones puras se exportan para node --test. */
+   y los factores (camiones de tierra negra y saco de mármol incluidos) llegan en data-material, escrito desde datos.py:
+   aquí no vive ningún precio. El botón es un enlace de WhatsApp con data-cta (terra.js lo mide como generate_lead y lo
+   firma al hacer clic); sin área válida manda el mensaje de la página (data-mensaje). Las funciones puras se exportan para node --test. */
 (function (root) {
   'use strict';
   const AREA_MAXIMA = 100000;
@@ -30,6 +30,15 @@
 
   const m3De = (area, capa) => Math.ceil(area * capa * 10) / 10;
 
+  // Camión de tierra negra donde cabe la cantidad (cfg.camiones: [[8, 5200], [14, 8000]] de datos.py), como
+  // camion_tierra() en Python; si no cabe en uno, camiones del más grande.
+  function camionTierra(cfg, m3) {
+    const cabe = cfg.camiones.find(([capacidad]) => m3 <= capacidad);
+    if (cabe) return `Camión volteo de ${cabe[0]} m³ (${dinero(cabe[1])})`;
+    const [capacidad, precio] = cfg.camiones[cfg.camiones.length - 1];
+    return `${miles(Math.ceil(m3 / capacidad))} camiones volteo de ${capacidad} m³ (${dinero(precio)} c/u)`;
+  }
+
   function calcular(cfg, area, capa) {
     if (cfg.clave === 'tierra-negra') {
       const m3 = m3De(area, capa);
@@ -44,7 +53,7 @@
     if (cfg.clave === 'marmol') {
       const porM2 = capa <= 4 ? 3 : capa <= 5 ? 4 : 5;
       const sacos = Math.ceil(area * porM2);
-      return { sacos, kg: sacos * cfg.kg_saco, por_m2: porM2 };
+      return { sacos, kg: sacos * cfg.kg_saco, por_m2: porM2, total: sacos * cfg.precio_saco };
     }
     return { kg: [Math.round(area * cfg.kg_m2[0]), Math.round(area * cfg.kg_m2[1])] };
   }
@@ -62,9 +71,8 @@
       let equivalente = `~${c} costales`;
       let lineas;
       if (cfg.clave === 'tierra-negra') {
-        presentacion = { costales: `${c} costales (${dinero(r.costales * cfg.precio_costal)})`,
-          m3: `${m3} m³ suelto (~${dinero(r.m3 * cfg.precio_m3)})`,
-          camion: 'Camión volteo de 8 m³ o más (según cotización)' }[r.tramo];
+        presentacion = r.tramo === 'costales' ? `${c} costales (${dinero(r.costales * cfg.precio_costal)})`
+          : r.tramo === 'm3' ? `${m3} m³ suelto (~${dinero(r.m3 * cfg.precio_m3)})` : camionTierra(cfg, r.m3);
         if (r.tramo === 'costales') equivalente = `${c} costales`;
         lineas = [`Área: ${a} m²`, `Capa: ${Math.round(capa * 100)} cm`, `Cantidad: ${m3} m³`];
       } else {
@@ -78,14 +86,17 @@
     if (cfg.clave === 'marmol') {
       const g = String(capa);
       const s = miles(r.sacos);
-      const nota = capa <= 4 ? `${s} sacos cubren ${a} m² con capa de ${g} cm.`
-        : `${s} sacos para ${a} m² con capa de ${g} cm (alta densidad).`;
-      return { cantidad: `${s} sacos`, peso: `${miles(r.kg)} kg`, nota,
-        mensaje: mensaje(cfg, 'Datos de mi proyecto:', [`Área: ${a} m²`, `Capa: ${g} cm`, `Cantidad: ${s} sacos`]) };
+      const total = dinero(r.total);
+      const precio = ` A ${dinero(cfg.precio_saco)} c/u.`;
+      const nota = capa <= 4 ? `${s} sacos cubren ${a} m² con capa de ${g} cm.${precio}`
+        : `${s} sacos para ${a} m² con capa de ${g} cm (alta densidad).${precio}`;
+      return { cantidad: `${s} sacos`, total, peso: `${miles(r.kg)} kg`, nota,
+        mensaje: mensaje(cfg, 'Datos de mi proyecto:',
+          [`Área: ${a} m²`, `Capa: ${g} cm`, `Cantidad: ${s} sacos`, `Precio estimado: ${total}`]) };
     }
     const cantidad = `${miles(r.kg[0])} a ${miles(r.kg[1])} kg`;
     return { cantidad, mensaje: mensaje(cfg, 'Resultado de la calculadora:',
-      [`Área: ${a} m²`, `Medida: ${cfg.medida}`, `Cantidad aprox.: ${cantidad}`]) };
+      [`Área: ${a} m²`, `Capa: ${cfg.capa_texto}`, `Cantidad aprox.: ${cantidad}`]) };
   }
 
   // Estado vacío: el que escribió el HTML (componentes_materiales.VACIO); se lee al arrancar para no repetir textos.
@@ -94,7 +105,7 @@
     const salida = (n) => caja.querySelector(`[data-vt-o="${n}"]`);
     const area = caja.querySelector('[data-vt-campo="area"]');
     const capa = caja.querySelector('[data-vt-campo="capa"]');
-    const nombres = ['cantidad', 'presentacion', 'equivalente', 'peso'].filter((n) => salida(n));
+    const nombres = ['cantidad', 'presentacion', 'equivalente', 'total', 'peso'].filter((n) => salida(n));
     const vacio = Object.fromEntries(nombres.map((n) => [n, salida(n).textContent]));
     const nota = salida('nota');
     function actualizar() {
