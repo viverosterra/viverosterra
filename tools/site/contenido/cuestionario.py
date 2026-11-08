@@ -102,7 +102,7 @@ CONTENIDO = {
     "cabeza": {"kicker": "Diseño de jardines", "h1": 'Tu jardín empieza aquí. <span class="vt-serif">Cuéntanos tu visión.</span>',
                "lede": f"Tómate 4 minutos para contarnos qué necesitas. Nuestro diseñador creará una propuesta hecha exactamente para ti; {datos.PROMESA.lower().replace('respondemos', 'te respondemos')}.",
                "aviso": f"{datos.VISITA_COSTO_CORTO} · Diseño personalizado · 4-5 minutos",
-               "foto": {"src": "/img/diseno-jardin-instalacion-plantas-tampico.webp", "ancho": 1400, "alto": 787, "alt": ""}},
+               "foto": {"src": "/img/diseno-jardin-instalacion-plantas-tampico.webp", "ancho": 787, "alto": 1400, "alt": ""}},
     "form": {"accion": componentes.FORMULARIO_ACCION, "cta": "cuestionario:formulario",
              "ocultos": (("_subject", "Nuevo cuestionario de jardín — Viveros Terra"), ("_next", componentes.FORMULARIO_GRACIAS),
                          ("_template", "table"), ("_captcha", "false")),
