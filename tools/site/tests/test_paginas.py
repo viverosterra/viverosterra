@@ -124,6 +124,21 @@ class ContextoTest(unittest.TestCase):
                 self.assertIn("___", texto)
         self.assertEqual(sorted(mensajes_paginas.PLANTAS), sorted(["/plantas-palmas-arboles-tampico", *datos.DESDE_PLANTAS]))
 
+    def test_materiales_con_su_mensaje_en_menu_barra_y_pie(self):
+        """Etapa 2f: los cuatro materiales llevan en el menú, la barra y el pie la plantilla de su portada, con la colonia
+        de entrega de datos.MENSAJES["materiales"]."""
+        colonia = datos.MENSAJES["materiales"].split("\n")[-1]
+        for ruta, texto in mensajes_paginas.MATERIALES.items():
+            ctx = paginas.contexto(ruta)
+            with self.subTest(ruta=ruta):
+                self.assertEqual(ctx["mensaje"], datos.con_firma(texto))
+                self.assertEqual(ctx["mensaje_pie"], ctx["mensaje"])
+                self.assertEqual(ctx["servicio"], "materiales")
+                self.assertTrue(texto.startswith("Hola, quiero cotizar "))
+                self.assertIn(colonia, texto)
+        self.assertEqual(sorted(mensajes_paginas.MATERIALES),
+                         ["/marmol-blanco-tampico", "/piedra-bola-rio-tampico", "/tezontle-rojo-tampico",
+                          "/tierra-negra-vegetal-tampico"])
     def test_ruta_desconocida_falla(self):
         with self.assertRaises(KeyError):
             paginas.contexto("/no-existe")
