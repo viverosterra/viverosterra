@@ -251,7 +251,7 @@ def contenido(slug):
             "h1": f'{z["h1"]} <span class="vt-serif">{z["accent"]}</span>',
             "lede": z["lede"],
             "etiqueta": {"codigo": f"Zona · {corto}", "aviso": "Con IVA", "nombre": "Pasto instalado",
-                         "antes": "desde", "monto": INSTALADO, "unidad": "/m²",
+                         "antes": "San Agustín instalado · desde", "monto": INSTALADO, "unidad": "/m²",
                          "filas": (("Mantenimiento", f"desde {MANTENIMIENTO}/mes"),
                                    ("Diseño", f"desde {dinero(P['diseno'])}"))},
             "mensaje": mensaje,

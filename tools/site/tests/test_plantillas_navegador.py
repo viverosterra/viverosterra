@@ -754,6 +754,15 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 self.assertIn(["event", "generate_lead", {"method": "whatsapp", "cta_id": "zona:hero",
                                                           "service": "jardin"}], eventos)
 
+    def test_etiqueta_de_zona_dice_de_que_es_el_precio_en_celular(self):
+        """En celular terra.css oculta el nombre de la etiqueta: el renglón del precio debe decir a qué corresponde."""
+        page = self.pagina(375, 812)
+        for ruta in ZONAS:
+            page.goto(self.base + ruta, wait_until="load")
+            with self.subTest(ruta=ruta):
+                self.assertFalse(page.locator(".vt-portada .vt-etiqueta__nombre").is_visible())
+                self.assertIn("instalado", page.locator(".vt-portada .vt-etiqueta__precio small").inner_text().lower())
+
     def test_simulador_de_precios_con_la_formula_oficial(self):
         """El simulador de /precios (vt-simulador.js + vt-mensualidades.js) muestra los 4 plazos con el total y la
         mensualidad de tools/pasto/mensualidades.py para el monto de ejemplo."""
