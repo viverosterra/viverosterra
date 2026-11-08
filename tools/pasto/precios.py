@@ -58,7 +58,7 @@ FAQS = [
      "registro REPSE 773725 para contratos con empresas."),
     ("¿Por qué algunos precios dicen «desde»?",
      "Porque el total depende de los metros, del estado del terreno y del acceso a la obra. En la visita medimos y te "
-     "damos el precio cerrado antes de empezar. La visita no tiene costo."),
+     "damos el precio cerrado antes de empezar."),
     ("¿Cuánto cuesta el pasto sintético en Tampico?",
      f"El material cuesta desde ${SINTETICO_MIN}/m² en rollo completo y el pasto instalado de ${SINTETICO_INSTALADO[0]} "
      f"a ${SINTETICO_INSTALADO[1]}/m² según el modelo, con material y colocación. La preparación del terreno se cotiza aparte."),
@@ -209,7 +209,6 @@ def build_precios():
                     f"diseño desde $3,000 y pasto sintético desde ${SINTETICO_MIN}/m². Precios con IVA en Tampico, Madero y Altamira.",
         canonical=URL, og_image=f"{SITE}{IMG}.webp", og_type="website",
         preload_img=f"{IMG}-sm.webp", preload_srcset=f"{IMG}-sm.webp 560w, {IMG}.webp 960w", ld=schema(faqs),
-        subnav=False,
     )
     base = (base.split('<script src="/js/vt-mensualidades.js')[0]
             + base.split('<script src="/js/tienda-pasto.js', 1)[1].split("defer></script>", 1)[1])

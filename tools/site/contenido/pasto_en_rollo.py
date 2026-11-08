@@ -144,9 +144,10 @@ CONTENIDO = {
         ),
         "nota": ("En sombra profunda el San Agustín no prende. Ahí va otra solución, y te lo decimos antes de cobrarte.",
                  "Al medir, en tu jardín"),
-        # Prueba social: la opinión aprobada de la home sobre pasto (textual) y los clientes con permiso del dueño.
+        # Prueba social: la opinión aprobada de la home sobre pasto, las dos de esta página anteriores a 2a (reales y con
+        # permiso del dueño, 2026-11-07), todas textuales, y los clientes con permiso del dueño.
         "titulo_opinion": "Lo que dicen quienes ya tienen su jardín",
-        "opiniones": datos.OPINIONES[:1],
+        "opiniones": datos.OPINIONES[:1] + datos.OPINIONES_PASTO_EN_ROLLO,
         "titulo_clientes": "Empresas que nos han contratado",
     },
     "precio": {

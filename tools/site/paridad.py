@@ -10,7 +10,6 @@ Uso:
   python3 tools/site/paridad.py informe /pasto-en-rollo-tampico    (lista lo que falta, para revisar a mano)
 """
 import html as html_mod
-import importlib
 import json
 import re
 import sys
@@ -149,18 +148,20 @@ def comparar(ruta, mapa, public=paginas.PUBLIC, capturas=CAPTURAS):
 
 
 def main(argv):
-    if len(argv) != 3 or argv[1] not in ("capturar", "informe"):
-        raise SystemExit("Uso: python3 tools/site/paridad.py capturar|informe <ruta>")
-    ruta = argv[2]
+    if len(argv) < 3 or argv[1] not in ("capturar", "informe"):
+        raise SystemExit("Uso: python3 tools/site/paridad.py capturar|informe <ruta> [<ruta> …]")
     if argv[1] == "capturar":
-        print(f"captura: {capturar(ruta).relative_to(AQUI.parents[1])}")
+        for ruta in argv[2:]:
+            print(f"captura: {capturar(ruta).relative_to(AQUI.parents[1])}")
         return
     import generar  # noqa: E402  (solo aquí: generar importa las plantillas)
-    modulo = importlib.import_module(f"contenido.{generar.contenido_de(ruta)}")
-    for categoria, lista in comparar(ruta, modulo.PARIDAD).items():
-        print(f"{categoria}: {'ok' if not lista else ''}")
-        for item in lista:
-            print(f"  - {item}")
+    for ruta in argv[2:]:
+        print(f"== {ruta}")
+        modulo = generar.cargar(generar.contenido_de(ruta))
+        for categoria, lista in comparar(ruta, modulo.PARIDAD).items():
+            print(f"{categoria}: {'ok' if not lista else ''}")
+            for item in lista:
+                print(f"  - {item}")
 
 
 if __name__ == "__main__":

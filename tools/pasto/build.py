@@ -1,19 +1,15 @@
-"""Genera el hub, las 9 fichas de pasto sintético, la página local de Tampico, /precios y las 6 zonas,
-y les aplica el shell compartido de tools/site (menú, pie, barra móvil y head esencial).
+"""Genera /precios, las 6 zonas, el feed de Merchant y las URLs de la tienda en el sitemap, y aplica el shell compartido
+de tools/site a las páginas que escribe. La tienda (hub, 9 fichas, 11 ciudades, perros y sintético en Tampico) sale de
+tools/site/generar.py desde la Etapa 2b; /precios y las zonas pasan a sus plantillas en la 2g.
 
 Uso: python3 tools/pasto/build.py   (desde la raíz del repo). Para todo el sitio: python3 tools/site/build.py
 """
 import sys
 from pathlib import Path
 
-from ciudad import build_ciudad
 from ciudades import CIUDADES
 from data import MODELOS, SITE
 from feed import build_feed
-from ficha import build_ficha
-from hub import build_hub
-from local import build_local
-from perros import build_perros
 from precios import build_precios
 from sitemap import upsert
 from zonas import ZONAS, build_zona
@@ -43,16 +39,9 @@ def aplicar_shell(paths):
 
 def main():
     ESCRITAS.clear()
-    write(ROOT / "index.html", build_hub())
-    write(ROOT.parent / "pasto-sintetico-tampico" / "index.html", build_local())
     write(ROOT.parent / "precios" / "index.html", build_precios())
     for slug, zona in ZONAS.items():
         write(ROOT.parent / slug / "index.html", build_zona(slug, zona))
-    for m in MODELOS:
-        write(ROOT / m["slug"] / "index.html", build_ficha(m))
-    for c in CIUDADES:
-        write(ROOT / "envio" / c["slug"] / "index.html", build_ciudad(c))
-    write(ROOT / "perros" / "index.html", build_perros())
     (ROOT.parent / "feed-pasto-sintetico.xml").write_text(build_feed(), encoding="utf-8")
     upsert([f"{SITE}/pasto-sintetico", f"{SITE}/pasto-sintetico/perros"]
            + [f"{SITE}/pasto-sintetico/envio/{c['slug']}" for c in CIUDADES]

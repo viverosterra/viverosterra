@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import paginas  # noqa: E402
 
 PUBLIC = paginas.PUBLIC
-PERMITIDAS = ('anuncian "envío gratis"',)  # el hub explica que "envío gratis" de otros ya viene en el precio
+PERMITIDAS = ()  # 2b: el hub ya no cita el "envío gratis" de otras ofertas; no se agregan excepciones
 PAGOS = r"inter[eé]s|intereses|mensualidad|meses|pagos?|plazos?|tarjeta|comisi[oó]n|enganche|financ|recargo"
 PROHIBIDAS = (
     ("Oasis", r"\bOasis\b"),
@@ -30,9 +30,12 @@ PROHIBIDAS = (
 )
 DEPORTES_RE = re.compile(r"p[aá]del|canchas?", re.I)
 PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
+# Decisión del dueño (2026-11-07): no se ofrece crédito a clientes (ni a instaladores ni a constructoras recurrentes).
+CREDITO_CLIENTES_RE = re.compile(r"\bcr[eé]dito\s+(?:para|a)\s+(?:(?:los|sus|nuestros)\s+)?clientes\b", re.I)
 # Decisión del dueño (2026-11-07): la visita para medir tiene costo o depende; nunca "visita sin costo", "visita
-# gratis" ni "visita gratuita" (tampoco "vamos a medir sin costo").
-GRATIS = r"(?:sin\s+costo|gratis|gratuit(?:[ao]s?|amente))"
+# gratis", "visita gratuita", "la visita no tiene costo", "sin cargo" ni "no cuesta" (tampoco "vamos a medir sin costo").
+GRATIS = (r"(?:sin\s+(?:costo|cargo)|gratis|gratuit(?:[ao]s?|amente)|no\s+(?:tiene\s+(?:ning[uú]n\s+)?costo|cuesta"
+          r"|se\s+cobra|cobramos|te\s+cobramos))")
 VISITA_GRATIS_RE = re.compile(
     rf"\bvisit\w*\b\W+(?:\w+\W+){{0,4}}?{GRATIS}\b|\b(?:medir|medimos|medici[oó]n|diagn[oó]sticos?)\W+(?:\w+\W+){{0,2}}?{GRATIS}\b"
     rf"|\b{GRATIS}\W+(?:\w+\W+){{0,2}}?visitas?\b", re.I)
@@ -170,6 +173,21 @@ class ReglasDelDuenoTest(unittest.TestCase):
                 hallazgos.append(f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
         self.assertEqual(hallazgos, [])
 
+    def test_sin_credito_para_clientes(self):
+        hallazgos = []
+        for path, texto in publicados():
+            for m in CREDITO_CLIENTES_RE.finditer(texto):
+                hallazgos.append(f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
+        self.assertEqual(hallazgos, [])
+
+    def test_credito_y_pago_al_terminar_se_detectan_sin_tocar_citas_de_clientes(self):
+        for sucio in ("crédito para clientes recurrentes", "Crédito a clientes recurrentes", "crédito a nuestros clientes"):
+            self.assertRegex(sucio, CREDITO_CLIENTES_RE)
+        for limpio in ("mensualidades con tarjeta de crédito", "tarjeta de débito o crédito para tu compra"):
+            self.assertNotRegex(limpio, CREDITO_CLIENTES_RE)
+        # La regla mira lo que promete la empresa ("pagas cuando ves"), no las palabras de un cliente real.
+        self.assertIsNone(PAGO_AL_TERMINAR_RE.search("Lo más importante: pagué el resto hasta que lo vi terminado."))
+
     def test_nunca_visita_gratis(self):
         con = {}
         for path, texto in publicados():
@@ -182,10 +200,13 @@ class ReglasDelDuenoTest(unittest.TestCase):
         for sucio in ("Agendamos una visita sin costo", "Visita técnica gratuita", "vamos a medir sin costo",
                       "Visita y medición Sin costo", "visita gratis",
                       "ofrece visita de diagnóstico y cotización gratuita", "visita el terreno gratuitamente",
+                      "La visita para medir no tiene costo", "La visita no tiene costo", "la visita no cuesta",
+                      "visita de diagnóstico sin cargo", "medir no te cobramos", "Sin cargo, una visita",
                       "diagnóstico gratuito", "una visita de diagnóstico sin costo", "diagnósticos de pasto sin costo"):
             self.assertRegex(sucio, VISITA_GRATIS_RE)
         for limpio in ("Agendamos una visita para medir y cotizar", "Cotización gratis por WhatsApp",
-                       "la reponemos sin costo", "Visítanos en el vivero"):
+                       "la reponemos sin costo", "Visítanos en el vivero",
+                       "el resto de Altamira, sin cargo extra por traslado", "no cuesta como un pasto de lujo"):
             self.assertNotRegex(limpio, VISITA_GRATIS_RE)
 
     def test_deportes_solo_se_marcan_con_sintetico(self):

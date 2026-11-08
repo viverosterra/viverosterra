@@ -44,10 +44,16 @@ class ContextoTest(unittest.TestCase):
         self.assertEqual(paginas.contexto("/jardineria-altamira")["servicio"], "jardin")
 
     def test_sin_barra_en_tienda_catalogo_y_formularios(self):
-        for ruta in ("/pasto-sintetico", "/pasto-sintetico/perros", "/pasto-sintetico/envio/cdmx", "/catalogo",
-                     "/cuestionario", "/gracias", "/datos-envio"):
+        for ruta in ("/pasto-sintetico", "/pasto-sintetico/toscana-28", "/catalogo", "/cuestionario", "/gracias",
+                     "/datos-envio"):
             with self.subTest(ruta=ruta):
                 self.assertFalse(paginas.contexto(ruta)["barra"])
+
+    def test_paginas_de_la_tienda_sin_cotizador_llevan_la_barra_del_shell(self):
+        # Desde 2b ciudades y perros no tienen #buybar: sin la barra móvil se quedaban sin CTA fijo en celular.
+        for ruta in ("/pasto-sintetico/perros", "/pasto-sintetico/envio/cdmx"):
+            with self.subTest(ruta=ruta):
+                self.assertTrue(paginas.contexto(ruta)["barra"])
 
     def test_sin_barra_del_shell_donde_la_pagina_tiene_su_barra_de_compra(self):
         # /pasto-sintetico-tampico tiene #buybar (precio + Cotizar): dos barras fijas se tapan a 375 px.

@@ -1,0 +1,74 @@
+{
+ "meta": {
+  "title": "Pasto sintético en Puebla con envío · desde $157/m² | Viveros Terra",
+  "description": "Pasto sintético con envío a Puebla desde $157/m² puesto en tu casa. 9 modelos de 10 a 35 mm, entrega en 3 a 5 días hábiles y factura.",
+  "robots": "index, follow, max-image-preview:large",
+  "canonical": "https://www.viverosterra.com/pasto-sintetico/envio/puebla",
+  "og:type": "website",
+  "og:site_name": "Viveros Terra",
+  "og:url": "https://www.viverosterra.com/pasto-sintetico/envio/puebla",
+  "og:title": "Pasto sintético en Puebla con envío · desde $157/m² | Viveros Terra",
+  "og:description": "Pasto sintético con envío a Puebla desde $157/m² puesto en tu casa. 9 modelos de 10 a 35 mm, entrega en 3 a 5 días hábiles y factura.",
+  "og:image": "https://www.viverosterra.com/img/pasto-sintetico/galeria/obra-proyecto-02.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "Answer",
+  "Brand",
+  "BreadcrumbList",
+  "DefinedRegion",
+  "FAQPage",
+  "ListItem",
+  "MonetaryAmount",
+  "Offer",
+  "OfferShippingDetails",
+  "Product",
+  "QuantitativeValue",
+  "Question",
+  "ShippingDeliveryTime",
+  "UnitPriceSpecification"
+ ],
+ "encabezados": [
+  "Pasto sintético en Puebla con envío a tu casa",
+  "Cuánto cuesta con envío a Puebla",
+  "El pasto que conviene en Puebla",
+  "Toscana 28",
+  "Viena 30",
+  "Toscana 18",
+  "Cómo te llega el pedido",
+  "Confirmas y pagas",
+  "Sale en rollo",
+  "Revisa al recibir",
+  "Instalarlo tú mismo es sencillo",
+  "Preguntas frecuentes en Puebla",
+  "Cotiza tu pedido a Puebla"
+ ],
+ "faq": [
+  "¿Aguanta las heladas de invierno en Puebla?",
+  "¿Envían a Cholula y Atlixco?",
+  "¿Cuánto tarda en llegar a Puebla?"
+ ],
+ "precios": [
+  "$1,503",
+  "$1,615",
+  "$1,795",
+  "$15,700",
+  "$157",
+  "$167",
+  "$195",
+  "$217",
+  "$267",
+  "$4,875",
+  "$7,850",
+  "$900"
+ ],
+ "enlaces": [
+  "/",
+  "/blog/como-instalar-pasto-sintetico",
+  "/pasto-sintetico",
+  "/pasto-sintetico/toscana-18",
+  "/pasto-sintetico/toscana-28",
+  "/pasto-sintetico/viena-30",
+  "/politicas"
+ ]
+}

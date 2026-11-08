@@ -1,0 +1,74 @@
+{
+ "meta": {
+  "title": "Pasto sintético en Monterrey con envío · desde $162/m² | Viveros Terra",
+  "description": "Pasto sintético con envío a Monterrey, Nuevo León desde $162/m² puesto en tu casa. 9 modelos de 10 a 35 mm, entrega en 3 a 5 días hábiles y factura.",
+  "robots": "index, follow, max-image-preview:large",
+  "canonical": "https://www.viverosterra.com/pasto-sintetico/envio/monterrey",
+  "og:type": "website",
+  "og:site_name": "Viveros Terra",
+  "og:url": "https://www.viverosterra.com/pasto-sintetico/envio/monterrey",
+  "og:title": "Pasto sintético en Monterrey con envío · desde $162/m² | Viveros Terra",
+  "og:description": "Pasto sintético con envío a Monterrey, Nuevo León desde $162/m² puesto en tu casa. 9 modelos de 10 a 35 mm, entrega en 3 a 5 días hábiles y factura.",
+  "og:image": "https://www.viverosterra.com/img/pasto-sintetico/galeria/obra-proyecto-02.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "Answer",
+  "Brand",
+  "BreadcrumbList",
+  "DefinedRegion",
+  "FAQPage",
+  "ListItem",
+  "MonetaryAmount",
+  "Offer",
+  "OfferShippingDetails",
+  "Product",
+  "QuantitativeValue",
+  "Question",
+  "ShippingDeliveryTime",
+  "UnitPriceSpecification"
+ ],
+ "encabezados": [
+  "Pasto sintético en Monterrey con envío a tu casa",
+  "Cuánto cuesta con envío a Monterrey",
+  "El pasto que conviene en Monterrey",
+  "Irlanda 25",
+  "Toscana 28",
+  "Bali 35",
+  "Cómo te llega el pedido",
+  "Confirmas y pagas",
+  "Sale en rollo",
+  "Revisa al recibir",
+  "Instalarlo tú mismo es sencillo",
+  "Preguntas frecuentes en Monterrey",
+  "Cotiza tu pedido a Monterrey"
+ ],
+ "faq": [
+  "¿El pasto sintético se calienta con el sol de Monterrey?",
+  "¿Envían a San Pedro, Apodaca y Santa Catarina?",
+  "¿Conviene en Monterrey por la falta de agua?"
+ ],
+ "precios": [
+  "$1,150",
+  "$1,551",
+  "$1,666",
+  "$16,200",
+  "$162",
+  "$205",
+  "$222",
+  "$232",
+  "$322",
+  "$5,125",
+  "$8,100",
+  "$981"
+ ],
+ "enlaces": [
+  "/",
+  "/blog/como-instalar-pasto-sintetico",
+  "/pasto-sintetico",
+  "/pasto-sintetico/bali-35",
+  "/pasto-sintetico/irlanda-25",
+  "/pasto-sintetico/toscana-28",
+  "/politicas"
+ ]
+}

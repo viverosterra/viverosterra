@@ -19,9 +19,12 @@ def precarga_imagen(f):
     return f'<link rel="preload" as="image" href="{escape(f["src"])}"{extra} fetchpriority="high">'
 
 
-def documento(meta, cuerpo, *, jsonld_bloques=(), precargas=(), scripts=()):
+def documento(meta, cuerpo, *, jsonld_bloques=(), precargas=(), scripts=(), head_extra=(), tras_main="",
+              clase_body="vt-pagina"):
     """meta: title, description, robots, canonical, og (pares en el orden publicado) y, opcionales, alternos
-    (hreflang, href) y twitter (pares name/content de la Twitter Card)."""
+    (hreflang, href) y twitter (pares name/content de la Twitter Card). head_extra: líneas después del JSON-LD (datos
+    para el JS de la tienda). tras_main: marcado fijo fuera de <main> (lista de cotización, aviso y barra de compra).
+    clase_body "vt-pagina vt-tienda" hace que el shell agregue terra-tienda.css."""
     lineas = [
         "<!DOCTYPE html>",
         '<html lang="es-MX">',
@@ -39,11 +42,14 @@ def documento(meta, cuerpo, *, jsonld_bloques=(), precargas=(), scripts=()):
     lineas.append('<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">')
     lineas += list(precargas)
     lineas += [jsonld(b) for b in jsonld_bloques]
+    lineas += list(head_extra)
     lineas += [
-        "<!-- vt:head -->", "<!-- /vt:head -->", "</head>", '<body class="vt-pagina">',
+        "<!-- vt:head -->", "<!-- /vt:head -->", "</head>", f'<body class="{escape(clase_body)}">',
         "<!-- vt:header -->", "<!-- /vt:header -->", '<main id="main">', cuerpo, "</main>",
         "<!-- vt:footer -->", "<!-- /vt:footer -->",
     ]
+    if tras_main:
+        lineas.append(tras_main)
     lineas += [f'<script src="{escape(s)}" defer></script>' for s in scripts]
     lineas += ["</body>", "</html>", ""]
     return "\n".join(lineas)

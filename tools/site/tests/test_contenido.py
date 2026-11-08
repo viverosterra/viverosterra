@@ -1,5 +1,4 @@
 """El contenido de las páginas con plantilla es solo HTML en línea permitido y no rompe las reglas del dueño."""
-import importlib
 import sys
 import unittest
 from pathlib import Path
@@ -25,7 +24,7 @@ def cadenas(valor):
 class ContenidoTest(unittest.TestCase):
     def modulos(self):
         for ruta, _salida, _plantilla, contenido in generar.PAGINAS:
-            yield ruta, importlib.import_module(f"contenido.{contenido}")
+            yield ruta, generar.cargar(contenido)
 
     def test_solo_marcado_en_linea_permitido(self):
         for ruta, modulo in self.modulos():

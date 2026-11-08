@@ -70,7 +70,7 @@ class ShellEnTodoElSitioTest(unittest.TestCase):
                 self.assertEqual(sin_cta, [])
 
     def test_assets_con_hash_existen_y_solo_queda_la_generacion_anterior(self):
-        # activos.publicar() conserva la copia actual y la generación anterior (caché de HTML tras un deploy).
+        # activos.publicar() conserva la copia actual y la que sirve producción (tools/site/activos.json).
         for url in activos.urls().values():
             self.assertTrue((PUBLIC / url.lstrip("/")).is_file(), url)
         for carpeta, patron in (("css", "terra.*.css"), ("css", "legacy-fixes.*.css"), ("js", "terra.*.js")):

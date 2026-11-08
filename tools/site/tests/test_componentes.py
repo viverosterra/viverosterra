@@ -91,6 +91,9 @@ class BloquesTest(unittest.TestCase):
                         {"titulo": "Poda", "quien": "juntos", "cuando": "Día 21", "texto": "t"}])
         self.assertIn('<span class="vt-quien vt-quien--tu">Tú</span>', html)
         self.assertIn('<span class="vt-quien vt-quien--juntos">Juntos</span>', html)
+        # El marcador no forma parte del encabezado: el <h3> es solo el paso.
+        self.assertIn("<h3>Riego</h3>", html)
+        self.assertNotRegex(html, r"<h3>[^<]*<span")
 
     def test_faq_y_su_json_ld_dicen_lo_mismo(self):
         preguntas = (("¿Uno?", 'Sí, <a href="/x">mira</a>.'), ("¿Dos?", "No."))
@@ -116,6 +119,21 @@ class BloquesTest(unittest.TestCase):
     def test_howto_numera_los_pasos(self):
         nodo = c.howto("Cómo", (("Uno", "a"), ("Dos", "b")))
         self.assertEqual([p["position"] for p in nodo["step"]], [1, 2])
+
+    def test_etiqueta_sin_nombre_cientifico_y_opciones_con_su_mensaje(self):
+        e = {"codigo": "Sintético · 05/09", "aviso": "Con IVA", "nombre": "Toscana 28", "antes": "desde",
+             "monto": "$199", "unidad": "/m²"}
+        self.assertNotIn("vt-etiqueta__sci", c.etiqueta(e))
+        self.assertIn('<p class="vt-etiqueta__sci">X y</p>', c.etiqueta(dict(e, cientifico="X y")))
+        items = ({"rotulo": "Opción 1", "titulo": "A", "precio": 139, "unidad": "/m²", "detalle": "d", "puntos": ("p",),
+                  "mensaje": "Hola A"},
+                 {"rotulo": "Opción 2", "titulo": "B", "precio": 385, "unidad": "/m²", "detalle": "d", "puntos": ("q",),
+                  "mensaje": "Hola B", "rec": True, "nota": "n"})
+        html = c.opciones(items, "servicio-sintetico")
+        self.assertEqual(re.findall(r'data-cta="([^"]+)"', html), ["servicio-sintetico:opcion-1", "servicio-sintetico:opcion-2"])
+        self.assertIn('<li class="vt-modo vt-modo--rec">', html)
+        self.assertIn('<span class="vt-precio-marca">$385</span>', html)
+        self.assertEqual([unquote(t).split("\n")[0] for t in re.findall(r"text=([^\"&]+)", html)], ["Hola A", "Hola B"])
 
 
 class MedidorTest(unittest.TestCase):

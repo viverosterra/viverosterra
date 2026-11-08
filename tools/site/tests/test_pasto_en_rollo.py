@@ -70,6 +70,24 @@ class PastoEnRolloTest(unittest.TestCase):
         self.assertEqual(MAIN.count('class="vt-planes"'), 0)  # el simulador ya muestra plazos y mínimos
         self.assertEqual(MAIN.count("data-simulador"), 1)
 
+    def test_paridad_con_las_opiniones_anteriores_a_2a(self):
+        # Decisión del dueño (2026-11-07): las dos opiniones que publicaba la página antes de 2a son reales y tienen
+        # permiso; vuelven palabra por palabra (citas del cliente, no promesas de la empresa) junto a la de Carlos Herrera.
+        prueba = MAIN[MAIN.index('id="vt-h-prueba"'):MAIN.index('id="vt-h-precio"')]
+        citas = (
+            ("Contraté pasto e instalación para 180 m² en mi jardín de Madero. Llegaron a la hora acordada, prepararon el "
+             "terreno y quedó perfecto en un día. A las 3 semanas estaba completamente arraigado. Lo más importante: "
+             "pagué el resto hasta que lo vi terminado.", "Jorge H.", "Residencial · Ciudad Madero · 180 m²"),
+            ("Somos constructora y compramos el pasto para un fraccionamiento en Altamira. Precio de mayoreo muy "
+             "competitivo, facturaron sin problema y respetaron el calendario de entrega por etapas. Ya son nuestro "
+             "proveedor recurrente.", "Arq. Patricia L.", "Constructora · Altamira · Proyecto 2,400 m²"),
+        )
+        for cita, nombre, detalle in citas:
+            with self.subTest(nombre=nombre):
+                self.assertIn(f"<p>“{cita}”</p>", prueba)
+                self.assertIn(f"<b>{nombre}</b><span>{detalle}</span>", prueba)
+        self.assertLess(prueba.index("Carlos Herrera"), prueba.index("Jorge H."))
+
     def test_twitter_card(self):
         for nombre in ("twitter:card", "twitter:title", "twitter:description", "twitter:image"):
             self.assertIn(f'<meta name="{nombre}" content=', HTML)

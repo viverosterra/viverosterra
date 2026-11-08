@@ -1,0 +1,65 @@
+"""Plantilla de ficha de tienda (spec §3.3): ruta visible → nombre, "En existencia" y etiqueta "desde $X/m² · rollo
+50 m² · envío por rollo según estado" en el primer pantallazo → galería (foto principal precargada, nunca lazy) →
+cotizador (estado, m², precio puesto, mensualidades) → para quién es → ficha técnica → fotos y rollo a escala →
+comparativa con 2 vecinos → envío por rollo y cómo comprar → garantía del modelo → preguntas → CTA final.
+Contenido: tools/site/contenido/ficha.py (desde tools/pasto/data.py). JS: tienda-pasto.js, vt-landed.js."""
+import componentes as c
+import componentes_tienda as t
+from plantillas import base
+
+CONTEXTO = "https://schema.org"
+SCRIPTS = ("/js/vt-mensualidades.js", "/js/tienda-pasto.js", "/js/vt-landed.js")
+
+
+def _portada(k):
+    m = k["modelo"]
+    info = (f'<div class="vt-ficha__info"><p class="vt-kicker">{k["kicker"]}</p><h1 id="vt-h1">{k["h1"]}</h1>'
+            f'{t.existencia(m)}{c.etiqueta(k["etiqueta"], cordel=False)}<p class="vt-lede">{k["lede"]}</p>'
+            f'{t.datos_modelo(m)}</div>')
+    cotizador = t.cotizador(m, titulo=f"Precio y cotización del {m['nombre']}", tipo=k["tipo"])
+    return (f'<section class="vt-ficha" aria-labelledby="vt-h1"><div class="vt-wrap">{c.migas(k["migas"])}'
+            f'<div class="vt-ficha__grid">{info}{t.galeria(m)}{cotizador}</div></div></section>')
+
+
+def _para_quien(k, n):
+    p = k["para_quien"]
+    checks = "".join(f"<li>{x}</li>" for x in p["si"]) + "".join(f'<li class="vt-checks__no">{x}</li>' for x in p["no"])
+    izquierda = f'<p class="vt-lede">{p["resumen"]}</p>{c.nota(*p["nota"])}'
+    return c.bloque_dos(n, "En resumen", "vt-h-resumen", p["titulo"], izquierda, f'<ul class="vt-checks">{checks}</ul>')
+
+
+def _fotos(k, n):
+    f = k["fotos"]
+    cuerpo = f'<div class="vt-obras">{"".join(c.figura(x) for x in f["figuras"])}</div>{t.rollo_escala()}'
+    return c.bloque(n, f["rotulo"], "vt-h-fotos", f["titulo"], cuerpo)
+
+
+def _pedido(k, n):
+    p = k["pedido"]
+    cuerpo = (f'<h3>{p["titulo_envio"]}</h3><p class="vt-lede">{p["lede"]}</p>{t.zonas_envio()}'
+              f'{c.pasos(p["pasos"])}')
+    return c.bloque(n, "Tu pedido", "vt-h-pedido", p["titulo"], cuerpo, id_seccion="como-funciona")
+
+
+def render(k):
+    m, f, ci, b = k["modelo"], k["faq"], k["cierre"], k["barra"]
+    secciones = (
+        _portada(k),
+        _para_quien(k, 1),
+        c.bloque(2, "Ficha técnica", "vt-h-ficha", k["ficha"]["titulo"], t.ficha_tecnica(m), tinte=True,
+                 id_seccion="ficha-tecnica"),
+        _fotos(k, 3),
+        c.bloque(4, "Compáralo", "vt-h-compara", k["compara"]["titulo"], t.comparativa(m), lede=k["compara"]["lede"],
+                 tinte=True),
+        _pedido(k, 5),
+        c.garantia(dict(k["garantia"], numero=6, id_titulo="vt-h-garantia", rotulo="Garantía")),
+        c.bloque_dos(7, "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"])),
+        c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], k["tipo"]),
+    )
+    grafo = list(k["jsonld"]) + [c.faq_jsonld(f["preguntas"])]
+    fuera = t.lista_y_aviso() + t.barra_compra(b["nombre"], b["precio"], ci["mensaje"], rollo=b["rollo"])
+    return base.documento(k["meta"], t.subnav() + "\n".join(secciones),
+                          jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
+                          precargas=(base.precarga_imagen(t.foto_principal(m)),),
+                          head_extra=(t.json_modelo(m), t.SCRIPT_PRECIO_PUESTO), tras_main=fuera, scripts=SCRIPTS,
+                          clase_body="vt-pagina vt-tienda")

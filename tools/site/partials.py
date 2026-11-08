@@ -68,10 +68,11 @@ def region(nombre, cuerpo):
 FUENTE_PRINCIPAL = "/fonts/archivo-latin.woff2"
 
 
-def head(urls, legacy):
+def head(urls, legacy, tienda=False):
     """Favicon, geo de la tienda, fuente principal precargada, CSS del shell (y legacy-fixes en páginas con Tailwind),
-    GA4 una sola vez y terra.js diferido. Las meta keywords, last-modified, ai-content-declaration y language ya no se
-    usan: no se reponen."""
+    GA4 una sola vez y terra.js diferido. Con tienda=True (páginas <body class="vt-pagina vt-tienda">), también
+    terra-tienda.css. Las meta keywords, last-modified, ai-content-declaration y language ya no se usan: no se
+    reponen."""
     lineas = [
         '<link rel="icon" type="image/png" href="/img/logo-viveros-terra-tampico.png">',
         '<meta name="geo.region" content="MX-TAM">',
@@ -82,6 +83,10 @@ def head(urls, legacy):
         lineas.append(f'<link rel="stylesheet" href="{urls["legacy-fixes.css"]}">')
     lineas += [
         f'<link rel="stylesheet" href="{urls["terra.css"]}">',
+    ]
+    if tienda:
+        lineas.append(f'<link rel="stylesheet" href="{urls["terra-tienda.css"]}">')
+    lineas += [
         f'<script async src="https://www.googletagmanager.com/gtag/js?id={datos.GA4_ID}"></script>',
         "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
         f"gtag('js',new Date());gtag('config','{datos.GA4_ID}');</script>",

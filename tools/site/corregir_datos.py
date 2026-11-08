@@ -184,11 +184,7 @@ POR_ARCHIVO = (
      f"pedidos a partir de {P['pasto_mayoreo_minimo_m2']} m²"),
     ("public/mayoreo-pasto-tampico/index.html", '<div class="font-semibold text-white">Cotización en 24 horas</div>',
      '<div class="font-semibold text-white">Respuesta en menos de 1 hora en horario</div>'),
-    # Sintético en Tampico (fuente: el generador): los 9 modelos en existencia; "para llevar hoy" solo Toscana 18 y 28.
-    ("tools/pasto/local.py",
-     'existencia para llevar el mismo día, y los otros 7 modelos sobre pedido. Atendemos de lunes a viernes de 9 a 18 h "',
-     'existencia para llevar hoy; los otros 7 modelos también están en existencia y llegan en 3 a 5 días. Atendemos de '
-     'lunes a viernes de 9 a 18 h "'),
+    # Sintético en Tampico: desde 2b sale de tools/site/contenido/sintetico_tampico.py, que ya trae la corrección.
     # Flamboyán desde $250 (decisión del dueño 2026-11-07).
     ("public/arboles-ornamentales-tampico/index.html", "Flamboyán desde $500", f"Flamboyán desde ${P['flamboyan']}"),
     ("public/arboles-ornamentales-tampico/index.html",

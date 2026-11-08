@@ -1,4 +1,4 @@
-"""Capturas de verificación: 10 páginas a 320, 375, 768 y 1440 px (página completa) y reporte de
+"""Capturas de verificación: 13 páginas a 320, 375, 768, 1024 y 1440 px (página completa) y reporte de
 desbordamiento horizontal. El desbordamiento del cuerpo viejo se anota para la Etapa 2; el del shell no se acepta.
 
 Uso: python3 tools/site/capturas.py <carpeta-de-salida>
@@ -12,9 +12,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import servidor  # noqa: E402
 
 PAGINAS = ("/", "/pasto-en-rollo-tampico/", "/pasto-sintetico/", "/pasto-sintetico/toscana-28/",
+           "/pasto-sintetico/envio/monterrey/", "/pasto-sintetico/perros/", "/pasto-sintetico-tampico/",
            "/diseno-jardines-tampico/", "/plantas-palmas-arboles-tampico/", "/catalogo.html", "/blog/",
            "/blog/cuando-regar-pasto-san-agustin-tampico/", "/precios/")
-ANCHOS = (320, 375, 768, 1440)
+ANCHOS = (320, 375, 768, 1024, 1440)
 # Baja la página de a una pantalla para que carguen las imágenes lazy y vuelve arriba (si no, la captura de página
 # completa las deja vacías).
 CARGAR_LAZY = """async () => {
@@ -26,9 +27,7 @@ CARGAR_LAZY = """async () => {
   await Promise.race([Promise.all(cargas), new Promise((r) => setTimeout(r, 3000))]);  // las ocultas nunca cargan
 }"""
 # Desbordes conocidos del cuerpo viejo (no del shell, que test_navegador cubre): se anotan, no se esconden.
-CONOCIDOS = {
-    "/pasto-sintetico/": "fila de chips de filtro de la tienda a 320 px (Etapa 2)",
-}
+CONOCIDOS = {}
 
 
 def nombre_archivo(ruta, ancho):

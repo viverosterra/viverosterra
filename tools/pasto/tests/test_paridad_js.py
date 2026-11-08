@@ -2,7 +2,7 @@ import re
 import unittest
 from pathlib import Path
 
-from data import ZONAS, ZONA_ESTADOS
+from data import MIN_NACIONAL_M2, MIN_SHOWROOM_M2, ZONAS, ZONA_ESTADOS
 
 JS = Path(__file__).resolve().parents[3] / "public" / "js" / "tienda-pasto.js"
 
@@ -19,6 +19,11 @@ class ParidadTest(unittest.TestCase):
         src = JS.read_text(encoding="utf-8")
         js = {z: int(t) for z, t in re.findall(r"([ABC]):\s*\{\s*tarifa:\s*(\d+)", src)}
         self.assertEqual(js, ZONAS)
+
+    def test_minimos_de_respaldo_iguales_a_data(self):
+        src = JS.read_text(encoding="utf-8")
+        self.assertIn(f"Number(LIMITES.minNacional) || {MIN_NACIONAL_M2};", src)
+        self.assertIn(f"Number(LIMITES.minShowroom) || {MIN_SHOWROOM_M2};", src)
 
 
 if __name__ == "__main__":

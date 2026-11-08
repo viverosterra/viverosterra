@@ -27,6 +27,10 @@ ZONA_ESTADOS = {
 }
 
 ROLLO_M2 = 50
+# Mínimos de compra: envío nacional desde medio rollo; en el showroom, desde 2 m². Única fuente: las plantillas los
+# escriben en data-min-nacional / data-min-showroom del cotizador y tienda-pasto.js los lee de ahí.
+MIN_NACIONAL_M2 = 25
+MIN_SHOWROOM_M2 = 2
 
 
 def zona_de(estado):
