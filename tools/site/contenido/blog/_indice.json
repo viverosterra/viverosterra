@@ -1,0 +1,912 @@
+{
+ "slug": "/blog",
+ "meta": {
+  "title": "Blog de Jardinería Tampico · Viveros Terra",
+  "description": "Blog de jardinería para el clima de Tampico. Guías de pasto San Agustín, palmas tropicales, árboles para banqueta, riego y diseño de jardines en Tamaulipas.",
+  "robots": "index, follow",
+  "canonical": "https://www.viverosterra.com/blog",
+  "og": [
+   [
+    "article:author",
+    "Viveros Terra"
+   ],
+   [
+    "og:type",
+    "website"
+   ],
+   [
+    "og:url",
+    "https://www.viverosterra.com/blog"
+   ],
+   [
+    "og:title",
+    "Blog de Jardinería Tampico | Viveros Terra"
+   ],
+   [
+    "og:description",
+    "Guías prácticas de jardinería adaptadas al clima cálido-húmedo de Tampico y la zona Huasteca."
+   ],
+   [
+    "og:image",
+    "https://www.viverosterra.com/img/jardineria-areas-verdes-tampico.webp"
+   ],
+   [
+    "og:locale",
+    "es_MX"
+   ]
+  ],
+  "twitter": [
+   [
+    "twitter:card",
+    "summary_large_image"
+   ],
+   [
+    "twitter:title",
+    "Blog de Jardinería Tampico · Viveros Terra"
+   ],
+   [
+    "twitter:description",
+    "Guías prácticas de jardinería adaptadas al clima cálido-húmedo de Tampico y la zona Huasteca."
+   ],
+   [
+    "twitter:image",
+    "https://www.viverosterra.com/img/jardineria-areas-verdes-tampico.webp"
+   ]
+  ]
+ },
+ "jsonld": {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Blog Viveros Terra Tampico",
+  "description": "Guías prácticas de jardinería para el clima de Tampico y la zona Huasteca",
+  "url": "https://www.viverosterra.com/blog",
+  "publisher": {
+   "@type": "Organization",
+   "name": "Viveros Terra",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://www.viverosterra.com/img/logo-viveros-terra-tampico.svg"
+   }
+  }
+ },
+ "foto": {
+  "tipo": "foto",
+  "src": "/img/jardineria-profesional-tampico-empresa.webp",
+  "alt": "",
+  "ancho": 1536,
+  "alto": 1024
+ },
+ "secciones": [
+  {
+   "titulo": "Para empezar",
+   "tarjetas": [
+    {
+     "href": "/blog/arboles-para-sembrar-en-banqueta",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/jardineria-profesional-tampico-empresa.webp",
+      "alt": "Árboles para banqueta en Tampico",
+      "ancho": 1536,
+      "alto": 1024
+     },
+     "categoria": "Árboles",
+     "titulo": "7 Árboles para Banqueta que No Levantan el Pavimento",
+     "texto": "Las especies con raíz no invasiva que dan sombra real sin destruir tu banqueta en Tampico. Con tabla comparativa.",
+     "minutos": null
+    },
+    {
+     "href": "/blog/cuidados-palma-del-viajero-ravenala",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/plantas-tropicales-tampico-viveros.webp",
+      "alt": "Palma del Viajero en Tampico",
+      "ancho": 1024,
+      "alto": 1536
+     },
+     "categoria": "Palmas",
+     "titulo": "Palma del Viajero: Guía Completa (Crece el Doble en Tampico)",
+     "texto": "Por qué la Ravenala crece 2× más rápido en Tamaulipas, cómo regarla y dónde plantarla correctamente.",
+     "minutos": null
+    },
+    {
+     "href": "/blog/pasto-san-agustin-vs-japones",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/pasto-en-rollo-san-agustin-tampico.webp",
+      "alt": "Pasto San Agustín vs Japonés en Tampico",
+      "ancho": 1024,
+      "alto": 1264
+     },
+     "categoria": "Pasto",
+     "titulo": "San Agustín vs Japonés: La Comparativa Honesta para Tampico",
+     "texto": "Tabla real, diferencias que importan y cuál elegir según tu jardín, sol y presupuesto.",
+     "minutos": null
+    }
+   ]
+  },
+  {
+   "titulo": "Nuevos artículos",
+   "tarjetas": [
+    {
+     "href": "/blog/jardin-en-macetas-terraza-tampico-guia",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/marmol-blanco-maceta-decorativa-tampico.webp",
+      "alt": "Jardín en macetas y terrazas en Tampico",
+      "ancho": 1200,
+      "alto": 1180
+     },
+     "categoria": "Jardines · Guías",
+     "titulo": "Jardín en macetas y terrazas en Tampico: guía para que tus plantas no sufran",
+     "texto": "Maceta, sustrato con drenaje, riego con calor y humedad, viento y plantas ideales para terraza.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/palma-bismarckia-bismarckia-nobilis-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/jardin-residencial-tropical-tampico.webp",
+      "alt": "Palma Bismarckia en Tampico",
+      "ancho": 1536,
+      "alto": 1024
+     },
+     "categoria": "Palmas",
+     "titulo": "Palma Bismarckia en Tampico: cuidados, tamaños y guía completa",
+     "texto": "Hojas plateado-azuladas, sol pleno y riego moderado: tamaños de 1 a 4 m. Cotiza por WhatsApp.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/como-plantar-palma-arbol-paso-a-paso-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/jardineros-plantando-arbol-tampico.webp",
+      "alt": "Cómo plantar una palma o un árbol en Tampico",
+      "ancho": 1400,
+      "alto": 933
+     },
+     "categoria": "Jardines · Guías",
+     "titulo": "Cómo plantar una palma o árbol paso a paso en Tampico",
+     "texto": "Hoyo, drenaje, tutores, acolchado y riego: la guía práctica para que tu palma o árbol arraigue bien.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/palma-triangular-dypsis-decaryi-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/especie-palma-triangulo-tampico.webp",
+      "alt": "Palma Triangular Dypsis decaryi en Tampico",
+      "ancho": 700,
+      "alto": 700
+     },
+     "categoria": "Palmas",
+     "titulo": "Palma Triangular en Tampico: cuidados, tamaños y guía completa",
+     "texto": "Hojas plateadas y tronco en forma de triángulo: sol pleno, riego moderado y alturas de 1 a 4 m. Cotiza por WhatsApp.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/nortes-tampico-proteger-plantas-jardin",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/plantas-tropicales-tampico-viveros.webp",
+      "alt": "Proteger plantas de los nortes en Tampico",
+      "ancho": 1024,
+      "alto": 1536
+     },
+     "categoria": "Jardines · Temporada",
+     "titulo": "Nortes en Tampico: cómo proteger tus plantas del viento y el frío",
+     "texto": "Tutores, riego y acolchado: qué hacer antes y después de un frente frío para que tu jardín no sufra daños.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/duranta-erecta-tampico-cuidados-seto",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/plantas-ornamentales-tampico-viveros-terra.webp",
+      "alt": "Duranta erecta en Tampico",
+      "ancho": 1024,
+      "alto": 1536
+     },
+     "categoria": "Plantas · Arbustos",
+     "titulo": "Duranta en Tampico: cuidados, poda y cómo hacer un seto florido",
+     "texto": "Variedades Cubana, Golden y Zafiro: sol pleno, flor lila y crecimiento rápido para setos y bordes.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/palma-cola-de-zorro-wodyetia-bifurcata-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/especie-palma-cola-zorra-tampico.webp",
+      "alt": "Palma Cola de Zorro Wodyetia bifurcata en Tampico",
+      "ancho": 700,
+      "alto": 700
+     },
+     "categoria": "Palmas",
+     "titulo": "Palma Cola de Zorro en Tampico: cuidados, tamaños y guía completa",
+     "texto": "Follaje denso en forma de cola de zorro, sol pleno y hasta 10 m de altura. Cotiza tamaños por WhatsApp.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/acolchado-mulch-jardin-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/jardin-residencial-tropical-tampico.webp",
+      "alt": "Acolchado mulch en el jardín en Tampico",
+      "ancho": 1536,
+      "alto": 1024
+     },
+     "categoria": "Jardines · Guías",
+     "titulo": "Acolchado (mulch) en el jardín en Tampico: qué usar y cómo aplicarlo",
+     "texto": "Menos riego y menos maleza: materiales, grosor ideal de 5 a 8 cm y errores que debes evitar.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/como-evitar-encharcamientos-jardin-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/tierra-negra-jardin-tampico.webp",
+      "alt": "Cómo evitar encharcamientos en el jardín en Tampico",
+      "ancho": 933,
+      "alto": 1400
+     },
+     "categoria": "Jardines",
+     "titulo": "Cómo evitar encharcamientos en el jardín en Tampico",
+     "texto": "Suelo arcilloso, lluvias intensas: diagnóstico, drenaje francés, camas elevadas y qué plantas toleran el exceso de agua.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/palma-kerpis-howea-forsteriana-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/especie-palma-kerpis-tampico.webp",
+      "alt": "Palma Kerpis Howea forsteriana en Tampico",
+      "ancho": 641,
+      "alto": 700
+     },
+     "categoria": "Palmas",
+     "titulo": "Palma Kerpis en Tampico: cuidados, precio y guía completa",
+     "texto": "La palma de interior más elegante: tolera luz baja y crece lento.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/palma-coco-plumoso-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/especie-coco-plumoso-tampico.webp",
+      "alt": "Palma Coco Plumoso Syagrus romanzoffiana en Tampico",
+      "ancho": 466,
+      "alto": 700
+     },
+     "categoria": "Palmas",
+     "titulo": "Palma Coco Plumoso en Tampico: cuidados, precio y guía completa",
+     "texto": "La palma más versátil de la región: tolera sol pleno, sequía y lluvia intensa. Precio desde $250.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/plagas-comunes-jardin-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/jardin-residencial-tropical-tampico.webp",
+      "alt": "Plagas comunes del jardín en temporada de lluvias en Tampico",
+      "ancho": 1536,
+      "alto": 1024
+     },
+     "categoria": "Jardines · Guías",
+     "titulo": "Plagas comunes del jardín en Tampico: cómo identificarlas y controlarlas",
+     "texto": "Pulgones, cochinillas, caracoles y hormigas arrieras: cómo reconocer cada plaga y controlarla a tiempo.",
+     "minutos": 10
+    },
+    {
+     "href": "/blog/hongos-plantas-exceso-humedad-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/jardin-residencial-tropical-tampico.webp",
+      "alt": "Hongos en plantas por exceso de humedad en Tampico",
+      "ancho": 1536,
+      "alto": 1024
+     },
+     "categoria": "Jardines · Guías",
+     "titulo": "Hongos en plantas por exceso de humedad en Tampico",
+     "texto": "Cómo identificar, prevenir y tratar los hongos que aparecen cada temporada de lluvias en el Golfo.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/palma-areca-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/especie-palma-areca-tampico.webp",
+      "alt": "Palma Areca Dypsis lutescens en Tampico",
+      "ancho": 700,
+      "alto": 525
+     },
+     "categoria": "Palmas",
+     "titulo": "Palma Areca en Tampico: cuidados, precio y guía completa",
+     "texto": "La palma multiuso por excelencia: interior, exterior y pantalla verde de privacidad, con precio desde $250.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/poda-arboles-palmas-tampico-guia",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/mantenimiento-jardines-poda-pasto-tampico.webp",
+      "alt": "Cómo podar árboles y palmas en Tampico",
+      "ancho": 1024,
+      "alto": 1536
+     },
+     "categoria": "Jardines · Guías",
+     "titulo": "Cuándo y cómo podar árboles y palmas sin dañarlos",
+     "texto": "La época correcta, la técnica que no debilita la planta y el error de la \"poda huracán\" que arruina palmas sanas.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/palma-washingtona-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/especie-palma-washingtonia-tampico.webp",
+      "alt": "Palma Washingtona Washingtonia robusta en Tampico",
+      "ancho": 700,
+      "alto": 700
+     },
+     "categoria": "Palmas",
+     "titulo": "Palma Washingtona en Tampico: cuidados, precio y guía completa",
+     "texto": "Crecimiento rápido y tolerancia total al calor.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/jardin-vertical-tampico-guia",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/plantas-ornamentales-tampico-viveros-terra.webp",
+      "alt": "Jardín vertical con plantas ornamentales en Tampico",
+      "ancho": 1024,
+      "alto": 1536
+     },
+     "categoria": "Diseño · Guías",
+     "titulo": "Jardín vertical en Tampico: guía paso a paso",
+     "texto": "Estructura, riego y qué plantas usar en clima cálido-húmedo. Ideal para patios y balcones pequeños.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/framboyan-delonix-regia-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/arboles-tampico-viveros-terra.webp",
+      "alt": "Equipo de Viveros Terra sembrando un árbol en Tampico",
+      "ancho": 1050,
+      "alto": 1400
+     },
+     "categoria": "Árboles",
+     "titulo": "Flamboyán en Tampico: cuidados, floración y precio",
+     "texto": "Florece rojo-naranja de mayo a septiembre, precio desde $250. Cuidados, tamaño adulto y dónde plantarlo.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/palma-real-roystonea-regia-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/palma-real-jardin-residencial-tampico.webp",
+      "alt": "Palma Real Roystonea regia en Tampico",
+      "ancho": 900,
+      "alto": 1600
+     },
+     "categoria": "Palmas",
+     "titulo": "Palma Real en Tampico: cuidados, precio y guía completa",
+     "texto": "Crece hasta 1 m al año, resiste el viento como ninguna otra y tiene precio desde $500. Todo sobre la Roystonea regia.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/temporada-huracanes-proteger-jardin-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/mantenimiento-jardines-poda-pasto-tampico.webp",
+      "alt": "Proteger jardín en temporada de huracanes Tampico",
+      "ancho": 1024,
+      "alto": 1536
+     },
+     "categoria": "Jardines · Temporada",
+     "titulo": "Cómo Proteger tu Jardín en Temporada de Huracanes",
+     "texto": "Checklist antes, durante y después de un ciclón: poda preventiva, macetas, drenaje y qué plantas resisten mejor el viento.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/cuanto-cuesta-pasto-sintetico-mexico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/pasto-sintetico/toscana-28.jpg",
+      "alt": "Precios pasto sintético México 2026",
+      "ancho": 800,
+      "alto": 800
+     },
+     "categoria": "Precios",
+     "titulo": "¿Cuánto cuesta el pasto sintético en México? Precios 2026",
+     "texto": "Tabla completa por modelo: de $139 a $299/m² en rollo, qué hace variar el precio y cuánto sale con envío a tu estado.",
+     "minutos": 6
+    },
+    {
+     "href": "/blog/pasto-sintetico-para-perros",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/pasto-sintetico-residencial-tampico.webp",
+      "alt": "Pasto sintético para perros y mascotas",
+      "ancho": 1024,
+      "alto": 1536
+     },
+     "categoria": "Pasto Sintético",
+     "titulo": "Pasto sintético para perros: la guía completa",
+     "texto": "¿Huele con la orina? ¿Lo pueden romper? Limpieza, drenaje correcto y qué modelos sí funcionan con mascotas.",
+     "minutos": 6
+    },
+    {
+     "href": "/blog/que-altura-de-pasto-sintetico-elegir",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/pasto-sintetico/japones-35.jpg",
+      "alt": "Qué altura de pasto sintético elegir",
+      "ancho": 800,
+      "alto": 800
+     },
+     "categoria": "Guías",
+     "titulo": "¿Qué altura de pasto sintético elegir? 10, 18, 28 o 35 mm",
+     "texto": "Altura vs densidad: los dos números que importan y la guía por uso — terrazas, familias, mascotas o lujo.",
+     "minutos": 5
+    },
+    {
+     "href": "/blog/como-instalar-pasto-sintetico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/pasto-sintetico-tampico-instalacion.webp",
+      "alt": "Cómo instalar pasto sintético tú mismo",
+      "ancho": 1400,
+      "alto": 933
+     },
+     "categoria": "Guía DIY",
+     "titulo": "Cómo instalar pasto sintético tú mismo, paso a paso",
+     "texto": "Un jardín de 25-50 m² se instala en un día: herramientas, base drenante, cortes, unión y los 5 errores a evitar.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/pasto-sintetico-calor-mexico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/pasto-sintetico-artificial-casa-tampico.webp",
+      "alt": "Pasto sintético y calor en México",
+      "ancho": 1080,
+      "alto": 1350
+     },
+     "categoria": "Pasto Sintético",
+     "titulo": "¿El pasto sintético aguanta el calor en México?",
+     "texto": "La verdad sin rodeos: protección UV, qué tan caliente se pone al tacto y 5 trucos para mantenerlo fresco.",
+     "minutos": 5
+    },
+    {
+     "href": "/blog/cuanto-cuesta-jardin-tampico-precios",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/diseno-jardines-tampico-proyecto.webp",
+      "alt": "Precios jardín Tampico 2026",
+      "ancho": 1290,
+      "alto": 2115
+     },
+     "categoria": "Precios",
+     "titulo": "¿Cuánto cuesta hacer un jardín en Tampico? Guía 2026",
+     "texto": "Precios reales por m² de pasto, plantas, riego y mano de obra. Desglose completo con presupuestos para jardines chicos, medianos y grandes.",
+     "minutos": 9
+    },
+    {
+     "href": "/blog/cesped-amarillo-tampico-causas-soluciones",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/instalacion-pasto-san-agustin-jardin-residencial-tampico-madero.webp",
+      "alt": "Césped amarillo causas y soluciones Tampico",
+      "ancho": 1280,
+      "alto": 720
+     },
+     "categoria": "Pasto",
+     "titulo": "Por qué tu césped se pone amarillo en Tampico",
+     "texto": "Las 7 causas más comunes del pasto amarillo en el clima cálido-húmedo: riego, hongos, nutrición y cómo recuperarlo.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/palmas-mas-vendidas-tampico-precios",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/plantas-tropicales-tampico-viveros.webp",
+      "alt": "Palmas para jardines en Tampico",
+      "ancho": 1024,
+      "alto": 1536
+     },
+     "categoria": "Palmas",
+     "titulo": "8 palmas para jardines en Tampico (con precios)",
+     "texto": "Catálogo actualizado 2026: Phoenix, Bismarckia, Washingtonia, Coco enano y más. Precios de vivero, tamaños y cuál elegir para tu espacio.",
+     "minutos": 10
+    },
+    {
+     "href": "/blog/jardin-bajo-presupuesto-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/jardin-residencial-plantas-pasto-tampico.webp",
+      "alt": "Jardín bajo presupuesto Tampico",
+      "ancho": 933,
+      "alto": 1400
+     },
+     "categoria": "Presupuesto",
+     "titulo": "Jardín bajo presupuesto: $5K, $20K o $50K",
+     "texto": "Tres planes reales con plantas, pasto y materiales adaptados al clima de Tampico. Qué incluir en cada presupuesto para el mejor resultado.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/errores-pasto-san-agustin-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/pasto-en-rollo-san-agustin-tampico.webp",
+      "alt": "Errores pasto San Agustín Tampico",
+      "ancho": 1024,
+      "alto": 1264
+     },
+     "categoria": "Pasto",
+     "titulo": "5 errores que matan tu pasto San Agustín",
+     "texto": "Los fallos más comunes en instalación, riego y fertilización que destruyen el pasto en Tampico. Cómo evitarlos y cómo recuperar el pasto dañado.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/tierra-negra-costal-camion-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/tierra-negra-jardin-tampico.webp",
+      "alt": "Tierra negra costal o camión Tampico",
+      "ancho": 933,
+      "alto": 1400
+     },
+     "categoria": "Materiales",
+     "titulo": "Tierra negra: ¿costal o camión?",
+     "texto": "Comparativa de precios y rendimiento para Tampico. Cuándo conviene comprar por costal y cuándo pedir un camión volteo con entrega directa.",
+     "minutos": 5
+    },
+    {
+     "href": "/blog/riego-automatico-tampico-roi",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/instalacion-riego-tuberias-jardines-tampico.webp",
+      "alt": "Sistema riego automático Tampico ROI",
+      "ancho": 900,
+      "alto": 675
+     },
+     "categoria": "Riego",
+     "titulo": "Sistema de riego automático: ¿vale la pena?",
+     "texto": "Análisis de costo-beneficio real en Tampico: inversión y ahorro en agua, con ejemplos por tamaño de jardín.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/como-medir-plantas-altura-cepellon",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/plantas-ornamentales-tampico-viveros-terra.webp",
+      "alt": "Cómo medir plantas altura cepellón",
+      "ancho": 1024,
+      "alto": 1536
+     },
+     "categoria": "Guías",
+     "titulo": "Cómo se miden las plantas: altura, cepellón, fronda",
+     "texto": "Guía práctica para entender las medidas de vivero y no llevarte sorpresas al comprar. Diferencias entre palmas, árboles y plantas de follaje.",
+     "minutos": 5
+    }
+   ]
+  },
+  {
+   "titulo": "Todos los artículos",
+   "tarjetas": [
+    {
+     "href": "/blog/jardin-en-macetas-terraza-tampico-guia",
+     "foto": null,
+     "categoria": "Jardines · Guías",
+     "titulo": "Jardín en macetas y terrazas en Tampico: guía para que tus plantas no sufran",
+     "texto": "Maceta, sustrato con drenaje, riego con calor y humedad, viento y plantas ideales para terraza.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/palma-bismarckia-bismarckia-nobilis-tampico",
+     "foto": null,
+     "categoria": "Palmas",
+     "titulo": "Palma Bismarckia en Tampico: cuidados, tamaños y guía completa",
+     "texto": "Hojas plateado-azuladas, sol pleno y riego moderado: tamaños de 1 a 4 m. Cotiza por WhatsApp.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/como-plantar-palma-arbol-paso-a-paso-tampico",
+     "foto": null,
+     "categoria": "Jardines · Guías",
+     "titulo": "Cómo plantar una palma o árbol paso a paso en Tampico",
+     "texto": "Hoyo, drenaje, tutores, acolchado y riego: la guía práctica para que tu palma o árbol arraigue bien.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/palma-triangular-dypsis-decaryi-tampico",
+     "foto": null,
+     "categoria": "Palmas",
+     "titulo": "Palma Triangular en Tampico: cuidados, tamaños y guía completa",
+     "texto": "Hojas plateadas y tronco en forma de triángulo: sol pleno, riego moderado y alturas de 1 a 4 m. Cotiza por WhatsApp.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/nortes-tampico-proteger-plantas-jardin",
+     "foto": null,
+     "categoria": "Jardines · Temporada",
+     "titulo": "Nortes en Tampico: cómo proteger tus plantas del viento y el frío",
+     "texto": "Tutores, riego y acolchado: qué hacer antes y después de un frente frío para que tu jardín no sufra daños.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/duranta-erecta-tampico-cuidados-seto",
+     "foto": null,
+     "categoria": "Plantas · Arbustos",
+     "titulo": "Duranta en Tampico: cuidados, poda y cómo hacer un seto florido",
+     "texto": "Variedades Cubana, Golden y Zafiro: sol pleno, flor lila y crecimiento rápido para setos y bordes.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/palma-cola-de-zorro-wodyetia-bifurcata-tampico",
+     "foto": null,
+     "categoria": "Palmas",
+     "titulo": "Palma Cola de Zorro en Tampico: cuidados, tamaños y guía completa",
+     "texto": "Follaje denso en forma de cola de zorro, sol pleno y hasta 10 m de altura. Cotiza tamaños por WhatsApp.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/acolchado-mulch-jardin-tampico",
+     "foto": null,
+     "categoria": "Jardines · Guías",
+     "titulo": "Acolchado (mulch) en el jardín en Tampico: qué usar y cómo aplicarlo",
+     "texto": "Menos riego y menos maleza: materiales, grosor ideal de 5 a 8 cm y errores que debes evitar.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/como-evitar-encharcamientos-jardin-tampico",
+     "foto": null,
+     "categoria": "Jardines",
+     "titulo": "Cómo evitar encharcamientos en el jardín en Tampico",
+     "texto": "Suelo arcilloso, lluvias intensas: diagnóstico, drenaje francés, camas elevadas y qué plantas toleran el exceso de agua.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/palma-kerpis-howea-forsteriana-tampico",
+     "foto": null,
+     "categoria": "Palmas",
+     "titulo": "Palma Kerpis en Tampico: cuidados, precio y guía completa",
+     "texto": "La palma de interior más elegante: tolera luz baja y crece lento.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/palma-coco-plumoso-tampico",
+     "foto": null,
+     "categoria": "Palmas",
+     "titulo": "Palma Coco Plumoso en Tampico: cuidados, precio y guía completa",
+     "texto": "La palma más versátil de la región: tolera sol pleno, sequía y lluvia intensa. Precio desde $250.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/plagas-comunes-jardin-tampico",
+     "foto": null,
+     "categoria": "Jardines · Guías",
+     "titulo": "Plagas comunes del jardín en Tampico: cómo identificarlas y controlarlas",
+     "texto": "Pulgones, cochinillas, caracoles y hormigas arrieras: cómo reconocer cada plaga y controlarla a tiempo.",
+     "minutos": 10
+    },
+    {
+     "href": "/blog/hongos-plantas-exceso-humedad-tampico",
+     "foto": null,
+     "categoria": "Jardines · Guías",
+     "titulo": "Hongos en plantas por exceso de humedad en Tampico",
+     "texto": "Cómo identificar, prevenir y tratar los hongos que aparecen cada temporada de lluvias en el Golfo.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/palma-areca-tampico",
+     "foto": null,
+     "categoria": "Palmas",
+     "titulo": "Palma Areca en Tampico: cuidados, precio y guía completa",
+     "texto": "La palma multiuso por excelencia: interior, exterior y pantalla verde de privacidad, con precio desde $250.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/jardin-vertical-tampico-guia",
+     "foto": null,
+     "categoria": "Diseño · Guías",
+     "titulo": "Jardín vertical en Tampico: guía paso a paso",
+     "texto": "Estructura, riego y qué plantas usar en clima cálido-húmedo. Ideal para patios y balcones pequeños.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/framboyan-delonix-regia-tampico",
+     "foto": null,
+     "categoria": "Árboles",
+     "titulo": "Flamboyán en Tampico: cuidados, floración y precio",
+     "texto": "Florece rojo-naranja de mayo a septiembre, precio desde $250. Cuidados, tamaño adulto y dónde plantarlo.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/poda-arboles-palmas-tampico-guia",
+     "foto": null,
+     "categoria": "Jardines · Guías",
+     "titulo": "Cuándo y cómo podar árboles y palmas sin dañarlos",
+     "texto": "La época correcta, la técnica que no debilita la planta y el error de la \"poda huracán\" que arruina palmas sanas.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/palma-washingtona-tampico",
+     "foto": null,
+     "categoria": "Palmas",
+     "titulo": "Palma Washingtona en Tampico: cuidados, precio y guía completa",
+     "texto": "Crecimiento rápido y tolerancia total al calor.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/ficus-elastica-cuidados-tampico",
+     "foto": null,
+     "categoria": "Plantas de Interior",
+     "titulo": "Ficus Elastica en Tampico: Guía para No Matarlo",
+     "texto": "Luz, riego, sustrato y los 5 errores que matan el árbol del caucho en climas cálidos.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/cuando-regar-pasto-san-agustin-tampico",
+     "foto": null,
+     "categoria": "Riego",
+     "titulo": "¿Cuándo Regar el Pasto San Agustín? Guía por Temporada",
+     "texto": "Horarios, frecuencia y cómo ahorrar hasta 40% de agua sin perder el verde en Tampico.",
+     "minutos": 6
+    },
+    {
+     "href": "/blog/pasto-sintetico-vs-natural-tampico",
+     "foto": null,
+     "categoria": "Pasto",
+     "titulo": "Pasto Sintético vs Natural: La Comparativa Honesta",
+     "texto": "Costos reales a 10 años, mantenimiento y en qué casos el sintético sí vale la pena en Tampico.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/palmas-tropicales-jardin-tampico",
+     "foto": null,
+     "categoria": "Palmas Tropicales",
+     "titulo": "Las 8 Palmas Más Espectaculares para Jardines en Tampico",
+     "texto": "Guía visual: tamaños, cuidados, precios y cuál palma es la correcta para tu espacio.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/sistema-riego-automatizado-tampico",
+     "foto": null,
+     "categoria": "Sistema de Riego",
+     "titulo": "Riego Automático en Tampico: ¿Vale la Pena? Costos Reales",
+     "texto": "Tipos, costos de instalación y cuánto puedes ahorrar en agua con un sistema de riego en Tampico.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/diseno-jardines-tampico-guia",
+     "foto": null,
+     "categoria": "Diseño de Jardines",
+     "titulo": "Cómo Diseñar Tu Jardín en Tampico: Guía Paso a Paso",
+     "texto": "Distribución de zonas, selección de plantas y los 7 errores que arruinan jardines en el Golfo.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/tezontle-usos-jardin-tampico",
+     "foto": null,
+     "categoria": "Piedras y Sustrato",
+     "titulo": "Tezontle Rojo: 8 Usos que Transforman Tu Jardín",
+     "texto": "Cómo usarlo para control de maleza, senderos, drenaje y decoración. Con calculadora de cantidad.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+     "foto": null,
+     "categoria": "Pasto",
+     "titulo": "Pasto San Agustín: Guía Completa de Instalación y Mantenimiento",
+     "texto": "Todo sobre el pasto más popular de Tampico: instalación, riego, poda y mantenimiento anual.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/como-ahorrar-agua-jardin-tampico",
+     "foto": null,
+     "categoria": "Riego · Agua",
+     "titulo": "Cómo Ahorrar Hasta 40% de Agua en Tu Jardín en Tampico",
+     "texto": "Técnicas accesibles para reducir el consumo sin sacrificar el verde de tu jardín.",
+     "minutos": 6
+    },
+    {
+     "href": "/blog/plantas-interior-tampico",
+     "foto": null,
+     "categoria": "Plantas de Interior",
+     "titulo": "Plantas de Interior para Casas en Tampico: Las Más Recomendadas",
+     "texto": "Las especies que mejor funcionan en el clima cálido-húmedo del Golfo dentro de casa.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/jardines-temporada-lluvias-tampico",
+     "foto": null,
+     "categoria": "Jardines · Temporada",
+     "titulo": "Jardines en Temporada de Lluvias en Tampico: Guía de Cuidados",
+     "texto": "Cómo proteger tu jardín y aprovechar las lluvias de verano en el sur de Tamaulipas.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/fertilizacion-jardines-tampico-temporada-lluvias",
+     "foto": null,
+     "categoria": "Jardines · Nutrición",
+     "titulo": "Fertilización de Jardines en Tampico: Guía para Temporada de Lluvias",
+     "texto": "Qué fertilizante usar, cuándo aplicarlo y cómo aprovechar las lluvias del Golfo para un jardín más verde en julio y agosto.",
+     "minutos": 9
+    },
+    {
+     "href": "/blog/buganvilia-tampico-cuidados-floracion",
+     "foto": null,
+     "categoria": "Plantas · Floración",
+     "titulo": "Buganvilia en Tampico: cómo cultivarla y lograr que florezca todo el año",
+     "texto": "La reina de los jardines tropicales. Variedades, poda, riego y el secreto para obtener hasta 4 floraciones anuales en Tampico.",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/cuanto-cuesta-pasto-sintetico-mexico",
+     "foto": null,
+     "categoria": "Precios",
+     "titulo": "¿Cuánto Cuesta el Pasto Sintético en México? Precios 2026",
+     "texto": "De $139 a $299/m² en rollo según modelo. Tabla completa, qué varía el precio y el costo real con envío.",
+     "minutos": 6
+    },
+    {
+     "href": "/blog/como-instalar-pasto-sintetico",
+     "foto": null,
+     "categoria": "Guía DIY",
+     "titulo": "Cómo Instalar Pasto Sintético Tú Mismo: Paso a Paso",
+     "texto": "Guía completa en 6 pasos con herramientas, base drenante y los errores que arruinan la instalación.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/pasto-sintetico-para-perros",
+     "foto": null,
+     "categoria": "Pasto Sintético",
+     "titulo": "Pasto Sintético para Perros y Mascotas: Guía Completa",
+     "texto": "Limpieza de orina y heces, el secreto del drenaje y los modelos aptos para hogares con mascotas.",
+     "minutos": 6
+    },
+    {
+     "href": "/blog/que-altura-de-pasto-sintetico-elegir",
+     "foto": null,
+     "categoria": "Guías",
+     "titulo": "¿Qué altura de pasto sintético elegir? 10, 18, 28 o 35 mm",
+     "texto": "Altura vs densidad y la guía por uso: terrazas, jardín familiar, mascotas, comercial o lujo.",
+     "minutos": 5
+    },
+    {
+     "href": "/blog/pasto-sintetico-calor-mexico",
+     "foto": null,
+     "categoria": "Pasto Sintético",
+     "titulo": "¿El Pasto Sintético Aguanta el Calor en México?",
+     "texto": "Protección UV, temperaturas reales al tacto y 5 trucos para mantenerlo fresco en verano.",
+     "minutos": 5
+    },
+    {
+     "href": "/blog/cuando-plantar-pasto-tampico-calendario",
+     "foto": null,
+     "categoria": "Pasto",
+     "titulo": "¿Cuándo Plantar Pasto en Tampico? Calendario Mes a Mes",
+     "texto": "El mejor mes para sembrar pasto en Tampico, qué meses evitar y por qué septiembre es clave.",
+     "minutos": 6
+    },
+    {
+     "href": "/blog/plantas-resistentes-sal-golfo-tampico",
+     "foto": null,
+     "categoria": "Plantas",
+     "titulo": "12 Plantas Resistentes a la Sal del Golfo",
+     "texto": "Especies que resisten la salinidad del aire marino: ideales para jardines costeros y terrazas frente al mar.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/sistema-riego-automatico-conviene-tampico",
+     "foto": null,
+     "categoria": "Riego",
+     "titulo": "¿Conviene el Riego Automático en Tampico? Guía 2026",
+     "texto": "Análisis honesto: cuándo conviene instalarlo vs regar manual, con cálculo de ROI y ahorro de agua.",
+     "minutos": 8
+    }
+   ]
+  }
+ ]
+}
