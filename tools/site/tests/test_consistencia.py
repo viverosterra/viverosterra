@@ -40,6 +40,8 @@ PROHIBIDAS = (
      r"|por WhatsApp en minutos|en minutos sabrás"
      r"|(?:disponibilidad|personalizada|precio exacto[^.]{0,40}|diagnóstico y solución) (?:hoy mismo|el mismo día)"
      r"|\bconfirmamos disponibilidad hoy"),
+    # La promesa oficial es datos.PROMESA: "menos de 1 hora" siempre lleva "en horario".
+    ("1 hora sin \"en horario\"", r"\bmenos de (?:1|una) hora\b(?! en horario)"),
     ("pago al terminar", r"\bpagas\s+(?:cuando|al\s+ver)\b"),
     # Decisión del dueño (2026-11-07): el envío local de sintético en Tampico, Madero y Altamira se cotiza por colonia.
     ("envío local con precio fijo", r"env[ií]o\s+local[^.]{0,40}\$\s?250\b|\blocal desde \$\s?250\b"),
@@ -280,6 +282,7 @@ class ConsistenciaTest(unittest.TestCase):
                 "mañana disponible", "Tu jardín verde, esta semana."),
             "frescura con fecha de corte": ("Pasto cortado esta semana", "Cortado esta semana"),
             "plazo de respuesta viejo": ("Respondemos en menos de 4h hábiles", "Respuesta en 2 h hábiles"),
+            "1 hora sin \"en horario\"": ("Respuesta en menos de 1 hora", "respondemos en menos de una hora."),
             "envío local con precio fijo": ("El envío local cuesta desde $250 según el volumen", "Envío local desde $250",
                                             "Local desde $250"),
         }

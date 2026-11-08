@@ -48,7 +48,7 @@ GLOBALES = (
     ("Cotiza tu jardín en menos de 2 horas", f"Cotiza tu jardín: respondemos {EN_1_HORA}"),
     ("Cotiza en menos de 2 horas.", f"{PROMESA}."),
     ("Te contactamos en 24 hrs", f"Te respondemos {EN_1_HORA}"),
-    ("Respuesta en 24h", "Respuesta en menos de 1 hora"),
+    ("Respuesta en 24h", PROMESA),
     ("te respondemos con diagnóstico y solución el mismo día.",
      f"te respondemos {EN_1_HORA} con el diagnóstico y la solución."),
     # Perfiles oficiales y ortografía.

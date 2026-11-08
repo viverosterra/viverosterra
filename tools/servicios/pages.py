@@ -84,7 +84,7 @@ PAGES = {
         title="Palmas al mayoreo", accent="para proyectos en Tampico",
         price_pre="Precio", price="por volumen", price_unit="", price_alt="· según especie, altura y cantidad",
         lede="Suministro de palmas y árboles para constructoras, desarrolladoras, hoteles y gobierno en Tamaulipas, Veracruz y San Luis Potosí.",
-        facts=[("CFDI 4.0", "Factura y certificado fitosanitario"), ("3 estados", "Tamaulipas, Veracruz y SLP"), ("30 días", "Garantía de arraigo en siembra propia")],
+        facts=[("CFDI 4.0", "Factura emitida el día del pago"), ("3 estados", "Tamaulipas, Veracruz y SLP"), ("30 días", "Garantía de arraigo en siembra propia")],
         img="/img/palmas-reales-mayoreo-vivero-tampico.webp", img_pos="center 35%",
         alt="Palmas reales en el vivero listas para proyecto", caption="Palmas en vivero para proyectos.",
         wa=guided("Hola, necesito palmas al mayoreo para un proyecto.", "Empresa", "Especies y cantidad", "Ubicación de la obra", "Fecha de entrega", foto=False),
