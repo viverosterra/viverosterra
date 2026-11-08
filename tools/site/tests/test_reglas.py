@@ -30,6 +30,8 @@ PROHIBIDAS = (
 )
 DEPORTES_RE = re.compile(r"p[aá]del|canchas?", re.I)
 PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
+# Decisión del dueño (2026-11-07): no se ofrece crédito a clientes (ni a instaladores ni a constructoras recurrentes).
+CREDITO_CLIENTES_RE = re.compile(r"\bcr[eé]dito\s+(?:para|a)\s+(?:(?:los|sus|nuestros)\s+)?clientes\b", re.I)
 # Decisión del dueño (2026-11-07): la visita para medir tiene costo o depende; nunca "visita sin costo", "visita
 # gratis" ni "visita gratuita" (tampoco "vamos a medir sin costo").
 GRATIS = r"(?:sin\s+costo|gratis|gratuit(?:[ao]s?|amente))"
@@ -169,6 +171,21 @@ class ReglasDelDuenoTest(unittest.TestCase):
             for m in PAGO_AL_TERMINAR_RE.finditer(texto):
                 hallazgos.append(f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
         self.assertEqual(hallazgos, [])
+
+    def test_sin_credito_para_clientes(self):
+        hallazgos = []
+        for path, texto in publicados():
+            for m in CREDITO_CLIENTES_RE.finditer(texto):
+                hallazgos.append(f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
+        self.assertEqual(hallazgos, [])
+
+    def test_credito_y_pago_al_terminar_se_detectan_sin_tocar_citas_de_clientes(self):
+        for sucio in ("crédito para clientes recurrentes", "Crédito a clientes recurrentes", "crédito a nuestros clientes"):
+            self.assertRegex(sucio, CREDITO_CLIENTES_RE)
+        for limpio in ("mensualidades con tarjeta de crédito", "tarjeta de débito o crédito para tu compra"):
+            self.assertNotRegex(limpio, CREDITO_CLIENTES_RE)
+        # La regla mira lo que promete la empresa ("pagas cuando ves"), no las palabras de un cliente real.
+        self.assertIsNone(PAGO_AL_TERMINAR_RE.search("Lo más importante: pagué el resto hasta que lo vi terminado."))
 
     def test_nunca_visita_gratis(self):
         con = {}

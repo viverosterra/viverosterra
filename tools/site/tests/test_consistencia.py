@@ -39,6 +39,8 @@ PROHIBIDAS = (
      r"|(?:disponibilidad|personalizada|precio exacto[^.]{0,40}|diagnóstico y solución) (?:hoy mismo|el mismo día)"
      r"|\bconfirmamos disponibilidad hoy"),
     ("pago al terminar", r"\bpagas\s+(?:cuando|al\s+ver)\b"),
+    # Decisión del dueño (2026-11-07): el envío local de sintético en Tampico, Madero y Altamira se cotiza por colonia.
+    ("envío local con precio fijo", r"env[ií]o\s+local[^.]{0,40}\$\s?250\b|\blocal desde \$\s?250\b"),
     ("líder", r"\blíder\b"),
     ("expertos", r"\bequipo de expertos\b"),
     ("sintético sobre pedido", r"\bmodelos? sobre pedido\b|\bsobre pedido\b"),
@@ -262,6 +264,8 @@ class ConsistenciaTest(unittest.TestCase):
                 "mañana disponible", "Tu jardín verde, esta semana."),
             "frescura con fecha de corte": ("Pasto cortado esta semana", "Cortado esta semana"),
             "plazo de respuesta viejo": ("Respondemos en menos de 4h hábiles", "Respuesta en 2 h hábiles"),
+            "envío local con precio fijo": ("El envío local cuesta desde $250 según el volumen", "Envío local desde $250",
+                                            "Local desde $250"),
         }
         for nombre_regla, frases in sucios.items():
             for frase in frases:
@@ -272,7 +276,8 @@ class ConsistenciaTest(unittest.TestCase):
                    "coordinar ambas entregas el mismo día", "Más de 18 años de experiencia", "dura de 8 a 12 años",
                    "/blog/framboyan-delonix-regia-tampico", "también conocido como framboyán", "Flamboyán Tabachín",
                    "proporción 50/50. Agrega compost", "No pedimos el 100% por adelantado", "ahorra entre 30% y 50% de agua",
-                   "Lo que instalas fue cortado esta semana", "Lomas del Chairel y Flamboyanes")
+                   "Lo que instalas fue cortado esta semana", "Lomas del Chairel y Flamboyanes",
+                   "Envío local según tu colonia; te lo cotizamos.", "Areca y coco plumoso desde $250")
         for frase in limpios:
             with self.subTest(frase=frase):
                 self.assertEqual([r for r, p in PROHIBIDAS if re.search(p, frase, re.I)], [])
