@@ -1,0 +1,69 @@
+{
+ "meta": {
+  "title": "Por qué tu césped se pone amarillo en Tampico (y cómo arreglarlo) · Viveros Terra",
+  "description": "¿Tu césped se pone amarillo en Tampico? Las 5 causas más comunes (riego, plagas, hongos, suelo, sol) y cómo solucionarlas paso a paso.",
+  "robots": "index, follow",
+  "canonical": "https://www.viverosterra.com/blog/cesped-amarillo-tampico-causas-soluciones",
+  "og:type": "article",
+  "og:url": "https://www.viverosterra.com/blog/cesped-amarillo-tampico-causas-soluciones",
+  "og:title": "Por qué tu césped se pone amarillo en Tampico (y cómo arreglarlo) | Viveros Terra",
+  "og:description": "¿Tu césped se pone amarillo en Tampico? Las 5 causas más comunes (riego, plagas, hongos, suelo, sol) y cómo solucionarlas paso a paso.",
+  "og:image": "https://www.viverosterra.com/img/instalacion-pasto-san-agustin-jardin-residencial-tampico-madero.webp",
+  "og:image:width": "1200",
+  "og:image:height": "630",
+  "og:locale": "es_MX",
+  "og:site_name": "Viveros Terra"
+ },
+ "jsonld_tipos": [
+  "Answer",
+  "Article",
+  "BreadcrumbList",
+  "FAQPage",
+  "ImageObject",
+  "ListItem",
+  "Organization",
+  "Question"
+ ],
+ "encabezados": [
+  "Por qué tu césped se pone amarillo en Tampico (y cómo arreglarlo)",
+  "Causa 1 — Riego incorrecto: la más frecuente en Tampico",
+  "Causa 2 — Plagas comunes en Tampico",
+  "Causa 3 — Hongos por humedad alta",
+  "Causa 4 — Suelo compactado o pH desbalanceado",
+  "Causa 5 — Sol o sombra incorrecta para la variedad",
+  "Tabla de diagnóstico rápido",
+  "¿Cuándo llamar a un profesional?",
+  "Preguntas frecuentes",
+  "¿Cómo sé qué causa está poniendo amarillo mi césped en Tampico?",
+  "¿Puedo recuperar el pasto que ya se secó por completo?",
+  "¿Cuánto tiempo tarda en recuperarse el pasto amarillo en Tampico?",
+  "¿El amarillamiento estacional del pasto en Tampico es normal?",
+  "¿Conviene reinstalar el pasto en lugar de recuperarlo?",
+  "¿Tu césped necesita ayuda profesional?",
+  "Artículos relacionados",
+  "¿Cuándo y cuánto regar el pasto San Agustín en Tampico?",
+  "Pasto San Agustín: Guía de Instalación y Mantenimiento",
+  "Sistema de Riego Automatizado en Tampico: Guía Completa"
+ ],
+ "faq": [
+  "¿Cómo sé qué causa está poniendo amarillo mi césped en Tampico?",
+  "¿Puedo recuperar el pasto que ya se secó por completo en Tampico?",
+  "¿Cuánto tiempo tarda en recuperarse el pasto amarillo en Tampico?",
+  "¿El amarillamiento estacional del pasto en Tampico es normal?",
+  "¿Conviene reinstalar el pasto en lugar de recuperarlo?"
+ ],
+ "precios": [
+  "$150",
+  "$50"
+ ],
+ "enlaces": [
+  "/",
+  "/blog",
+  "/blog/cuando-regar-pasto-san-agustin-tampico",
+  "/blog/pasto-san-agustin-instalacion-mantenimiento",
+  "/blog/sistema-riego-automatizado-tampico",
+  "/mantenimiento-jardines-tampico",
+  "/pasto-en-rollo-tampico",
+  "/sistema-riego-tampico"
+ ]
+}

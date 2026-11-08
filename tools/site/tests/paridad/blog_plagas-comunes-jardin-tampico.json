@@ -1,0 +1,58 @@
+{
+ "meta": {
+  "title": "Plagas comunes del jardín en Tampico: cómo identificarlas y controlarlas · Viveros Terra",
+  "description": "Guía de plagas comunes en jardines de Tampico durante temporada de lluvias: pulgones, cochinillas, caracoles, babosas y hormigas arrieras. Cómo identificarlas, controlarlas y prevenirlas.",
+  "robots": "index, follow",
+  "canonical": "https://www.viverosterra.com/blog/plagas-comunes-jardin-tampico",
+  "og:type": "article",
+  "og:url": "https://www.viverosterra.com/blog/plagas-comunes-jardin-tampico",
+  "og:title": "Plagas comunes del jardín en Tampico: cómo identificarlas y controlarlas",
+  "og:description": "Pulgones, cochinillas, caracoles y hormigas arrieras aumentan con el calor húmedo de la temporada de lluvias. Aprende a identificar cada plaga y controlarla antes de que dañe tu jardín.",
+  "og:image": "https://www.viverosterra.com/img/jardin-residencial-tropical-tampico.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "Answer",
+  "Article",
+  "BreadcrumbList",
+  "FAQPage",
+  "ImageObject",
+  "ListItem",
+  "Organization",
+  "Question",
+  "WebPage"
+ ],
+ "encabezados": [
+  "Plagas comunes del jardín en Tampico: cómo identificarlas y controlarlas",
+  "Respuesta directa",
+  "¿Por qué aumentan las plagas en temporada de lluvias?",
+  "Las 4 plagas más comunes en jardines de Tampico",
+  "1. Pulgones (Aphidoidea)",
+  "2. Cochinillas (Coccoidea)",
+  "3. Caracoles y babosas",
+  "4. Hormigas arrieras (Atta spp.)",
+  "Control orgánico: la primera línea de defensa",
+  "Cuándo usar control específico por plaga",
+  "Prevención: reduce las plagas antes de que aparezcan",
+  "Preguntas frecuentes",
+  "¿Tu jardín tiene una plaga que no puedes controlar?",
+  "En este artículo",
+  "¿Necesitas ayuda con una plaga?",
+  "También te puede interesar"
+ ],
+ "faq": [
+  "¿Por qué hay más plagas en el jardín durante la temporada de lluvias en Tampico?",
+  "¿Cómo elimino los pulgones de mis plantas sin dañarlas?",
+  "¿Qué hago si mi jardín tiene hormigas arrieras?",
+  "¿Los caracoles y babosas dañan de verdad el jardín?",
+  "¿Cada cuánto debo revisar mi jardín para detectar plagas a tiempo?"
+ ],
+ "precios": [],
+ "enlaces": [
+  "/",
+  "/blog",
+  "/blog/cesped-amarillo-tampico-causas-soluciones",
+  "/blog/fertilizacion-jardines-tampico-temporada-lluvias",
+  "/blog/jardines-temporada-lluvias-tampico"
+ ]
+}
