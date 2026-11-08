@@ -1,0 +1,110 @@
+{
+ "/jardineria-lomas-de-rosales-tampico": {
+  "fotos": [
+   {
+    "src": "/img/portadas/diseno-jardines-tampico-proyecto-sm.webp",
+    "srcset": "/img/portadas/diseno-jardines-tampico-proyecto-sm.webp 560w, /img/portadas/diseno-jardines-tampico-proyecto.webp 960w",
+    "alt": "Jardín con pasto San Agustín atendido por Viveros Terra"
+   }
+  ],
+  "anclas": [
+   "colonias",
+   "precios",
+   "preguntas",
+   "zona"
+  ]
+ },
+ "/jardineria-country-club-tampico": {
+  "fotos": [
+   {
+    "src": "/img/portadas/jardin-residencial-tropical-tampico-sm.webp",
+    "srcset": "/img/portadas/jardin-residencial-tropical-tampico-sm.webp 560w, /img/portadas/jardin-residencial-tropical-tampico.webp 960w",
+    "alt": "Jardín con pasto San Agustín atendido por Viveros Terra"
+   }
+  ],
+  "anclas": [
+   "colonias",
+   "precios",
+   "preguntas",
+   "zona"
+  ]
+ },
+ "/jardineria-aguila-tampico": {
+  "fotos": [
+   {
+    "src": "/img/portadas/mantenimiento-jardines-poda-pasto-tampico-sm.webp",
+    "srcset": "/img/portadas/mantenimiento-jardines-poda-pasto-tampico-sm.webp 560w, /img/portadas/mantenimiento-jardines-poda-pasto-tampico.webp 960w",
+    "alt": "Jardín con pasto San Agustín atendido por Viveros Terra"
+   }
+  ],
+  "anclas": [
+   "colonias",
+   "precios",
+   "preguntas",
+   "zona"
+  ]
+ },
+ "/jardineria-lomas-del-chairel-tampico": {
+  "fotos": [
+   {
+    "src": "/img/portadas/riego-pro-01-sm.webp",
+    "srcset": "/img/portadas/riego-pro-01-sm.webp 560w, /img/portadas/riego-pro-01.webp 960w",
+    "alt": "Jardín con pasto San Agustín atendido por Viveros Terra"
+   }
+  ],
+  "anclas": [
+   "colonias",
+   "precios",
+   "preguntas",
+   "zona"
+  ]
+ },
+ "/jardineria-ciudad-madero": {
+  "fotos": [
+   {
+    "src": "/img/portadas/diseno-jardines-madero-altamira-pasto-sm.webp",
+    "srcset": "/img/portadas/diseno-jardines-madero-altamira-pasto-sm.webp 560w, /img/portadas/diseno-jardines-madero-altamira-pasto.webp 960w",
+    "alt": "Jardín con pasto San Agustín atendido por Viveros Terra"
+   }
+  ],
+  "anclas": [
+   "colonias",
+   "precios",
+   "preguntas",
+   "zona"
+  ]
+ },
+ "/jardineria-altamira": {
+  "fotos": [
+   {
+    "src": "/img/portadas/jardineria-areas-verdes-tampico-sm.webp",
+    "srcset": "/img/portadas/jardineria-areas-verdes-tampico-sm.webp 560w, /img/portadas/jardineria-areas-verdes-tampico.webp 793w",
+    "alt": "Jardín con pasto San Agustín atendido por Viveros Terra"
+   }
+  ],
+  "anclas": [
+   "colonias",
+   "precios",
+   "preguntas",
+   "zona"
+  ]
+ },
+ "/precios": {
+  "fotos": [
+   {
+    "src": "/img/precios/pasto-rollo-jardin-sm.webp",
+    "srcset": "/img/precios/pasto-rollo-jardin-sm.webp 560w, /img/precios/pasto-rollo-jardin.webp 960w",
+    "alt": "Trabajador de Viveros Terra descargando pasto San Agustín en rollo de la camioneta"
+   }
+  ],
+  "anclas": [
+   "materiales",
+   "mensualidades",
+   "pasto",
+   "plantas",
+   "preguntas",
+   "servicios",
+   "sintetico"
+  ]
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "meta": {
+  "title": "Jardinería en Águila, Altavista y Petrolera, Tampico · Viveros Terra",
+  "description": "Pasto, poda de árboles, diseño y mantenimiento para las casas de Águila, Altavista, Petrolera y Campbell, en Tampico. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "robots": "index, follow, max-image-preview:large",
+  "canonical": "https://www.viverosterra.com/jardineria-aguila-tampico",
+  "og:type": "website",
+  "og:site_name": "Viveros Terra",
+  "og:url": "https://www.viverosterra.com/jardineria-aguila-tampico",
+  "og:title": "Jardinería en Águila, Altavista y Petrolera, Tampico · Viveros Terra",
+  "og:description": "Pasto, poda de árboles, diseño y mantenimiento para las casas de Águila, Altavista, Petrolera y Campbell, en Tampico. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "og:image": "https://www.viverosterra.com/img/portadas/mantenimiento-jardines-poda-pasto-tampico.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "AggregateOffer",
+  "Answer",
+  "BreadcrumbList",
+  "FAQPage",
+  "ListItem",
+  "Place",
+  "PostalAddress",
+  "Question",
+  "Service"
+ ],
+ "encabezados": [
+  "Jardinería en Águila, Altavista y Petrolera, Tampico",
+  "Colonias que atendemos en Águila y Altavista",
+  "Lo que pide un jardín en esta zona",
+  "Árboles grandes y sombra",
+  "Jardines de frente y patios",
+  "Poda y raíces",
+  "Servicios y precios con IVA",
+  "Preguntas frecuentes en Águila y Altavista",
+  "Cotiza tu jardín en Águila y Altavista"
+ ],
+ "faq": [
+  "¿Dan servicio de jardinería en la colonia Águila y Altavista?",
+  "¿El pasto San Agustín crece en sombra?",
+  "¿Cuánto cuesta poner pasto en el frente de mi casa?"
+ ],
+ "precios": [
+  "$120",
+  "$180",
+  "$250",
+  "$3,000",
+  "$320",
+  "$385",
+  "$750",
+  "$85"
+ ],
+ "enlaces": [
+  "/",
+  "/diseno-jardines-tampico",
+  "/mantenimiento-jardines-tampico",
+  "/palmas-tropicales-tampico",
+  "/pasto-en-rollo-tampico",
+  "/pasto-sintetico-tampico",
+  "/precios",
+  "/sistema-riego-tampico",
+  "/vivero-tampico"
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "meta": {
+  "title": "Jardinería en Lomas de Rosales, Tampico: pasto, diseño y mantenimiento · Viveros Terra",
+  "description": "Pasto en rollo, diseño, riego y mantenimiento para las casas de Lomas de Rosales, Lomas de la Aurora y Vista Hermosa, en Tampico. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "robots": "index, follow, max-image-preview:large",
+  "canonical": "https://www.viverosterra.com/jardineria-lomas-de-rosales-tampico",
+  "og:type": "website",
+  "og:site_name": "Viveros Terra",
+  "og:url": "https://www.viverosterra.com/jardineria-lomas-de-rosales-tampico",
+  "og:title": "Jardinería en Lomas de Rosales, Tampico: pasto, diseño y mantenimiento · Viveros Terra",
+  "og:description": "Pasto en rollo, diseño, riego y mantenimiento para las casas de Lomas de Rosales, Lomas de la Aurora y Vista Hermosa, en Tampico. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "og:image": "https://www.viverosterra.com/img/portadas/diseno-jardines-tampico-proyecto.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "AggregateOffer",
+  "Answer",
+  "BreadcrumbList",
+  "FAQPage",
+  "ListItem",
+  "Place",
+  "PostalAddress",
+  "Question",
+  "Service"
+ ],
+ "encabezados": [
+  "Jardinería en Lomas de Rosales y Vista Hermosa, Tampico",
+  "Colonias que atendemos en Lomas de Rosales",
+  "Lo que pide un jardín en esta zona",
+  "Terrenos en pendiente",
+  "Lotes amplios",
+  "Sol fuerte en la parte alta",
+  "Servicios y precios con IVA",
+  "Preguntas frecuentes en Lomas de Rosales",
+  "Cotiza tu jardín en Lomas de Rosales"
+ ],
+ "faq": [
+  "¿Dan servicio de jardinería en Lomas de Rosales?",
+  "¿Cuánto cuesta el mantenimiento de jardín en Lomas de Rosales?",
+  "¿Qué riego conviene en un jardín con pendiente?"
+ ],
+ "precios": [
+  "$120",
+  "$180",
+  "$250",
+  "$3,000",
+  "$320",
+  "$385",
+  "$750"
+ ],
+ "enlaces": [
+  "/",
+  "/diseno-jardines-tampico",
+  "/mantenimiento-jardines-tampico",
+  "/palmas-tropicales-tampico",
+  "/pasto-en-rollo-tampico",
+  "/pasto-sintetico-tampico",
+  "/precios",
+  "/sistema-riego-tampico",
+  "/vivero-tampico"
+ ]
+}

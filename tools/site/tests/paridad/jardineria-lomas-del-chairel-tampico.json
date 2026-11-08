@@ -1,0 +1,64 @@
+{
+ "meta": {
+  "title": "Jardinería en Lomas del Chairel y Colinas de San Gerardo, Tampico · Viveros Terra",
+  "description": "Pasto en rollo, riego, diseño y mantenimiento para las casas cerca de la laguna del Chairel: Lomas del Chairel, Colinas de San Gerardo y Flamboyanes. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "robots": "index, follow, max-image-preview:large",
+  "canonical": "https://www.viverosterra.com/jardineria-lomas-del-chairel-tampico",
+  "og:type": "website",
+  "og:site_name": "Viveros Terra",
+  "og:url": "https://www.viverosterra.com/jardineria-lomas-del-chairel-tampico",
+  "og:title": "Jardinería en Lomas del Chairel y Colinas de San Gerardo, Tampico · Viveros Terra",
+  "og:description": "Pasto en rollo, riego, diseño y mantenimiento para las casas cerca de la laguna del Chairel: Lomas del Chairel, Colinas de San Gerardo y Flamboyanes. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "og:image": "https://www.viverosterra.com/img/portadas/riego-pro-01.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "AggregateOffer",
+  "Answer",
+  "BreadcrumbList",
+  "FAQPage",
+  "ListItem",
+  "Place",
+  "PostalAddress",
+  "Question",
+  "Service"
+ ],
+ "encabezados": [
+  "Jardinería en Lomas del Chairel y Colinas de San Gerardo",
+  "Colonias que atendemos en Lomas del Chairel",
+  "Lo que pide un jardín en esta zona",
+  "Humedad y lluvias",
+  "Casas nuevas",
+  "Mosquitos y agua estancada",
+  "Servicios y precios con IVA",
+  "Preguntas frecuentes en Lomas del Chairel",
+  "Cotiza tu jardín en Lomas del Chairel"
+ ],
+ "faq": [
+  "¿Atienden jardines en Lomas del Chairel y Colinas de San Gerardo?",
+  "¿Qué hago si mi jardín se encharca?",
+  "¿Necesito tierra negra antes de poner pasto?"
+ ],
+ "precios": [
+  "$1,500",
+  "$120",
+  "$180",
+  "$250",
+  "$3,000",
+  "$320",
+  "$385",
+  "$750",
+  "$90"
+ ],
+ "enlaces": [
+  "/",
+  "/diseno-jardines-tampico",
+  "/mantenimiento-jardines-tampico",
+  "/palmas-tropicales-tampico",
+  "/pasto-en-rollo-tampico",
+  "/pasto-sintetico-tampico",
+  "/precios",
+  "/sistema-riego-tampico",
+  "/vivero-tampico"
+ ]
+}

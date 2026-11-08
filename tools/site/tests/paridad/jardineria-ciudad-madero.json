@@ -1,0 +1,63 @@
+{
+ "meta": {
+  "title": "Jardinería en Ciudad Madero y Playa Miramar: pasto, diseño y mantenimiento · Viveros Terra",
+  "description": "Nuestro vivero está en Ciudad Madero. Instalamos pasto, diseñamos y damos mantenimiento en Playa Miramar, Jardín 20 de Noviembre y el resto de la ciudad. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "robots": "index, follow, max-image-preview:large",
+  "canonical": "https://www.viverosterra.com/jardineria-ciudad-madero",
+  "og:type": "website",
+  "og:site_name": "Viveros Terra",
+  "og:url": "https://www.viverosterra.com/jardineria-ciudad-madero",
+  "og:title": "Jardinería en Ciudad Madero y Playa Miramar: pasto, diseño y mantenimiento · Viveros Terra",
+  "og:description": "Nuestro vivero está en Ciudad Madero. Instalamos pasto, diseñamos y damos mantenimiento en Playa Miramar, Jardín 20 de Noviembre y el resto de la ciudad. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "og:image": "https://www.viverosterra.com/img/portadas/diseno-jardines-madero-altamira-pasto.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "AggregateOffer",
+  "Answer",
+  "BreadcrumbList",
+  "FAQPage",
+  "ListItem",
+  "Place",
+  "PostalAddress",
+  "Question",
+  "Service"
+ ],
+ "encabezados": [
+  "Jardinería en Ciudad Madero y Playa Miramar",
+  "Colonias que atendemos en Cd. Madero",
+  "Lo que pide un jardín en esta zona",
+  "Brisa y salitre cerca de la playa",
+  "Suelo arenoso",
+  "A minutos del vivero",
+  "Servicios y precios con IVA",
+  "Preguntas frecuentes en Cd. Madero",
+  "Cotiza tu jardín en Cd. Madero"
+ ],
+ "faq": [
+  "¿Dónde está el vivero de Viveros Terra en Madero?",
+  "¿Qué plantas aguantan la brisa de Playa Miramar?",
+  "¿Cuánto cuesta el pasto en rollo en Madero?"
+ ],
+ "precios": [
+  "$120",
+  "$180",
+  "$250",
+  "$3,000",
+  "$320",
+  "$385",
+  "$750",
+  "$85"
+ ],
+ "enlaces": [
+  "/",
+  "/diseno-jardines-tampico",
+  "/mantenimiento-jardines-tampico",
+  "/palmas-tropicales-tampico",
+  "/pasto-en-rollo-tampico",
+  "/pasto-sintetico-tampico",
+  "/precios",
+  "/sistema-riego-tampico",
+  "/vivero-tampico"
+ ]
+}
