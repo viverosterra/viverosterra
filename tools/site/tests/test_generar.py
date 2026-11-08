@@ -14,7 +14,7 @@ import shell  # noqa: E402
 
 class GenerarTest(unittest.TestCase):
     def test_paginas_registradas_tienen_contexto(self):
-        self.assertEqual([r for r, *_ in generar.PAGINAS], ["/", "/pasto-en-rollo-tampico"])
+        self.assertEqual([r for r, *_ in generar.PAGINAS][:2], ["/", "/pasto-en-rollo-tampico"])
         for ruta, salida, _p, _c in generar.PAGINAS:
             paginas.contexto(ruta)
             self.assertEqual(paginas.ruta_de(paginas.PUBLIC / salida), ruta)

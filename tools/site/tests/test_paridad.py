@@ -1,5 +1,4 @@
 """Paridad de contenido de las páginas migradas contra su captura anterior (tools/site/tests/paridad/*.json)."""
-import importlib
 import json
 import sys
 import unittest
@@ -14,14 +13,14 @@ import paridad  # noqa: E402
 class ParidadTest(unittest.TestCase):
     def test_nada_se_pierde_sin_motivo(self):
         for ruta, _salida, _plantilla, contenido in generar.PAGINAS:
-            mapa = importlib.import_module(f"contenido.{contenido}").PARIDAD
+            mapa = generar.cargar(contenido).PARIDAD
             for categoria, faltantes in paridad.comparar(ruta, mapa).items():
                 with self.subTest(ruta=ruta, categoria=categoria):
                     self.assertEqual(faltantes, [])
 
     def test_el_mapa_no_tiene_entradas_viejas(self):
         for ruta, _salida, _plantilla, contenido in generar.PAGINAS:
-            mapa = importlib.import_module(f"contenido.{contenido}").PARIDAD
+            mapa = generar.cargar(contenido).PARIDAD
             captura = json.loads((paridad.CAPTURAS / f"{paridad.nombre_captura(ruta)}.json").read_text(encoding="utf-8"))
             conocidos = {item for c in paridad.CATEGORIAS for item in captura[c]}
             for viejo in list(mapa["reemplazos"]) + list(mapa["retirados"]):
@@ -30,7 +29,7 @@ class ParidadTest(unittest.TestCase):
 
     def test_opiniones_de_la_home_se_conservan(self):
         """Decisión del dueño (2026-11-07): las opiniones con nombre de la home son reales; no se pueden retirar."""
-        mapa = importlib.import_module("contenido.inicio").PARIDAD
+        mapa = generar.cargar("inicio").PARIDAD
         titulo = "Lo que dicen nuestros clientes en Tampico"
         self.assertNotIn(titulo, mapa["retirados"])
         self.assertNotIn(titulo, mapa["reemplazos"])
