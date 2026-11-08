@@ -20,7 +20,8 @@ def precarga_imagen(f):
 
 
 def documento(meta, cuerpo, *, jsonld_bloques=(), precargas=(), scripts=()):
-    """meta: title, description, robots, canonical y og (pares en el orden publicado)."""
+    """meta: title, description, robots, canonical, og (pares en el orden publicado) y, opcionales, alternos
+    (hreflang, href) y twitter (pares name/content de la Twitter Card)."""
     lineas = [
         "<!DOCTYPE html>",
         '<html lang="es-MX">',
@@ -32,7 +33,9 @@ def documento(meta, cuerpo, *, jsonld_bloques=(), precargas=(), scripts=()):
         f'<meta name="robots" content="{escape(meta["robots"])}">',
         f'<link rel="canonical" href="{escape(meta["canonical"])}">',
     ]
+    lineas += [f'<link rel="alternate" hreflang="{escape(h)}" href="{escape(u)}">' for h, u in meta.get("alternos", ())]
     lineas += [f'<meta property="{escape(p)}" content="{escape(v)}">' for p, v in meta["og"]]
+    lineas += [f'<meta name="{escape(n)}" content="{escape(v)}">' for n, v in meta.get("twitter", ())]
     lineas.append('<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">')
     lineas += list(precargas)
     lineas += [jsonld(b) for b in jsonld_bloques]

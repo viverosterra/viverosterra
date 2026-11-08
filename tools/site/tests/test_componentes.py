@@ -55,7 +55,7 @@ class BloquesTest(unittest.TestCase):
 
     def test_logos_son_los_clientes_autorizados(self):
         self.assertEqual(tuple(n for n, *_ in c.LOGOS), datos.CLIENTES_B2B)
-        for _nombre, archivo, _a, _h in c.LOGOS:
+        for _nombre, archivo, _a, _h, _escala in c.LOGOS:
             if archivo is None:
                 continue
             self.assertTrue((Path(__file__).resolve().parents[3] / "public" / "img" / "clientes" / f"{archivo}-c.webp")
@@ -67,9 +67,16 @@ class BloquesTest(unittest.TestCase):
         self.assertNotIn('alt="Renault"', html)
         self.assertEqual(html.count("<img"), 6)
 
+    def test_flex_y_velamar_se_leen(self):
+        """Gate de diseño 2a: el logo de Flex va recortado a su palabra y el de Velamar, más alto."""
+        flex = next(l for l in c.LOGOS if l[0] == "Flex")
+        self.assertGreater(flex[2] / flex[3], 3)
+        self.assertIn('<li class="vt-logos--alto"><img src="/img/clientes/logo-velamar-c.webp"', c.logos())
+
     def test_testimonios_con_nombre_y_servicio(self):
         html = c.testimonios((("Quedó muy bien.", "Ana Pérez", "Pasto · Tampico"),))
         self.assertIn('<blockquote><p>“Quedó muy bien.”</p></blockquote>', html)
+        self.assertIn('<li class="vt-testimonios__dest">', html)  # la primera va destacada
         self.assertIn("<figcaption><b>Ana Pérez</b><span>Pasto · Tampico</span></figcaption>", html)
 
     def test_tabla_de_precios_con_unidad_y_desde(self):
@@ -118,9 +125,22 @@ class MedidorTest(unittest.TestCase):
         self.assertEqual(html.count('name="prueba-modo"'), 3)
         self.assertIn('data-precio="120"', html)
         self.assertIn('data-minimo="500"', html)
-        self.assertIn('<b data-vt-o="monto">$5,760</b>', html)
         self.assertIn('data-cta="home:medidor"', html)
         self.assertIn('<p class="vt-medidor__aviso" data-vt-o="aviso" hidden>', html)
+        self.assertEqual(html.count('name="prueba-plazo"'), 5)
+        self.assertIn('value="1" checked', html)
+        self.assertIn("data-hero-cta", html)  # la barra móvil se esconde mientras el Medidor está a la vista
+
+    def test_medidor_empieza_vacio_y_no_presenta_el_ejemplo_como_estimado(self):
+        html = c.medidor("prueba", "home")
+        self.assertIn('placeholder="8"', html)
+        self.assertIn('placeholder="6"', html)
+        self.assertNotRegex(html, r'data-vt-campo="(?:largo|ancho)"[^>]*value=')
+        self.assertIn('<b data-vt-o="monto">—</b>', html)
+        self.assertNotIn("$5,760", html)
+        cta = re.search(r'data-vt-o="cta" href="https://wa\.me/528333268008\?text=([^"]+)"', html).group(1)
+        self.assertEqual(unquote(cta), datos.con_firma(datos.MENSAJES["general"]))
+        self.assertIn(f'data-mensaje-mayoreo="{c.esc(datos.con_firma(datos.MENSAJES["empresas"]))}"', html)
         for campo in ("largo", "ancho", "colonia"):
             self.assertIn(f'<label for="prueba-{campo}">', html)
         self.assertNotIn("<form", html)

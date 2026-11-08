@@ -179,7 +179,8 @@ class ConsistenciaTest(unittest.TestCase):
         self.assertIn('"text":"No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos '
                       'un anticipo. También puedes pagar en mensualidades con tarjeta de crédito en cotizaciones desde $2,000."',
                       rollo)
-        self.assertIn('"text":"Confirmas con un anticipo y coordinamos la entrega."', rollo)
+        self.assertIn("Recibes el precio del pasto, la entrega y la instalación por separado.",
+                      TEXTOS[PUBLIC / "pasto-en-rollo-tampico" / "index.html"])
         self.assertEqual(TEXTOS[PUBLIC / "pasto-en-rollo-tampico" / "index.html"].count("Cortado para tu pedido"), 2)
         palmas = TEXTOS[PUBLIC / "palmas-mayoreo-proyectos" / "index.html"]
         self.assertEqual(palmas.count("Para proyectos solicitamos un anticipo al confirmar y el resto se acuerda contra "

@@ -28,7 +28,7 @@ class PastoEnRolloTest(unittest.TestCase):
         marcas = ('class="vt-crumbs"', "<h1", 'class="vt-etiqueta"', 'data-cta="servicio-pasto:hero"',
                   'class="vt-datos"', 'id="vt-h-prueba"', 'id="vt-h-precio"', "data-vt-medidor", 'id="vt-h-conviene"',
                   'id="vt-h-proceso"', 'id="vt-h-garantia"', 'id="vt-h-pago"', "data-simulador", 'id="vt-h-faq"',
-                  'class="vt-cierre"', 'id="vt-h-rel"')
+                  'id="vt-h-cobertura"', 'id="vt-h-rel"', 'class="vt-cierre"')
         posiciones = [MAIN.index(m) for m in marcas]
         self.assertEqual(posiciones, sorted(posiciones))
 
@@ -57,6 +57,28 @@ class PastoEnRolloTest(unittest.TestCase):
         self.assertIn('data-cta="servicio-pasto:medidor"', MAIN)
         self.assertIn('data-cta="servicio-pasto:simulador"', MAIN)
 
+    def test_prueba_social_cobertura_y_un_solo_bloque_de_mensualidades(self):
+        nombre, cita = datos.OPINIONES[0][1], datos.OPINIONES[0][0]
+        prueba = MAIN[MAIN.index('id="vt-h-prueba"'):MAIN.index('id="vt-h-precio"')]
+        self.assertIn(f"<b>{nombre}</b>", prueba)
+        self.assertIn(cita, prueba)
+        self.assertIn('class="vt-logos"', prueba)
+        self.assertIn("+500,000 m² instalados en Tamaulipas y la Huasteca", TEXTO)
+        self.assertIn("Sectores que atendemos", MAIN)
+        for _nombre, href in datos.ZONAS:
+            self.assertIn(f'href="{href}"', MAIN)
+        self.assertEqual(MAIN.count('class="vt-planes"'), 0)  # el simulador ya muestra plazos y mínimos
+        self.assertEqual(MAIN.count("data-simulador"), 1)
+
+    def test_twitter_card(self):
+        for nombre in ("twitter:card", "twitter:title", "twitter:description", "twitter:image"):
+            self.assertIn(f'<meta name="{nombre}" content=', HTML)
+        self.assertIn('<meta name="twitter:card" content="summary_large_image">', HTML)
+
+    def test_render_rotulado_como_referencia(self):
+        self.assertIn("<span>Proyecto · referencia</span>", MAIN)
+        self.assertNotIn("<span>Terminado</span>", MAIN)
+
     def test_sin_css_viejo_ni_scripts_de_servicios(self):
         self.assertNotRegex(HTML, r"fonts\.googleapis|/css/(?:tailwind|design-system|servicios|legacy-fixes)")
         self.assertNotIn("svc-hero", HTML)
@@ -75,11 +97,16 @@ class PastoEnRolloTest(unittest.TestCase):
         visibles = [re.sub(r"<[^>]+>", "", s) for s in re.findall(r"<summary>(.*?)</summary>", MAIN)]
         self.assertEqual([q["name"] for q in nodo("FAQPage")["mainEntity"]], visibles)
         self.assertEqual(len(visibles), 8)
+        # El HowTo es el proceso visible (una sola lista de pasos en la página).
         pasos = nodo("HowTo")["step"]
+        proceso = re.search(r'<ol class="vt-pasos">(.*?)</ol>', MAIN).group(1)
+        titulos = [re.sub(r"\s*<span.*", "", h) for h in re.findall(r"<li><h3>(.*?)</h3>", proceso)]
+        self.assertEqual([p["name"] for p in pasos], titulos)
         self.assertEqual(len(pasos), 5)
-        self.assertEqual(pasos[2]["text"], "Confirmas con un anticipo y coordinamos la entrega.")
         for paso in pasos:
-            self.assertIn(f"<b>{paso['name']}.</b> {paso['text']}", MAIN)
+            self.assertIn(paso["text"], TEXTO)
+        self.assertEqual(MAIN.count('class="vt-pasos"'), 1)
+        self.assertEqual(MAIN.count('class="vt-compra"'), 0)
         self.assertEqual(nodo("Product")["offers"]["price"], str(datos.PRECIOS["pasto_solo_m2"]))
 
 

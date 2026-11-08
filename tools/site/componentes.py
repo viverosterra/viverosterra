@@ -98,14 +98,16 @@ def bloque_dos(numero, rotulo, id_titulo, titulo, izquierda, derecha, tinte=Fals
 
 
 # ---------- etiqueta de precio y cuadro de datos ----------
-def etiqueta(e):
-    """Etiqueta amarilla de precio. e: codigo, aviso, nombre, cientifico, antes, monto, unidad, filas, nota."""
+def etiqueta(e, cordel=True):
+    """Etiqueta amarilla de precio. e: codigo, aviso, nombre, cientifico, antes, monto, unidad, filas, nota. El
+    envoltorio lleva la sombra y, con cordel=True, el cordel que cuelga del ojal (solo en escritorio)."""
     filas = "".join(f'<p class="vt-etiqueta__fila"><span>{t}</span><b>{v}</b></p>' for t, v in e.get("filas", ()))
     nota = f'<p class="vt-etiqueta__nota">{e["nota"]}</p>' if e.get("nota") else ""
-    return (f'<div class="vt-etiqueta"><p class="vt-etiqueta__cod"><span>{e["codigo"]}</span><span>{e["aviso"]}</span></p>'
+    return (f'<div class="vt-etiqueta-x{" vt-etiqueta-x--cordel" if cordel else ""}"><div class="vt-etiqueta">'
+            f'<p class="vt-etiqueta__cod"><span>{e["codigo"]}</span><span>{e["aviso"]}</span></p>'
             f'<p class="vt-etiqueta__nombre">{e["nombre"]}</p><p class="vt-etiqueta__sci">{e["cientifico"]}</p>'
             f'<p class="vt-etiqueta__precio"><small>{e["antes"]}</small><b>{e["monto"]}</b><span>{e["unidad"]}</span></p>'
-            f'{filas}{nota}</div>')
+            f'{filas}{nota}</div></div>')
 
 
 DATOS_EMPRESA = (
@@ -113,7 +115,7 @@ DATOS_EMPRESA = (
     ("Registro", f"REPSE {datos.REPSE}", "Contratos con empresas"),
     ("Facturación", datos.FACTURA, "Persona física o moral"),
     ("Desde", str(datos.DESDE), "En Cd. Madero y Tampico"),
-    ("Showroom", "Obregón 209 Sur", datos.REFERENCIA),
+    ("Showroom", datos.CALLE_CORTA, datos.REFERENCIA),
     ("Instalado", datos.M2_INSTALADOS, "En Tamaulipas y la Huasteca"),
 )
 
@@ -150,23 +152,25 @@ def linea_prueba():
             f'<span><b>{datos.CLIENTES} clientes · {datos.INSTALACIONES} instalaciones</b> desde {datos.DESDE}</span></p>')
 
 
-# Nombre (igual que datos.CLIENTES_B2B), archivo en /img/clientes/<archivo>-c.webp, ancho y alto. Sin archivo, el
-# cliente va con su nombre en texto (nunca un logo inventado).
+# Nombre (igual que datos.CLIENTES_B2B), archivo en /img/clientes/<archivo>-c.webp, ancho, alto y escala. Sin archivo,
+# el cliente va con su nombre en texto (nunca un logo inventado). Escala "alto": logos con letra chica (Velamar) van más
+# altos para que se lean; el de Flex viene recortado a su palabra.
 LOGOS = (
-    ("BMW", "logo-bmw", 120, 120),
-    ("Taghleef Industries", "logo-taghleef", 584, 120),
-    ("Gobierno de Tampico", "logo-gobierno-tampico", 198, 120),
-    ("Grupo Velas", "logo-grupo-velas", 229, 120),
-    ("Velamar", "logo-velamar", 188, 120),
-    ("Flex", "logo-flex", 120, 120),
-    ("Renault", None, 0, 0),
+    ("BMW", "logo-bmw", 120, 120, ""),
+    ("Taghleef Industries", "logo-taghleef", 584, 120, ""),
+    ("Gobierno de Tampico", "logo-gobierno-tampico", 198, 120, ""),
+    ("Grupo Velas", "logo-grupo-velas", 229, 120, ""),
+    ("Velamar", "logo-velamar", 188, 120, "alto"),
+    ("Flex", "logo-flex", 119, 34, ""),
+    ("Renault", None, 0, 0, ""),
 )
 
 
-def _logo(nombre, archivo, ancho, alto):
+def _logo(nombre, archivo, ancho, alto, escala):
     if archivo is None:
         return f'<li class="vt-logos__nombre">{esc(nombre)}</li>'
-    return (f'<li><img src="/img/clientes/{archivo}-c.webp" width="{ancho}" height="{alto}" alt="{esc(nombre)}" '
+    clase = f' class="vt-logos--{escala}"' if escala else ""
+    return (f'<li{clase}><img src="/img/clientes/{archivo}-c.webp" width="{ancho}" height="{alto}" alt="{esc(nombre)}" '
             f'loading="lazy" decoding="async"></li>')
 
 
@@ -175,20 +179,26 @@ def logos():
 
 
 def testimonios(items):
-    """Opiniones reales con nombre (publicadas con permiso del dueño). items: (cita, nombre, servicio · lugar)."""
-    filas = "".join(f'<li><figure class="vt-testimonio"><blockquote><p>“{cita}”</p></blockquote><figcaption>'
-                    f'<b>{nombre}</b><span>{detalle}</span></figcaption></figure></li>' for cita, nombre, detalle in items)
+    """Opiniones reales con nombre (publicadas con permiso del dueño). items: (cita, nombre, servicio · lugar). La
+    primera va destacada a todo lo ancho; las demás, compactas."""
+    destacado = ' class="vt-testimonios__dest"'
+    filas = "".join(f'<li{destacado if i == 0 else ""}><figure class="vt-testimonio"><blockquote>'
+                    f'<p>“{cita}”</p></blockquote><figcaption><b>{nombre}</b><span>{detalle}</span></figcaption></figure>'
+                    f'</li>' for i, (cita, nombre, detalle) in enumerate(items))
     return f'<ul class="vt-testimonios">{filas}</ul>'
 
 
 # ---------- índice de servicios, tablas y relacionados ----------
 def indice(items):
-    """Filas tipo índice: foto, título con enlace, qué incluye y "desde" con la marca amarilla."""
+    """Filas tipo índice: foto, número, título con enlace (toda la fila lo abre), qué incluye, "desde" con la marca
+    amarilla y flecha."""
     filas = "".join(
         f'<li><img src="{esc(i["img"])}" width="{i["ancho"]}" height="{i["alto"]}" alt="" loading="lazy" decoding="async">'
+        f'<span class="vt-indice__n" aria-hidden="true">{n:02d}</span>'
         f'<h3><a href="{esc(i["href"])}">{i["titulo"]}</a></h3><p>{i["texto"]}</p>'
-        f'<p class="vt-indice__desde">desde <span class="vt-precio-marca">{i["desde"]}</span> {i["unidad"]}</p></li>'
-        for i in items)
+        f'<p class="vt-indice__desde">desde <span class="vt-precio-marca">{i["desde"]}</span> {i["unidad"]}</p>'
+        f'<span class="vt-indice__ir" aria-hidden="true">→</span></li>'
+        for n, i in enumerate(items, 1))
     return f'<ol class="vt-indice">{filas}</ol>'
 
 
@@ -207,17 +217,34 @@ def tabla_precios(filas, caption, concepto="Concepto"):
 
 
 def tabla_comparativa(columnas, filas, caption):
-    """Tabla de comparación: la primera columna es el encabezado de cada fila. Se desliza en celular si no cabe."""
+    """Tabla de comparación: la primera columna es el encabezado de cada fila. En celular cada fila es una tarjeta y
+    cada celda lleva el nombre de su columna (data-col); desde 768 px es tabla."""
     cabeza = "".join(f'<th scope="col">{c}</th>' for c in columnas)
-    cuerpo = "".join(f'<tr><th scope="row">{f[0]}</th>{"".join(f"<td>{v}</td>" for v in f[1:])}</tr>' for f in filas)
-    return (f'<div class="vt-desliza" role="region" aria-label="{esc(texto_plano(caption))}" tabindex="0">'
-            f'<table class="vt-tabla"><caption>{caption}</caption><thead><tr>{cabeza}</tr></thead>'
-            f'<tbody>{cuerpo}</tbody></table></div>')
+    celda = '<td data-col="{}">{}</td>'.format
+    cuerpo = "".join(f'<tr><th scope="row">{f[0]}</th>'
+                     f'{"".join(celda(esc(texto_plano(c)), v) for c, v in zip(columnas[1:], f[1:]))}</tr>' for f in filas)
+    return (f'<table class="vt-tabla vt-tabla--comparar"><caption>{caption}</caption><thead><tr>{cabeza}</tr></thead>'
+            f'<tbody>{cuerpo}</tbody></table>')
 
 
 def relacionados(items):
-    filas = "".join(f'<li><h3><a href="{esc(i["href"])}">{i["titulo"]}</a></h3><p>{i["texto"]}</p></li>' for i in items)
+    """Tarjetas del sistema: foto, título con enlace (toda la tarjeta lo abre) y texto. items: titulo, href, texto, img,
+    ancho, alto."""
+    filas = "".join(f'<li class="vt-tarjeta"><img src="{esc(i["img"])}" width="{i["ancho"]}" height="{i["alto"]}" alt="" '
+                    f'loading="lazy" decoding="async"><h3><a href="{esc(i["href"])}">{i["titulo"]}</a></h3>'
+                    f'<p>{i["texto"]}</p></li>' for i in items)
     return f'<ul class="vt-relacionados">{filas}</ul>'
+
+
+def cobertura(zonas, por_proyecto, sectores=()):
+    """Zonas con página propia, las que se atienden por proyecto y, si los hay, los sectores (nombre, detalle)."""
+    lista = "".join(f'<li><a href="{esc(href)}">{nombre}</a></li>' for nombre, href in zonas)
+    html = (f'<h3>Jardinería por zona</h3><ul class="vt-zonas">{lista}</ul>'
+            f'<p class="vt-promesa">También atendemos {por_proyecto}, por proyecto.</p>')
+    if sectores:
+        filas = "".join(f"<li><b>{n}</b><span>{d}</span></li>" for n, d in sectores)
+        html += f'<h3 class="vt-mt">Sectores que atendemos</h3><ul class="vt-sectores">{filas}</ul>'
+    return html
 
 
 def guias(items, href_todas="/blog"):
@@ -235,12 +262,6 @@ def pasos(items):
         f'<li><h3>{p["titulo"]} <span class="vt-quien{QUIEN[p["quien"]][1]}">{QUIEN[p["quien"]][0]}</span></h3>'
         f'<p class="vt-pasos__cuando">{p["cuando"]}</p><p>{p["texto"]}</p></li>' for p in items)
     return f'<ol class="vt-pasos">{filas}</ol>'
-
-
-def pasos_compra(items):
-    """Lista breve "de la cotización a tu jardín" (la misma que el HowTo del JSON-LD). items: (nombre, texto)."""
-    filas = "".join(f"<li><b>{nombre}.</b> {texto}</li>" for nombre, texto in items)
-    return f'<ol class="vt-compra">{filas}</ol>'
 
 
 def howto(nombre, items):
@@ -340,25 +361,34 @@ def calculo_medidor(largo, ancho, modo):
             "total": redondear(m2 * precio)}
 
 
-def textos_medidor(largo, ancho, r, colonia=""):
-    """Textos de la etiqueta y mensaje de WhatsApp para el resultado `r` de calculo_medidor."""
+def textos_medidor(largo, ancho, r, colonia="", plazo=1):
+    """Textos de la etiqueta y mensaje de WhatsApp para el resultado `r` de calculo_medidor. plazo: 1 (contado) o el
+    número de mensualidades elegido; si ese plazo no aplica al total, se toma contado. El mensaje dice qué forma de pago
+    le interesa al cliente."""
     medida = f"{largo:.2f} × {ancho:.2f} m = {formato_m2(r['m2'])} m²"
     desde = "desde " if r["desde"] else ""
     disponibles = mensualidades.plazos_disponibles(r["total"])
-    if disponibles:
+    plazo = plazo if plazo in disponibles else 1
+    if plazo > 1:
+        total = mensualidades.total_a_plazos(r["total"], plazo)
+        detalle = f"{plazo} mensualidades de {dinero(total / plazo)} con tarjeta de crédito (total {dinero(total)})"
+        plan, interes = f"{detalle}. Tu banco debe aceptar el plan.", detalle
+    elif disponibles:
         ultimo = disponibles[-1]
         total = mensualidades.total_a_plazos(r["total"], ultimo)
         plan = (f"O {ultimo} mensualidades de {dinero(total / ultimo)} con tarjeta de crédito "
                 f"(total {dinero(total)}).")
+        interes = "contado"
     else:
         plan = f"Mensualidades con tarjeta de crédito en cotizaciones desde {dinero(mensualidades.minimo_de(3))}."
+        interes = "contado"
     cierre_calc = "Al medir te damos el precio cerrado." if r["desde"] else "La entrega se cotiza según tu colonia."
     mensaje = "\n".join((f"Hola, quiero cotizar {r['texto']}.", f"Medidas: {medida}",
-                         f"Estimado de la web: {desde}{dinero(r['total'])} con IVA", f"Colonia: {colonia or '___'}",
-                         "Te mando foto del área."))
+                         f"Estimado de la web: {desde}{dinero(r['total'])} con IVA", f"Me interesa: {interes}",
+                         f"Colonia: {colonia or '___'}", "Te mando foto del área."))
     return {"medida": medida, "monto": dinero(r["total"]),
             "calc": f"{formato_m2(r['m2'])} m² × {desde}${r['precio']}/m², con IVA. {cierre_calc}",
-            "plan": plan, "mensaje": mensaje}
+            "plan": plan, "plazo": plazo, "mensaje": mensaje}
 
 
 def plano_medidor(largo, ancho):
@@ -402,19 +432,34 @@ def _opcion_medidor(prefijo, clave, m, elegido):
             f'data-texto="{esc(m["texto"])}" data-rotulo="{esc(m["rotulo"])}"{minimo}{marcado}></label>')
 
 
+def _opcion_plazo(prefijo, plazo):
+    """Contado o N mensualidades. Sin medida, los plazos van deshabilitados con su monto mínimo de cotización."""
+    if plazo == 1:
+        return (f'<label><span>Contado</span><small data-vt-plazo="1">—</small><input type="radio" '
+                f'name="{prefijo}-plazo" value="1" checked></label>')
+    return (f'<label><span>{plazo} meses</span><small data-vt-plazo="{plazo}">desde '
+            f'{dinero(mensualidades.minimo_de(plazo))}</small><input type="radio" name="{prefijo}-plazo" '
+            f'value="{plazo}" disabled></label>')
+
+
+VACIO_MEDIDOR = {"medida": "Escribe tus medidas", "monto": "—", "calc": "Escribe el largo y el ancho de tu patio."}
+
+
 def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
-    """Medidor: largo × ancho → plano a escala → etiqueta con el estimado y mensualidades → WhatsApp con la medida.
-    Sin JavaScript queda el cálculo inicial y un enlace válido. vt-medidor.js lo actualiza con los data-* de cada
-    opción: los precios no viven en el JS. data-wa (número) y data-mensaje (mensaje genérico de la página, con firma)
-    le dan el destino; sin medida válida, el botón manda el genérico y nunca un estimado viejo."""
+    """Medidor: largo × ancho → plano a escala → etiqueta con el estimado y la forma de pago → WhatsApp con la medida.
+    Los campos empiezan vacíos (8 y 6 son solo el ejemplo del placeholder y del plano): mientras el visitante no
+    escriba, la etiqueta no muestra un estimado ajeno y el botón manda el mensaje genérico de la página (data-mensaje,
+    con firma). vt-medidor.js calcula con los data-* de cada opción: los precios no viven en el JS. data-hero-cta: la
+    barra móvil se esconde mientras el Medidor está a la vista, para que su CTA no compita."""
     generico = datos.con_firma(mensaje or datos.MENSAJES["general"])
-    r = calculo_medidor(largo, ancho, modo)
-    t = textos_medidor(largo, ancho, r)
+    mayoreo = datos.con_firma(datos.MENSAJES["empresas"])
     opciones = "".join(_opcion_medidor(prefijo, k, m, modo) for k, m in MODOS_MEDIDOR.items())
+    plazos = "".join(_opcion_plazo(prefijo, p) for p in (1,) + tuple(mensualidades.PLAZOS))
     campo = ('<div class="vt-campo"><label for="{p}-{n}">{t}</label><div class="vt-control"><input id="{p}-{n}" '
-             'data-vt-campo="{n}" inputmode="decimal" value="{v}" autocomplete="off"><span>m</span></div></div>')
+             'data-vt-campo="{n}" inputmode="decimal" placeholder="{v}" autocomplete="off"><span>m</span></div></div>')
     return (
-        f'<div class="vt-medidor" data-vt-medidor data-wa="{esc(datos.TELEFONO_WA)}" data-mensaje="{esc(generico)}">'
+        f'<div class="vt-medidor" data-vt-medidor data-hero-cta data-wa="{esc(datos.TELEFONO_WA)}" '
+        f'data-mensaje="{esc(generico)}" data-mensaje-mayoreo="{esc(mayoreo)}">'
         f'<div class="vt-medidor__form" role="group" aria-label="Medidor de pasto">'
         f'<div class="vt-medidor__medidas">{campo.format(p=prefijo, n="largo", t="Largo", v=largo)}'
         f'<span class="vt-medidor__x" aria-hidden="true">×</span>{campo.format(p=prefijo, n="ancho", t="Ancho", v=ancho)}'
@@ -422,18 +467,22 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
         f'<div class="vt-campo"><label for="{prefijo}-colonia">Colonia (opcional)</label><div class="vt-control">'
         f'<input type="text" id="{prefijo}-colonia" data-vt-campo="colonia" placeholder="Ej. Lomas de Rosales" '
         f'autocomplete="off"></div></div></div>'
-        f'<figure class="vt-fig vt-medidor__plano">{svg_plano(largo, ancho, r["m2"])}<figcaption><span><b>Vista en planta'
-        f'</b> · escala ajustada a tu medida</span><span>Cotas en metros</span></figcaption></figure>'
-        f'<div class="vt-etiqueta vt-medidor__res" role="status"><p class="vt-etiqueta__cod"><span>Tu etiqueta</span><span>Estimado'
-        f'</span></p><p class="vt-etiqueta__nombre" data-vt-o="m2">{t["medida"]}</p><p class="vt-etiqueta__sci">'
-        f'Stenotaphrum secundatum</p><p class="vt-etiqueta__precio"><small data-vt-o="rotulo">'
-        f'{r["rotulo"]}</small><b data-vt-o="monto">{t["monto"]}</b><span>con IVA</span></p>'
-        f'<p class="vt-medidor__calc" data-vt-o="calc">{t["calc"]}</p>'
-        f'<p class="vt-medidor__aviso" data-vt-o="aviso"{"" if r["aviso"] else " hidden"}>{r["aviso"]}</p>'
-        f'<p class="vt-medidor__plan" data-vt-o="plan">{t["plan"]}</p>'
-        f'<a class="vt-btn vt-btn--wa" data-cta="{tipo}:medidor" data-vt-o="cta" href="{esc(datos.wa_url(t["mensaje"]))}" '
+        f'<figure class="vt-fig vt-medidor__plano">{svg_plano(largo, ancho, redondear(largo * ancho * 10) / 10)}'
+        f'<figcaption><span><b>Vista en planta</b> · escala ajustada a tu medida</span><span>Cotas en metros</span>'
+        f'</figcaption></figure>'
+        f'<div class="vt-etiqueta-x"><div class="vt-etiqueta vt-medidor__res" role="status"><p class="vt-etiqueta__cod">'
+        f'<span>Tu etiqueta</span><span>Estimado</span></p><p class="vt-etiqueta__nombre" data-vt-o="m2">'
+        f'{VACIO_MEDIDOR["medida"]}</p><p class="vt-etiqueta__sci">Stenotaphrum secundatum</p>'
+        f'<p class="vt-etiqueta__precio is-vacio"><small data-vt-o="rotulo">{MODOS_MEDIDOR[modo]["rotulo"]}</small>'
+        f'<b data-vt-o="monto">{VACIO_MEDIDOR["monto"]}</b><span>con IVA</span></p>'
+        f'<p class="vt-medidor__calc" data-vt-o="calc">{VACIO_MEDIDOR["calc"]}</p>'
+        f'<p class="vt-medidor__aviso" data-vt-o="aviso" hidden></p>'
+        f'<fieldset class="vt-opciones vt-opciones--plazo"><legend>Forma de pago: contado o mensualidades con tarjeta de '
+        f'crédito</legend>{plazos}</fieldset>'
+        f'<p class="vt-medidor__plan" data-vt-o="plan"></p>'
+        f'<a class="vt-btn vt-btn--wa" data-cta="{tipo}:medidor" data-vt-o="cta" href="{esc(datos.wa_url(generico))}" '
         f'target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp<span class="vt-flecha" aria-hidden="true">→'
-        f'</span></a></div></div>')
+        f'</span></a></div></div></div>')
 
 
 # ---------- portada (primer pantallazo: qué, dónde, precio y CTA) ----------

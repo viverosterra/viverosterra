@@ -106,6 +106,19 @@ class PlantillasNavegadorTest(unittest.TestCase):
         mensaje = unquote(caja.locator('[data-vt-o="cta"]').get_attribute("href").split("text=", 1)[1])
         self.assertIn("Medidas: 10.00 × 10.00 m = 100 m²", mensaje)
         self.assertIn("Colonia: Lomas de Rosales", mensaje)
+        self.assertIn("Me interesa: contado", mensaje)
+        # Con $8,500 aplican 3 y 6 mensualidades; 12 queda deshabilitado. El plan elegido viaja en el mensaje.
+        self.assertTrue(caja.locator('input[name="inicio-plazo"][value="12"]').is_disabled())
+        caja.locator('input[name="inicio-plazo"][value="6"]').check(force=True)
+        mensaje = unquote(caja.locator('[data-vt-o="cta"]').get_attribute("href").split("text=", 1)[1])
+        self.assertRegex(mensaje, r"Me interesa: 6 mensualidades de \$[\d,]+ con tarjeta de crédito \(total \$[\d,]+\)")
+        self.assertIn("6 mensualidades de", caja.locator('[data-vt-o="plan"]').inner_text())
+        # Un lado de 1,000 m o más: se pide escribirnos y el botón manda el mensaje de proyecto, sin calcular en silencio.
+        caja.locator('[data-vt-campo="largo"]').fill("1200")
+        self.assertIn("Para áreas tan grandes, escríbenos", caja.locator('[data-vt-o="aviso"]').inner_text())
+        grande = unquote(caja.locator('[data-vt-o="cta"]').get_attribute("href").split("text=", 1)[1])
+        self.assertEqual(grande, datos.con_firma(datos.MENSAJES["empresas"]))
+        caja.locator('[data-vt-campo="largo"]').fill("10")
         caja.locator('[data-vt-campo="ancho"]').fill("")
         self.assertEqual(caja.locator('[data-vt-o="monto"]').inner_text(), "—")
         # Sin medida válida, el botón manda el mensaje genérico de la página y nunca el estimado anterior.
@@ -114,6 +127,26 @@ class PlantillasNavegadorTest(unittest.TestCase):
         self.assertTrue(caja.locator('[data-vt-o="cta"]').get_attribute("href").startswith(
             f"https://wa.me/{datos.TELEFONO_WA}?text="))
         self.assertEqual(caja.locator(".vt-medidor__res").get_attribute("role"), "status")
+
+    def test_medidor_empieza_vacio_y_manda_el_mensaje_generico(self):
+        for ruta, mensaje in (("/", datos.MENSAJES["general"]), ("/pasto-en-rollo-tampico/", datos.MENSAJES["pasto-natural"])):
+            page = self.pagina()
+            page.goto(self.base + ruta, wait_until="load")
+            caja = page.locator("[data-vt-medidor]")
+            with self.subTest(ruta=ruta):
+                self.assertEqual(caja.locator('[data-vt-campo="largo"]').input_value(), "")
+                self.assertEqual(caja.locator('[data-vt-campo="largo"]').get_attribute("placeholder"), "8")
+                self.assertEqual(caja.locator('[data-vt-o="monto"]').inner_text(), "—")
+                href = caja.locator('[data-vt-o="cta"]').get_attribute("href")
+                self.assertEqual(unquote(href.split("text=", 1)[1]), datos.con_firma(mensaje))
+
+    def test_barra_movil_se_esconde_con_el_medidor_a_la_vista(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/", wait_until="load")
+        page.locator("[data-vt-medidor] .vt-medidor__res").scroll_into_view_if_needed()
+        page.wait_for_function("() => document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
+        page.locator("#vt-h-precios").scroll_into_view_if_needed()
+        page.wait_for_function("() => !document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
 
     def test_clic_en_el_medidor_manda_generate_lead(self):
         page = self.pagina()

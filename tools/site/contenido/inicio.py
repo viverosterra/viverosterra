@@ -30,6 +30,14 @@ META = {
         ("og:locale", "es_MX"),
         ("og:site_name", "Viveros Terra Tampico"),
     ),
+    "alternos": (("es-MX", datos.SITIO),),
+    # Twitter Card como estaba publicada en main.
+    "twitter": (
+        ("twitter:card", "summary_large_image"),
+        ("twitter:title", "Viveros Terra | Jardinería y Pasto en Rollo en Tampico"),
+        ("twitter:description", "Pasto en rollo, diseño de jardines y mantenimiento en Tampico. Cotiza gratis."),
+        ("twitter:image", f"{datos.SITIO}/img/jardineria-areas-verdes-tampico.webp"),
+    ),
 }
 
 NEGOCIO = {
@@ -49,10 +57,8 @@ NEGOCIO = {
                 "addressRegion": "Tamaulipas", "postalCode": datos.CP, "addressCountry": "MX"},
     "geo": {"@type": "GeoCoordinates", "latitude": datos.GEO[0], "longitude": datos.GEO[1]},
     "openingHoursSpecification": [
-        {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-         "opens": "09:00", "closes": "18:00"},
-        {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00"},
-    ],
+        {"@type": "OpeningHoursSpecification", "dayOfWeek": list(dias) if len(dias) > 1 else dias[0], "opens": abre,
+         "closes": cierra} for dias, abre, cierra in datos.HORARIO_LD],
     "sameAs": ["https://www.facebook.com/viverosterra/", "https://www.instagram.com/viverosterramx",
                "https://www.linkedin.com/company/viveros-terra-tampico"],
     "priceRange": "$$",
@@ -92,22 +98,8 @@ PREGUNTAS = (
      f'<a href="/mayoreo-pasto-tampico">Mayoreo de pasto</a> desde {MINIMO} m².'),
 )
 
-# Opiniones reales con nombre, publicadas con permiso (decisión del dueño, 2026-11-07): mismos nombres y citas que la
-# home anterior. Nunca se agrega una opinión sin confirmarla con el dueño.
-TESTIMONIOS = (
-    ("Renovamos 250 m² de jardín con pasto San Agustín y el resultado fue excelente desde el primer día. El césped llegó "
-     "en perfectas condiciones. La asesoría para el riego fue muy útil.",
-     "Carlos Herrera", "Instalación pasto en rollo · Tampico"),
-    ("El equipo nos ayudó desde el diseño hasta la instalación con plantas, pasto y sistema de riego. Quedó moderno y "
-     "fácil de mantener. Superó nuestras expectativas completamente.",
-     "María Fernanda Ruiz", "Diseño de jardín residencial · Ciudad Madero"),
-    ("Instalamos sistema de riego para un área comercial de 600 m². Proyecto bien planeado, distribución uniforme. "
-     "Desde la puesta en marcha funciona perfectamente.",
-     "Ing. Raúl Sánchez", "Sistema de riego comercial · Altamira"),
-    ("El servicio de mantenimiento ha sido constante y profesional. Poda, fertilización y control de plagas con "
-     "puntualidad. Nuestras áreas verdes se mantienen en excelente estado.",
-     "Lic. Adriana Morales", "Mantenimiento de áreas verdes · Tampico"),
-)
+# Opiniones reales con nombre, publicadas con permiso (decisión del dueño, 2026-11-07): viven en datos.OPINIONES.
+TESTIMONIOS = datos.OPINIONES
 
 CONTENIDO = {
     "meta": META,
@@ -141,8 +133,8 @@ CONTENIDO = {
     },
     "que_hacemos": {
         "titulo": "Cinco formas de trabajar con nosotros, cada una con su precio.",
-        "lede": ("Para que llegues a la plática sabiendo cuánto cuesta. Donde dice “desde”, el total depende de tus "
-                 "metros y del terreno."),
+        "lede": ("Pasto, jardinería, plantas y obra para empresas: para que llegues a la plática sabiendo cuánto cuesta. "
+                 "Donde dice “desde”, el total depende de tus metros y del terreno."),
         "items": (
             {"titulo": "Pasto natural", "href": "/pasto-en-rollo-tampico",
              "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111,
@@ -182,9 +174,10 @@ CONTENIDO = {
         "titulo": "Fotos de obra, no de catálogo.",
         "lede": "Cada foto lleva su pie: dónde y en qué etapa. Así ves lo que entregamos, no una promesa.",
         "figuras": (
+            # Es un render, no una foto de obra: el pie lo dice (gate de diseño 2a).
             {"src": f"{OBRA}/jardin-residencial-pasto-san-agustin.webp", "ancho": 1280, "alto": 720, "numero": 2,
-             "alt": "Jardín residencial con pasto San Agustín recién instalado.",
-             "lugar": "Zona Tampico–Madero · jardín residencial", "etapa": "Pasto natural"},
+             "alt": "Imagen de referencia de un jardín residencial con pasto San Agustín.",
+             "lugar": "Jardín residencial con pasto San Agustín", "etapa": "Proyecto · referencia"},
             {"src": f"{OBRA}/pasto-san-agustin-recien-instalado.webp", "ancho": 640, "alto": 960, "numero": 3,
              "alt": "Pasto San Agustín recién instalado junto a un andador.", "lugar": "Después",
              "etapa": "Día de instalación"},
@@ -226,7 +219,7 @@ CONTENIDO = {
         "lede": ("Con IVA. Donde dice “desde”, el total depende de tus metros y del terreno: al medir te damos el precio "
                  "cerrado."),
         "nota": ("En sombra profunda el San Agustín no prende. Si es tu caso, te lo decimos al medir, antes de cobrarte "
-                 "nada.", "Desde el vivero, Obregón 209 Sur"),
+                 "nada.", f"Desde el vivero, {datos.CALLE_CORTA}"),
         "filas": (
             {"nombre": "Pasto San Agustín instalado", "unidad": "/m²", "precio": P["pasto_instalado_m2"], "desde": True,
              "rec": True, "detalle": (f"Preparación básica del suelo, tendido en un día y garantía de arraigo de "
@@ -262,6 +255,12 @@ CONTENIDO = {
             ("¿Conviene el riego automático en Tampico?", "/blog/sistema-riego-automatico-conviene-tampico"),
         ),
     },
+    "cobertura": {
+        "titulo": "Jardinería en Tampico, Madero, Altamira y la Huasteca.",
+        "lede": ("Pasto en rollo, diseño de jardines, riego y mantenimiento en toda la zona conurbada; en la Huasteca, "
+                 "por proyecto."),
+        "zonas": datos.ZONAS, "por_proyecto": datos.ZONAS_POR_PROYECTO,
+    },
     "cierre": {
         "titulo": "Mándanos tus medidas y una foto del espacio.",
         "lede": ("Tu colonia, los metros aproximados y qué quieres hacer. Si hace falta, agendamos una visita para medir y "
@@ -293,6 +292,7 @@ PARIDAD = {
         "Preguntas frecuentes sobre pasto y jardinería en Tampico": "Lo que nos preguntan antes de empezar.",
         "Tu jardín ideal está a un mensaje de distancia": "Mándanos tus medidas y una foto del espacio.",
         "Cotización por WhatsApp": "Mándanos tus medidas y una foto del espacio.",  # sin formulario por correo (dueño)
+        "Cobertura de Servicio en Tamaulipas y Veracruz": "Jardinería en Tampico, Madero, Altamira y la Huasteca.",
     },
     "retirados": {
         "Viveros Terra: vivero y empresa de jardinería en Tampico y Madero desde 2007": (
@@ -317,8 +317,6 @@ PARIDAD = {
         "Tierra Negra Vegetal": "Fila “Tierra negra vegetal” de la lista de precios.",
         "Tezontle Rojo": "Fila “Tezontle rojo” de la lista de precios.",
         "Mármol y Piedra": "Mármol blanco y piedra bola siguen en el menú y en el pie.",
-        "Cobertura de Servicio en Tamaulipas y Veracruz": "Las 6 zonas siguen enlazadas desde el pie; /zonas llega en la "
-                                                          "Etapa 3.",
         "7 árboles para banqueta que no levantan el pavimento": GUIA_EN_LISTA,
         "Palma del viajero: guía de cuidados en Tampico": GUIA_EN_LISTA,
         "Pasto San Agustín o japonés: cuál conviene en Tampico": GUIA_EN_LISTA,

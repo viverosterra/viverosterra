@@ -29,7 +29,7 @@ def ld(tipo):
 class InicioTest(unittest.TestCase):
     def test_secuencia_de_la_plantilla(self):
         marcas = ('class="vt-portada"', 'class="vt-datos"', 'id="vt-h-que"', 'data-vt-medidor', 'id="vt-h-obras"',
-                  'class="vt-logos"', 'id="vt-h-opiniones"', 'id="vt-h-como"', 'id="vt-h-precios"', 'id="vt-h-faq"', 'class="vt-cierre"')
+                  'class="vt-logos"', 'id="vt-h-opiniones"', 'id="vt-h-como"', 'id="vt-h-precios"', 'id="vt-h-faq"', 'id="vt-h-cobertura"', 'class="vt-cierre"')
         posiciones = [MAIN.index(m) for m in marcas]
         self.assertEqual(posiciones, sorted(posiciones))
 
@@ -105,6 +105,29 @@ class InicioTest(unittest.TestCase):
 
     def test_sin_prometer_visita_gratis(self):
         self.assertNotRegex(TEXTO, r"(?i)visitas?\W+(?:\w+\W+){0,3}?(?:sin costo|gratis|gratuita)|medir sin costo")
+
+    def test_seo_jardineria_cobertura_twitter_y_hreflang(self):
+        h2 = re.findall(r"<h2\b[^>]*>(.*?)</h2>", MAIN, re.S)
+        self.assertTrue(any("Jardinería" in t for t in h2), h2)
+        cobertura = MAIN[MAIN.index('id="vt-h-cobertura"'):MAIN.index('class="vt-cierre"')]
+        for lugar in ("Tampico", "Madero", "Altamira", "Huasteca"):
+            self.assertIn(lugar, cobertura)
+        for _nombre, href in datos.ZONAS:
+            self.assertIn(f'href="{href}"', cobertura)
+        for nombre in ("twitter:card", "twitter:title", "twitter:description", "twitter:image"):
+            self.assertIn(f'<meta name="{nombre}" content=', HTML)
+        self.assertIn(f'<link rel="alternate" hreflang="es-MX" href="{datos.SITIO}">', HTML)
+
+    def test_una_opinion_destacada_y_tres_compactas(self):
+        opiniones = MAIN[MAIN.index('id="vt-h-opiniones"'):MAIN.index('id="vt-h-como"')]
+        self.assertEqual(opiniones.count('class="vt-testimonios__dest"'), 1)
+
+    def test_render_rotulado_como_referencia_y_filas_numeradas(self):
+        self.assertIn("<span>Proyecto · referencia</span>", MAIN)
+        indice = MAIN[MAIN.index('class="vt-indice"'):MAIN.index('data-vt-medidor')]
+        self.assertEqual(re.findall(r'class="vt-indice__n" aria-hidden="true">(\d+)<', indice),
+                         ["01", "02", "03", "04", "05"])
+        self.assertEqual(indice.count('class="vt-indice__ir"'), 5)
 
     def test_una_sola_etiqueta_de_precio_en_la_portada(self):
         portada = MAIN[:MAIN.index('id="vt-h-que"')]

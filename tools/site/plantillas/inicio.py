@@ -1,6 +1,6 @@
 """Plantilla de la home (spec §3.3): portada con precio y CTA en el primer pantallazo móvil → cuadro de datos → qué
 hacemos (cada ruta con su precio) → Medidor → obras con pies FIG. y clientes → opiniones con nombre → proceso
-NOSOTROS / TÚ → precios → preguntas → CTA final. Sin formulario por correo: se cotiza por WhatsApp o con el Medidor. El contenido vive en tools/site/contenido/inicio.py."""
+NOSOTROS / TÚ → precios → preguntas → cobertura por zona → CTA final. Sin formulario por correo: se cotiza por WhatsApp o con el Medidor. El contenido vive en tools/site/contenido/inicio.py."""
 import componentes as c
 from plantillas import base
 
@@ -10,8 +10,8 @@ CONTEXTO = "https://schema.org"
 
 
 def render(k):
-    q, m, o, op, pr, pc, f, ci = (k[s] for s in ("que_hacemos", "medidor", "obras", "opiniones", "proceso", "precios",
-                                                  "faq", "cierre"))
+    q, m, o, op, pr, pc, f, co, ci = (k[s] for s in ("que_hacemos", "medidor", "obras", "opiniones", "proceso", "precios",
+                                                      "faq", "cobertura", "cierre"))
     cuerpo = "\n".join((
         c.portada(k["portada"], TIPO),
         c.bloque(1, "Qué hacemos", "vt-h-que", q["titulo"], c.indice(q["items"]), lede=q["lede"]),
@@ -26,6 +26,8 @@ def render(k):
                      c.tabla_precios(pc["filas"], pc["caption"]) + c.planes_mensualidades(), id_seccion="precios"),
         c.bloque_dos(7, "Preguntas", "vt-h-faq", f["titulo"], f'<h3 class="vt-mt">{f["titulo_guias"]}</h3>' + c.guias(f["guias"]),
                      c.faq(f["preguntas"]), tinte=True),
+        c.bloque(8, "Cobertura", "vt-h-cobertura", co["titulo"], c.cobertura(co["zonas"], co["por_proyecto"]),
+                 lede=co["lede"]),
         c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], TIPO),
     ))
     j = k["jsonld"]

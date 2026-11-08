@@ -2,8 +2,9 @@
 
 Copy de la maqueta aprobada (docs/diseno/hibrido/pasto-en-rollo.html) con los datos vivos de datos.py y el copy
 corregido en la Etapa 1b (anticipo sin porcentaje, "Cortado para tu pedido", llegada semanal sin fecha de corte).
-Título, descripción, canonical, Open Graph, Product, HowTo y migas del JSON-LD se conservan como estaban publicados;
-FAQPage sale de las mismas preguntas visibles. PARIDAD: tests/test_paridad.py.
+Título, descripción, canonical, Open Graph, Twitter Card, Product y migas del JSON-LD se conservan como estaban
+publicados; FAQPage sale de las mismas preguntas visibles y HowTo, de los cinco pasos del proceso visible.
+PARIDAD: tests/test_paridad.py.
 """
 import datos
 from componentes import dinero, mensualidades
@@ -30,6 +31,13 @@ META = {
         ("og:image", f"{datos.SITIO}/img/despues-instalacion-pasto-san-agustin-tampico.webp"),
         ("og:locale", "es_MX"),
     ),
+    # Twitter Card como estaba publicada en main.
+    "twitter": (
+        ("twitter:card", "summary_large_image"),
+        ("twitter:title", f"Pasto en Rollo San Agustín Tampico · ${P['pasto_solo_m2']}/m²"),
+        ("twitter:description", "Pasto fresco cortado cada semana. Instalación con garantía. Tampico, Madero, Altamira."),
+        ("twitter:image", f"{datos.SITIO}/img/despues-instalacion-pasto-san-agustin-tampico.webp"),
+    ),
 }
 
 PRODUCTO = {
@@ -48,11 +56,6 @@ MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "Inicio", "item": datos.SITIO},
     {"@type": "ListItem", "position": 2, "name": "Pasto en Rollo Tampico", "item": URL},
 ]}
-
-ZONAS = " · ".join(f'<a href="{href}">{nombre}</a>' for nombre, href in (
-    ("Lomas de Rosales", "/jardineria-lomas-de-rosales-tampico"), ("Country Club", "/jardineria-country-club-tampico"),
-    ("Águila y Altavista", "/jardineria-aguila-tampico"), ("Lomas del Chairel", "/jardineria-lomas-del-chairel-tampico"),
-    ("Ciudad Madero", "/jardineria-ciudad-madero"), ("Altamira", "/jardineria-altamira")))
 
 PREGUNTAS = (
     ("¿Cuánto cuesta el pasto en rollo en Tampico?", datos.RESPUESTA_PRECIO_PASTO),
@@ -85,20 +88,19 @@ PREGUNTAS = (
      '<a href="/mayoreo-pasto-tampico">Ver mayoreo para obras</a>.'),
 )
 
-COMPRA = (
-    ("Cotización inicial", "Envía por WhatsApp la dirección y los metros cuadrados aproximados."),
-    ("Precio transparente", "Recibes el precio del pasto, entrega e instalación por separado."),
-    ("Anticipo y coordinación", "Confirmas con un anticipo y coordinamos la entrega."),
-    ("Instalación en un día", "El pasto va directo del campo a tu jardín. Instalación completa en un día."),
-    ("Pago final y arraigo", ("Liquidas el saldo según lo acordado en tu cotización. Te explicamos cómo dar el primer "
-                              "riego y te dejamos el protocolo de riego de 20 días.")),
+SECTORES = (
+    ("Residencial", "Casas y jardines familiares"),
+    ("Fraccionamientos", "Áreas verdes de acceso y casas muestra"),
+    ("Hoteles y resorts", "Jardines de imagen y áreas exteriores"),
+    ("Industria", "Parques industriales, áreas perimetrales y accesos"),
+    ("Gobierno y municipios", "Parques, plazas y áreas públicas"),
 )
 
 CONTENIDO = {
     "tipo": "servicio-pasto",
     "prefijo": "pasto",
     "meta": META,
-    "jsonld": {"producto": PRODUCTO, "migas": MIGAS_LD, "howto": "Cómo comprar e instalar pasto en rollo en Tampico",
+    "jsonld": {"producto": PRODUCTO, "migas": MIGAS_LD, "howto": "Cómo instalar pasto en rollo San Agustín en Tampico",
                "speakable": ("h1", "h2", ".vt-faq summary")},
     "migas": (("Inicio", "/"), ("Pasto en rollo", None)),
     "portada": {
@@ -126,9 +128,10 @@ CONTENIDO = {
         "lede": ('<i class="vt-serif">Stenotaphrum secundatum</i> es la variedad que mejor aguanta el calor y la '
                  "humedad del Golfo. Así se ve en cada etapa."),
         "figuras": (
+            # Es un render, no una foto de obra: el pie lo dice (gate de diseño 2a).
             {"src": f"{OBRA}/jardin-residencial-pasto-san-agustin.webp", "ancho": 1280, "alto": 720, "numero": 2,
-             "alt": "Jardín residencial con pasto San Agustín ya instalado.",
-             "lugar": "Zona Tampico–Madero · jardín residencial", "etapa": "Terminado"},
+             "alt": "Imagen de referencia de un jardín residencial con pasto San Agustín.",
+             "lugar": "Jardín residencial con pasto San Agustín", "etapa": "Proyecto · referencia"},
             {"src": f"{OBRA}/cuadrilla-tendiendo-pasto-san-agustin-640.webp", "ancho": 640, "alto": 960, "numero": 3,
              "alt": "Integrante de la cuadrilla tendiendo tepes de pasto San Agustín.", "lugar": "Tendido de tepes",
              "etapa": "Día de instalación"},
@@ -141,6 +144,10 @@ CONTENIDO = {
         ),
         "nota": ("En sombra profunda el San Agustín no prende. Ahí va otra solución, y te lo decimos antes de cobrarte.",
                  "Al medir, en tu jardín"),
+        # Prueba social: la opinión aprobada de la home sobre pasto (textual) y los clientes con permiso del dueño.
+        "titulo_opinion": "Lo que dicen quienes ya tienen su jardín",
+        "opiniones": datos.OPINIONES[:1],
+        "titulo_clientes": "Empresas que nos han contratado",
     },
     "precio": {
         "titulo": "¿Cuánto cuesta el pasto San Agustín en Tampico?",
@@ -153,7 +160,7 @@ CONTENIDO = {
              "rec": True, "detalle": (f"Preparación básica del suelo, tendido en un día, garantía de arraigo de "
                                       f"{datos.ARRAIGO} y protocolo de riego.")},
             {"nombre": "Solo el pasto", "unidad": "/m²", "precio": P["pasto_solo_m2"],
-             "detalle": ("Tú lo instalas. Recoges en el vivero de Obregón 209 Sur o te lo llevamos (la entrega se "
+             "detalle": (f"Tú lo instalas. Recoges en el vivero de {datos.CALLE_CORTA} o te lo llevamos (la entrega se "
                          "cotiza según tu colonia).")},
             {"nombre": "Mayoreo, solo pasto", "unidad": "/m²", "precio": P["pasto_mayoreo_m2"], "desde": True,
              "detalle": (f"Desde {MINIMO} m². Entregas por etapas según avance de obra, factura {datos.FACTURA} y REPSE "
@@ -221,9 +228,9 @@ CONTENIDO = {
         ),
     },
     "garantia": {
-        "titulo": f"Garantía de arraigo de {datos.ARRAIGO}: si no arraiga, lo reponemos.",
+        "titulo": "Si no arraiga, lo reponemos.",
         "grande": "15–20", "unidad": "días",
-        "resumen": "Garantía de arraigo con instalación contratada.",
+        "resumen": f"Garantía de arraigo de {datos.ARRAIGO} con instalación contratada.",
         "puntos": (
             ("Si contratas la instalación y sigues el protocolo de riego de 20 días, garantizamos el arraigo: si una "
              f"sección no arraiga en {datos.ARRAIGO}, la reponemos sin costo.", True),
@@ -240,8 +247,12 @@ CONTENIDO = {
         "titulo": "Cómo se paga: anticipo y mensualidades con tarjeta de crédito.",
         "lede": (f"{datos.ANTICIPO} El resto se liquida según lo acordado en tu cotización, de contado o en "
                  f"mensualidades con tarjeta de crédito desde {DESDE_MENSUALIDADES}."),
-        "titulo_compra": "De la cotización a tu jardín verde en 5 pasos",
-        "compra": COMPRA,
+        "puntos": (
+            "Recibes el precio del pasto, la entrega y la instalación por separado.",
+            "Contado (transferencia, efectivo o tarjeta en una exhibición): el precio más bajo.",
+            ("Mensualidades con tarjeta de crédito: el total a plazos es mayor que el de contado y te lo mostramos antes "
+             'de enviarte el link de pago. <a href="/politicas#mensualidades">Condiciones</a>'),
+        ),
         "titulo_sim": "Calcula tus mensualidades con tarjeta",
         "sim": {"servicio": "pasto en rollo instalado", "monto": 12000},
     },
@@ -252,18 +263,26 @@ CONTENIDO = {
                  "agendamos una visita para medir y cotizar."),
         "mensaje": datos.MENSAJES["pasto-natural"],
     },
+    "cobertura": {
+        "titulo": f"{datos.M2_INSTALADOS} instalados en Tamaulipas y la Huasteca.",
+        "lede": ("Instalamos pasto en rollo en Tampico, Ciudad Madero y Altamira, para casas, fraccionamientos, hoteles, "
+                 "industria y gobierno. Fuera de la zona conurbada, por proyecto."),
+        "zonas": datos.ZONAS, "por_proyecto": datos.ZONAS_POR_PROYECTO, "sectores": SECTORES,
+    },
     "relacionados": {
         "titulo": "Complementa tu jardín",
         "items": (
             {"titulo": "Tierra negra vegetal", "href": "/tierra-negra-vegetal-tampico",
+             "img": "/img/tierra-negra-preparacion-pasto-tampico-640.webp", "ancho": 640, "alto": 360,
              "texto": (f"La base ideal antes de instalar pasto. Costal {dinero(P['tierra_negra_costal'])} · m³ "
                        f"{dinero(P['tierra_negra_m3'])}.")},
             {"titulo": "Sistema de riego automático", "href": "/sistema-riego-tampico",
+             "img": f"{OBRA}/instalacion-tuberia-riego-jardin.webp", "ancho": 900, "alto": 600,
              "texto": "Para que tu pasto siempre esté verde sin esfuerzo. Ahorra hasta 40% de agua."},
             {"titulo": "Mantenimiento mensual", "href": "/mantenimiento-jardines-tampico",
+             "img": f"{OBRA}/mantenimiento-jardin-poda-tampico.webp", "ancho": 640, "alto": 960,
              "texto": (f"¿Ya tienes tu pasto? Que nunca se vea descuidado. Desde {dinero(P['mantenimiento_mes'])}/mes.")},
         ),
-        "zonas": (f"Instalamos en {ZONAS}. También en Pánuco, Ciudad Victoria, Tuxpan y la Huasteca, por proyecto."),
     },
 }
 
@@ -281,8 +300,8 @@ PARIDAD = {
         "Riego abundante y diario los primeros 15 a 20 días": "Riego diario",
         "Primera poda a los 21 días": "Primera poda",
         "Jardines con pasto San Agustín en Tampico": "Lo que entregamos, documentado.",
-        "Protocolo de Cuidados Garantía de arraigo en 15 a 20 días": (
-            "Garantía de arraigo de 15 a 20 días: si no arraiga, lo reponemos."),
+        "Protocolo de Cuidados Garantía de arraigo en 15 a 20 días": "Si no arraiga, lo reponemos.",
+        "+500,000 m² instalados en Tamaulipas y zona Huasteca": "+500,000 m² instalados en Tamaulipas y la Huasteca.",
         "¿Puedo pagar en partes?": "¿Cómo se paga el pasto en rollo?",
         "¿Cuánto tiempo tarda en arraigar?": "¿Cuánto tiempo tarda en arraigar el pasto San Agustín?",
     },
@@ -298,17 +317,15 @@ PARIDAD = {
         "\"¿Mi terreno está muy mal para pasto?\"": OBJECIONES,
         "\"¿El pasto llegará fresco?\"": OBJECIONES,
         "\"¿Y si el pasto no arraiga?\"": OBJECIONES,
-        "+500,000 m² instalados en Tamaulipas y zona Huasteca": "La cifra va en el cuadro de datos (Instalado).",
-        "Lo que dicen quienes ya tienen su jardín": (
-            "Las dos opiniones de esta página no entran en la confirmación del dueño (que cubre las cuatro de la home) y "
-            "una decía “pagué el resto hasta que lo vi terminado”, contra la regla de nunca pagar al ver el jardín "
-            "terminado. Pendiente de confirmar con el dueño antes de volver a publicarlas."),
         "Su vivero de confianza en Tamaulipas": (
             "El bloque B2B pasa a /mayoreo-pasto-tampico (enlazado en la tabla de precios y en la pregunta de mayoreo); "
             "decía “Más de 18 años”."),
         "Viveros Terra · Tampico": (
             "Caja de autor de la página de servicio; la entidad va a /nosotros (Etapa 3). “Certificación SENASICA” y "
             "“+200 proyectos B2B” no están en datos.py."),
+        "De la cotización a tu jardín verde en 5 pasos": (
+            "Era una segunda lista de cinco pasos junto al proceso: queda una sola (el proceso NOSOTROS / TÚ / JUNTOS, que "
+            "también es el HowTo del JSON-LD) y el pago se resume en el bloque “Cómo se paga” (gate de diseño 2a)."),
         "Escríbenos para cotizar": (
             "Formulario de pedido por correo retirado por decisión del dueño (2026-11-07): se cotiza solo por WhatsApp "
             "o con el Medidor, con la promesa única (spec §3.3, §4.3)."),

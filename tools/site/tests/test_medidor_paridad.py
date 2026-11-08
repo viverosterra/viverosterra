@@ -19,11 +19,16 @@ class MedidorParidadTest(unittest.TestCase):
         for caso in CASOS["casos"]:
             e = caso["entrada"]
             r = c.calculo_medidor(e["largo"], e["ancho"], e["modo"])
-            t = c.textos_medidor(e["largo"], e["ancho"], r, e["colonia"])
+            t = c.textos_medidor(e["largo"], e["ancho"], r, e["colonia"], e["plazo"])
             obtenido = {k: r[k] for k in ("m2", "precio", "desde", "total", "rotulo", "aviso")}
             obtenido.update(t)
             with self.subTest(entrada=e):
                 self.assertEqual(obtenido, caso["esperado"])
+
+    def test_hay_casos_con_plazo_elegido_y_con_plazo_que_no_aplica(self):
+        pedidos = [(caso["entrada"]["plazo"], caso["esperado"]["plazo"]) for caso in CASOS["casos"]]
+        self.assertIn((6, 6), pedidos)
+        self.assertIn((12, 1), pedidos)
 
     def test_modos_del_json_son_los_de_datos(self):
         self.assertEqual(CASOS["modos"], {k: {kk: v for kk, v in m.items() if kk != "opcion"}
