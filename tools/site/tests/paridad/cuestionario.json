@@ -1,0 +1,22 @@
+{
+ "meta": {
+  "title": "Cuestionario de Proyecto — Viveros Terra",
+  "description": "",
+  "robots": "noindex, follow",
+  "canonical": ""
+ },
+ "jsonld_tipos": [],
+ "encabezados": [
+  "Tu jardín empieza aquí. Cuéntanos tu visión.",
+  "Tu jardín empieza aquí",
+  "¡Gracias por tu información!"
+ ],
+ "faq": [],
+ "precios": [
+  "$15,000",
+  "$40,000",
+  "$5,000",
+  "$80,000"
+ ],
+ "enlaces": []
+}
