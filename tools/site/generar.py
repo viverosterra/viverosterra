@@ -27,6 +27,7 @@ UTILITARIAS = (
     ("/gracias", "gracias/index.html", "formulario", "gracias"),
     ("/cuestionario", "cuestionario.html", "formulario", "cuestionario"),
     ("/datos-envio", "datos-envio/index.html", "formulario", "datos_envio"),
+    ("/protocolo-cuidados-pasto-san-agustin", "protocolo-cuidados-pasto-san-agustin.html", "protocolo", "protocolo"),
 )
 
 PAGINAS = (

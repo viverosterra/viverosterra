@@ -16,7 +16,7 @@ import paridad  # noqa: E402
 import paridad_util  # noqa: E402
 
 CONTRATO = json.loads(paridad_util.CAPTURA.read_text(encoding="utf-8"))
-PENDIENTES = frozenset({"/protocolo-cuidados-pasto-san-agustin", "/vivero-tampico"})
+PENDIENTES = frozenset({"/vivero-tampico"})
 PAGINAS = tuple(CONTRATO)
 GARANTIA_PASTO = "la reponemos sin costo"  # la única frase con "sin costo" que aprobó el dueño
 VIEJOS = r"fonts\.googleapis|/css/(?:tailwind|design-system|servicios|legacy-fixes)|<style\b|function sendWA|window\.open"
