@@ -10,7 +10,6 @@ from ciudad import build_ciudad
 from ciudades import CIUDADES
 from data import MODELOS, SITE
 from feed import build_feed
-from ficha import build_ficha
 from hub import build_hub
 from local import build_local
 from perros import build_perros
@@ -48,8 +47,6 @@ def main():
     write(ROOT.parent / "precios" / "index.html", build_precios())
     for slug, zona in ZONAS.items():
         write(ROOT.parent / slug / "index.html", build_zona(slug, zona))
-    for m in MODELOS:
-        write(ROOT / m["slug"] / "index.html", build_ficha(m))
     for c in CIUDADES:
         write(ROOT / "envio" / c["slug"] / "index.html", build_ciudad(c))
     write(ROOT / "perros" / "index.html", build_perros())
