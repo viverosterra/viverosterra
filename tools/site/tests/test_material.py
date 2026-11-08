@@ -12,7 +12,8 @@ import datos  # noqa: E402
 import paginas  # noqa: E402
 import paridad  # noqa: E402
 
-MIGRADAS = {"/tierra-negra-vegetal-tampico": "tierra-negra-vegetal-tampico/index.html"}
+MIGRADAS = {"/tierra-negra-vegetal-tampico": "tierra-negra-vegetal-tampico/index.html",
+            "/tezontle-rojo-tampico": "tezontle-rojo-tampico/index.html"}
 ORDEN = ('id="vt-h1"', 'id="vt-h-precio"', 'id="vt-h-usos"', 'id="vt-h-calc"', 'id="vt-h-entrega"', 'id="vt-h-faq"',
          'id="vt-cierre-titulo"', 'id="vt-h-correo"')
 

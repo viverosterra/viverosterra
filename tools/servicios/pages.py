@@ -30,13 +30,6 @@ PAGES = {
         wa=guided("Hola, quiero visitar el vivero o cotizar plantas.", "Lo que busco", "Tamaño aprox.", foto=False),
         secondary=("https://maps.app.goo.gl/xC4XGL2WeucAjGwAA", "Cómo llegar"),
     ),
-    "tezontle-rojo-tampico": dict(
-        title="Tezontle rojo", accent="por costal, m³ o camión",
-        price_pre="Costal", price="$200", price_unit="", price_alt="· también por m³ y camión de 14 m³",
-        lede="Tezontle volcánico para drenaje de macetas, jardineras y decoración. Recoges en el vivero o te lo llevamos con factura.",
-        facts=[("14 m³", "Camión volteo"), ("CFDI 4.0", "Factura disponible"), ("Entrega", "Tampico, Madero y Altamira")],
-        wa=guided("Hola, quiero cotizar tezontle rojo.", "Costales o camión", "Cantidad", "Colonia de entrega", foto=False),
-    ),
     "marmol-blanco-tampico": dict(
         title="Mármol blanco", accent="para jardines y andadores",
         price_pre="Saco", price="$250", price_unit="", price_alt="· 3 sacos cubren 1 m²",
