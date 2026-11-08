@@ -104,6 +104,22 @@ OPINIONES = (
      "puntualidad. Nuestras áreas verdes se mantienen en excelente estado.",
      "Lic. Adriana Morales", "Mantenimiento de áreas verdes · Tampico"),
 )
+# Otras opiniones reales con nombre, publicadas con permiso del dueño (2026-11-07), textuales, de las páginas anteriores
+# a la Etapa 2: la de /pasto-sintetico-tampico y las dos de /pasto-en-rollo-tampico que 2a había retirado.
+OPINION_SINTETICO_TAMPICO = (
+    ("Instalamos pasto sintético en la terraza de nuestra cafetería. Ya no tenemos que regar nada y siempre está "
+     "verde. Los clientes preguntan si es natural.",
+     "Sofía R.", "Cafetería en el centro de Tampico"),
+)
+OPINIONES_PASTO_EN_ROLLO = (
+    ("Contraté pasto e instalación para 180 m² en mi jardín de Madero. Llegaron a la hora acordada, prepararon el "
+     "terreno y quedó perfecto en un día. A las 3 semanas estaba completamente arraigado. Lo más importante: pagué el "
+     "resto hasta que lo vi terminado.",
+     "Jorge H.", "Residencial · Ciudad Madero · 180 m²"),
+    ("Somos constructora y compramos el pasto para un fraccionamiento en Altamira. Precio de mayoreo muy competitivo, "
+     "facturaron sin problema y respetaron el calendario de entrega por etapas. Ya son nuestro proveedor recurrente.",
+     "Arq. Patricia L.", "Constructora · Altamira · Proyecto 2,400 m²"),
+)
 # Zonas con página propia (nombre visible, ruta) y las que se atienden por proyecto.
 ZONAS = (
     ("Lomas de Rosales y Vista Hermosa", "/jardineria-lomas-de-rosales-tampico"),

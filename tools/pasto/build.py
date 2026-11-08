@@ -9,7 +9,6 @@ from pathlib import Path
 from ciudades import CIUDADES
 from data import MODELOS, SITE
 from feed import build_feed
-from local import build_local
 from precios import build_precios
 from sitemap import upsert
 from zonas import ZONAS, build_zona
@@ -39,7 +38,6 @@ def aplicar_shell(paths):
 
 def main():
     ESCRITAS.clear()
-    write(ROOT.parent / "pasto-sintetico-tampico" / "index.html", build_local())
     write(ROOT.parent / "precios" / "index.html", build_precios())
     for slug, zona in ZONAS.items():
         write(ROOT.parent / slug / "index.html", build_zona(slug, zona))

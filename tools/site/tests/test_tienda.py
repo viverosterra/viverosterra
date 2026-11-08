@@ -74,10 +74,6 @@ class TiendaPublicadaTest(unittest.TestCase):
             self.assertIn(f"<g:link>{data.SITE}/pasto-sintetico/{m['slug']}</g:link>", feed)
             self.assertIn(f"<g:price>{m['rollo']:.2f} MXN</g:price>", feed)
 
-    def test_scripts_de_la_ficha_en_orden(self):
-        self.assertEqual(re.findall(r'<script src="/js/([\w-]+)\.js" defer>', html("/pasto-sintetico/toscana-28")),
-                         ["vt-mensualidades", "tienda-pasto", "vt-landed"])
-
     def test_hub_con_precio_puesto_catalogo_y_lista(self):
         texto = html("/pasto-sintetico")
         cuerpo = principal(texto)
@@ -111,6 +107,39 @@ class TiendaPublicadaTest(unittest.TestCase):
         self.assertNotIn("$139", cuerpo)
         self.assertNotIn("muestra", cuerpo.lower())
         self.assertIn('href="/blog/pasto-sintetico-para-perros"', cuerpo)
+    def test_veinticinco_paginas_de_sintetico_con_plantilla(self):
+        self.assertEqual(len(TIENDA), 1 + 1 + 1 + len(data.MODELOS) + 11)
+
+    def test_scripts_en_orden(self):
+        esperado = {"/pasto-sintetico": ["vt-mensualidades", "tienda-pasto", "vt-landed", "tienda-hub"],
+                    "/pasto-sintetico/toscana-28": ["vt-mensualidades", "tienda-pasto", "vt-landed"],
+                    "/pasto-sintetico/envio/cdmx": ["vt-mensualidades", "tienda-pasto", "vt-landed"],
+                    "/pasto-sintetico-tampico": ["vt-mensualidades", "tienda-pasto"]}
+        for ruta, scripts in esperado.items():
+            with self.subTest(ruta=ruta):
+                self.assertEqual(re.findall(r'<script src="/js/([\w-]+)\.js" defer>', html(ruta)), scripts)
+
+    def test_tampico_con_opciones_cotizador_y_showroom(self):
+        texto = html("/pasto-sintetico-tampico")
+        cuerpo = principal(texto)
+        self.assertIn("los otros 7 modelos también están en existencia", cuerpo)
+        self.assertIn('id="showroom"', cuerpo)
+        self.assertIn('<option value="showroom" selected>', cuerpo)
+        self.assertEqual(cuerpo.count('<li class="vt-modo'), 2)
+        # Decisión del dueño (2026-11-07): el testimonio de Sofía R. es real y publicado con permiso; se conserva textual.
+        self.assertIn("Los clientes preguntan si es natural.”", cuerpo)
+        self.assertIn("<b>Sofía R.</b><span>Cafetería en el centro de Tampico</span>", cuerpo)
+        tipos = {t for n in grafo(texto) for t in ([n["@type"]] if isinstance(n["@type"], str) else n["@type"])}
+        self.assertTrue({"LocalBusiness", "Store", "Service", "FAQPage", "HowTo", "BreadcrumbList"} <= tipos)
+
+    def test_barras_fijas_que_no_se_tapan(self):
+        for ruta in TIENDA:
+            texto = html(ruta)
+            buybar, barra = 'id="buybar"' in texto, "data-vt-bar" in texto
+            with self.subTest(ruta=ruta):
+                self.assertFalse(buybar and barra)
+                self.assertTrue(buybar or barra)
+
 
 if __name__ == "__main__":
     unittest.main()

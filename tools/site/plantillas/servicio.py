@@ -3,17 +3,23 @@ con plantilla y promesa → prueba (cuadro de datos, fotos FIG., nota de campo, 
 Medidor → objeción principal → proceso NOSOTROS / TÚ (también es el HowTo del JSON-LD) → garantía con condiciones →
 pago (anticipo y mensualidades con tarjeta de crédito, con su simulador) → preguntas → cobertura → relacionados → CTA
 final. Las secciones que el contenido no trae se omiten (diseño, mantenimiento y riego no llevan Medidor de pasto).
-Primera página: /pasto-en-rollo-tampico (contenido/pasto_en_rollo.py)."""
+Opcionales desde 2b: formas de contratar (máx. 3, cada una con su mensaje), tabla comparativa de precios, cotizador de
+la tienda (tienda-pasto.js, con lista de cotización y barra de compra), visita al showroom y pago sin simulador (con
+los plazos de mensualidades). Páginas: /pasto-en-rollo-tampico (contenido/pasto_en_rollo.py) y
+/pasto-sintetico-tampico (contenido/sintetico_tampico.py)."""
 import componentes as c
+import componentes_tienda as t
 from plantillas import base
 
 CONTEXTO = "https://schema.org"
 
 
 def _scripts(k):
-    """vt-mensualidades.js primero (lo usan el Medidor y el simulador); el Medidor solo si la página lo trae."""
+    """vt-mensualidades.js primero (lo usan el Medidor, el simulador y el cotizador); cada uno solo si la página lo trae."""
     con_medidor = bool(k.get("precio", {}).get("titulo_medidor"))
-    return ("/js/vt-mensualidades.js",) + (("/js/vt-medidor.js",) if con_medidor else ()) + ("/js/vt-simulador.js",)
+    return (("/js/vt-mensualidades.js",) + (("/js/vt-medidor.js",) if con_medidor else ())
+            + (("/js/tienda-pasto.js",) if "cotizador" in k else ())
+            + (("/js/vt-simulador.js",) if k["pago"].get("sim") else ()))
 
 
 def _prueba(k, numero):
@@ -28,10 +34,47 @@ def _prueba(k, numero):
 
 def _precio(k, numero):
     p = k["precio"]
-    cuerpo = c.tabla_precios(p["filas"], p["caption"], concepto="Forma de compra")
+    if "tabla" in p:
+        cuerpo = c.tabla_comparativa(p["tabla"]["columnas"], p["tabla"]["filas"], p["caption"])
+    else:
+        cuerpo = c.tabla_precios(p["filas"], p["caption"], concepto="Forma de compra")
     if p.get("titulo_medidor"):
         cuerpo += f'<h3 class="vt-mt">{p["titulo_medidor"]}</h3>' + c.medidor(k["prefijo"], k["tipo"], mensaje=k["portada"]["mensaje"])
     return c.bloque(numero, "Precio", "vt-h-precio", p["titulo"], cuerpo, lede=p["lede"], tinte=True, id_seccion="precio")
+
+
+def _opciones(k, numero):
+    o = k["opciones"]
+    return c.bloque(numero, "Opciones", "vt-h-opciones", o["titulo"], c.opciones(o["items"], k["tipo"]), lede=o.get("lede"),
+                    id_seccion="opciones")
+
+
+def _aparte(items):
+    """Columna junto al cotizador: (título, puntos, nota) por bloque."""
+    salida = []
+    for i, (titulo, puntos, nota) in enumerate(items):
+        clase = ' class="vt-mt"' if i else ""
+        lista = "".join(f"<li>{x}</li>" for x in puntos)
+        salida.append(f"<h3{clase}>{titulo}</h3>" + (f'<ul class="vt-checks vt-mt-s">{lista}</ul>' if lista else "")
+                      + f'<p class="vt-promesa">{nota}</p>')
+    return "".join(salida)
+
+
+def _cotizador(k, numero):
+    q = k["cotizador"]
+    modelo = t.modelo(q["modelo"])
+    calculadora = t.cotizador(modelo, modelos=t.data.MODELOS, m2=q["m2"], showroom=True, nivel=3, titulo=q["titulo_calc"],
+                              tipo=k["tipo"])
+    cuerpo = f'<div class="vt-dos">{calculadora}<div>{_aparte(q["aparte"])}</div></div>'
+    return c.bloque(numero, "Calculadora", "vt-h-cotizador", q["titulo"], cuerpo, tinte=True, id_seccion="cotizador")
+
+
+def _visita(k, numero):
+    v = k["visita"]
+    enlaces = "".join(f'<a class="vt-btn vt-btn--linea" href="{c.esc(h)}" target="_blank" rel="noopener">{x}</a>'
+                      for x, h in v["mapas"])
+    cuerpo = f'{c.cuadro_datos(v["datos"])}<div class="vt-cta vt-mt-s">{enlaces}{c.boton_tel(k["tipo"] + ":visita")}</div>'
+    return c.bloque(numero, "Showroom", "vt-h-visita", v["titulo"], cuerpo, lede=v.get("lede"), id_seccion="showroom")
 
 
 def _objecion(k, numero):
@@ -48,7 +91,10 @@ def _pago(k, numero):
     p = k["pago"]
     puntos = "".join(f"<li>{t}</li>" for t in p["puntos"])
     izquierda = f'<p class="vt-lede">{p["lede"]}</p><ul class="vt-checks vt-mt-s">{puntos}</ul>'
-    derecha = f'<h3>{p["titulo_sim"]}</h3>' + c.simulador(p["sim"]["servicio"], p["sim"]["monto"], k["tipo"])
+    if p.get("sim"):
+        derecha = f'<h3>{p["titulo_sim"]}</h3>' + c.simulador(p["sim"]["servicio"], p["sim"]["monto"], k["tipo"])
+    else:
+        derecha = c.planes_mensualidades()
     return c.bloque_dos(numero, "Pago", "vt-h-pago", p["titulo"], izquierda, derecha, id_seccion="mensualidades")
 
 
@@ -68,7 +114,8 @@ def render(k):
     g, f, ci, p = k["garantia"], k["faq"], k["cierre"], k["proceso"]
     secciones = [c.portada(k["portada"], tipo, k["migas"]), _prueba(k, 1)]
     numero = 2
-    for clave, armar in (("precio", _precio), ("objecion", _objecion)):
+    for clave, armar in (("opciones", _opciones), ("precio", _precio), ("cotizador", _cotizador),
+                         ("objecion", _objecion)):
         if clave in k:
             secciones.append(armar(k, numero))
             numero += 1
@@ -77,7 +124,7 @@ def render(k):
     secciones.append(_pago(k, numero + 2))
     secciones.append(c.bloque_dos(numero + 3, "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]), tinte=True))
     numero += 4
-    for clave, armar in (("cobertura", _cobertura), ("relacionados", _relacionados)):
+    for clave, armar in (("visita", _visita), ("cobertura", _cobertura), ("relacionados", _relacionados)):
         if clave in k:
             secciones.append(armar(k, numero))
             numero += 1
@@ -85,7 +132,15 @@ def render(k):
 
     j = k["jsonld"]
     pasos_howto = tuple((x["titulo"], x["texto"]) for x in p["pasos"])
-    grafo = [j["producto"], c.faq_jsonld(f["preguntas"]), c.howto(j["howto"], pasos_howto), j["migas"],
-             {"@type": "SpeakableSpecification", "cssSelector": list(j["speakable"])}]
-    return base.documento(k["meta"], "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
-                          precargas=(base.precarga_imagen(k["portada"]["foto"]),), scripts=_scripts(k))
+    grafo = [j["producto"], *j.get("nodos", ()), c.faq_jsonld(f["preguntas"]), c.howto(j["howto"], pasos_howto),
+             j["migas"], {"@type": "SpeakableSpecification", "cssSelector": list(j["speakable"])}]
+    tienda = "cotizador" in k
+    fuera = ""
+    if tienda:
+        b = k["barra"]
+        fuera = t.lista_y_aviso() + t.barra_compra(b["nombre"], b["precio"], ci["mensaje"])
+    return base.documento(k["meta"], (t.subnav() if tienda else "") + "\n".join(secciones),
+                          jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
+                          precargas=(base.precarga_imagen(k["portada"]["foto"]),), scripts=_scripts(k),
+                          head_extra=(t.json_modelos(),) if tienda else (), tras_main=fuera,
+                          clase_body="vt-pagina vt-tienda" if tienda else "vt-pagina")
