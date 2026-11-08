@@ -1,6 +1,6 @@
 {
  "terra.css": [
-  "/css/terra.6db077a86b.css",
+  "/css/terra.2aa04f8f9f.css",
   "/css/terra.cbf51c7c5a.css"
  ],
  "terra-tienda.css": [
@@ -11,7 +11,7 @@
   "/css/legacy-fixes.6fb87ff99e.css"
  ],
  "terra.js": [
-  "/js/terra.fb37c1434f.js",
-  "/js/terra.0dbc7510a5.js"
+  "/js/terra.88c051ced0.js",
+  "/js/terra.fb37c1434f.js"
  ]
 }
