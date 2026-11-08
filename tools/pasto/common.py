@@ -1,4 +1,8 @@
-"""Piezas compartidas por el hub y las fichas de la tienda de pasto sintético."""
+"""Piezas del HTML viejo que todavía usan /precios y las 6 zonas (tools/pasto/precios.py y zonas.py).
+
+La tienda (hub, fichas, ciudades, perros y sintético en Tampico) sale de tools/site desde la Etapa 2b;
+este módulo se borra en la Etapa 2g, cuando /precios y las zonas pasen a sus plantillas.
+"""
 import json
 from html import escape
 from urllib.parse import quote
@@ -24,9 +28,8 @@ def jsonld(graph):
     return json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, separators=(",", ":"))
 
 
-def head(*, title, description, canonical, og_image, og_type, preload_img, preload_srcset, ld, extra="", subnav=True):
-    """<head> y apertura de <body> con las regiones vacías del shell; con subnav, la barra contextual de la tienda."""
-    barra_tienda = SUBNAV if subnav else ""
+def head(*, title, description, canonical, og_image, og_type, preload_img, preload_srcset, ld, extra=""):
+    """<head> y apertura de <body> con las regiones vacías del shell."""
     return f"""<!DOCTYPE html>
 <html lang="es-MX">
 <head>
@@ -60,7 +63,7 @@ def head(*, title, description, canonical, og_image, og_type, preload_img, prelo
 {SYMBOLS}
 <!-- vt:header -->
 <!-- /vt:header -->
-{barra_tienda}"""
+"""
 
 
 SYMBOLS = """<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
@@ -74,84 +77,9 @@ SYMBOLS = """<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-h
   <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
 </svg>"""
 
-# Barra contextual de la tienda, debajo del menú principal del shell (spec §3.1).
-SUBNAV = """<div class="site-header site-header--sub">
-  <div class="wrap site-header__bar">
-    <nav class="site-nav" aria-label="Tienda de pasto sintético">
-      <a href="/pasto-sintetico#modelos">Los 9 modelos</a>
-      <a href="/pasto-sintetico#elegir">¿Cuál me conviene?</a>
-      <a href="/pasto-sintetico#como-funciona">Cómo comprar</a>
-    </nav>
-    <button class="quote-btn" type="button" data-open-cot aria-haspopup="dialog">
-      <svg class="icon" aria-hidden="true"><use href="#i-list"/></svg>
-      <span>Mi lista</span>
-      <span class="quote-btn__count num" data-cot-count data-empty="true">0</span>
-    </button>
-  </div>
-</div>
-"""
-
-
 def footer():
     """Región vacía del pie: tools/site/shell.py la llena con el pie único y la barra móvil."""
     return "<!-- vt:footer -->\n<!-- /vt:footer -->\n"
-
-
-def buybar(name, price_text, *, rollo=None):
-    """Barra fija en celular. Con `rollo`, tienda-pasto.js la cambia al precio puesto del estado elegido."""
-    landed = f' data-landed-bar data-rollo="{rollo}"' if rollo else ""
-    return f"""<div class="buybar" id="buybar" data-visible="false"{landed}>
-  <div class="buybar__info">
-    <div class="buybar__name">{esc(name)}</div>
-    <div class="buybar__price num">{esc(price_text)}</div>
-  </div>
-  <a class="btn btn--primary" data-cta-wa href="https://wa.me/{WA_NUMBER}" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Cotizar</a>
-</div>
-"""
-
-
-ESTADO_OPTIONS = """<option value="">Selecciona tu estado</option>
-                <option value="showroom">Recoger en showroom, Cd. Madero</option>"""
-
-
-def drawer_and_toast():
-    return f"""<dialog class="drawer" id="cotizacion" aria-labelledby="cot-titulo">
-  <div class="drawer__inner">
-    <div class="drawer__head">
-      <h2 id="cot-titulo">Tu lista</h2>
-      <button class="drawer__close" type="button" id="cot-close" aria-label="Cerrar">×</button>
-    </div>
-    <div class="drawer__body" id="cot-list"></div>
-    <div class="drawer__foot" id="cot-foot" hidden>
-      <div class="field">
-        <label for="cot-estado">Entrega</label>
-        <select class="select" id="cot-estado">
-          {ESTADO_OPTIONS}
-        </select>
-      </div>
-      <div class="drawer__total num"><span id="cot-total-label">Total estimado del material</span><strong id="cot-total">$0</strong></div>
-      <a class="btn btn--primary" id="cot-send" href="https://wa.me/{WA_NUMBER}" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>Enviar cotización por WhatsApp</a>
-      <small>Precio estimado. Confirmamos el flete exacto con tu dirección.</small>
-    </div>
-  </div>
-</dialog>
-
-<div class="toast" id="toast" role="status" data-visible="false">
-  <span data-toast-text></span>
-  <button type="button" data-open-cot>Ver</button>
-</div>
-</body>
-</html>
-"""
-
-
-def assurances(garantia_text):
-    return f"""<ul class="assurances">
-          <li><svg class="icon" aria-hidden="true"><use href="#i-truck"/></svg><span><strong>3 a 5 días hábiles</strong>A todo México con guía de rastreo</span></li>
-          <li><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg><span><strong>Factura CFDI 4.0</strong>Para persona física o moral</span></li>
-          <li><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>{esc(garantia_text)}</strong>La gestionamos nosotros</span></li>
-          <li><svg class="icon" aria-hidden="true"><use href="#i-store"/></svg><span><strong>Showroom real</strong>Desde 2007 en Tampico y Madero</span></li>
-        </ul>"""
 
 
 def section_open(num, label, heading_id, heading_html, *, tint=False, section_id=None):
@@ -169,15 +97,6 @@ SECTION_CLOSE = """
     </div>
   </section>
 """
-
-
-def steps_list():
-    return """<ol class="steps">
-          <li><h3>Cotiza aquí</h3><p>Pon tus m² y tu estado. Mándanos la cotización por WhatsApp.</p></li>
-          <li><h3>Confirmamos el flete</h3><p>Con tu dirección te damos el precio final. Sin sorpresas.</p></li>
-          <li><h3>Pagas y facturamos</h3><p>Transferencia o link de pago con tarjeta. Factura CFDI 4.0.</p></li>
-          <li><h3>Recibes en 3 a 5 días</h3><p>Llega por paquetería con guía de rastreo y guía de instalación.</p></li>
-        </ol>"""
 
 
 def faq_html(faqs):
@@ -198,73 +117,3 @@ def faq_schema(faqs):
 
 
 from esquema import RETURNS, SELLER, SHIPPING, breadcrumb_schema, product_schema, strip_tags  # noqa: E402,F401
-
-
-MAX_MM = 35
-
-
-def estado_select_html(select_id, *, selected="", label="Envíalo a"):
-    opts = "\n".join(
-        f'            <option value="{esc(e)}"{" selected" if e == selected else ""}>{esc(e)}</option>' for e in ESTADOS_ORDEN
-    )
-    return f"""<div class="ship-to">
-          <label for="{select_id}" class="ship-to__label">{esc(label)}</label>
-          <select class="ship-to__select" id="{select_id}" data-estado-select>
-            <option value="">Elige tu estado</option>
-{opts}
-          </select>
-        </div>"""
-
-
-def height_rule_html(mm):
-    pct = round(mm / MAX_MM * 100)
-    return (f'<div class="hrule" role="img" aria-label="Altura de fibra: {mm} mm">'
-            f'<span class="hrule__track"><span class="hrule__fill" style="--w:{pct}%"></span></span>'
-            f'<span class="hrule__val num">{mm}<small>mm</small></span></div>')
-
-
-TRUST = [
-    ("Respuesta en menos de 1 hora", "Lun a vie 9 a 18 h, sáb 9 a 14 h"),
-    ("Garantía de fábrica", "De 3 a 8 años según el modelo"),
-    ("Devoluciones en 7 días", '<a href="/politicas#devoluciones">Ver política</a>'),
-    ("Factura CFDI 4.0", "Persona física o moral"),
-    ("Desde 2007", "Vivero y showroom en Cd. Madero"),
-]
-
-
-def trust_band_html():
-    items = "\n".join(f"      <li><strong>{esc(t)}</strong><span>{d}</span></li>" for t, d in TRUST)
-    return f"""<section class="trust" aria-label="Por qué comprar con nosotros">
-  <ul class="wrap trust__list">
-{items}
-  </ul>
-</section>"""
-
-
-def plan_selector_html(prefix):
-    """Forma de pago: contado o mensualidades con tarjeta. tienda-pasto.js llena montos y disponibilidad."""
-    opts = [("0", "Contado", "Transferencia, efectivo o tarjeta en una exhibición")] + [
-        (str(n), f"{n} mensualidades", "Con tarjeta de crédito") for n in (3, 6, 9, 12)
-    ]
-    rows = "\n".join(
-        f'''          <label class="plan" data-plan="{v}">
-            <input type="radio" name="{prefix}-plan" value="{v}"{" checked" if v == "0" else ""}>
-            <span class="plan__name">{esc(name)}<small>{esc(sub)}</small></span>
-            <span class="plan__amount num" data-plan-amount></span>
-            <span class="plan__total num" data-plan-total></span>
-          </label>''' for v, name, sub in opts
-    )
-    return f"""<fieldset class="plans" id="{prefix}-plans" data-plans>
-          <legend id="{prefix}-plans-legend">¿Cómo prefieres pagar?</legend>
-          <dl class="plan-trip num" id="{prefix}-plan-trip" aria-live="polite">
-            <div><dt>Contado</dt><dd data-trip-contado>—</dd></div>
-            <div><dt>Al mes</dt><dd data-trip-mes>—</dd></div>
-            <div><dt>Total</dt><dd data-trip-total>—</dd></div>
-          </dl>
-          <div class="pay-rule" id="{prefix}-plan-rule" aria-hidden="true"></div>
-          <div class="plans__list" role="radiogroup" aria-labelledby="{prefix}-plans-legend">
-{rows}
-          </div>
-          <p class="plans__save" data-plan-save></p>
-          <p class="plans__note">Precio en mensualidades con tarjeta de crédito. Contado (transferencia, efectivo o tarjeta en una exhibición) es el precio más bajo. Montos aproximados: tu banco debe aceptar el plan. Te confirmamos el total antes de enviarte el link de pago. <a href="/politicas#mensualidades">Condiciones</a></p>
-        </fieldset>"""

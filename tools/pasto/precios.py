@@ -209,7 +209,6 @@ def build_precios():
                     f"diseño desde $3,000 y pasto sintético desde ${SINTETICO_MIN}/m². Precios con IVA en Tampico, Madero y Altamira.",
         canonical=URL, og_image=f"{SITE}{IMG}.webp", og_type="website",
         preload_img=f"{IMG}-sm.webp", preload_srcset=f"{IMG}-sm.webp 560w, {IMG}.webp 960w", ld=schema(faqs),
-        subnav=False,
     )
     base = (base.split('<script src="/js/vt-mensualidades.js')[0]
             + base.split('<script src="/js/tienda-pasto.js', 1)[1].split("defer></script>", 1)[1])

@@ -1,5 +1,6 @@
-"""Genera el hub, las 9 fichas de pasto sintético, la página local de Tampico, /precios y las 6 zonas,
-y les aplica el shell compartido de tools/site (menú, pie, barra móvil y head esencial).
+"""Genera /precios, las 6 zonas, el feed de Merchant y las URLs de la tienda en el sitemap, y aplica el shell compartido
+de tools/site a las páginas que escribe. La tienda (hub, 9 fichas, 11 ciudades, perros y sintético en Tampico) sale de
+tools/site/generar.py desde la Etapa 2b; /precios y las zonas pasan a sus plantillas en la 2g.
 
 Uso: python3 tools/pasto/build.py   (desde la raíz del repo). Para todo el sitio: python3 tools/site/build.py
 """
