@@ -27,8 +27,12 @@ def _prueba(k, numero):
 def _escalas(k, numero):
     e = k["escalas"]
     cotizador = COTIZADORES[e["cotizador"]](k["prefijo"], k["tipo"], k["portada"]["mensaje"])
-    cuerpo = (c.tabla_comparativa(e["columnas"], e["filas"], e["caption"])
-              + f'<h3 class="vt-mt">{e["titulo_cotizador"]}</h3>{cotizador}')
+    if "especies" in e:  # palmas: tabla de especies con el renglón agrupado en celular
+        tabla = c.tabla_especies(e["especies"], e["caption"], e["grupo"])
+    else:
+        tabla = c.tabla_comparativa(e["columnas"], e["filas"], e["caption"])
+    nota = f'<p class="vt-promesa">{e["nota"]}</p>' if e.get("nota") else ""
+    cuerpo = tabla + nota + f'<h3 class="vt-mt vt-b2b__titulo">{e["titulo_cotizador"]}</h3>{cotizador}'
     return c.bloque(numero, "Precio por volumen", "vt-h-precio", e["titulo"], cuerpo, lede=e["lede"], tinte=True,
                     id_seccion="precio")
 

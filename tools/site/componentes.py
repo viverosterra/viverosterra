@@ -244,6 +244,23 @@ def tabla_comparativa(columnas, filas, caption):
             f'<tbody>{cuerpo}</tbody></table>')
 
 
+def tabla_especies(filas, caption, grupo):
+    """Especies con su precio: el nombre científico en cursiva bajo el común (sin columna propia). filas: nombre,
+    cientifico, precio (texto) y cotiza (True si va "según cotización"). En celular las que se cotizan se juntan en un
+    solo renglón (grupo: nombre y precio) para no apilar una tarjeta por especie; desde 768 px la tabla va completa.
+    Cada vista oculta la otra con display:none, así el lector de pantalla lee lo mismo que se ve."""
+    def fila(clase, nombre, detalle, precio):
+        atributo = f' class="{clase}"' if clase else ""
+        return (f'<tr{atributo}><th scope="row"><b>{nombre}</b><span>{detalle}</span></th>'
+                f'<td class="vt-tabla__p">{precio}</td></tr>')
+    cuerpo = "".join(fila("vt-tabla__cotiza" if cotiza else "", nombre, f"<i>{cientifico}</i>", precio)
+                     for nombre, cientifico, precio, cotiza in filas)
+    cuerpo += fila("vt-tabla__grupo", *grupo)
+    return (f'<table class="vt-tabla vt-tabla--especies"><caption>{caption}</caption><thead><tr><th scope="col">Especie'
+            '</th><th scope="col" class="vt-tabla__p">Precio</th></tr></thead>'
+            f'<tbody>{cuerpo}</tbody></table>')
+
+
 def linea_mensualidad(contado):
     """Plazo más largo disponible para un precio de contado, con la fórmula oficial (tools/pasto/mensualidades.py, la
     misma de vt-mensualidades.js): "o en 12 mensualidades de ≈ $1,852 con tarjeta de crédito (total $22,220)"."""
@@ -263,7 +280,8 @@ def _precio_opcion(o):
         return (f'<p class="vt-modo__precio">{desde}<span class="vt-precio-marca">{dinero(o["precio"])}</span> '
                 f'{o["unidad"]} <small>{o["detalle"]}</small>{mes}</p>')
     if "precio_texto" in o:
-        return f'<p class="vt-modo__precio">{o["precio_texto"]} <small>{o["detalle"]}</small></p>'
+        detalle = f' <small>{o["detalle"]}</small>' if o.get("detalle") else ""
+        return f'<p class="vt-modo__precio">{o["precio_texto"]}{detalle}</p>'
     return ""
 
 
@@ -736,13 +754,13 @@ FORMULARIO_GRACIAS = f"{datos.SITIO}/gracias"
 
 
 def _campo_correo(prefijo, nombre, etiqueta, tipo="text", requerido=True, completar="off", placeholder="",
-                  multilinea=False, ancho=False):
+                  multilinea=False, ancho=False, modo=None):
     ident = f"{prefijo}-c-{nombre}"
     error = f"{ident}-error"
     texto = etiqueta if requerido else f"{etiqueta} (opcional)"
     comunes = (f'id="{esc(ident)}" name="{esc(nombre)}"' + ("" if multilinea else f' type="{tipo}"')
-               + (" required" if requerido else "") + f' autocomplete="{completar}" placeholder="{esc(placeholder)}" '
-               f'aria-describedby="{esc(error)}"')
+               + (" required" if requerido else "") + (f' inputmode="{modo}"' if modo else "")
+               + f' autocomplete="{completar}" placeholder="{esc(placeholder)}" aria-describedby="{esc(error)}"')
     control = f"<textarea {comunes} rows=\"3\"></textarea>" if multilinea else f"<input {comunes}>"
     clase = "vt-campo vt-correo__ancho" if ancho or multilinea else "vt-campo"
     return (f'<div class="{clase}"><label for="{esc(ident)}">{texto}</label><div class="vt-control">{control}</div>'
@@ -750,9 +768,10 @@ def _campo_correo(prefijo, nombre, etiqueta, tipo="text", requerido=True, comple
 
 
 def formulario_correo(prefijo, f):
-    """Cotización por correo para departamentos de compras. f: pagina (asunto), cta (cta_id de GA4) y cantidad
-    (etiqueta, ejemplo, multilínea) para m² o la lista de palmas, que el cotizador de la página prellena."""
-    etiqueta, ejemplo, multilinea = f["cantidad"]
+    """Cotización por correo para departamentos de compras. f: pagina (asunto), cta (cta_id de GA4), cantidad
+    (etiqueta, ejemplo, multilínea y, opcional, inputmode) para m² o la lista de palmas, y aviso (privacidad, debajo del
+    botón). El cotizador de la página prellena cantidad, empresa, proyecto y fecha."""
+    etiqueta, ejemplo, multilinea, *modo = f["cantidad"]
     campos = (
         _campo_correo(prefijo, "empresa", "Empresa", completar="organization", placeholder="Razón social"),
         _campo_correo(prefijo, "nombre", "Nombre", completar="name", placeholder="Quién recibe la cotización"),
@@ -760,7 +779,8 @@ def formulario_correo(prefijo, f):
         _campo_correo(prefijo, "telefono", "Teléfono", "tel", False, "tel", "833 000 0000"),
         _campo_correo(prefijo, "proyecto", "Proyecto y ubicación", placeholder="Ej. fraccionamiento en Altamira",
                       ancho=True),
-        _campo_correo(prefijo, "cantidad", etiqueta, placeholder=ejemplo, multilinea=multilinea, ancho=True),
+        _campo_correo(prefijo, "cantidad", etiqueta, placeholder=ejemplo, multilinea=multilinea, ancho=True,
+                      modo=modo[0] if modo else None),
         _campo_correo(prefijo, "fecha", "Fecha estimada de entrega", requerido=False, placeholder="Ej. marzo"),
         _campo_correo(prefijo, "mensaje", "Mensaje", requerido=False, multilinea=True,
                       placeholder="Especificaciones, etapas de la obra o datos de facturación"),
@@ -773,8 +793,9 @@ def formulario_correo(prefijo, f):
         '<input type="hidden" name="_captcha" value="false">'
         '<input class="vt-correo__miel" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">'
         f'<div class="vt-correo__campos">{"".join(campos)}</div>'
-        '<div class="vt-correo__pie"><button type="submit" class="vt-btn vt-btn--linea">Enviar solicitud por correo'
-        '</button><p class="vt-correo__estado" role="status" data-vt-o="correo-estado"></p></div></form>')
+        '<div class="vt-correo__pie"><button type="submit" class="vt-btn vt-btn--tinta">Enviar solicitud por correo'
+        '</button><p class="vt-correo__estado" role="status" data-vt-o="correo-estado"></p>'
+        f'<p class="vt-correo__aviso">{f["aviso"]}</p></div></form>')
 
 
 # ---------- portada (primer pantallazo: qué, dónde, precio y CTA) ----------

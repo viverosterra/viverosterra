@@ -5,7 +5,8 @@ Graph), tipos del JSON-LD, encabezados h1–h3, preguntas frecuentes, precios y 
 tests/test_paridad.py exige que cada elemento siga en la página nueva o que el contenido diga a dónde fue
 (PARIDAD["reemplazos"]) o por qué se retiró (PARIDAD["retirados"]). La meta no cambia salvo que el contenido declare el
 valor nuevo y el motivo (PARIDAD["meta"]: {clave: (valor nuevo, motivo)}; desde 2d, para no publicar un precio que el
-dueño corrigió).
+dueño corrigió). Un tipo del JSON-LD solo deja de salir con su motivo (PARIDAD["jsonld"]: {tipo: motivo}; desde la
+revisión 2d, cuando un nodo suelto pasa a ser una referencia por @id a la entidad única #negocio).
 
 Uso:
   python3 tools/site/paridad.py capturar /pasto-en-rollo-tampico   (congela tests/paridad/pasto-en-rollo-tampico.json)
@@ -159,8 +160,14 @@ def comparar(ruta, mapa, public=paginas.PUBLIC, capturas=CAPTURAS):
     nuevo["enlaces"] = enlaces(html)
     resultado = {c: faltantes(viejo[c], nuevo[c], mapa) for c in CATEGORIAS}
     resultado["meta"] = meta_distinta(viejo["meta"], nuevo["meta"], mapa.get("meta"))
-    resultado["jsonld_tipos"] = sorted(set(viejo["jsonld_tipos"]) - set(nuevo["jsonld_tipos"]))
+    resultado["jsonld_tipos"] = tipos_retirados(viejo["jsonld_tipos"], nuevo["jsonld_tipos"], mapa.get("jsonld"))
     return resultado
+
+
+def tipos_retirados(viejos, nuevos, motivos=None):
+    """Tipos del JSON-LD que ya no salen y no tienen un motivo escrito (PARIDAD["jsonld"])."""
+    motivos = motivos or {}
+    return sorted(t for t in set(viejos) - set(nuevos) if len(motivos.get(t, "")) <= 20)
 
 
 def main(argv):

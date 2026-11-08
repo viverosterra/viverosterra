@@ -5,8 +5,9 @@ de una constructora (datos.OPINIONES_PASTO_EN_ROLLO, con permiso del dueño) y 3
 
 Precios de datos.PRECIOS ($60 desde 500 m², $85 solo pasto, desde $120 instalado). La capacidad por entrega y los plazos
 no están en datos.py: la tabla dice que van por escrito en la cotización (hoja de ruta 2d: el dueño los da o no se
-publican). Título, canonical, robots, Open Graph, Service y migas como estaban publicados; la descripción y su
-og:description corrigen el "Factura CFDI, factura CFDI" repetido (PARIDAD["meta"]). FAQPage de las preguntas visibles.
+publican). Título, canonical, robots, Open Graph y Service como estaban publicados; la descripción y su og:description
+corrigen el "Factura CFDI, factura CFDI" repetido (PARIDAD["meta"]). Revisión 2d: el Service apunta a la entidad única
+#negocio (PARIDAD["jsonld"]) y las migas del JSON-LD son las visibles. FAQPage de las preguntas visibles.
 """
 import datos
 import mensajes_paginas
@@ -48,15 +49,14 @@ SERVICIO = {
     "description": ("Suministro de pasto San Agustín en rollo al mayoreo para constructoras, arquitectos, fraccionamientos, "
                     "hoteles y empresas en Tampico, Ciudad Madero y Altamira. Precio preferencial por volumen, factura "
                     "CFDI 4.0 y entrega por etapas según avance de obra."),
-    "provider": {"@type": "LocalBusiness", "name": datos.NOMBRE, "telephone": datos.TELEFONO_TEL,
-                 "address": {"@type": "PostalAddress", "streetAddress": datos.CALLE, "addressLocality": datos.CIUDAD,
-                             "addressRegion": "Tamaulipas", "postalCode": datos.CP, "addressCountry": "MX"}},
+    "provider": {"@id": f"{SITE}/#negocio"},  # la entidad de las demás páginas (el nodo completo vive en la home)
     "areaServed": ["Tampico", "Ciudad Madero", "Altamira", "Tamaulipas"],
 }
+# Las mismas migas que se ven (CONTENIDO["migas"]).
 MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
-    {"@type": "ListItem", "position": 1, "name": "Inicio", "item": SITE},
-    {"@type": "ListItem", "position": 2, "name": "Pasto en Rollo Tampico", "item": f"{SITE}/pasto-en-rollo-tampico"},
-    {"@type": "ListItem", "position": 3, "name": "Mayoreo Pasto Tampico", "item": URL},
+    {"@type": "ListItem", "position": 1, "name": "Inicio", "item": f"{SITE}/"},
+    {"@type": "ListItem", "position": 2, "name": "Pasto en rollo", "item": f"{SITE}/pasto-en-rollo-tampico"},
+    {"@type": "ListItem", "position": 3, "name": "Mayoreo", "item": URL},
 ]}
 
 PREGUNTAS = (
@@ -174,16 +174,17 @@ CONTENIDO = {
         "opiniones": datos.OPINIONES_PASTO_EN_ROLLO[1:],
     },
     "escalas": {
-        "titulo": "¿Cuánto cuesta el pasto al mayoreo?",
+        "titulo": "¿Cuánto cuesta el pasto en rollo al mayoreo?",
         "lede": (f"Desde {dinero(MAYOREO)}/m² solo pasto en pedidos de {MINIMO} m² o más; con menos, {dinero(SOLO)}/m². "
                  f"La instalación en obra, {datos.SEGUN_COTIZACION.lower()}. Precios {datos.ANIO} con IVA; lista "
                  'completa en <a href="/precios">viverosterra.com/precios</a>.'),
-        "columnas": ("Volumen", "Unidad", "Precio", "Entrega"),
+        # La unidad va con el precio ("$85/m²"): sin columna Unidad, la tarjeta de celular tiene una línea menos.
+        "columnas": ("Volumen", "Precio", "Entrega"),
         "filas": (
-            (f"Menos de {MINIMO} m²", "/m²", f"{dinero(SOLO)} solo pasto", "Se cotiza según tu obra"),
-            (f"{MINIMO} m² o más", "/m²", f"desde {dinero(MAYOREO)} solo pasto", "Por etapas, según el avance de obra"),
-            ("Pasto instalado en obra", "/m²", datos.SEGUN_COTIZACION, "Con nuestra cuadrilla"),
-            ("Capacidad y calendario", "por entrega", "Por escrito en tu cotización",
+            (f"Menos de {MINIMO} m²", f"{dinero(SOLO)}/m² solo pasto", "Se cotiza según tu obra"),
+            (f"{MINIMO} m² o más", f"desde {dinero(MAYOREO)}/m² solo pasto", "Por etapas, según el avance de obra"),
+            ("Pasto instalado en obra", f"{datos.SEGUN_COTIZACION} por m²", "Con nuestra cuadrilla"),
+            ("Capacidad y calendario", "Por escrito en tu cotización, por entrega",
              f"El pasto llega del campo {datos.LLEGADA_PASTO}"),
         ),
         "caption": "Con IVA. El cotizador estima solo el pasto; la entrega y la instalación se cotizan con tu obra.",
@@ -194,7 +195,8 @@ CONTENIDO = {
         "titulo": "¿Compras prefiere correo? Pide la cotización por escrito",
         "lede": b2b_comun.LEDE_CORREO,
         "pagina": "Mayoreo de pasto", "cta": "mayoreo:formulario",
-        "cantidad": ("m² totales de la obra", "Ej. 1,200 m²", False),
+        "cantidad": ("m² totales de la obra", "Ej. 1,200 m²", False, "decimal"),
+        "aviso": b2b_comun.AVISO_PRIVACIDAD,
     },
     "documentacion": {
         "titulo": "Documentación para compras",
@@ -244,7 +246,7 @@ PARIDAD = {
     },
     "reemplazos": {
         "Ventajas para tu empresa u obra": "Documentación para compras",
-        "Precio preferencial por volumen": "¿Cuánto cuesta el pasto al mayoreo?",
+        "Precio preferencial por volumen": "¿Cuánto cuesta el pasto en rollo al mayoreo?",
         "Entrega por etapas según obra": "Entregas por etapas",
         "Preguntas frecuentes — Mayoreo B2B": "Preguntas de compras sobre pasto al mayoreo",
     },
@@ -258,5 +260,11 @@ PARIDAD = {
         "Viveros Terra · Tampico": (
             "Bloque de autor; la entidad y el autor son de la Etapa 4. “+200 proyectos B2B” (confirmado por el dueño) "
             "pasa a la entrada de la sección de clientes."),
+    },
+    # Tipos del JSON-LD que ya no salen, con su motivo (paridad.comparar).
+    "jsonld": {
+        "LocalBusiness": ("El provider del Service apunta por @id a la entidad única #negocio de las demás páginas (el "
+                          "nodo completo vive en la home), en vez de un LocalBusiness suelto. Revisión 2d."),
+        "PostalAddress": "Iba dentro del LocalBusiness suelto del provider; la dirección completa es del nodo #negocio.",
     },
 }

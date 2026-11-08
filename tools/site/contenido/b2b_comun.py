@@ -20,11 +20,16 @@ DOCUMENTACION = (
      "texto": ("Confirmas con un anticipo; los pagos siguientes se acuerdan contra avances de obra y quedan por escrito "
                "en la cotización.")},
     {"titulo": "Entregas por etapas",
-     "texto": "Un pedido global con entregas parciales en las fechas que tu obra necesita, para que cada entrega llegue fresca."},
+     "texto": "Un pedido global con entregas parciales en las fechas que tu obra necesita."},
 )
 # Cotización por correo (respuesta del dueño, 2026-11-08): compras que no usan WhatsApp mandan su solicitud por escrito.
-LEDE_CORREO = (f"Para departamentos de compras que piden la cotización por escrito. {datos.PROMESA} "
-               f"({datos.HORARIO}); si prefieres, el mismo detalle va por WhatsApp.")
+# Sin la promesa de “menos de 1 hora” (es de WhatsApp): por correo no se promete un plazo para la cotización formal.
+LEDE_CORREO = ("Para departamentos de compras que piden la cotización por escrito. Te respondemos por correo en horario "
+               f"de atención ({datos.HORARIO}); la cotización formal va por escrito. Si prefieres, el mismo detalle va "
+               "por WhatsApp.")
+# Debajo del botón de envío: para qué se usan los datos y el aviso de privacidad del sitio (el mismo enlace del pie).
+AVISO_PRIVACIDAD = ('Usamos tus datos solo para responder tu cotización. '
+                    '<a href="/politica-privacidad">Aviso de privacidad</a>.')
 PREGUNTA_PAGO = ("¿Cómo se paga un proyecto?",
                  f"{datos.ANTICIPO_PROYECTOS} Cada pago lleva su factura {datos.FACTURA}.")
 PREGUNTA_REPSE = ("¿Están dados de alta en el REPSE?",

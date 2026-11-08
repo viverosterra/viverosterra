@@ -5,7 +5,8 @@
      el mínimo y, con menos, solo pasto con su aviso. Los modos y precios llegan en data-modos, escritos desde datos.py.
    - [data-vt-palmas]: especie, altura y cantidad por renglón (hasta 8) → un solo mensaje con toda la lista.
    - [data-vt-correo]: cotización por correo para compras (formsubmit). Valida junto a cada campo, manda generate_lead con
-     method "formulario" y recibe del cotizador o del armador los m² o la lista (si el visitante no escribió otra cosa).
+     method "formulario" y recibe del cotizador o del armador los m² o la lista, la empresa, la obra y la fecha (cada campo
+     mientras el visitante no haya escrito otra cosa en él).
    Los botones son enlaces de WhatsApp con data-cta: terra.js los mide (generate_lead) y los firma al hacer clic. Sin JS, el
    botón manda la plantilla de compras de la página (data-mensaje) y el formulario usa la validación del navegador. Las
    funciones puras se exportan para node --test. */
@@ -98,11 +99,20 @@
 
   const prellenadoVolumen = (m2) => (m2 ? `${formatoM2(m2)} m²` : '');
   const prellenadoPalmas = (filas) => filas.map(lineaPalma).filter(Boolean).join('\n');
+  // Campos del cotizador (camposObra) → campos del formulario por correo: la obra va a "Proyecto y ubicación".
+  const prellenadoObra = (campos) => ({ empresa: String(campos.empresa || '').trim(),
+    proyecto: String(campos.obra || '').trim(), fecha: String(campos.fecha || '').trim() });
+  const PRELLENABLES = ['cantidad', 'empresa', 'proyecto', 'fecha'];
 
-  // Lleva m² o la lista al campo "cantidad" del formulario por correo mientras el visitante no lo haya escrito él.
-  function prellenar(texto) {
-    const campo = document.querySelector('[data-vt-correo] [name="cantidad"]');
-    if (campo && !campo.dataset.vtPropio) campo.value = texto;
+  // Lleva m² o la lista, la empresa, la obra y la fecha al formulario por correo: cada campo, mientras el visitante no
+  // lo haya escrito él (data-vt-propio).
+  function prellenar(valores) {
+    const form = document.querySelector('[data-vt-correo]');
+    if (!form) return;
+    Object.keys(valores).forEach((n) => {
+      const campo = form.querySelector(`[name="${n}"]`);
+      if (campo && !campo.dataset.vtPropio) campo.value = valores[n];
+    });
   }
 
   function iniciarCorreo(form, win) {
@@ -110,7 +120,6 @@
     const campos = Array.from(form.querySelectorAll('.vt-correo__campos [name]'));
     const requeridos = campos.filter((c) => c.required).map((c) => c.name);
     const estado = form.querySelector('[data-vt-o="correo-estado"]');
-    const cantidad = form.querySelector('[name="cantidad"]');
     const pintar = (c, mensaje) => {
       const p = form.querySelector(`#${c.id}-error`);
       p.textContent = mensaje || '';
@@ -119,7 +128,10 @@
       else c.removeAttribute('aria-invalid');
     };
     const valores = () => Object.fromEntries(campos.map((c) => [c.name, c.value]));
-    if (cantidad) cantidad.addEventListener('input', () => { cantidad.dataset.vtPropio = cantidad.value ? '1' : ''; });
+    PRELLENABLES.forEach((n) => {
+      const c = form.querySelector(`[name="${n}"]`);
+      if (c) c.addEventListener('input', () => { c.dataset.vtPropio = c.value ? '1' : ''; });
+    });
     form.addEventListener('input', (e) => {
       const c = e.target;
       if (c.getAttribute && c.getAttribute('aria-invalid') === 'true') pintar(c, erroresCorreo(valores(), requeridos)[c.name]);
@@ -132,7 +144,9 @@
         e.preventDefault();
         estado.textContent = malos.length === 1 ? 'Falta 1 dato: revisa el campo marcado.'
           : `Faltan ${malos.length} datos: revisa los campos marcados.`;
-        malos[0].focus();
+        // El campo queda bajo el menú fijo si solo se enfoca: se lleva a la vista con su scroll-margin-top (CSS).
+        malos[0].closest('.vt-campo').scrollIntoView({ block: 'start' });
+        malos[0].focus({ preventScroll: true });
         return;
       }
       estado.textContent = 'Enviando tu solicitud…';
@@ -163,7 +177,7 @@
         salida('aviso').textContent = '';
         salida('aviso').hidden = true;
         salida('cta').setAttribute('href', enlace(caja.dataset.wa, caja.dataset.mensaje));
-        prellenar('');
+        prellenar(Object.assign({ cantidad: '' }, prellenadoObra(camposObra(caja))));
         return;
       }
       const r = calcular(m2, 1, 'mayoreo', modos);
@@ -176,7 +190,7 @@
       salida('aviso').textContent = r.aviso;
       salida('aviso').hidden = !r.aviso;
       salida('cta').setAttribute('href', enlace(caja.dataset.wa, t.mensaje));
-      prellenar(prellenadoVolumen(m2));
+      prellenar(Object.assign({ cantidad: prellenadoVolumen(m2) }, prellenadoObra(camposObra(caja))));
     }
     caja.addEventListener('input', actualizar);
     actualizar();
@@ -196,7 +210,7 @@
       salida('resumen').textContent = resumenPalmas(f);
       salida('lista').textContent = f.map(lineaPalma).filter(Boolean).join('\n');
       salida('cta').setAttribute('href', enlace(caja.dataset.wa, mensaje || caja.dataset.mensaje));
-      prellenar(prellenadoPalmas(f));
+      prellenar(Object.assign({ cantidad: prellenadoPalmas(f) }, prellenadoObra(camposObra(caja))));
     }
     // Copia del último renglón, vacía y con ids nuevos (cada label sigue apuntando a su control).
     function otraFila() {
@@ -218,7 +232,7 @@
   }
 
   const api = { leerM2, textosVolumen, leerAltura, leerCantidad, lineaPalma, mensajePalmas, resumenPalmas, enlace,
-    erroresCorreo, eventoFormulario, prellenadoVolumen, prellenadoPalmas, MENSAJE_REQUERIDO };
+    erroresCorreo, eventoFormulario, prellenadoVolumen, prellenadoPalmas, prellenadoObra, MENSAJE_REQUERIDO };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
     return;

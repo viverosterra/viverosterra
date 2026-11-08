@@ -7,9 +7,11 @@ Precios (decisión del dueño, 2026-11-07): areca y coco plumoso desde $250 y pa
 precio sube con la altura; las demás especies, según cotización. Se retiran los precios “desde” de main ($850 a
 $4,200 por ejemplar), los paquetes con monto, los proyectos anónimos, los plazos de entrega, las alturas y los “lead
 time” por especie, la calculadora de rangos ($180K–$260K) y el pago “a crédito”: nada de eso está en datos.py ni lo
-confirmó el dueño (preguntas al final del plan 2d). Título, canonical, robots, Open Graph (salvo la descripción, que
-decía “desde $850”: PARIDAD["meta"]), Twitter Card, Service, el nodo LocalBusiness #localbusiness (se va con el grafo
-único de la Etapa 4) y migas como estaban publicados; ItemList y AggregateOffer con los precios nuevos.
+confirmó el dueño (preguntas al final del plan 2d). Título, canonical y robots como estaban publicados. Revisión 2d
+(PARIDAD["meta"] y PARIDAD["jsonld"]): la descripción y el Open Graph sin “productor directo” (sin verificar) ni “desde
+$850”, con la foto de palmas del vivero; el Service apunta a la entidad única #negocio de las demás páginas (sin el nodo
+LocalBusiness recortado de main); las migas del JSON-LD son las visibles; ItemList y AggregateOffer con los precios
+nuevos en PriceSpecification (minPrice: son precios “desde”).
 """
 import datos
 import mensajes_paginas
@@ -26,9 +28,13 @@ DESDE, REAL = dinero(P["palma_desde"]), dinero(P["palma_real"])
 # areca y coco plumoso desde $250 y palma real desde $500 en tamaño chico; todo lo demás, con esta frase.
 SEGUN_ALTURA = "Según cotización por altura y volumen"
 MENSAJE = mensajes_paginas.EMPRESAS[RUTA]
-OG_IMAGEN = f"{SITE}/img/jardin-diseno-paisajismo-pasto-san-agustin-tampico-og.webp"
-DESCRIPCION = (f"Productor directo de palmas para proyectos B2B. 12 especies; areca y coco plumoso desde {DESDE}. "
-               f"Cobertura Tamaulipas, Veracruz y SLP. {datos.FACTURA} y garantía de arraigo de 30 días en siembra propia.")
+# Recorte 1200×630 de la foto de palmas del vivero (la de la portada), para Open Graph y Twitter.
+OG_IMAGEN = f"{SITE}/img/portadas/palmas-reales-mayoreo-vivero-tampico-og.webp"
+ESPECIES = "12 especies (palmas, cycas, bambú y yucca)"
+DESCRIPCION = (f"Palmas al mayoreo para proyectos B2B: {ESPECIES}; areca y coco plumoso desde {DESDE}. Cobertura "
+               f"Tamaulipas, Veracruz y SLP. {datos.FACTURA} y garantía de arraigo de 30 días en siembra propia.")
+DESCRIPCION_OG = (f"{ESPECIES} para proyectos en Tamaulipas, Veracruz y SLP. CFDI 4.0 y garantía de arraigo de 30 días "
+                  "en siembra propia.")
 
 META = {
     "title": "Palmas Mayoreo para Proyectos B2B en Tamaulipas, Veracruz y SLP · Viveros Terra",
@@ -39,8 +45,7 @@ META = {
         ("og:type", "website"),
         ("og:url", URL),
         ("og:title", "Palmas Mayoreo para Proyectos B2B · Viveros Terra"),
-        ("og:description", ("12 especies de palmas para proyectos en Tamaulipas, Veracruz y SLP. CFDI 4.0 y garantía de "
-                            "arraigo de 30 días en siembra propia.")),
+        ("og:description", DESCRIPCION_OG),
         ("og:image", OG_IMAGEN),
         ("og:image:width", "1200"),
         ("og:image:height", "630"),
@@ -50,49 +55,52 @@ META = {
     "twitter": (
         ("twitter:card", "summary_large_image"),
         ("twitter:title", "Palmas Mayoreo Proyectos B2B · Viveros Terra"),
-        ("twitter:description", ("12 especies. CFDI y garantía de arraigo de 30 días en siembra propia. Cobertura "
+        ("twitter:description", (f"{ESPECIES}. CFDI y garantía de arraigo de 30 días en siembra propia. Cobertura "
                                  "Tamaulipas, Veracruz y SLP.")),
         ("twitter:image", OG_IMAGEN),
     ),
 }
-NEGOCIO = f"{SITE}#localbusiness"  # @id de main; el grafo único con #negocio es de la Etapa 4
+NEGOCIO = f"{SITE}/#negocio"  # la entidad de las demás páginas (el nodo completo vive en la home)
 SERVICIO = {
     "@type": "Service", "@id": f"{URL}#service", "name": "Palmas al mayoreo para proyectos B2B",
     "serviceType": ("Venta y entrega de palmas para proyectos arquitectónicos, hoteleros, gubernamentales e "
                     "industriales"),
     "provider": {"@id": NEGOCIO},
     "areaServed": [{"@type": "State", "name": n} for n in ("Tamaulipas", "Veracruz", "San Luis Potosí")],
+    # Solo las especies con precio publicado cuentan como oferta (las demás, según cotización).
     "offers": {"@type": "AggregateOffer", "lowPrice": str(P["palma_desde"]), "priceCurrency": "MXN",
-               "offerCount": str(len(datos.PALMAS_PROYECTO))},
-}
-LOCAL = {
-    "@type": "LocalBusiness", "@id": NEGOCIO, "name": datos.NOMBRE, "url": SITE, "telephone": datos.TELEFONO_TEL,
-    "address": {"@type": "PostalAddress", "addressLocality": datos.CIUDAD, "addressRegion": "Tamaulipas",
-                "addressCountry": "MX"},
-    "sameAs": ["https://www.facebook.com/viverosterra/", "https://www.instagram.com/viverosterramx"],
+               "offerCount": str(sum(1 for *_e, precio in datos.PALMAS_PROYECTO if precio is not None))},
 }
 
 
 def _producto(nombre, cientifico, precio):
     producto = {"@type": "Product", "name": nombre, "alternateName": cientifico}
-    if precio is not None:
-        producto["offers"] = {"@type": "Offer", "price": str(precio), "priceCurrency": "MXN",
-                              "description": "Tamaño chico; el precio sube con la altura."}
+    if precio is not None:  # precio "desde": mínimo del tamaño chico, no un precio cerrado
+        producto["offers"] = {"@type": "Offer", "priceSpecification": {
+            "@type": "PriceSpecification", "minPrice": precio, "priceCurrency": "MXN"},
+            "description": "Tamaño chico; el precio sube con la altura."}
     return producto
+
+
+def _lista_es(nombres):
+    """"a, b y c" en minúsculas, con la primera en mayúscula."""
+    nombres = [n[:1].lower() + n[1:] for n in nombres]
+    texto = ", ".join(nombres[:-1]) + f" y {nombres[-1]}" if len(nombres) > 1 else "".join(nombres)
+    return texto[:1].upper() + texto[1:]
 
 
 ESPECIES_LD = {"@type": "ItemList", "name": "12 palmas para proyectos B2B", "itemListElement": [
     {"@type": "ListItem", "position": i, "item": _producto(*e)} for i, e in enumerate(datos.PALMAS_PROYECTO, 1)]}
+# Las mismas migas que se ven (CONTENIDO["migas"]).
 MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "Inicio", "item": f"{SITE}/"},
-    {"@type": "ListItem", "position": 2, "name": "Mayoreo B2B", "item": f"{SITE}/mayoreo-pasto-tampico"},
-    {"@type": "ListItem", "position": 3, "name": "Palmas Mayoreo Proyectos", "item": URL},
+    {"@type": "ListItem", "position": 2, "name": "Palmas para proyectos", "item": URL},
 ]}
 
 PREGUNTAS = (
-    ("¿Cuál es el pedido mínimo al mayoreo?",
-     "El precio por volumen depende de la especie, la altura y la cantidad de cada una: con tu lista te damos el precio "
-     f"por escrito. Como referencia, la areca y el coco plumoso cuestan desde {DESDE} y la palma real desde {REAL} en "
+    ("¿Cómo se calcula el precio por volumen?",
+     "No pedimos mínimo por especie: el precio por volumen depende de la especie, la altura y la cantidad de cada una, y "
+     f"con tu lista te lo damos por escrito. Como referencia, la areca y el coco plumoso cuestan desde {DESDE} y la palma real desde {REAL} en "
      "su tamaño más chico."),
     ("¿Hacen envíos fuera de Tamaulipas?",
      f"Sí, por proyecto. Además de Tampico, Madero y Altamira, atendemos {datos.ZONAS_POR_PROYECTO}, y obras en el resto "
@@ -109,8 +117,8 @@ PREGUNTAS = (
      "entregas si la obra avanza por etapas."),
     b2b_comun.PREGUNTA_PAGO,
     ("¿Pueden hacer instalación llave en mano?",
-     "Sí: maniobra de plantación con nuestra cuadrilla, supervisión y guía de cuidado. La garantía de 30 días aplica a "
-     "las palmas que sembramos nosotros. Fuera de la zona conurbada de Tampico, la siembra se cotiza por proyecto."),
+     "Sí: siembra con nuestra cuadrilla y guía de cuidado por escrito; la maniobra y las fechas te las confirmamos por "
+     "escrito con la cotización. La garantía de 30 días aplica a las palmas que sembramos nosotros. Fuera de la zona conurbada de Tampico, la siembra se cotiza por proyecto."),
     ("¿Trabajan con compras de gobierno?",
      f"Sí: el Gobierno de Tampico es cliente nuestro. Tenemos REPSE {datos.REPSE} y facturamos {datos.FACTURA}; los "
      "requisitos de tu convocatoria (padrón de proveedores, fianzas o actas) los revisamos contigo al cotizar."),
@@ -145,20 +153,20 @@ FIGURAS = (
 
 PAQUETES = (
     {"rotulo": "Paquete 1 · Fraccionamientos", "titulo": "Áreas comunes, camellones y casa muestra",
-     "precio_texto": SEGUN_ALTURA, "detalle": "según especies, alturas y cantidad",
+     "precio_texto": SEGUN_ALTURA,
      "puntos": ("Washingtonia y areca para accesos y camellones", "Entregas por etapas: la casa muestra primero",
                 "Siembra con nuestra cuadrilla y garantía de 30 días con el riego indicado"),
      "mensaje": ("Hola, quiero cotizar palmas para un fraccionamiento.\nEmpresa: ___\n"
                  "Áreas (accesos, camellones, casa muestra): ___\nEspecies y cantidad: ___\nUbicación: ___\n"
                  "Fecha de entrega: ___")},
     {"rotulo": "Paquete 2 · Hoteles y comercios", "titulo": "Palmas de imagen para hoteles y comercios",
-     "precio_texto": SEGUN_ALTURA, "detalle": "según especies, alturas y cantidad", "rec": True,
+     "precio_texto": SEGUN_ALTURA,
      "puntos": ("Palma real, coco plumoso y areca", "Especies para el clima de la costa del Golfo",
                 'Diseño del área con el <a href="/diseno-jardines-tampico">Plan Terra</a>, si lo necesitas'),
      "mensaje": ("Hola, quiero cotizar palmas para un hotel o comercio.\nEmpresa: ___\nEspecies y cantidad: ___\n"
                  "Altura aprox.: ___\nUbicación: ___\nFecha de entrega: ___")},
     {"rotulo": "Paquete 3 · Industria y gobierno", "titulo": "Perímetros y áreas públicas de bajo mantenimiento",
-     "precio_texto": SEGUN_ALTURA, "detalle": "según especies, alturas y cantidad",
+     "precio_texto": SEGUN_ALTURA,
      "puntos": ("Washingtonia y cycas para perímetros", f"REPSE {datos.REPSE} y factura {datos.FACTURA}",
                 '<a href="/mantenimiento-jardines-tampico">Mantenimiento</a> después de la entrega'),
      "mensaje": ("Hola, quiero cotizar palmas para una nave industrial o un área pública.\nEmpresa o institución: ___\n"
@@ -169,7 +177,7 @@ CONTENIDO = {
     "tipo": "b2b",
     "prefijo": "pal",
     "meta": META,
-    "jsonld": {"producto": SERVICIO, "nodos": (LOCAL, ESPECIES_LD), "migas": MIGAS_LD,
+    "jsonld": {"producto": SERVICIO, "nodos": (ESPECIES_LD,), "migas": MIGAS_LD,
                "speakable": ("h1", "h2", ".vt-faq summary")},
     # /empresas llega en la Etapa 3: entonces la ruta visible y MIGAS_LD pasan a Inicio › Empresas › Palmas.
     "migas": (("Inicio", "/"), ("Palmas para proyectos", None)),
@@ -196,9 +204,9 @@ CONTENIDO = {
                  "etapa": "Para proyecto"},
     },
     "prueba": {
-        "titulo": f"Empresas que nos han contratado · {datos.PROYECTOS_B2B} proyectos B2B",
-        "lede": (f"{datos.M2_INSTALADOS} instalados desde {datos.DESDE} en Tamaulipas y la Huasteca: hoteles, "
-                 "fraccionamientos, industria y gobierno."),
+        "titulo": "Palmas para hoteles, fraccionamientos, gobierno e industria",
+        "lede": (f"Empresas que nos han contratado: {datos.PROYECTOS_B2B} proyectos B2B y {datos.M2_INSTALADOS} "
+                 f"instalados desde {datos.DESDE} en Tamaulipas y la Huasteca."),
         "figuras": FIGURAS,
         "nota": ("Si el render pide palmas muy altas de una sola especie, pregúntanos antes de cerrar el plano: a veces "
                  "otra altura u otra especie da el mismo efecto, y te lo decimos al cotizar.", "Al cotizar"),
@@ -206,10 +214,15 @@ CONTENIDO = {
     "escalas": {
         "titulo": "¿Cuánto cuestan las palmas para proyecto?",
         "lede": (f"Areca y coco plumoso desde {DESDE} y palma real desde {REAL} en tamaño chico, con IVA. El precio sube "
-                 f"con la altura; las demás especies, {SEGUN_ALTURA.lower()}. Precios {datos.ANIO}."),
-        "columnas": ("Especie", "Nombre científico", "Precio"),
-        "filas": tuple((n, f"<i>{sci}</i>", f"desde {dinero(p)} · tamaño chico" if p else SEGUN_ALTURA)
-                       for n, sci, p in datos.PALMAS_PROYECTO),
+                 f"con la altura; las demás especies, {SEGUN_ALTURA.lower()}. Precios {datos.ANIO}; lista completa en "
+                 '<a href="/precios">viverosterra.com/precios</a>.'),
+        "especies": tuple((n, sci, f"desde {dinero(p)} · tamaño chico" if p else SEGUN_ALTURA, p is None)
+                          for n, sci, p in datos.PALMAS_PROYECTO),
+        # En celular, las 9 que se cotizan van en un solo renglón (la tabla completa se ve desde 768 px).
+        "grupo": (f"Otras {sum(1 for *_e, p in datos.PALMAS_PROYECTO if p is None)} especies",
+                  _lista_es([n for n, _s, p in datos.PALMAS_PROYECTO if p is None]), SEGUN_ALTURA),
+        "nota": ('¿Pocas palmas para casa? Ve las <a href="/palmas-tropicales-tampico">palmas tropicales para tu '
+                 "jardín</a>."),
         "caption": ("El precio de cada ejemplar depende de su altura: la cotización por escrito lleva especie, altura, "
                     "cantidad y precio."),
         "titulo_cotizador": "Arma tu lista de palmas",
@@ -220,6 +233,7 @@ CONTENIDO = {
         "lede": b2b_comun.LEDE_CORREO,
         "pagina": "Palmas para proyectos", "cta": "palmas:formulario",
         "cantidad": ("Lista de palmas (especie, altura y cantidad)", "Ej. 40 palma real de 3 m, 120 areca", True),
+        "aviso": b2b_comun.AVISO_PRIVACIDAD,
     },
     "documentacion": {
         "titulo": "Documentación completa para tu compra empresarial.",
@@ -272,11 +286,24 @@ PROYECTO_ANONIMO = ("Proyecto anónimo sin nombre, foto ni permiso verificables:
                     "inventados”. Si es real, el dueño lo da con permiso (pregunta del plan 2d).")
 
 PARIDAD = {
-    "meta": {"description": (DESCRIPCION, "Decía “12 especies desde $850”: precio sin confirmar; el dueño fijó areca "
-                                          "y coco plumoso desde $250 (2026-11-07).")},
+    "meta": {
+        "description": (DESCRIPCION, "Decía “Productor directo… 12 especies desde $850”: precio sin confirmar (el dueño "
+                                     "fijó areca y coco plumoso desde $250, 2026-11-07) y “productor directo” sin "
+                                     "verificar (revisión 2d); las 12 especies incluyen cycas, bambú y yucca."),
+        "og:description": (DESCRIPCION_OG, "“12 especies de palmas” no era exacto: tres no son palmas (cycas, bambú y "
+                                           "yucca). Revisión 2d."),
+        "og:image": (OG_IMAGEN, "Era la foto de un jardín con pasto de la home; ahora, palmas del vivero en 1200×630 "
+                                "(recorte de la foto de la portada). Revisión 2d."),
+    },
+    # Tipos del JSON-LD que ya no salen, con su motivo (paridad.comparar).
+    "jsonld": {
+        "LocalBusiness": ("El Service apunta por @id a la entidad única #negocio de las demás páginas (el nodo completo "
+                          "vive en la home); se retira el LocalBusiness recortado de main. Revisión 2d."),
+        "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección completa es del nodo #negocio.",
+    },
     "reemplazos": {
         "Productor directo de palmas para hoteles, fraccionamientos, gobierno e industria": (
-            f"Empresas que nos han contratado · {datos.PROYECTOS_B2B} proyectos B2B"),
+            "Palmas para hoteles, fraccionamientos, gobierno e industria"),
         "12 palmas para proyectos · spec sheet": "¿Cuánto cuestan las palmas para proyecto?",
         "Calcula tu proyecto antes de hablar con ventas.": "Arma tu lista de palmas",
         "Enviamos palmas a toda la región .": "Enviamos palmas a toda la región.",
@@ -291,9 +318,10 @@ PARIDAD = {
     },
     "retirados": {
         "Por qué arquitectos y compradores corporativos eligen Viveros Terra .": (
-            "Diferenciadores sin dato: “productor directo” queda en la descripción; la logística pasa a la cobertura y "
-            "al proceso, y la documentación a su sección."),
-        "Productor directo": "Queda en la descripción; “capacidad sin agotar stock” no está en datos.py.",
+            "Diferenciadores sin dato: “productor directo” no está verificado y se retira (revisión 2d); la logística "
+            "pasa a la cobertura y al proceso, y la documentación a su sección."),
+        "Productor directo": ("Sin verificar: se retira también de la descripción (revisión 2d); “capacidad sin agotar "
+                              "stock” no está en datos.py."),
         "Logística regional": ("Pasa a la cobertura y al paso “Entrega en obra”; la maniobra, “transportes propios y "
                                "red de fleteros” quedan por escrito en la cotización (el dueño no los publicó)."),
         "Documentación B2B": "Pasa a la sección de documentación (CFDI, REPSE, anticipo y avances, entregas).",
@@ -319,7 +347,10 @@ PARIDAD = {
                                          "Áreas verdes recreativas", "35 Coco Plumoso", "120 plantas + 15 palmas")},
         "Envíos fuera de Tamaulipas": "Pasa a la pregunta “¿Hacen envíos fuera de Tamaulipas?” y a la cobertura.",
         "Licitaciones / gobierno": "Pasa a la pregunta “¿Trabajan con compras de gobierno?”, sin prometer fianzas.",
-        **{q: FAQ_SUMMARY for q in ("¿Cuál es el pedido mínimo al mayoreo?", "¿Hacen envíos fuera de Tamaulipas?",
+        "¿Cuál es el pedido mínimo al mayoreo?": (
+            "Pasa a “¿Cómo se calcula el precio por volumen?”, que abre con “No pedimos mínimo por especie” (respuesta "
+            "del dueño 3: sin mínimo por especie). Revisión 2d."),
+        **{q: FAQ_SUMMARY for q in ("¿Hacen envíos fuera de Tamaulipas?",
                                     "¿Qué pasa si una palma no arraiga?", "¿Tienen factura?", "¿Cuánto tarda la entrega?",
                                     "¿Pueden hacer instalación llave en mano?", "¿Trabajan con compras de gobierno?")},
         "¿Aceptan pago diferido / a crédito para proyectos?": CREDITO,
@@ -328,7 +359,8 @@ PARIDAD = {
             "El formulario no mandaba correo: armaba un WhatsApp. Lo sustituyen el armador de palmas y, por respuesta del "
             "dueño (2026-11-08), la cotización por correo para compras (formsubmit, como los materiales)."),
         "Viveros Terra · Tampico": (
-            "Bloque de autor; la entidad y el autor son de la Etapa 4. “+200 proyectos B2B” pasa al título de clientes."),
+            "Bloque de autor; la entidad y el autor son de la Etapa 4. “+200 proyectos B2B” pasa a la entrada de la "
+            "sección de clientes."),
         **{pr: PRECIO_VIEJO for pr in ("$850", "$1,200", "$1,500", "$1,600", "$1,800", "$2,000", "$2,200", "$2,400",
                                        "$2,800", "$3,200", "$4,200")},
         **{pr: PAQUETE_VIEJO for pr in ("$90,000", "$150,000", "$180,000")},
