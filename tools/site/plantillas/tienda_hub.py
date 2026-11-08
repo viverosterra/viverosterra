@@ -19,7 +19,8 @@ def _portada(k):
     copia = (f'<div><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1>'
              f'<p class="vt-existencia"><span>{p["existencia"]}</span></p><p class="vt-lede">{p["rotulo_estado"]}</p>'
              f'{t.selector_estado("hero-estado")}{precio}<p class="vt-promesa">{p["mensualidades"]}</p>'
-             f'{c.fila_cta(p["mensaje"], k["tipo"], "hero", hero=True)}</div>')
+             f'{c.fila_cta(p["mensaje"], k["tipo"], "hero", hero=True)}'
+             f'<p class="vt-enlace-sec"><a href="#modelos">{p["texto_modelos"]}</a></p></div>')
     return (f'<section class="vt-portada vt-portada-t" aria-labelledby="vt-h1"><div class="vt-wrap">{c.migas(k["migas"])}'
             f'<div class="vt-portada__grid">{copia}<div class="vt-portada__foto">{c.figura(p["foto"], principal=True)}'
             f'</div></div>{c.cuadro_datos(p["datos"])}</div></section>')

@@ -37,6 +37,21 @@ def formato_m2(x):
     return texto[:-2] if texto.endswith(".0") else texto
 
 
+UNIDADES_RE = re.compile(r"(?<![\w/])(?:g/m²|/m²|m²)")
+
+
+def unidades(fragmento):
+    """Envuelve m², /m² y g/m² en <span class="vt-u"> para que los rótulos en mayúsculas no los vuelvan "M²"."""
+    return UNIDADES_RE.sub(lambda m: f'<span class="vt-u">{m.group(0)}</span>', fragmento)
+
+
+def mayusculas_sin_unidades(texto):
+    """Mayúsculas para un atributo que CSS muestra tal cual (data-col de las tablas en celular), sin tocar m² y g/m²."""
+    partes = UNIDADES_RE.split(texto)
+    unidades_ = UNIDADES_RE.findall(texto)
+    return "".join(p.upper() + (unidades_[i] if i < len(unidades_) else "") for i, p in enumerate(partes))
+
+
 def texto_plano(fragmento):
     """Texto sin etiquetas ni entidades, con espacios normalizados (para el JSON-LD)."""
     sin_etiquetas = re.sub(r"<[^>]+>", "", fragmento)
@@ -105,7 +120,7 @@ def etiqueta(e, cordel=True):
     return (f'<div class="vt-etiqueta-x{" vt-etiqueta-x--cordel" if cordel else ""}"><div class="vt-etiqueta">'
             f'<p class="vt-etiqueta__cod"><span>{e["codigo"]}</span><span>{e["aviso"]}</span></p>'
             f'<p class="vt-etiqueta__nombre">{e["nombre"]}</p>{sci}'
-            f'<p class="vt-etiqueta__precio"><small>{e["antes"]}</small><b>{e["monto"]}</b><span>{e["unidad"]}</span></p>'
+            f'<p class="vt-etiqueta__precio"><small>{unidades(e["antes"])}</small><b>{e["monto"]}</b><span>{e["unidad"]}</span></p>'
             f'{filas}{nota}</div></div>')
 
 
@@ -120,7 +135,8 @@ DATOS_EMPRESA = (
 
 
 def cuadro_datos(celdas=DATOS_EMPRESA):
-    cuerpo = "".join(f"<div><dt>{esc(t)}</dt><dd>{esc(v)}<small>{esc(s)}</small></dd></div>" for t, v, s in celdas)
+    cuerpo = "".join(f"<div><dt>{unidades(esc(t))}</dt><dd>{esc(v)}<small>{esc(s)}</small></dd></div>"
+                     for t, v, s in celdas)
     return f'<dl class="vt-datos">{cuerpo}</dl>'
 
 
@@ -218,10 +234,11 @@ def tabla_precios(filas, caption, concepto="Concepto"):
 def tabla_comparativa(columnas, filas, caption):
     """Tabla de comparación: la primera columna es el encabezado de cada fila. En celular cada fila es una tarjeta y
     cada celda lleva el nombre de su columna (data-col); desde 768 px es tabla."""
-    cabeza = "".join(f'<th scope="col">{c}</th>' for c in columnas)
+    cabeza = "".join(f'<th scope="col">{unidades(c)}</th>' for c in columnas)
     celda = '<td data-col="{}">{}</td>'.format
     cuerpo = "".join(f'<tr><th scope="row">{f[0]}</th>'
-                     f'{"".join(celda(esc(texto_plano(c)), v) for c, v in zip(columnas[1:], f[1:]))}</tr>' for f in filas)
+                     f'{"".join(celda(esc(mayusculas_sin_unidades(texto_plano(c))), v) for c, v in zip(columnas[1:], f[1:]))}'
+                     '</tr>' for f in filas)
     return (f'<table class="vt-tabla vt-tabla--comparar"><caption>{caption}</caption><thead><tr>{cabeza}</tr></thead>'
             f'<tbody>{cuerpo}</tbody></table>')
 
@@ -271,10 +288,11 @@ QUIEN = {"nosotros": ("Nosotros", ""), "tu": ("Tú", " vt-quien--tu"), "juntos":
 
 
 def pasos(items):
-    """Proceso con marcadores NOSOTROS / TÚ / JUNTOS. items: titulo, quien, cuando, texto."""
+    """Proceso con marcadores NOSOTROS / TÚ / JUNTOS. items: titulo, quien, cuando, texto. El marcador va fuera del
+    <h3> (en la línea de cuándo), para que el encabezado sea solo el paso."""
     filas = "".join(
-        f'<li><h3>{p["titulo"]} <span class="vt-quien{QUIEN[p["quien"]][1]}">{QUIEN[p["quien"]][0]}</span></h3>'
-        f'<p class="vt-pasos__cuando">{p["cuando"]}</p><p>{p["texto"]}</p></li>' for p in items)
+        f'<li><h3>{p["titulo"]}</h3><p class="vt-pasos__cuando"><span class="vt-quien{QUIEN[p["quien"]][1]}">'
+        f'{QUIEN[p["quien"]][0]}</span> {p["cuando"]}</p><p>{p["texto"]}</p></li>' for p in items)
     return f'<ol class="vt-pasos">{filas}</ol>'
 
 

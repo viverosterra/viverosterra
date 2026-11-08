@@ -63,8 +63,8 @@ def _aparte(items):
 def _cotizador(k, numero):
     q = k["cotizador"]
     modelo = t.modelo(q["modelo"])
-    calculadora = t.cotizador(modelo, modelos=t.data.MODELOS, m2=q["m2"], showroom=True, nivel=3, titulo=q["titulo_calc"],
-                              tipo=k["tipo"])
+    calculadora = t.cotizador(modelo, modelos=t.data.MODELOS, m2=q["m2"], showroom=True, local=q.get("local", False),
+                              nivel=3, titulo=q["titulo_calc"], tipo=k["tipo"])
     cuerpo = f'<div class="vt-dos">{calculadora}<div>{_aparte(q["aparte"])}</div></div>'
     return c.bloque(numero, "Calculadora", "vt-h-cotizador", q["titulo"], cuerpo, tinte=True, id_seccion="cotizador")
 
@@ -132,8 +132,10 @@ def render(k):
 
     j = k["jsonld"]
     pasos_howto = tuple((x["titulo"], x["texto"]) for x in p["pasos"])
-    grafo = [j["producto"], *j.get("nodos", ()), c.faq_jsonld(f["preguntas"]), c.howto(j["howto"], pasos_howto),
-             j["migas"], {"@type": "SpeakableSpecification", "cssSelector": list(j["speakable"])}]
+    # HowTo y SpeakableSpecification solo si el contenido los pide (pasto en rollo sí; sintético en Tampico no).
+    howto = [c.howto(j["howto"], pasos_howto)] if j.get("howto") else []
+    speakable = [{"@type": "SpeakableSpecification", "cssSelector": list(j["speakable"])}] if j.get("speakable") else []
+    grafo = [j["producto"], *j.get("nodos", ()), c.faq_jsonld(f["preguntas"]), *howto, j["migas"], *speakable]
     tienda = "cotizador" in k
     fuera = ""
     if tienda:

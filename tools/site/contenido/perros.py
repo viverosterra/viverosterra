@@ -13,7 +13,7 @@ from esquema import breadcrumb_schema
 SITE = data.SITE
 URL = f"{SITE}/pasto-sintetico/perros"
 GAL = t.GAL
-FOTO = "obra-proyecto-02"
+FOTO = "obra-proyecto-02"  # og:image (sin cambio); la portada usa otra obra real para no repetir la de las ciudades
 RECOMENDADOS = (
     ("irlanda-25", "Fibra más resistente de la colección: aguanta pisoteo y juego diario."),
     ("capri-20", "Alta densidad y fibra corta: fácil de limpiar y de levantar desechos."),
@@ -64,10 +64,7 @@ CONTENIDO = {
         "mensaje": MENSAJE,
         "href_modelos": "/pasto-sintetico#modelos",
         "texto_modelos": "Ver precios con envío",
-        "foto": {"src": f"{GAL}/{FOTO}-sm.webp", "srcset": f"{GAL}/{FOTO}-sm.webp 560w, {GAL}/{FOTO}.webp 960w",
-                 "sizes": "(min-width: 1024px) 620px, 100vw", "ancho": 960, "alto": 1280, "numero": 1,
-                 "alt": "Patio con pasto sintético de nuestra colección", "lugar": "Patio residencial",
-                 "etapa": "Pasto de la colección instalado"},
+        "foto": t.foto_obra("obra-proyecto-01", "(min-width: 1024px) 620px, 100vw", "Pasto de la colección instalado"),
         "datos": (("Altura ideal", "18 a 25 mm", "Fácil de limpiar"), ("Base", "Perforada", "Drena la orina"),
                   ("Tratamientos", "Antibacterial", "UV y retardante al fuego"), ("Desde", f"{DESDE}/m²", MAS_BARATO["nombre"]),
                   ("Entrega", "3 a 5 días", "A todo México"), ("Factura", datos.FACTURA, "Persona física o moral")),

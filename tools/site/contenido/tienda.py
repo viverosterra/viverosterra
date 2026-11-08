@@ -31,8 +31,8 @@ PREGUNTAS = (
      'de esta página calcula tu total estimado. Más detalle en la <a href="/blog/cuanto-cuesta-pasto-sintetico-mexico">'
      "guía de precios</a>."),
     ("¿Cuál es la compra mínima?",
-     "Para envío nacional el mínimo es 25 m², medio rollo. En el showroom de Cd. Madero puedes comprar desde 2 m² sin "
-     "flete."),
+     f"Para envío nacional el mínimo es {data.MIN_NACIONAL_M2} m², medio rollo. En el showroom de Cd. Madero puedes "
+     f"comprar desde {data.MIN_SHOWROOM_M2} m² sin flete."),
     ("¿Cuánto tarda el envío?",
      "De 3 a 5 días hábiles después de confirmar tu pago, según el destino. Te compartimos la guía de rastreo."),
     ("¿Cómo pago?",
@@ -43,11 +43,12 @@ PREGUNTAS = (
      "Toscana 28 es el más vendido para jardines familiares. Para poco uso o presupuesto ajustado, Toscana 18. Para "
      "perros y pisoteo diario, Irlanda 25 o Capri 20. Para el look más natural, los de 35 mm: Japonés, Mónaco y Bali."),
     ("¿Puedo instalarlo yo mismo?",
-     "Sí. Un jardín de 25 a 50 m² se instala en un día. Te mandamos la guía de instalación con el pedido. En Tampico, "
+     f"Sí. Un jardín de {data.MIN_NACIONAL_M2} a {data.ROLLO_M2} m² se instala en un día. Te mandamos la guía de instalación con el pedido. En Tampico, "
      "Madero y Altamira también ofrecemos instalación profesional. Aquí está la "
      '<a href="/blog/como-instalar-pasto-sintetico">guía paso a paso</a>.'),
     ("¿Qué incluye un rollo?",
-     "Un rollo mide 2 m de ancho por 25 m de largo: 50 m². Puedes pedir desde 25 m² y te enviamos el corte."),
+     f"Un rollo mide 2 m de ancho por 25 m de largo: {data.ROLLO_M2} m². Puedes pedir desde {data.MIN_NACIONAL_M2} m² y te "
+     "enviamos el corte."),
     ("¿Hacen instalación fuera de Tampico?",
      "A nivel nacional enviamos solo el material, con guía de instalación. La instalación profesional es solo en "
      "Tampico, Ciudad Madero y Altamira."),
@@ -106,6 +107,7 @@ CONTENIDO = {
                   ("Envío nacional", f"Desde {datos.SINTETICO_NACIONAL_DESDE}", "3 a 5 días hábiles"),
                   ("Showroom", datos.CALLE_CORTA, f"Vivero desde {datos.DESDE}")),
         "mensaje": datos.MENSAJES["pasto-sintetico"],
+        "texto_modelos": f"Ver los {len(data.MODELOS)} modelos",
     },
     "modelos": {"titulo": "Modelos de pasto sintético de 10 a 35 mm",
                 "lede": ("Ordenados por altura. A más altura y peso, más volumen y realismo. Todos se venden por rollo de "
@@ -121,8 +123,9 @@ CONTENIDO = {
                               "Con 50 m² o más pagas precio de rollo completo",
                               "El flete exacto se confirma con tu dirección"),
                   "titulo_envio": "Costo de envío por estado",
-                  "lede_envio": ("El envío se cobra por rollo de 50 m². Un pedido de 25 a 50 m² viaja en 1 rollo; de 51 a "
-                                 "100 m², en 2. En Tampico, Madero y Altamira puedes recoger en el showroom sin flete."),
+                  "lede_envio": (f"El envío se cobra por rollo de {data.ROLLO_M2} m². Un pedido de {data.MIN_NACIONAL_M2} a "
+                                 f"{data.ROLLO_M2} m² viaja en 1 rollo; de 51 a 100 m², en 2. En Tampico, Madero y Altamira puedes "
+                                 "recoger en el showroom sin flete."),
                   "nota_envio": "Te confirmamos el costo exacto con tu código postal antes de pagar."},
     "ciudades": {"titulo": "Envíos a tu ciudad con precio puesto", "items": CIUDADES,
                  "lede": ("Precio puesto con el modelo más económico, envío incluido. Enviamos a los 32 estados; estas son "
@@ -138,7 +141,8 @@ CONTENIDO = {
                        "Antes de comprar")},
     "pedido": {"titulo": "Cómo comprar pasto sintético en línea", "pasos": PASOS},
     "instalar": {"titulo": "Cómo instalar pasto sintético tú mismo", "pasos": DIY,
-                 "lede": "Un jardín de 25 a 50 m² se instala en un día. Estos son los cinco pasos básicos.",
+                 "lede": (f"Un jardín de {data.MIN_NACIONAL_M2} a {data.ROLLO_M2} m² se instala en un día. Estos son los cinco "
+                          "pasos básicos."),
                  "guia": '<a href="/blog/como-instalar-pasto-sintetico">Ver la guía completa paso a paso</a>'},
     "faq": {"titulo": "Preguntas frecuentes sobre pasto sintético", "preguntas": PREGUNTAS},
     "cierre": {"titulo": "¿Estás en Tampico, Madero o Altamira?",

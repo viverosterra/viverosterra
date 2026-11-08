@@ -4,8 +4,8 @@ tienda y visita al showroom).
 
 Modelos y precios de tools/pasto/data.py; instalado de datos.PRECIOS["sintetico_instalado_m2"]; domicilio, horario y
 promesa de datos.py. Título, descripción, canonical, Open Graph, LocalBusiness/Store, Service y migas: los que
-publicaba tools/pasto/local.py; FAQPage de las preguntas visibles y HowTo de los 5 pasos visibles. Los 9 modelos en
-existencia; para llevar hoy solo Toscana 18 y 28 (data.MODELOS[...]["stock"]). PARIDAD: tests/test_paridad.py.
+publicaba tools/pasto/local.py; FAQPage de las preguntas visibles (sin HowTo ni SpeakableSpecification, como en
+main). Los 9 modelos en existencia; para llevar hoy solo Toscana 18 y 28 (data.MODELOS[...]["stock"]). PARIDAD: tests/test_paridad.py.
 """
 import componentes_tienda as t
 import data
@@ -121,8 +121,7 @@ CONTENIDO = {
                ("og:description", DESCRIPCION), ("og:image", OG_IMG), ("og:locale", "es_MX")),
         "twitter": (("twitter:card", "summary_large_image"),),
     },
-    "jsonld": {"producto": NEGOCIO_LD, "nodos": (SERVICIO,), "migas": MIGAS_LD,
-               "howto": "Cómo instalamos pasto sintético en Tampico", "speakable": ("h1", "h2", ".vt-faq summary")},
+    "jsonld": {"producto": NEGOCIO_LD, "nodos": (SERVICIO,), "migas": MIGAS_LD},
     "migas": (("Inicio", "/"), ("Pasto sintético en Tampico", None)),
     "portada": {
         "kicker": "Pasto sintético · Tampico, Madero y Altamira",
@@ -139,10 +138,11 @@ CONTENIDO = {
         "mensaje": MENSAJE,
         "tambien": (f'Los 9 modelos en existencia · <a href="#cotizador">calcula tu material</a> · '
                     '<a href="#showroom">cómo llegar al showroom</a>'),
-        "foto": {"src": f"{GAL}/obra-proyecto-02-sm.webp", "srcset": f"{GAL}/obra-proyecto-02-sm.webp 560w, "
-                 f"{GAL}/obra-proyecto-02.webp 960w", "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960,
-                 "alto": 1280, "numero": 1, "alt": "Residencia moderna con escalones de piedra y pasto sintético hasta el deck",
-                 "lugar": "Residencia con deck", "etapa": "Obra de Viveros Terra"},
+        "foto": {"src": f"{GAL}/obra-residencial-tampico-sm.webp", "srcset": f"{GAL}/obra-residencial-tampico-sm.webp "
+                 f"560w, {GAL}/obra-residencial-tampico.webp 960w", "sizes": "(min-width: 1024px) 560px, 100vw",
+                 "ancho": 960, "alto": 1440, "numero": 1,
+                 "alt": "Losas de piedra con franjas de pasto sintético junto a un muro de piedra iluminado",
+                 "lugar": "Patio con losas y pasto sintético", "etapa": "Obra de Viveros Terra"},
     },
     "prueba": {
         "titulo": "Pasto sintético instalado en la región",
@@ -182,7 +182,7 @@ CONTENIDO = {
     },
     "cotizador": {
         "titulo": "Calcula tu material y llévatelo", "titulo_calc": "Calculadora de material", "modelo": "toscana-28",
-        "m2": 20,
+        "m2": 20, "local": True,  # venta local: showroom o envío local por colonia, sin flete nacional por estado
         "aparte": (
             ("Kit para instalarlo tú", ("Pegamento de contacto industrial, 4 L", "Cinta de unión profesional, 100 m",
                                        "Clavos de fijación de 2″, caja de 5 kg", "Guía de instalación paso a paso"),

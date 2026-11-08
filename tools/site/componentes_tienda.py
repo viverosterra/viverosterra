@@ -153,46 +153,65 @@ def _selector_modelo(modelos, elegido):
             f'<select id="modelo">{opciones}</select></div></div>')
 
 
-def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, titulo="Cotiza tu corte", id_titulo="vt-h-cotizar",
-              nivel=2, mensaje=None, tipo="tienda"):
+def _entrega(showroom, local):
+    """Select #estado. local=True (Tampico): solo showroom o envío local según la colonia, sin los 32 estados ni flete
+    nacional (data-local: tienda-pasto.js no agrega los estados)."""
+    if local:
+        return ('<div class="vt-campo"><label for="estado">Entrega</label><div class="vt-control"><select id="estado" '
+                'data-local><option value="showroom" selected>Recoger en showroom, Cd. Madero</option><option value="local">'
+                'Envío local en Tampico, Madero o Altamira</option></select></div></div>')
+    sel_showroom = " selected" if showroom else ""
+    return ('<div class="vt-campo"><label for="estado">Entrega</label><div class="vt-control"><select id="estado">'
+            f'<option value="">Selecciona tu estado</option><option value="showroom"{sel_showroom}>Recoger en showroom, '
+            'Cd. Madero</option></select></div></div>')
+
+
+def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, local=False, titulo="Cotiza tu corte",
+              id_titulo="vt-h-cotizar", nivel=2, mensaje=None, tipo="tienda"):
     """Cotizador de tienda-pasto.js. m: modelo inicial; con `modelos`, agrega el selector #modelo (hub y Tampico).
-    showroom=True preselecciona "Recoger en showroom" (Tampico). Envío nacional bajo 25 m²: el JS bloquea total y
-    mensualidades (J03 §3). El botón de WhatsApp lleva desde el HTML un mensaje con firma (sin JS no queda vacío)."""
+    showroom=True preselecciona "Recoger en showroom". local=True (venta local en Tampico): showroom o envío local
+    según la colonia, sin flete por estado, y el "desde" es el material más barato. Envío nacional bajo 25 m²: el JS
+    bloquea total y mensualidades (J03 §3). El botón de WhatsApp lleva desde el HTML un mensaje con firma (sin JS no
+    queda vacío)."""
     pm2 = m["rollo"] if m2 >= ROLLO_M2 else (m["t2"] if m2 >= 10 else m["t1"])
     material = pm2 * m2
     texto = mensaje or (f"Hola, quiero cotizar el pasto sintético {m['nombre']}.\nNecesito ___ m².\n"
-                        "Mi estado: ___")
+                        + ("Mi colonia: ___" if local else "Mi estado: ___"))
     href = esc(datos.wa_url(datos.con_firma(texto)))
     chips = "".join(f'<button class="vt-chip" type="button" data-m2="{n}" aria-pressed="{"true" if n == m2 else "false"}">'
                     f'{n} m²</button>' for n in (MIN_NACIONAL, ROLLO_M2, ROLLO_M2 * 2))
-    sel_showroom = " selected" if showroom else ""
     selector = _selector_modelo(modelos, m) if modelos else ""
+    if local:
+        desde = (f'<p class="vt-cotizador__desde">Material desde <b>{c.dinero(barato(modelos)["rollo"])}</b>/m² en rollo, '
+                 'IVA incluido · envío local según tu colonia</p>')
+        envio = ('<p class="vt-cuenta__fila"><span id="q-envio-label">Recoger en showroom</span><b id="q-envio">Sin costo'
+                 '</b></p>')
+        nota = "Te cotizamos el envío local según tu colonia antes de pagar."
+    else:
+        desde = (f'<p class="vt-cotizador__desde">Desde <b id="buy-price">{c.dinero(m["rollo"])}</b>/m² · rollo de '
+                 f'{ROLLO_M2} m², IVA incluido · envío por rollo según tu estado</p>')
+        envio = '<p class="vt-cuenta__fila"><span id="q-envio-label">Envío</span><b id="q-envio">Elige tu estado</b></p>'
+        nota = NOTA_FLETE
     return (
         f'<section class="vt-cotizador" id="comprar" aria-labelledby="{id_titulo}" data-min-nacional="{MIN_NACIONAL}" '
         f'data-min-showroom="{MIN_SHOWROOM}"><h{nivel} class="vt-cotizador__t" id="{id_titulo}">{esc(titulo)}</h{nivel}>'
-        f'<p class="vt-cotizador__desde">Desde <b id="buy-price">{c.dinero(m["rollo"])}</b>/m² · rollo de {ROLLO_M2} m², '
-        'IVA incluido · envío por rollo según tu estado</p>'
-        f'{selector}<div class="vt-campo"><label for="m2">Metros cuadrados</label><div class="vt-stepper">'
+        f'{desde}{selector}<div class="vt-campo"><label for="m2">Metros cuadrados</label><div class="vt-stepper">'
         '<button type="button" id="m2-minus" aria-label="Restar 5 m²">−</button><input id="m2" type="number" '
         f'inputmode="numeric" min="{MIN_SHOWROOM}" max="5000" step="1" value="{m2}">'
         '<button type="button" id="m2-plus" aria-label="Sumar 5 m²">+</button></div>'
         f'<div class="vt-chips" role="group" aria-label="Medidas rápidas">{chips}</div></div>'
-        '<div class="vt-campo"><label for="estado">Entrega</label><div class="vt-control"><select id="estado">'
-        f'<option value="">Selecciona tu estado</option><option value="showroom"{sel_showroom}>Recoger en showroom, '
-        'Cd. Madero</option></select></div></div>'
-        f'{tabla_tiers(m)}'
+        f'{_entrega(showroom, local)}{tabla_tiers(m)}'
         '<div class="vt-cuenta" aria-live="polite">'
         f'<p class="vt-cuenta__fila"><span>Precio aplicado</span><b id="q-pm2">{c.dinero(pm2)}/m²</b></p>'
         f'<p class="vt-cuenta__fila"><span>Material</span><b id="q-material">{c.dinero(material)}</b></p>'
-        '<p class="vt-cuenta__fila"><span id="q-envio-label">Envío</span><b id="q-envio">Elige tu estado</b></p>'
-        f'<p class="vt-cuenta__total"><span id="q-total-label">Total estimado</span><b id="q-total">'
+        f'{envio}<p class="vt-cuenta__total"><span id="q-total-label">Total estimado</span><b id="q-total">'
         f'{c.dinero(material)}</b></p><p class="vt-cuenta__puesto" id="q-landed"></p>'
         '<p class="vt-cuenta__pista" id="q-hint"></p><p class="vt-cuenta__error" id="q-error"></p></div>'
         f'{planes_cotizador("q")}'
         f'<div class="vt-cotizador__acciones"><a class="vt-btn vt-btn--wa" data-cta-wa data-cta="{tipo}:cotizador" '
         f'href="{href}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp</a>'
         '<button class="vt-btn vt-btn--linea" type="button" id="cta-add">Agregar a mi cotización</button>'
-        f'<p class="vt-promesa">{NOTA_FLETE} {esc(datos.PROMESA_COMPLETA)}.</p></div></section>')
+        f'<p class="vt-promesa">{nota} {esc(datos.PROMESA_COMPLETA)}.</p></div></section>')
 
 
 # ---------- lista de cotización, aviso y barra de compra ----------
@@ -227,16 +246,17 @@ def barra_compra(nombre, precio, mensaje, *, rollo=None):
 
 # ---------- catálogo del hub ----------
 def tarjeta(m):
-    """Tarjeta del catálogo: foto con la altura, etiqueta S con el precio, regla de altura, precio puesto y Agregar."""
+    """Tarjeta del catálogo: foto con la altura, "para llevar hoy" (chip verde: el amarillo es solo para precios),
+    regla de altura, precio puesto y Agregar. En celular es horizontal (terra-tienda.css)."""
     url = f"/pasto-sintetico/{m['slug']}"
-    hoy = (f'<span class="vt-tarjeta-p__hoy">{esc(m["nombre"])} para llevar hoy · {datos.CALLE_CORTA}</span>'
+    hoy = (f'<p class="vt-tarjeta-p__hoy">{esc(m["nombre"])} para llevar hoy · {datos.CALLE_CORTA}</p>'
            if m["stock"] else "")
     return (
         f'<article class="spec-card vt-tarjeta-p" data-usos="{" ".join(m["usos"])}" id="m-{m["slug"]}">'
         f'<a class="vt-tarjeta-p__foto" href="{url}" tabindex="-1" aria-hidden="true"><img src="{img_textura(m)}" '
-        f'width="420" height="560" alt="" loading="lazy" decoding="async">{chip_mm(m["mm"])}{hoy}</a>'
+        f'width="420" height="560" alt="" loading="lazy" decoding="async">{chip_mm(m["mm"])}</a>'
         f'<div class="vt-tarjeta-p__cuerpo"><p class="vt-tarjeta-p__tag">N.º {m["n"]:02d} · {esc(m["tag"])}</p>'
-        f'<h3 class="spec-card__name"><a href="{url}">{esc(m["nombre"])}</a></h3>{regla_altura(m["mm"])}'
+        f'<h3 class="spec-card__name"><a href="{url}">{esc(m["nombre"])}</a></h3>{hoy}{regla_altura(m["mm"])}'
         f'<dl class="vt-tarjeta-p__datos"><div><dt>Peso</dt><dd>{m["peso"]} g/m²</dd></div><div><dt>Garantía</dt>'
         f'<dd>{garantia_texto(m)}</dd></div></dl>'
         f'<p class="vt-tarjeta-p__precio">Desde <b>${m["rollo"]}</b>/m² <span class="vt-tarjeta-p__puesto" '
@@ -293,8 +313,12 @@ def tabla_modelos(modelos=None):
     filas = tuple((f'<a href="/pasto-sintetico/{m["slug"]}">{esc(m["nombre"])}</a><br><small>{esc(m["tag"])}</small>',
                    f'{m["mm"]} mm', m["peso"], garantia_texto(m), f'<b>${m["rollo"]}</b>', esc(m["ideal"]))
                   for m in modelos or data.MODELOS)
-    return c.tabla_comparativa(("Modelo", "Altura", "Peso g/m²", "Garantía", "Rollo /m²", "Ideal para"), filas,
-                               "Los 9 modelos por altura, peso, garantía y precio por rollo.")
+    tabla = c.tabla_comparativa(("Modelo", "Altura", "Peso g/m²", "Garantía", "Rollo /m²", "Ideal para"), filas,
+                                "Los 9 modelos por altura, peso, garantía y precio por rollo.")
+    # En celular es tabla con desplazamiento horizontal (no 9 tarjetas): el catálogo de arriba ya trae cada modelo.
+    tabla = tabla.replace('class="vt-tabla vt-tabla--comparar"', 'class="vt-tabla vt-tabla--fija"', 1)
+    return (f'<div class="vt-tabla-scroll" role="region" aria-label="Comparativa de los {len(modelos or data.MODELOS)} '
+            f'modelos (desliza para ver más columnas)" tabindex="0">{tabla}</div>')
 
 
 def tabla_envio():
@@ -428,6 +452,14 @@ def comparativa(m):
 
 
 # ---------- ciudades ----------
+def foto_obra(nombre, sizes, etapa, numero=1):
+    """Figura de portada con una foto real de obra (data.OBRAS: medidas, alt y pie); se precarga como foto principal."""
+    _n, ancho, alto, alt, lugar = next(o for o in data.OBRAS if o[0] == nombre)
+    return {"src": f"{GAL}/{nombre}-sm.webp", "srcset": f"{GAL}/{nombre}-sm.webp 560w, {GAL}/{nombre}.webp {ancho}w",
+            "sizes": sizes, "ancho": ancho, "alto": alto, "numero": numero, "alt": alt, "lugar": lugar, "etapa": etapa}
+
+
+
 def totales(m, zona):
     """Material + flete para 25, 50 y 100 m² (reglas del cotizador: 25 m² usa el precio de corte mediano)."""
     salida = []
@@ -455,17 +487,19 @@ def tabla_totales(m, zona):
                                "incluido.")
 
 
-def modelos_recomendados(items, zona=None, lugar=""):
+def modelos_recomendados(items, zona=None, lugar="", estado=""):
     """Tres modelos con su regla de altura y la razón; con zona, el precio puesto en la ciudad; sin zona, el precio
-    del rollo y el puesto según el estado elegido (data-landed-slug)."""
+    del rollo y el puesto según el estado elegido (data-landed-slug). Con estado (slug), el enlace a la ficha lleva
+    ?estado= y la ficha abre con ese estado elegido (tienda-pasto.js)."""
     tarjetas = []
+    consulta = f"?estado={estado}" if estado else ""
     for slug, razon in items:
         m = modelo(slug)
         if zona:
             precio = f'Desde <b>${data.landed_m2(m, zona)}</b>/m² puesto en {esc(lugar)}'
         else:
             precio = f'Desde <b>${m["rollo"]}</b>/m² <span data-landed-slug="{m["slug"]}"></span>'
-        tarjetas.append(f'<li class="vt-recomendado"><h3><a href="/pasto-sintetico/{m["slug"]}">{esc(m["nombre"])}'
+        tarjetas.append(f'<li class="vt-recomendado"><h3><a href="/pasto-sintetico/{m["slug"]}{consulta}">{esc(m["nombre"])}'
                         f'</a></h3>{regla_altura(m["mm"])}<p>{esc(razon)}</p><p class="vt-recomendado__precio">'
                         f'{precio}</p></li>')
     return f'<ul class="vt-recomendados">{"".join(tarjetas)}</ul>'

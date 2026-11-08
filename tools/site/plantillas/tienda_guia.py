@@ -32,7 +32,7 @@ def _cuerpo(s):
     if tipo == "preguntas":
         return t.preguntas_h3(s["items"])
     if tipo == "modelos":
-        return t.modelos_recomendados(s["items"], s.get("zona"), s.get("lugar", ""))
+        return t.modelos_recomendados(s["items"], s.get("zona"), s.get("lugar", ""), s.get("estado", ""))
     if tipo == "pasos":
         return c.pasos(s["items"])
     if tipo == "faq":

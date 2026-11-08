@@ -102,7 +102,7 @@ class CatalogoTest(unittest.TestCase):
         self.assertEqual(html.count("data-filter="), len(data.USO_FILTERS))
 
     def test_para_llevar_hoy_solo_en_toscana_18_y_28(self):
-        hoy = re.findall(r'<span class="vt-tarjeta-p__hoy">([^<]+)</span>', t.catalogo())
+        hoy = re.findall(r'<p class="vt-tarjeta-p__hoy">([^<]+)</p>', t.catalogo())
         self.assertEqual(hoy, [f"Toscana 18 para llevar hoy · {datos.CALLE_CORTA}",
                                f"Toscana 28 para llevar hoy · {datos.CALLE_CORTA}"])
 

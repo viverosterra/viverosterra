@@ -91,6 +91,9 @@ class BloquesTest(unittest.TestCase):
                         {"titulo": "Poda", "quien": "juntos", "cuando": "Día 21", "texto": "t"}])
         self.assertIn('<span class="vt-quien vt-quien--tu">Tú</span>', html)
         self.assertIn('<span class="vt-quien vt-quien--juntos">Juntos</span>', html)
+        # El marcador no forma parte del encabezado: el <h3> es solo el paso.
+        self.assertIn("<h3>Riego</h3>", html)
+        self.assertNotRegex(html, r"<h3>[^<]*<span")
 
     def test_faq_y_su_json_ld_dicen_lo_mismo(self):
         preguntas = (("¿Uno?", 'Sí, <a href="/x">mira</a>.'), ("¿Dos?", "No."))
