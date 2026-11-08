@@ -414,6 +414,21 @@
 .vt-medidor .vt-etiqueta-x{width:100%}
 @media (min-width:640px) and (max-width:1023px){.vt-medidor{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.vt-medidor__form{grid-row:span 2}}
 @media (min-width:1024px){.vt-medidor{grid-template-columns:4fr 4fr 4fr;gap:32px;align-items:start}}
+/* Empresas (Etapa 2d): cotizador de pasto por volumen y armador de palmas (vt-b2b.js) */
+.vt-b2b{display:grid;gap:24px}
+.vt-b2b__form{display:grid;gap:16px;align-content:start}
+.vt-b2b__form>.vt-btn{justify-self:start}
+.vt-b2b [hidden]{display:none}
+.vt-b2b__filas{display:grid;gap:16px;margin:0;padding:0;list-style:none}
+.vt-b2b__fila{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.vt-b2b__fila>.vt-campo:first-child{grid-column:1/-1}
+.vt-control select{flex:1;width:100%;min-width:0;height:50px;padding:0 12px;border:0;background:transparent;font:500 16px var(--vt-font-sans);color:var(--vt-ink)}
+.vt-control select:focus{outline:none}
+.vt-b2b .vt-etiqueta-x{width:100%}
+.vt-b2b .vt-etiqueta .vt-btn{width:100%;margin-top:14px}
+.vt-pagina main .vt-b2b__msg{margin-top:8px;white-space:pre-line;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
+@media (min-width:640px){.vt-b2b__fila{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr)}.vt-b2b__fila>.vt-campo:first-child{grid-column:auto}}
+@media (min-width:1024px){.vt-b2b{grid-template-columns:7fr 5fr;gap:48px;align-items:start}}
 
 /* ---------- precios con columna Unidad y mensualidades ---------- */
 .vt-tabla{width:100%;border-collapse:collapse;border:1px solid var(--vt-line);background:var(--vt-card)}

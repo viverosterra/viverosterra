@@ -91,6 +91,13 @@ class TerraCssTest(unittest.TestCase):
         self.assertLess(len(gzip.compress(datos, mtime=0)), 10 * 1024)
         self.assertLess(len(datos), 48 * 1024)
 
+    def test_cotizadores_de_empresas(self):
+        """Etapa 2d: [hidden] gana a .vt-btn (el botón "Agregar otra especie" sale oculto sin JS) y el select del armador
+        de palmas usa el mismo control que los campos."""
+        self.assertIn(".vt-b2b [hidden]{display:none}", self.css)
+        self.assertIn(".vt-control select{", self.css)
+        self.assertIn("@media (min-width:1024px){.vt-b2b{grid-template-columns:7fr 5fr", self.css)
+
     def test_fuentes_referenciadas_existen(self):
         urls = re.findall(r'url\("(/fonts/[^"]+)"\)', self.css)
         self.assertEqual(len(urls), 2)
