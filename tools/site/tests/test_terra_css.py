@@ -10,7 +10,8 @@ import activos  # noqa: E402
 
 PUBLIC = Path(__file__).resolve().parents[3] / "public"
 TERRA = PUBLIC / "css" / "terra.css"
-CSS_VIEJOS = ("design-system.css", "tailwind.css", "servicios.css", "tienda-pasto.css")
+# tienda-pasto.css se borró en la Etapa 2g (sus últimas páginas, /precios y las zonas, ya salen de plantillas).
+CSS_VIEJOS = ("design-system.css", "tailwind.css", "servicios.css")
 # Clases que crea public/js/vt-simulador.js (las mismas en servicios.css). En terra.css solo aparecen bajo .vt-sim, que
 # ninguna página vieja tiene, así que no pueden alterar el simulador viejo.
 CLASES_DEL_SIMULADOR = {"sim-plan", "sim-plan__name", "sim-plan__amt", "sim-plan__sep", "sim-plan__more", "is-selected",

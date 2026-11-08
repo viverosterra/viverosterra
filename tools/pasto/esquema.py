@@ -1,7 +1,6 @@
 """Nodos schema.org de la tienda de pasto sintético (Product, BreadcrumbList, envío, devoluciones y vendedor).
 
-Datos, no HTML: los usan las plantillas de tools/site (fichas, hub, ciudades) y las páginas que aún genera
-tools/pasto (/precios y zonas, vía common.py) hasta la Etapa 2g.
+Datos, no HTML: los usan las plantillas de tools/site (fichas, hub, ciudades) y el feed de Merchant (feed.py).
 """
 import re
 
