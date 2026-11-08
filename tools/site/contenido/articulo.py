@@ -14,6 +14,7 @@ DIR = Path(__file__).resolve().parent / "blog"
 CLAVES = tuple(sorted(p.stem for p in DIR.glob("*.html")))
 MESES = ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre",
          "diciembre")
+M_LOGO = "Era el logo del publisher; ahora el publisher es una referencia por @id a la entidad única #negocio."
 H2_RE = re.compile(r'<h2 id="([^"]+)">(.*?)</h2>', re.S)
 
 
@@ -64,7 +65,7 @@ class _Pagina:
             "tema": tema, "mensaje": paginas.contexto(ruta)["mensaje"].rsplit("\n\n", 1)[0],
             "relacionados_titulo": doc["relacionados_titulo"], "relacionados": tuple(doc["relacionados"]),
         }
-        self.PARIDAD = doc.get("paridad") or {"reemplazos": {}, "retirados": {}}
+        self.PARIDAD = {**(doc.get("paridad") or {"reemplazos": {}, "retirados": {}}), "jsonld": {"ImageObject": M_LOGO} if "ImageObject" in json.dumps(doc["jsonld"]) else {}}
 
 
 def pagina(slug):

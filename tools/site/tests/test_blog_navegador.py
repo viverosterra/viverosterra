@@ -130,6 +130,32 @@ class BlogNavegadorTest(unittest.TestCase):
             self.assertGreaterEqual(aire, 12, ruta)
             pagina.close()
 
+    def test_indice_y_cta_cambian_de_lugar_con_la_anchura(self):
+        visible = """(s) => { const e = document.querySelector(s); return e.getBoundingClientRect().height > 0; }"""
+        for ancho, movil in ((375, True), (768, True), (1023, True), (1024, False), (1440, False)):
+            pagina = self.nav.new_page(viewport={"width": ancho, "height": 900})
+            pagina.goto(f"{self.base}/blog/palma-areca-tampico/", wait_until="load")
+            for selector, esperado in ((".vt-art__toc", movil), (".vt-art__medio", movil), (".vt-art__margen", not movil)):
+                self.assertEqual(pagina.evaluate(visible, selector), esperado, f"{selector} a {ancho}px")
+            if movil:
+                self.assertIsNone(pagina.locator(".vt-art__toc").get_attribute("open"))
+            pagina.close()
+
+    def test_migas_sin_separador_huerfano_en_celular(self):
+        pagina = self.nav.new_page(viewport={"width": 375, "height": 812})
+        pagina.goto(f"{self.base}/blog/palma-areca-tampico/", wait_until="load")
+        self.assertEqual(pagina.evaluate("() => getComputedStyle(document.querySelector('main .vt-crumbs li')).display"), "inline")
+        pagina.close()
+
+    def test_tabla_con_sombra_de_desplazamiento_y_primera_columna_fija(self):
+        pagina = self.nav.new_page(viewport={"width": 375, "height": 812})
+        pagina.goto(f"{self.base}/blog/cuanto-cuesta-pasto-sintetico-mexico/", wait_until="load")
+        datos_tabla = pagina.evaluate("""() => { const e = document.querySelector('.vt-art__tabla');
+          return [e.scrollWidth > e.clientWidth, getComputedStyle(e).backgroundAttachment.includes('local'),
+                  getComputedStyle(e.querySelector('td')).position]; }""")
+        self.assertEqual(datos_tabla, [True, True, "sticky"])
+        pagina.close()
+
     def test_consola_limpia_en_el_indice_y_la_muestra(self):
         errores = []
         pagina = self.nav.new_page(viewport={"width": 1440, "height": 900})

@@ -1,5 +1,6 @@
 """Plantilla de artículo (Etapa 2h): orden de la spec, sin marcado viejo, índice que llega a ids reales, una sola etiqueta de
 producto y un CTA a una landing."""
+import json
 import re
 import sys
 import unittest
@@ -7,6 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import datos  # noqa: E402
 import paridad  # noqa: E402
 from contenido import articulo, blog_clusters  # noqa: E402
 
@@ -70,6 +72,90 @@ class ArticuloTest(unittest.TestCase):
         for slug in blog_clusters.A_PRECIOS:
             with self.subTest(slug=slug):
                 self.assertTrue(any(h == "/precios" for _t, h in blog_clusters.de(slug)["enlaces"]))
+
+    def grafo(self, slug):
+        bloque = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html_de(slug), re.S)
+        return next(json.loads(b)["@graph"] for b in bloque if "@graph" in b)
+
+    def test_autor_y_publisher_del_jsonld(self):
+        for slug in articulo.CLAVES:
+            nodo = next(n for n in self.grafo(slug) if n["@type"] == "Article")
+            with self.subTest(slug=slug):
+                self.assertEqual(nodo["author"]["name"], datos.AUTOR_BLOG)
+                self.assertEqual(nodo["publisher"], {"@id": f"{datos.SITIO}/#negocio"})
+
+    def test_migas_del_jsonld_iguales_a_las_visibles(self):
+        for slug in articulo.CLAVES:
+            migas = next((n for n in self.grafo(slug) if n["@type"] == "BreadcrumbList"), None)
+            visibles = re.findall(r"<li[^>]*>(?:<a [^>]+>)?(.*?)(?:</a>)?</li>",
+                                  re.search(r'<nav class="vt-crumbs".*?</nav>', html_de(slug), re.S).group(0))
+            with self.subTest(slug=slug):
+                self.assertIsNotNone(migas)
+                self.assertEqual([i["name"] for i in migas["itemListElement"]], [paridad.texto(v) for v in visibles])
+
+    def test_indice_movil_cerrado_tras_la_respuesta(self):
+        for slug in articulo.CLAVES:
+            html = html_de(slug)
+            with self.subTest(slug=slug):
+                self.assertEqual(html.count('<details class="vt-art__toc">'), 1)
+                inicio = html.index('<details class="vt-art__toc">')
+                self.assertLess(inicio, html.index('<h2 id="', inicio))
+                if 'id="respuesta"' in html:
+                    self.assertLess(html.index('id="respuesta"'), inicio)
+
+    def test_cta_a_media_lectura_una_vez_y_antes_del_tercer_h2(self):
+        for slug in articulo.CLAVES:
+            html = html_de(slug)
+            href = blog_clusters.de(slug)["landing"][0]
+            cuerpo = re.search(r'<article class="vt-art__cuerpo".*?</article>', html, re.S).group(0)
+            pos = cuerpo.index('class="vt-art__medio"')
+            h2 = [m.start() for m in re.finditer(r'<h2 id="(?!preguntas)', cuerpo)]
+            with self.subTest(slug=slug):
+                self.assertEqual(html.count('data-cta="blog:medio"'), 1)
+                self.assertEqual(html.count('data-cta="blog:margen"'), 1)
+                self.assertIn(f'data-cta="blog:medio" href="{href}"', html)
+                self.assertIn(f'data-cta="blog:margen" href="{href}"', html)
+                self.assertGreater(pos, h2[min(1, len(h2) - 1)])
+                if len(h2) > 2:
+                    self.assertLess(pos, h2[2])
+
+    def test_etiqueta_de_servicio_y_sin_iva_en_cotizacion(self):
+        for slug in articulo.CLAVES:
+            tema = blog_clusters.de(slug)
+            html = html_de(slug)
+            codigo = "Servicio relacionado" if tema["tema"] in ("riego", "diseno", "mantenimiento") else "Producto relacionado"
+            with self.subTest(slug=slug):
+                self.assertIn(f"<span>{codigo}</span>", html)
+                self.assertEqual("<span>Con IVA</span>" in html, tema["etiqueta"]["monto"] != datos.SEGUN_COTIZACION)
+
+    def test_cierre_segun_el_tema_del_articulo(self):
+        esperado = {"cesped-amarillo-tampico-causas-soluciones": "mantenimiento", "errores-pasto-san-agustin-tampico": "mantenimiento",
+                    "cuando-regar-pasto-san-agustin-tampico": "mantenimiento", "jardin-en-macetas-terraza-tampico-guia": "plantas",
+                    "como-medir-plantas-altura-cepellon": "plantas"}
+        for slug in ("cuidados-palma-del-viajero-ravenala", "palma-washingtona-tampico", "palma-bismarckia-bismarckia-nobilis-tampico",
+                     "palma-kerpis-howea-forsteriana-tampico", "palma-cola-de-zorro-wodyetia-bifurcata-tampico",
+                     "palma-triangular-dypsis-decaryi-tampico"):
+            esperado[slug] = "palmas-cotizacion"
+            self.assertEqual(blog_clusters.de(slug)["etiqueta"]["monto"], datos.SEGUN_COTIZACION)
+        for slug, tema in esperado.items():
+            self.assertEqual(blog_clusters.de(slug)["tema"], tema, slug)
+        self.assertEqual(blog_clusters.de("pasto-sintetico-vs-natural-tampico")["landing"][0], "/pasto-sintetico-tampico")
+
+    def test_tablas_con_nombre_de_su_encabezado(self):
+        self.assertIn('aria-label="Tabla: ', html_de("cuanto-cuesta-jardin-tampico-precios"))
+        for slug in articulo.CLAVES:
+            with self.subTest(slug=slug):
+                self.assertNotIn('role="region" aria-label="Tabla"', html_de(slug))
+
+    def test_indice_sin_repetidos_e_itemlist(self):
+        html = paridad.archivo("/blog").read_text(encoding="utf-8")
+        tarjetas = re.findall(r'<h3><a href="(/blog/[^"]+)"', html)
+        self.assertEqual(len(tarjetas), len(set(tarjetas)))
+        self.assertEqual(len(tarjetas), 52)
+        lista = next(d for d in (json.loads(b) for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S))
+                     if d.get("@type") == "ItemList")
+        self.assertEqual([i["position"] for i in lista["itemListElement"]], list(range(1, 53)))
+        self.assertEqual({i["url"] for i in lista["itemListElement"]}, {f"{datos.SITIO}{t}" for t in tarjetas})
 
     def test_todo_articulo_tiene_tema(self):
         self.assertEqual(sorted(blog_clusters.TEMA), sorted(articulo.CLAVES))

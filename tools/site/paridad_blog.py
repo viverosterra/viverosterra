@@ -49,10 +49,13 @@ def viejo_corregido(slug, correcciones):
 
 
 def cuerpo_nuevo(html):
-    """Texto del <article> (respuesta, cuerpo y preguntas), sin el bloque "Para seguir" que agrega la plantilla."""
+    """Texto del <article> (respuesta, cuerpo y preguntas), sin lo que agrega la plantilla (índice móvil, CTA a media lectura y "Para seguir")."""
     m = re.search(r'<article class="vt-art__cuerpo".*?</article>', html, re.S)
-    sin_sigue = re.sub(r'<nav class="vt-art__sigue".*?</nav>', " ", m.group(0), flags=re.S)
-    return paridad.texto(sin_sigue)
+    sin_plantilla = m.group(0)
+    for agregado in (r'<nav class="vt-art__sigue".*?</nav>', r'<details class="vt-art__toc".*?</details>',
+                     r'<aside class="vt-art__medio".*?</aside>'):
+        sin_plantilla = re.sub(agregado, " ", sin_plantilla, flags=re.S)
+    return paridad.texto(sin_plantilla)
 
 
 def diferencias(viejo, nuevo):

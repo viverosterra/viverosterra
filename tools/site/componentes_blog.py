@@ -4,7 +4,7 @@ import datos
 from partials import esc
 
 P = datos.PRECIOS
-PRODUCTO = {"codigo": "Producto relacionado", "aviso": "Con IVA"}
+SERVICIOS = ("riego", "diseno", "mantenimiento")
 
 
 def cabeza(k):
@@ -32,9 +32,36 @@ def indice(items):
     return f'<nav class="vt-art__indice" aria-label="En este artículo"><b>En este artículo</b><ol>{filas}</ol></nav>'
 
 
+def indice_movil(items):
+    """Índice para pantallas de menos de 1024 px: cerrado y después de la respuesta, así que no repite el enlace a ella."""
+    filas = "".join(f'<li><a href="#{esc(i)}"><span aria-hidden="true">{n:02d}</span>{t}</a></li>'
+                    for n, (i, t) in enumerate((x for x in items if x[0] != "respuesta"), 1))
+    return (f'<details class="vt-art__toc"><summary class="vt-art__toc-t">En este artículo</summary>'
+            f'<nav aria-label="En este artículo"><ol>{filas}</ol></nav></details>')
+
+
+def cta_medio(tema, tipo):
+    """CTA de texto a media lectura (solo menos de 1024 px); en escritorio lo sustituye cta_margen, bajo el índice fijo."""
+    href, texto = tema["landing"]
+    return (f'<aside class="vt-art__medio" aria-label="Siguiente paso"><p>{tema["titulo"]}</p>'
+            f'<a data-cta="{tipo}:medio" href="{esc(href)}">{texto}<span class="vt-flecha" aria-hidden="true">→</span></a></aside>')
+
+
+def cta_margen(tema, tipo):
+    href, texto = tema["landing"]
+    return (f'<p class="vt-art__margen-cta"><a data-cta="{tipo}:margen" href="{esc(href)}">{texto}'
+            f'<span class="vt-flecha" aria-hidden="true">→</span></a></p>')
+
+
 def enlaces(items):
     filas = "".join(f'<li><a href="{esc(h)}">{t}</a></li>' for t, h in items)
     return f'<nav class="vt-art__sigue" aria-label="Para seguir"><b>Para seguir</b><ul>{filas}</ul></nav>'
+
+
+def etiqueta_de(tema):
+    """"Servicio" en riego, diseño y mantenimiento; "Con IVA" solo si hay un precio al que aplique."""
+    return {"codigo": "Servicio relacionado" if tema["tema"] in SERVICIOS else "Producto relacionado",
+            "aviso": "" if tema["etiqueta"]["monto"] == datos.SEGUN_COTIZACION else "Con IVA", **tema["etiqueta"]}
 
 
 def producto(tema, mensaje, tipo):
@@ -43,7 +70,7 @@ def producto(tema, mensaje, tipo):
             f'<h2 id="vt-art-prod">{tema["titulo"]}</h2><div class="vt-cta"><a class="vt-btn vt-btn--tinta" '
             f'data-cta="{tipo}:landing" href="{esc(href)}">{texto}<span class="vt-flecha" aria-hidden="true">→</span></a>'
             f'{c.boton_wa(mensaje, f"{tipo}:cierre")}</div><p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p></div>'
-            f'{c.etiqueta({**PRODUCTO, **tema["etiqueta"]})}</div></section>')
+            f'{c.etiqueta(etiqueta_de(tema))}</div></section>')
 
 
 def relacionados(titulo, items):

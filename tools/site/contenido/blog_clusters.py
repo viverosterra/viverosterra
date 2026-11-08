@@ -64,6 +64,13 @@ CLUSTERS = {
         "enlaces": (("palmas tropicales en Tampico", "/palmas-tropicales-tampico"), ("catálogo del vivero", "/catalogo"),
                     ("palmas para proyectos", "/palmas-mayoreo-proyectos")),
     },
+    "palmas-cotizacion": {
+        "landing": ("/palmas-tropicales-tampico", "Ver palmas"),
+        "titulo": "¿Ya elegiste tu palma?",
+        "etiqueta": {"nombre": "Palmas tropicales", "antes": "Precio", "monto": SEGUN, "unidad": ""},
+        "enlaces": (("palmas tropicales en Tampico", "/palmas-tropicales-tampico"), ("catálogo del vivero", "/catalogo"),
+                    ("palmas para proyectos", "/palmas-mayoreo-proyectos")),
+    },
     "arboles": {
         "landing": ("/arboles-ornamentales-tampico", "Ver árboles"),
         "titulo": "¿Buscas un árbol para tu jardín?",
@@ -110,26 +117,27 @@ _SINTETICOS = ("como-instalar-pasto-sintetico", "cuanto-cuesta-pasto-sintetico-m
                "pasto-sintetico-para-perros", "pasto-sintetico-vs-natural-tampico", "que-altura-de-pasto-sintetico-elegir")
 POR_SLUG = (
     ("pasto-sintetico", _SINTETICOS),
-    ("pasto-natural", ("cesped-amarillo-tampico-causas-soluciones", "cuando-plantar-pasto-tampico-calendario",
-                       "cuando-regar-pasto-san-agustin-tampico", "errores-pasto-san-agustin-tampico",
-                       "pasto-san-agustin-instalacion-mantenimiento", "pasto-san-agustin-vs-japones")),
+    ("pasto-natural", ("cuando-plantar-pasto-tampico-calendario", "pasto-san-agustin-instalacion-mantenimiento",
+                       "pasto-san-agustin-vs-japones")),
     ("riego", ("como-ahorrar-agua-jardin-tampico", "riego-automatico-tampico-roi", "sistema-riego-automatico-conviene-tampico",
                "sistema-riego-automatizado-tampico")),
     ("diseno", ("cuanto-cuesta-jardin-tampico-precios", "diseno-jardines-tampico-guia", "jardin-bajo-presupuesto-tampico",
-                "jardin-en-macetas-terraza-tampico-guia", "jardin-vertical-tampico-guia")),
-    ("mantenimiento", ("acolchado-mulch-jardin-tampico", "como-evitar-encharcamientos-jardin-tampico",
+                "jardin-vertical-tampico-guia")),
+    ("mantenimiento", ("acolchado-mulch-jardin-tampico", "cesped-amarillo-tampico-causas-soluciones", "como-evitar-encharcamientos-jardin-tampico",
+                       "cuando-regar-pasto-san-agustin-tampico", "errores-pasto-san-agustin-tampico",
                        "fertilizacion-jardines-tampico-temporada-lluvias", "hongos-plantas-exceso-humedad-tampico",
                        "jardines-temporada-lluvias-tampico", "nortes-tampico-proteger-plantas-jardin",
                        "plagas-comunes-jardin-tampico", "poda-arboles-palmas-tampico-guia",
                        "temporada-huracanes-proteger-jardin-tampico")),
-    ("palmas", ("como-medir-plantas-altura-cepellon", "como-plantar-palma-arbol-paso-a-paso-tampico", "cuidados-palma-del-viajero-ravenala",
-                "palma-areca-tampico", "palma-bismarckia-bismarckia-nobilis-tampico", "palma-coco-plumoso-tampico",
-                "palma-cola-de-zorro-wodyetia-bifurcata-tampico", "palma-kerpis-howea-forsteriana-tampico", "palma-real-roystonea-regia-tampico",
-                "palma-triangular-dypsis-decaryi-tampico", "palma-washingtona-tampico", "palmas-mas-vendidas-tampico-precios",
-                "palmas-tropicales-jardin-tampico")),
+    ("palmas", ("como-plantar-palma-arbol-paso-a-paso-tampico", "palma-areca-tampico", "palma-coco-plumoso-tampico",
+                "palma-real-roystonea-regia-tampico", "palmas-mas-vendidas-tampico-precios", "palmas-tropicales-jardin-tampico")),
+    ("palmas-cotizacion", ("cuidados-palma-del-viajero-ravenala", "palma-bismarckia-bismarckia-nobilis-tampico",
+                           "palma-cola-de-zorro-wodyetia-bifurcata-tampico", "palma-kerpis-howea-forsteriana-tampico",
+                           "palma-triangular-dypsis-decaryi-tampico", "palma-washingtona-tampico")),
     ("arboles", ("framboyan-delonix-regia-tampico",)),
     ("banqueta", ("arboles-para-sembrar-en-banqueta",)),
-    ("plantas", ("buganvilia-tampico-cuidados-floracion", "duranta-erecta-tampico-cuidados-seto", "plantas-resistentes-sal-golfo-tampico")),
+    ("plantas", ("buganvilia-tampico-cuidados-floracion", "como-medir-plantas-altura-cepellon", "duranta-erecta-tampico-cuidados-seto",
+                 "jardin-en-macetas-terraza-tampico-guia", "plantas-resistentes-sal-golfo-tampico")),
     ("interior", ("ficus-elastica-cuidados-tampico", "plantas-interior-tampico")),
     ("tierra", ("tierra-negra-costal-camion-tampico",)),
     ("tezontle", ("tezontle-usos-jardin-tampico",)),
@@ -137,6 +145,8 @@ POR_SLUG = (
 TEMA = {slug: tema for tema, slugs in POR_SLUG for slug in slugs}
 # Los blogs de precios enlazan a /precios como fuente única (spec §3.5).
 A_PRECIOS = ("cuanto-cuesta-jardin-tampico-precios", "cuanto-cuesta-pasto-sintetico-mexico", "jardin-bajo-presupuesto-tampico")
+# La comparativa con pasto natural es de instalación en Tampico, no de compra en línea.
+LANDING = {"pasto-sintetico-vs-natural-tampico": ("/pasto-sintetico-tampico", "Ver pasto sintético en Tampico")}
 
 
 def de(slug):
@@ -149,4 +159,4 @@ def de(slug):
         enlaces += ((f"envío de pasto sintético a {NOMBRES_CIUDAD[c]}", f"/pasto-sintetico/envio/{c}"),)
     if slug in A_PRECIOS and not any(h == "/precios" for _t, h in enlaces):
         enlaces = (("lista de precios vigente", "/precios"),) + enlaces[:2]
-    return {**base, "tema": tema, "enlaces": enlaces[:3]}
+    return {**base, "tema": tema, "enlaces": enlaces[:3], "landing": LANDING.get(slug, base["landing"])}

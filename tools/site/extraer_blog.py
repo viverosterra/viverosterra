@@ -376,11 +376,19 @@ class Articulo:
         return any(x is objetivo for x in n.buscar(lambda _: True))
 
 
+def nombre_tabla(encabezado):
+    """aria-label de la región desplazable: "Tabla: <encabezado anterior>"."""
+    plano = limpio(html_mod.unescape(re.sub(r"<[^>]+>", " ", encabezado or "")))
+    return f"Tabla: {html_mod.escape(plano)}" if plano else "Tabla"
+
+
 def serializar(bloques):
     salida = []
+    encabezado = ""
     for b in bloques:
         t = b["tipo"]
         if t in ("h2", "h3", "h4", "h5"):
+            encabezado = b["html"]
             ident = f' id="{b["id"]}"' if b.get("id") else ""
             salida.append(f"<{t}{ident}>{b['html']}</{t}>")
         elif t == "p":
@@ -388,7 +396,7 @@ def serializar(bloques):
         elif t in ("ul", "ol"):
             salida.append(f"<{t}>\n" + "\n".join(f"<li>{i}</li>" for i in b["items"]) + f"\n</{t}>")
         elif t == "tabla":
-            salida.append(f'<div class="vt-art__tabla" tabindex="0" role="region" aria-label="Tabla">{b["html"]}</div>')
+            salida.append(f'<div class="vt-art__tabla" tabindex="0" role="region" aria-label="{nombre_tabla(encabezado)}">{b["html"]}</div>')
         elif t == "cita":
             salida.append(f"<blockquote>{b['html']}</blockquote>")
         elif t == "nota":
@@ -523,9 +531,9 @@ def paridad_de(html, doc, correcciones):
     for q in viejo["faq"]:
         if not par.cubierto(q, faq):
             corr = next(((v, n, m) for v, n, m in plano if v and v in q), None)
-            if corr:
+            if corr and q not in retirados:
                 reemplazos[q] = q.replace(corr[0], corr[1])
-            else:
+            elif not corr:
                 retirados[q] = M_SOLO_LD
     nuevo_txt = par.texto(_texto_doc(doc))
     nuevos = {p.replace(" ", "") for p in re.findall(r"\$\s?\d[\d,]*", nuevo_txt)}
