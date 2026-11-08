@@ -152,6 +152,7 @@ CONTENIDO = {
                "speakable": ("h1", "h2", ".vt-faq summary")},
     "migas": (("Inicio", "/"), ("Riego automático", None)),
     "portada": {
+        "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
         "kicker": "Riego automático · Tampico, Madero y Altamira",
         "h1": f'Riego automático para jardines en Tampico <span class="vt-serif">que ahorra {AHORRO} de agua</span>',
         "lede": ("Aspersión, goteo o microaspersión con programador, para casas, fraccionamientos, hoteles, industria y "
@@ -249,7 +250,7 @@ CONTENIDO = {
              'de enviarte el link de pago. <a href="/politicas#mensualidades">Condiciones</a>'),
         ),
         "titulo_sim": "Calcula tus mensualidades con tarjeta",
-        "sim": {"servicio": "un sistema de riego", "monto": 18000},
+        "sim": {"servicio": "un sistema de riego", "monto": RIEGO_MIN * EJEMPLO_M2},  # el ejemplo de 100 m²
     },
     "faq": {"titulo": "Todo sobre sistemas de riego en Tampico", "preguntas": PREGUNTAS},
     "cierre": {

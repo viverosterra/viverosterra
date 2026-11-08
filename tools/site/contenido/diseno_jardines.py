@@ -113,6 +113,7 @@ PLANES = (
 
 COMPARA = {
     "titulo": "Compara los 3 planes en detalle",
+    "plegable": True,  # revisión de 2c: en celular la tabla larga va plegada; desde 768 px se abre
     "columnas": ("Incluye", f"Esencial {dinero(ESENCIAL)}", f"Completo {dinero(COMPLETO)}",
                  f"Premium desde {dinero(PREMIUM)}"),
     "filas": (
@@ -203,6 +204,7 @@ CONTENIDO = {
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": ("h1", "h2", ".vt-faq summary")},
     "migas": (("Inicio", "/"), ("Diseño de jardines", None)),
     "portada": {
+        "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
         "kicker": "Diseño de jardines · Tampico, Madero y Altamira",
         "h1": 'Diseño de jardines en Tampico <span class="vt-serif">con plan y presupuesto claros</span>',
         "lede": ("Te entregamos el diseño, la lista de plantas y materiales y el costo de la obra. Si nos contratas para "
@@ -223,7 +225,7 @@ CONTENIDO = {
                  "lugar": "Tampico", "etapa": "Terminado"},
     },
     "prueba": {
-        "titulo": "Jardines que hemos diseñado en Tampico",
+        "titulo": "Jardines y paisajismo que hemos diseñado en Tampico",
         "lede": "Jardines terminados del Plan Terra en casas, hoteles y desarrollos de la zona.",
         "figuras": FIGURAS,
         "nota": ("Si ya sabes qué plantas quieres y dónde van, no necesitas un plan de diseño: arma tu lista en el "
@@ -326,6 +328,8 @@ PARIDAD = {
     "reemplazos": {
         "Diseño de jardines con plan y presupuesto claros": "Diseño de jardines en Tampico con plan y presupuesto claros",
         "Elige el plan que se ajusta a tu proyecto": "¿Cuánto cuesta un diseño de jardín en Tampico?",
+        # Revisión de 2c: "paisajismo" vuelve a un H2 (el título y la descripción no cambian).
+        "Jardines que hemos diseñado en Tampico": "Jardines y paisajismo que hemos diseñado en Tampico",
         # Las preguntas del JSON-LD sin acentos: el FAQPage sale ahora de las preguntas visibles.
         "Cuanto cuesta el diseno de un jardin en Tampico?": "¿Cuánto cuesta el diseño de un jardín en Tampico?",
         "Que incluye el Plan Terra?": "¿Qué diferencia al Plan Esencial del Completo?",

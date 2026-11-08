@@ -75,6 +75,40 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 self.assertLessEqual(precio["y"] + precio["height"], 812)
                 self.assertLessEqual(cta["y"] + cta["height"], 812)
 
+    def test_barra_no_tapa_la_etiqueta_y_cta_a_la_vista_en_celulares_cortos(self):
+        """Revisión de 2c: en mantenimiento, a 375×667 y 320×640 el CTA del hero cabe en la primera pantalla y la barra
+        móvil (que se oculta mientras el CTA se ve) no tapa la etiqueta de precio con la página sin desplazar."""
+        for ancho, alto in ((375, 667), (320, 640)):
+            page = self.pagina(ancho, alto)
+            page.goto(self.base + "/mantenimiento-jardines-tampico/", wait_until="load")
+            page.wait_for_function("() => document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
+            etiqueta = page.locator(".vt-portada .vt-etiqueta").bounding_box()
+            cta = page.locator('.vt-portada [data-hero-cta] .vt-btn--wa').bounding_box()
+            with self.subTest(ancho=ancho, alto=alto):
+                self.assertLessEqual(cta["y"] + cta["height"], alto)
+                self.assertLessEqual(etiqueta["y"] + etiqueta["height"], alto)
+
+    def test_cta_en_la_primera_pantalla_a_1024(self):
+        """Revisión de 2c: a 1024×800 la portada compacta deja el CTA de los servicios de jardín en la primera pantalla."""
+        page = self.pagina(1024, 800)
+        for ruta in SERVICIOS:
+            page.goto(self.base + ruta, wait_until="load")
+            cta = page.locator('.vt-portada [data-hero-cta] .vt-btn--wa').bounding_box()
+            with self.subTest(ruta=ruta):
+                self.assertLessEqual(cta["y"] + cta["height"], 800)
+
+    def test_tabla_de_planes_de_diseno_plegada_en_celular_y_abierta_desde_768(self):
+        for ancho, abierta in ((375, False), (768, True), (1440, True)):
+            page = self.pagina(ancho)
+            page.goto(self.base + "/diseno-jardines-tampico/", wait_until="load")
+            plegable = page.locator("details[data-vt-plegable]")
+            with self.subTest(ancho=ancho):
+                self.assertEqual(plegable.evaluate("d => d.open"), abierta)
+                self.assertEqual(plegable.locator("table").is_visible(), abierta)
+                self.assertEqual(plegable.locator("summary h3").inner_text(), "Compara los 3 planes en detalle")
+        page.locator("details[data-vt-plegable] summary").click()
+        self.assertFalse(page.locator("details[data-vt-plegable]").evaluate("d => d.open"))
+
     def test_sin_desbordar_en_cuatro_anchos(self):
         for ancho in (320, 375, 768, 1024, 1440):
             page = self.pagina(ancho)

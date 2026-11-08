@@ -17,7 +17,8 @@ SITE = datos.SITIO
 URL = f"{SITE}/mantenimiento-jardines-tampico"
 OBRA = "/img/obra"
 BASICO = P["mantenimiento_mes"]
-PREMIUM = datos.MANTENIMIENTO_PREMIUM  # "según cotización": el dueño no da precio "desde" para el premium
+COTIZA = datos.SEGUN_COTIZACION  # premium y empresa: una sola redacción; en minúscula solo a media frase
+PREMIUM = datos.MANTENIMIENTO_PREMIUM  # el dueño no da precio "desde" para el premium
 FRECUENCIAS = ", ".join(datos.FRECUENCIAS_MANTENIMIENTO[:-1]) + " o " + datos.FRECUENCIAS_MANTENIMIENTO[-1]
 MENSAJE = mensajes_paginas.SERVICIOS["/mantenimiento-jardines-tampico"]
 
@@ -65,17 +66,18 @@ PLANES = (
                 "Limpieza y recolección de residuos", "Reporte con fotos de cada visita"),
      "mensaje": (f"Hola, me interesa el plan de mantenimiento Residencial básico (desde {dinero(BASICO)}/mes).\n"
                  "Colonia: ___\nMetros aprox. del jardín: ___\nFrecuencia que busco (mensual o cada 21 días): ___")},
-    {"rotulo": "Plan 2 · 200 a 500 m²", "titulo": "Residencial premium", "precio_texto": PREMIUM.capitalize(),
+    {"rotulo": "Plan 2 · 200 a 500 m²", "titulo": "Residencial premium", "precio_texto": PREMIUM,
      "rec": True, "detalle": "Visita cada 15 días",
      "puntos": ("Poda especializada de pasto, arbustos y palmas", "Fertilización mensual",
                 "Control de plagas preventivo", "Revisión del sistema de riego", "Reporte con fotos de cada visita"),
-     "mensaje": (f"Hola, me interesa el plan de mantenimiento Residencial premium ({PREMIUM}, visita cada 15 días).\n"
+     "mensaje": (f"Hola, me interesa el plan de mantenimiento Residencial premium ({PREMIUM.lower()}, visita cada 15 días).\n"
                  "Colonia: ___\nMetros aprox. del jardín: ___\nTengo palmas o sistema de riego: ___")},
-    {"rotulo": "Plan 3 · 500 m² o más", "titulo": "Empresa e industria", "precio_texto": "Por cotización",
+    {"rotulo": "Plan 3 · 500 m² o más", "titulo": "Empresa e industria", "precio_texto": COTIZA,
      "detalle": f"Visita semanal con cuadrilla · REPSE {datos.REPSE} y factura {datos.FACTURA}",
      "puntos": ("Poda con cuadrilla", "Fertilización quincenal", "Programa anual de control de plagas",
                 "Operación del sistema de riego", "Contrato de servicios y reporte con fotos de cada visita"),
-     "mensaje": ("Hola, me interesa el plan de mantenimiento para empresa o industria.\nEmpresa: ___\nUbicación: ___\n"
+     "mensaje": (f"Hola, me interesa el plan de mantenimiento para empresa o industria ({COTIZA.lower()}).\n"
+                 "Empresa: ___\nUbicación: ___\n"
                  f"m² de áreas verdes: ___\nFrecuencia que buscan ({FRECUENCIAS}): ___")},
 )
 
@@ -89,7 +91,7 @@ COMPARA = {
         ("Fertilización", "Trimestral", "Mensual", "Quincenal"),
         ("Control de plagas", "A solicitud", "Preventivo", "Programa anual"),
         ("Riego automatizado", "No incluido", "Revisión incluida", "Operación incluida"),
-        ("Precio", f"desde {dinero(BASICO)}/mes", PREMIUM.capitalize(), "Por cotización"),
+        ("Precio", f"desde {dinero(BASICO)}/mes", PREMIUM, COTIZA),
     ),
     "caption": f"Precios {datos.ANIO} con IVA. La frecuencia final depende de tu plan y de lo que necesita tu jardín.",
 }
@@ -185,14 +187,15 @@ CONTENIDO = {
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": ("h1", "h2", ".vt-faq summary")},
     "migas": (("Inicio", "/"), ("Mantenimiento de jardines", None)),
     "portada": {
-        "kicker": "Mantenimiento de jardines · Tampico, Madero y Altamira",
+        "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
+        "kicker": "Jardinería · Tampico, Madero y Altamira",
         "h1": 'Mantenimiento de jardines y jardinero en Tampico <span class="vt-serif">con visitas programadas</span>',
-        "lede": ("Poda, fertilización, control de plagas y revisión del riego para casas, fraccionamientos y empresas. "
-                 f"Vamos {FRECUENCIAS}, según tu plan y lo que necesita tu jardín."),
+        # Corta para que el precio y el CTA quepan en la primera pantalla del celular; las frecuencias van en la FAQ.
+        "lede": "Poda, fertilización, control de plagas y riego para casas y empresas.",
         "etiqueta": {
             "codigo": "Jardín · mensual", "aviso": "Con IVA", "nombre": "Mantenimiento de jardín",
             "antes": "Residencial · desde", "monto": dinero(BASICO), "unidad": "/mes",
-            "filas": (("Residencial premium", PREMIUM), ("Empresa e industria", "por cotización")),
+            "filas": (("Otros planes", COTIZA),),
         },
         "mensaje": MENSAJE,
         "tambien": (f'REPSE {datos.REPSE} y factura {datos.FACTURA} para empresas · '
@@ -329,8 +332,8 @@ PARIDAD = {
         "Temporada de lluvias": "Las dos temporadas pasan a filas de la tabla “Dos temporadas, dos ritmos de mantenimiento”.",
         "Temporada seca": "Las dos temporadas pasan a filas de la tabla “Dos temporadas, dos ritmos de mantenimiento”.",
         "Desde $750/mes": (
-            "El precio desde $750/mes y sus factores quedan en la etiqueta de la portada y en los planes ($750, según "
-            "cotización y por cotización), una sola sección de precio."),
+            "El precio desde $750/mes y sus factores quedan en la etiqueta de la portada y en los planes ($750 y “Según "
+            "cotización”, datos.SEGUN_COTIZACION), una sola sección de precio."),
         "Cotización mensual por WhatsApp": (
             "El formulario que armaba el mensaje (sendWA) se sustituye por un botón con su propio mensaje en cada plan "
             "(auditoría 02: los 4 CTA mandaban el mismo texto) y el CTA final."),

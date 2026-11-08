@@ -557,9 +557,11 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
 
 # ---------- portada (primer pantallazo: qué, dónde, precio y CTA) ----------
 def portada(p, tipo, migas_items=None):
-    """p: kicker, h1, lede, etiqueta, mensaje, tambien y foto. Con migas_items, la ruta visible va arriba."""
+    """p: kicker, h1, lede, etiqueta, mensaje, tambien y foto; opcional compacta (a 1024–1199 px la etiqueta va en su
+    versión de celular para que el CTA quede en la primera pantalla). Con migas_items, la ruta visible va arriba."""
     ruta = migas(migas_items) if migas_items else ""
-    return (f'<section class="vt-portada" aria-labelledby="vt-h1"><div class="vt-wrap">{ruta}<div class="vt-portada__grid">'
+    clase = "vt-portada vt-portada--compacta" if p.get("compacta") else "vt-portada"
+    return (f'<section class="{clase}" aria-labelledby="vt-h1"><div class="vt-wrap">{ruta}<div class="vt-portada__grid">'
             f'<div><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1><p class="vt-lede">{p["lede"]}</p>'
             f'<div class="vt-portada__trato">{etiqueta(p["etiqueta"])}<div>{fila_cta(p["mensaje"], tipo, "hero", hero=True)}'
             f'<p class="vt-portada__tambien">{p["tambien"]}</p></div></div></div>'

@@ -290,6 +290,21 @@
   .vt-pagina main .vt-portada .vt-etiqueta__fila:has(+.vt-etiqueta__nota){border-bottom:0}
   .vt-portada .vt-etiqueta__nombre,.vt-pagina main .vt-portada .vt-etiqueta__sci,.vt-pagina main .vt-portada .vt-etiqueta__nota{display:none}
 }
+/* portada compacta (servicios de jardín): de 1024 a 1199 px, la misma etiqueta de celular y menos aire para que el
+   CTA quede en la primera pantalla a 1024×800 */
+@media (min-width:1024px) and (max-width:1199px){
+  .vt-portada--compacta{padding-top:28px}
+  .vt-portada--compacta .vt-crumbs{margin-top:-28px}
+  .vt-portada--compacta .vt-portada__trato{margin-top:22px}
+  .vt-portada--compacta .vt-etiqueta-x--cordel::before{display:none}
+  .vt-portada--compacta .vt-etiqueta{padding:14px 16px 12px 46px;-webkit-mask:radial-gradient(circle 6px at 22px 26px,transparent 98%,var(--vt-opaco) 100%);mask:radial-gradient(circle 6px at 22px 26px,transparent 98%,var(--vt-opaco) 100%)}
+  .vt-portada--compacta .vt-etiqueta::before{left:22px;top:26px;width:18px;height:18px}
+  .vt-pagina main .vt-portada--compacta .vt-etiqueta__cod{margin:0}
+  .vt-pagina main .vt-portada--compacta .vt-etiqueta__precio{margin:8px -16px 0 -46px;padding:8px 16px 9px 46px}
+  .vt-portada--compacta .vt-etiqueta__precio b{font-size:34px}
+  .vt-pagina main .vt-portada--compacta .vt-etiqueta__fila:has(+.vt-etiqueta__nota){border-bottom:0}
+  .vt-portada--compacta .vt-etiqueta__nombre,.vt-pagina main .vt-portada--compacta .vt-etiqueta__sci,.vt-pagina main .vt-portada--compacta .vt-etiqueta__nota{display:none}
+}
 
 /* Unidades dentro de rótulos en mayúsculas: m² y g/m² no se vuelven "M²" (componentes.unidades). */
 .vt-u{text-transform:none}
@@ -491,6 +506,14 @@
 .vt-checks li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
 .vt-checks li::before{content:"";width:18px;height:18px;margin-top:2px;border-radius:50%;background:var(--vt-field-100);box-shadow:inset 0 0 0 5px var(--vt-field)}
 .vt-checks .vt-checks__no::before{background:var(--vt-bone-2);box-shadow:inset 0 0 0 5px var(--vt-soil)}
+/* tabla plegable (diseño): cerrada en celular, terra.js la abre desde 768 px */
+.vt-plegable>summary{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:56px;padding:12px 0;border-bottom:1px solid var(--vt-ink);list-style:none;cursor:pointer}
+.vt-plegable>summary::-webkit-details-marker{display:none}
+.vt-plegable>summary h3{margin:0}
+.vt-plegable>summary::after{content:"+";flex:none;font-size:26px;font-weight:400;color:var(--vt-field);transition:transform var(--vt-duration-normal) var(--vt-ease-out)}
+.vt-plegable[open]>summary::after{transform:rotate(45deg)}
+.vt-plegable>summary:focus-visible{outline:2px solid var(--vt-field);outline-offset:4px}
+.vt-plegable>.vt-tabla{margin-top:20px}
 .vt-faq{border-top:1px solid var(--vt-ink)}
 .vt-faq details{border-bottom:1px solid var(--vt-line)}
 .vt-faq summary{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:56px;padding:14px 0;font-size:18px;font-weight:600;list-style:none;cursor:pointer}

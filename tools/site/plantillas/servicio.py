@@ -53,7 +53,13 @@ def _opciones(k, numero):
     cuerpo = c.opciones(o["items"], k["tipo"])
     if o.get("tabla"):
         tb = o["tabla"]
-        cuerpo += f'<h3 class="vt-mt">{tb["titulo"]}</h3>' + c.tabla_comparativa(tb["columnas"], tb["filas"], tb["caption"])
+        tabla = c.tabla_comparativa(tb["columnas"], tb["filas"], tb["caption"])
+        if tb.get("plegable"):
+            # Cerrada en celular para acortar la página; terra.js la abre desde 768 px (data-vt-plegable).
+            cuerpo += (f'<details class="vt-plegable vt-mt" data-vt-plegable><summary class="vt-plegable__resumen">'
+                       f'<h3>{tb["titulo"]}</h3></summary>{tabla}</details>')
+        else:
+            cuerpo += f'<h3 class="vt-mt">{tb["titulo"]}</h3>' + tabla
     if o.get("nota"):
         cuerpo += f'<p class="vt-promesa">{o["nota"]}</p>'
     return c.bloque(numero, o.get("rotulo", "Opciones"), "vt-h-opciones", o["titulo"], cuerpo, lede=o.get("lede"),

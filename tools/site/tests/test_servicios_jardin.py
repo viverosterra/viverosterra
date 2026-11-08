@@ -24,7 +24,7 @@ ESPERADO = {
     "diseno": {"ruta": "/diseno-jardines-tampico", "extra": (), "ld": BASE_LD,
                "cifras": ("$3,000", "$6,500", "desde $18,000", "en proyectos de más de $150,000")},
     "mantenimiento": {"ruta": "/mantenimiento-jardines-tampico", "extra": ('id="vt-h-incluye"',), "ld": BASE_LD,
-                      "cifras": ("$750", "según cotización", "Por cotización")},
+                      "cifras": ("$750", datos.SEGUN_COTIZACION)},
     "riego": {"ruta": "/sistema-riego-tampico", "extra": ('id="vt-h-precio"',), "ld": BASE_LD | {"HowTo"},
               "cifras": ("$180", "$320", "$18,000 a $32,000", datos.RIEGO_AHORRO)},
 }
@@ -177,7 +177,11 @@ class MantenimientoTest(unittest.TestCase):
         planes = mensajes_de(html, r"servicio-mantenimiento:opcion-\d")
         self.assertIn(f"Residencial básico (desde ${P['mantenimiento_mes']}/mes)", planes[0])
         # Respuesta del dueño (2026-11-07): el premium se cotiza; no hay "desde $1,800/mes".
-        self.assertIn(f"Residencial premium ({datos.MANTENIMIENTO_PREMIUM}", planes[1])
+        self.assertIn(f"Residencial premium ({datos.SEGUN_COTIZACION.lower()}", planes[1])
+        self.assertIn(f"empresa o industria ({datos.SEGUN_COTIZACION.lower()})", planes[2])
+        # Una sola redacción para lo que se cotiza: "Según cotización" (minúscula solo a media frase).
+        self.assertNotRegex(texto, r"(?i)por cotizaci[oó]n")
+        self.assertEqual(texto.count(datos.SEGUN_COTIZACION), 5, "etiqueta (1), tarjetas (2) y tabla (2)")
         self.assertNotIn("1,800", texto)
         self.assertIn("empresa o industria", planes[2])
         self.assertGreaterEqual(len(set(mensajes_de(html, r"servicio-mantenimiento:[a-z0-9-]+"))), 4)

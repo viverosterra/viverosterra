@@ -314,3 +314,19 @@ test('un enlace al catálogo manda select_content con el tipo de la página', ()
   }
   assert.strictEqual(evento(enlace({ href: '/catalogos-viejos' }), ctx), null);
 });
+
+test('las tablas plegables se abren desde 768 px y siguen cerradas en celular', () => {
+  const { plegables } = require('../terra.js');
+  const crear = () => [{ open: false }, { open: false }];
+  const doc = (ds) => ({ querySelectorAll: (sel) => (sel === 'details[data-vt-plegable]' ? ds : []) });
+  const ancho = (px) => ({ matchMedia: (q) => ({ matches: q === '(min-width: 768px)' && px >= 768 }) });
+  const escritorio = crear();
+  plegables(doc(escritorio), ancho(1024));
+  assert.deepStrictEqual(escritorio.map((d) => d.open), [true, true]);
+  const celular = crear();
+  plegables(doc(celular), ancho(375));
+  assert.deepStrictEqual(celular.map((d) => d.open), [false, false]);
+  const sinMatchMedia = crear();
+  plegables(doc(sinMatchMedia), {});
+  assert.deepStrictEqual(sinMatchMedia.map((d) => d.open), [false, false]);
+});

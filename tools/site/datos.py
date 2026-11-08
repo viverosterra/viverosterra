@@ -85,8 +85,11 @@ VISITA_COSTO_CORTO = "Visita para medir y cotizar: su costo depende de la ubicac
 # plan y lo que necesita el jardín (decisión del dueño).
 RIEGO_AHORRO = "hasta 40%"
 FRECUENCIAS_MANTENIMIENTO = ("semanal", "cada 15 días", "cada 21 días", "mensual")
+# Una sola forma de decir que un plan se cotiza (premium y empresa de mantenimiento): así, con mayúscula, en la
+# etiqueta, las tarjetas y la tabla; en minúscula (SEGUN_COTIZACION.lower()) solo a media frase. Nunca "por cotización".
+SEGUN_COTIZACION = "Según cotización"
 # El plan de mantenimiento residencial premium se cotiza: no tiene precio "desde" (decisión del dueño, 2026-11-07).
-MANTENIMIENTO_PREMIUM = "según cotización"
+MANTENIMIENTO_PREMIUM = SEGUN_COTIZACION
 # Cifras confirmadas por el dueño (2026-11-07). No se publican el registro SENASICA ni "se amortiza en 18–24 meses"
 # (test_reglas.py).
 SISTEMAS_RIEGO = "+200"
