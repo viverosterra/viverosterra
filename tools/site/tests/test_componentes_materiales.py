@@ -41,7 +41,7 @@ class CalculadoraTest(unittest.TestCase):
         self.assertIn('data-vt-o="nota"', status)
 
     def test_piedra_bola_pide_los_kg_y_la_colonia(self):
-        self.assertIn("Mándanos los kg y la colonia: te decimos cuántos costales o si conviene camión.",
+        self.assertIn("Se vende a granel: mándanos los kg y la colonia y te damos el precio con la entrega.",
                       cm.calculadora("vt-piedra", "material", "piedra-bola", MENSAJE, "piedra bola"))
 
     def test_cta_con_el_cta_id_que_media_main(self):
@@ -52,7 +52,7 @@ class CalculadoraTest(unittest.TestCase):
     def test_datos_para_el_js_salen_de_datos_py(self):
         cfg = json.loads(unescape(re.search(r'data-material="([^"]*)"', self.html).group(1)))
         self.assertEqual(cfg, {"clave": "tierra-negra", "costal_m3": 0.035, "precio_costal": 90, "precio_m3": 1500,
-                               "texto": "tierra negra vegetal"})
+                               "camiones": [[8, 5200], [14, 8000]], "texto": "tierra negra vegetal"})
         self.assertEqual(cm.datos_js("piedra-bola")["kg_m2"], (120, 150))
 
     def test_capa_con_label_y_la_de_main_elegida(self):
@@ -60,10 +60,14 @@ class CalculadoraTest(unittest.TestCase):
         self.assertIn('<option value="0.08" selected>', self.html)
         self.assertNotIn("data-vt-campo=\"capa\"", cm.calculadora("vt-p", "material", "piedra-bola", MENSAJE, "piedra bola"))
 
-    def test_marmol_sin_precio_y_con_peso(self):
+    def test_marmol_con_total_y_peso_aproximado(self):
+        """El dueño confirmó el saco a $250 (2026-11-08): la calculadora vuelve a dar el total; el precio llega en
+        data-material y el peso del saco se publica solo aquí, aproximado."""
         html = cm.calculadora("vt-marmol", "material", "marmol", MENSAJE, "mármol blanco")
         self.assertIn('data-vt-o="peso"', html)
-        self.assertNotIn("$", html.split("data-mensaje")[0] + html.split("</select>")[-1].split("href=")[0])
+        self.assertIn('data-vt-o="total"', html)
+        self.assertEqual(cm.datos_js("marmol")["precio_saco"], datos.PRECIOS["marmol_saco"])
+        self.assertIn("≈ 20 kg", cm.NOTAS["marmol"])
 
 
 class PresentacionesTest(unittest.TestCase):

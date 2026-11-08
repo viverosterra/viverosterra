@@ -1,7 +1,8 @@
 """Plantilla de material (spec §3.3): ruta visible → H1 con el precio por presentación en la etiqueta (costal / m³ /
 camión, o "según cotización") y CTA con la plantilla de la página → qué es (con las fotos de main) → precio por
 presentación → usos → calculadora de cantidad (la de main, como función pura) → entrega (recoger o a domicilio, costo
-según la colonia, anticipo y factura) → galería (tierra negra) → preguntas → combinaciones e instalación (tezontle y
+según la colonia, anticipo y factura) → galería (tierra negra) → opiniones (tierra negra y piedra bola: reales, con
+permiso del dueño, solo texto, sin calificación en el JSON-LD) → preguntas → combinaciones e instalación (tezontle y
 mármol) → CTA final (con la foto de fondo de main) → otros materiales → pedido por correo (el formulario de main). Las
 cuatro páginas siguen ese orden; el mármol pone los otros materiales antes del CTA final porque sus miniaturas van
 antes de la foto del cierre en main y el orden de las fotos de main no cambia (regla del dueño; "antes_del_cierre").
@@ -76,6 +77,8 @@ def _extra(k, n, clave):
         return c.bloque(n(), "Instalación", "vt-h-instalacion", x["titulo"], cuerpo, lede=x.get("lede"), tinte=True)
     if clave == "galeria":
         return c.bloque(n(), "Fotos", "vt-h-galeria", x["titulo"], c.obras(x["figuras"]), lede=x.get("lede"))
+    if clave == "opiniones":
+        return c.bloque(n(), "Opiniones", "vt-h-opiniones", x["titulo"], c.testimonios(x["items"]), lede=x.get("lede"))
     # Tras las preguntas (con tinte): combinaciones sin tinte e instalación con tinte, para que no se junten dos iguales.
     return c.bloque(n(), "Combinaciones", "vt-h-combina", x["titulo"], c.fichas(x["items"]), lede=x.get("lede"))
 
@@ -102,8 +105,7 @@ def render(k):
     if k.get("que_es"):
         secciones.append(_que_es(k, n))
     secciones += [_precio(k, n), _usos(k, n), _calculadora(k, n), _entrega(k, n)]
-    if k.get("galeria"):
-        secciones.append(_extra(k, n, "galeria"))
+    secciones += [_extra(k, n, clave) for clave in ("galeria", "opiniones") if k.get(clave)]
     f = k["faq"]
     secciones.append(c.bloque_dos(n(), "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]), tinte=True))
     secciones += [_extra(k, n, clave) for clave in ("combinaciones", "instalacion") if k.get(clave)]

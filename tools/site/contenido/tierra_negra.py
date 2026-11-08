@@ -1,12 +1,13 @@
 """Contenido de /tierra-negra-vegetal-tampico (tierra negra vegetal por costal, m³ o camión). Solo datos: la plantilla es
 tools/site/plantillas/material.py, con la calculadora de main (calcularTierra) como función pura.
 
-Precios de datos.PRECIOS: costal $90 y m³ $1,500. La tierra preparada ($100), el camión ("desde $5,000") y los camiones de
-5, 8 y 14 m³ ($3,500, $5,200, $8,000) no están en datos.py: van "según cotización" (preguntas al dueño). Las 8 fotos de
+Precios de datos.PRECIOS (dueño, 2026-11-08): costal $90, tierra preparada $100, m³ $1,500 y camiones de 5, 8 y 14 m³ a
+$3,500, $5,200 y $8,000 (la tabla de camiones; nunca el "camión desde $5,000" de main, que no confirmó). Las 8 fotos de
 main, en su orden. Sin “Entrega inmediata”, “+500 jardines”, “40% más rápido” ni “gratis”; las opiniones de Ricardo O.
-y Laura P. no tienen permiso del dueño y se retiran. Título, robots y canonical como estaban; la descripción y el Open
-Graph pierden los precios que no están en datos.py y el “gratis” (PARIDAD["meta"]). El peso del costal no se publica:
-main decía “≈ 20 kg” y “de 30 a 40 kg” (PARIDAD["cifras"], pregunta 5 al dueño).
+y Laura P. vuelven textuales (reales y con permiso: datos.OPINIONES_TIERRA_NEGRA), sin calificación en el JSON-LD.
+Sin mínimo de compra, entrega por viaje y factura en todo (datos.CONDICIONES_MATERIALES). Título, robots y canonical
+como estaban; la descripción y el Open Graph pierden el camión "desde $5,000" y el “gratis” (PARIDAD["meta"]). El peso
+del costal no se publica: main decía “≈ 20 kg” y “de 30 a 40 kg” y el dueño no lo tiene (PARIDAD["cifras"]).
 """
 import datos
 import mensajes_paginas
@@ -19,12 +20,17 @@ SITE = datos.SITIO
 RUTA = "/tierra-negra-vegetal-tampico"
 URL = f"{SITE}{RUTA}"
 COSTAL, M3 = dinero(P["tierra_negra_costal"]), dinero(P["tierra_negra_m3"])
+PREPARADA = dinero(P["tierra_preparada_costal"])
+CAMIONES = datos.TIERRA_CAMIONES
+CAMIONES_TEXTO = ", ".join(f"{m3} m³ a {dinero(precio)}" for m3, precio in CAMIONES[:-1]) + \
+    f" y {CAMIONES[-1][0]} m³ a {dinero(CAMIONES[-1][1])}"
 MENSAJE = mensajes_paginas.MATERIALES[RUTA]
 MIGAS, MIGAS_LD = mc.migas(RUTA, "Tierra negra vegetal")
-DESCRIPCION = (f"Tierra negra vegetal en Tampico. Costal {COSTAL} · m³ {M3} · camión volteo según cotización. Entrega a "
-               "domicilio en Madero y Altamira. Cotiza por WhatsApp.")
-DESCRIPCION_OG = (f"Tierra negra vegetal para jardín y pasto en Tampico. Costal {COSTAL}, m³ {M3} y camión volteo según "
-                  "cotización. Cotiza por WhatsApp.")
+DESCRIPCION = (f"Tierra negra vegetal en Tampico. Costal {COSTAL} · preparada {PREPARADA} · m³ {M3} · camión de "
+               f"{CAMIONES[0][0]} m³ {dinero(CAMIONES[0][1])}. Entrega a domicilio en Madero y Altamira. Cotiza por "
+               "WhatsApp.")
+DESCRIPCION_OG = (f"Tierra negra vegetal para jardín y pasto en Tampico. Costal {COSTAL}, preparada {PREPARADA}, m³ {M3} y "
+                  f"camión volteo de {CAMIONES[0][0]} m³ {dinero(CAMIONES[0][1])}. Cotiza por WhatsApp.")
 
 META = {
     "title": "Tierra Negra Vegetal Tampico · Costal y Camión Volteo",
@@ -96,7 +102,7 @@ USOS = (
     {"titulo": "Nivelación de terrenos",
      "texto": ("Relleno y nivelación de terrenos irregulares antes de jardines, fraccionamientos u obras, en camiones "
                "volteo coordinados por etapas."),
-     "puntos": ("Camiones de 5, 8 y 14 m³",)},
+     "puntos": (f"Camiones de {CAMIONES_TEXTO}",)},
     {"titulo": "Macetas y jardineras grandes",
      "texto": ("Sustrato base para macetones y jardineras: se mezcla con perlita o arena gruesa 70/30 para que drene y no "
                "se encharque."),
@@ -104,14 +110,14 @@ USOS = (
     {"titulo": "Proyectos comerciales e industriales",
      "texto": ("Áreas verdes en fraccionamientos, condominios, parques industriales y escuelas: camiones coordinados por "
                f"etapas con factura {datos.FACTURA}."),
-     "puntos": (f"Por camión, {mc.SEGUN}",)},
+     "puntos": ("Por camión de 5, 8 o 14 m³",)},
 )
 
 PREGUNTAS = (
     ("¿Cuánto cuesta un camión de tierra negra en Tampico?",
-     f"El camión volteo de tierra negra se cotiza según el volumen y la distancia de entrega: escríbenos tu colonia y la "
-     f"cantidad y te mandamos el precio por escrito antes de que confirmes. A granel por m³ cuesta {M3} y el costal, "
-     f"{COSTAL}."),
+     f"El camión volteo de tierra negra cuesta según su tamaño: {CAMIONES_TEXTO}. {datos.ENTREGA_COBRO} A granel por m³ "
+     f"cuesta {M3}; el costal, {COSTAL}, y la tierra preparada, {PREPARADA} el costal. Escríbenos tu colonia y la "
+     "cantidad y te mandamos el total por escrito antes de que confirmes."),
     ("¿Para qué sirve la tierra negra vegetal?",
      "Para preparar terrenos antes de instalar pasto en rollo, rellenar cajetes de árboles y palmas, mejorar el suelo "
      "arcilloso de Tampico, nivelar terrenos y como sustrato base en macetas grandes. Aporta materia orgánica, retiene "
@@ -135,9 +141,7 @@ PREGUNTAS = (
     ("¿Se puede usar tierra negra para macetas y jardineras?",
      "Sí, mezclada con perlita o arena gruesa en proporción 70/30: la tierra negra pura en maceta se compacta con el "
      "riego frecuente y se encharca. La mezcla aporta los nutrientes de la tierra negra y el drenaje de la perlita."),
-    ("¿Dan factura CFDI por la tierra negra?",
-     f"Sí. Emitimos factura {datos.FACTURA}, sobre todo en proyectos comerciales, fraccionamientos y empresas. Pídela al "
-     "cotizar con tu RFC y datos fiscales."),
+    mc.pregunta_condiciones("tierra negra", "¿Dan factura CFDI por la tierra negra?"),
 )
 
 CONTENIDO = {
@@ -149,11 +153,11 @@ CONTENIDO = {
         "kicker": "Tampico · Madero · Altamira",
         "h1": "Tierra negra vegetal <em>por costal o camión</em>",
         "lede": (f"En Viveros Terra la tierra negra vegetal cuesta {COSTAL} el costal y {M3} el m³ a granel; el camión "
-                 "volteo se cotiza según el volumen y tu colonia. Para pasto, jardineras y siembra: recoges en el vivero "
-                 "o te la llevamos en Tampico, Madero y Altamira."),
+                 f"volteo, {CAMIONES_TEXTO}. Para pasto, jardineras y siembra: recoges en el vivero o te la llevamos "
+                 "en Tampico, Madero y Altamira."),
         "etiqueta": {"codigo": "Tierra negra", "aviso": f"Precios {datos.ANIO}", "nombre": "Costal", "antes": "",
                      "monto": COSTAL, "unidad": "por costal",
-                     "filas": (("Por m³ a granel", M3), ("Camión volteo", datos.SEGUN_COTIZACION)),
+                     "filas": (("Por m³ a granel", M3), (f"Camión volteo {CAMIONES[0][0]} m³", dinero(CAMIONES[0][1]))),
                      "nota": "La entrega se cotiza según tu colonia."},
         "mensaje": MENSAJE,
         "tambien": 'O <a href="#calculadora" data-cta="material:calculadora">calcula cuánta necesitas</a>.',
@@ -174,19 +178,19 @@ CONTENIDO = {
     },
     "precio": {
         "titulo": "¿Cuánto cuesta la tierra negra en Tampico?",
-        "lede": f"Precios {datos.ANIO}. Lo que no tiene precio publicado se cotiza por escrito antes de que confirmes.",
+        "lede": f"Precios {datos.ANIO}, con IVA. {datos.SIN_MINIMO} Te mandamos el total por escrito antes de que confirmes.",
         "caption": "Tierra negra vegetal por presentación",
         "filas": (
             {"nombre": "Costal de tierra negra", "detalle": "Recoger o a domicilio",
              "unidad": "costal", "precio": P["tierra_negra_costal"]},
             {"nombre": "Tierra negra preparada", "detalle": "Costal con hojarasca y abono, para macetas",
-             "unidad": "costal", "precio": None},
+             "unidad": "costal", "precio": P["tierra_preparada_costal"]},
             {"nombre": "A granel por m³", "detalle": "Entregada en tu domicilio", "unidad": "m³",
              "precio": P["tierra_negra_m3"]},
-            {"nombre": "Camión volteo", "detalle": "8 m³ o más, por etapas y con factura", "unidad": "camión",
-             "precio": None},
+            *({"nombre": f"Camión volteo de {m3} m³", "detalle": "Descarga en tu domicilio u obra", "unidad": "camión",
+               "precio": precio} for m3, precio in CAMIONES),
         ),
-        "nota": "El costo de entrega se cotiza según tu colonia y el volumen.",
+        "nota": f"{datos.ENTREGA_COBRO} {datos.FACTURACION}",
     },
     "usos": {"titulo": "¿Para qué usas la tierra negra?",
              "lede": "Cada uso tiene su capa y su cantidad de referencia.", "items": USOS},
@@ -194,6 +198,7 @@ CONTENIDO = {
                     "lede": "Escribe el área y el grosor de la capa: te damos los m³, la presentación y los costales."},
     "entrega": mc.entrega("la tierra negra"),
     "galeria": {"titulo": "Así luce la tierra negra de Viveros Terra", "figuras": FIGURAS_GALERIA},
+    "opiniones": {"titulo": "Lo que dicen nuestros clientes", "items": datos.OPINIONES_TIERRA_NEGRA},
     "faq": {"titulo": "Todo sobre tierra negra en Tampico", "preguntas": PREGUNTAS},
     "otros": {"titulo": "Otros materiales para tu jardín",
               "items": mc.otros(RUTA, ("/tezontle-rojo-tampico", "/marmol-blanco-tampico", "/piedra-bola-rio-tampico")),
@@ -209,8 +214,12 @@ CONTENIDO = {
             ("Tierra negra vegetal orgánica para jardines, pasto en rollo y plantas en Tampico. Venta por costal, por m³ y "
              "en camión volteo con entrega a domicilio en Ciudad Madero y Altamira."),
             f"{SITE}/img/camion-tierra-negra-entrega-tampico.jpg",
-            ofertas=(mc.oferta(f"{URL}#precio", "costal", precio=P["tierra_negra_costal"]),
-                     mc.oferta(f"{URL}#precio", "m³", precio=P["tierra_negra_m3"]))),
+            ofertas=(mc.oferta(f"{URL}#precio", "costal", precio=P["tierra_negra_costal"], nombre="Costal de tierra negra"),
+                     mc.oferta(f"{URL}#precio", "costal", precio=P["tierra_preparada_costal"],
+                               nombre="Costal de tierra negra preparada"),
+                     mc.oferta(f"{URL}#precio", "m³", precio=P["tierra_negra_m3"], nombre="Tierra negra a granel por m³"),
+                     *(mc.oferta(f"{URL}#precio", "camión", precio=precio, nombre=f"Camión volteo de {m3} m³")
+                       for m3, precio in CAMIONES))),
         "negocio": mc.NEGOCIO,
         "migas": MIGAS_LD,
         "speakable": mc.SPEAKABLE,
@@ -219,10 +228,10 @@ CONTENIDO = {
 
 PARIDAD = {
     "meta": {
-        "description": (DESCRIPCION, "Sin la tierra preparada a $100 ni el camión desde $5,000 (no están en datos.py) y "
-                                     "sin “gratis” (regla del dueño)."),
-        "og:description": (DESCRIPCION_OG, "Sin la tierra preparada a $100 ni el camión desde $5,000 (no están en "
-                                           "datos.py) y sin “gratis” (regla del dueño)."),
+        "description": (DESCRIPCION, "Sin el camión desde $5,000 (el dueño no lo confirmó: va el camión de 5 m³ de su "
+                                     "tabla) y sin “gratis” (regla del dueño)."),
+        "og:description": (DESCRIPCION_OG, "Sin el camión desde $5,000 (el dueño no lo confirmó: va el camión de 5 m³ de "
+                                           "su tabla) y sin “gratis” (regla del dueño)."),
     },
     "reemplazos": {
         "Elige el formato para tu proyecto": "¿Cuánto cuesta la tierra negra en Tampico?",
@@ -234,16 +243,13 @@ PARIDAD = {
         "¿Entregan tierra negra a domicilio en Tampico?": "¿Entregan tierra negra a domicilio en toda la zona de Tampico?",
     },
     "retirados": {
-        "Lo que dicen nuestros clientes": mc.MOTIVO_TESTIMONIOS,
-        "$100": mc.MOTIVO_PRECIO,
-        "$3,500": mc.MOTIVO_PRECIO,
-        "$5,000": mc.MOTIVO_PRECIO,
-        "$5,200": mc.MOTIVO_PRECIO,
-        "$8,000": mc.MOTIVO_PRECIO,
+        "$5,000": ("El “camión desde $5,000” no lo confirmó el dueño (2026-11-08): va la tabla de camiones de 5, 8 y "
+                   "14 m³ de datos.py."),
     },
     "jsonld": {"LocalBusiness": mc.MOTIVO_LOCALBUSINESS,
-               "AggregateOffer": ("Pasa a dos Offer con su UnitPriceSpecification (costal $90 y m³ $1,500, de "
-                                  "datos.py): cada precio con su unidad, en vez de un rango sin unidad.")},
+               "AggregateOffer": ("Pasa a un Offer por presentación con su UnitPriceSpecification (costal, preparada, "
+                                  "m³ y los tres camiones, de datos.py): cada precio con su unidad, en vez de un rango "
+                                  "sin unidad y sin InStock.")},
     # Cifras que main publicaba y no salen (paridad.py no las captura: se declaran aquí).
     "cifras": {"Costal ≈ 20 kg / Costales de 30–40 kg": mc.MOTIVO_PESO_COSTAL},
 }

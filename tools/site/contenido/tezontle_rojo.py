@@ -2,10 +2,12 @@
 tools/site/plantillas/material.py, con la calculadora de main (calcularTezontle) como función pura.
 
 Precio de datos.PRECIOS: costal desde $200 (como en la home). El m³ ($3,200) y el camión de 14 m³ no están en datos.py:
-"según cotización". La comparativa pierde el mármol a $350 y la piedra a $280 (no están en datos.py). Sin “+300
+"según cotización" (el dueño lo confirmó el 2026-11-08). La comparativa lleva el mármol a $250 el saco de datos.py
+(main decía $350 aquí y $250 en la página del mármol) y la piedra de río a granel, sin medidas ni el $280. Sin “+300
 jardines”, “3–5 años sin reposición”, “90% de la maleza”, “del 60% al 95%”, “imbatible” ni “gratis”. Sin foto de
 portada (main no la tenía); sus 4 fotos, en su orden. Meta como estaba publicada. El peso del costal no se publica:
-main decía “15 kg” y “de 25 a 30 kg” (PARIDAD["cifras"], pregunta 5 al dueño).
+main decía “15 kg” y “de 25 a 30 kg” y el dueño no lo tiene (PARIDAD["cifras"]). Sin mínimo de compra, entrega por
+viaje y factura en todo (datos.CONDICIONES_MATERIALES).
 """
 import datos
 import mensajes_paginas
@@ -129,6 +131,7 @@ PREGUNTAS = (
      "Para control de maleza, sí: sin membrana el tezontle ayuda, pero las semillas que caen desde arriba pueden germinar "
      "entre las piedras. Para uso decorativo o senderos de mucho tránsito no es indispensable. Te orientamos sobre la "
      "membrana para tu proyecto."),
+    mc.pregunta_condiciones("tezontle"),
 )
 
 CONTENIDO = {
@@ -165,7 +168,7 @@ CONTENIDO = {
     },
     "precio": {
         "titulo": "¿Cuánto cuesta el tezontle rojo en Tampico?",
-        "lede": f"Precios {datos.ANIO}. Lo que no tiene precio publicado se cotiza por escrito antes de que confirmes.",
+        "lede": (f"Precios {datos.ANIO}, con IVA. El m³ y el camión se cotizan por escrito antes de que confirmes."),
         "caption": "Tezontle rojo por presentación",
         "filas": (
             {"nombre": "Por costal", "detalle": "Recoger o a domicilio", "unidad": "costal",
@@ -175,17 +178,17 @@ CONTENIDO = {
             {"nombre": "Camión volteo de 14 m³", "detalle": "Descarga en tu domicilio u obra, con factura",
              "unidad": "camión", "precio": None},
         ),
-        "nota": "El costo de entrega se cotiza según tu colonia y el volumen.",
+        "nota": datos.CONDICIONES_MATERIALES,
         "tablas": ({
             "titulo": "Tezontle, mármol blanco o piedra de río",
             "caption": "Tres materiales decorativos para senderos, bordes y arriates",
             "columnas": ("Característica", "Tezontle rojo", "Mármol blanco", "Piedra de río"),
             "filas": (("Color", "Rojo terracota", "Blanco", "Gris o beige natural"),
                       ("Origen", "Roca volcánica", "Mármol triturado", "Piedra de río"),
-                      ("Tamaño", mc.TEZONTLE_MEDIDA, mc.MARMOL_MEDIDA, f"{mc.PIEDRA_BOLA_RANGO} (tres medidas)"),
+                      ("Tamaño o venta", mc.TEZONTLE_MEDIDA, mc.MARMOL_MEDIDA, mc.PIEDRA_BOLA_VENTA.capitalize()),
                       ("Drenaje", "Excelente (poroso)", "Bueno", "Excelente"),
                       ("Estilo", "Rústico, mexicano", "Minimalista", "Natural, zen"),
-                      ("Precio por costal", f"desde {COSTAL}", SEGUN, SEGUN),
+                      ("Precio por costal o saco", f"desde {COSTAL}", f"{dinero(P['marmol_saco'])} el saco", SEGUN),
                       ("Mejor uso", "Bordes y arriates", "Senderos formales", "Estanques y decoración")),
         },),
     },
@@ -237,7 +240,8 @@ PARIDAD = {
         "Viveros Terra · Tampico": mc.MOTIVO_AUTOR,
         "$280": mc.MOTIVO_PRECIO,
         "$3,200": mc.MOTIVO_PRECIO,
-        "$350": mc.MOTIVO_PRECIO,
+        "$350": ("Era el mármol a $350 en la comparativa; el dueño confirmó $250 el saco (datos.py) y la comparativa "
+                 "usa ese."),
     },
     "jsonld": {"LocalBusiness": mc.MOTIVO_LOCALBUSINESS},
     # Cifras que main publicaba y no salen (paridad.py no las captura: se declaran aquí).
