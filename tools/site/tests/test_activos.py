@@ -27,6 +27,7 @@ class ActivosTest(unittest.TestCase):
         (self.pub / "css" / "terra-plantas.css").write_text(".vt-plantas .vt-x{}", encoding="utf-8")
         (self.pub / "css" / "terra-materiales.css").write_text(".vt-materiales .vt-x{}", encoding="utf-8")
         (self.pub / "css" / "terra-precios.css").write_text(".vt-precios .vt-x{}", encoding="utf-8")
+        (self.pub / "css" / "terra-util.css").write_text(".vt-util .vt-x{}", encoding="utf-8")
         (self.pub / "js" / "terra.js").write_text("void 0;", encoding="utf-8")
 
     def escribir(self, css):

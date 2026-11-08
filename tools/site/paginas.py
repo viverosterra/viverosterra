@@ -49,6 +49,7 @@ EXACTAS = {
     "/politica-privacidad": _UTILIDAD,
     "/gracias": _UTILIDAD,
     "/datos-envio": _UTILIDAD,
+    "/404": _UTILIDAD,
 }
 PREFIJOS = (
     ("/pasto-sintetico/envio/", ("ciudad", "pasto-sintetico", "pasto-sintetico")),

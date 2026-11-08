@@ -20,6 +20,10 @@ def _varias(modulo, ruta_de, archivo_de, plantilla):
     return tuple((ruta_de(k), archivo_de(k), plantilla, f"{modulo}:{k}") for k in m.CLAVES)
 
 
+# Etapa 2i: páginas utilitarias (legales, formularios, protocolo, vivero y 404).
+UTILITARIAS = (
+)
+
 PAGINAS = (
     ("/", "index.html", "inicio", "inicio"),
     ("/pasto-en-rollo-tampico", "pasto-en-rollo-tampico/index.html", "servicio", "pasto_en_rollo"),
@@ -47,7 +51,7 @@ PAGINAS = (
     ("/pasto-sintetico/perros", "pasto-sintetico/perros/index.html", "tienda_guia", "perros"),
 ) + _varias("ficha", lambda k: f"/pasto-sintetico/{k}", lambda k: f"pasto-sintetico/{k}/index.html", "ficha") + _varias(
     "ciudad", lambda k: f"/pasto-sintetico/envio/{k}", lambda k: f"pasto-sintetico/envio/{k}/index.html", "tienda_guia"
-) + _varias("zona", lambda k: f"/{k}", lambda k: f"{k}/index.html", "zona")
+) + _varias("zona", lambda k: f"/{k}", lambda k: f"{k}/index.html", "zona") + UTILITARIAS
 
 
 def cargar(contenido):

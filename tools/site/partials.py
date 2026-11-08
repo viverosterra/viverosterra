@@ -68,12 +68,12 @@ def region(nombre, cuerpo):
 FUENTE_PRINCIPAL = "/fonts/archivo-latin.woff2"
 
 
-def head(urls, legacy, tienda=False, plantas=False, materiales=False, precios=False):
+def head(urls, legacy, tienda=False, plantas=False, materiales=False, precios=False, util=False):
     """Favicon, geo de la tienda, fuente principal precargada, CSS del shell (y legacy-fixes en páginas con Tailwind),
     GA4 una sola vez y terra.js diferido. Con tienda=True (páginas <body class="vt-pagina vt-tienda">), también
     terra-tienda.css. Con plantas=True (páginas <body class="vt-pagina vt-plantas">, Etapa 2e), terra-plantas.css. Con
     materiales=True (<body class="vt-pagina vt-materiales">, Etapa 2f), terra-materiales.css. Con precios=True
-    (<body class="vt-pagina vt-precios">, Etapa 2g), terra-precios.css.
+    (<body class="vt-pagina vt-precios">, Etapa 2g), terra-precios.css. Con util=True (<body class="vt-pagina vt-util">, Etapa 2i), terra-util.css.
     Las meta keywords, last-modified, ai-content-declaration y language ya no se usan: no se
     reponen."""
     lineas = [
@@ -95,6 +95,8 @@ def head(urls, legacy, tienda=False, plantas=False, materiales=False, precios=Fa
         lineas.append(f'<link rel="stylesheet" href="{urls["terra-materiales.css"]}">')
     if precios:
         lineas.append(f'<link rel="stylesheet" href="{urls["terra-precios.css"]}">')
+    if util:
+        lineas.append(f'<link rel="stylesheet" href="{urls["terra-util.css"]}">')
     lineas += [
         f'<script async src="https://www.googletagmanager.com/gtag/js?id={datos.GA4_ID}"></script>',
         "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
