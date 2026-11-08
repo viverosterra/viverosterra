@@ -663,6 +663,28 @@ class PlantillasNavegadorTest(unittest.TestCase):
         self.assertIn(["event", "generate_lead", {"method": "formulario", "cta_id": "material:formulario",
                                                   "service": "materiales"}], eventos)
 
+    def test_calculadoras_de_materiales_con_resultado_largo_no_se_salen_de_la_pantalla(self):
+        """El body recorta con overflow-x: clip, así que scrollWidth no ve lo que se sale: se miden las cajas. El
+        resultado más largo de main ("Camión volteo de 8 m³ o más (según cotización)") no ensancha la columna."""
+        casos = (("/tierra-negra-vegetal-tampico/", "vt-tierra", "87.5", "0.10"),
+                 ("/tierra-negra-vegetal-tampico/", "vt-tierra", "5000", "0.15"),
+                 ("/tezontle-rojo-tampico/", "vt-tezontle", "5000", "0.08"),
+                 ("/marmol-blanco-tampico/", "vt-marmol", "99999", "6"),
+                 ("/piedra-bola-rio-tampico/", "vt-piedra", "99999", None))
+        for ancho in (320, 375, 1024):
+            page = self.pagina(ancho, 812)
+            for ruta, prefijo, area, capa in casos:
+                page.goto(self.base + ruta, wait_until="load")
+                page.locator(f"#{prefijo}-area").fill(area)
+                if capa:
+                    page.locator(f"#{prefijo}-capa").select_option(capa)
+                fuera = page.evaluate("""() => { const sec = document.querySelector('#calculadora .vt-wrap')
+                  .getBoundingClientRect(); return Array.from(document.querySelectorAll('#calculadora .vt-b2b *'))
+                  .filter((e) => { const r = e.getBoundingClientRect(); return r.width && (r.right > sec.right + 0.5
+                  || r.right > innerWidth); }).map((e) => e.tagName + '.' + e.className).slice(0, 5) }""")
+                with self.subTest(ancho=ancho, ruta=ruta, area=area, capa=capa):
+                    self.assertEqual(fuera, [])
+
     def test_fotos_de_materiales_cargan_sin_deformarse(self):
         """Las fotos de main, todas: ninguna rota tras desplazar la página (carga lazy) y ninguna estirada."""
         page = self.pagina(1440, 900)

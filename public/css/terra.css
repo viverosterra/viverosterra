@@ -418,7 +418,9 @@
 @media (min-width:640px) and (max-width:1023px){.vt-medidor{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.vt-medidor__form{grid-row:span 2}}
 @media (min-width:1024px){.vt-medidor{grid-template-columns:4fr 4fr 4fr;gap:32px;align-items:start}}
 /* Empresas (Etapa 2d): cotizador de pasto por volumen y armador de palmas (vt-b2b.js) */
-.vt-b2b{display:grid;gap:24px}
+.vt-b2b{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+/* El resultado largo de la calculadora ("Camión volteo de 8 m³ o más (según cotización)") parte renglón en vez de ensanchar la columna. */
+.vt-b2b .vt-etiqueta__fila b{white-space:normal;text-align:right}
 .vt-b2b__form{display:grid;gap:16px;align-content:start}
 .vt-b2b__form>.vt-btn{justify-self:start}
 .vt-b2b [hidden]{display:none}
