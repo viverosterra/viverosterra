@@ -379,12 +379,60 @@ class PlantillasNavegadorTest(unittest.TestCase):
         campo.fill("1,500 m² en dos etapas")
         page.locator('[data-vt-volumen] [data-vt-campo="m2"]').fill("800")
         self.assertEqual(campo.input_value(), "1,500 m² en dos etapas")  # lo que escribe el visitante no se pisa
+        # Empresa, obra y fecha del cotizador también pasan al formulario (la obra a "Proyecto y ubicación").
+        form = page.locator("form.vt-correo")
+        page.locator("#may-empresa").fill("Constructora Norte")
+        page.locator("#may-obra").fill("Fraccionamiento en Altamira")
+        page.locator("#may-fecha").fill("marzo")
+        self.assertEqual([form.locator(f'[name="{n}"]').input_value() for n in ("empresa", "proyecto", "fecha")],
+                         ["Constructora Norte", "Fraccionamiento en Altamira", "marzo"])
+        form.locator('[name="empresa"]').fill("Constructora Norte SA de CV")
+        page.locator("#may-empresa").fill("Otra")
+        self.assertEqual(form.locator('[name="empresa"]').input_value(), "Constructora Norte SA de CV")
+        self.assertEqual(form.locator('[name="proyecto"]').input_value(), "Fraccionamiento en Altamira")
         page.goto(self.base + "/palmas-mayoreo-proyectos/", wait_until="load")
         page.locator("#pal-especie-1").select_option("Palma real")
         page.locator("#pal-altura-1").fill("3")
         page.locator("#pal-cantidad-1").fill("40")
+        page.locator("#pal-obra").fill("Hotel en Madero")
         self.assertEqual(page.locator('form.vt-correo [name="cantidad"]').input_value(),
                          "- 40 × Palma real, altura aprox.: 3 m")
+        self.assertEqual(page.locator('form.vt-correo [name="proyecto"]').input_value(), "Hotel en Madero")
+
+    def test_campo_con_error_no_queda_bajo_el_menu(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/mayoreo-pasto-tampico/", wait_until="load")
+        page.locator('form.vt-correo button[type="submit"]').click()
+        menu = page.evaluate("() => document.querySelector('.vt-head').getBoundingClientRect().bottom")
+        campo = page.evaluate("() => document.activeElement.closest('.vt-campo').getBoundingClientRect().top")
+        self.assertEqual(page.evaluate("() => document.activeElement.name"), "empresa")
+        self.assertGreaterEqual(campo, menu)
+
+    def test_tabla_de_palmas_en_celular_y_completa_en_escritorio(self):
+        visibles = """() => Array.from(document.querySelectorAll('.vt-tabla--especies tbody tr'))
+          .filter((tr) => tr.offsetParent !== null).map((tr) => tr.querySelector('b').textContent)"""
+        con_precio = [n for n, _c, p in datos.PALMAS_PROYECTO if p is not None]
+        otras = len(datos.PALMAS_PROYECTO) - len(con_precio)
+        for ancho, esperado in ((375, con_precio + [f"Otras {otras} especies"]),
+                                (1440, [n for n, _c, _p in datos.PALMAS_PROYECTO])):
+            page = self.pagina(ancho, 900)
+            page.goto(self.base + "/palmas-mayoreo-proyectos/", wait_until="load")
+            with self.subTest(ancho=ancho):
+                self.assertEqual(page.evaluate(visibles), esperado)
+
+    def test_logos_sin_huerfano_en_celular(self):
+        """7 clientes a 375–430 px: 2 columnas y el último a todo lo ancho, sin una celda suelta."""
+        for ancho in (375, 430):
+            page = self.pagina(ancho, 900)
+            page.goto(self.base + "/mayoreo-pasto-tampico/", wait_until="load")
+            cajas = page.evaluate("""() => Array.from(document.querySelectorAll('.vt-logos li'))
+              .map((li) => { const r = li.getBoundingClientRect(); return [Math.round(r.top), Math.round(r.width)]; })""")
+            filas = {}
+            for top, w in cajas:
+                filas.setdefault(top, []).append(w)
+            with self.subTest(ancho=ancho):
+                anchos = sorted({sum(ws) for ws in filas.values()})
+                self.assertLessEqual(anchos[-1] - anchos[0], 2)  # cada renglón llena el ancho
 
     def test_cls_bajo_0_1_en_movil(self):
         page = self.pagina(375, 812)

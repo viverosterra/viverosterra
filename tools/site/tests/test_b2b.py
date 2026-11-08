@@ -25,8 +25,13 @@ SCRIPTS = {"mayoreo": ["/js/vt-medidor.js", "/js/vt-b2b.js"], "palmas": ["/js/vt
 FORMULARIO = f"https://formsubmit.co/{datos.CORREO_FORMULARIOS}"
 PAGINA_FORMULARIO = {"mayoreo": "Mayoreo de pasto", "palmas": "Palmas para proyectos"}
 # Sin mínimo fijo por especie (respuesta del dueño 3) ni promesas de logística o factura que el dueño no confirmó.
+# Revisión 2d: tampoco "productor directo" (sin verificar), "maniobra de plantación" ni "supervisión" (no confirmadas).
 SIN_CONFIRMAR = ("50 por especie", "50 ejemplares", "por especie mínimo", "el día del pago", "maniobra incluida",
-                 "maniobra en obra va incluida")
+                 "maniobra en obra va incluida", "productor directo", "maniobra de plantación", "cuadrilla, supervisión",
+                 "llegue fresca")
+NEGOCIO = f"{datos.SITIO}/#negocio"
+# Migas visibles de cada página (las del JSON-LD dicen lo mismo).
+MIGAS = {"mayoreo": ["Inicio", "Pasto en rollo", "Mayoreo"], "palmas": ["Inicio", "Palmas para proyectos"]}
 PRECIOS_VIEJOS_PALMAS = ("$850", "$1,200", "$1,500", "$1,600", "$1,800", "$2,000", "$2,200", "$2,400", "$2,800",
                          "$3,200", "$4,200", "$90,000", "$150,000", "$180,000", "$180K", "$260K", "$100K")
 
@@ -134,6 +139,35 @@ class ComunTest(unittest.TestCase):
                 self.assertIn('type="email"', form)
                 self.assertIn('type="tel"', form)
                 self.assertIn('data-hero-cta', form)  # la barra móvil no tapa los campos
+                # Botón sólido en tinta (no el verde de WhatsApp ni de línea) y el aviso de privacidad debajo.
+                self.assertIn('<button type="submit" class="vt-btn vt-btn--tinta">', form)
+                pie = form[form.index('class="vt-correo__pie"'):]
+                self.assertIn('Usamos tus datos solo para responder tu cotización. '
+                              '<a href="/politica-privacidad">Aviso de privacidad</a>.', pie)
+                self.assertTrue((paginas.PUBLIC / "politica-privacidad" / "index.html").is_file())
+
+    def test_correo_sin_prometer_respuesta_en_una_hora(self):
+        for clave in RUTAS:
+            _h, main, _t, _g = pagina(clave)
+            correo = main[main.index('id="vt-h-correo"'):main.index('id="vt-h-docs"')]
+            with self.subTest(pagina=clave):
+                self.assertNotIn("1 hora", correo)
+                self.assertIn(datos.HORARIO, correo)
+                self.assertIn("la cotización formal va por escrito", correo)
+
+    def test_json_ld_con_la_entidad_unica_y_las_migas_visibles(self):
+        for clave in RUTAS:
+            _h, main, _t, grafo = pagina(clave)
+            servicio = next(n for n in grafo if n["@type"] == "Service")
+            migas = next(n for n in grafo if n["@type"] == "BreadcrumbList")["itemListElement"]
+            visibles = [re.sub(r"<[^>]+>", "", m).strip()
+                        for m in re.findall(r"<li\b[^>]*>(.*?)</li>", main[main.index('class="vt-crumbs"'):
+                                                                          main.index("</ol>", main.index('class="vt-crumbs"'))])]
+            with self.subTest(pagina=clave):
+                self.assertEqual(servicio["provider"], {"@id": NEGOCIO})
+                self.assertNotIn("LocalBusiness", [n["@type"] for n in grafo])
+                self.assertEqual([m["name"] for m in migas], MIGAS[clave])
+                self.assertEqual(visibles, MIGAS[clave])
 
     def test_sin_minimo_por_especie_ni_promesas_sin_confirmar(self):
         for clave in RUTAS:
@@ -194,7 +228,18 @@ class MayoreoTest(unittest.TestCase):
     def test_json_ld_como_estaba_publicado(self):
         _h, _m, _t, grafo = pagina("mayoreo")
         self.assertEqual([n["@type"] for n in grafo], ["Service", "FAQPage", "BreadcrumbList", "SpeakableSpecification"])
-        self.assertEqual(grafo[0]["provider"]["address"]["streetAddress"], datos.CALLE)
+
+    def test_tabla_sin_columna_unidad(self):
+        """La unidad va con el precio ("$85/m²"): en celular cada tarjeta tiene una línea menos."""
+        _h, main, _t, _g = pagina("mayoreo")
+        tabla = main[main.index('class="vt-tabla vt-tabla--comparar"'):main.index("</table>")]
+        self.assertNotIn(">Unidad<", tabla)
+        self.assertIn(f"${P['pasto_solo_m2']}/m² solo pasto", tabla)
+        self.assertIn(f"desde ${P['pasto_mayoreo_m2']}/m² solo pasto", tabla)
+
+    def test_m2_del_formulario_con_teclado_decimal(self):
+        _h, main, _t, _g = pagina("mayoreo")
+        self.assertRegex(main, r'<input id="may-c-cantidad" name="cantidad" type="text" required inputmode="decimal"')
 
 
 class PalmasTest(unittest.TestCase):
@@ -202,11 +247,60 @@ class PalmasTest(unittest.TestCase):
         _h, main, _t, _g = pagina("palmas")
         tabla = main[main.index('id="vt-h-precio"'):main.index("<h3", main.index('id="vt-h-precio"'))]
         for nombre, cientifico, precio in datos.PALMAS_PROYECTO:
-            fila = re.search(rf'<th scope="row">{re.escape(nombre)}</th>(.*?)</tr>', tabla).group(1)
+            fila = re.search(rf'<tr( class="vt-tabla__cotiza")?><th scope="row"><b>{re.escape(nombre)}</b>'
+                             r'(.*?)</tr>', tabla)
             with self.subTest(especie=nombre):
-                self.assertIn(f"<i>{cientifico}</i>", fila)
+                self.assertIn(f"<span><i>{cientifico}</i></span>", fila.group(2))  # bajo el nombre común
                 esperado = f"desde ${precio:,} · tamaño chico" if precio else "Según cotización por altura y volumen"
-                self.assertIn(esperado, fila)
+                self.assertIn(esperado, fila.group(2))
+                self.assertEqual(bool(fila.group(1)), precio is None)  # en celular se juntan en un renglón
+
+    def test_en_celular_las_que_se_cotizan_van_en_un_renglon(self):
+        _h, main, _t, _g = pagina("palmas")
+        grupo = re.search(r'<tr class="vt-tabla__grupo">(.*?)</tr>', main).group(1)
+        sin_precio = [n for n, _c, p in datos.PALMAS_PROYECTO if p is None]
+        self.assertIn(f"<b>Otras {len(sin_precio)} especies</b>", grupo)
+        self.assertIn("Palma washingtonia, palma del viajero", grupo)
+        self.assertIn("bambú tarro y yucca rostrata", grupo)
+        self.assertIn("Según cotización por altura y volumen", grupo)
+        self.assertEqual(main.count('class="vt-tabla__grupo"'), 1)
+
+    def test_enlaces_a_precios_y_a_palmas_para_casa(self):
+        _h, main, _t, _g = pagina("palmas")
+        precio = main[main.index('id="vt-h-precio"'):main.index("data-vt-palmas")]
+        for ruta in ("/precios", "/palmas-tropicales-tampico"):
+            with self.subTest(ruta=ruta):
+                self.assertIn(f'href="{ruta}"', precio)
+                self.assertTrue((paginas.PUBLIC / ruta.strip("/") / "index.html").is_file())
+        self.assertIn("¿Pocas palmas para casa?", precio)
+
+    def test_paquetes_sin_destacado_ni_detalle_repetido(self):
+        _h, main, _t, _g = pagina("palmas")
+        paquetes = main[main.index('id="vt-h-opciones"'):main.index('id="vt-h-proceso"')]
+        self.assertNotIn("vt-modo--rec", paquetes)
+        self.assertNotIn("según especies, alturas y cantidad", paquetes)
+        self.assertNotIn("Más pedido", paquetes)
+
+    def test_faq_sin_minimo_por_especie_y_llave_en_mano_sin_supervision(self):
+        _h, main, _t, grafo = pagina("palmas")
+        faq = {q["name"]: q["acceptedAnswer"]["text"] for q in next(n for n in grafo if n["@type"] == "FAQPage")["mainEntity"]}
+        self.assertNotIn("¿Cuál es el pedido mínimo al mayoreo?", faq)
+        self.assertTrue(faq["¿Cómo se calcula el precio por volumen?"].startswith("No pedimos mínimo por especie: "))
+        self.assertTrue(faq["¿Pueden hacer instalación llave en mano?"].startswith(
+            "Sí: siembra con nuestra cuadrilla y guía de cuidado por escrito; la maniobra y las fechas te las "
+            "confirmamos por escrito con la cotización."))
+
+    def test_meta_sin_productor_directo_y_con_foto_de_palmas(self):
+        html, _m, _t, _g = pagina("palmas")
+        descripcion = re.search(r'<meta name="description" content="([^"]*)"', html).group(1)
+        self.assertTrue(descripcion.startswith("Palmas al mayoreo para proyectos B2B"))
+        imagen = re.search(r'<meta property="og:image" content="([^"]*)"', html).group(1)
+        self.assertEqual(imagen, f"{datos.SITIO}/img/portadas/palmas-reales-mayoreo-vivero-tampico-og.webp")
+        self.assertTrue((paginas.PUBLIC / imagen.split(datos.SITIO + "/", 1)[1]).is_file())
+        for propiedad in ("og:description", "twitter:description"):
+            with self.subTest(propiedad=propiedad):
+                self.assertRegex(html, rf'(?:property|name)="{propiedad}" content="12 especies \(palmas, cycas, bambú y '
+                                       r'yucca\)')
 
     def test_sin_precios_ni_proyectos_viejos(self):
         _h, _m, texto, _g = pagina("palmas")
@@ -250,14 +344,17 @@ class PalmasTest(unittest.TestCase):
         _h, _m, texto, grafo = pagina("palmas")
         servicio = grafo[0]
         self.assertEqual(servicio["offers"], {"@type": "AggregateOffer", "lowPrice": "250", "priceCurrency": "MXN",
-                                              "offerCount": "12"})
+                                              "offerCount": "3"})
         lista = next(n for n in grafo if n["@type"] == "ItemList")["itemListElement"]
-        con_precio = {e["item"]["name"]: e["item"]["offers"]["price"] for e in lista if "offers" in e["item"]}
-        self.assertEqual(con_precio, {"Palma areca": "250", "Coco plumoso": "250", "Palma real": "500"})
+        ofertas = {e["item"]["name"]: e["item"]["offers"] for e in lista if "offers" in e["item"]}
+        self.assertEqual({n: o["priceSpecification"] for n, o in ofertas.items()},
+                         {n: {"@type": "PriceSpecification", "minPrice": p, "priceCurrency": "MXN"}
+                          for n, p in (("Palma areca", 250), ("Coco plumoso", 250), ("Palma real", 500))})
+        self.assertTrue(all("price" not in o for o in ofertas.values()))  # precios "desde": mínimo, no cerrado
         self.assertEqual(len(lista), 12)
         self.assertNotIn("InStock", texto)
         self.assertEqual([n["@type"] for n in grafo],
-                         ["Service", "LocalBusiness", "ItemList", "FAQPage", "BreadcrumbList", "SpeakableSpecification"])
+                         ["Service", "ItemList", "FAQPage", "BreadcrumbList", "SpeakableSpecification"])
 
 
 if __name__ == "__main__":

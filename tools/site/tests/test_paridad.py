@@ -37,6 +37,22 @@ class ParidadTest(unittest.TestCase):
                     self.assertIn(clave, captura["meta"])
                     self.assertNotEqual(captura["meta"][clave], nuevo)
 
+    def test_tipos_de_json_ld_retirados_son_de_la_captura(self):
+        """PARIDAD["jsonld"] solo nombra tipos que la página publicaba y que ya no salen (si vuelven, sobra el motivo)."""
+        for ruta, _salida, _plantilla, contenido in generar.PAGINAS:
+            motivos = generar.cargar(contenido).PARIDAD.get("jsonld", {})
+            captura = json.loads((paridad.CAPTURAS / f"{paridad.nombre_captura(ruta)}.json").read_text(encoding="utf-8"))
+            actuales = paridad.extraer(paridad.archivo(ruta).read_text(encoding="utf-8"))["jsonld_tipos"]
+            for tipo in motivos:
+                with self.subTest(ruta=ruta, tipo=tipo):
+                    self.assertIn(tipo, captura["jsonld_tipos"])
+                    self.assertNotIn(tipo, actuales)
+
+    def test_tipos_retirados(self):
+        self.assertEqual(paridad.tipos_retirados(["A", "B"], ["A"]), ["B"])
+        self.assertEqual(paridad.tipos_retirados(["A", "B"], ["A"], {"B": "pasa a una referencia por @id al nodo"}), [])
+        self.assertEqual(paridad.tipos_retirados(["A", "B"], ["A"], {"B": "corto"}), ["B"])
+
     def test_meta_distinta(self):
         viejo = {"title": "T", "description": "Desde $850"}
         self.assertEqual(paridad.meta_distinta(viejo, dict(viejo)), [])

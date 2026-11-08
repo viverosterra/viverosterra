@@ -66,4 +66,7 @@ test('prellenado del formulario: m² del cotizador y lista del armador', () => {
   assert.strictEqual(B.prellenadoVolumen(1200), '1,200 m²');
   assert.strictEqual(B.prellenadoVolumen(0), '');
   assert.strictEqual(B.prellenadoPalmas([['Palma real', '3', '40'], ['', '', '']]), '- 40 × Palma real, altura aprox.: 3 m');
+  assert.deepStrictEqual(B.prellenadoObra({ empresa: ' Constructora Norte ', obra: 'Fracc. en Altamira', fecha: 'marzo' }),
+    { empresa: 'Constructora Norte', proyecto: 'Fracc. en Altamira', fecha: 'marzo' });
+  assert.deepStrictEqual(B.prellenadoObra({ empresa: '', obra: '', fecha: '' }), { empresa: '', proyecto: '', fecha: '' });
 });

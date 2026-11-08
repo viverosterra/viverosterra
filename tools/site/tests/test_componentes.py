@@ -287,11 +287,32 @@ class EmpresasTest(unittest.TestCase):
                             "mensaje": "Hola", "precio_texto": "Según cotización", "detalle": "d"}], "b2b")
         self.assertIn('<li><span><a href="/x">Mantenimiento</a> después</span></li>', html)
 
+    def test_tabla_de_especies_agrupa_las_que_se_cotizan(self):
+        """Revisión 2d: el nombre científico va bajo el común; en celular las que se cotizan van en un renglón."""
+        html = c.tabla_especies((("Palma real", "Roystonea regia", "desde $500", False),
+                                 ("Cycas revoluta", "Cycas revoluta", "Según cotización", True)), "Cap",
+                                ("Otras 1 especies", "Cycas revoluta", "Según cotización"))
+        self.assertIn('<tr><th scope="row"><b>Palma real</b><span><i>Roystonea regia</i></span></th>'
+                      '<td class="vt-tabla__p">desde $500</td></tr>', html)
+        self.assertIn('<tr class="vt-tabla__cotiza"><th scope="row"><b>Cycas revoluta</b>', html)
+        self.assertIn('<tr class="vt-tabla__grupo"><th scope="row"><b>Otras 1 especies</b><span>Cycas revoluta</span>',
+                      html)
+        self.assertEqual(html.count('<th scope="col"'), 2)
+
+    def test_opcion_sin_detalle(self):
+        html = c.opciones([{"rotulo": "R", "titulo": "T", "puntos": ("p",), "mensaje": "Hola",
+                            "precio_texto": "Según cotización"}], "b2b")
+        self.assertIn('<p class="vt-modo__precio">Según cotización</p>', html)
+
     def test_formulario_por_correo_para_compras(self):
         """Respuesta del dueño (2026-11-08): formulario por correo para compras, además de WhatsApp."""
         f = {"pagina": "Mayoreo de pasto", "cta": "mayoreo:formulario",
-             "cantidad": ("m² totales de la obra", "Ej. 1,200 m²", False)}
+             "cantidad": ("m² totales de la obra", "Ej. 1,200 m²", False, "decimal"),
+             "aviso": 'Usamos tus datos solo para responder tu cotización. <a href="/politica-privacidad">Aviso</a>.'}
         html = c.formulario_correo("may", f)
+        self.assertIn('name="cantidad" type="text" required inputmode="decimal"', html)
+        self.assertIn('<button type="submit" class="vt-btn vt-btn--tinta">', html)
+        self.assertIn(f'<p class="vt-correo__aviso">{f["aviso"]}</p>', html)
         self.assertIn(f'action="https://formsubmit.co/{datos.CORREO_FORMULARIOS}" method="POST"', html)
         self.assertIn('data-vt-correo data-hero-cta data-cta-form="mayoreo:formulario"', html)
         self.assertIn('value="Cotización empresa · Mayoreo de pasto"', html)
@@ -305,6 +326,7 @@ class EmpresasTest(unittest.TestCase):
         self.assertIn('role="status"', html)
         lista = c.formulario_correo("pal", dict(f, cantidad=("Lista de palmas", "Ej. 40 palma real de 3 m", True)))
         self.assertIn('<textarea id="pal-c-cantidad" name="cantidad"', lista)
+        self.assertNotIn("inputmode", lista[lista.index('id="pal-c-cantidad"'):lista.index("</textarea>")])
         self.assertEqual(lista.count("<textarea"), 2)
 
 
