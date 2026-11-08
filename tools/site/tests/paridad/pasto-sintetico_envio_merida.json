@@ -1,0 +1,74 @@
+{
+ "meta": {
+  "title": "Pasto sintético en Mérida con envío · desde $167/m² | Viveros Terra",
+  "description": "Pasto sintético con envío a Mérida, Yucatán desde $167/m² puesto en tu casa. 9 modelos de 10 a 35 mm, entrega en 3 a 5 días hábiles y factura.",
+  "robots": "index, follow, max-image-preview:large",
+  "canonical": "https://www.viverosterra.com/pasto-sintetico/envio/merida",
+  "og:type": "website",
+  "og:site_name": "Viveros Terra",
+  "og:url": "https://www.viverosterra.com/pasto-sintetico/envio/merida",
+  "og:title": "Pasto sintético en Mérida con envío · desde $167/m² | Viveros Terra",
+  "og:description": "Pasto sintético con envío a Mérida, Yucatán desde $167/m² puesto en tu casa. 9 modelos de 10 a 35 mm, entrega en 3 a 5 días hábiles y factura.",
+  "og:image": "https://www.viverosterra.com/img/pasto-sintetico/galeria/obra-proyecto-02.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "Answer",
+  "Brand",
+  "BreadcrumbList",
+  "DefinedRegion",
+  "FAQPage",
+  "ListItem",
+  "MonetaryAmount",
+  "Offer",
+  "OfferShippingDetails",
+  "Product",
+  "QuantitativeValue",
+  "Question",
+  "ShippingDeliveryTime",
+  "UnitPriceSpecification"
+ ],
+ "encabezados": [
+  "Pasto sintético en Mérida con envío a tu casa",
+  "Cuánto cuesta con envío a Mérida",
+  "El pasto que conviene en Mérida",
+  "Toscana 28",
+  "Irlanda 25",
+  "Viena 30",
+  "Cómo te llega el pedido",
+  "Confirmas y pagas",
+  "Sale en rollo",
+  "Revisa al recibir",
+  "Instalarlo tú mismo es sencillo",
+  "Preguntas frecuentes en Mérida",
+  "Cotiza tu pedido a Mérida"
+ ],
+ "faq": [
+  "¿Se puede poner pasto sintético sobre el suelo de piedra de Mérida?",
+  "¿Aguanta las lluvias de verano en Mérida?",
+  "¿Cuánto tarda en llegar a Mérida?"
+ ],
+ "precios": [
+  "$1,029",
+  "$1,400",
+  "$1,599",
+  "$1,718",
+  "$16,700",
+  "$167",
+  "$215",
+  "$227",
+  "$237",
+  "$277",
+  "$5,375",
+  "$8,350"
+ ],
+ "enlaces": [
+  "/",
+  "/blog/como-instalar-pasto-sintetico",
+  "/pasto-sintetico",
+  "/pasto-sintetico/irlanda-25",
+  "/pasto-sintetico/toscana-28",
+  "/pasto-sintetico/viena-30",
+  "/politicas"
+ ]
+}
