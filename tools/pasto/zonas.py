@@ -51,7 +51,7 @@ ZONAS = {
         img=("jardin-residencial-tropical-tampico", 960, 640, None),
         faqs=[
             ("¿Atienden jardines en Club Campestre y Country Club?", "Sí. Atendemos Club Campestre, Country Club y Sierra Morena en Tampico con pasto en rollo, diseño, riego automático y mantenimiento."),
-            ("¿Cuánto cuesta un sistema de riego automático?", "De $180 a $320 por m², según el tipo de sistema. Medimos y revisamos la presión en la visita, sin costo."),
+            ("¿Cuánto cuesta un sistema de riego automático?", "De $180 a $320 por m², según el tipo de sistema. Medimos y revisamos la presión en la visita."),
             ("¿Pueden encargarse del jardín todo el año?", "Sí. El mantenimiento cuesta desde $750 al mes, con visitas cada 15 a 21 días en lluvias y cada 30 días en secas."),
         ],
     ),
@@ -87,7 +87,7 @@ ZONAS = {
         img=("riego-pro-01", 960, 640, None),
         faqs=[
             ("¿Atienden jardines en Lomas del Chairel y Colinas de San Gerardo?", "Sí. Atendemos Lomas del Chairel, Colinas de San Gerardo y Flamboyanes en Tampico con pasto, riego, diseño y mantenimiento."),
-            ("¿Qué hago si mi jardín se encharca?", "Revisamos el nivel del terreno y el drenaje. A veces basta con nivelar y mejorar la tierra; en otros casos hace falta un dren. Lo vemos en la visita, sin costo."),
+            ("¿Qué hago si mi jardín se encharca?", "Revisamos el nivel del terreno y el drenaje. A veces basta con nivelar y mejorar la tierra; en otros casos hace falta un dren. Lo revisamos en la visita para medir."),
             ("¿Necesito tierra negra antes de poner pasto?", "En casas nuevas con suelo de relleno, sí. La tierra negra vegetal cuesta $90 el costal o $1,500 el m³."),
         ],
     ),
@@ -147,7 +147,7 @@ def hero_html(z):
         <dl class="specstrip">
           <div><dt>Pasto instalado</dt><dd class="num"><small>desde</small> $120<small>/m²</small></dd></div>
           <div><dt>Mantenimiento</dt><dd class="num"><small>desde</small> $750<small>/mes</small></dd></div>
-          <div><dt>Visita y medición</dt><dd class="num">Sin costo</dd></div>
+          <div><dt>Cotización</dt><dd class="num">Por WhatsApp</dd></div>
           <div><dt>Vivero propio</dt><dd class="num"><small>desde</small> 2007</dd></div>
         </dl>
         <div class="hub-hero__actions">
@@ -214,7 +214,7 @@ def build_zona(slug, z):
     ld = jsonld([breadcrumb_schema([("Inicio", SITE), (f"Jardinería en {z['nombre']}", url)]), service, faq_schema(faqs)])
     img = z["img"][0]
     base = head(title=f"{z['title']} · Viveros Terra",
-                description=f"{z['lede']} Pasto instalado desde $120/m², mantenimiento desde $750/mes. Visita sin costo.",
+                description=f"{z['lede']} Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
                 canonical=url, og_image=f"{SITE}/img/portadas/{img}.webp", og_type="website",
                 preload_img=f"/img/portadas/{img}-sm.webp", preload_srcset=f"/img/portadas/{img}-sm.webp 560w, /img/portadas/{img}.webp {z['img'][1]}w", ld=ld, subnav=False)
     base = (base.split('<script src="/js/vt-mensualidades.js')[0]
@@ -242,7 +242,7 @@ def build_zona(slug, z):
   <section class="closing" aria-labelledby="cierre">
     <div class="wrap">
       <h2 id="cierre">Cotiza tu jardín <em>en {esc(z["corto"])}</em></h2>
-      <p>Mándanos tu colonia, el servicio que necesitas, los metros aproximados y una foto. Te respondemos en menos de 1 hora en horario y, si hace falta, vamos a medir sin costo.</p>
+      <p>Mándanos tu colonia, el servicio que necesitas, los metros aproximados y una foto. Te respondemos en menos de 1 hora en horario y, si hace falta, agendamos una visita para medir.</p>
       <div class="closing__actions">
         <a class="btn btn--light" href="{wa(guided(z["corto"]))}" target="_blank" rel="noopener">Cotizar por WhatsApp</a>
         <a class="btn btn--ghost" href="/vivero-tampico">Visitar el vivero</a>

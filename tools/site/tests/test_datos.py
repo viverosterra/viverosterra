@@ -55,7 +55,8 @@ class DatosTest(unittest.TestCase):
         self.assertEqual(datos.PRECIOS["poda"], 500)
         self.assertTrue(datos.PODA.startswith("Desde $500, según cotización"))
         self.assertEqual(datos.PRECIOS["flamboyan"], 250)
-        self.assertEqual(len(datos.CLIENTES_B2B), 6)
+        self.assertEqual(len(datos.CLIENTES_B2B), 7)
+        self.assertEqual(datos.CLIENTES_B2B[-1], "Renault")
         self.assertEqual(datos.AUTOR_BLOG, "Equipo técnico de Viveros Terra")
         self.assertIsNone(datos.PROXIMO_CORTE)
 
@@ -63,6 +64,21 @@ class DatosTest(unittest.TestCase):
         self.assertIn("15 a 20 días", datos.GARANTIA_PASTO)
         self.assertIn("sembramos nosotros", datos.GARANTIA_PLANTAS)
         self.assertEqual(datos.PRIMER_RIEGO, "El primer riego lo haces tú: te enseñamos cómo y te dejamos el protocolo de 20 días.")
+
+    def test_datos_de_las_plantillas_etapa_2a(self):
+        p = datos.PRECIOS
+        self.assertEqual((p["palma_desde"], p["tierra_negra_costal"], p["tierra_negra_m3"], p["tezontle_costal"]),
+                         (250, 90, 1500, 200))
+        self.assertEqual(datos.LLEGADA_PASTO, "una vez por semana, generalmente los viernes")
+        self.assertTrue(datos.ANTICIPO.startswith("No pedimos el 100% por adelantado: para confirmar tu pedido o "
+                                                  "agendar el servicio solicitamos un anticipo"))
+        self.assertEqual(datos.ARRAIGO, "15 a 20 días")
+        for cifra in ("$85 por m²", "desde $120 por m²", "500 m²", "$60/m²", f"Precios {datos.ANIO}, con IVA"):
+            self.assertIn(cifra, datos.RESPUESTA_PRECIO_PASTO)
+        # Sin mes de vigencia: un mes escrito envejece solo (como el aviso de lluvias de antes).
+        self.assertNotRegex(datos.RESPUESTA_PRECIO_PASTO, r"(?i)\b(?:enero|febrero|marzo|abril|mayo|junio|julio|agosto|"
+                                                          r"septiembre|octubre|noviembre|diciembre|vigentes)\b")
+        self.assertFalse(hasattr(datos, "VIGENCIA"))
 
     def test_mensajes_terminan_con_la_firma(self):
         for servicio in datos.MENSAJES:

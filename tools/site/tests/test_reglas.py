@@ -30,6 +30,15 @@ PROHIBIDAS = (
 )
 DEPORTES_RE = re.compile(r"p[aá]del|canchas?", re.I)
 PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
+# Decisión del dueño (2026-11-07): la visita para medir tiene costo o depende; nunca "visita sin costo", "visita
+# gratis" ni "visita gratuita" (tampoco "vamos a medir sin costo").
+GRATIS = r"(?:sin\s+costo|gratis|gratuit(?:[ao]s?|amente))"
+VISITA_GRATIS_RE = re.compile(
+    rf"\bvisit\w*\b\W+(?:\w+\W+){{0,4}}?{GRATIS}\b|\b(?:medir|medimos|medici[oó]n|diagn[oó]sticos?)\W+(?:\w+\W+){{0,2}}?{GRATIS}\b"
+    rf"|\b{GRATIS}\W+(?:\w+\W+){{0,2}}?visitas?\b", re.I)
+# Páginas que todavía lo dicen. Debe quedar vacía: ninguna página pública promete la visita, la medición ni el
+# diagnóstico gratis. Esta lista solo puede encoger; no se agregan páginas nuevas.
+VISITA_PENDIENTES = frozenset()
 
 
 def sin_valores_css(css):
@@ -94,6 +103,8 @@ class ReglasDelDuenoTest(unittest.TestCase):
                     continue
                 if destino.isdigit():
                     ok = destino == NUMERO
+                elif destino == "${wa}" and "dataset.wa" in fuente:  # vt-medidor.js: data-wa lo escribe datos.py
+                    ok = True
                 else:  # wa.me/${PHONE} o wa.me/52${WA}: la constante del archivo debe ser el número real
                     ok = NUMERO[2:] in fuente
                 if not ok:
@@ -158,6 +169,24 @@ class ReglasDelDuenoTest(unittest.TestCase):
             for m in PAGO_AL_TERMINAR_RE.finditer(texto):
                 hallazgos.append(f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
         self.assertEqual(hallazgos, [])
+
+    def test_nunca_visita_gratis(self):
+        con = {}
+        for path, texto in publicados():
+            for m in VISITA_GRATIS_RE.finditer(texto):
+                con.setdefault(path.relative_to(PUBLIC).as_posix(), f"…{texto[max(0, m.start() - 40):m.end() + 20]}…")
+        self.assertEqual({k: v for k, v in con.items() if k not in VISITA_PENDIENTES}, {})
+        self.assertEqual(sorted(VISITA_PENDIENTES - set(con)), [], "ya no lo dicen: sácalas de VISITA_PENDIENTES")
+
+    def test_visita_gratis_se_detecta(self):
+        for sucio in ("Agendamos una visita sin costo", "Visita técnica gratuita", "vamos a medir sin costo",
+                      "Visita y medición Sin costo", "visita gratis",
+                      "ofrece visita de diagnóstico y cotización gratuita", "visita el terreno gratuitamente",
+                      "diagnóstico gratuito", "una visita de diagnóstico sin costo", "diagnósticos de pasto sin costo"):
+            self.assertRegex(sucio, VISITA_GRATIS_RE)
+        for limpio in ("Agendamos una visita para medir y cotizar", "Cotización gratis por WhatsApp",
+                       "la reponemos sin costo", "Visítanos en el vivero"):
+            self.assertNotRegex(limpio, VISITA_GRATIS_RE)
 
     def test_deportes_solo_se_marcan_con_sintetico(self):
         def marcado(texto):

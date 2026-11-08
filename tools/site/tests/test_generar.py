@@ -1,0 +1,41 @@
+"""generar.py escribe las páginas con plantilla ya con el shell, y solo si cambian."""
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+import activos  # noqa: E402
+import generar  # noqa: E402
+import paginas  # noqa: E402
+import shell  # noqa: E402
+
+
+class GenerarTest(unittest.TestCase):
+    def test_paginas_registradas_tienen_contexto(self):
+        self.assertEqual([r for r, *_ in generar.PAGINAS], ["/", "/pasto-en-rollo-tampico"])
+        for ruta, salida, _p, _c in generar.PAGINAS:
+            paginas.contexto(ruta)
+            self.assertEqual(paginas.ruta_de(paginas.PUBLIC / salida), ruta)
+
+    def test_lo_publicado_es_lo_que_sale_de_la_plantilla(self):
+        urls = activos.urls()
+        for ruta, salida, plantilla, contenido in generar.PAGINAS:
+            with self.subTest(ruta=ruta):
+                publicado = (paginas.PUBLIC / salida).read_text(encoding="utf-8")
+                self.assertEqual(generar.renderizar(ruta, plantilla, contenido, urls), publicado)
+                self.assertEqual(shell.aplicar(publicado, ruta, urls), publicado)
+
+    def test_escribe_solo_si_cambia(self):
+        urls = activos.urls()
+        with tempfile.TemporaryDirectory() as tmp:
+            destino = Path(tmp)
+            self.assertEqual(generar.escribir_todo(urls, destino), len(generar.PAGINAS))
+            self.assertEqual(generar.escribir_todo(urls, destino), 0)
+            for _r, salida, _p, _c in generar.PAGINAS:
+                self.assertEqual((destino / salida).read_text(encoding="utf-8"),
+                                 (paginas.PUBLIC / salida).read_text(encoding="utf-8"))
+
+if __name__ == "__main__":
+    unittest.main()

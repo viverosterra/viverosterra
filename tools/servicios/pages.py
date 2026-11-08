@@ -17,17 +17,8 @@ GARANTIA_PLANTAS = ("30 días", "Garantía de arraigo al sembrarlas nosotros")
 DESDE_2007 = ("Desde 2007", "Vivero propio en Cd. Madero")
 VARIEDADES = ("+200", "Variedades en el vivero")
 
+# /pasto-en-rollo-tampico y la home salen de tools/site/plantillas/ desde la Etapa 2a: este script ya no las toca.
 PAGES = {
-    "pasto-en-rollo-tampico": dict(
-        title="Pasto San Agustín en rollo,", accent="instalado en un día",
-        price_pre="Instalado desde", price="$120", price_unit="/m²", price_alt="· $85/m² solo el pasto",
-        lede="Pasto natural cortado para tu pedido en Tampico, Madero y Altamira. El instalado incluye preparación básica del suelo, nivelación y garantía de arraigo.",
-        facts=[("15 a 20 días", "Garantía de arraigo con riego diario"), ("Desde $60/m²", "Mayoreo en pedidos de 500 m² o más"), ("1 día", "Instalación de un jardín residencial")],
-        img="/img/instalacion-pasto-rollo-san-agustin-tampico.webp", img_pos="center 40%",
-        alt="Instalación de pasto San Agustín en rollo en un jardín de Tampico", caption="Instalación de pasto San Agustín en Tampico.",
-        wa=guided("Hola, quiero cotizar pasto San Agustín en rollo.", "Colonia", "Metros aprox.", "Solo el pasto o instalado"),
-        pago_nota="Paga en mensualidades con tarjeta de crédito en cotizaciones desde $2,000.",
-    ),
     "mayoreo-pasto-tampico": dict(
         eyebrow="Constructoras · Fraccionamientos · Industria",
         title="Pasto al mayoreo", accent="para obras y fraccionamientos",
@@ -62,7 +53,7 @@ PAGES = {
         title="Riego automático", accent="para jardines en Tampico",
         price_pre="De", price="$180 a $320", price_unit="/m²", price_alt="· según el tipo de sistema",
         lede="Aspersión, goteo o microaspersión con programador, para casas, fraccionamientos, hoteles e industria en Tampico, Madero y Altamira.",
-        facts=[("Hasta 40%", "Menos agua que el riego manual"), ("Sin costo", "Visita técnica y medición"), ("Aspersión o goteo", "Según tus plantas y tu pasto")],
+        facts=[("Hasta 40%", "Menos agua que el riego manual"), ("Por WhatsApp", "Fotos y medidas para cotizar"), ("Aspersión o goteo", "Según tus plantas y tu pasto")],
         img="/img/riego-pro-01.webp",
         alt="Aspersores de riego automático funcionando en un jardín", caption="Sistema de riego por aspersión instalado.",
         wa=guided("Hola, quiero cotizar riego automático.", "Colonia", "Metros aprox. del jardín", "Tengo pasto, plantas o ambos"),
