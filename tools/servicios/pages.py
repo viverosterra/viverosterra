@@ -17,7 +17,7 @@ GARANTIA_PLANTAS = ("30 días", "Garantía de arraigo al sembrarlas nosotros")
 DESDE_2007 = ("Desde 2007", "Vivero propio en Cd. Madero")
 VARIEDADES = ("+200", "Variedades en el vivero")
 
-# La home y /pasto-en-rollo-tampico (Etapa 2a) y /diseno-jardines-tampico (Etapa 2c) salen de tools/site/plantillas/:
+# La home y /pasto-en-rollo-tampico (Etapa 2a) y diseño y mantenimiento (Etapa 2c) salen de tools/site/plantillas/:
 # este script ya no las toca.
 PAGES = {
     "mayoreo-pasto-tampico": dict(
@@ -30,15 +30,6 @@ PAGES = {
         alt="Cuadrilla instalando pasto San Agustín en rollo", caption="Pasto San Agustín cortado para obra.",
         wa=guided("Hola, necesito pasto al mayoreo para un proyecto.", "Empresa", "Ubicación de la obra", "Metros totales", "Fecha de entrega", foto=False),
         cta="Cotizar mayoreo",
-    ),
-    "mantenimiento-jardines-tampico": dict(
-        title="Mantenimiento de jardines", accent="en Tampico, cada mes",
-        price_pre="Desde", price="$750", price_unit="/mes", price_alt="· según metros y frecuencia",
-        lede="Poda, fertilización, control de plagas y revisión del riego para casas, fraccionamientos y empresas en Tampico, Madero y Altamira.",
-        facts=[("Cada 15 a 21 días", "Visitas en temporada de lluvias"), ("Cada 30 días", "Visitas en temporada seca"), ("REPSE 773725", "Contratos con empresas")],
-        img="/img/mantenimiento-jardines-poda-pasto-tampico.webp", img_pos="center 45%",
-        alt="Jardinero de Viveros Terra podando pasto en un jardín de Tampico", caption="Poda y mantenimiento en Tampico.",
-        wa=guided("Hola, quiero cotizar mantenimiento de jardín.", "Colonia", "Metros aprox. del jardín", "Casa o empresa"),
     ),
     "sistema-riego-tampico": dict(
         title="Riego automático", accent="para jardines en Tampico",

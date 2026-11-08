@@ -8,7 +8,7 @@ import hero  # noqa: E402
 from pages import PAGES  # noqa: E402
 
 # Salen de tools/site/plantillas/ (Etapas 2a y 2c): ningún parche de tools/servicios las toca.
-CON_PLANTILLA = ("pasto-en-rollo-tampico", "diseno-jardines-tampico")
+CON_PLANTILLA = ("pasto-en-rollo-tampico", "diseno-jardines-tampico", "mantenimiento-jardines-tampico")
 
 
 class PagoNotaTest(unittest.TestCase):

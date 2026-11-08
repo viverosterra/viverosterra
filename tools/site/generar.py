@@ -25,6 +25,8 @@ PAGINAS = (
     ("/pasto-en-rollo-tampico", "pasto-en-rollo-tampico/index.html", "servicio", "pasto_en_rollo"),
     ("/pasto-sintetico-tampico", "pasto-sintetico-tampico/index.html", "servicio", "sintetico_tampico"),
     ("/diseno-jardines-tampico", "diseno-jardines-tampico/index.html", "servicio", "diseno_jardines"),
+    ("/mantenimiento-jardines-tampico", "mantenimiento-jardines-tampico/index.html", "servicio",
+     "mantenimiento_jardines"),
     ("/pasto-sintetico", "pasto-sintetico/index.html", "tienda_hub", "tienda"),
     ("/pasto-sintetico/perros", "pasto-sintetico/perros/index.html", "tienda_guia", "perros"),
 ) + _varias("ficha", lambda k: f"/pasto-sintetico/{k}", lambda k: f"pasto-sintetico/{k}/index.html", "ficha") + _varias(
