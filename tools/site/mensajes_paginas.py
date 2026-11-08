@@ -53,7 +53,8 @@ MATERIALES = {
                                "Colonia de entrega: ___"),
     "/marmol-blanco-tampico": ("Hola, quiero cotizar mármol blanco.\nMetros a cubrir: ___\nColonia de entrega: ___\n"
                                "Les mando foto del espacio."),
-    "/piedra-bola-rio-tampico": ("Hola, quiero cotizar piedra bola de río.\nMedida: ___\nMetros a cubrir: ___\n"
+    # Piedra bola: a granel, sin medidas (dueño, 2026-11-08): el mensaje ya no pide "Medida".
+    "/piedra-bola-rio-tampico": ("Hola, quiero cotizar piedra bola de río.\nMetros a cubrir: ___\n"
                                  "Colonia de entrega: ___\nLes mando foto del espacio."),
 }
 

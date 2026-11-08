@@ -8,18 +8,24 @@ const M = require('../vt-materiales.js');
 const CASOS = JSON.parse(fs.readFileSync(path.join(__dirname, 'casos-materiales.json'), 'utf8'));
 // Lo que escribe componentes_materiales.datos_js(clave) en data-material (test_componentes_materiales lo compara).
 const CFG = {
-  'tierra-negra': { clave: 'tierra-negra', costal_m3: 0.035, precio_costal: 90, precio_m3: 1500, texto: 'tierra negra vegetal' },
+  'tierra-negra': { clave: 'tierra-negra', costal_m3: 0.035, precio_costal: 90, precio_m3: 1500,
+    camiones: [[8, 5200], [14, 8000]], texto: 'tierra negra vegetal' },
   tezontle: { clave: 'tezontle', costal_m3: 0.027, camion_m3: 14, texto: 'tezontle rojo' },
-  marmol: { clave: 'marmol', kg_saco: 20, texto: 'mármol blanco decorativo' },
-  'piedra-bola': { clave: 'piedra-bola', kg_m2: [120, 150], medida: 'mediana (capa de 8 a 10 cm)', texto: 'piedra bola de río' },
+  marmol: { clave: 'marmol', kg_saco: 20, precio_saco: 250, texto: 'mármol blanco decorativo' },
+  'piedra-bola': { clave: 'piedra-bola', kg_m2: [120, 150], capa_texto: '8 a 10 cm', texto: 'piedra bola de río' },
 };
 const CAMION_MAIN = 'Camión volteo 8m³+ (~desde $5,000)';
-const CAMION = 'Camión volteo de 8 m³ o más (según cotización)';
+// Igual que camion_tierra() de componentes_materiales.py: el camión de la tabla de datos.py donde cabe la cantidad.
+function camion(m3) {
+  if (m3 <= 8) return 'Camión volteo de 8 m³ ($5,200)';
+  if (m3 <= 14) return 'Camión volteo de 14 m³ ($8,000)';
+  return `${Math.ceil(m3 / 14)} camiones volteo de 14 m³ ($8,000 c/u)`;
+}
 
 // Igual que agrupar, mensaje_de_main y esperado_de_main de tests/test_materiales_paridad.py.
 const agrupar = (t) => t.replace(/(?<![\d.,])\d{4,}/g, (n) => Number(n).toLocaleString('en-US'));
 function mensajeDeMain(clave, m, capa) {
-  const lineas = m.split('\n').filter((x) => !x.startsWith('Precio estimado: ')).map(agrupar);
+  const lineas = m.split('\n').map(agrupar);
   lineas[lineas.length - 1] = M.CIERRE;
   lineas.splice(lineas.length - 2, 0, M.COLONIA);
   if (clave === 'tierra-negra') {
@@ -30,15 +36,16 @@ function mensajeDeMain(clave, m, capa) {
 function esperadoDeMain(clave, { entrada, visibles: v, mensaje }) {
   const m = mensajeDeMain(clave, mensaje, entrada.capa);
   if (clave === 'tierra-negra') {
-    return { cantidad: agrupar(v['res-m3']), presentacion: agrupar(v['res-formato'].replace(CAMION_MAIN, CAMION)),
+    return { cantidad: agrupar(v['res-m3']),
+      presentacion: agrupar(v['res-formato'].replace(CAMION_MAIN, camion(Number(v['res-m3'].split(' ')[0])))),
       equivalente: agrupar(v['res-costales']), mensaje: m };
   }
   if (clave === 'tezontle') {
     return { cantidad: agrupar(v['tez-res-m3']), presentacion: agrupar(v['tez-res-formato']),
       equivalente: agrupar(v['tez-res-costales']), mensaje: m };
   }
-  return { cantidad: `${agrupar(String(v['res-sacos']))} sacos`, peso: agrupar(v['res-peso']),
-    nota: agrupar(v['res-nota'].replace(' sacos cubre ', ' sacos cubren ').replace(' A $250 c/u.', '')), mensaje: m };
+  return { cantidad: `${agrupar(String(v['res-sacos']))} sacos`, total: v['res-precio'], peso: agrupar(v['res-peso']),
+    nota: agrupar(v['res-nota'].replace(' sacos cubre ', ' sacos cubren ')), mensaje: m };
 }
 
 test('mismos resultados que main en cada caso de casos-materiales.json', () => {
@@ -66,7 +73,7 @@ test('el mensaje es texto plano y termina con la misma pregunta en las cuatro ca
   for (const cfg of Object.values(CFG)) {
     const t = M.textos(cfg, 20, cfg.clave === 'marmol' ? 4 : 0.08, M.calcular(cfg, 20, cfg.clave === 'marmol' ? 4 : 0.08), 'x');
     assert.ok(t.mensaje.endsWith(M.CIERRE));
-    assert.doesNotMatch(t.mensaje, /<|\$250|disponibilidad/);
+    assert.doesNotMatch(t.mensaje, /<|disponibilidad|chica|mediana|grande/);
   }
 });
 
@@ -74,7 +81,8 @@ test('miles con coma en kg, sacos, costales y área, sin redondear decimales', (
   assert.deepStrictEqual([999, 1000, 1250.5, 100000, 0.1].map(M.miles), ['999', '1,000', '1,250.5', '100,000', '0.1']);
   const cfg = CFG.marmol;
   const t = M.textos(cfg, 1250, 4, M.calcular(cfg, 1250, 4));
-  assert.deepStrictEqual([t.cantidad, t.peso, t.nota], ['3,750 sacos', '75,000 kg', '3,750 sacos cubren 1,250 m² con capa de 4 cm.']);
+  assert.deepStrictEqual([t.cantidad, t.total, t.peso, t.nota],
+    ['3,750 sacos', '$937,500', '75,000 kg', '3,750 sacos cubren 1,250 m² con capa de 4 cm. A $250 c/u.']);
 });
 
 test('con resultado, el mensaje conserva la colonia por llenar y la tierra negra manda la capa', () => {

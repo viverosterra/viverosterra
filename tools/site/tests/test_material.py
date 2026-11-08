@@ -58,13 +58,13 @@ class MaterialTest(unittest.TestCase):
                 self.assertIn('<script src="/js/vt-b2b.js" defer></script>', html)
 
     def test_producto_ligado_al_negocio_sin_existencias(self):
-        """Product solo con precio de datos.py (tierra negra y tezontle), con UnitPriceSpecification y seller #negocio;
-        mármol y piedra bola, sin Product (no tienen precio)."""
+        """Product solo con precio de datos.py (tierra negra, tezontle y mármol), con UnitPriceSpecification y seller
+        #negocio; piedra bola, sin Product (según cotización)."""
         for ruta in MIGRADAS:
             productos = [n for n in grafo(html_de(ruta)) if n["@type"] == "Product"]
             with self.subTest(ruta=ruta):
                 self.assertNotIn("InStock", json.dumps(productos))
-                self.assertEqual(len(productos), 0 if ruta in ("/marmol-blanco-tampico", "/piedra-bola-rio-tampico") else 1)
+                self.assertEqual(len(productos), 0 if ruta == "/piedra-bola-rio-tampico" else 1)
                 for producto in productos:
                     ofertas = producto["offers"] if isinstance(producto["offers"], list) else [producto["offers"]]
                     for o in ofertas:
@@ -72,7 +72,9 @@ class MaterialTest(unittest.TestCase):
                         self.assertEqual(o["priceSpecification"]["@type"], "UnitPriceSpecification")
         tierra = next(n for n in grafo(html_de("/tierra-negra-vegetal-tampico")) if n["@type"] == "Product")
         self.assertEqual([(o["priceSpecification"]["price"], o["priceSpecification"]["unitText"]) for o in tierra["offers"]],
-                         [(datos.PRECIOS["tierra_negra_costal"], "costal"), (datos.PRECIOS["tierra_negra_m3"], "m³")])
+                         [(datos.PRECIOS["tierra_negra_costal"], "costal"),
+                          (datos.PRECIOS["tierra_preparada_costal"], "costal"), (datos.PRECIOS["tierra_negra_m3"], "m³"),
+                          *((precio, "camión") for _m3, precio in datos.TIERRA_CAMIONES)])
         tezontle = next(n for n in grafo(html_de("/tezontle-rojo-tampico")) if n["@type"] == "Product")["offers"]
         self.assertEqual(tezontle["priceSpecification"], {"@type": "UnitPriceSpecification", "priceCurrency": "MXN",
                                                           "unitText": "costal", "minPrice": datos.PRECIOS["tezontle_costal"]})
@@ -91,9 +93,8 @@ class MaterialTest(unittest.TestCase):
             with self.subTest(ruta=ruta):
                 self.assertIn('<meta property="og:site_name" content="Viveros Terra">', html)
                 self.assertIn('<meta name="twitter:card" content="summary_large_image">', html)
-                self.assertNotIn("$250", " ".join(re.findall(r'<meta name="twitter:[^>]*>', html)))
         marmol = html_de("/marmol-blanco-tampico")
-        self.assertIn('<meta name="twitter:title" content="Mármol Blanco para Jardín Tampico · Viveros Terra">', marmol)
+        self.assertIn('<meta name="twitter:title" content="Mármol Blanco para Jardín Tampico · $250/saco">', marmol)
         self.assertNotIn("gratis", " ".join(re.findall(r'<meta name="twitter:[^>]*>', marmol)))
 
     def test_sitemap_con_la_fecha_de_la_revision(self):

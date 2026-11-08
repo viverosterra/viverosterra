@@ -68,8 +68,26 @@ PRECIOS = {
     "palma_real": 500,
     "tierra_negra_costal": 90,
     "tierra_negra_m3": 1500,
+    "tierra_preparada_costal": 100,
+    "tierra_negra_camion_5m3": 3500,
+    "tierra_negra_camion_8m3": 5200,
+    "tierra_negra_camion_14m3": 8000,
     "tezontle_costal": 200,
+    "marmol_saco": 250,
 }
+# Materiales: respuestas del dueño (2026-11-08). Tierra preparada a $100 el costal y camiones de tierra negra de 5, 8 y
+# 14 m³ a $3,500, $5,200 y $8,000 (nunca "camión desde $5,000": no lo confirmó). Mármol a $250 el saco, IVA incluido,
+# con sus palabras: "sujeto a disponibilidad" (solo junto al precio del mármol: test_materiales_reglas.py). El m³ y el
+# camión de tezontle y la piedra bola, según cotización. La piedra bola se vende a granel, no por medidas.
+TIERRA_CAMIONES = tuple((m3, PRECIOS[f"tierra_negra_camion_{m3}m3"]) for m3 in (5, 8, 14))
+MARMOL_CONDICION = "IVA incluido, sujeto a disponibilidad"
+PIEDRA_BOLA_VENTA = "a granel"
+# Condiciones de compra de materiales (dueño, 2026-11-08): sin mínimo, la entrega se cobra por viaje y todo se factura.
+# "Sin mínimo" solo se publica con estas palabras (test_materiales_reglas.py).
+SIN_MINIMO = "Sin mínimo de compra."
+ENTREGA_COBRO = "La entrega a domicilio se cobra por viaje, según tu colonia."
+FACTURACION = "Todas las compras se pueden facturar."
+CONDICIONES_MATERIALES = f"{SIN_MINIMO} {ENTREGA_COBRO} {FACTURACION}"
 PODA = ("Desde $500, según cotización: el precio depende del tamaño del árbol o la palma y de los residuos que se "
         "generan. Mándanos fotos y ubicación por WhatsApp.")
 GARANTIA_PASTO = ("Si una sección no arraiga en 15 a 20 días, la reponemos sin costo, siguiendo el protocolo de riego "
@@ -214,6 +232,25 @@ OPINIONES_RIEGO = (
     ("Instalaron el sistema de riego en las áreas verdes de nuestra planta industrial en Altamira. Llegaron a tiempo, el "
      "diseño es eficiente y el equipo de calidad. 100% recomendados.",
      "María V.", "Parque Industrial · Altamira"),
+)
+# Opiniones reales con nombre de las páginas de materiales de main, textuales; el dueño confirmó que son reales y que hay
+# permiso (2026-11-08). Solo texto visible: nunca aggregateRating ni Review con calificación. En la de David M. y la de
+# Patricia H., main tenía cruzados el lugar y las iniciales; aquí cada cita va con su nombre y su lugar.
+OPINIONES_TIERRA_NEGRA = (
+    ("Pedimos tierra negra para nivelar 200 m² antes de instalar pasto. El material llegó en perfectas condiciones, el "
+     "camión descargó exactamente donde necesitábamos y el pasto arraigó en menos de 10 días. Resultado excelente.",
+     "Ricardo O.", "Administrador de condominio · Altamira"),
+    ("Compré costales para mejorar el jardín de mi casa en Madero. La diferencia con la tierra que tenía antes fue "
+     "inmediata — las plantas están más verdes y el pasto que pusimos sobre ella arraigó muy rápido. Lo recomiendo.",
+     "Laura P.", "Cliente residencial · Ciudad Madero"),
+)
+OPINIONES_PIEDRA_BOLA = (
+    ("Hice un jardín zen en mi terraza usando piedra bola mediana, arena y bambú. Todo lo conseguí en Viveros Terra. La "
+     "calidad de la piedra era muy buena y la entrega fue rápida.",
+     "Patricia H.", "Residencial · Tampico"),
+    ("Usamos piedra bola grande para los bordes de la fuente del hotel. Queda muy natural y elegante. Viveros Terra nos "
+     "cotizó bien y coordinaron la entrega en el horario que necesitábamos.",
+     "David M.", "Hotel · Altamira"),
 )
 # Zonas con página propia (nombre visible, ruta) y las que se atienden por proyecto.
 ZONAS = (
