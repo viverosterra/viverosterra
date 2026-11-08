@@ -114,6 +114,24 @@ class DatosTest(unittest.TestCase):
         self.assertEqual((datos.PRECIOS["palma_desde"], datos.PRECIOS["palma_real"]), (250, 500))
         self.assertEqual(len({n for n, _s, _p in datos.PALMAS_PROYECTO}), 12)
 
+    def test_precios_de_plantas_etapa_2e(self):
+        """Decisión del dueño (2026-11-07): los únicos precios de plantas; las demás especies, según cotización."""
+        self.assertEqual(datos.PRECIOS_ESPECIE, {"Palma Areca": 250, "Coco Plumoso": 250, "Palma Real": 500,
+                                                 "Flamboyán Tabachín": 250})
+        self.assertEqual(datos.PALMAS_PRECIO, "Areca y coco plumoso desde $250, palma real desde $500 en tamaño chico; "
+                                              "el precio sube con la altura")
+        proyecto = {n.casefold(): p for n, _s, p in datos.PALMAS_PROYECTO if p is not None}
+        for nombre, precio in datos.PRECIOS_ESPECIE.items():
+            if nombre.casefold() in proyecto:
+                with self.subTest(especie=nombre):
+                    self.assertEqual(precio, proyecto[nombre.casefold()])
+        oficiales = {v for v in datos.PRECIOS.values() if isinstance(v, int)}
+        for ruta, desde in datos.DESDE_PLANTAS.items():
+            with self.subTest(ruta=ruta):
+                self.assertTrue(desde is None or desde in oficiales)
+        self.assertEqual(sorted(r for r, d in datos.DESDE_PLANTAS.items() if d is not None),
+                         ["/arboles-ornamentales-tampico", "/palmas-tropicales-tampico"])
+
     def test_mensajes_terminan_con_la_firma(self):
         for servicio in datos.MENSAJES:
             with self.subTest(servicio=servicio):

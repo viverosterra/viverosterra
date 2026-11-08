@@ -114,6 +114,16 @@ class ContextoTest(unittest.TestCase):
                 self.assertIn("Obra y ubicación: ___", texto)
         self.assertEqual(sorted(mensajes_paginas.EMPRESAS), ["/mayoreo-pasto-tampico", "/palmas-mayoreo-proyectos"])
 
+    def test_plantas_con_su_mensaje_en_menu_barra_y_pie(self):
+        """Etapa 2e: el hub y las 5 subcategorías llevan en el menú, la barra y el pie la plantilla de su portada."""
+        for ruta, texto in mensajes_paginas.PLANTAS.items():
+            ctx = paginas.contexto(ruta)
+            with self.subTest(ruta=ruta):
+                self.assertEqual(ctx["mensaje"], datos.con_firma(texto))
+                self.assertEqual(ctx["mensaje_pie"], ctx["mensaje"])
+                self.assertIn("___", texto)
+        self.assertEqual(sorted(mensajes_paginas.PLANTAS), sorted(["/plantas-palmas-arboles-tampico", *datos.DESDE_PLANTAS]))
+
     def test_ruta_desconocida_falla(self):
         with self.assertRaises(KeyError):
             paginas.contexto("/no-existe")

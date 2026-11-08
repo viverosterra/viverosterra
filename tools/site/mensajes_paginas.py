@@ -26,6 +26,23 @@ EMPRESAS = {
                                   "Especies, altura y cantidad: ___\nFecha de entrega: ___"),
 }
 
+# Plantas (Etapa 2e): la plantilla de main de cada portada (tools/servicios/pages.py, guided()), con los huecos ___. La
+# usan la portada y el cierre y, por RUTAS, el menú, la barra móvil y el pie. El catálogo conserva su mensaje de RUTAS.
+PLANTAS = {
+    "/plantas-palmas-arboles-tampico": ("Hola, quiero cotizar plantas o palmas.\nPlantas que busco: ___\n"
+                                        "Tamaño aprox.: ___\nColonia de entrega: ___\nLes mando foto del espacio."),
+    "/palmas-tropicales-tampico": ("Hola, quiero cotizar palmas.\nPalma que me interesa: ___\nAltura aprox.: ___\n"
+                                   "Colonia de entrega: ___\nLes mando foto del espacio."),
+    "/plantas-para-jardin-tampico": ("Hola, quiero cotizar plantas para mi jardín.\nEl lugar es de sol o de sombra: ___\n"
+                                     "Metros aprox.: ___\nColonia: ___\nLes mando foto del espacio."),
+    "/arboles-ornamentales-tampico": ("Hola, quiero cotizar árboles.\nÁrbol que me interesa: ___\nAltura aprox.: ___\n"
+                                      "Colonia de entrega: ___\nLes mando foto del espacio."),
+    "/arboles-para-banqueta-tampico": ("Hola, quiero árboles para mi banqueta.\nAncho de la banqueta: ___\n"
+                                       "Cuántos árboles: ___\nColonia: ___\nLes mando foto del espacio."),
+    "/plantas-de-interior-tampico": ("Hola, quiero plantas de interior.\nCasa u oficina: ___\n"
+                                     "Luz del lugar (mucha o poca): ___\nColonia: ___\nLes mando foto del espacio."),
+}
+
 # Ruta exacta → (mensaje del menú y la barra, mensaje del pie o None para usar el mismo).
 RUTAS = {
     "/blog": ("Hola, vi el blog de Viveros Terra y quiero cotizar", None),
@@ -33,6 +50,7 @@ RUTAS = {
     "/precios": ("Hola, vi la lista de precios y quiero cotizar", "Hola, tengo una pregunta sobre precios"),
     **{ruta: (texto, None) for ruta, texto in SERVICIOS.items()},
     **{ruta: (texto, None) for ruta, texto in EMPRESAS.items()},
+    **{ruta: (texto, None) for ruta, texto in PLANTAS.items()},
 }
 # Tienda y páginas de envío: el pie conserva su "pregunta"; el menú usa el mensaje de cotizar pasto sintético.
 PIE_TIPO = {
