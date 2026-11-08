@@ -59,6 +59,16 @@ class TiendaPublicadaTest(unittest.TestCase):
                 self.assertLess(cuerpo.index("vt-etiqueta__precio"), cuerpo.index("vt-galeria"))
                 self.assertIn(f'data-landed-slug="{m["slug"]}"', cuerpo)
 
+    def test_miniaturas_de_la_galeria_ligeras_y_publicadas(self):
+        # Las miniaturas se ven a 64 px: van las de 128 px de tools/site/miniaturas.py, no la copia -sm de 420 px.
+        for m in data.MODELOS:
+            minis = re.findall(r'class="vt-galeria__mini"[^>]*><img src="([^"]+)"', principal(html(f"/pasto-sintetico/{m['slug']}")))
+            with self.subTest(modelo=m["slug"]):
+                self.assertEqual(len(minis), len(m["gallery"]))
+                for src in minis:
+                    self.assertTrue(src.endswith("-mini.webp"), src)
+                    self.assertTrue((PUBLIC / src.lstrip("/")).is_file(), src)
+
     def test_secuencia_de_la_ficha(self):
         cuerpo = principal(html("/pasto-sintetico/toscana-28"))
         orden = ['id="vt-h1"', 'class="vt-galeria"', 'id="comprar"', "Para quién es el Toscana 28",

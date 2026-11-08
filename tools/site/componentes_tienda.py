@@ -338,13 +338,16 @@ def galeria(m):
         base = f"{GAL}/{m['slug']}-{idx}"
         alt = ALT[tipo].format(n=m["nombre"], color=m["color"].lower(), mm=m["mm"], caption=pie.lower())
         carga = 'loading="eager" fetchpriority="high"' if i == 0 else 'loading="lazy"'
+        # Las diapositivas 2+ están en la pista horizontal y Chrome las baja de inmediato aunque sean lazy: en celular
+        # piden la copia de 420 px (no la de 720), así no le quitan ancho de banda a la foto principal ni al texto.
+        tamanos = "(min-width: 1024px) 620px, 100vw" if i == 0 else "(min-width: 1024px) 620px, 240px"
         diapos.append(f'<figure class="gallery__slide vt-fig"><div class="vt-fig__marco"><img src="{base}-sm.webp" '
-                      f'srcset="{base}-sm.webp 420w, {base}.webp 720w" sizes="(min-width: 1024px) 620px, 100vw" '
+                      f'srcset="{base}-sm.webp 420w, {base}.webp 720w" sizes="{tamanos}" '
                       f'width="720" height="960" alt="{esc(alt)}" {carga} decoding="async">'
                       f'{chip_mm(m["mm"]) if i == 0 else ""}</div><figcaption><span><b>Fig. {i + 1:02d}</b> · '
                       f'{esc(pie)}</span><span>Foto de producto</span></figcaption></figure>')
         minis.append(f'<button class="vt-galeria__mini" type="button" data-gal-idx="{i}" aria-label="Ver foto '
-                     f'{i + 1}: {esc(pie.lower())}"><img src="{base}-sm.webp" alt="" width="64" height="64" '
+                     f'{i + 1}: {esc(pie.lower())}"><img src="{base}-mini.webp" alt="" width="64" height="64" '
                      'loading="lazy"></button>')
     return (f'<section class="vt-galeria" aria-label="Fotos del {esc(m["nombre"])}"><div class="vt-galeria__pista" '
             f'id="gal-track" tabindex="0">{"".join(diapos)}</div><div class="vt-galeria__meta"><span '
