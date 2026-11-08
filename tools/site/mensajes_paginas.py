@@ -17,12 +17,22 @@ SERVICIOS = {
                                "Tengo pasto, plantas o ambos: ___\nLes mando fotos del espacio."),
 }
 
+# Empresas (Etapa 2d): la plantilla de compras de cada página B2B (la de main, con los huecos ___). La usan la portada, el
+# cierre y los cotizadores mientras no tienen datos y, por RUTAS, el menú, la barra móvil y el pie.
+EMPRESAS = {
+    "/mayoreo-pasto-tampico": ("Hola, quiero cotizar pasto San Agustín al mayoreo para un proyecto.\nEmpresa: ___\n"
+                               "Obra y ubicación: ___\nm² totales: ___\nFecha de la primera entrega: ___"),
+    "/palmas-mayoreo-proyectos": ("Hola, quiero cotizar palmas para un proyecto.\nEmpresa: ___\nObra y ubicación: ___\n"
+                                  "Especies, altura y cantidad: ___\nFecha de entrega: ___"),
+}
+
 # Ruta exacta → (mensaje del menú y la barra, mensaje del pie o None para usar el mismo).
 RUTAS = {
     "/blog": ("Hola, vi el blog de Viveros Terra y quiero cotizar", None),
     "/catalogo": ("Hola, vi el catálogo y quiero cotizar una planta", None),
     "/precios": ("Hola, vi la lista de precios y quiero cotizar", "Hola, tengo una pregunta sobre precios"),
     **{ruta: (texto, None) for ruta, texto in SERVICIOS.items()},
+    **{ruta: (texto, None) for ruta, texto in EMPRESAS.items()},
 }
 # Tienda y páginas de envío: el pie conserva su "pregunta"; el menú usa el mensaje de cotizar pasto sintético.
 PIE_TIPO = {
