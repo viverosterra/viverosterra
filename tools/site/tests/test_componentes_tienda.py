@@ -53,9 +53,22 @@ class CotizadorTest(unittest.TestCase):
         self.assertTrue(texto.startswith("Hola, quiero cotizar el pasto sintético Toscana 28."))
         self.assertTrue(texto.endswith(datos.FIRMA))
 
+    def test_minimos_de_data_para_el_js_y_error_anunciado_una_vez(self):
+        html = t.cotizador(T28)
+        self.assertIn(f'data-min-nacional="{data.MIN_NACIONAL_M2}" data-min-showroom="{data.MIN_SHOWROOM_M2}"', html)
+        self.assertIn('<p class="vt-cuenta__error" id="q-error"></p>', html)  # ya dentro de un aria-live
+        self.assertNotIn('role="alert"', html)
+
+    def test_textos_escapados(self):
+        self.assertIn("<h2 class=\"vt-cotizador__t\" id=\"vt-h-cotizar\">A &amp; B &lt;x&gt;</h2>",
+                      t.cotizador(T28, titulo="A & B <x>"))
+        self.assertEqual(t.preguntas_h3((("¿<b>?", 'Ver <a href="/x">guía</a>'),)),
+                         '<ul class="vt-recomendados"><li class="vt-recomendado"><h3>¿&lt;b&gt;?</h3><p>Ver '
+                         '<a href="/x">guía</a></p></li></ul>')
+
     def test_forma_de_pago_con_los_plazos_oficiales(self):
         html = t.planes_cotizador("q")
-        self.assertIn('role="radiogroup"', html)
+        self.assertNotIn('role="radiogroup"', html)  # el fieldset con legend ya agrupa los radios
         for v in ("0", "3", "6", "9", "12"):
             self.assertIn(f'name="q-plan" value="{v}"', html)
         self.assertIn('value="0" checked', html)

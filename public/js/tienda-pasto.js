@@ -7,8 +7,11 @@
   const STORE_KEY = 'vt-cotizacion-v1';
   const ROLLO_M2 = 50;
   const TIER2_MIN_M2 = 10;
-  const MIN_NACIONAL_M2 = 25;
-  const MIN_SHOWROOM_M2 = 2;
+  /* Mínimos de compra: los escribe la plantilla desde tools/pasto/data.py en el cotizador (data-min-*); el respaldo solo
+     aplica en páginas sin cotizador (test_paridad_js.py lo mantiene igual a data.py). */
+  const LIMITES = (document.getElementById('comprar') || { dataset: {} }).dataset;
+  const MIN_NACIONAL_M2 = Number(LIMITES.minNacional) || 25;
+  const MIN_SHOWROOM_M2 = Number(LIMITES.minShowroom) || 2;
   const MAX_M2 = 5000;
   const PICKUP = 'showroom';
   const TOAST_MS = 4000;
@@ -106,7 +109,7 @@
     root.hidden = planes.length === 0;
     if (planes.length === 0) return;
     if (memoryState.plan && !planes.some((x) => x.plazo === memoryState.plan && x.disponible)) {
-      writeStore({ ...memoryState, plan: 0 });
+      writeStore({ ...memoryState, plan: 0 }, false);
     }
     $$('.plan', root).forEach((row) => renderPlanRow(row, planes, contado));
     const p = planElegido(contado);
@@ -158,7 +161,8 @@
 
   let memoryState = readStore();
 
-  function writeStore(next) {
+  /* avisar=false: el cambio sale de un render (renderPlans) y no debe volver a disparar update() por vt:lista. */
+  function writeStore(next, avisar = true) {
     memoryState = next;
     try {
       localStorage.setItem(STORE_KEY, JSON.stringify(next));
@@ -166,7 +170,7 @@
       console.warn('[tienda] No se pudo guardar la cotización en este navegador; se conserva mientras la página esté abierta.');
     }
     renderCount();
-    document.dispatchEvent(new CustomEvent('vt:lista'));
+    if (avisar) document.dispatchEvent(new CustomEvent('vt:lista'));
   }
 
   function upsertItem(state, item) {

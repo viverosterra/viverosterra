@@ -1,15 +1,88 @@
 {
  "nota": "Paridad de la mensualidad entre public/js/vt-mensualidades.js y tools/pasto/mensualidades.py: [contado, plazo, total, mensualidad]. Los cuatro primeros caen en .5 exacto (Math.round lo sube; round() de Python lo llevaba al par). Los demás son los casos de J03 §3 y la calculadora del procesador.",
  "casos": [
-  [5005, 6, 5751, 959],
-  [15014, 12, 18534, 1545],
-  [16200, 12, 19998, 1667],
-  [2007, 12, 2478, 207],
-  [11100, 12, 13702, 1142],
-  [10850, 3, 11986, 3995],
-  [10850, 6, 12466, 2078],
-  [8270, 3, 9136, 3045],
-  [8270, 6, 9502, 1584],
-  [27330, 12, 33737, 2811]
+  [
+   5005,
+   6,
+   5751,
+   959
+  ],
+  [
+   15014,
+   12,
+   18534,
+   1545
+  ],
+  [
+   16200,
+   12,
+   19998,
+   1667
+  ],
+  [
+   2007,
+   12,
+   2478,
+   207
+  ],
+  [
+   11100,
+   12,
+   13702,
+   1142
+  ],
+  [
+   10850,
+   3,
+   11986,
+   3995
+  ],
+  [
+   10850,
+   6,
+   12466,
+   2078
+  ],
+  [
+   8270,
+   3,
+   9136,
+   3045
+  ],
+  [
+   8270,
+   6,
+   9502,
+   1584
+  ],
+  [
+   27330,
+   12,
+   33737,
+   2811
+  ]
+ ],
+ "nota_redondeo": "Redondeo de valores con artefacto de punto flotante: [valor, Math.round(valor)]. 1102.4999999999998 es lo que da una suma como 1102.1 + 0.4 - 0.0000000000002; 0.49999999999999994 es el caso en que floor(x + 0.5) se equivoca.",
+ "redondeo": [
+  [
+   1102.4999999999998,
+   1102
+  ],
+  [
+   1102.5,
+   1103
+  ],
+  [
+   0.49999999999999994,
+   0
+  ],
+  [
+   1666.5,
+   1667
+  ],
+  [
+   958.4999999999999,
+   958
+  ]
  ]
 }

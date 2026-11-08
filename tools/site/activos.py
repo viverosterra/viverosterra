@@ -52,12 +52,15 @@ def urls(public=PUBLIC):
     return {clave: "/" + _con_hash(rel, publicado(rel, (public / rel).read_bytes())) for clave, rel in FUENTES.items()}
 
 
+REFS_PRODUCCION = ("origin/main", "main", "HEAD")
+
+
 def _html_de_main(public):
-    """HTML de la home y del índice del blog (entre los dos enlazan los tres assets) en `main`, en HEAD o, sin git, en
-    disco."""
+    """HTML de la home y del índice del blog (entre los dos enlazan los tres assets) en `origin/main` (lo que sirve
+    producción aunque el `main` local esté atrasado), en `main`, en HEAD o, sin git, en disco."""
     rutas = ("public/index.html", "public/blog/index.html")
     raiz = Path(public).resolve().parent
-    for ref in ("main", "HEAD"):
+    for ref in REFS_PRODUCCION:
         try:
             return "".join(subprocess.run(["git", "show", f"{ref}:{r}"], cwd=raiz, capture_output=True, text=True,
                                           check=True).stdout for r in rutas)

@@ -28,3 +28,8 @@ test('paridad con Python en los casos compartidos (incluye .5 exacto)', () => {
     assert.deepStrictEqual([p.total, p.mensualidad], [total, mensualidad], `${contado} a ${plazo}`);
   }
 });
+
+test('Math.round con artefactos de punto flotante (mismos casos que redondear() de Python)', () => {
+  const { redondeo } = JSON.parse(require('node:fs').readFileSync(require('node:path').join(__dirname, 'casos-mensualidades.json'), 'utf8'));
+  for (const [valor, esperado] of redondeo) assert.strictEqual(Math.round(valor), esperado, String(valor));
+});

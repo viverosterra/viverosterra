@@ -63,5 +63,11 @@ class ParidadConJavaScriptTest(unittest.TestCase):
             with self.subTest(contado=contado, plazo=plazo):
                 self.assertEqual((p["total"], p["mensualidad"]), (total, mensualidad))
 
+    def test_redondear_igual_a_math_round_con_artefactos_de_punto_flotante(self):
+        ruta = Path(__file__).resolve().parents[3] / "public" / "js" / "tests" / "casos-mensualidades.json"
+        for valor, esperado in json.loads(ruta.read_text(encoding="utf-8"))["redondeo"]:
+            with self.subTest(valor=valor):
+                self.assertEqual(redondear(valor), esperado)
+
     def test_redondear_sube_los_medios(self):
         self.assertEqual([redondear(x) for x in (958.5, 1666.5, 2.5, 0.49)], [959, 1667, 3, 0])

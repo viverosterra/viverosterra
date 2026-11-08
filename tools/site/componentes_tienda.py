@@ -19,8 +19,8 @@ from partials import WA_GLIFO, esc
 GAL = "/img/pasto-sintetico/galeria"
 MAX_MM = 35
 ROLLO_M2 = data.ROLLO_M2
-MIN_NACIONAL = 25
-MIN_SHOWROOM = 2
+MIN_NACIONAL = data.MIN_NACIONAL_M2
+MIN_SHOWROOM = data.MIN_SHOWROOM_M2
 TIERS = (("rollo", "Rollo completo", f"{ROLLO_M2} m² o más"), ("t2", "Corte mediano", "10 a 49 m²"),
          ("t1", "Corte chico", "2 a 9 m², solo en showroom"))
 NOTA_FLETE = "Te confirmamos el flete exacto a tu dirección antes de pagar."
@@ -138,7 +138,7 @@ def planes_cotizador(prefijo):
             f'<dl class="vt-planes-t__trip" id="{prefijo}-plan-trip" aria-live="polite"><div><dt>Contado</dt>'
             '<dd data-trip-contado>—</dd></div><div><dt>Al mes</dt><dd data-trip-mes>—</dd></div><div><dt>Total</dt>'
             f'<dd data-trip-total>—</dd></div></dl><div class="pay-rule" id="{prefijo}-plan-rule" aria-hidden="true"></div>'
-            f'<div class="vt-planes-t__lista" role="radiogroup" aria-labelledby="{prefijo}-plans-legend">{filas}</div>'
+            f'<div class="vt-planes-t__lista">{filas}</div>'
             '<p class="vt-planes-t__ahorro" data-plan-save></p>'
             '<p class="vt-planes-t__nota">Precio en mensualidades con tarjeta de crédito. Contado (transferencia, '
             'efectivo o tarjeta en una exhibición) es el precio más bajo. Montos aproximados: tu banco debe aceptar el '
@@ -168,8 +168,8 @@ def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, titulo="Cotiza tu
     sel_showroom = " selected" if showroom else ""
     selector = _selector_modelo(modelos, m) if modelos else ""
     return (
-        f'<section class="vt-cotizador" id="comprar" aria-labelledby="{id_titulo}"><h{nivel} class="vt-cotizador__t" '
-        f'id="{id_titulo}">{titulo}</h{nivel}>'
+        f'<section class="vt-cotizador" id="comprar" aria-labelledby="{id_titulo}" data-min-nacional="{MIN_NACIONAL}" '
+        f'data-min-showroom="{MIN_SHOWROOM}"><h{nivel} class="vt-cotizador__t" id="{id_titulo}">{esc(titulo)}</h{nivel}>'
         f'<p class="vt-cotizador__desde">Desde <b id="buy-price">{c.dinero(m["rollo"])}</b>/m² · rollo de {ROLLO_M2} m², '
         'IVA incluido · envío por rollo según tu estado</p>'
         f'{selector}<div class="vt-campo"><label for="m2">Metros cuadrados</label><div class="vt-stepper">'
@@ -187,7 +187,7 @@ def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, titulo="Cotiza tu
         '<p class="vt-cuenta__fila"><span id="q-envio-label">Envío</span><b id="q-envio">Elige tu estado</b></p>'
         f'<p class="vt-cuenta__total"><span id="q-total-label">Total estimado</span><b id="q-total">'
         f'{c.dinero(material)}</b></p><p class="vt-cuenta__puesto" id="q-landed"></p>'
-        '<p class="vt-cuenta__pista" id="q-hint"></p><p class="vt-cuenta__error" id="q-error" role="alert"></p></div>'
+        '<p class="vt-cuenta__pista" id="q-hint"></p><p class="vt-cuenta__error" id="q-error"></p></div>'
         f'{planes_cotizador("q")}'
         f'<div class="vt-cotizador__acciones"><a class="vt-btn vt-btn--wa" data-cta-wa data-cta="{tipo}:cotizador" '
         f'href="{href}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp</a>'
@@ -374,7 +374,7 @@ def ficha_tecnica(m):
                   for e, n, v in filas) + "</dl></div>" for titulo, filas in m["specs"])
     nota = m.get("specs_note") or NOTA_FICHA
     glosario = "" if m.get("specs_note") else (
-        '<dl class="vt-glosario">' + "".join(f"<div><dt>{t}</dt><dd>{d}</dd></div>" for t, d in GLOSARIO) + "</dl>")
+        '<dl class="vt-glosario">' + "".join(f"<div><dt>{esc(t)}</dt><dd>{esc(d)}</dd></div>" for t, d in GLOSARIO) + "</dl>")
     return f'<div class="vt-tecnica">{grupos}</div><p class="vt-promesa">{esc(nota)}</p>{glosario}'
 
 
@@ -478,6 +478,7 @@ def ciudades_destacadas(ciudades):
 
 def preguntas_h3(items):
     """Encabezados en pregunta con su respuesta corta (h3 + párrafo): costo, tiempo, mínimo, cómo elegir sin muestra
-    e instalación en las ciudades; criterios en la página de perros."""
-    filas = "".join(f'<li class="vt-recomendado"><h3>{q}</h3><p>{a}</p></li>' for q, a in items)
+    e instalación en las ciudades; criterios en la página de perros. La pregunta se escapa; la respuesta es HTML en
+    línea de confianza (constantes de tools/site/contenido con enlaces <a>), nunca texto de usuarios."""
+    filas = "".join(f'<li class="vt-recomendado"><h3>{esc(q)}</h3><p>{a}</p></li>' for q, a in items)
     return f'<ul class="vt-recomendados">{filas}</ul>'

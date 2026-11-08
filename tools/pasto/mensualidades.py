@@ -18,7 +18,8 @@ UMBRALES = ((15000, (3, 6, 9, 12)), (5000, (3, 6)), (2000, (3,)))
 def redondear(x):
     """Igual que Math.round de JavaScript para valores positivos: los .5 suben (round() de Python los lleva al par y
     daba $1 menos que vt-mensualidades.js en mensualidades como 1,666.5)."""
-    return int(math.floor(x + 0.5))
+    piso = math.floor(x)
+    return int(piso + 1 if x - piso >= 0.5 else piso)  # x - piso es exacto; floor(x + 0.5) falla con 0.49999999999999994
 
 
 def plazos_disponibles(contado):

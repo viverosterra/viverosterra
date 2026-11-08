@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -115,11 +116,41 @@ class ActivosTest(unittest.TestCase):
         css = "/* nota */\n.vt-a{\n  content:\"a  b\";\n  margin:0 auto}\n\n@media (min-width:768px){\n  .vt-b{x:y}\n}\n"
         self.assertEqual(activos.minificar_css(css),
                          '.vt-a{\ncontent:"a  b";\nmargin:0 auto}\n@media (min-width:768px){\n.vt-b{x:y}\n}\n')
-        terra = (activos.PUBLIC / "css" / "terra.css").read_text(encoding="utf-8")
 
-        def reglas(texto):
-            return [r.strip() for r in re.findall(r"[^{}]+\{", re.sub(r"/\*.*?\*/", "", texto, flags=re.S))]
-        self.assertEqual(reglas(activos.minificar_css(terra)), reglas(terra))
+        def colapsado(texto):
+            """Todo el texto sin comentarios y con los espacios en blanco reducidos a uno: selectores y declaraciones."""
+            return " ".join(re.sub(r"/\*.*?\*/", "", texto, flags=re.S).split())
+        for hoja in ("terra.css", "terra-tienda.css"):
+            fuente = (activos.PUBLIC / "css" / hoja).read_text(encoding="utf-8")
+            with self.subTest(hoja=hoja):
+                self.assertEqual(colapsado(activos.minificar_css(fuente)), colapsado(fuente))
+
+    def test_lee_el_html_de_origin_main_antes_que_main_y_head(self):
+        raiz = self.pub.parent
+
+        def git(*args):
+            subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", *args], cwd=raiz, check=True,
+                           capture_output=True)
+
+        def commit(enlace):
+            (self.pub / "index.html").write_text(f'<link href="/css/{enlace}">', encoding="utf-8")
+            git("add", "public/index.html")
+            git("commit", "-q", "-m", enlace)
+
+        git("init", "-q", "-b", "main")
+        (self.pub / "blog" / "index.html").write_text("<p>blog</p>", encoding="utf-8")
+        git("add", "public/blog/index.html")
+        commit("terra.1111111111.css")
+        git("update-ref", "refs/remotes/origin/main", "HEAD")  # producción
+        commit("terra.2222222222.css")  # main local adelantado
+        git("checkout", "-q", "-b", "rama")
+        commit("terra.3333333333.css")  # HEAD de la rama
+        (self.pub / "index.html").write_text('<link href="/css/terra.4444444444.css">', encoding="utf-8")  # disco
+        self.assertEqual(activos.servida("css/terra.css", activos._html_de_main(self.pub)), "/css/terra.1111111111.css")
+        git("update-ref", "-d", "refs/remotes/origin/main")
+        self.assertEqual(activos.servida("css/terra.css", activos._html_de_main(self.pub)), "/css/terra.2222222222.css")
+        git("branch", "-D", "main")
+        self.assertEqual(activos.servida("css/terra.css", activos._html_de_main(self.pub)), "/css/terra.3333333333.css")
 
     def test_registro_del_repo_coincide_con_lo_publicado(self):
         registro = json.loads(activos.REGISTRO.read_text(encoding="utf-8"))
