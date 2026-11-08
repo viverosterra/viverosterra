@@ -183,7 +183,7 @@ CONTENIDO = {
         "filas": (
             (f"Menos de {MINIMO} m²", f"{dinero(SOLO)}/m² solo pasto", "Se cotiza según tu obra"),
             (f"{MINIMO} m² o más", f"desde {dinero(MAYOREO)}/m² solo pasto", "Por etapas, según el avance de obra"),
-            ("Pasto instalado en obra", f"{datos.SEGUN_COTIZACION} por m²", "Con nuestra cuadrilla"),
+            ("Pasto instalado en obra", f"desde {dinero(INSTALADO)}/m² instalado", "Con nuestra cuadrilla"),
             ("Capacidad y calendario", "Por escrito en tu cotización, por entrega",
              f"El pasto llega del campo {datos.LLEGADA_PASTO}"),
         ),
