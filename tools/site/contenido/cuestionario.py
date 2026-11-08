@@ -1,8 +1,9 @@
-"""Contenido de /cuestionario, paso 2 del diseño (lo manda el asesor; noindex). Mismo action de formsubmit y mismos name y
-value que main (el dueño recibe esos campos: tests/paridad/utilitarias-contrato.json), más el honeypot _honey que tienen
-los demás formularios. Dos H1 en main: queda uno. Los rangos de inversión son opciones del cliente, no precios."""
+"""Contenido de /cuestionario, paso 2 del diseño (lo manda el asesor; noindex). Mismos name y value que main (el dueño
+recibe esos campos: tests/paridad/utilitarias-contrato.json), más _honey y _next: se envía y se mide como los otros 6
+formularios (POST nativo, generate_lead y /gracias). Dos H1 en main: queda uno. Los rangos de inversión son opciones del
+cliente, no precios."""
+import componentes
 import datos
-import mensajes_paginas
 import componentes_util as cu
 
 URL = f"{datos.SITIO}/cuestionario"
@@ -102,8 +103,9 @@ CONTENIDO = {
                "lede": f"Tómate 4 minutos para contarnos qué necesitas. Nuestro diseñador creará una propuesta hecha exactamente para ti; {datos.PROMESA.lower().replace('respondemos', 'te respondemos')}.",
                "aviso": f"{datos.VISITA_COSTO_CORTO} · Diseño personalizado · 4-5 minutos",
                "foto": {"src": "/img/diseno-jardin-instalacion-plantas-tampico.webp", "ancho": 1400, "alto": 787, "alt": ""}},
-    "form": {"accion": f"https://formsubmit.co/ajax/{datos.CORREO_FORMULARIOS}",
-             "ocultos": (("_subject", "Nuevo cuestionario de jardín — Viveros Terra"), ("_template", "table"), ("_captcha", "false")),
+    "form": {"accion": componentes.FORMULARIO_ACCION, "cta": "cuestionario:formulario",
+             "ocultos": (("_subject", "Nuevo cuestionario de jardín — Viveros Terra"), ("_next", componentes.FORMULARIO_GRACIAS),
+                         ("_template", "table"), ("_captcha", "false")),
              "pasos": (
                  {"corto": "Tus datos", "titulo": "Cuéntanos de ti", "pista": "Para coordinar tu visita técnica y enviarte la propuesta de diseño.", "controles": PASO_1},
                  {"corto": "Tu espacio", "titulo": "Tu espacio", "pista": "No te preocupes si no tienes las medidas exactas — las tomamos en la visita.", "controles": PASO_2},
@@ -111,13 +113,11 @@ CONTENIDO = {
                  {"corto": "Inversión", "titulo": "Inversión estimada", "pista": "Esta info es solo para proponer opciones reales — no te compromete a nada.", "controles": PASO_4},
                  {"corto": "Final", "titulo": "¡Ya casi! Una última pregunta", "pista": "Esto nos ayuda a priorizar lo que más le importa en el diseño.", "controles": PASO_5},
              )},
-    "exito": {"titulo": "¡Gracias por tu información!", "texto": f"Hemos recibido tu cuestionario. Un diseñador de Viveros Terra {datos.PROMESA.lower().replace('respondemos', 'te responde')} para coordinar tu visita técnica. {datos.VISITA_COSTO}",
-              "boton": "También puedes escribirnos por WhatsApp", "mensaje": mensajes_paginas.UTILITARIAS["cuestionario_enviado"]},
     "fecha": "14 de mayo, 2026", "fecha_iso": "2026-05-14",
 }
 PARIDAD = {"reemplazos": {"Tu jardín empieza aquí": "Tu jardín empieza aquí. Cuéntanos tu visión.",
                           "Tu jardín empieza aquí. Cuéntanos tu visión.": "Tu jardín empieza aquí. Cuéntanos tu visión."},
-           "retirados": {},
+           "retirados": {"¡Gracias por tu información!": "El aviso en la misma página se sustituye por /gracias (_next), como en los otros 6 formularios; decisión del dueño."},
            "meta": {"description": (DESCRIPCION, "La página no tenía descripción y publicaba una meta vacía."),
                     "canonical": (URL, "Spec §3.5: el cuestionario lleva noindex, follow y canonical; no tenía canonical.")},
            "jsonld": {}}

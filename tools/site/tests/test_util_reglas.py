@@ -54,6 +54,8 @@ ESPECIFICAS = {
     "/cuestionario": (
         ("un solo H1", lambda h: len(re.findall(r"<h1\b", h)) == 1),
         ("honeypot", lambda h: 'name="_honey"' in h),
+        ("medido como los demás formularios", lambda h: f'name="_next" value="{datos.SITIO}/gracias"' in h
+         and 'data-cta-form="cuestionario:formulario"' in h and "formsubmit.co/ajax/" not in h),
         ("visita con costo", lambda h: datos.VISITA_COSTO_CORTO in h),
     ),
 }

@@ -1,4 +1,4 @@
-"""Contenido de /gracias: destino de los 6 formularios por correo (_next de formsubmit). GA4 la cuenta por su URL y su
+"""Contenido de /gracias: destino de los 7 formularios por correo (_next de formsubmit). GA4 la cuenta por su URL y su
 page_view; no tiene evento propio. El archivo, la URL, el título, robots, canonical y data-cta no cambian."""
 import datos
 import mensajes_paginas

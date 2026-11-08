@@ -67,6 +67,14 @@
    [
     "input",
     null,
+    "_next",
+    "hidden",
+    "https://www.viverosterra.com/gracias",
+    false
+   ],
+   [
+    "input",
+    null,
     "_template",
     "hidden",
     "table",
@@ -644,7 +652,7 @@
    ]
   ],
   "form": [
-   "https://formsubmit.co/ajax/viverosterra@hotmail.com",
+   "https://formsubmit.co/viverosterra@hotmail.com",
    "POST"
   ],
   "medicion": {

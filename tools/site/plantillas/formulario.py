@@ -1,5 +1,5 @@
 """Plantilla de las páginas de formulario, todas noindex (spec §3.3): /gracias (promesa única, qué sigue y "Adelantar por
-WhatsApp"; GA4 la cuenta por su URL y su page_view), /cuestionario (paso 2 del diseño: 5 pasos a formsubmit) y
+WhatsApp"; GA4 la cuenta por su URL y su page_view), /cuestionario (paso 2 del diseño: 5 pasos a formsubmit y de ahí a /gracias) y
 /datos-envio (arma el mensaje de WhatsApp en el navegador). La misma cabecera; el cuerpo sale de k["vista"]."""
 import componentes as c
 import componentes_util as cu
@@ -34,20 +34,17 @@ def _cuestionario(k):
     pasos = "".join(_paso(i, p, total) for i, p in enumerate(f["pasos"], 1))
     nav = "".join(f'<li data-vt-marca="{i}"{" aria-current=step" if i == 1 else ""}><b>{i}</b><span>{p["corto"]}</span></li>'
                   for i, p in enumerate(f["pasos"], 1))
-    ok = k["exito"]
     return (
         f'<section class="vt-bloque" aria-labelledby="vt-h1"><div class="vt-wrap vt-util__estrecho">'
         f'<ol class="vt-wizard" aria-label="Pasos del cuestionario">{nav}</ol>'
         f'<div class="vt-progreso" aria-hidden="true"><span id="prog"></span></div>'
-        f'<form id="mainForm" class="vt-util__form" action="{c.esc(f["accion"])}" method="POST">'
+        f'<form id="mainForm" class="vt-util__form" action="{c.esc(f["accion"])}" method="POST" data-cta-form="{c.esc(f["cta"])}">'
         f'{ocultos}{miel}{pasos}'
         f'<div class="vt-util__pie" id="main-footer"><button type="button" class="vt-btn vt-btn--linea" id="btn-prev" hidden>'
         f'← Anterior</button><p class="vt-util__cuenta" id="step-counter" role="status">Paso 1 de {total}</p>'
         f'<button type="button" class="vt-btn vt-btn--tinta" id="btn-next">Siguiente →</button>'
         f'<button type="submit" class="vt-btn vt-btn--tinta" id="submit-btn" hidden>Enviar cuestionario</button></div>'
-        f'</form><div class="vt-util__exito" id="success-screen" hidden role="status"><h2 tabindex="-1">{ok["titulo"]}</h2>'
-        f'<p>{ok["texto"]}</p><div class="vt-cta">'
-        f'{cu.boton_wa_texto(ok["boton"], ok["mensaje"], k["tipo"] + ":cuerpo")}</div></div>'
+        f'</form>'
         f'<p class="vt-promesa">Última actualización: <time datetime="{k["fecha_iso"]}">{k["fecha"]}</time></p>'
         f'</div></section>')
 

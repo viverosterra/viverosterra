@@ -1,7 +1,7 @@
 // public/js/vt-cuestionario.js
-/* Cuestionario de diseño (Etapa 2i): el asistente de 5 pasos de main y su envío a formsubmit por fetch (el action /ajax/
-   responde JSON), con el mismo aviso en la misma página al terminar. Dos arreglos: no se avanza con los datos obligatorios
-   vacíos (antes el navegador bloqueaba el envío al final, en un paso oculto) y Enter a medio camino avanza en vez de enviar. */
+/* Cuestionario de diseño (Etapa 2i): el asistente de 5 pasos de main, enviado y medido como los otros 6 formularios. Dos
+   arreglos: no se avanza con los datos obligatorios vacíos (antes el navegador bloqueaba el envío al final, en un paso
+   oculto) y Enter a medio camino avanza en vez de enviar. */
 (function () {
   'use strict';
   const form = document.getElementById('mainForm');
@@ -66,28 +66,29 @@
   $('area_pasto').addEventListener('input', calcularTotal);
   $('area_jard').addEventListener('input', calcularTotal);
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (actual < total) { ir(1); return; }
+  // Como los otros 6 formularios (vt-b2b.js): el navegador hace el POST, formsubmit lleva a /gracias con _next y aquí
+  // solo se manda generate_lead con method "formulario".
+  let enviando = false;
+  form.addEventListener('submit', (e) => {
+    if (actual < total || enviando) {
+      e.preventDefault();
+      if (!enviando) ir(1);
+      return;
+    }
+    enviando = true;
     enviar.textContent = 'Enviando...';
     enviar.disabled = true;
-    const fallo = () => { enviar.textContent = 'Error — intenta de nuevo'; enviar.disabled = false; };
-    try {
-      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
-      const datos = res.ok ? await res.json().catch(() => ({})) : {};
-      if (res.ok && String(datos.success) !== 'false') {
-        form.hidden = true;
-        document.querySelector('.vt-wizard').hidden = true;
-        $('prog').style.transform = 'scaleX(1)';
-        const ok = $('success-screen');
-        ok.hidden = false;
-        ok.querySelector('h2').focus();
-      } else {
-        fallo();
-      }
-    } catch (error) {
-      fallo();
+    const head = document.querySelector('.vt-head');
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'generate_lead', { method: 'formulario', cta_id: form.dataset.ctaForm,
+        service: (head && head.dataset.vtServicio) || 'jardin' });
     }
+  });
+  // Al volver desde /gracias con el botón Atrás, el formulario se puede enviar otra vez.
+  window.addEventListener('pageshow', () => {
+    enviando = false;
+    enviar.textContent = 'Enviar cuestionario';
+    enviar.disabled = false;
   });
 
   pintar();

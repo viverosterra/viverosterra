@@ -186,7 +186,6 @@ def tema_blog(slug):
 UTILITARIAS = {
     "gracias": "Hola, acabo de enviar una cotización por el cotizador y quiero avanzar",
     "cuestionario": "Hola, quiero empezar un proyecto de jardín en Tampico",
-    "cuestionario_enviado": "Hola, acabo de enviar mi cuestionario de diseño de jardín",
     "politicas": "Hola, tengo una duda sobre envíos/devoluciones",
     "privacidad": "Hola, tengo una duda sobre el aviso de privacidad",
     "protocolo": "Hola, tengo dudas sobre el cuidado de mi pasto San Agustín",
