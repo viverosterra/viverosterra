@@ -13,6 +13,7 @@ import datos  # noqa: E402
 import generar  # noqa: E402
 import mensajes_paginas  # noqa: E402
 import paginas  # noqa: E402
+from contenido import catalogo_datos as cd  # noqa: E402
 from contenido import plantas_comun as pc  # noqa: E402
 
 PUBLIC = paginas.PUBLIC
@@ -142,6 +143,43 @@ class SubcategoriasTest(unittest.TestCase):
             with self.subTest(ruta=ruta):
                 self.assertIn(datos.con_firma(mensajes_paginas.PLANTAS[ruta]), ms)
                 self.assertTrue(all(m.endswith(datos.FIRMA) for m in ms))
+
+
+class CatalogoTest(unittest.TestCase):
+    def setUp(self):
+        self.h = html("/catalogo")
+
+    def test_orden_buscador_rejilla_pedido_garantia(self):
+        orden = ['id="vt-h1"', "data-vt-filtros", "data-vt-rejilla", "data-vt-especial", "/politicas#garantia-plantas"]
+        posiciones = [self.h.index(x) for x in orden]
+        self.assertEqual(posiciones, sorted(posiciones))
+
+    def test_rejilla_completa_sin_proxy_ni_js_en_linea(self):
+        self.assertEqual(self.h.count('data-vt-agregar="'), 117)
+        self.assertNotIn("/api/img", self.h)
+        self.assertNotIn("function sendWA", self.h)
+        self.assertNotIn("onclick=", self.h)
+        self.assertIn('<script src="/js/vt-catalogo.js" defer></script>', self.h)
+        self.assertIn('<script type="application/json" id="vt-catalogo-datos">', self.h)
+
+    def test_datos_del_js_con_el_contrato(self):
+        crudo = re.search(r'<script type="application/json" id="vt-catalogo-datos">(.*?)</script>', self.h, re.S).group(1)
+        especies = json.loads(crudo)
+        self.assertEqual(len(especies), 117)
+        self.assertEqual(set(especies["palma-real"]), {"name", "sc", "sz"})
+
+    def test_sin_las_cifras_ni_la_pestana_de_pasto_de_main(self):
+        for viejo in ("Productor directo", "disponibilidad real", "Proyectos entregados", "+200,000 m²", "+ Vendido",
+                      "setTab(", "Más vendidas", "gratis", "sin costo"):
+            self.assertNotIn(viejo, self.h)
+
+    def test_fotos_retiradas_con_marcador_y_sin_decir_del_vivero(self):
+        self.assertEqual(self.h.count("Foto pendiente"), len(cd.FOTOS_RETIRADAS))
+        self.assertNotIn("En nuestro vivero", self.h)
+
+    def test_json_ld_itemlist_con_117(self):
+        lista = next(n for n in grafo(self.h) if n["@type"] == "ItemList")
+        self.assertEqual(lista["numberOfItems"], 117)
 
 
 if __name__ == "__main__":

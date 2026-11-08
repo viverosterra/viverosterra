@@ -29,7 +29,7 @@ PLANTAS = {
     "/plantas-de-interior-tampico": "plantas-de-interior-tampico/index.html",
     "/catalogo": "catalogo.html",
 }
-PENDIENTES = frozenset({"/catalogo"})
+PENDIENTES = frozenset()
 PERMITIDOS = {dinero(n) for v in datos.PRECIOS.values() for n in (v if isinstance(v, tuple) else (v,))
               if isinstance(n, int)}
 PRECIO_RE = re.compile(r"\$\s?\d[\d,]*\d|\$\s?\d")
@@ -122,6 +122,11 @@ class PlantasReglasTest(unittest.TestCase):
             for frase in frases:
                 with self.subTest(ruta=ruta, frase=frase):
                     self.assertIn(frase, visible_y_ld(html_de(ruta)))
+
+    def test_ninguna_pagina_publica_usa_api_img(self):
+        """Etapa 2e: el proxy /api/img ya no lo usa ninguna página (se borra en la Etapa 5)."""
+        self.assertEqual([str(p.relative_to(PUBLIC)) for p in PUBLIC.rglob("*.html")
+                          if "/api/img" in p.read_text(encoding="utf-8")], [])
 
     def test_hub_explica_el_anticipo(self):
         if "/plantas-palmas-arboles-tampico" not in PENDIENTES:

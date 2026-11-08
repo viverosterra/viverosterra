@@ -92,6 +92,13 @@ class ComponentesPlantasTest(unittest.TestCase):
             self.assertIn(attr, olivo)
         self.assertNotIn("/api/img", html)
 
+    def test_boton_anadir_con_un_solo_espacio_visible(self):
+        """.vt-btn es inline-flex con gap: si el nombre para lectores de pantalla (vt-sr) queda como hijo directo, el
+        gap se suma dos veces y se ven dos espacios entre «Añadir» y «a mi lista». El texto va en un solo <span>."""
+        html = cp.tarjeta_catalogo(cd.especie("palma-real"), 1)
+        self.assertIn('data-vt-agregar="palma-real"><span>+ Añadir<span class="vt-sr"> Palma Real</span> a mi lista'
+                      '</span></button>', html)
+
     def test_rejilla_sin_fotos_retiradas(self):
         html = cp.rejilla_catalogo()
         self.assertEqual(html.count('<svg class="vt-esp__sinfoto"'), len(cd.FOTOS_RETIRADAS))

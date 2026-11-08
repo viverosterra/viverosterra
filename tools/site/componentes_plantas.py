@@ -153,7 +153,8 @@ def tarjeta_catalogo(e, numero, carga="lazy"):
     return (f'<li class="vt-esp vt-cat" data-vt-esp="{esc(e["slug"])}" {atributos} data-buscar="{esc(buscar)}">'
             f'{_cabeza(e, numero, carga)}{datos_especie(e)}{precio_especie(e)}{ficha}'
             f'<button type="button" class="vt-btn vt-btn--linea vt-cat__add" data-vt-agregar="{esc(e["slug"])}">'
-            f'+ Añadir<span class="vt-sr"> {nombre}</span> a mi lista</button></li>')
+            # Un solo <span>: .vt-btn es inline-flex con gap y, con el vt-sr como hijo directo, se verían dos espacios.
+            f'<span>+ Añadir<span class="vt-sr"> {nombre}</span> a mi lista</span></button></li>')
 
 
 PRIMERAS = 4  # fotos que cargan de inmediato (la primera con prioridad alta: el LCP del catálogo)
