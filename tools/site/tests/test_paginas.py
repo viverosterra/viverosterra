@@ -83,7 +83,7 @@ class ContextoTest(unittest.TestCase):
         firma = "\n\n" + datos.FIRMA
         self.assertEqual(paginas.contexto("/catalogo")["mensaje"], "Hola, vi el catálogo y quiero cotizar una planta" + firma)
         precios = paginas.contexto("/precios")
-        self.assertEqual(precios["mensaje"], "Hola, vi la lista de precios y quiero cotizar" + firma)
+        self.assertEqual(precios["mensaje"], "Hola, vi la lista de precios y quiero cotizar.\nColonia: ___\nMetros aprox.: ___" + firma)
         self.assertEqual(precios["mensaje_pie"], "Hola, tengo una pregunta sobre precios" + firma)
         for ruta in ("/pasto-sintetico", "/pasto-sintetico/toscana-28", "/pasto-sintetico/envio/cdmx"):
             with self.subTest(ruta=ruta):
@@ -123,6 +123,22 @@ class ContextoTest(unittest.TestCase):
                 self.assertEqual(ctx["mensaje_pie"], ctx["mensaje"])
                 self.assertIn("___", texto)
         self.assertEqual(sorted(mensajes_paginas.PLANTAS), sorted(["/plantas-palmas-arboles-tampico", *datos.DESDE_PLANTAS]))
+
+    def test_zonas_con_su_mensaje_en_menu_barra_y_pie(self):
+        """Etapa 2g: cada zona lleva en el menú, la barra y el pie el mensaje de su portada en main (antes, el genérico de
+        jardín), con la colonia, el servicio y los metros por llenar; /precios conserva los suyos."""
+        for nombre, ruta in datos.ZONAS:
+            ctx = paginas.contexto(ruta)
+            texto = mensajes_paginas.ZONAS[ruta]
+            with self.subTest(ruta=ruta):
+                self.assertEqual(ctx["mensaje"], datos.con_firma(texto))
+                self.assertEqual(ctx["mensaje_pie"], ctx["mensaje"])
+                self.assertEqual((ctx["tipo"], ctx["servicio"]), ("zona", "jardin"))
+                self.assertTrue(texto.startswith("Hola, quiero cotizar jardinería en "))
+                for hueco in ("Colonia: ___", "Servicio que necesito: ___", "Metros aprox.: ___"):
+                    self.assertIn(hueco, texto)
+        self.assertEqual(sorted(mensajes_paginas.ZONAS), sorted(r for _n, r in datos.ZONAS))
+        self.assertTrue(mensajes_paginas.PRECIOS.startswith(mensajes_paginas.RUTAS["/precios"][0]))
 
     def test_materiales_con_su_mensaje_en_menu_barra_y_pie(self):
         """Etapa 2f: los cuatro materiales llevan en el menú, la barra y el pie la plantilla de su portada, con la colonia

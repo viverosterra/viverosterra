@@ -1,0 +1,62 @@
+{
+ "meta": {
+  "title": "Jardinería en Altamira y Lagunas de Miralta: pasto, diseño y mantenimiento · Viveros Terra",
+  "description": "Pasto en rollo, diseño, riego y mantenimiento para Residencial Lagunas de Miralta y el resto de Altamira. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "robots": "index, follow, max-image-preview:large",
+  "canonical": "https://www.viverosterra.com/jardineria-altamira",
+  "og:type": "website",
+  "og:site_name": "Viveros Terra",
+  "og:url": "https://www.viverosterra.com/jardineria-altamira",
+  "og:title": "Jardinería en Altamira y Lagunas de Miralta: pasto, diseño y mantenimiento · Viveros Terra",
+  "og:description": "Pasto en rollo, diseño, riego y mantenimiento para Residencial Lagunas de Miralta y el resto de Altamira. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "og:image": "https://www.viverosterra.com/img/portadas/jardineria-areas-verdes-tampico.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "AggregateOffer",
+  "Answer",
+  "BreadcrumbList",
+  "FAQPage",
+  "ListItem",
+  "Place",
+  "PostalAddress",
+  "Question",
+  "Service"
+ ],
+ "encabezados": [
+  "Jardinería en Altamira y Lagunas de Miralta",
+  "Colonias que atendemos en Altamira",
+  "Lo que pide un jardín en esta zona",
+  "Jardines de fraccionamiento",
+  "Áreas verdes amplias",
+  "Casas nuevas",
+  "Servicios y precios con IVA",
+  "Preguntas frecuentes en Altamira",
+  "Cotiza tu jardín en Altamira"
+ ],
+ "faq": [
+  "¿Dan servicio de jardinería en Lagunas de Miralta?",
+  "¿Cuánto cuesta el mantenimiento de jardín en Altamira?",
+  "¿Atienden empresas en el puerto industrial de Altamira?"
+ ],
+ "precios": [
+  "$120",
+  "$180",
+  "$250",
+  "$3,000",
+  "$320",
+  "$385",
+  "$750"
+ ],
+ "enlaces": [
+  "/",
+  "/diseno-jardines-tampico",
+  "/mantenimiento-jardines-tampico",
+  "/palmas-tropicales-tampico",
+  "/pasto-en-rollo-tampico",
+  "/pasto-sintetico-tampico",
+  "/precios",
+  "/sistema-riego-tampico",
+  "/vivero-tampico"
+ ]
+}

@@ -6,7 +6,7 @@ para no mostrar menos de lo que paga el cliente en ningún estado.
 """
 from xml.sax.saxutils import escape
 
-from common import GAL, strip_tags
+from esquema import GAL, strip_tags
 from data import MODELOS, SITE, ZONAS
 
 SHIPPING_MAX = max(ZONAS.values())

@@ -58,15 +58,51 @@ MATERIALES = {
                                  "Colonia de entrega: ___\nLes mando foto del espacio."),
 }
 
+# Zonas (Etapa 2g): la plantilla de main de cada zona (tools/pasto/zonas.py, guided()), con los huecos ___. La usan la
+# portada y el cierre y, por RUTAS, el menú, la barra móvil y el pie (antes llevaban el genérico de jardín).
+_ZONA = "Hola, quiero cotizar jardinería en {}.\nColonia: ___\nServicio que necesito: ___\nMetros aprox.: ___\nLes mando foto del espacio."
+ZONAS = {
+    "/jardineria-lomas-de-rosales-tampico": _ZONA.format("Lomas de Rosales"),
+    "/jardineria-country-club-tampico": _ZONA.format("Club Campestre"),
+    "/jardineria-aguila-tampico": _ZONA.format("Águila y Altavista"),
+    "/jardineria-lomas-del-chairel-tampico": _ZONA.format("Lomas del Chairel"),
+    "/jardineria-ciudad-madero": _ZONA.format("Cd. Madero"),
+    "/jardineria-altamira": _ZONA.format("Altamira"),
+}
+# Poda en la zona: su renglón de la lista pide fotos (el precio depende del tamaño y de los residuos).
+_PODA = "Hola, quiero cotizar poda de palmas y árboles{}.\nColonia: ___\nCuántos árboles o palmas: ___\nLes mando fotos."
+PODA_ZONAS = {
+    "/jardineria-lomas-de-rosales-tampico": _PODA.format(" en Lomas de Rosales"),
+    "/jardineria-country-club-tampico": _PODA.format(" en Club Campestre"),
+    "/jardineria-aguila-tampico": _PODA.format(" en Águila y Altavista"),
+    "/jardineria-lomas-del-chairel-tampico": _PODA.format(" en Lomas del Chairel"),
+    "/jardineria-ciudad-madero": _PODA.format(" en Cd. Madero"),
+    "/jardineria-altamira": _PODA.format(" en Altamira"),
+}
+# /precios (Etapa 2g): la portada, el menú y la barra (RUTAS) con los huecos de main ("Mi colonia es: ___ y son aprox. ___
+# m²"), y un mensaje por sección de la lista para que el chat llegue diciendo qué se quiere cotizar.
+PRECIOS = "Hola, vi la lista de precios y quiero cotizar.\nColonia: ___\nMetros aprox.: ___"
+PRECIOS_SECCIONES = {
+    "pasto": "Hola, quiero cotizar pasto San Agustín instalado.\nColonia: ___\nMetros aprox.: ___",
+    "servicios": ("Hola, quiero cotizar un servicio de jardín.\nMantenimiento, diseño o riego: ___\nColonia: ___\n"
+                  "Metros aprox.: ___"),
+    "poda": _PODA.format(""),
+    "sintetico": "Hola, quiero cotizar pasto sintético.\nModelo: ___\nMetros aprox.: ___\nColonia o ciudad: ___",
+    "materiales": "Hola, quiero cotizar materiales.\nMaterial: ___\nCantidad: ___\nColonia de entrega: ___",
+    "plantas": ("Hola, quiero cotizar plantas o palmas.\nPlantas que busco: ___\nTamaño aprox.: ___\n"
+                "Colonia de entrega: ___"),
+}
+
 # Ruta exacta → (mensaje del menú y la barra, mensaje del pie o None para usar el mismo).
 RUTAS = {
     "/blog": ("Hola, vi el blog de Viveros Terra y quiero cotizar", None),
     "/catalogo": ("Hola, vi el catálogo y quiero cotizar una planta", None),
-    "/precios": ("Hola, vi la lista de precios y quiero cotizar", "Hola, tengo una pregunta sobre precios"),
+    "/precios": (PRECIOS, "Hola, tengo una pregunta sobre precios"),
     **{ruta: (texto, None) for ruta, texto in SERVICIOS.items()},
     **{ruta: (texto, None) for ruta, texto in EMPRESAS.items()},
     **{ruta: (texto, None) for ruta, texto in PLANTAS.items()},
     **{ruta: (texto, None) for ruta, texto in MATERIALES.items()},
+    **{ruta: (texto, None) for ruta, texto in ZONAS.items()},
 }
 # Tienda y páginas de envío: el pie conserva su "pregunta"; el menú usa el mensaje de cotizar pasto sintético.
 PIE_TIPO = {

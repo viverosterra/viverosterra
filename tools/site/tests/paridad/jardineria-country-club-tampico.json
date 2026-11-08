@@ -1,0 +1,62 @@
+{
+ "meta": {
+  "title": "Jardinería en Club Campestre y Country Club, Tampico · Viveros Terra",
+  "description": "Instalación de pasto, diseño de jardín, riego automático y mantenimiento para las casas de Club Campestre, Country Club y Sierra Morena, en Tampico. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "robots": "index, follow, max-image-preview:large",
+  "canonical": "https://www.viverosterra.com/jardineria-country-club-tampico",
+  "og:type": "website",
+  "og:site_name": "Viveros Terra",
+  "og:url": "https://www.viverosterra.com/jardineria-country-club-tampico",
+  "og:title": "Jardinería en Club Campestre y Country Club, Tampico · Viveros Terra",
+  "og:description": "Instalación de pasto, diseño de jardín, riego automático y mantenimiento para las casas de Club Campestre, Country Club y Sierra Morena, en Tampico. Pasto instalado desde $120/m², mantenimiento desde $750/mes. Cotiza por WhatsApp.",
+  "og:image": "https://www.viverosterra.com/img/portadas/jardin-residencial-tropical-tampico.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "AggregateOffer",
+  "Answer",
+  "BreadcrumbList",
+  "FAQPage",
+  "ListItem",
+  "Place",
+  "PostalAddress",
+  "Question",
+  "Service"
+ ],
+ "encabezados": [
+  "Jardinería en Club Campestre y Country Club, Tampico",
+  "Colonias que atendemos en Club Campestre",
+  "Lo que pide un jardín en esta zona",
+  "Jardines grandes",
+  "Pasto parejo todo el año",
+  "Palmas y árboles grandes",
+  "Servicios y precios con IVA",
+  "Preguntas frecuentes en Club Campestre",
+  "Cotiza tu jardín en Club Campestre"
+ ],
+ "faq": [
+  "¿Atienden jardines en Club Campestre y Country Club?",
+  "¿Cuánto cuesta un sistema de riego automático?",
+  "¿Pueden encargarse del jardín todo el año?"
+ ],
+ "precios": [
+  "$120",
+  "$180",
+  "$250",
+  "$3,000",
+  "$320",
+  "$385",
+  "$750"
+ ],
+ "enlaces": [
+  "/",
+  "/diseno-jardines-tampico",
+  "/mantenimiento-jardines-tampico",
+  "/palmas-tropicales-tampico",
+  "/pasto-en-rollo-tampico",
+  "/pasto-sintetico-tampico",
+  "/precios",
+  "/sistema-riego-tampico",
+  "/vivero-tampico"
+ ]
+}

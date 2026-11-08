@@ -112,7 +112,7 @@ def producto(nombre, descripcion, imagen, sku=None, ofertas=()):
     return nodo
 
 
-def oferta(url, unidad, precio=None, desde=None, nombre=None):
+def oferta(url, unidad, precio=None, desde=None, nombre=None, descripcion=None):
     """Offer con su precio por unidad (UnitPriceSpecification) de datos.py: precio exacto (también como price del Offer)
     o, si es "desde", minPrice. Sin "InStock" (no hay dato de existencias) y con el seller por @id a #negocio."""
     spec = {"@type": "UnitPriceSpecification", "priceCurrency": "MXN", "unitText": unidad}
@@ -122,6 +122,8 @@ def oferta(url, unidad, precio=None, desde=None, nombre=None):
         nodo["name"] = nombre
     if desde is None:
         nodo["price"] = precio
+    if descripcion:
+        nodo["description"] = descripcion
     return {**nodo, "priceSpecification": spec, "seller": NEGOCIO}
 
 

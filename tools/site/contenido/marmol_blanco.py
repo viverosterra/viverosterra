@@ -234,7 +234,7 @@ CONTENIDO = {
              f"{CONDICION}. Con 3 sacos se cubre 1 m² con capa de 3 a 4 cm. Entrega a domicilio en Tampico, Ciudad "
              "Madero y Altamira."),
             f"{SITE}/img/piedra-marmol-blanca-decorativa-jardin-tampico.webp",
-            ofertas=(mc.oferta(f"{URL}#precio", "saco", precio=P["marmol_saco"]),)),
+            ofertas=(mc.oferta(f"{URL}#precio", "saco", precio=P["marmol_saco"], descripcion=datos.MARMOL_CONDICION),)),
         "negocio": mc.NEGOCIO,
         "migas": MIGAS_LD,
         "speakable": mc.SPEAKABLE,

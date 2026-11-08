@@ -1,0 +1,37 @@
+/* terra-precios.css: hoja de /precios (Etapa 2g). Solo se carga en <body class="vt-pagina vt-precios"> (shell.py);
+   todo bajo .vt-precios y con los tokens de terra.css. */
+
+/* Tablas de varias columnas (pasto sintético por modelo y mensualidades): en celular siguen siendo tabla, compacta, en
+   vez de una tarjeta por renglón (9 modelos apilaban ~1,400 px). Los precios a la derecha, con cifras tabulares. */
+.vt-precios .vt-tabla--compacta td{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.vt-precios .vt-tabla--compacta thead th:not(:first-child){text-align:right}
+.vt-precios .vt-tabla--compacta tbody th a{font-weight:700}
+@media (max-width:640px){
+  .vt-precios .vt-tabla--compacta :is(th,td){padding:10px 8px;font-size:var(--vt-text-sm)}
+  .vt-precios .vt-tabla--compacta thead th{font-size:11px;letter-spacing:.02em}
+}
+
+/* Lista de precios: el precio queda en el mismo renglón que la unidad (la línea base es de terra.css, compartida con las
+   zonas) y el "según cotización" de la poda, debajo del precio, sin cortar la columna. */
+@media (max-width:640px){
+  .vt-precios .vt-tabla--precios td{grid-row:2}
+}
+
+/* En pantallas anchas, las tablas de varias columnas tampoco se estiran de lado a lado. */
+.vt-precios .vt-tabla--compacta{max-width:56rem}
+
+/* Índice de secciones: una fila de fichas que se desliza en celular y se acomoda en renglones en escritorio. */
+.vt-precios .vt-saltos{padding-block:12px;border-block:1px solid var(--vt-line);background:var(--vt-bone-2)}
+.vt-precios .vt-saltos ul{display:flex;gap:8px;margin:0;padding:0;list-style:none;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
+.vt-precios .vt-saltos ul::-webkit-scrollbar{display:none}
+.vt-precios .vt-saltos li{flex:none}
+.vt-precios .vt-saltos a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--vt-line-strong);background:var(--vt-card);color:var(--vt-ink);font-size:var(--vt-text-sm);font-weight:600;text-decoration:none;white-space:nowrap}
+.vt-precios .vt-saltos a:hover{border-color:var(--vt-field);color:var(--vt-field-deep)}
+@media (min-width:768px){.vt-precios .vt-saltos ul{flex-wrap:wrap}}
+
+/* Simulador: en celular el botón ocupa todo el ancho, como el resto de los CTA. */
+@media (max-width:640px){.vt-precios .vt-sim .vt-btn{width:100%}}
+
+/* Anclas (#pasto, #mensualidades, #garantia-plantas…): al llegar desde otra página o desde "Ver la lista", la sección no
+   queda bajo el menú fijo. */
+.vt-precios :is(section,li)[id]{scroll-margin-top:calc(var(--vt-head-h) + 16px)}

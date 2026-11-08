@@ -7,7 +7,9 @@ from urllib.parse import parse_qsl, unquote
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import componentes  # noqa: E402,F401  (agrega tools/pasto al path: mensualidades)
 import datos  # noqa: E402
+import mensualidades  # noqa: E402
 import mensajes_paginas  # noqa: E402
 import servidor  # noqa: E402
 
@@ -30,7 +32,41 @@ CATALOGO = "/catalogo.html"
 # Etapa 2f: materiales con la plantilla material (portada con o sin foto, calculadora y pedido por correo).
 MATERIALES = ("/tierra-negra-vegetal-tampico/", "/tezontle-rojo-tampico/", "/marmol-blanco-tampico/",
               "/piedra-bola-rio-tampico/")
-CON_PLANTILLA = PAGINAS + SERVICIOS + EMPRESAS + PLANTAS + MATERIALES
+# Etapa 2g: las 6 zonas (plantilla zona) y la lista de precios (plantilla precios, con terra-precios.css).
+ZONAS = tuple(f"{ruta}/" for _nombre, ruta in datos.ZONAS)
+PRECIOS = "/precios/"
+CON_PLANTILLA = PAGINAS + SERVICIOS + EMPRESAS + PLANTAS + MATERIALES + ZONAS + (PRECIOS,)
+# El body recorta con overflow-x: clip y scrollWidth no ve lo que se sale: se mide cada caja visible del <main>. Un
+# elemento dentro de un contenedor con scroll propio no cuenta (no se corta: se desplaza). Las imágenes de portada a
+# sangre y sus marcos sí se miden: si sobresalen, también se cortan.
+SALIDOS_DEL_MAIN = """(selector) => {
+  const ancho = document.documentElement.clientWidth;
+  const conScroll = (e) => { for (let p = e.parentElement; p && p !== document.body; p = p.parentElement) {
+    if (['auto', 'scroll'].includes(getComputedStyle(p).overflowX)) return true; } return false; };
+  return Array.from(document.querySelectorAll(selector)).filter((e) => {
+    const c = e.getBoundingClientRect();
+    if (!c.width || !c.height || getComputedStyle(e).visibility === 'hidden' || conScroll(e)) return false;
+    return c.right > ancho + 0.5 || c.left < -0.5;
+  }).map((e) => e.tagName + '.' + e.className + ' [' + Math.round(e.getBoundingClientRect().left) + ', '
+    + Math.round(e.getBoundingClientRect().right) + '] ' + e.textContent.trim().slice(0, 40));
+}"""
+# El texto que se sale de su celda no cambia la caja de la celda: se mide cada renglón de texto contra su th/td.
+TEXTO_FUERA_DE_CELDA = """() => {
+  const fuera = [];
+  const rango = document.createRange();
+  document.querySelectorAll('main .vt-tabla th, main .vt-tabla td').forEach((celda) => {
+    const caja = celda.getBoundingClientRect();
+    const textos = document.createTreeWalker(celda, NodeFilter.SHOW_TEXT);
+    while (textos.nextNode()) {
+      if (!textos.currentNode.textContent.trim()) continue;
+      rango.selectNodeContents(textos.currentNode);
+      for (const r of rango.getClientRects()) {
+        if (r.width && (r.right > caja.right + 0.5 || r.left < caja.left - 0.5)) fuera.push(textos.currentNode.textContent.trim());
+      }
+    }
+  });
+  return fuera;
+}"""
 AXE_PAGINA = """async () => {
   const r = await axe.run(document, { resultTypes: ['violations'] });
   return r.violations.filter((v) => ['serious', 'critical'].includes(v.impact))
@@ -103,7 +139,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
         """Revisión de 2c: a 1024×800 la portada compacta deja el CTA de los servicios de jardín (y, desde 2d, de las
         páginas para empresas) en la primera pantalla."""
         page = self.pagina(1024, 800)
-        for ruta in SERVICIOS + EMPRESAS + MATERIALES:
+        for ruta in SERVICIOS + EMPRESAS + MATERIALES + ZONAS + (PRECIOS,):
             page.goto(self.base + ruta, wait_until="load")
             cta = page.locator('.vt-portada [data-hero-cta] .vt-btn--wa').bounding_box()
             with self.subTest(ruta=ruta):
@@ -700,6 +736,82 @@ class PlantillasNavegadorTest(unittest.TestCase):
               !i.complete || !i.naturalWidth || getComputedStyle(i).objectFit === 'fill').map((i) => i.src)""")
             with self.subTest(ruta=ruta):
                 self.assertEqual(malas, [])
+
+    # ---------- Etapa 2g: zonas y precios ----------
+    def test_cta_de_zona_manda_su_mensaje_y_generate_lead(self):
+        """La portada de cada zona abre el WhatsApp con el mensaje de esa zona (el de main) y lo mide como zona:hero."""
+        page = self.pagina(375, 812)
+        for ruta in ZONAS:
+            page.goto(self.base + ruta, wait_until="load")
+            boton = page.locator('.vt-portada [data-hero-cta] .vt-btn--wa')
+            page.evaluate("(b) => b.addEventListener('click', (e) => e.preventDefault())", boton.element_handle())
+            boton.click()
+            eventos = page.evaluate(
+                "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+            texto = unquote(boton.get_attribute("href").split("text=", 1)[1])
+            with self.subTest(ruta=ruta):
+                self.assertEqual(texto, datos.con_firma(mensajes_paginas.ZONAS[ruta.rstrip("/")]))
+                self.assertIn(["event", "generate_lead", {"method": "whatsapp", "cta_id": "zona:hero",
+                                                          "service": "jardin"}], eventos)
+
+    def test_etiqueta_de_zona_dice_de_que_es_el_precio_en_celular(self):
+        """En celular terra.css oculta el nombre de la etiqueta: el renglón del precio debe decir a qué corresponde."""
+        page = self.pagina(375, 812)
+        for ruta in ZONAS:
+            page.goto(self.base + ruta, wait_until="load")
+            with self.subTest(ruta=ruta):
+                self.assertFalse(page.locator(".vt-portada .vt-etiqueta__nombre").is_visible())
+                self.assertIn("instalado", page.locator(".vt-portada .vt-etiqueta__precio small").inner_text().lower())
+
+    def test_simulador_de_precios_con_la_formula_oficial(self):
+        """El simulador de /precios (vt-simulador.js + vt-mensualidades.js) muestra los 4 plazos con el total y la
+        mensualidad de tools/pasto/mensualidades.py para el monto de ejemplo."""
+        page = self.pagina()
+        page.goto(self.base + PRECIOS, wait_until="load")
+        monto = int(page.input_value("[data-sim-monto]"))
+        texto = page.locator("[data-sim-list]").inner_text()
+        for p in mensualidades.planes(monto):
+            if p["plazo"] and p["disponible"]:
+                with self.subTest(plazo=p["plazo"]):
+                    self.assertIn(f"${p['mensualidad']:,}", texto)
+                    self.assertIn(f"${p['total']:,}", texto)
+
+    def test_tablas_de_precios_compactas_en_celular(self):
+        """Sintético por modelo y mensualidades siguen siendo tabla a 320 px (no una tarjeta por renglón) y no se salen."""
+        page = self.pagina(320, 800)
+        page.goto(self.base + PRECIOS, wait_until="load")
+        for tabla in page.locator(".vt-tabla--compacta").all():
+            caja = tabla.bounding_box()
+            with self.subTest(tabla=tabla.locator("caption").inner_text()[:30]):
+                self.assertEqual(tabla.evaluate("t => getComputedStyle(t).display"), "table")
+                self.assertLessEqual(caja["x"] + caja["width"], 320)
+
+    def test_nada_del_main_se_sale_de_la_pantalla_en_celular(self):
+        """Medido caja por caja (el overflow-x: clip del body esconde lo que se sale de scrollWidth): cada tabla, celda,
+        enlace y texto de /precios y de las 6 zonas cabe en 320 y 375, también con el simulador en su monto más largo."""
+        for ancho in (320, 375):
+            page = self.pagina(ancho, 800)
+            for ruta in ZONAS + (PRECIOS,):
+                page.goto(self.base + ruta, wait_until="load")
+                with self.subTest(ruta=ruta, ancho=ancho):
+                    self.assertEqual(page.evaluate(SALIDOS_DEL_MAIN, "main, main *"), [])
+                    self.assertEqual(page.evaluate(TEXTO_FUERA_DE_CELDA), [])
+            page.goto(self.base + PRECIOS, wait_until="load")
+            page.fill("[data-sim-monto]", "9999999")
+            page.locator("[data-sim-monto]").dispatch_event("input")
+            with self.subTest(simulador="monto largo", ancho=ancho):
+                self.assertEqual(page.evaluate(SALIDOS_DEL_MAIN, "main, main *"), [])
+
+    def test_anclas_de_precios_llevan_a_su_seccion(self):
+        """#garantia-plantas y #mensualidades desde otra página: la sección queda a la vista y no bajo el menú."""
+        page = self.pagina(375, 812)
+        for ancla in ("mensualidades", "garantia-plantas", "pasto"):
+            page.goto(f"{self.base}{PRECIOS}#{ancla}", wait_until="load")
+            arriba = page.locator(f"#{ancla}").evaluate("e => e.getBoundingClientRect().top")
+            menu = page.locator(".vt-head").evaluate("e => e.getBoundingClientRect().bottom")
+            with self.subTest(ancla=ancla):
+                self.assertGreaterEqual(arriba, menu - 1)
+                self.assertLess(arriba, 812)
 
     def test_cls_bajo_0_1_en_movil(self):
         page = self.pagina(375, 812)
