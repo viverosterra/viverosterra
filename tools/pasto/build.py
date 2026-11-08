@@ -10,7 +10,6 @@ from pathlib import Path
 from ciudades import CIUDADES
 from data import MODELOS, SITE
 from feed import build_feed
-from precios import build_precios
 from sitemap import upsert
 
 ROOT = Path(__file__).resolve().parents[2] / "public" / "pasto-sintetico"
@@ -38,7 +37,6 @@ def aplicar_shell(paths):
 
 def main():
     ESCRITAS.clear()
-    write(ROOT.parent / "precios" / "index.html", build_precios())
     (ROOT.parent / "feed-pasto-sintetico.xml").write_text(build_feed(), encoding="utf-8")
     upsert([f"{SITE}/pasto-sintetico", f"{SITE}/pasto-sintetico/perros"]
            + [f"{SITE}/pasto-sintetico/envio/{c['slug']}" for c in CIUDADES]
