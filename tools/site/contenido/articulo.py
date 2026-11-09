@@ -12,6 +12,8 @@ from contenido import blog_clusters
 
 DIR = Path(__file__).resolve().parent / "blog"
 CLAVES = tuple(sorted(p.stem for p in DIR.glob("*.html")))
+# Artículos escritos directamente en este formato (sin página anterior que comparar): quedan fuera de las pruebas de paridad.
+NUEVOS = ("palma-bambu-chamaedorea-tampico", "plantas-seguras-mascotas-jardin-tampico")
 MESES = ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre",
          "diciembre")
 M_LOGO = "Era el logo del publisher; ahora el publisher es una referencia por @id a la entidad única #negocio."
