@@ -9,11 +9,20 @@ SCRIPTS = ("/js/vt-mensualidades.js", "/js/vt-medidor.js")
 CONTEXTO = "https://schema.org"
 
 
+def _franja_temporada(t):
+    """Franja de temporada bajo la portada, con clases existentes (terra.css no tiene presupuesto). None: fuera de temporada."""
+    if not t:
+        return ""
+    return (f'<aside class="vt-wrap" aria-label="{t["aviso"]}"><p class="vt-prueba"><span><b>{t["titulo"]}</b></span><span>{t["texto"]}</span>'
+            f'<a data-cta="{TIPO}:nochebuenas" href="{t["href"]}">{t["cta"]}</a></p></aside>')
+
+
 def render(k):
     q, m, o, op, pr, pc, f, co, ci = (k[s] for s in ("que_hacemos", "medidor", "obras", "opiniones", "proceso", "precios",
                                                       "faq", "cobertura", "cierre"))
     cuerpo = "\n".join((
         c.portada(k["portada"], TIPO),
+        _franja_temporada(k["temporada"]),
         c.bloque(1, "Qué hacemos", "vt-h-que", q["titulo"], c.indice(q["items"]), lede=q["lede"]),
         c.bloque(2, "Medidor", "vt-h-medidor", m["titulo"], c.medidor("inicio", TIPO, mensaje=k["portada"]["mensaje"]), lede=m["lede"], tinte=True,
                  id_seccion="medidor"),

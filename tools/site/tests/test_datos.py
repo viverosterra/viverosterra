@@ -149,6 +149,17 @@ class DatosTest(unittest.TestCase):
                 self.assertTrue(url.startswith("https://www."))
                 self.assertNotIn("il.linkedin", url)
 
+    def test_nochebuenas_cortes_y_productos(self):
+        nb = datos.NOCHEBUENAS
+        self.assertEqual(nb["cortes"], (1, 12, 50, 200))
+        self.assertEqual(len(nb["nombres_escalon"]), len(nb["cortes"]))
+        self.assertEqual([p["clave"] for p in nb["productos"]], ["5", "6", "7", "colgante", "12"])
+        for producto in nb["productos"]:
+            with self.subTest(producto=producto["clave"]):
+                self.assertEqual(len(producto["precios"]), len(nb["cortes"]))
+                self.assertEqual(list(producto["precios"]), sorted(producto["precios"], reverse=True))
+        self.assertEqual([p["clave"] for p in nb["productos"] if p.get("sobre_pedido")], ["12"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -23,6 +23,7 @@ PLANTAS = '<body class="vt-pagina vt-plantas">'
 MATERIALES = '<body class="vt-pagina vt-materiales">'
 PRECIOS = '<body class="vt-pagina vt-precios">'
 BLOG = '<body class="vt-pagina vt-blog">'
+NOCHEBUENAS = '<body class="vt-pagina vt-nochebuenas">'
 CONTEO_BLOG_RE = re.compile(r'(<span data-vt-conteo="blog">)\d+(</span>)')
 
 
@@ -76,7 +77,8 @@ def aplicar(html, ruta, urls, public=PUBLIC):
         raise ValueError(f"{ruta}: regiones del shell {encontradas}; debe haber head, header y footer, una de cada una")
     partes = {
         "head": partials.head(urls, legacy="/css/tailwind.css" in html, tienda=TIENDA in html, plantas=PLANTAS in html,
-                              materiales=MATERIALES in html, precios=PRECIOS in html, blog=BLOG in html),
+                              materiales=MATERIALES in html, precios=PRECIOS in html, blog=BLOG in html,
+                              nochebuenas=NOCHEBUENAS in html),
         "header": partials.header(ctx),
         "footer": partials.footer(ctx),
     }

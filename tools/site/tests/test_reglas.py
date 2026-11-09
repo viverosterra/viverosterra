@@ -128,6 +128,8 @@ class ReglasDelDuenoTest(unittest.TestCase):
                 destino = m.group(1)
                 if destino and set(destino) == {"."}:  # "wa.me/..." en un comentario
                     continue
+                if path.name == "vt-nochebuenas.js" and destino == "${wa}":  # #nb-config lo escribe datos.py: test_nochebuenas.py
+                    continue
                 if destino.isdigit():
                     ok = destino == NUMERO
                 elif destino == "${wa}" and "dataset.wa" in fuente:  # vt-medidor.js: data-wa lo escribe datos.py

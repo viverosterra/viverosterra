@@ -300,3 +300,31 @@ def mensaje(servicio):
 def wa_url(texto):
     """Enlace wa.me con el texto codificado por completo (espacios como %20, saltos como %0A)."""
     return f"https://wa.me/{TELEFONO_WA}?text={quote(texto, safe='')}"
+
+
+# Temporada de Nochebuenas: fuente única de la página, su JSON-LD y el cotizador (public/js/vt-nochebuenas.js).
+NOCHEBUENAS = {
+    "ruta": "/post/nochebuenas-tampico-madero-mayoreo",
+    "temporada": 2026,
+    "modo": "temporada",  # "preventa" | "temporada" | "postemporada"
+    "sheets_endpoint": "",  # URL del Web App de apps-script/nochebuenas-pedidos.gs
+    "cortes": (1, 12, 50, 200),
+    "nombres_escalon": ("Menudeo", "Mayoreo", "Mayoreo Plus", "Proyecto"),
+    "productos": (
+        {"clave": "5", "nombre": 'Maceta 5"', "precios": (89, 75, 69, 65)},
+        {"clave": "6", "nombre": 'Maceta 6"', "precios": (139, 119, 109, 105)},
+        {"clave": "7", "nombre": 'Maceta 7"', "precios": (199, 169, 155, 149)},
+        {"clave": "colgante", "nombre": "Colgante", "precios": (339, 279, 259, 249)},
+        {"clave": "12", "nombre": 'Macetón 12"', "precios": (1195, 995, 899, 865), "sobre_pedido": True},
+    ),
+    "variedades": ("Roja", "Rosa", "Jaspeada"),
+    "variedades_sobre_pedido": ("Rosa", "Jaspeada"),  # decisión del dueño, 2026-11-09
+    "zonas": ("Tampico", "Madero", "Altamira", "Recojo en vivero"),
+    "tipos_cliente": ("Hogar", "Empresa/regalo", "Restaurante/hotel", "Comercio/plaza", "Gobierno", "Evento/posada", "Iglesia/escuela"),
+    "entrega_incluida_desde": 3500,
+    "preventa": {"descuento": 0.05, "hasta": "2026-11-30", "aplica_hasta_escalon": 2},
+    "fecha_limite_mayoreo": "2026-11-30",
+    "entrega_mayoreo_antes": "2026-12-12",
+    "anticipo_pct": 50,  # solo en esta página, por indicación del dueño
+    "ultima_actualizacion": "2026-11-08",
+}
