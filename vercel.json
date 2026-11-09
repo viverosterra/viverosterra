@@ -177,7 +177,7 @@
     },
     {
       "source": "/nochebuenas-mayoreo-tampico",
-      "destination": "/plantas-palmas-arboles-tampico",
+      "destination": "/post/nochebuenas-tampico-madero-mayoreo",
       "permanent": true
     },
     {
@@ -786,13 +786,8 @@
       "permanent": true
     },
     {
-      "source": "/post/nochebuenas-tampico-madero-mayoreo",
-      "destination": "/plantas-palmas-arboles-tampico",
-      "permanent": true
-    },
-    {
       "source": "/post/productores-de-nochebuenas-mayoreo",
-      "destination": "/plantas-palmas-arboles-tampico",
+      "destination": "/post/nochebuenas-tampico-madero-mayoreo",
       "permanent": true
     },
     {
@@ -890,7 +885,7 @@
         },
         {
           "key": "Content-Security-Policy-Report-Only",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://www.google.com https://www.googletagmanager.com https://lh3.googleusercontent.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://www.google.com https://www.googletagmanager.com https://formsubmit.co; form-action 'self' https://formsubmit.co; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://www.google.com https://www.googletagmanager.com https://lh3.googleusercontent.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://www.google.com https://www.googletagmanager.com https://formsubmit.co https://script.google.com https://script.googleusercontent.com; form-action 'self' https://formsubmit.co; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
         }
       ]
     },
@@ -922,7 +917,7 @@
       ]
     },
     {
-      "source": "/(css|js)/(terra|terra-tienda|terra-plantas|terra-materiales|terra-precios|terra-blog|terra-obras|legacy-fixes)\\.([0-9a-f]+)\\.(css|js)",
+      "source": "/(css|js)/(terra|terra-tienda|terra-plantas|terra-materiales|terra-precios|terra-blog|terra-nochebuenas|terra-temporada|terra-obras|legacy-fixes)\\.([0-9a-f]+)\\.(css|js)",
       "headers": [
         {
           "key": "Cache-Control",

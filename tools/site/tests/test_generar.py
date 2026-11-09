@@ -25,7 +25,7 @@ class GenerarTest(unittest.TestCase):
                       "/plantas-para-jardin-tampico", "/arboles-ornamentales-tampico",
                       "/arboles-para-banqueta-tampico", "/plantas-de-interior-tampico", "/catalogo",
                       "/tierra-negra-vegetal-tampico", "/tezontle-rojo-tampico", "/marmol-blanco-tampico",
-                      "/piedra-bola-rio-tampico", "/precios", "/blog", "/pasto-sintetico", "/pasto-sintetico/perros"]
+                      "/piedra-bola-rio-tampico", "/precios", datos.NOCHEBUENAS["ruta"], "/blog", "/pasto-sintetico", "/pasto-sintetico/perros"]
                      + [f"/pasto-sintetico/{m['slug']}" for m in MODELOS]
                      + [f"/pasto-sintetico/envio/{c['slug']}" for c in CIUDADES]
                      + [ruta for _nombre, ruta in datos.ZONAS]

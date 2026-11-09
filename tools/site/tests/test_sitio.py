@@ -31,8 +31,8 @@ def nombre(path):
 
 
 class ShellEnTodoElSitioTest(unittest.TestCase):
-    def test_108_paginas_con_contexto(self):
-        self.assertEqual(len(PAGINAS), 108)
+    def test_111_paginas_con_contexto(self):
+        self.assertEqual(len(PAGINAS), 111)
         for path in PAGINAS:
             paginas.contexto(paginas.ruta_de(path))
 

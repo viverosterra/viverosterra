@@ -29,6 +29,8 @@ class ActivosTest(unittest.TestCase):
         (self.pub / "css" / "terra-precios.css").write_text(".vt-precios .vt-x{}", encoding="utf-8")
         (self.pub / "css" / "terra-blog.css").write_text(".vt-blog .vt-x{}", encoding="utf-8")
         (self.pub / "css" / "terra-obras.css").write_text(".vt-mosaico{}", encoding="utf-8")
+        (self.pub / "css" / "terra-nochebuenas.css").write_text(".vt-nochebuenas .vt-x{}", encoding="utf-8")
+        (self.pub / "css" / "terra-temporada.css").write_text(".vt-temporada .vt-x{}", encoding="utf-8")
         (self.pub / "js" / "terra.js").write_text("void 0;", encoding="utf-8")
 
     def escribir(self, css):
