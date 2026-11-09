@@ -160,11 +160,11 @@ class NochebuenasNavegadorTest(unittest.TestCase):
 
     def test_fechas_vencidas_se_ocultan(self):
         page = self.abrir(self.contexto(hoy=FUERA_DE_PREVENTA))
-        for fecha in ("2026-11-20", "2026-11-30"):
-            self.assertFalse(page.locator(f'.vt-nb-fechas [data-nb-hasta="{fecha}"]').is_visible())
+        for fecha in page.locator('.vt-nb-fechas [data-nb-hasta="2026-11-30"]').all():
+            self.assertFalse(fecha.is_visible())
         page = self.abrir(self.contexto(hoy=EN_PREVENTA))
-        for fecha in ("2026-11-20", "2026-11-30"):
-            self.assertTrue(page.locator(f'.vt-nb-fechas [data-nb-hasta="{fecha}"]').is_visible())
+        for fecha in page.locator('.vt-nb-fechas [data-nb-hasta="2026-11-30"]').all():
+            self.assertTrue(fecha.is_visible())
 
     def test_preventa_aplica_y_se_explica(self):
         page = self.abrir(self.contexto(hoy=EN_PREVENTA))

@@ -15,7 +15,7 @@ Página generada por el build de `tools/site/`, con plantilla y hoja de estilos 
 
 **Fuente única.** El bloque `NOCHEBUENAS` de `datos.py` sustituye al `NB_CONFIG` del prompt, con los mismos valores:
 `temporada` 2026, `modo` "temporada", `cortes` (1, 12, 50, 200), `nombres_escalon` (Menudeo, Mayoreo, Mayoreo Plus, Proyecto),
-`productos`, `variedades` (Roja, Rosa, Jaspeada), `entrega_incluida_desde` 3500, `preventa` (5%, hasta 2026-11-20, hasta el
+`productos`, `variedades` (Roja, Rosa, Jaspeada), `entrega_incluida_desde` 3500, `preventa` (5%, hasta 2026-11-30, hasta el
 escalón índice 2, es decir, nunca Proyecto), `fecha_limite_mayoreo` 2026-11-30 y `ultima_actualizacion` 2026-11-08.
 
 | Producto | Menudeo | Mayoreo | Mayoreo Plus | Proyecto |
@@ -37,7 +37,7 @@ las plantas no llevan IVA: nunca aparece "con IVA" en esta página.
 3. **Nudge**: si faltan 4 piezas o menos para el siguiente corte. Las piezas faltantes se calculan con el producto de la
    última línea: "Te faltan 2 piezas para precio Mayoreo: por $38 más te llevas 12 y ahorras $240". El ahorro compara las
    piezas objetivo a precio actual contra precio siguiente. Si el pedido completo resulta más barato, dice "y pagas $X menos".
-4. **Preventa**: fecha de America/Mexico_City ≤ 2026-11-20 inclusive y escalón ≤ 2: −5% sobre el total, redondeado al peso,
+4. **Preventa**: fecha de America/Mexico_City ≤ 2026-11-30 inclusive y escalón ≤ 2: −5% sobre el total, redondeado al peso,
    con la etiqueta "Precio preventa: apartando con 50% de anticipo". El 50% se publica solo en esta página y por indicación
    del dueño.
 5. **Entrega**: total final ≥ $3,500 en Tampico, Madero o Altamira: "Entrega incluida". Debajo: "Te faltan $X para entrega

@@ -52,7 +52,8 @@
     const producto = productoDe(cfg, l.clave);
     const precio = producto.precios[escalon];
     return { clave: l.clave, nombre: producto.nombre, variedad: l.variedad, cantidad: l.cantidad, precio,
-      subtotal: l.cantidad * precio, sobrePedido: Boolean(producto.sobre_pedido) };
+      subtotal: l.cantidad * precio,
+      sobrePedido: Boolean(producto.sobre_pedido) || (cfg.variedades_sobre_pedido || []).includes(l.variedad) };
   }
 
   function cotizar(lineas, cfg, hoy) {
@@ -98,7 +99,7 @@
     const faltan = cfg.entrega_incluida_desde - total;
     if (faltan <= 0) {
       return { incluida: true, texto: zona ? 'Entrega incluida'
-        : `Entrega incluida desde ${dinero(cfg.entrega_incluida_desde)} en Tampico, Madero y Altamira.` };
+        : `Entrega incluida desde ${dinero(cfg.entrega_incluida_desde)} por pedido en Tampico, Madero y Altamira.` };
     }
     return { incluida: false, faltan,
       texto: `Te faltan ${dinero(faltan)} para entrega incluida. Entrega según tu ubicación o colonia; te la cotizamos por WhatsApp.` };

@@ -318,10 +318,11 @@ NOCHEBUENAS = {
         {"clave": "12", "nombre": 'Macetón 12"', "precios": (1195, 995, 899, 865), "sobre_pedido": True},
     ),
     "variedades": ("Roja", "Rosa", "Jaspeada"),
+    "variedades_sobre_pedido": ("Rosa", "Jaspeada"),  # decisión del dueño, 2026-11-09
     "zonas": ("Tampico", "Madero", "Altamira", "Recojo en vivero"),
     "tipos_cliente": ("Hogar", "Empresa/regalo", "Restaurante/hotel", "Comercio/plaza", "Gobierno", "Evento/posada", "Iglesia/escuela"),
     "entrega_incluida_desde": 3500,
-    "preventa": {"descuento": 0.05, "hasta": "2026-11-20", "aplica_hasta_escalon": 2},
+    "preventa": {"descuento": 0.05, "hasta": "2026-11-30", "aplica_hasta_escalon": 2},
     "fecha_limite_mayoreo": "2026-11-30",
     "entrega_mayoreo_antes": "2026-12-12",
     "anticipo_pct": 50,  # solo en esta página, por indicación del dueño

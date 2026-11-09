@@ -188,7 +188,7 @@ class ContenidoVisibleTest(unittest.TestCase):
                       "Recibes en tu domicilio o recoges en el vivero"):
             with self.subTest(frase=frase):
                 self.assertIn(frase, self.visible)
-        self.assertRegex(self.main, r'data-nb-hasta="2026-11-20"[^>]*>Precio preventa hasta el 20 de noviembre<')
+        self.assertRegex(self.main, r'data-nb-hasta="2026-11-30"[^>]*>Precio preventa hasta el 30 de noviembre<')
         self.assertRegex(self.main, r'data-nb-hasta="2026-11-30"[^>]*>Mayoreo con entrega antes del 12 de diciembre: confirma antes '
                                     r"del 30 de noviembre<")
 

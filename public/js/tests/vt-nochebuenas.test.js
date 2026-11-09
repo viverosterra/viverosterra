@@ -118,7 +118,7 @@ test('a precio de menudeo no hay ahorro aunque haya preventa', () => {
   assert.ok(c.descuento > 0);
 });
 test('entrega sin zona: dice las tres ciudades si alcanza; con zona, igual que antes', () => {
-  assert.strictEqual(nb.entrega(3500,'',cfg).texto,'Entrega incluida desde $3,500 en Tampico, Madero y Altamira.');
+  assert.strictEqual(nb.entrega(3500,'',cfg).texto,'Entrega incluida desde $3,500 por pedido en Tampico, Madero y Altamira.');
   assert.strictEqual(nb.entrega(3500,undefined,cfg).incluida,true);
   assert.strictEqual(nb.entrega(3500,'Tampico',cfg).texto,'Entrega incluida');
   assert.strictEqual(nb.entrega(3499,'',cfg).faltan,1);
@@ -144,4 +144,11 @@ test('textos de la barra', () => {
   assert.deepStrictEqual(nb.textoBarra(c,true,true,cfg),{texto:'12 piezas · $1,357 · Ver total',href:'#nb-ticket'});
   assert.deepStrictEqual(nb.textoBarra(c,true,false,{...cfg,modo:'preventa'}),{texto:'Apartar · $1,357',href:'#cotizador'});
   assert.deepStrictEqual(nb.textoBarra(c,false,false,{...cfg,modo:'preventa'}),{texto:'Apartar mi pedido',href:'#cotizador'});
+});
+
+test('rosa y jaspeada son sobre pedido; la roja no', () => {
+  const conVariedades = {...cfg, variedades_sobre_pedido:['Rosa','Jaspeada']};
+  assert.strictEqual(nb.cotizar([L('6',2)],conVariedades,FUERA).haySobrePedido,false);
+  assert.strictEqual(nb.cotizar([L('6',2),L('7',1,'Rosa')],conVariedades,FUERA).haySobrePedido,true);
+  assert.strictEqual(nb.cotizar([L('6',2,'Jaspeada')],conVariedades,FUERA).haySobrePedido,true);
 });

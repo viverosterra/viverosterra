@@ -96,7 +96,7 @@ TABLA = {
     "caption": f"Nochebuenas {ANIO}: precio por pieza, en pesos, según el total de piezas del pedido.",
     "caption_referencia": f"Precios de referencia {ANIO}, en pesos, según el total de piezas del pedido.",
     "nota": ("Los escalones se calculan con el total del pedido: puedes combinar tamaños y colores. Mismo precio en roja, "
-             "rosa y jaspeada."),
+             "rosa y jaspeada. Rosa y jaspeada, sobre pedido."),
 }
 PARA = (
     {"id": "empresas", "titulo": "Empresas y regalos corporativos", "corto": "tu empresa",
@@ -125,7 +125,7 @@ PARA = (
 )
 PARA_TITULO = "¿Para quién es este pedido?"
 MINIMO_SUGERIDO = f"Mínimo sugerido: {MINIMO_MAYOREO} piezas"
-GALERIA_TEXTO = {"titulo": "Fotos reales de temporadas anteriores", "lede": "Nochebuena roja. Rosa y jaspeada también disponibles, al mismo precio."}
+GALERIA_TEXTO = {"titulo": "Fotos reales de temporadas anteriores", "lede": "Nochebuena roja. Rosa y jaspeada, sobre pedido y al mismo precio."}
 CONFIANZA = {"titulo": "Referencias y factura",
              "sellos": ((datos.GOOGLE, "Calificación pública del vivero"), (datos.FACTURA, "Factura para persona física o moral")),
              "clientes": "Empresas e instituciones que han confiado en Viveros Terra"}
@@ -171,7 +171,7 @@ PREGUNTAS = (
     ("¿Desde cuántas piezas es mayoreo?",
      f'Desde {MINIMO_MAYOREO} piezas, sumando tamaños y colores. {dinero(_MAYOREO_5)} la de 5" y {dinero(_MAYOREO_6)} la de 6".'),
     ("¿Entregan en Madero y Altamira?",
-     f"Sí. La entrega va incluida desde {ENTREGA_DESDE}. Debajo de ese monto, según tu ubicación o colonia y te la cotizamos por WhatsApp."),
+     f"Sí. La entrega va incluida desde {ENTREGA_DESDE} por pedido. Debajo de ese monto, según tu ubicación o colonia y te la cotizamos por WhatsApp."),
     ("¿Facturan?", f"Sí, con {datos.FACTURA}."),
     ("¿Cuándo debo pedir para empresas o posadas?",
      "Lo antes posible. Confírmanos por WhatsApp y te decimos la fecha de entrega."),
@@ -181,7 +181,7 @@ PREGUNTAS = (
      "en el cubremaceta, y déjala lejos del aire acondicionado."),
     ("¿Es tóxica para perros y gatos?",
      "Puede irritar la boca y el estómago. Mantenla fuera de su alcance. Ante síntomas, consulta al veterinario."),
-    ("¿Tienen nochebuena rosa y jaspeada?", "Sí, al mismo precio que la roja."),
+    ("¿Tienen nochebuena rosa y jaspeada?", "Sí, sobre pedido y al mismo precio que la roja."),
 )
 # Preventa: la misma respuesta de precio, rotulada como referencia. Postemporada: solo lo que sigue vigente sin oferta.
 PREGUNTAS_PREVENTA = tuple((q, f"{a} Son precios de referencia.") if q == PREGUNTA_PRECIO else (q, a) for q, a in PREGUNTAS)
@@ -211,7 +211,7 @@ CONTENIDO = {
     "franja": FRANJA,
     "etiquetas": {"temporada": ETIQUETA, "preventa": ETIQUETA_PREVENTA},
     "mensajes": MENSAJES,
-    "mismo_precio": "Mismo precio en roja, rosa y jaspeada.",
+    "mismo_precio": "Mismo precio en roja, rosa y jaspeada. Rosa y jaspeada, sobre pedido.",
     "aviso": AVISO,
     "cotizador": COTIZADOR,
     "tabla": TABLA,

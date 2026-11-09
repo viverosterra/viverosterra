@@ -78,7 +78,7 @@ PROHIBIDAS = (
 # Solo la página de Nochebuenas (decisión del dueño, 2026-11-09, spec §3): el 50% de anticipo se publica únicamente ahí y
 # "sobre pedido" es del macetón, no del pasto sintético. Se quitan solo esas frases; todas las reglas corren sobre el resto.
 NOCHEBUENAS_HTML = "post/nochebuenas-tampico-madero-mayoreo/index.html"
-NOCHEBUENAS_AUTORIZADAS = re.compile(r'50% de anticipo|(?<=Macetón 12" )sobre pedido|(?<=Macetón 12\\" )sobre pedido', re.I)  # visible y JSON-LD
+NOCHEBUENAS_AUTORIZADAS = re.compile(r'50% de anticipo|Rosa y jaspeada, sobre pedido|Sí, sobre pedido|(?<=Macetón 12" )sobre pedido|(?<=Macetón 12\\" )sobre pedido', re.I)  # visible y JSON-LD
 
 
 def nombre(path):
