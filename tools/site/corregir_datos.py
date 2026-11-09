@@ -1,6 +1,6 @@
 """Corrección única de datos contradictorios (Etapa 1b, spec §5.2 y decisiones del dueño del 2026-11-07).
 
-Reglas globales (todas las páginas, llms.txt y las fuentes de tools/pasto y tools/servicios): domicilio "209 Sur"
+Reglas globales (todas las páginas, llms.txt y las fuentes de tools/pasto): domicilio "209 Sur"
 (también en el JSON-LD, con calle y código postal oficiales), promesa única de respuesta, perfiles oficiales y una sola
 ortografía de flamboyán. Cambios por archivo: home, pasto en rollo, mayoreo, sintético en Tampico, árboles
 ornamentales, catálogo, diseño, materiales, cuestionario, blogs de precios, índice del blog, gracias y llms.txt.
@@ -337,7 +337,6 @@ def archivos_globales():
     yield from sorted(PUBLIC.rglob("*.html"))
     yield PUBLIC / "llms.txt"
     yield from sorted((RAIZ / "tools" / "pasto").glob("*.py"))
-    yield from sorted((RAIZ / "tools" / "servicios").glob("*.py"))
 
 
 def _escribir_si_cambia(path, nuevo, cambiados):

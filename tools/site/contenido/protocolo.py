@@ -4,6 +4,7 @@ Sin "experto", sin los contadores repetidos del hero y con un solo H1."""
 import datos
 import mensajes_paginas
 from componentes import dinero
+import componentes_util as cu
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -88,4 +89,5 @@ PARIDAD = {
     "reemplazos": {"Protocolo de Cuidados": "Cómo cuidar tu Pasto San Agustín paso a paso."},
     "retirados": {},
     "jsonld": {},
+    "meta_retirada": cu.META_AUTOR_RETIRADA,
 }

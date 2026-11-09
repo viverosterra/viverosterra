@@ -127,7 +127,7 @@ SECCIONES = (
             "procesar y enviar tu pedido y emitir tu factura.",
             "<strong>Uso:</strong> los datos se usan para dar seguimiento a tu compra y atención al cliente y, si no te "
             "das de baja, para enviarte promociones y recordatorios de jardinería. <strong>No vendemos ni compartimos"
-            "</strong> tu información con terceros ajenos al envío, el cobro o la facturación.",
+            "</strong> tu información con terceros distintos a los que indica el Aviso Integral.",
             "<strong>Conservación:</strong> conservamos tus datos el tiempo necesario para cumplir obligaciones fiscales y "
             "de garantía.",
             f"<strong>Derechos ARCO:</strong> puedes solicitar acceso, rectificación, cancelación u oposición al uso de tus "

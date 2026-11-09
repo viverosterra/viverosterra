@@ -50,6 +50,12 @@ class PoliticasTest(unittest.TestCase):
         self.assertIn("Nos avisas por WhatsApp con fotos dentro de los 30 días.", self.html)
         self.assertNotIn("asesoría gratis", self.html)
 
+    def test_privacidad_remite_a_los_terceros_del_aviso_integral(self):
+        html = render("/politicas")
+        self.assertIn("<strong>No vendemos ni compartimos</strong> tu información con terceros distintos a los que indica el "
+                      "Aviso Integral.", html)
+        self.assertNotIn("terceros ajenos", html)
+
     def test_contacto_de_datos(self):
         for pieza in (datos.TELEFONO_VISIBLE, datos.CORREO_FORMULARIOS, datos.HORARIO, datos.CALLE):
             self.assertIn(pieza, self.html)

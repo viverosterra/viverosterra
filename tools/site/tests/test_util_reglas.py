@@ -12,6 +12,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import datos  # noqa: E402
+import generar  # noqa: E402
 import paridad  # noqa: E402
 import paridad_util  # noqa: E402
 
@@ -115,6 +116,18 @@ class UtilitariasReglasTest(unittest.TestCase):
     def test_controles_de_datos_de_envio_iguales_a_main(self):
         ids = lambda campos: [c[1] for c in campos if c[0] != "option"]  # noqa: E731
         self.assertEqual(ids(paridad_util.extraer("/datos-envio")["campos"]), ids(CONTRATO["/datos-envio"]["campos"]))
+
+    def test_metas_de_autor_retiradas_con_motivo(self):
+        """Las tres etiquetas de autor de main no van en la captura de paridad: su retiro queda escrito en PARIDAD."""
+        for contenido, ruta in (("cuestionario", "/cuestionario"), ("protocolo", "/protocolo-cuidados-pasto-san-agustin"),
+                                ("vivero", "/vivero-tampico")):
+            retiradas = generar.cargar(contenido).PARIDAD["meta_retirada"]
+            with self.subTest(ruta=ruta):
+                self.assertEqual(set(retiradas), {"author", "article:author", "article:publisher"})
+                self.assertTrue(all(len(motivo) > 20 for motivo in retiradas.values()))
+                html = html_de(ruta)
+                for nombre in retiradas:
+                    self.assertNotRegex(html, rf'<meta (?:name|property)="{nombre}"')
 
     def test_las_noindex_siguen_noindex(self):
         for ruta in ("/gracias", "/cuestionario", "/datos-envio"):
