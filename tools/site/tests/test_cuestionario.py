@@ -1,4 +1,5 @@
 """/cuestionario: un H1, etiqueta en cada control, cinco pasos y medido como los demás formularios (generate_lead y _next a /gracias)."""
+import html
 import re
 import sys
 import unittest
@@ -52,6 +53,34 @@ class CuestionarioTest(unittest.TestCase):
                 self.assertIn(re.search(r'id="([^"]+)"', etiqueta).group(1), ids)
         self.assertEqual(self.main.count("<fieldset"), self.main.count("<legend>"))
         self.assertEqual(self.main.count("<fieldset"), 11)
+
+    def test_whatsapp_exige_un_telefono_real(self):
+        """El patrón se valida en el navegador al avanzar (test_util_navegador); aquí, que salga en el campo y qué acepta."""
+        campo = re.search(r'<input [^>]*name="whatsapp"[^>]*>', self.main).group(0)
+        patron = html.unescape(re.search(r'pattern="([^"]+)"', campo).group(1))
+        self.assertRegex(campo, r'minlength="10"')
+        self.assertRegex(campo, r'title="[^"]+"')
+        self.assertIn('required', campo)
+        for bueno in ("+52 833 000 0000", "8330000000", "(833) 000-0000"):
+            with self.subTest(bueno=bueno):
+                self.assertTrue(re.fullmatch(patron, bueno))
+        for malo in ("abc", "12345", "----------", "          "):
+            with self.subTest(malo=malo):
+                self.assertFalse(re.fullmatch(patron, malo))
+
+    def test_areas_aceptan_decimales(self):
+        for nombre in ("area_pasto", "area_jardinera", "area_total"):
+            with self.subTest(nombre=nombre):
+                self.assertIn('step="any"', re.search(rf'<input [^>]*name="{nombre}"[^>]*>', self.main).group(0))
+
+    def test_sin_javascript_ofrece_whatsapp(self):
+        aviso = re.search(r"<noscript>(.*?)</noscript>", self.main, re.S).group(1)
+        self.assertIn('href="https://wa.me/', aviso)
+        self.assertIn('data-cta="cuestionario:sin-js"', aviso)
+
+    def test_cada_seccion_con_su_propio_nombre(self):
+        self.assertEqual(self.main.count('aria-labelledby="vt-h1"'), 1)
+        self.assertRegex(self.main, r'<section class="vt-bloque" aria-label="[^"]+"><div class="vt-wrap vt-util__estrecho"><noscript>')
 
     def test_script_propio_sin_inline(self):
         self.assertIn('<script src="/js/vt-cuestionario.js" defer></script>', self.html)

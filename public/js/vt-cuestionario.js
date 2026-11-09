@@ -16,6 +16,16 @@
   const cuenta = $('step-counter');
   let actual = 1;
 
+  const asistente = document.querySelector('.vt-wizard');
+  const HOLGURA = 16; // la misma separación bajo el menú que scroll-margin-top en terra-util.css
+
+  function subirAlAsistente() {
+    const menu = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--vt-head-h')) || 0;
+    const top = asistente.getBoundingClientRect().top + window.scrollY - menu - HOLGURA;
+    const calma = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: Math.max(0, top), behavior: calma ? 'auto' : 'smooth' });
+  }
+
   function pintar() {
     pasos.forEach((p, i) => { p.hidden = i + 1 !== actual; });
     marcas.forEach((m, i) => {
@@ -38,7 +48,7 @@
     if (destino < 1 || destino > total || (delta > 0 && !pasoValido())) return;
     actual = destino;
     pintar();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    subirAlAsistente();
     pasos[actual - 1].querySelector('h2').focus({ preventScroll: true });
   }
 
@@ -57,7 +67,12 @@
   function calcularTotal() {
     const pasto = parseFloat($('area_pasto').value) || 0;
     const jardinera = parseFloat($('area_jard').value) || 0;
-    if (pasto <= 0 && jardinera <= 0) return;
+    if (pasto <= 0 && jardinera <= 0) {
+      $('area-display').hidden = true;
+      $('area-total-val').textContent = '0 m²';
+      $('area_total_input').value = '';
+      return;
+    }
     const suma = Math.round(pasto + jardinera);
     $('area-display').hidden = false;
     $('area-total-val').textContent = `${suma} m²`;

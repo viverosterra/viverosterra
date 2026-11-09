@@ -35,7 +35,9 @@ def _cuestionario(k):
     nav = "".join(f'<li data-vt-marca="{i}"{" aria-current=step" if i == 1 else ""}><b>{i}</b><span>{p["corto"]}</span></li>'
                   for i, p in enumerate(f["pasos"], 1))
     return (
-        f'<section class="vt-bloque" aria-labelledby="vt-h1"><div class="vt-wrap vt-util__estrecho">'
+        f'<section class="vt-bloque" aria-label="Formulario del cuestionario"><div class="vt-wrap vt-util__estrecho">'
+        f'<noscript><p class="vt-util__pista">{k["sin_js"]["texto"]}</p>'
+        f'<div class="vt-cta">{c.boton_wa(k["sin_js"]["mensaje"], "cuestionario:sin-js")}</div></noscript>'
         f'<ol class="vt-wizard" aria-label="Pasos del cuestionario">{nav}</ol>'
         f'<div class="vt-progreso" aria-hidden="true"><span id="prog"></span></div>'
         f'<form id="mainForm" class="vt-util__form" action="{c.esc(f["accion"])}" method="POST" data-cta-form="{c.esc(f["cta"])}">'

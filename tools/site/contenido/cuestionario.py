@@ -4,12 +4,16 @@ formularios (POST nativo, generate_lead y /gracias). Dos H1 en main: queda uno. 
 cliente, no precios."""
 import componentes
 import datos
+import mensajes_paginas
 import componentes_util as cu
 
 URL = f"{datos.SITIO}/cuestionario"
 DESCRIPCION = "Cuéntanos de tu jardín para preparar tu propuesta de diseño. Viveros Terra, Tampico, Madero y Altamira."
 _otro = (("id", "rb-otro-esp"),)
 _riego = (("class", "riego-trigger"),)
+# Mínimo 10 dígitos, con +, espacios, guiones y paréntesis. Dentro de la clase van escapados: el navegador compila `pattern`
+# con la bandera v, y una clase con ( o ) sueltos invalida el patrón entero: dejaría pasar cualquier texto.
+PATRON_WHATSAPP = r"[+]?(?:[ \(\)\-]*[0-9]){10,15}[ \(\)\-]*"
 
 
 def _radios(legend, name, items, **extra):
@@ -28,7 +32,8 @@ PASO_1 = (
     cu.fila(cu.campo({"label": "Nombre completo", "name": "nombre", "id": "nombre", "tipo": "text", "requerido": True,
                       "placeholder": "Ej. María González", "completar": "name"}),
             cu.campo({"label": "WhatsApp", "name": "whatsapp", "id": "whatsapp", "tipo": "tel", "requerido": True,
-                      "placeholder": "+52 833 000 0000", "completar": "tel"}), columnas=2),
+                      "placeholder": "+52 833 000 0000", "completar": "tel", "min_largo": "10",
+                      "patron": PATRON_WHATSAPP, "ayuda": "Escribe tu número de WhatsApp con lada, por ejemplo +52 833 000 0000"}), columnas=2),
     cu.fila(cu.campo({"label": "Correo electrónico", "name": "email", "tipo": "email", "placeholder": "correo@ejemplo.com",
                       "completar": "email"}),
             cu.campo({"label": "¿Cómo nos conoció?", "name": "como_nos_conocio", "tipo": "lista",
@@ -44,11 +49,11 @@ PASO_2 = (
             sub=cu.condicional("otro-esp-wrap", cu.campo({"label": "Especificar tipo de espacio", "name": "tipo_espacio_otro",
                                                            "tipo": "text", "placeholder": "Especificar tipo de espacio..."}))),
     cu.fila(cu.campo({"label": "Área de pasto (m²)", "name": "area_pasto", "id": "area_pasto", "tipo": "number",
-                      "placeholder": "Ej. 60", "min": "0", "pista": "Aproximado está bien"}),
+                      "placeholder": "Ej. 60", "min": "0", "paso": "any", "pista": "Aproximado está bien"}),
             cu.campo({"label": "Área jardinera (m²)", "name": "area_jardinera", "id": "area_jard", "tipo": "number",
-                      "placeholder": "Ej. 20", "min": "0"}),
+                      "placeholder": "Ej. 20", "min": "0", "paso": "any"}),
             cu.campo({"label": "Área total (m²)", "name": "area_total", "id": "area_total_input", "tipo": "number",
-                      "placeholder": "Ej. 80", "min": "0"}), columnas=3),
+                      "placeholder": "Ej. 80", "min": "0", "paso": "any"}), columnas=3),
     cu.SUMA_AREAS,
     cu.fila(
         _radios("¿Tiene riego instalado?", "riego_instalado",
@@ -114,10 +119,13 @@ CONTENIDO = {
                  {"corto": "Final", "titulo": "¡Ya casi! Una última pregunta", "pista": "Esto nos ayuda a priorizar lo que más le importa en el diseño.", "controles": PASO_5},
              )},
     "fecha": "14 de mayo, 2026", "fecha_iso": "2026-05-14",
+    "sin_js": {"texto": "Este cuestionario necesita JavaScript. Si no puedes activarlo, cuéntanos de tu jardín por WhatsApp.",
+               "mensaje": mensajes_paginas.UTILITARIAS["cuestionario"]},
 }
 PARIDAD = {"reemplazos": {"Tu jardín empieza aquí": "Tu jardín empieza aquí. Cuéntanos tu visión.",
                           "Tu jardín empieza aquí. Cuéntanos tu visión.": "Tu jardín empieza aquí. Cuéntanos tu visión."},
            "retirados": {"¡Gracias por tu información!": "El aviso en la misma página se sustituye por /gracias (_next), como en los otros 6 formularios; decisión del dueño."},
            "meta": {"description": (DESCRIPCION, "La página no tenía descripción y publicaba una meta vacía."),
                     "canonical": (URL, "Spec §3.5: el cuestionario lleva noindex, follow y canonical; no tenía canonical.")},
-           "jsonld": {}}
+           "jsonld": {},
+           "meta_retirada": cu.META_AUTOR_RETIRADA,}

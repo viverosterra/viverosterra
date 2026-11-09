@@ -6,6 +6,11 @@ import datos
 from partials import WA_GLIFO, esc
 
 
+# Etiquetas de autor de main que estas páginas ya no publican; paridad.py no las captura, así que el motivo se escribe aquí.
+META_AUTOR_RETIRADA = {clave: "No es un artículo: el autor solo se declara en los artículos del blog, como en las páginas migradas antes."
+                       for clave in ("author", "article:author", "article:publisher")}
+
+
 def boton_wa_texto(texto, mensaje, cta):
     """Botón de WhatsApp con un texto que no es "Cotizar por WhatsApp" (Adelantar, Mandar foto…)."""
     href = esc(datos.wa_url(datos.con_firma(mensaje)))
@@ -62,7 +67,8 @@ def _control(campo, ident):
     comunes = f'id="{esc(ident)}"' + (f' name="{esc(campo["name"])}"' if campo.get("name") else "")
     comunes += " required" if campo.get("requerido") else ""
     for atributo, clave in (("autocomplete", "completar"), ("placeholder", "placeholder"), ("min", "min"),
-                            ("inputmode", "modo"), ("maxlength", "max")):
+                            ("inputmode", "modo"), ("maxlength", "max"), ("minlength", "min_largo"), ("pattern", "patron"),
+                            ("title", "ayuda"), ("step", "paso")):
         if campo.get(clave) is not None:
             comunes += f' {atributo}="{esc(campo[clave])}"'
     if campo["tipo"] == "area":
@@ -95,7 +101,7 @@ def _opciones(k):
 # plantilla los dibuja.
 def campo(k):
     """k: label, tipo (text, tel, email, number, area o lista), name o id; opcionales requerido, completar, placeholder,
-    min, modo, max, pista, error, opciones."""
+    min, modo, max, min_largo, patron, ayuda (title), paso (step), pista, error, opciones."""
     return ("campo", k)
 
 
