@@ -63,6 +63,26 @@ AMORTIZA_RE = re.compile(
     r"|\brecupera(?:r|s|n)?\s+(?:la|tu|su)\s+inversi[oó]n\b|\brecuperaci[oó]n\s+(?:de\s+(?:la\s+|tu\s+)?)?inversi[oó]n\b"
     r"|\btiempo\s+de\s+recuperaci[oó]n\b|\bpayback\b", re.I)
 AMORTIZA_PENDIENTES = frozenset()
+# Decisión del dueño (2026-11-08): la cotización no se anuncia como "gratis"; se dice "Cotiza por WhatsApp."
+COTIZA_GRATIS_RE = re.compile(r"\bcotiza\w*\W+(?:\w+\W+){0,4}?(?:gratis|gratuit\w*)\b", re.I)
+# Decisión del dueño (2026-11-08): el pasto natural, las plantas, los árboles y las palmas no llevan IVA. Ninguno de sus
+# precios va junto a "con IVA" en la misma etiqueta, tabla o frase. No cuentan "salvo las palmas", la poda de palmas (es un
+# servicio) ni el pasto sintético. Pendiente de decidir por el dueño: el precio de pasto *instalado* cuando va solo.
+IVA_INCLUIDO_RE = re.compile(r"\bcon\s+IVA\b|\bIVA\s+incluido\b(?!\s+cuando\s+aplica)|\bincluyen?\s+(?:el\s+)?IVA\b", re.I)
+SIN_IVA_RE = re.compile(r"\bpalmas?\b|\bareca\b|\bcoco\s+plumoso\b|\bpasto\b(?!\s+sint[eé]tico)|\bSan\s+Agust[ií]n\b"
+                        r"|\bplantas?\b|\b[aá]rbol(?:es)?\b|\bflamboy[aá]n\b", re.I)
+FILA_SIN_IVA_RE = re.compile(r"(?:palmas?|pasto\s+san\s+agust[ií]n(?!\s+instalado)|solo\s+el\s+pasto|mayoreo(?:\s+de\s+pasto)?,?\s+solo"
+                             r"|[aá]rboles|plantas)\b", re.I)
+PRECIO_RE = re.compile(r"\$\s?\d")
+SALVEDAD_RE = re.compile(r"salvo\s+las\s+palmas|poda\s+de\s+palmas", re.I)
+INSTALADO_PENDIENTE_RE = re.compile(r"\binstalado\b", re.I)
+SOLO_PASTO_RE = re.compile(r"\bsolo\s+(?:el\s+)?pasto\b", re.I)
+ETIQUETA_RE = re.compile(r'<div class="vt-etiqueta(?: [^"]*)?"[^>]*>(.*?)</div>', re.S)
+TABLA_RE = re.compile(r"<table\b.*?</table>", re.S | re.I)
+FILA_RE = re.compile(r"<tr\b.*?</tr>", re.S | re.I)
+CAPTION_RE = re.compile(r"<caption\b[^>]*>(.*?)</caption>", re.S | re.I)
+BLOQUE_RE = re.compile(r"</?(?:p|li|div|h[1-6]|td|th|tr|caption|ul|ol|section|table|details|summary)\b[^>]*>", re.I)
+FRASE_RE = re.compile(r"(?<=[.!?])\s+")
 
 
 def sin_valores_css(css):
@@ -102,6 +122,37 @@ def reposiciones_que_no_son_de_pasto(texto):
         frase = texto[texto.rfind(". ", 0, m.start()) + 1:m.end()].strip()
         if not re.search(r"secci[oó]n", frase, re.I):
             salida.append(frase)
+    return salida
+
+
+def _plano(fragmento):
+    return re.sub(r"\s+", " ", html_mod.unescape(re.sub(r"<[^>]+>", " ", fragmento))).strip()
+
+
+def _anuncia_iva_sin_iva(texto):
+    """Dice "con IVA" junto a un precio de pasto natural, planta, árbol o palma (lo solo instalado sigue pendiente)."""
+    if not (IVA_INCLUIDO_RE.search(texto) and SIN_IVA_RE.search(texto) and PRECIO_RE.search(texto)):
+        return False
+    pendiente = INSTALADO_PENDIENTE_RE.search(texto) and not SOLO_PASTO_RE.search(texto)
+    return not (SALVEDAD_RE.search(texto) or pendiente)
+
+
+def iva_en_precios_sin_iva(html):
+    """Etiquetas, tablas y frases (visibles, meta y JSON-LD) que presentan con IVA un precio que no lo lleva."""
+    salida = [f"etiqueta: {_plano(e)}" for e in ETIQUETA_RE.findall(html) if _anuncia_iva_sin_iva(_plano(e))]
+    for tabla in TABLA_RE.findall(html):
+        caption = " ".join(CAPTION_RE.findall(tabla))
+        filas = [f for f in map(_plano, FILA_RE.findall(tabla)) if FILA_SIN_IVA_RE.match(f) and PRECIO_RE.search(f)]
+        if filas and IVA_INCLUIDO_RE.search(caption) and not SALVEDAD_RE.search(caption):
+            salida.append(f"tabla: {_plano(caption)} · {filas[0]}")
+    principal = re.search(r"<main\b.*?</main>", html, re.S | re.I)
+    cuerpo = re.sub(r"<(script|style|svg)\b.*?</\1>", " ", principal.group() if principal else html, flags=re.S | re.I)
+    fragmentos = [_plano(b) for b in BLOQUE_RE.split(cuerpo)]
+    fragmentos += re.findall(r'<meta\b[^>]*\bcontent="([^"]*)"', html)
+    for ld in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S):
+        fragmentos += re.findall(r'"((?:[^"\\]|\\.)*)"', ld)
+    salida += [f"frase: {f}" for fragmento in fragmentos for f in FRASE_RE.split(html_mod.unescape(fragmento))
+               if _anuncia_iva_sin_iva(f)]
     return salida
 
 
@@ -303,6 +354,48 @@ class ReglasDelDuenoTest(unittest.TestCase):
                        "Si una planta que sembramos no prende en 30 días, la reponemos.",
                        "fugas o fallas por causas de la instalación se atienden sin costo adicional"):
             self.assertFalse(reposiciones_que_no_son_de_pasto(limpio), limpio)
+
+    def test_nunca_cotizacion_gratis(self):
+        hallazgos = [f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…"
+                     for path, texto in publicados() for m in COTIZA_GRATIS_RE.finditer(texto)]
+        self.assertEqual(hallazgos, [])
+
+    def test_cotizacion_gratis_se_detecta(self):
+        for sucio in ("Cotización gratis hoy.", "Cotiza gratis.", "Cotiza gratis por WhatsApp.", "cotizamos tu jardín gratis",
+                      "Cotización 100% gratuita"):
+            self.assertRegex(sucio, COTIZA_GRATIS_RE)
+        for limpio in ("Cotiza por WhatsApp.", "Recoger en showroom — Sin costo", "te escribimos con tu cotización"):
+            self.assertNotRegex(limpio, COTIZA_GRATIS_RE)
+
+    def test_ningun_precio_sin_iva_dice_con_iva(self):
+        hallazgos = [f"{path.relative_to(PUBLIC)} · {h}" for path in sorted(PUBLIC.rglob("*.html"))
+                     for h in iva_en_precios_sin_iva(path.read_text(encoding="utf-8"))]
+        self.assertEqual(hallazgos, [])
+
+    def test_calculadoras_de_pasto_natural_sin_iva(self):
+        for nombre in ("vt-medidor.js", "vt-b2b.js"):
+            self.assertNotRegex((PUBLIC / "js" / nombre).read_text(encoding="utf-8"), r"(?i)\bcon IVA\b")
+
+    def test_precio_sin_iva_con_iva_se_detecta(self):
+        tarjeta = ('<div class="vt-etiqueta"><p class="vt-etiqueta__cod"><span>Vivero</span><span>{}</span></p>'
+                   '<p class="vt-etiqueta__nombre">{}</p><p class="vt-etiqueta__precio"><b>$250</b></p></div>')
+        tabla = '<table><caption>{}</caption><tr><th scope="row">{}</th><td>pieza</td><td>desde $250</td></tr></table>'
+        for sucio in (tarjeta.format("Con IVA", "Palmas"), tarjeta.format("Con IVA", "Pasto San Agustín"),
+                      tarjeta.format("Con IVA", "Flamboyán"),
+                      tabla.format("Precios 2026 con IVA.", "Palmas"), tabla.format("Precios 2026 con IVA.", "Árboles"),
+                      tabla.format("Con IVA.", "Pasto San Agustín, solo el pasto"),
+                      "<main><p>Areca y coco plumoso desde $250 y palma real desde $500 en tamaño chico, con IVA.</p></main>",
+                      "<main><p>El pasto cuesta $85 por m² solo el pasto y desde $120 por m² instalado, con IVA incluido.</p></main>",
+                      '<meta name="description" content="Palma areca desde $250, IVA incluido.">'):
+            self.assertTrue(iva_en_precios_sin_iva(sucio), sucio)
+        for limpio in (tarjeta.format("", "Palmas"), tarjeta.format("Con IVA", "Pasto instalado"),
+                       tarjeta.format("Con IVA", "Pasto sintético"), tarjeta.format("Con IVA", "Tezontle rojo"),
+                       tabla.format("Precios 2026 con IVA, salvo las palmas, que no llevan IVA.", "Palmas"),
+                       tabla.format("Precios 2026 con IVA.", "Poda de palmas y árboles"),
+                       tabla.format("Precios 2026 con IVA.", "Pasto San Agustín instalado"),
+                       "<main><p>Areca y coco plumoso desde $250. El pasto sintético cuesta $139/m², con IVA.</p></main>",
+                       "<main><p>Precios 2026, IVA incluido cuando aplica; palma areca desde $250.</p></main>"):
+            self.assertFalse(iva_en_precios_sin_iva(limpio), limpio)
 
     def test_visita_gratis_se_detecta(self):
         for sucio in ("Agendamos una visita sin costo", "Visita técnica gratuita", "vamos a medir sin costo",

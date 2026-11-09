@@ -155,7 +155,7 @@ CONTENIDO = {
         "lede": (f"Desde {dinero(P['pasto_instalado_m2'])}/m² instalado en Tampico, Madero y Altamira, con preparación "
                  f"básica del suelo y garantía de arraigo de {datos.ARRAIGO}; {dinero(P['pasto_solo_m2'])}/m² solo el "
                  f"pasto, y desde {dinero(P['pasto_mayoreo_m2'])}/m² en mayoreo de {MINIMO} m² o más con factura "
-                 f"{datos.FACTURA}. Precios {datos.ANIO} con IVA."),
+                 f"{datos.FACTURA}. Precios {datos.ANIO}."),
         "filas": (
             {"nombre": "Pasto con instalación", "unidad": "/m²", "precio": P["pasto_instalado_m2"], "desde": True,
              "rec": True, "detalle": (f"Preparación básica del suelo, tendido en un día, garantía de arraigo de "
@@ -167,7 +167,7 @@ CONTENIDO = {
              "detalle": (f"Desde {MINIMO} m². Entregas por etapas según avance de obra, factura {datos.FACTURA} y REPSE "
                          f'{datos.REPSE}. <a href="/mayoreo-pasto-tampico">Ver mayoreo para obras</a>.')},
         ),
-        "caption": (f"Precios {datos.ANIO} con IVA incluido. Donde dice “desde”, al medir te damos el precio cerrado. "
+        "caption": (f"Precios {datos.ANIO}. Donde dice “desde”, al medir te damos el precio cerrado. "
                     'Lista completa en <a href="/precios">viverosterra.com/precios</a>.'),
         "titulo_medidor": "Calcula el tuyo",
     },

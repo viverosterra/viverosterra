@@ -44,7 +44,7 @@ MENU = (
      "items": (("Mayoreo de pasto", "/mayoreo-pasto-tampico"),
                ("Palmas para proyectos", "/palmas-mayoreo-proyectos"),
                ("Mantenimiento de áreas verdes", "/mantenimiento-jardines-tampico"))},
-    {"id": "precios", "texto": "Precios", "href": "/precios", "nota": "con IVA", "items": ()},
+    {"id": "precios", "texto": "Precios", "href": "/precios", "nota": str(datos.ANIO), "items": ()},
 )
 
 SPRITE = """<svg class="vt-sprite" width="0" height="0" aria-hidden="true" focusable="false">
@@ -244,7 +244,7 @@ def footer(ctx):
 {contacto}
 </div>
 <dl class="vt-foot__datos">{celdas}</dl>
-<div class="vt-foot__legal"><p>© {datos.ANIO} {datos.NOMBRE} · {datos.CIUDAD}, Tamaulipas · Precios {datos.ANIO} con IVA incluido</p><p class="vt-foot__redes">{redes}</p></div>
+<div class="vt-foot__legal"><p>© {datos.ANIO} {datos.NOMBRE} · {datos.CIUDAD}, Tamaulipas · Precios {datos.ANIO}, IVA incluido cuando aplica</p><p class="vt-foot__redes">{redes}</p></div>
 </div>
 </footer>"""
     cuerpo = pie + ("\n" + barra(ctx) if ctx["barra"] else "")

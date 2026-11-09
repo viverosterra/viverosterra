@@ -189,7 +189,7 @@ CONTENIDO = {
                  "en tamaño chico; el precio sube con la altura. Entregamos en obra en Tampico, Madero y Altamira y, por "
                  f"proyecto, en Tamaulipas, Veracruz y San Luis Potosí, con factura {datos.FACTURA}."),
         "etiqueta": {
-            "codigo": "Palmas · 01", "aviso": "Con IVA", "nombre": "Palma areca y coco plumoso",
+            "codigo": "Palmas · 01", "aviso": "", "nombre": "Palma areca y coco plumoso",
             "cientifico": "Dypsis lutescens · Syagrus romanzoffiana", "antes": "Tamaño chico · desde", "monto": DESDE,
             "unidad": "c/u",
             "filas": (("Palma real, tamaño chico", f"desde {REAL}"), ("Otras especies y alturas", "Según cotización")),
@@ -213,7 +213,7 @@ CONTENIDO = {
     },
     "escalas": {
         "titulo": "¿Cuánto cuestan las palmas para proyecto?",
-        "lede": (f"Areca y coco plumoso desde {DESDE} y palma real desde {REAL} en tamaño chico, con IVA. El precio sube "
+        "lede": (f"Areca y coco plumoso desde {DESDE} y palma real desde {REAL} en tamaño chico. El precio sube "
                  f"con la altura; las demás especies, {SEGUN_ALTURA.lower()}. Precios {datos.ANIO}; lista completa en "
                  '<a href="/precios">viverosterra.com/precios</a>.'),
         "especies": tuple((n, sci, f"desde {dinero(p)} · tamaño chico" if p else SEGUN_ALTURA, p is None)

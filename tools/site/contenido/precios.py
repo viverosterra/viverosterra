@@ -30,7 +30,7 @@ MENSAJE = mensajes_paginas.PRECIOS
 COTIZAR = mensajes_paginas.PRECIOS_SECCIONES
 TITULO = "Precios de jardinería en Tampico 2026: pasto, diseño y mantenimiento | Viveros Terra"
 DESCRIPCION = (f"Pasto San Agustín {SOLO}/m² o instalado desde {INSTALADO}/m², mantenimiento desde {MANTENIMIENTO}/mes, "
-               f"diseño desde {DISENO} y pasto sintético desde {SINTETICO}/m². Precios con IVA en Tampico, Madero y "
+               f"diseño desde {DISENO} y pasto sintético desde {SINTETICO}/m². Precios en Tampico, Madero y "
                "Altamira.")
 ENLACES_FAQ = {
     "sintetico": ' Ve los <a href="/pasto-sintetico">9 modelos con precio</a>.',
@@ -40,7 +40,7 @@ ENLACES_FAQ = {
 PREGUNTAS = (
     ("¿Cuánto cuesta el pasto en rollo en Tampico?", datos.RESPUESTA_PRECIO_PASTO),
     ("¿Los precios incluyen IVA?",
-     f"Sí. Todos los precios de esta página incluyen IVA. Damos factura {datos.FACTURA} a persona física o moral y "
+     f"Los precios de esta página incluyen IVA cuando aplica. El pasto natural, las plantas, los árboles y las palmas no llevan IVA. Damos factura {datos.FACTURA} a persona física o moral y "
      f"tenemos registro REPSE {datos.REPSE} para contratos con empresas."),
     ("¿Por qué algunos precios dicen «desde»?",
      "Porque el total depende de los metros, del estado del terreno y del acceso a la obra. En la visita medimos y te "
@@ -108,11 +108,11 @@ CONTENIDO = {
     "portada": {
         "compacta": True,
         "kicker": f"Lista de precios {datos.ANIO} · Tampico, Madero y Altamira",
-        "h1": 'Precios de jardinería en Tampico <span class="vt-serif">2026, con IVA</span>',
+        "h1": 'Precios de jardinería en Tampico <span class="vt-serif">2026</span>',
         "lede": (f"En Tampico, Madero y Altamira, el pasto San Agustín cuesta {SOLO}/m² solo el pasto y desde "
                  f"{INSTALADO}/m² instalado. El mantenimiento de jardín cuesta desde {MANTENIMIENTO}/mes, el diseño desde "
                  f"{DISENO} y el pasto sintético desde {SINTETICO}/m²."),
-        "etiqueta": {"codigo": f"Lista · {datos.ANIO}", "aviso": "Con IVA", "nombre": "Pasto San Agustín",
+        "etiqueta": {"codigo": f"Lista · {datos.ANIO}", "aviso": "", "nombre": "Pasto San Agustín",
                      "antes": "solo el pasto", "monto": SOLO, "unidad": "/m²",
                      "filas": (("Instalado", f"desde {INSTALADO}/m²"), ("Mantenimiento", f"desde {MANTENIMIENTO}/mes"),
                                ("Pasto sintético", f"desde {SINTETICO}/m²"))},
@@ -128,7 +128,7 @@ CONTENIDO = {
                ("Plantas", "plantas"), ("Mensualidades", "mensualidades"), ("Garantías", "garantias")),
     "secciones": (
         {"id": "pasto", "rotulo": "Pasto natural", "titulo": 'Pasto San Agustín <span class="vt-serif">en rollo</span>',
-         "filas": lp.PASTO, "concepto": "Producto", "caption": f"Precios {datos.ANIO} con IVA.",
+         "filas": lp.PASTO, "concepto": "Producto", "caption": f"Precios {datos.ANIO}.",
          "cotizar": ("Cotizar pasto por WhatsApp", COTIZAR["pasto"]),
          "nota": ("Solo el pasto: recoges en el vivero o se cobra la entrega según tu colonia. "
                   '<a href="/protocolo-cuidados-pasto-san-agustin">Protocolo de riego y garantía</a>.')},
@@ -151,7 +151,8 @@ CONTENIDO = {
          "nota": ("Recoges en el vivero de Cd. Madero o te lo llevamos en Tampico, Madero y Altamira. "
                   f"{datos.CONDICIONES_MATERIALES}")},
         {"id": "plantas", "rotulo": "Vivero", "titulo": 'Plantas, palmas <span class="vt-serif">y árboles</span>',
-         "filas": lp.PLANTAS, "concepto": "Planta", "caption": f"Precios {datos.ANIO} con IVA.",
+         "filas": lp.PLANTAS, "concepto": "Planta",
+         "caption": f"Precios {datos.ANIO}.",
          "cotizar": ("Cotizar plantas por WhatsApp", COTIZAR["plantas"]),
          "nota": ('Arma tu lista en el <a href="/catalogo">catálogo</a> y mándala por WhatsApp. '
                   f"{datos.GARANTIA_PLANTAS.replace(' (ver condiciones)', '')} "
@@ -199,7 +200,9 @@ CONTENIDO = {
 }
 
 PARIDAD = {
-    "reemplazos": {},
+    "meta": {"description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto natural, las plantas, los árboles y las palmas no se anuncian con IVA."),
+             "og:description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto natural, las plantas, los árboles y las palmas no se anuncian con IVA.")},
+    "reemplazos": {"Precios de jardinería en Tampico 2026, con IVA": "Precios de jardinería en Tampico 2026"},
     "retirados": {},
     "jsonld": {},
 }

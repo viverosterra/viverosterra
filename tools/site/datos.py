@@ -126,10 +126,10 @@ ANTICIPO = ("No pedimos el 100% por adelantado: para confirmar tu pedido o agend
 # Una sola respuesta a "¿cuánto cuesta el pasto en rollo en Tampico?" en home, servicio y precios (spec §7.3).
 RESPUESTA_PRECIO_PASTO = (
     f"En Viveros Terra el pasto San Agustín en rollo cuesta ${PRECIOS['pasto_solo_m2']} por m² solo el pasto y desde "
-    f"${PRECIOS['pasto_instalado_m2']} por m² instalado, con IVA incluido. El instalado incluye la preparación básica "
+    f"${PRECIOS['pasto_instalado_m2']} por m² instalado. El instalado incluye la preparación básica "
     f"del terreno, la colocación y una garantía de arraigo de {ARRAIGO}. En pedidos de "
     f"{PRECIOS['pasto_mayoreo_minimo_m2']} m² o más, el mayoreo cuesta desde ${PRECIOS['pasto_mayoreo_m2']}/m². "
-    f"Precios {ANIO}, con IVA, para Tampico, Ciudad Madero y Altamira."
+    f"Precios {ANIO}, IVA incluido cuando aplica, para Tampico, Ciudad Madero y Altamira."
 )
 
 # Palmas y especies para proyectos (nombre, nombre científico, precio "desde" o None). Decisión del dueño (2026-11-07):

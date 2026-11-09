@@ -124,8 +124,9 @@ def etiqueta(e, cordel=True):
     filas = "".join(f'<p class="vt-etiqueta__fila"><span>{t}</span><b>{v}</b></p>' for t, v in e.get("filas", ()))
     nota = f'<p class="vt-etiqueta__nota">{e["nota"]}</p>' if e.get("nota") else ""
     sci = f'<p class="vt-etiqueta__sci">{e["cientifico"]}</p>' if e.get("cientifico") else ""
+    aviso = f'<span>{e["aviso"]}</span>' if e.get("aviso") else ""
     return (f'<div class="vt-etiqueta-x{" vt-etiqueta-x--cordel" if cordel else ""}"><div class="vt-etiqueta">'
-            f'<p class="vt-etiqueta__cod"><span>{e["codigo"]}</span><span>{e["aviso"]}</span></p>'
+            f'<p class="vt-etiqueta__cod"><span>{e["codigo"]}</span>{aviso}</p>'
             f'<p class="vt-etiqueta__nombre">{e["nombre"]}</p>{sci}'
             f'<p class="vt-etiqueta__precio"><small>{unidades(e["antes"])}</small><b>{e["monto"]}</b><span>{e["unidad"]}</span></p>'
             f'{filas}{nota}</div></div>')
@@ -479,10 +480,10 @@ def textos_medidor(largo, ancho, r, colonia="", plazo=1):
         interes = "contado"
     cierre_calc = "Al medir te damos el precio cerrado." if r["desde"] else "La entrega se cotiza según tu colonia."
     mensaje = "\n".join((f"Hola, quiero cotizar {r['texto']}.", f"Medidas: {medida}",
-                         f"Estimado de la web: {desde}{dinero(r['total'])} con IVA", f"Me interesa: {interes}",
+                         f"Estimado de la web: {desde}{dinero(r['total'])}", f"Me interesa: {interes}",
                          f"Colonia: {colonia or '___'}", "Te mando foto del área."))
     return {"medida": medida, "monto": dinero(r["total"]),
-            "calc": f"{formato_m2(r['m2'])} m² × {desde}${r['precio']}/m², con IVA. {cierre_calc}",
+            "calc": f"{formato_m2(r['m2'])} m² × {desde}${r['precio']}/m². {cierre_calc}",
             "plan": plan, "plazo": plazo, "mensaje": mensaje}
 
 
@@ -569,7 +570,7 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
         f'<span>Tu etiqueta</span><span>Estimado</span></p><p class="vt-etiqueta__nombre" data-vt-o="m2">'
         f'{VACIO_MEDIDOR["medida"]}</p><p class="vt-etiqueta__sci">Stenotaphrum secundatum</p>'
         f'<p class="vt-etiqueta__precio is-vacio"><small data-vt-o="rotulo">{MODOS_MEDIDOR[modo]["rotulo"]}</small>'
-        f'<b data-vt-o="monto">{VACIO_MEDIDOR["monto"]}</b><span>con IVA</span></p>'
+        f'<b data-vt-o="monto">{VACIO_MEDIDOR["monto"]}</b></p>'
         f'<p class="vt-medidor__calc" data-vt-o="calc">{VACIO_MEDIDOR["calc"]}</p>'
         f'<p class="vt-medidor__aviso" data-vt-o="aviso" hidden></p>'
         f'<fieldset class="vt-opciones vt-opciones--plazo"><legend>Forma de pago: contado o mensualidades con tarjeta de '
@@ -591,7 +592,7 @@ ALTURA_RE = re.compile(r"^\s*(\d+(?:[.,]\d+)?)")
 CANTIDAD_RE = re.compile(r"^\s*(\d+)")
 VACIO_VOLUMEN = {"medida": "Escribe los m² de tu obra", "monto": "—",
                  "calc": (f"Desde {MINIMO_MAYOREO} m², mayoreo desde ${P['pasto_mayoreo_m2']}/m²; con menos, "
-                          f"${P['pasto_solo_m2']}/m² (solo pasto). Con IVA.")}
+                          f"${P['pasto_solo_m2']}/m² (solo pasto).")}
 VACIO_PALMAS = "Elige especie y cantidad"
 OTRA_ESPECIE = "Otra especie (la escribo en el chat)"
 
@@ -621,11 +622,11 @@ def textos_volumen(r, empresa="", obra="", fecha=""):
     desde = "desde " if r["desde"] else ""
     m2 = formato_m2(r["m2"])
     mensaje = "\n".join((f"Hola, quiero cotizar {r['texto']} para un proyecto.", f"m² totales: {m2} m²",
-                         f"Estimado de la web: {desde}{dinero(r['total'])} con IVA ({desde}${r['precio']}/m²)",
+                         f"Estimado de la web: {desde}{dinero(r['total'])} ({desde}${r['precio']}/m²)",
                          f"Empresa: {_hueco(empresa)}", f"Obra y ubicación: {_hueco(obra)}",
                          f"Fecha de la primera entrega: {_hueco(fecha)}"))
     return {"medida": f"{m2} m²", "monto": dinero(r["total"]),
-            "calc": (f"{m2} m² × {desde}${r['precio']}/m², con IVA. Solo pasto: la entrega por etapas y la instalación "
+            "calc": (f"{m2} m² × {desde}${r['precio']}/m². Solo pasto: la entrega por etapas y la instalación "
                      "se cotizan con tu obra."),
             "mensaje": mensaje}
 
@@ -709,7 +710,7 @@ def cotizador_volumen(prefijo, tipo, mensaje):
         f'<p class="vt-etiqueta__nombre" data-vt-o="m2">{VACIO_VOLUMEN["medida"]}</p>'
         '<p class="vt-etiqueta__sci">Stenotaphrum secundatum</p>'
         f'<p class="vt-etiqueta__precio is-vacio"><small data-vt-o="rotulo">{MODOS_MEDIDOR["mayoreo"]["rotulo"]}</small>'
-        f'<b data-vt-o="monto">{VACIO_VOLUMEN["monto"]}</b><span>con IVA</span></p>'
+        f'<b data-vt-o="monto">{VACIO_VOLUMEN["monto"]}</b></p>'
         f'<p class="vt-medidor__calc" data-vt-o="calc">{VACIO_VOLUMEN["calc"]}</p>'
         '<p class="vt-medidor__aviso" data-vt-o="aviso" hidden></p>'
         f'{_boton_cta(tipo, "cotizador", generico)}</div></div></div>')

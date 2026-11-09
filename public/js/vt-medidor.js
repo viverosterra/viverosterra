@@ -60,9 +60,9 @@
     }
     const cierre = r.desde ? 'Al medir te damos el precio cerrado.' : 'La entrega se cotiza según tu colonia.';
     const mensaje = [`Hola, quiero cotizar ${r.texto}.`, `Medidas: ${medida}`,
-      `Estimado de la web: ${desde}${dinero(r.total)} con IVA`, `Me interesa: ${interes}`, `Colonia: ${colonia || '___'}`,
+      `Estimado de la web: ${desde}${dinero(r.total)}`, `Me interesa: ${interes}`, `Colonia: ${colonia || '___'}`,
       'Te mando foto del área.'].join('\n');
-    return { medida, monto: dinero(r.total), calc: `${formatoM2(r.m2)} m² × ${desde}$${r.precio}/m², con IVA. ${cierre}`,
+    return { medida, monto: dinero(r.total), calc: `${formatoM2(r.m2)} m² × ${desde}$${r.precio}/m². ${cierre}`,
       plan, plazo: elegido, mensaje };
   }
 

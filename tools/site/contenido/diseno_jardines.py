@@ -33,7 +33,7 @@ META = {
         ("og:title", f"Diseño de Jardines Tampico | Plan Terra desde {dinero(ESENCIAL)} — Viveros Terra"),
         ("og:description", ("Diseño profesional de jardines en Tampico, Madero y Altamira. Plan Terra en 3 niveles: "
                             f"Esencial desde {dinero(ESENCIAL)}, Completo {dinero(COMPLETO)} y Premium con planos AutoCAD "
-                            "y render 3D. Cotiza gratis por WhatsApp.")),
+                            "y render 3D. Cotiza por WhatsApp.")),
         ("og:image", f"{SITE}/img/diseno-jardines-tampico-viveros-terra.webp"),
         ("og:locale", "es_MX"),
     ),
@@ -325,6 +325,7 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": {"og:description": (dict(META["og"])["og:description"], "Decisión del dueño (2026-11-08): sin “gratis” en la cotización; se invita a cotizar por WhatsApp.")},
     "reemplazos": {
         "Diseño de jardines con plan y presupuesto claros": "Diseño de jardines en Tampico con plan y presupuesto claros",
         "Elige el plan que se ajusta a tu proyecto": "¿Cuánto cuesta un diseño de jardín en Tampico?",

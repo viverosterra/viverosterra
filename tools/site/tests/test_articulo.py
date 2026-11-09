@@ -126,7 +126,9 @@ class ArticuloTest(unittest.TestCase):
             codigo = "Servicio relacionado" if tema["tema"] in ("riego", "diseno", "mantenimiento") else "Producto relacionado"
             with self.subTest(slug=slug):
                 self.assertIn(f"<span>{codigo}</span>", html)
-                self.assertEqual("<span>Con IVA</span>" in html, tema["etiqueta"]["monto"] != datos.SEGUN_COTIZACION)
+                self.assertEqual("<span>Con IVA</span>" in html, tema["etiqueta"]["monto"] != datos.SEGUN_COTIZACION
+                                 and tema["tema"] not in ("pasto-natural", "palmas", "palmas-cotizacion", "arboles", "banqueta",
+                                                          "plantas", "interior"))
 
     def test_cierre_segun_el_tema_del_articulo(self):
         esperado = {"cesped-amarillo-tampico-causas-soluciones": "mantenimiento", "errores-pasto-san-agustin-tampico": "mantenimiento",

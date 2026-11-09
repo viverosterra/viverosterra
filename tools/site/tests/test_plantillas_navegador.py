@@ -299,7 +299,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
         self.assertFalse(caja.locator('[data-vt-o="aviso"]').is_visible())
         mensaje = self.mensaje(caja)
         self.assertIn("m² totales: 1,200 m²", mensaje)
-        self.assertIn("Estimado de la web: desde $72,000 con IVA (desde $60/m²)", mensaje)
+        self.assertIn("Estimado de la web: desde $72,000 (desde $60/m²)", mensaje)
         self.assertIn("Empresa: Mi empresa", mensaje)
         caja.locator('[data-vt-campo="m2"]').fill("")
         self.assertEqual(caja.locator('[data-vt-o="monto"]').inner_text(), "—")

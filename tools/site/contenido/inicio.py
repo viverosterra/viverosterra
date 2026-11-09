@@ -12,7 +12,7 @@ P = datos.PRECIOS
 MINIMO = P["pasto_mayoreo_minimo_m2"]
 EMPRESAS = f"{', '.join(datos.CLIENTES_B2B[:-1])} y {datos.CLIENTES_B2B[-1]}"
 DESCRIPCION = (f"Pasto San Agustín desde ${P['pasto_solo_m2']}/m², diseño de jardines y mantenimiento en Tampico. "
-               f"+18 años · {datos.CLIENTES} clientes · Cotización gratis hoy.")
+               f"+18 años · {datos.CLIENTES} clientes · Cotiza por WhatsApp.")
 
 META = {
     "title": "Viveros Terra · Jardinería, Pasto en Rollo y Paisajismo en Tampico",
@@ -35,7 +35,7 @@ META = {
     "twitter": (
         ("twitter:card", "summary_large_image"),
         ("twitter:title", "Viveros Terra | Jardinería y Pasto en Rollo en Tampico"),
-        ("twitter:description", "Pasto en rollo, diseño de jardines y mantenimiento en Tampico. Cotiza gratis."),
+        ("twitter:description", "Pasto en rollo, diseño de jardines y mantenimiento en Tampico. Cotiza por WhatsApp."),
         ("twitter:image", f"{datos.SITIO}/img/jardineria-areas-verdes-tampico.webp"),
     ),
 }
@@ -111,7 +111,7 @@ CONTENIDO = {
                  f"diseñamos y cuidamos jardines, y tenemos {datos.VARIEDADES} variedades de plantas. "
                  "El precio va por delante."),
         "etiqueta": {
-            "codigo": "Pasto · 01", "aviso": "Con IVA", "nombre": "Pasto San Agustín",
+            "codigo": "Pasto · 01", "aviso": "", "nombre": "Pasto San Agustín",
             "cientifico": "Stenotaphrum secundatum", "antes": "San Agustín instalado · desde",
             "monto": dinero(P["pasto_instalado_m2"]), "unidad": "/m²",
             "filas": (("Solo pasto, tú lo instalas", f"{dinero(P['pasto_solo_m2'])} /m²"),),
@@ -216,7 +216,7 @@ CONTENIDO = {
     },
     "precios": {
         "titulo": "Lista de precios, sin letra chica.",
-        "lede": ("Con IVA. Donde dice “desde”, el total depende de tus metros y del terreno: al medir te damos el precio "
+        "lede": ("Donde dice “desde”, el total depende de tus metros y del terreno: al medir te damos el precio "
                  "cerrado."),
         "nota": ("En sombra profunda el San Agustín no prende. Si es tu caso, te lo decimos al medir, antes de cobrarte "
                  "nada.", f"Desde el vivero, {datos.CALLE_CORTA}"),
@@ -239,7 +239,7 @@ CONTENIDO = {
             {"nombre": "Tezontle rojo", "unidad": "/costal", "precio": P["tezontle_costal"], "desde": True,
              "detalle": "También por m³ y en camión volteo de 14 m³."},
         ),
-        "caption": (f'Precios {datos.ANIO} con IVA incluido. Lista completa en '
+        "caption": (f'Precios {datos.ANIO}, IVA incluido cuando aplica. Lista completa en '
                     '<a href="/precios">viverosterra.com/precios</a>.'),
     },
     "faq": {
@@ -274,6 +274,8 @@ SERVICIOS_EN_INDICE = "Ahora es una fila del índice “Cinco formas de trabajar
 GUIA_EN_LISTA = "Sigue enlazada desde la lista “Guías para el clima de Tampico”, con el mismo texto de enlace."
 PASOS_VIEJOS = "Los 5 pasos genéricos se reemplazan por los 4 pasos con NOSOTROS / TÚ / JUNTOS (spec §4.1)."
 PARIDAD = {
+    "meta": {"description": (DESCRIPCION, "Decisión del dueño (2026-11-08): sin “gratis” en la cotización; se invita a cotizar por WhatsApp."),
+             "og:description": (DESCRIPCION, "Decisión del dueño (2026-11-08): sin “gratis” en la cotización; se invita a cotizar por WhatsApp.")},
     "reemplazos": {
         "Jardinería en Tampico, pasto en rollo y vivero desde 2007.": "Pasto en rollo, jardines y plantas en Tampico y Madero.",
         "¿Cuánto cuesta tu jardín?": "Mide tu patio. Te decimos cuánto cuesta.",

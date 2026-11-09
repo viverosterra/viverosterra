@@ -37,7 +37,7 @@ CONTENIDO = {
     "migas": (("Inicio", "/"), ("Vivero en Tampico", None)),
     "portada": {"kicker": "Tampico · Madero · Altamira", "h1": 'Vivero en Tampico <span class="vt-serif">y Ciudad Madero, desde 2007</span>',
                 "lede": f"Pasto, plantas, palmas, árboles y materiales para jardín en {datos.CALLE}, {datos.COLONIA}, Cd. Madero, frente a Walmart.",
-                "etiqueta": {"codigo": "Vivero", "aviso": "Con IVA", "nombre": "Palmas", "antes": "desde", "monto": dinero(P["palma_desde"]),
+                "etiqueta": {"codigo": "Vivero", "aviso": "", "nombre": "Palmas", "antes": "desde", "monto": dinero(P["palma_desde"]),
                              "unidad": "", "filas": (("Pasto", f"{dinero(P['pasto_solo_m2'])}/m²"), ("Plantas", "por tamaño"))},
                 "mensaje": MENSAJE, "boton_extra": boton_mapas("vivero:mapas"), "foto": FOTO},
     "donde": {"titulo": 'Viveros Terra en Ciudad Madero, <span class="vt-serif">frente a Walmart</span>', "lede": DONDE,
