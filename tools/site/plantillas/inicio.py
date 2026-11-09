@@ -9,20 +9,29 @@ SCRIPTS = ("/js/vt-mensualidades.js", "/js/vt-medidor.js")
 CONTEXTO = "https://schema.org"
 
 
-def _franja_temporada(t):
-    """Franja de temporada bajo la portada, con clases existentes (terra.css no tiene presupuesto). None: fuera de temporada."""
+# Banner de temporada, pedido del dueño (2026-11-09): rojo navideño con la etiqueta amarilla del sitio (terra-temporada.css).
+_FLOR = ('<svg class="vt-navidad__flor" viewBox="-16 -16 32 32" aria-hidden="true" fill="currentColor">'
+         + "".join(f'<path transform="rotate({g})" d="M0-1C-5-5-5-12 0-16 5-12 5-5 0-1Z"/>' for g in range(0, 360, 45))
+         + '<circle class="vt-navidad__centro" r="2.6"/></svg>')
+
+
+def _banner_temporada(t):
+    """Banner navideño, primero en <main>; todo el banner enlaza a la página de temporada. Vacío fuera de temporada."""
     if not t:
         return ""
-    return (f'<aside class="vt-wrap" aria-label="{t["aviso"]}"><p class="vt-prueba"><span><b>{t["titulo"]}</b></span><span>{t["texto"]}</span>'
-            f'<a data-cta="{TIPO}:nochebuenas" href="{t["href"]}">{t["cta"]}</a></p></aside>')
+    return (f'<aside class="vt-navidad-x" aria-label="{t["aviso"]}"><a class="vt-navidad" data-cta="{TIPO}:banner-nochebuenas" '
+            f'href="{t["href"]}">{_FLOR}<span class="vt-navidad__txt"><b>{t["titulo"]}<span class="vt-navidad__estado"> · '
+            f'{t["estado"]}</span></b><span>{t["texto"]}</span></span><span class="vt-navidad__cta">'
+            f'Ver<span class="vt-navidad__mas"> nochebuenas</span><span class="vt-navidad__flecha" aria-hidden="true">→</span>'
+            '</span></a></aside>')
 
 
 def render(k):
     q, m, o, op, pr, pc, f, co, ci = (k[s] for s in ("que_hacemos", "medidor", "obras", "opiniones", "proceso", "precios",
                                                       "faq", "cobertura", "cierre"))
     cuerpo = "\n".join((
+        _banner_temporada(k["temporada"]),
         c.portada(k["portada"], TIPO),
-        _franja_temporada(k["temporada"]),
         c.bloque(1, "Qué hacemos", "vt-h-que", q["titulo"], c.indice(q["items"]), lede=q["lede"]),
         c.bloque(2, "Medidor", "vt-h-medidor", m["titulo"], c.medidor("inicio", TIPO, mensaje=k["portada"]["mensaje"]), lede=m["lede"], tinte=True,
                  id_seccion="medidor"),
@@ -46,4 +55,5 @@ def render(k):
         {"@context": CONTEXTO, **j["migas"]},
     )
     return base.documento(k["meta"], cuerpo, jsonld_bloques=bloques,
-                          precargas=(base.precarga_imagen(k["portada"]["foto"]),), scripts=SCRIPTS)
+                          precargas=(base.precarga_imagen(k["portada"]["foto"]),), scripts=SCRIPTS,
+                          clase_body="vt-pagina vt-temporada" if k["temporada"] else "vt-pagina")
