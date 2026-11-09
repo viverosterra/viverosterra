@@ -47,7 +47,10 @@ Las flores y las hojas moradas conservan su color. El balance no usa el follaje 
 3. Revelado por lote a un máximo de 2400 px, sin ampliar las fotos chicas.
 4. Limpieza local y gratuita con LaMa (IOPaint) en 10 a 15 fotos clave, sin enviar fotos a servicios externos. Se
    marca solo el objeto a retirar y `verificar_limpieza.py` confirma que nada cambió fuera de esa zona.
-5. Galería de aprobación con antes y después.
+   El dueño pidió además retirar cables y tierra de pisos terminados, y subir definición cuando haga falta: `pisos`
+   detecta suciedad sobre superficies duras y `definicion.py` duplica las fotos de menos de 1500 px.
+   Por grupo trabajan un agente editor y un evaluador independiente con autoridad para corregir una vez o descartar.
+5. Galería local de aprobación con antes y después (`galeria/`, decisiones en `galeria/decisiones.json`).
 6. Integración en una etapa propia: WebP de hasta 1200 px, `activos.json`, plantillas y pies `FIG.`.
 
 ## Colocación preliminar
@@ -74,5 +77,4 @@ correcta entre las fotos propias. Los renders actuales salen de forma gradual o 
 
 ## Fuera de alcance
 
-Generar fotos nuevas con IA, ampliar artificialmente las fotos chicas y sustituir la sesión de fotos real recomendada
-en la mejora integral.
+Generar fotos nuevas con IA y sustituir la sesión de fotos real recomendada en la mejora integral.
