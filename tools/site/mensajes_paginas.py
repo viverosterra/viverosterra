@@ -43,6 +43,14 @@ PLANTAS = {
                                      "Luz del lugar (mucha o poca): ___\nColonia: ___\nLes mando foto del espacio."),
 }
 
+# Nochebuenas, por modo (datos.NOCHEBUENAS["modo"]): mensaje de la página y del shell; el cotizador lo reemplaza por el pedido
+# completo. paginas.contexto elige el del modo vigente.
+NOCHEBUENAS = {
+    "temporada": "Hola, quiero cotizar Nochebuenas.\nTamaño y cantidad: ___\nColonia de entrega: ___",
+    "preventa": "Hola, quiero apartar Nochebuenas.\nTamaño y cantidad: ___\nColonia de entrega: ___",
+    "postemporada": "Hola, avísenme cuando abra la próxima temporada de Nochebuenas.",
+}
+
 # Materiales (Etapa 2f): la plantilla de main de cada portada (tools/servicios/pages.py, guided()), con los huecos ___:
 # el formato de datos.MENSAJES["materiales"] (material, cantidad y colonia de entrega) con el material ya escrito. La usan
 # la portada, el cierre y la calculadora mientras no tiene área y, por RUTAS, el menú, la barra móvil y el pie.

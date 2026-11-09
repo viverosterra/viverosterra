@@ -8,18 +8,22 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import generar  # noqa: E402
 import paridad  # noqa: E402
+import datos  # noqa: E402
+
+# La página de Nochebuenas es nueva: nunca hubo una versión publicada que capturar (la URL solo redirigía).
+CON_CAPTURA = tuple(p for p in generar.PAGINAS if p[0] != datos.NOCHEBUENAS["ruta"])
 
 
 class ParidadTest(unittest.TestCase):
     def test_nada_se_pierde_sin_motivo(self):
-        for ruta, _salida, _plantilla, contenido in generar.PAGINAS:
+        for ruta, _salida, _plantilla, contenido in CON_CAPTURA:
             mapa = generar.cargar(contenido).PARIDAD
             for categoria, faltantes in paridad.comparar(ruta, mapa).items():
                 with self.subTest(ruta=ruta, categoria=categoria):
                     self.assertEqual(faltantes, [])
 
     def test_el_mapa_no_tiene_entradas_viejas(self):
-        for ruta, _salida, _plantilla, contenido in generar.PAGINAS:
+        for ruta, _salida, _plantilla, contenido in CON_CAPTURA:
             mapa = generar.cargar(contenido).PARIDAD
             captura = json.loads((paridad.CAPTURAS / f"{paridad.nombre_captura(ruta)}.json").read_text(encoding="utf-8"))
             conocidos = {item for c in paridad.CATEGORIAS for item in captura[c]}
@@ -29,7 +33,7 @@ class ParidadTest(unittest.TestCase):
 
     def test_cambios_de_meta_declarados_son_de_la_captura(self):
         """PARIDAD["meta"] solo nombra claves que la página publicaba, con un valor distinto al de la captura."""
-        for ruta, _salida, _plantilla, contenido in generar.PAGINAS:
+        for ruta, _salida, _plantilla, contenido in CON_CAPTURA:
             cambios = generar.cargar(contenido).PARIDAD.get("meta", {})
             captura = json.loads((paridad.CAPTURAS / f"{paridad.nombre_captura(ruta)}.json").read_text(encoding="utf-8"))
             for clave, (nuevo, _motivo) in cambios.items():
@@ -39,7 +43,7 @@ class ParidadTest(unittest.TestCase):
 
     def test_tipos_de_json_ld_retirados_son_de_la_captura(self):
         """PARIDAD["jsonld"] solo nombra tipos que la página publicaba y que ya no salen (si vuelven, sobra el motivo)."""
-        for ruta, _salida, _plantilla, contenido in generar.PAGINAS:
+        for ruta, _salida, _plantilla, contenido in CON_CAPTURA:
             motivos = generar.cargar(contenido).PARIDAD.get("jsonld", {})
             captura = json.loads((paridad.CAPTURAS / f"{paridad.nombre_captura(ruta)}.json").read_text(encoding="utf-8"))
             actuales = paridad.extraer(paridad.archivo(ruta).read_text(encoding="utf-8"))["jsonld_tipos"]

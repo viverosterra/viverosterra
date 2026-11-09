@@ -125,6 +125,9 @@ CONTENIDO = {
         ("Cómo plantar una palma o un árbol", "/blog/como-plantar-palma-arbol-paso-a-paso-tampico"),
         ("Plantas que resisten la sal del Golfo", "/blog/plantas-resistentes-sal-golfo-tampico"))},
     "relacionados": {"titulo": "Complementa tu proyecto", "items": (
+        {"titulo": "Nochebuenas de temporada", "href": datos.NOCHEBUENAS["ruta"],
+         "texto": "Roja, rosa y jaspeada, en menudeo y mayoreo.",
+         "img": "/img/nochebuenas/nochebuena-roja-tres-plantas-tampico-800.webp", "ancho": 800, "alto": 600},
         {"titulo": "Pasto en rollo", "href": "/pasto-en-rollo-tampico",
          "texto": f"San Agustín desde {dinero(P['pasto_solo_m2'])}/m².",
          "img": "/img/portadas/instalacion-pasto-rollo-san-agustin-tampico-sm.webp", "ancho": 560, "alto": 840},

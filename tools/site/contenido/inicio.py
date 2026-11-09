@@ -101,8 +101,18 @@ PREGUNTAS = (
 # Opiniones reales con nombre, publicadas con permiso (decisión del dueño, 2026-11-07): viven en datos.OPINIONES.
 TESTIMONIOS = datos.OPINIONES
 
+# Franja de temporada bajo la portada: se retira sola en postemporada (spec de Nochebuenas, §7).
+_NB = datos.NOCHEBUENAS
+TEMPORADA = None if _NB["modo"] == "postemporada" else {
+    "aviso": "Temporada de Nochebuenas", "titulo": f"Nochebuenas {_NB['temporada']}",
+    "texto": (f"Desde {dinero(_NB['productos'][0]['precios'][0])} en menudeo y desde "
+              f"{dinero(min(p['precios'][-1] for p in _NB['productos']))} por volumen, con factura y entrega."),
+    "cta": "Ver precios y cotizar", "href": _NB["ruta"],
+}
+
 CONTENIDO = {
     "meta": META,
+    "temporada": TEMPORADA,
     "jsonld": {"negocio": NEGOCIO, "migas": MIGAS_LD, "speakable": ("h1", "h2", ".vt-faq summary")},
     "portada": {
         "kicker": "Vivero y jardinería · Tampico, Madero y Altamira",

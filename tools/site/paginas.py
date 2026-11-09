@@ -11,7 +11,8 @@ import mensajes_paginas
 PUBLIC = Path(__file__).resolve().parents[2] / "public"
 SIN_BARRA = {"tienda", "catalogo"}
 # Formularios y páginas con su propia barra fija de compra (#buybar): dos barras fijas se tapan en celular.
-RUTAS_SIN_BARRA = {"/cuestionario", "/gracias", "/datos-envio", "/pasto-sintetico-tampico"}
+RUTAS_SIN_BARRA = {"/cuestionario", "/gracias", "/datos-envio", "/pasto-sintetico-tampico",
+                   datos.NOCHEBUENAS["ruta"]}
 # Páginas de la tienda sin cotizador ni #buybar (Etapa 2b): llevan la barra móvil del shell.
 RUTAS_CON_BARRA = {"/pasto-sintetico/perros"}
 
@@ -36,6 +37,7 @@ EXACTAS = {
     "/arboles-ornamentales-tampico": _PLANTAS,
     "/arboles-para-banqueta-tampico": _PLANTAS,
     "/plantas-de-interior-tampico": _PLANTAS,
+    datos.NOCHEBUENAS["ruta"]: ("nochebuenas", "plantas", "plantas"),
     "/catalogo": ("catalogo", "plantas", "plantas"),
     "/tierra-negra-vegetal-tampico": _MATERIAL,
     "/tezontle-rojo-tampico": _MATERIAL,
@@ -84,6 +86,8 @@ def contexto(ruta):
         texto = mensajes_paginas.BLOG.get(slug, texto)
     if ruta in mensajes_paginas.RUTAS:
         texto, texto_pie = mensajes_paginas.RUTAS[ruta]
+    if ruta == datos.NOCHEBUENAS["ruta"]:
+        texto, texto_pie = mensajes_paginas.NOCHEBUENAS[datos.NOCHEBUENAS["modo"]], None
     return {
         "ruta": ruta,
         "tipo": tipo,
