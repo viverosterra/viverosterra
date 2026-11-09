@@ -8,7 +8,7 @@ CLASE_BODY = "vt-pagina vt-util"
 
 
 def _lista(items):
-    return '<ul class="vt-checks">' + "".join(f"<li>{x}</li>" for x in items) + "</ul>"
+    return '<ul class="vt-checks">' + "".join(f"<li><span>{x}</span></li>" for x in items) + "</ul>"
 
 
 def _fases(fases):

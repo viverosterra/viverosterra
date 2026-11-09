@@ -307,7 +307,7 @@ def fichas(items):
     """Tarjetas de lo que incluye un servicio, sin precio ni botón. items: titulo, texto y, opcional, puntos."""
     filas = []
     for f in items:
-        puntos = "".join(f"<li>{x}</li>" for x in f.get("puntos", ()))
+        puntos = "".join(f"<li><span>{x}</span></li>" for x in f.get("puntos", ()))
         lista = f'<ul class="vt-checks">{puntos}</ul>' if puntos else ""
         filas.append(f'<li class="vt-modo"><h3>{f["titulo"]}</h3><p>{f["texto"]}</p>{lista}</li>')
     return f'<ul class="vt-modos vt-fichas">{"".join(filas)}</ul>'
@@ -362,7 +362,7 @@ def garantia(g):
     cifra de la garantía; riego no tiene un plazo y la omite)."""
     no_aplica = ' class="vt-checks__no"'
     cifra = f'<p class="vt-grande">{g["grande"]}<small> {g["unidad"]}</small></p>' if g.get("grande") else ""
-    puntos = "".join(f'<li{"" if ok else no_aplica}>{t}</li>' for t, ok in g["puntos"])
+    puntos = "".join(f'<li{"" if ok else no_aplica}><span>{t}</span></li>' for t, ok in g["puntos"])
     ident = esc(g["id_titulo"])
     return (f'<section class="vt-bloque vt-bloque--tinte" aria-labelledby="{ident}"><div class="vt-wrap vt-dos">'
             f'<div><p class="vt-bloque__no"><b>{g["numero"]:02d}</b>{g["rotulo"]}</p><h2 id="{ident}">'

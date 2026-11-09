@@ -77,3 +77,4 @@
 /* Al final y con la misma especificidad que las reglas de arriba: un elemento hidden nunca se ve, aunque su regla le dé display. */
 .vt-util [hidden]{display:none}
 @media (prefers-reduced-motion:reduce){.vt-util .vt-progreso span,.vt-util .vt-pill span{transition:none}}
+.vt-util .vt-portada .vt-etiqueta__nombre{display:block}

@@ -15,6 +15,20 @@ VIEJOS = re.compile(r"fonts\.googleapis|/css/(?:tailwind|design-system|servicios
 
 
 class CierreEtapa2Test(unittest.TestCase):
+    def test_cada_punto_de_lista_con_palomita_es_una_sola_celda(self):
+        """.vt-checks li es un grid de 22px 1fr: texto suelto junto a un <strong> o <a> caería en la columna de 22px."""
+        rotos = {}
+        for p in PUBLIC.rglob("*.html"):
+            for lista in re.findall(r'<ul class="vt-checks[^"]*">(.*?)</ul>', p.read_text(encoding="utf-8"), re.S):
+                for punto in re.findall(r"<li[^>]*>(.*?)</li>", lista, re.S):
+                    if re.search(r"<(?:strong|a|em|b)\b", punto) and not punto.startswith("<span>"):
+                        rotos.setdefault(p.relative_to(PUBLIC).as_posix(), []).append(punto[:60])
+        self.assertEqual(rotos, {})
+
+    def test_vivero_nombra_el_producto_de_la_etiqueta_en_celular(self):
+        hoja = next(PUBLIC.joinpath("css").glob("terra-util.??????????.css")).read_text(encoding="utf-8")
+        self.assertIn(".vt-util .vt-portada .vt-etiqueta__nombre{display:block}", hoja)
+
     def test_ninguna_pagina_carga_estilos_viejos(self):
         con_viejo = {p.relative_to(PUBLIC).as_posix(): VIEJOS.search(p.read_text(encoding="utf-8")).group(0)
                      for p in PUBLIC.rglob("*.html") if VIEJOS.search(p.read_text(encoding="utf-8"))}

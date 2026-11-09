@@ -180,7 +180,7 @@ class PlanesTest(unittest.TestCase):
                          {"titulo": "Goteo", "texto": "A la raíz.", "puntos": ("Menos agua",)}))
         self.assertTrue(html.startswith('<ul class="vt-modos vt-fichas">'))
         self.assertIn("<h3>Poda de pasto</h3><p>Corte parejo.</p></li>", html)
-        self.assertIn('<ul class="vt-checks"><li>Menos agua</li></ul>', html)
+        self.assertIn('<ul class="vt-checks"><li><span>Menos agua</span></li></ul>', html)
         self.assertNotIn("wa.me", html)
 
     def test_garantia_con_y_sin_cifra(self):
