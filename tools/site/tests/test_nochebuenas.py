@@ -532,7 +532,7 @@ class ConfiguracionTest(unittest.TestCase):
 
     def test_home_y_hub_enlazan_la_pagina(self):
         home = (paginas.PUBLIC / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Desde $89 en menudeo y desde $65 por volumen, con factura y entrega.", home)
+        self.assertIn("Desde $89 en menudeo y desde $65 por volumen", home)
         hub = (paginas.PUBLIC / "plantas-palmas-arboles-tampico" / "index.html").read_text(encoding="utf-8")
         main_home = re.search(r"<main\b.*</main>", home, re.S).group(0)
         main_hub = re.search(r"<main\b.*</main>", hub, re.S).group(0)

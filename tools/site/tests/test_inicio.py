@@ -27,6 +27,18 @@ def ld(tipo):
 
 
 class InicioTest(unittest.TestCase):
+    def test_banner_de_nochebuenas_es_lo_primero_y_todo_enlaza(self):
+        """Pedido del dueño (2026-11-09): algo llamativo por la temporada, arriba de la portada, que lleve a Nochebuenas."""
+        ruta = datos.NOCHEBUENAS["ruta"]
+        self.assertRegex(MAIN.lstrip(), rf'^<aside class="vt-navidad-x" aria-label="Temporada de Nochebuenas"><a class="vt-navidad" data-cta="home:banner-nochebuenas" href="{ruta}">')
+        banner = re.search(r'<a class="vt-navidad".*?</a>', MAIN, re.S).group(0)
+        plano = re.sub(r"<[^>]+>", "", banner)
+        for frase in ("Nochebuenas 2026", "Pedidos abiertos", "Desde $89 en menudeo y desde $65 por volumen", "Ver nochebuenas"):
+            self.assertIn(frase, plano)
+        self.assertEqual(MAIN.count(f'href="{ruta}"'), 1, "un solo enlace de temporada en la home: el banner sustituye a la franja")
+        self.assertIn('<body class="vt-pagina vt-temporada">', HTML)
+        self.assertIn("/css/terra-temporada.", HTML[:HTML.index("</head>")])
+
     def test_secuencia_de_la_plantilla(self):
         marcas = ('class="vt-portada"', 'class="vt-datos"', 'id="vt-h-que"', 'data-vt-medidor', 'id="vt-h-obras"',
                   'class="vt-logos"', 'id="vt-h-opiniones"', 'id="vt-h-como"', 'id="vt-h-precios"', 'id="vt-h-faq"', 'id="vt-h-cobertura"', 'class="vt-cierre"')

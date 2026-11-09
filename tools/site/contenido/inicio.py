@@ -104,10 +104,10 @@ TESTIMONIOS = datos.OPINIONES
 # Franja de temporada bajo la portada: se retira sola en postemporada (spec de Nochebuenas, §7).
 _NB = datos.NOCHEBUENAS
 TEMPORADA = None if _NB["modo"] == "postemporada" else {
-    "aviso": "Temporada de Nochebuenas", "titulo": f"Nochebuenas {_NB['temporada']}",
+    "aviso": "Temporada de Nochebuenas", "titulo": f"Nochebuenas {_NB['temporada']}", "estado": "Pedidos abiertos",
     "texto": (f"Desde {dinero(_NB['productos'][0]['precios'][0])} en menudeo y desde "
-              f"{dinero(min(p['precios'][-1] for p in _NB['productos']))} por volumen, con factura y entrega."),
-    "cta": "Ver precios y cotizar", "href": _NB["ruta"],
+              f"{dinero(min(p['precios'][-1] for p in _NB['productos']))} por volumen"),
+    "cta": "Ver nochebuenas", "href": _NB["ruta"],
 }
 
 CONTENIDO = {
