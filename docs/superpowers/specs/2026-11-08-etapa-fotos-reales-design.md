@@ -45,8 +45,8 @@ Las flores y las hojas moradas conservan su color. El balance no usa el follaje 
    `claridad`) definida en un JSON.
 2. Ficha por foto: contenido, obra, sección, calidad, recorte y si necesita limpieza.
 3. Revelado por lote a un máximo de 2400 px, sin ampliar las fotos chicas.
-4. Limpieza con IA en 10 a 15 fotos clave, después de aprobar la lista y el costo. Cada resultado se compara contra
-   su original.
+4. Limpieza local y gratuita con LaMa (IOPaint) en 10 a 15 fotos clave, sin enviar fotos a servicios externos. Se
+   marca solo el objeto a retirar y `verificar_limpieza.py` confirma que nada cambió fuera de esa zona.
 5. Galería de aprobación con antes y después.
 6. Integración en una etapa propia: WebP de hasta 1200 px, `activos.json`, plantillas y pies `FIG.`.
 
