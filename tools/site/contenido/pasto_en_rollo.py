@@ -128,10 +128,9 @@ CONTENIDO = {
         "lede": ('<i class="vt-serif">Stenotaphrum secundatum</i> es la variedad que mejor aguanta el calor y la '
                  "humedad del Golfo. Así se ve en cada etapa."),
         "figuras": (
-            # Es un render, no una foto de obra: el pie lo dice (gate de diseño 2a).
-            {"src": f"{OBRA}/jardin-residencial-pasto-san-agustin.webp", "ancho": 1280, "alto": 720, "numero": 2,
-             "alt": "Imagen de referencia de un jardín residencial con pasto San Agustín.",
-             "lugar": "Jardín residencial con pasto San Agustín", "etapa": "Proyecto · referencia"},
+            {"src": f"{OBRA}/terra/jardin-residencial-pasto-alberca.webp", "ancho": 1200, "alto": 918, "numero": 2,
+             "alt": "Jardín residencial con pasto parejo alrededor de una alberca de forma libre, con palmeras y muro de piedra.",
+             "lugar": "Jardín residencial con pasto", "etapa": "Terminado"},
             {"src": f"{OBRA}/cuadrilla-tendiendo-pasto-san-agustin-640.webp", "ancho": 640, "alto": 960, "numero": 3,
              "alt": "Integrante de la cuadrilla tendiendo tepes de pasto San Agustín.", "lugar": "Tendido de tepes",
              "etapa": "Día de instalación"},

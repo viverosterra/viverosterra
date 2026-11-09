@@ -69,6 +69,14 @@ Las flores y las hojas moradas conservan su color. El balance no usa el follaje 
 La primera sustitución son las 24 fotos con marca de agua registradas en `FOTOS_POR_REVISAR`, cuando exista la especie
 correcta entre las fotos propias. Los renders actuales salen de forma gradual o conservan su pie de referencia.
 
+## Colocación aprobada
+
+El dueño eligió 63 fotos en la galería (2026-11-09) y pidió secciones de obras en cada servicio. Son 62 en mosaicos de 9
+páginas (`tools/site/contenido/fotos_obra.json`, generado por `herramientas/colocar.py`) y 1 que sustituye el render
+"Proyecto · referencia" de inicio y pasto en rollo. El dueño confirmó permiso para las 5 fotos con letreros o edificios
+de terceros. Sin lugar capturado, el pie describe lo que se ve; la etapa de las 18 fotos rescatadas o confirmadas es
+propuesta y la confirma el dueño en la revisión. Las 24 fotos con marca de agua siguen pendientes hasta tener especie.
+
 ## Criterios de terminado
 
 - Cada foto publicada tiene aprobación, pie confirmado, `alt` descriptivo y cero metadatos.

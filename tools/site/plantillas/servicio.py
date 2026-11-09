@@ -13,6 +13,7 @@ sin cifra. Páginas: /pasto-en-rollo-tampico (contenido/pasto_en_rollo.py), /pas
 (contenido/sistema_riego.py)."""
 import componentes as c
 import componentes_tienda as t
+from contenido import fotos_obra
 from plantillas import base
 
 CONTEXTO = "https://schema.org"
@@ -140,6 +141,10 @@ def render(k):
     g, f, ci, p = k["garantia"], k["faq"], k["cierre"], k["proceso"]
     secciones = [c.portada(k["portada"], tipo, k["migas"]), _prueba(k, 1)]
     numero = 2
+    obras = fotos_obra.seccion(k["meta"]["canonical"])
+    if obras:
+        secciones.append(c.bloque_obras(numero, obras, "\n".join(secciones)))
+        numero += 1
     for clave, armar in (("opciones", _opciones), ("incluye", _incluye), ("precio", _precio), ("cotizador", _cotizador),
                          ("objecion", _objecion)):
         if clave in k:

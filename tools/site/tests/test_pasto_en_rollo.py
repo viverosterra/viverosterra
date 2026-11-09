@@ -93,9 +93,8 @@ class PastoEnRolloTest(unittest.TestCase):
             self.assertIn(f'<meta name="{nombre}" content=', HTML)
         self.assertIn('<meta name="twitter:card" content="summary_large_image">', HTML)
 
-    def test_render_rotulado_como_referencia(self):
-        self.assertIn("<span>Proyecto · referencia</span>", MAIN)
-        self.assertNotIn("<span>Terminado</span>", MAIN)
+    def test_sin_render_de_referencia(self):
+        self.assertNotIn("Proyecto · referencia", MAIN)
 
     def test_sin_css_viejo_ni_scripts_de_servicios(self):
         self.assertNotRegex(HTML, r"fonts\.googleapis|/css/(?:tailwind|design-system|servicios|legacy-fixes)")

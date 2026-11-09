@@ -1,0 +1,614 @@
+{
+ "/diseno-jardines-tampico": {
+  "titulo": "Más jardines hechos por Terra",
+  "lede": "Fotos de nuestro equipo, de la plantación al jardín terminado.",
+  "figuras": [
+   {
+    "src": "/img/obra/terra/diseno-jardines-01-muro-de-piedra-con-jardinera.webp",
+    "ancho": 1200,
+    "alto": 928,
+    "alt": "Muro de piedra laminada con jardinera a todo lo ancho, con helechos y plantas de follaje oscuro sobre un piso de losa.",
+    "lugar": "Muro de piedra con jardinera",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/diseno-jardines-01-muro-de-piedra-con-jardinera-640.webp 640w, /img/obra/terra/diseno-jardines-01-muro-de-piedra-con-jardinera.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/diseno-jardines-02-faro-de-tampico.webp",
+    "ancho": 1200,
+    "alto": 900,
+    "alt": "Macizos de flores rojas y naranjas frente a las letras de Tampico y el faro.",
+    "lugar": "Faro de Tampico",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/diseno-jardines-02-faro-de-tampico-640.webp 640w, /img/obra/terra/diseno-jardines-02-faro-de-tampico.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/diseno-jardines-03-jardinera-frente-a-celosia.webp",
+    "ancho": 1200,
+    "alto": 1182,
+    "alt": "Jardinera con palmas, gramíneas y follaje morado frente a una celosía horizontal.",
+    "lugar": "Jardinera frente a celosía",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/diseno-jardines-03-jardinera-frente-a-celosia-640.webp 640w, /img/obra/terra/diseno-jardines-03-jardinera-frente-a-celosia.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/diseno-jardines-04-hojas-grandes-y-piedra-blanca.webp",
+    "ancho": 900,
+    "alto": 1200,
+    "alt": "Plantas de hoja grande perforada con piedra blanca y pasos de losa.",
+    "lugar": "Hojas grandes y piedra blanca",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/diseno-jardines-04-hojas-grandes-y-piedra-blanca-640.webp 640w, /img/obra/terra/diseno-jardines-04-hojas-grandes-y-piedra-blanca.webp 900w"
+   },
+   {
+    "src": "/img/obra/terra/diseno-jardines-05-jardin-con-piedra-bola.webp",
+    "ancho": 812,
+    "alto": 1200,
+    "alt": "Plantas de hoja variegada junto a un muro, con piedra bola, pasillo de grano lavado y pasto.",
+    "lugar": "Jardín con piedra bola",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/diseno-jardines-05-jardin-con-piedra-bola-640.webp 640w, /img/obra/terra/diseno-jardines-05-jardin-con-piedra-bola.webp 812w"
+   },
+   {
+    "src": "/img/obra/terra/diseno-jardines-06-escalones-junto-a-alberca.webp",
+    "ancho": 1200,
+    "alto": 1057,
+    "alt": "Escalones de concreto flanqueados por helechos y plantas de hoja grande, reflejados en el agua de una alberca.",
+    "lugar": "Escalones junto a alberca",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/diseno-jardines-06-escalones-junto-a-alberca-640.webp 640w, /img/obra/terra/diseno-jardines-06-escalones-junto-a-alberca.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/diseno-jardines-07-jardinera-en-capas.webp",
+    "ancho": 947,
+    "alto": 1200,
+    "alt": "Jardinera en capas con follaje claro, una palma baja y plantas moradas, con borde de losa.",
+    "lugar": "Jardinera en capas",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/diseno-jardines-07-jardinera-en-capas-640.webp 640w, /img/obra/terra/diseno-jardines-07-jardinera-en-capas.webp 947w"
+   },
+   {
+    "src": "/img/obra/terra/diseno-jardines-08-helechos-y-losas.webp",
+    "ancho": 937,
+    "alto": 1200,
+    "alt": "Detalle de helechos y plantas de hoja grande en una jardinera, con pasto y losas al fondo.",
+    "lugar": "Helechos y losas",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/diseno-jardines-08-helechos-y-losas-640.webp 640w, /img/obra/terra/diseno-jardines-08-helechos-y-losas.webp 937w"
+   }
+  ]
+ },
+ "/mantenimiento-jardines-tampico": {
+  "titulo": "Jardines y áreas verdes de Terra",
+  "lede": "Así se ven los espacios cuando las plantas tienen quien las atienda.",
+  "figuras": [
+   {
+    "src": "/img/obra/terra/mantenimiento-jardines-01-canas-frente-a-muro-morado.webp",
+    "ancho": 1200,
+    "alto": 1052,
+    "alt": "Jardinera escalonada con cañas altas y follaje bajo frente a un muro morado, con la sombra de las cañas proyectada sobre el muro.",
+    "lugar": "Cañas frente a muro morado",
+    "etapa": "Mantenimiento",
+    "srcset": "/img/obra/terra/mantenimiento-jardines-01-canas-frente-a-muro-morado-640.webp 640w, /img/obra/terra/mantenimiento-jardines-01-canas-frente-a-muro-morado.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/mantenimiento-jardines-02-recorte-de-seto-a-mano.webp",
+    "ancho": 973,
+    "alto": 1200,
+    "alt": "Colaborador de Viveros Terra de espaldas, con chaleco de la marca, recortando un seto con tijeras de mano.",
+    "lugar": "Recorte de seto a mano",
+    "etapa": "Mantenimiento",
+    "srcset": "/img/obra/terra/mantenimiento-jardines-02-recorte-de-seto-a-mano-640.webp 640w, /img/obra/terra/mantenimiento-jardines-02-recorte-de-seto-a-mano.webp 973w"
+   },
+   {
+    "src": "/img/obra/terra/mantenimiento-jardines-03-plantas-a-lo-largo-de-un-pasillo.webp",
+    "ancho": 853,
+    "alto": 1200,
+    "alt": "Hilera de plantas de hoja vertical con borde amarillo a lo largo de un pasillo de losa.",
+    "lugar": "Plantas a lo largo de un pasillo",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/mantenimiento-jardines-03-plantas-a-lo-largo-de-un-pasillo-640.webp 640w, /img/obra/terra/mantenimiento-jardines-03-plantas-a-lo-largo-de-un-pasillo.webp 853w"
+   },
+   {
+    "src": "/img/obra/terra/mantenimiento-jardines-04-canas-junto-a-muro-blanco.webp",
+    "ancho": 1046,
+    "alto": 852,
+    "alt": "Pasillo con cañas altas alineadas a un muro blanco y un borde de piedra bola.",
+    "lugar": "Cañas junto a muro blanco",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/mantenimiento-jardines-04-canas-junto-a-muro-blanco-640.webp 640w, /img/obra/terra/mantenimiento-jardines-04-canas-junto-a-muro-blanco.webp 1046w"
+   },
+   {
+    "src": "/img/obra/terra/mantenimiento-jardines-05-jardinera-junto-a-muro.webp",
+    "ancho": 832,
+    "alto": 1200,
+    "alt": "Arbusto alto, gramíneas y follaje claro en una jardinera junto a un muro blanco, con piso de losa.",
+    "lugar": "Jardinera junto a muro",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/mantenimiento-jardines-05-jardinera-junto-a-muro-640.webp 640w, /img/obra/terra/mantenimiento-jardines-05-jardinera-junto-a-muro.webp 832w"
+   },
+   {
+    "src": "/img/obra/terra/mantenimiento-jardines-06-jardinera-con-escultura.webp",
+    "ancho": 947,
+    "alto": 1200,
+    "alt": "Jardinera con follaje verde limón y morado alrededor de una escultura de peces, junto a un barandal frente al agua y un puente al fondo.",
+    "lugar": "Jardinera con escultura",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/mantenimiento-jardines-06-jardinera-con-escultura-640.webp 640w, /img/obra/terra/mantenimiento-jardines-06-jardinera-con-escultura.webp 947w"
+   },
+   {
+    "src": "/img/obra/terra/mantenimiento-jardines-07-area-verde-frente-a-reja.webp",
+    "ancho": 1200,
+    "alto": 996,
+    "alt": "Área verde con pasto, árboles jóvenes y plantas de hoja lineal frente a una reja blanca.",
+    "lugar": "Área verde frente a reja",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/mantenimiento-jardines-07-area-verde-frente-a-reja-640.webp 640w, /img/obra/terra/mantenimiento-jardines-07-area-verde-frente-a-reja.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/mantenimiento-jardines-08-franja-ajardinada.webp",
+    "ancho": 900,
+    "alto": 1200,
+    "alt": "Franja ajardinada con pasto, cícadas y palmeras junto a una fachada blanca con paneles verdes y reja blanca.",
+    "lugar": "Franja ajardinada",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/mantenimiento-jardines-08-franja-ajardinada-640.webp 640w, /img/obra/terra/mantenimiento-jardines-08-franja-ajardinada.webp 900w"
+   }
+  ]
+ },
+ "/pasto-en-rollo-tampico": {
+  "titulo": "Pasto instalado en obras reales",
+  "lede": "Fotos de nuestras obras, algunas durante la instalación y otras ya terminadas.",
+  "figuras": [
+   {
+    "src": "/img/obra/terra/pasto-en-rollo-01-explanada-de-pasto.webp",
+    "ancho": 1200,
+    "alto": 702,
+    "alt": "Explanada extensa de pasto con andadores frente a un edificio moderno, vista desde lo alto bajo cielo azul.",
+    "lugar": "Explanada de pasto",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/pasto-en-rollo-01-explanada-de-pasto-640.webp 640w, /img/obra/terra/pasto-en-rollo-01-explanada-de-pasto.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/pasto-en-rollo-02-parterre-circular-sobre-pasto.webp",
+    "ancho": 1200,
+    "alto": 1024,
+    "alt": "Parterre circular con anillos de follaje verde limón y morado sobre pasto, frente a un barandal junto al agua.",
+    "lugar": "Parterre circular sobre pasto",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/pasto-en-rollo-02-parterre-circular-sobre-pasto-640.webp 640w, /img/obra/terra/pasto-en-rollo-02-parterre-circular-sobre-pasto.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/pasto-en-rollo-03-pasto-de-hoja-ancha.webp",
+    "ancho": 1052,
+    "alto": 1200,
+    "alt": "Acercamiento a ras de suelo de pasto de hoja ancha, sano y denso.",
+    "lugar": "Pasto de hoja ancha",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/pasto-en-rollo-03-pasto-de-hoja-ancha-640.webp 640w, /img/obra/terra/pasto-en-rollo-03-pasto-de-hoja-ancha.webp 1052w"
+   },
+   {
+    "src": "/img/obra/terra/pasto-en-rollo-04-pasto-recien-instalado-en-parque.webp",
+    "ancho": 1200,
+    "alto": 809,
+    "alt": "Pasto recién instalado en un parque, con bancas protegidas con plástico y borde de tierra por terminar.",
+    "lugar": "Pasto recién instalado en parque",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/pasto-en-rollo-04-pasto-recien-instalado-en-parque-640.webp 640w, /img/obra/terra/pasto-en-rollo-04-pasto-recien-instalado-en-parque.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/pasto-en-rollo-05-plaza-con-fuente.webp",
+    "ancho": 1200,
+    "alto": 846,
+    "alt": "Plaza con fuente central y pasto recién colocado, con trabajadores terminando las obras junto a los andadores.",
+    "lugar": "Plaza con fuente",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/pasto-en-rollo-05-plaza-con-fuente-640.webp 640w, /img/obra/terra/pasto-en-rollo-05-plaza-con-fuente.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/pasto-en-rollo-06-area-verde-con-andadores.webp",
+    "ancho": 1200,
+    "alto": 702,
+    "alt": "Área verde amplia con pasto joven, andadores curvos de concreto y muro blanco al fondo.",
+    "lugar": "Área verde con andadores",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/pasto-en-rollo-06-area-verde-con-andadores-640.webp 640w, /img/obra/terra/pasto-en-rollo-06-area-verde-con-andadores.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/pasto-en-rollo-07-area-verde-industrial.webp",
+    "ancho": 1200,
+    "alto": 1073,
+    "alt": "Área verde con pasto recién colocado y plantas en bolsa alineadas en el borde, en una zona industrial.",
+    "lugar": "Área verde industrial",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/pasto-en-rollo-07-area-verde-industrial-640.webp 640w, /img/obra/terra/pasto-en-rollo-07-area-verde-industrial.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/pasto-en-rollo-08-plantacion-junto-a-pasto.webp",
+    "ancho": 860,
+    "alto": 1200,
+    "alt": "Plantación nueva de plantas de hoja ancha sobre tierra preparada, con pasto, palmeras y una pérgola blanca al fondo.",
+    "lugar": "Plantación junto a pasto",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/pasto-en-rollo-08-plantacion-junto-a-pasto-640.webp 640w, /img/obra/terra/pasto-en-rollo-08-plantacion-junto-a-pasto.webp 860w"
+   }
+  ]
+ },
+ "/sistema-riego-tampico": {
+  "titulo": "Sistemas de riego funcionando",
+  "lede": "Aspersores y controladores en obras de Terra.",
+  "figuras": [
+   {
+    "src": "/img/obra/terra/sistema-riego-01-aspersores-a-contraluz.webp",
+    "ancho": 1200,
+    "alto": 992,
+    "alt": "Dos aspersores lanzan arcos de agua a contraluz sobre un campo deportivo de pasto.",
+    "lugar": "Aspersores a contraluz",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/sistema-riego-01-aspersores-a-contraluz-640.webp 640w, /img/obra/terra/sistema-riego-01-aspersores-a-contraluz.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/sistema-riego-02-chorros-cruzados-en-campo.webp",
+    "ancho": 1200,
+    "alto": 824,
+    "alt": "Tres aspersores cruzan sus chorros a contraluz sobre un campo de pasto.",
+    "lugar": "Chorros cruzados en campo",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/sistema-riego-02-chorros-cruzados-en-campo-640.webp 640w, /img/obra/terra/sistema-riego-02-chorros-cruzados-en-campo.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/sistema-riego-03-aspersor-emergente.webp",
+    "ancho": 1200,
+    "alto": 797,
+    "alt": "Aspersor emergente negro regando sobre pasto, en toma a ras de piso.",
+    "lugar": "Aspersor emergente",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/sistema-riego-03-aspersor-emergente-640.webp 640w, /img/obra/terra/sistema-riego-03-aspersor-emergente.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/sistema-riego-04-instalacion-del-controlador.webp",
+    "ancho": 923,
+    "alto": 1200,
+    "alt": "Técnico de espaldas trabajando con un taladro junto al controlador de riego y un grupo de palmas.",
+    "lugar": "Instalación del controlador",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/sistema-riego-04-instalacion-del-controlador-640.webp 640w, /img/obra/terra/sistema-riego-04-instalacion-del-controlador.webp 923w"
+   },
+   {
+    "src": "/img/obra/terra/sistema-riego-05-aspersor-junto-a-banqueta.webp",
+    "ancho": 1200,
+    "alto": 1073,
+    "alt": "Aspersor emergente en funcionamiento sobre pasto con zonas secas, junto a una banqueta de concreto.",
+    "lugar": "Aspersor junto a banqueta",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/sistema-riego-05-aspersor-junto-a-banqueta-640.webp 640w, /img/obra/terra/sistema-riego-05-aspersor-junto-a-banqueta.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/sistema-riego-06-riego-de-pasto-recien-colocado.webp",
+    "ancho": 1200,
+    "alto": 891,
+    "alt": "Pasto en rollo recién colocado con un aspersor en marcha junto a un edificio de gran formato.",
+    "lugar": "Riego de pasto recién colocado",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/sistema-riego-06-riego-de-pasto-recien-colocado-640.webp 640w, /img/obra/terra/sistema-riego-06-riego-de-pasto-recien-colocado.webp 1200w"
+   }
+  ]
+ },
+ "/pasto-sintetico-tampico": {
+  "titulo": "Pasto sintético instalado por Terra",
+  "lede": "Instalaciones de nuestro equipo en la zona.",
+  "figuras": [
+   {
+    "src": "/img/obra/terra/pasto-sintetico-01-terraza-con-alberca.webp",
+    "ancho": 1200,
+    "alto": 1176,
+    "alt": "Pasto sintético terminado junto a un deck de madera, una alberca infinita y pérgolas oscuras frente a un cuerpo de agua.",
+    "lugar": "Terraza con alberca",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/pasto-sintetico-01-terraza-con-alberca-640.webp 640w, /img/obra/terra/pasto-sintetico-01-terraza-con-alberca.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/pasto-sintetico-02-union-de-rollos.webp",
+    "ancho": 1200,
+    "alto": 1056,
+    "alt": "Instalador de espaldas trabajando la unión entre rollos de pasto sintético, junto a una alberca frente a un cuerpo de agua.",
+    "lugar": "Unión de rollos",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/pasto-sintetico-02-union-de-rollos-640.webp 640w, /img/obra/terra/pasto-sintetico-02-union-de-rollos.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/pasto-sintetico-03-patio-con-pasto-sintetico.webp",
+    "ancho": 1038,
+    "alto": 1176,
+    "alt": "Patio con pasto sintético recién instalado, muro claro, una palma y plantas de follaje al fondo.",
+    "lugar": "Patio con pasto sintético",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/pasto-sintetico-03-patio-con-pasto-sintetico-640.webp 640w, /img/obra/terra/pasto-sintetico-03-patio-con-pasto-sintetico.webp 1038w"
+   },
+   {
+    "src": "/img/obra/terra/pasto-sintetico-04-terraza-con-vista-al-mar.webp",
+    "ancho": 963,
+    "alto": 1200,
+    "alt": "Instalación en proceso de pasto sintético en una terraza con vista al mar, con un rollo levantado y una unión abierta.",
+    "lugar": "Terraza con vista al mar",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/pasto-sintetico-04-terraza-con-vista-al-mar-640.webp 640w, /img/obra/terra/pasto-sintetico-04-terraza-con-vista-al-mar.webp 963w"
+   },
+   {
+    "src": "/img/obra/terra/pasto-sintetico-05-pasto-a-ras-de-piso.webp",
+    "ancho": 1058,
+    "alto": 1200,
+    "alt": "Acercamiento a ras de piso de pasto denso con desenfoque hacia el fondo.",
+    "lugar": "Pasto a ras de piso",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/pasto-sintetico-05-pasto-a-ras-de-piso-640.webp 640w, /img/obra/terra/pasto-sintetico-05-pasto-a-ras-de-piso.webp 1058w"
+   }
+  ]
+ },
+ "/plantas-para-jardin-tampico": {
+  "titulo": "Plantas de nuestro vivero",
+  "lede": "Follaje y flor, en fotos tomadas por nuestro equipo.",
+  "figuras": [
+   {
+    "src": "/img/obra/terra/plantas-para-jardin-01-plantas-junto-a-andador.webp",
+    "ancho": 675,
+    "alto": 1200,
+    "alt": "Plantas de hoja lobulada sembradas a lo largo de un andador de madera.",
+    "lugar": "Plantas junto a andador",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/plantas-para-jardin-01-plantas-junto-a-andador-640.webp 640w, /img/obra/terra/plantas-para-jardin-01-plantas-junto-a-andador.webp 675w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-para-jardin-02-esquina-de-jardinera.webp",
+    "ancho": 1046,
+    "alto": 1200,
+    "alt": "Esquina de jardinera de piedra laminada con un arbusto, helechos y follaje morado, junto a un muro blanco.",
+    "lugar": "Esquina de jardinera",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/plantas-para-jardin-02-esquina-de-jardinera-640.webp 640w, /img/obra/terra/plantas-para-jardin-02-esquina-de-jardinera.webp 1046w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-para-jardin-03-flores-tropicales.webp",
+    "ancho": 900,
+    "alto": 1200,
+    "alt": "Dos flores tropicales rojas y naranjas de tallo alto sobre un fondo de follaje verde.",
+    "lugar": "Flores tropicales",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-para-jardin-03-flores-tropicales-640.webp 640w, /img/obra/terra/plantas-para-jardin-03-flores-tropicales.webp 900w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-para-jardin-04-espigas-amarillas.webp",
+    "ancho": 1125,
+    "alto": 1200,
+    "alt": "Arbusto de hojas oscuras con espigas de flor amarilla en bolsa negra, en un vivero.",
+    "lugar": "Espigas amarillas",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-para-jardin-04-espigas-amarillas-640.webp 640w, /img/obra/terra/plantas-para-jardin-04-espigas-amarillas.webp 1125w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-para-jardin-05-trepadora-en-flor.webp",
+    "ancho": 931,
+    "alto": 1200,
+    "alt": "Planta trepadora con flores rosas acampanadas y botones, sujeta a tutores de caña.",
+    "lugar": "Trepadora en flor",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-para-jardin-05-trepadora-en-flor-640.webp 640w, /img/obra/terra/plantas-para-jardin-05-trepadora-en-flor.webp 931w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-para-jardin-06-follaje-de-color.webp",
+    "ancho": 900,
+    "alto": 1200,
+    "alt": "Follaje de hojas alargadas en tonos vino, verde y amarillo con bordes rosados.",
+    "lugar": "Follaje de color",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-para-jardin-06-follaje-de-color-640.webp 640w, /img/obra/terra/plantas-para-jardin-06-follaje-de-color.webp 900w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-para-jardin-07-rosetas-variegadas.webp",
+    "ancho": 920,
+    "alto": 1200,
+    "alt": "Plantas en roseta de hojas alargadas con franjas verdes, crema y magenta en un vivero.",
+    "lugar": "Rosetas variegadas",
+    "etapa": "Entrega",
+    "srcset": "/img/obra/terra/plantas-para-jardin-07-rosetas-variegadas-640.webp 640w, /img/obra/terra/plantas-para-jardin-07-rosetas-variegadas.webp 920w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-para-jardin-08-follaje-con-gotas-de-agua.webp",
+    "ancho": 1200,
+    "alto": 1120,
+    "alt": "Plantas de follaje amarillo, verde y rojo con gotas de agua, en bolsas negras de vivero.",
+    "lugar": "Follaje con gotas de agua",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-para-jardin-08-follaje-con-gotas-de-agua-640.webp 640w, /img/obra/terra/plantas-para-jardin-08-follaje-con-gotas-de-agua.webp 1200w"
+   }
+  ]
+ },
+ "/plantas-palmas-arboles-tampico": {
+  "titulo": "Recorrido por el vivero",
+  "lede": "Lotes reales, en bolsa, listos para entrega o plantación.",
+  "figuras": [
+   {
+    "src": "/img/obra/terra/plantas-palmas-arboles-01-lote-de-hoja-variegada.webp",
+    "ancho": 1200,
+    "alto": 848,
+    "alt": "Lote de plantas de hoja variegada verde y crema en bolsas, visto de cerca en un vivero.",
+    "lugar": "Lote de hoja variegada",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-palmas-arboles-01-lote-de-hoja-variegada-640.webp 640w, /img/obra/terra/plantas-palmas-arboles-01-lote-de-hoja-variegada.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-palmas-arboles-02-arbustos-de-follaje-claro.webp",
+    "ancho": 1200,
+    "alto": 1120,
+    "alt": "Arbustos de follaje verde amarillento en bolsas negras, con hojas húmedas, en un vivero.",
+    "lugar": "Arbustos de follaje claro",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/plantas-palmas-arboles-02-arbustos-de-follaje-claro-640.webp 640w, /img/obra/terra/plantas-palmas-arboles-02-arbustos-de-follaje-claro.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-palmas-arboles-03-arbustos-en-flor.webp",
+    "ancho": 1118,
+    "alto": 1200,
+    "alt": "Hilera de arbustos con flores naranjas, rosas y blancas en bolsas negras sobre tierra de vivero.",
+    "lugar": "Arbustos en flor",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-palmas-arboles-03-arbustos-en-flor-640.webp 640w, /img/obra/terra/plantas-palmas-arboles-03-arbustos-en-flor.webp 1118w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-palmas-arboles-04-arbustos-con-flor-fucsia.webp",
+    "ancho": 999,
+    "alto": 817,
+    "alt": "Grupo de arbustos con flor fucsia y tutores de caña, en bolsas negras sobre tierra de vivero.",
+    "lugar": "Arbustos con flor fucsia",
+    "etapa": "Entrega",
+    "srcset": "/img/obra/terra/plantas-palmas-arboles-04-arbustos-con-flor-fucsia-640.webp 640w, /img/obra/terra/plantas-palmas-arboles-04-arbustos-con-flor-fucsia.webp 999w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-palmas-arboles-05-gramineas-en-bolsa.webp",
+    "ancho": 1200,
+    "alto": 1200,
+    "alt": "Gramínea ornamental en bolsa negra, al frente de dos hileras de la misma planta en un vivero.",
+    "lugar": "Gramíneas en bolsa",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-palmas-arboles-05-gramineas-en-bolsa-640.webp 640w, /img/obra/terra/plantas-palmas-arboles-05-gramineas-en-bolsa.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-palmas-arboles-06-coniferas-en-hilera.webp",
+    "ancho": 1118,
+    "alto": 1200,
+    "alt": "Coníferas de forma columnar en hilera frente a un muro claro desenfocado.",
+    "lugar": "Coníferas en hilera",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-palmas-arboles-06-coniferas-en-hilera-640.webp 640w, /img/obra/terra/plantas-palmas-arboles-06-coniferas-en-hilera.webp 1118w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-palmas-arboles-07-plantas-de-tronco-engrosado.webp",
+    "ancho": 1200,
+    "alto": 1187,
+    "alt": "Plantas de tronco engrosado con hojas verdes y flores rosas y fucsias en un vivero.",
+    "lugar": "Plantas de tronco engrosado",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-palmas-arboles-07-plantas-de-tronco-engrosado-640.webp 640w, /img/obra/terra/plantas-palmas-arboles-07-plantas-de-tronco-engrosado.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-palmas-arboles-08-gramineas-y-arbustos.webp",
+    "ancho": 983,
+    "alto": 1200,
+    "alt": "Macizo de gramíneas con espigas detrás de un lote de arbustos de hoja angosta con flores rosas.",
+    "lugar": "Gramíneas y arbustos",
+    "etapa": "Entrega",
+    "srcset": "/img/obra/terra/plantas-palmas-arboles-08-gramineas-y-arbustos-640.webp 640w, /img/obra/terra/plantas-palmas-arboles-08-gramineas-y-arbustos.webp 983w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-palmas-arboles-09-arboles-jovenes.webp",
+    "ancho": 1200,
+    "alto": 785,
+    "alt": "Hileras de árboles jóvenes en bolsas negras sobre pasto.",
+    "lugar": "Árboles jóvenes",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-palmas-arboles-09-arboles-jovenes-640.webp 640w, /img/obra/terra/plantas-palmas-arboles-09-arboles-jovenes.webp 1200w"
+   }
+  ]
+ },
+ "/palmas-tropicales-tampico": {
+  "titulo": "Palmas en obra y antes de plantar",
+  "lede": "Fotos propias de jardineras terminadas y plantas en sitio.",
+  "figuras": [
+   {
+    "src": "/img/obra/terra/palmas-tropicales-01-grupo-de-palmas.webp",
+    "ancho": 1050,
+    "alto": 1200,
+    "alt": "Jardinera con un grupo de palmas sobre tierra negra, junto a un muro blanco.",
+    "lugar": "Grupo de palmas",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/palmas-tropicales-01-grupo-de-palmas-640.webp 640w, /img/obra/terra/palmas-tropicales-01-grupo-de-palmas.webp 1050w"
+   },
+   {
+    "src": "/img/obra/terra/palmas-tropicales-02-palma-sobre-grava-y-roca.webp",
+    "ancho": 643,
+    "alto": 1200,
+    "alt": "Palma sobre una cama de grava blanca y roca roja con borde curvo, junto a un muro oscuro.",
+    "lugar": "Palma sobre grava y roca",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/palmas-tropicales-02-palma-sobre-grava-y-roca-640.webp 640w, /img/obra/terra/palmas-tropicales-02-palma-sobre-grava-y-roca.webp 643w"
+   },
+   {
+    "src": "/img/obra/terra/palmas-tropicales-03-jardinera-con-palmeras.webp",
+    "ancho": 1200,
+    "alto": 1066,
+    "alt": "Jardinera con palmeras y plantas de follaje sobre tierra negra y pasto, en un estacionamiento comercial.",
+    "lugar": "Jardinera con palmeras",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/palmas-tropicales-03-jardinera-con-palmeras-640.webp 640w, /img/obra/terra/palmas-tropicales-03-jardinera-con-palmeras.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/palmas-tropicales-04-palma-de-abanico-en-jardinera.webp",
+    "ancho": 983,
+    "alto": 1200,
+    "alt": "Jardinera con palma de abanico, cicadácea y arbusto variegado junto a un muro de piedra.",
+    "lugar": "Palma de abanico en jardinera",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/palmas-tropicales-04-palma-de-abanico-en-jardinera-640.webp 640w, /img/obra/terra/palmas-tropicales-04-palma-de-abanico-en-jardinera.webp 983w"
+   },
+   {
+    "src": "/img/obra/terra/palmas-tropicales-05-plantas-antes-de-sembrar.webp",
+    "ancho": 715,
+    "alto": 1200,
+    "alt": "Plantas de hoja grande y follaje plumoso en bolsas negras, colocadas sobre tierra antes de plantarse.",
+    "lugar": "Plantas antes de sembrar",
+    "etapa": "En instalación",
+    "srcset": "/img/obra/terra/palmas-tropicales-05-plantas-antes-de-sembrar-640.webp 640w, /img/obra/terra/palmas-tropicales-05-plantas-antes-de-sembrar.webp 715w"
+   }
+  ]
+ },
+ "/plantas-de-interior-tampico": {
+  "titulo": "Follaje de hoja grande en el vivero",
+  "lede": "Plantas que puedes ver en persona antes de llevarlas.",
+  "figuras": [
+   {
+    "src": "/img/obra/terra/plantas-de-interior-01-hojas-acorazonadas-en-bolsa.webp",
+    "ancho": 900,
+    "alto": 1200,
+    "alt": "Plantas de hojas grandes acorazonadas en bolsas negras sobre malla, en un vivero.",
+    "lugar": "Hojas acorazonadas en bolsa",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-de-interior-01-hojas-acorazonadas-en-bolsa-640.webp 640w, /img/obra/terra/plantas-de-interior-01-hojas-acorazonadas-en-bolsa.webp 900w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-de-interior-02-hojas-con-nervaduras.webp",
+    "ancho": 900,
+    "alto": 1200,
+    "alt": "Hojas grandes acorazonadas con nervaduras marcadas frente a un muro de ladrillo desenfocado.",
+    "lugar": "Hojas con nervaduras",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/plantas-de-interior-02-hojas-con-nervaduras-640.webp 640w, /img/obra/terra/plantas-de-interior-02-hojas-con-nervaduras.webp 900w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-de-interior-03-hoja-ancha-con-brotes-rojos.webp",
+    "ancho": 1200,
+    "alto": 1184,
+    "alt": "Plantas de hoja ancha oscura con brotes rojos junto a plantas de hojas grandes verdes, en macetas de vivero.",
+    "lugar": "Hoja ancha con brotes rojos",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-de-interior-03-hoja-ancha-con-brotes-rojos-640.webp 640w, /img/obra/terra/plantas-de-interior-03-hoja-ancha-con-brotes-rojos.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-de-interior-04-hojas-lobuladas.webp",
+    "ancho": 1200,
+    "alto": 896,
+    "alt": "Hojas lobuladas de follaje tropical iluminadas por el sol sobre pasto desenfocado.",
+    "lugar": "Hojas lobuladas",
+    "etapa": "Terminado",
+    "srcset": "/img/obra/terra/plantas-de-interior-04-hojas-lobuladas-640.webp 640w, /img/obra/terra/plantas-de-interior-04-hojas-lobuladas.webp 1200w"
+   },
+   {
+    "src": "/img/obra/terra/plantas-de-interior-05-helechos-de-follaje-rizado.webp",
+    "ancho": 1200,
+    "alto": 1095,
+    "alt": "Lote de helechos de follaje rizado visto desde arriba en un vivero.",
+    "lugar": "Helechos de follaje rizado",
+    "etapa": "En vivero",
+    "srcset": "/img/obra/terra/plantas-de-interior-05-helechos-de-follaje-rizado-640.webp 640w, /img/obra/terra/plantas-de-interior-05-helechos-de-follaje-rizado.webp 1200w"
+   }
+  ]
+ }
+}

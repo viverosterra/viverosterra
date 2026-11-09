@@ -157,6 +157,24 @@ def obras(figuras, nota_html=""):
     return f'<div class="vt-obras">{"".join(figura(f) for f in figuras)}{nota_html}</div>'
 
 
+def mosaico(figuras, desde):
+    """Mosaico de fotos reales, numeradas desde `desde`. La primera va ancha salvo que el total sea múltiplo de 3 (la
+    retícula de 3 columnas quedaría con un hueco); todas cargan diferido porque van debajo de la primera pantalla."""
+    plano = " vt-mosaico--plano" if len(figuras) % 3 == 0 else ""
+    primera = "(min-width: 900px) 66vw, 100vw"
+    resto = "(min-width: 900px) 33vw, 50vw"
+    items = "".join(figura(dict(f, numero=desde + i, sizes=primera if i == 0 and not plano else resto))
+                    for i, f in enumerate(figuras))
+    return f'<div class="vt-mosaico{plano}">{items}</div>'
+
+
+def bloque_obras(numero, datos_obras, html_previo):
+    """Sección de fotos de obra. La numeración sigue después de las figuras que ya trae la página."""
+    desde = html_previo.count("<b>Fig. ") + 1
+    return bloque(numero, "Fotos reales", "vt-h-obras", datos_obras["titulo"], mosaico(datos_obras["figuras"], desde),
+                  lede=datos_obras["lede"])
+
+
 def nota(texto, firma):
     return (f'<aside class="vt-nota" aria-label="Nota de campo"><span class="vt-nota__t">Nota de campo</span>'
             f'<p>{texto}</p><span class="vt-nota__firma">{firma}</span></aside>')

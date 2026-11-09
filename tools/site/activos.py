@@ -24,6 +24,7 @@ FUENTES = {
     "terra-materiales.css": "css/terra-materiales.css",
     "terra-precios.css": "css/terra-precios.css",
     "terra-blog.css": "css/terra-blog.css",
+    "terra-obras.css": "css/terra-obras.css",
     "legacy-fixes.css": "css/legacy-fixes.css",
     "terra.js": "js/terra.js",
 }

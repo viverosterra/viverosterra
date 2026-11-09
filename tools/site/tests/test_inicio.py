@@ -122,8 +122,8 @@ class InicioTest(unittest.TestCase):
         opiniones = MAIN[MAIN.index('id="vt-h-opiniones"'):MAIN.index('id="vt-h-como"')]
         self.assertEqual(opiniones.count('class="vt-testimonios__dest"'), 1)
 
-    def test_render_rotulado_como_referencia_y_filas_numeradas(self):
-        self.assertIn("<span>Proyecto · referencia</span>", MAIN)
+    def test_sin_render_de_referencia_y_filas_numeradas(self):
+        self.assertNotIn("Proyecto · referencia", MAIN)
         indice = MAIN[MAIN.index('class="vt-indice"'):MAIN.index('data-vt-medidor')]
         self.assertEqual(re.findall(r'class="vt-indice__n" aria-hidden="true">(\d+)<', indice),
                          ["01", "02", "03", "04", "05"])

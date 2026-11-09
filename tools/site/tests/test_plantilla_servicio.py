@@ -24,7 +24,7 @@ class PlantillaServicioTest(unittest.TestCase):
             del k["objecion"][clave]
         k["objecion"]["rotulo"] = "Frecuencia"
         conviene = main_de(k).split('id="vt-h-conviene"')[0].rsplit("<section", 1)[1]
-        self.assertIn("<b>03</b>Frecuencia", conviene)
+        self.assertIn("<b>04</b>Frecuencia", conviene)  # 02 es el mosaico de fotos
         cuerpo = main_de(k).split('id="vt-h-conviene"')[1].split("</section>")[0]
         self.assertEqual(cuerpo.count("<table"), 1)
 
@@ -39,7 +39,7 @@ class PlantillaServicioTest(unittest.TestCase):
         opciones = html.split('id="vt-h-opciones"')[1].split("</section>")[0]
         self.assertIn('<h3 class="vt-mt">Compara</h3><table class="vt-tabla vt-tabla--comparar">', opciones)
         self.assertIn('<p class="vt-promesa">Nota de planes.</p>', opciones)
-        self.assertIn("<b>02</b>Planes", html)
+        self.assertIn("<b>03</b>Planes", html)  # 02 es el mosaico de fotos
 
     def test_que_incluye_va_despues_de_las_opciones(self):
         k = copy.deepcopy(BASE)

@@ -1,0 +1,15 @@
+/* terra-obras.css: mosaico de fotos reales de obra y vivero (etapa de fotos). Solo en las páginas que lo traen. */
+.vt-mosaico{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px}
+.vt-mosaico .vt-fig__marco{aspect-ratio:4/3}
+.vt-mosaico .vt-fig figcaption{flex-direction:column;gap:0;line-height:1.35}
+.vt-mosaico:not(.vt-mosaico--plano)>:first-child{grid-column:1 / -1}
+.vt-mosaico:not(.vt-mosaico--plano)>:first-child .vt-fig__marco{aspect-ratio:16/10}
+.vt-mosaico:not(.vt-mosaico--plano)>:last-child:nth-child(even){grid-column:1 / -1}
+.vt-mosaico--plano>:last-child:nth-child(odd){grid-column:1 / -1}
+@media (min-width:900px){
+  .vt-mosaico{grid-template-columns:repeat(3,minmax(0,1fr));gap:26px 20px}
+  .vt-mosaico .vt-fig figcaption{flex-direction:row;gap:2px 10px}
+  .vt-mosaico .vt-fig__marco,.vt-mosaico:not(.vt-mosaico--plano)>:first-child .vt-fig__marco{aspect-ratio:auto;height:clamp(220px,21vw,300px)}
+  .vt-mosaico:not(.vt-mosaico--plano)>:first-child{grid-column:span 2}
+  .vt-mosaico:not(.vt-mosaico--plano)>:last-child:nth-child(even),.vt-mosaico--plano>:last-child:nth-child(odd){grid-column:auto}
+}
