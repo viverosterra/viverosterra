@@ -25,7 +25,7 @@ IMG = "/img/precios/pasto-rollo-jardin"
 SOLO, INSTALADO = dinero(P["pasto_solo_m2"]), dinero(P["pasto_instalado_m2"])
 MANTENIMIENTO, DISENO = dinero(P["mantenimiento_mes"]), dinero(P["diseno"])
 SINTETICO = dinero(lp.SINTETICO_MIN)
-SINT_MIN, SINT_MAX = (dinero(x) for x in P["sintetico_instalado_m2"])
+SINT_MIN, SINT_MAX = (c.dinero_exacto(x) for x in P["sintetico_instalado_m2"])
 MENSAJE = mensajes_paginas.PRECIOS
 COTIZAR = mensajes_paginas.PRECIOS_SECCIONES
 TITULO = "Precios de jardinería en Tampico 2026: pasto, diseño y mantenimiento | Viveros Terra"
@@ -202,7 +202,7 @@ CONTENIDO = {
 PARIDAD = {
     "meta": {"description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto natural, las plantas, los árboles y las palmas no se anuncian con IVA."),
              "og:description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto natural, las plantas, los árboles y las palmas no se anuncian con IVA.")},
-    "reemplazos": {"Precios de jardinería en Tampico 2026, con IVA": "Precios de jardinería en Tampico 2026"},
+    "reemplazos": {"Precios de jardinería en Tampico 2026, con IVA": "Precios de jardinería en Tampico 2026", "$385": SINT_MIN.split(".")[0], "$650": SINT_MAX},
     "retirados": {},
     "jsonld": {},
 }

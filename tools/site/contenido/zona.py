@@ -316,7 +316,7 @@ def paridad(slug):
                   if slug == "jardineria-ciudad-madero" else {})
     motivo = "Renglón que la zona ya no publica (solo sus 4 servicios principales): sigue en /precios, enlazada desde la tabla."
     servicios = ZONAS[slug]["servicios"]
-    fuera = [P["sintetico_instalado_m2"][0]]  # el sintético no es de los 4 de ninguna zona
+    fuera = [385]  # el precio anterior del sintético instalado, en la captura; no es de los 4 de ninguna zona
     fuera += [] if "palmas" in servicios else [P["palma_desde"]]
     fuera += [] if "riego" in servicios else list(P["riego_m2"])
     return {"reemplazos": reemplazos, "retirados": {dinero(n): motivo for n in fuera},

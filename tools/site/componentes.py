@@ -32,6 +32,11 @@ def dinero(n):
     return f"${redondear(n):,}"
 
 
+def dinero_exacto(n):
+    """Como dinero, pero respeta los centavos de un precio oficial: 446.6 → "$446.60", 754 → "$754"."""
+    return f"${n:,.2f}" if n != int(n) else f"${int(n):,}"
+
+
 def formato_m2(x):
     """Como x.toLocaleString('es-MX', {maximumFractionDigits: 1}): 48 → "48", 1234.5 → "1,234.5"."""
     texto = f"{x:,.1f}"
@@ -284,7 +289,7 @@ def _precio_opcion(o):
     if "precio" in o:
         desde = "desde " if o.get("desde", True) else ""
         mes = f'<small class="vt-modo__mes">{linea_mensualidad(o["precio"])}</small>' if o.get("mensualidad") else ""
-        return (f'<p class="vt-modo__precio">{desde}<span class="vt-precio-marca">{dinero(o["precio"])}</span> '
+        return (f'<p class="vt-modo__precio">{desde}<span class="vt-precio-marca">{dinero_exacto(o["precio"])}</span> '
                 f'{o["unidad"]} <small>{o["detalle"]}</small>{mes}</p>')
     if "precio_texto" in o:
         detalle = f' <small>{o["detalle"]}</small>' if o.get("detalle") else ""

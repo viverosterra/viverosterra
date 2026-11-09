@@ -30,7 +30,7 @@ ZONAS = tuple(ruta for _nombre, ruta in datos.ZONAS)
 PAGINAS = ZONAS + ("/precios",)
 PENDIENTES = frozenset()
 CAPTURA = json.loads(paridad_zonas.CAPTURA.read_text(encoding="utf-8"))
-PERMITIDOS = ({dinero(n) for v in datos.PRECIOS.values() for n in (v if isinstance(v, tuple) else (v,))}
+PERMITIDOS = ({f"${int(n):,}" for v in datos.PRECIOS.values() for n in (v if isinstance(v, tuple) else (v,))}  # parte entera: "$446" de "$446.60"
               | {dinero(m[k]) for m in data.MODELOS for k in ("t1", "t2", "rollo")}
               | {dinero(minimo) for minimo, _plazos in mensualidades.UMBRALES})
 PRECIO_RE = re.compile(r"\$\s?\d[\d,]*\d|\$\s?\d")

@@ -16,7 +16,7 @@ import paridad  # noqa: E402
 from componentes import dinero  # noqa: E402
 from contenido import articulo  # noqa: E402
 
-PERMITIDOS = ({dinero(n) for v in datos.PRECIOS.values() for n in (v if isinstance(v, tuple) else (v,))}
+PERMITIDOS = ({f"${int(n):,}" for v in datos.PRECIOS.values() for n in (v if isinstance(v, tuple) else (v,))}  # parte entera: "$446" de "$446.60"
               | {dinero(m[k]) for m in data.MODELOS for k in ("t1", "t2", "rollo")})
 PRECIO_RE = re.compile(r"\$\s?\d[\d,]*\d|\$\s?\d")
 _RIEGO = {dinero(a * m2) for a in datos.PRECIOS["riego_m2"] for m2 in (30, 50, 60, 80, 100, 120, 150, 200, 250, 500)}
@@ -34,7 +34,7 @@ CALCULADOS = {
     "jardin-bajo-presupuesto-tampico": _PRESUPUESTO | {"$10,800", "$18,300", "$19,200", "$30,900", "$4,500", "$5,000",
                                                         "$15,000", "$20,000", "$50,000"},
     "jardin-vertical-tampico-guia": _PRESUPUESTO,
-    "pasto-sintetico-vs-natural-tampico": {"$0", "$1,200", "$2,400", "$4,000", "$4,800", "$6,000", "$9,600", "$19,250", "$32,500",
+    "pasto-sintetico-vs-natural-tampico": {"$0", "$1,200", "$2,400", "$4,000", "$4,800", "$6,000", "$9,600", "$22,330", "$37,700",
                                            "$94,000", "$182,000"},
     "riego-automatico-tampico-roi": _RIEGO | {"$0", "$50", "$600", "$900", "$1,100", "$2,000", "$4,500", "$7,200",
                                               "$10,800", "$14,400", "$19,200", "$21,600", "$25,600", "$36,000", "$38,400", "$64,000",

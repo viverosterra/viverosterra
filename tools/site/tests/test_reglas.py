@@ -355,6 +355,12 @@ class ReglasDelDuenoTest(unittest.TestCase):
                        "fugas o fallas por causas de la instalación se atienden sin costo adicional"):
             self.assertFalse(reposiciones_que_no_son_de_pasto(limpio), limpio)
 
+    def test_sintetico_instalado_siempre_con_iva(self):
+        """Decisión del dueño (2026-11-08): $385 a $650/m² eran más IVA; se publica el precio final, $446.60 a $754/m²."""
+        for path, texto in publicados():
+            with self.subTest(path=str(path)):
+                self.assertIsNone(re.search(r"\$\s?385\b|\$\s?19,250\b|\$\s?32,500\b|\b385\s*(?:a|-|–)\s*\$?650\b", texto))
+
     def test_nunca_cotizacion_gratis(self):
         hallazgos = [f"{path.relative_to(PUBLIC)} · …{texto[max(0, m.start() - 40):m.end() + 40]}…"
                      for path, texto in publicados() for m in COTIZA_GRATIS_RE.finditer(texto)]
