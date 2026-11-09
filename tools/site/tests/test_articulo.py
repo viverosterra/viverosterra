@@ -151,10 +151,10 @@ class ArticuloTest(unittest.TestCase):
         html = paridad.archivo("/blog").read_text(encoding="utf-8")
         tarjetas = re.findall(r'<h3><a href="(/blog/[^"]+)"', html)
         self.assertEqual(len(tarjetas), len(set(tarjetas)))
-        self.assertEqual(len(tarjetas), 52)
+        self.assertEqual(len(tarjetas), 54)
         lista = next(d for d in (json.loads(b) for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S))
                      if d.get("@type") == "ItemList")
-        self.assertEqual([i["position"] for i in lista["itemListElement"]], list(range(1, 53)))
+        self.assertEqual([i["position"] for i in lista["itemListElement"]], list(range(1, 55)))
         self.assertEqual({i["url"] for i in lista["itemListElement"]}, {f"{datos.SITIO}{t}" for t in tarjetas})
 
     def test_todo_articulo_tiene_tema(self):
