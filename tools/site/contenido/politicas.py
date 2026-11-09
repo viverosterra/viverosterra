@@ -75,6 +75,8 @@ SECCIONES = (
             "Macetas o plantas movidas a otro lugar, sobre todo de sol a sombra o de sombra a sol.",
             "Daños por mascotas, golpes, niños jugando, poda o productos aplicados sin consultarnos.",
             "Clima fuera de lo normal: nortes fuertes, heladas, granizo o inundación.",
+            "Nochebuenas y otras plantas de temporada, aunque las coloquemos nosotros: su cuidado queda fuera de "
+            "nuestras manos y su ciclo termina con la temporada.",
             "Plantas que compraste en el vivero y sembraste por tu cuenta. En ese caso te orientamos por WhatsApp para "
             "que prendan.",
         )),
