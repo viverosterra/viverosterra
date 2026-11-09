@@ -9,7 +9,8 @@ SCRIPTS = ("/js/vt-404.js",)
 
 
 def render(k):
-    filas = "".join(f'<li data-vt-servicio-404><a href="{c.esc(h)}">{t}</a></li>' for t, h in k["servicios"])
+    filas = "".join(f'<li data-vt-servicio-404 data-vt-claves="{c.esc(claves)}"><a href="{c.esc(h)}">{t}</a></li>'
+                    for t, h, claves in k["servicios"])
     buscador = (f'<section class="vt-bloque" aria-labelledby="vt-h-buscar"><div class="vt-wrap vt-util__estrecho">'
                 f'<h2 id="vt-h-buscar">{k["buscar"]["titulo"]}</h2><div class="vt-campo"><label for="vt-buscar-404">'
                 f'{k["buscar"]["label"]}</label><div class="vt-control"><input id="vt-buscar-404" type="search" '

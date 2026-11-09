@@ -76,11 +76,17 @@ def boton_tel(cta):
             f'<svg class="vt-ico" aria-hidden="true"><use href="#vt-i-tel"/></svg>Llamar {datos.TELEFONO_VISIBLE}</a>')
 
 
-def fila_cta(mensaje, tipo, seccion, hero=False):
-    """WhatsApp + teléfono + promesa única. Con hero=True, terra.js oculta la barra móvil mientras se ve."""
+def boton_mapas(cta):
+    return (f'<a class="vt-btn vt-btn--linea" data-cta="{esc(cta)}" href="{esc(datos.MAPS_URL)}" target="_blank" '
+            f'rel="noopener">Cómo llegar</a>')
+
+
+def fila_cta(mensaje, tipo, seccion, hero=False, extra=""):
+    """WhatsApp + extra (otro botón, opcional) + teléfono + promesa única. Con hero=True, terra.js oculta la barra móvil
+    mientras se ve."""
     cta = f"{tipo}:{seccion}"
     marca = " data-hero-cta" if hero else ""
-    return (f'<div class="vt-cta"{marca}>{boton_wa(mensaje, cta)}{boton_tel(cta)}</div>'
+    return (f'<div class="vt-cta"{marca}>{boton_wa(mensaje, cta)}{extra}{boton_tel(cta)}</div>'
             f'<p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p>')
 
 
@@ -800,12 +806,14 @@ def formulario_correo(prefijo, f):
 
 # ---------- portada (primer pantallazo: qué, dónde, precio y CTA) ----------
 def portada(p, tipo, migas_items=None):
-    """p: kicker, h1, lede, etiqueta, mensaje, tambien y foto; opcional compacta (a 1024–1199 px la etiqueta va en su
-    versión de celular para que el CTA quede en la primera pantalla). Con migas_items, la ruta visible va arriba."""
+    """p: kicker, h1, lede, etiqueta, mensaje y foto; opcionales tambien (línea bajo el CTA), boton_extra (HTML de otro botón
+    junto a WhatsApp) y compacta (a 1024–1199 px la etiqueta va en su versión de celular para que el CTA quede en la primera
+    pantalla). Con migas_items, la ruta visible va arriba."""
     ruta = migas(migas_items) if migas_items else ""
     clase = "vt-portada vt-portada--compacta" if p.get("compacta") else "vt-portada"
+    tambien = f'<p class="vt-portada__tambien">{p["tambien"]}</p>' if p.get("tambien") else ""
     return (f'<section class="{clase}" aria-labelledby="vt-h1"><div class="vt-wrap">{ruta}<div class="vt-portada__grid">'
             f'<div><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1><p class="vt-lede">{p["lede"]}</p>'
-            f'<div class="vt-portada__trato">{etiqueta(p["etiqueta"])}<div>{fila_cta(p["mensaje"], tipo, "hero", hero=True)}'
-            f'<p class="vt-portada__tambien">{p["tambien"]}</p></div></div></div>'
+            f'<div class="vt-portada__trato">{etiqueta(p["etiqueta"])}<div>{fila_cta(p["mensaje"], tipo, "hero", hero=True, extra=p.get("boton_extra", ""))}'
+            f'{tambien}</div></div></div>'
             f'<div class="vt-portada__foto">{figura(p["foto"], principal=True)}</div></div>{cuadro_datos()}</div></section>')

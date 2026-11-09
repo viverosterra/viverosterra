@@ -27,10 +27,21 @@ class NoEncontradaTest(unittest.TestCase):
         self.assertIn('<script src="/js/vt-404.js" defer></script>', self.html)
 
     def test_todo_servicio_enlaza_a_una_pagina_real(self):
-        for _texto, href in K["servicios"]:
+        for _texto, href, _claves in K["servicios"]:
             with self.subTest(href=href):
                 archivo = paginas.PUBLIC / href.strip("/")
                 self.assertTrue((archivo / "index.html").is_file() or archivo.with_suffix(".html").is_file())
+
+    def test_servicios_nuevos_y_palabras_clave_por_fila(self):
+        hrefs = {href for _t, href, _c in K["servicios"]}
+        self.assertLessEqual({"/plantas-de-interior-tampico", "/jardineria-altamira"}, hrefs)
+        for texto, _href, claves in K["servicios"]:
+            with self.subTest(texto=texto):
+                self.assertTrue(claves.strip())
+        self.assertEqual(self.html.count("data-vt-claves="), len(K["servicios"]))
+        for palabra in ("jardinería", "interior", "altamira", "cotizar"):
+            with self.subTest(palabra=palabra):
+                self.assertTrue(any(palabra in f"{t} {c}".lower() for t, _h, c in K["servicios"]))
 
     def test_no_entra_al_sitemap(self):
         self.assertNotIn("/404<", (paginas.PUBLIC / "sitemap.xml").read_text(encoding="utf-8"))

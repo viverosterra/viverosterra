@@ -39,6 +39,20 @@ class ViveroTest(unittest.TestCase):
         self.assertIn('"closes":"14:00"', self.html)
         self.assertNotIn("InStock", self.html)
 
+    def test_como_llegar_es_boton_junto_a_whatsapp(self):
+        fila = re.search(r'<div class="vt-cta" data-hero-cta>(.*?)</div>', self.html, re.S).group(1)
+        boton = re.search(r'<a class="vt-btn vt-btn--linea" data-cta="vivero:mapas" href="([^"]+)"[^>]*>(.*?)</a>', fila)
+        self.assertEqual(boton.group(1), datos.MAPS_URL)
+        self.assertIn("Cómo llegar", boton.group(2))
+        self.assertLess(fila.index("vt-btn--wa"), fila.index("vivero:mapas"))
+        self.assertLess(fila.index("vivero:mapas"), fila.index("tel:"))
+        self.assertNotIn("vt-portada__tambien", self.html)
+
+    def test_enlaces_a_mapas_etiquetados(self):
+        for cta, texto in (("vivero:mapas-google", "Abrir en Google Maps"), ("vivero:mapas-apple", "Apple Maps")):
+            with self.subTest(cta=cta):
+                self.assertRegex(self.html, rf'<a [^>]*data-cta="{cta}"[^>]*>{texto}</a>')
+
     def test_una_sola_foto_de_main(self):
         self.assertEqual(re.findall(r'<img src="([^"]+)"', re.search(r"<main.*</main>", self.html, re.S).group(0)),
                          ["/img/portadas/arboles-tampico-viveros-terra-sm.webp"])

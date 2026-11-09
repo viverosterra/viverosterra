@@ -11,7 +11,7 @@
     const q = plano(campo.value.trim());
     let visibles = 0;
     lista.forEach((li) => {
-      const ver = plano(li.textContent).includes(q);
+      const ver = plano(`${li.textContent} ${li.dataset.vtClaves || ''}`).includes(q);
       li.hidden = !ver;
       if (ver) visibles += 1;
     });

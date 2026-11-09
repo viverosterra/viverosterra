@@ -3,7 +3,8 @@ datos.py. Fuera (sin respaldo o contra una regla del dueño): "Lun–Sáb 9am–
 stock", "te decimos si la tenemos disponible", "precios orientativos", "precios más bajos" y "+18 años"."""
 import datos
 import mensajes_paginas
-from componentes import dinero
+from componentes import boton_mapas, dinero
+from componentes_util import META_AUTOR_RETIRADA
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -38,7 +39,7 @@ CONTENIDO = {
                 "lede": f"Pasto, plantas, palmas, árboles y materiales para jardín en {datos.CALLE}, {datos.COLONIA}, Cd. Madero, frente a Walmart.",
                 "etiqueta": {"codigo": "Vivero", "aviso": "Con IVA", "nombre": "Palmas", "antes": "desde", "monto": dinero(P["palma_desde"]),
                              "unidad": "", "filas": (("Pasto", f"{dinero(P['pasto_solo_m2'])}/m²"), ("Plantas", "por tamaño"))},
-                "mensaje": MENSAJE, "tambien": f'<a href="{datos.MAPS_URL}" target="_blank" rel="noopener">Cómo llegar</a>', "foto": FOTO},
+                "mensaje": MENSAJE, "boton_extra": boton_mapas("vivero:mapas"), "foto": FOTO},
     "donde": {"titulo": 'Viveros Terra en Ciudad Madero, <span class="vt-serif">frente a Walmart</span>', "lede": DONDE,
               "hechos": ({"titulo": f"{datos.VARIEDADES} variedades", "texto": "En el vivero"},
                          {"titulo": str(datos.DESDE), "texto": "Año de fundación"},
@@ -51,8 +52,8 @@ CONTENIDO = {
                        {"titulo": '<a href="/catalogo">Catálogo completo</a>', "texto": f"{datos.VARIEDADES} variedades con foto y descripción. Agrega lo que te interesa y cotiza todo en un WhatsApp."})},
     "llegar": {"titulo": 'Cómo llegar <span class="vt-serif">al vivero</span>',
                "datos": (("Dirección", f'{datos.CALLE}, {datos.COLONIA}, Ciudad Madero, Tamaulipas. {datos.REFERENCIA}. '
-                                       f'<a href="{datos.MAPS_URL}" target="_blank" rel="noopener">Abrir en Google Maps</a> · '
-                                       f'<a href="https://maps.apple.com/?daddr={datos.GEO[0]},{datos.GEO[1]}&amp;q=Viveros%20Terra" target="_blank" rel="noopener">Apple Maps</a>'),
+                                       f'<a data-cta="vivero:mapas-google" href="{datos.MAPS_URL}" target="_blank" rel="noopener">Abrir en Google Maps</a> · '
+                                       f'<a data-cta="vivero:mapas-apple" href="https://maps.apple.com/?daddr={datos.GEO[0]},{datos.GEO[1]}&amp;q=Viveros%20Terra" target="_blank" rel="noopener">Apple Maps</a>'),
                          ("Horario de atención", datos.HORARIO),
                          ("Entrega a domicilio", "Entregamos en Tampico, Ciudad Madero y Altamira; te confirmamos el costo por WhatsApp según tu colonia."))},
     "faq": {"titulo": 'Preguntas frecuentes <span class="vt-serif">sobre el vivero</span>', "preguntas": PREGUNTAS},
@@ -79,6 +80,7 @@ PARIDAD = {
                    "Explora el catálogo completo del vivero": "Catálogo completo",
                    "¿Buscas una planta específica?": "¿Buscas una planta específica?"},
     "retirados": {},
+    "meta_retirada": META_AUTOR_RETIRADA,
     "meta": {"og:description": (CONTENIDO["meta"]["og"][3][1], "Sin “Productor directo”: el dueño no lo ha confirmado y 2d y 2f ya lo retiraron.")},
     "jsonld": {},
 }

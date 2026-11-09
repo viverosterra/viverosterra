@@ -3,6 +3,7 @@ recibe: el cuestionario a formsubmit y a /gracias (interceptado: nunca sale un c
 Se saltan sin Playwright."""
 import base64
 import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -19,6 +20,9 @@ try:
 except ImportError:
     sync_playwright = None
 
+# Niega todo lo que no sea este equipo: un patrón que no coincide no debe dejar salir un correo real. Las rutas de cada prueba
+# (formsubmit, wa.me…) se registran en la página y tienen prioridad sobre esta, que va en el contexto y cubre también ventanas nuevas.
+EXTERNO = re.compile(r"^https?://(?!(?:localhost|127\.0\.0\.1)(?:[:/]|$))")
 AXE = Path(__file__).resolve().parents[1] / "vendor" / "axe.min.js"
 RUTAS = ("/politicas/", "/politica-privacidad/", "/gracias/", "/cuestionario.html", "/datos-envio/",
          "/protocolo-cuidados-pasto-san-agustin.html", "/vivero-tampico/", "/404.html")
@@ -48,11 +52,23 @@ class UtilitariasNavegadorTest(unittest.TestCase):
         cls.srv.shutdown()
         cls.srv.server_close()
 
-    def pagina(self, ancho=375):
-        page = self.nav.new_page(viewport={"width": ancho, "height": 812})
-        page.route("**googletagmanager.com/**", lambda r: r.abort())
+    def pagina(self, ancho=375, alto=812):
+        page = self.nav.new_page(viewport={"width": ancho, "height": alto})
+        page.context.route(EXTERNO, lambda r: r.abort())
         self.addCleanup(page.close)
         return page
+
+    def test_ningun_pedido_externo_sale(self):
+        """Solo GET a rutas inexistentes: si el bloqueo fallara, no se envía nada."""
+        page = self.pagina()
+        vistos = []
+        page.on("requestfailed", lambda r: vistos.append(r.url))
+        page.goto(self.base + "/404.html", wait_until="load")
+        for url in ("https://formsubmit.co/vt-sonda", "https://www.googletagmanager.com/vt-sonda",
+                    "https://www.google-analytics.com/vt-sonda"):
+            with self.subTest(url=url):
+                self.assertEqual(page.evaluate("(u) => fetch(u, { mode: 'no-cors' }).then(() => 'salio', () => 'bloqueado')", url), "bloqueado")
+                self.assertIn(url, vistos)
 
     def test_axe_sin_serias(self):
         for ruta in RUTAS:
@@ -87,10 +103,10 @@ class UtilitariasNavegadorTest(unittest.TestCase):
         self.assertEqual([a[:2] for a in capa if a[:1] == ["config"]], [["config", datos.GA4_ID]])
         self.assertEqual([a for a in capa if a[:1] == ["event"]], [])
 
-    def _cuestionario(self):
+    def _cuestionario(self, ancho=1440, alto=812):
         """El POST nativo a formsubmit se intercepta (ningún correo real): se contesta con el HTML que lleva a `_next`, como
         hace formsubmit, y /gracias se sirve desde public/ sin salir a producción."""
-        page = self.pagina(1440)
+        page = self.pagina(ancho, alto)
         enviados = []
         def formsubmit(route):
             pedido = route.request
@@ -178,6 +194,99 @@ class UtilitariasNavegadorTest(unittest.TestCase):
         page.fill("#area_pasto", "60")
         page.fill("#area_jard", "20")
         self.assertEqual(page.input_value("#area_total_input"), "80")
+
+    def _posicion_del_paso(self, page, paso):
+        return page.evaluate("""(n) => { const raiz = getComputedStyle(document.documentElement);
+          const cabecera = parseFloat(raiz.getPropertyValue('--vt-head-h'));
+          const h2 = document.querySelector('#page-' + n + ' h2').getBoundingClientRect();
+          return { cabecera, wizard: document.querySelector('.vt-wizard').getBoundingClientRect().top, h2: h2.top,
+                   abajo: h2.bottom, alto: innerHeight, y: scrollY }; }""", paso)
+
+    def test_siguiente_y_anterior_suben_al_asistente_bajo_el_menu(self):
+        page, _ = self._cuestionario(320, 568)
+        page.emulate_media(reduced_motion="reduce")
+        page.fill("#nombre", "María Ejemplo")
+        page.fill("#whatsapp", "+52 833 000 0000")
+        page.locator("#btn-next").scroll_into_view_if_needed()
+        page.click("#btn-next")
+        for paso in (2, 1):
+            p = self._posicion_del_paso(page, paso)
+            with self.subTest(paso=paso, posicion=p):
+                self.assertGreater(p["y"], 0)
+                self.assertGreaterEqual(p["wizard"], p["cabecera"])
+                self.assertLess(p["wizard"], p["cabecera"] + 40)
+                self.assertGreaterEqual(p["h2"], p["cabecera"])
+                self.assertLessEqual(p["abajo"], p["alto"])
+            if paso == 2:
+                page.locator("#btn-prev").scroll_into_view_if_needed()
+                page.click("#btn-prev")
+
+    def test_desplazamiento_respeta_movimiento_reducido(self):
+        for preferencia, esperado in (("reduce", "auto"), ("no-preference", "smooth")):
+            page, _ = self._cuestionario(320, 568)
+            page.emulate_media(reduced_motion=preferencia)
+            page.evaluate("() => { const o = window.scrollTo; window.vtDesp = []; window.scrollTo = function (a) { window.vtDesp.push(a.behavior); return o.apply(this, arguments); }; }")
+            page.fill("#nombre", "María Ejemplo")
+            page.fill("#whatsapp", "8330000000")
+            page.click("#btn-next")
+            with self.subTest(preferencia=preferencia):
+                self.assertEqual(page.evaluate("() => window.vtDesp"), [esperado])
+
+    def test_whatsapp_invalido_no_avanza(self):
+        page, _ = self._cuestionario()
+        page.fill("#nombre", "María Ejemplo")
+        page.fill("#whatsapp", "abc")
+        page.click("#btn-next")
+        self.assertTrue(page.locator("#page-1").is_visible())
+        self.assertTrue(page.evaluate("() => document.getElementById('whatsapp').validity.patternMismatch"))
+        for valido in ("+52 833 000 0000", "(833) 000-0000"):
+            page.fill("#whatsapp", valido)
+            with self.subTest(valido=valido):
+                self.assertFalse(page.evaluate("() => document.getElementById('whatsapp').validity.patternMismatch"))
+        page.click("#btn-next")
+        self.assertTrue(page.locator("#page-2").is_visible())
+
+    def test_limpiar_areas_limpia_el_total_y_acepta_decimales(self):
+        page, _ = self._cuestionario()
+        page.fill("#nombre", "María Ejemplo")
+        page.fill("#whatsapp", "8330000000")
+        page.click("#btn-next")
+        page.fill("#area_pasto", "60.5")
+        page.fill("#area_jard", "20")
+        self.assertEqual(page.input_value("#area_total_input"), "81")
+        self.assertTrue(page.evaluate("() => document.getElementById('area_pasto').validity.valid"))
+        self.assertTrue(page.locator("#area-display").is_visible())
+        page.fill("#area_pasto", "")
+        page.fill("#area_jard", "")
+        self.assertEqual(page.input_value("#area_total_input"), "")
+        self.assertFalse(page.locator("#area-display").is_visible())
+
+    def test_404_encuentra_por_palabras_clave(self):
+        page = self.pagina()
+        page.goto(self.base + "/404.html", wait_until="load")
+        for palabra, href in (("jardinería", "/jardineria-altamira"), ("jardineria", "/jardineria-altamira"),
+                              ("interior", "/plantas-de-interior-tampico"), ("altamira", "/jardineria-altamira"), ("cotizar", "/precios")):
+            page.fill("#vt-buscar-404", palabra)
+            with self.subTest(palabra=palabra):
+                self.assertFalse(page.locator("#vt-vacio-404").is_visible())
+                self.assertTrue(page.locator(f'[data-vt-servicio-404]:visible a[href="{href}"]').count() == 1)
+
+    def test_boton_como_llegar_cabe_y_no_inventa_evento(self):
+        for ancho in (320, 375, 1440):
+            page = self.pagina(ancho)
+            page.goto(self.base + "/vivero-tampico/", wait_until="load")
+            boton = page.locator('[data-hero-cta] a[data-cta="vivero:mapas"]')
+            caja = boton.bounding_box()
+            with self.subTest(ancho=ancho):
+                self.assertTrue(boton.is_visible())
+                self.assertGreaterEqual(caja["height"], 44)
+                self.assertGreaterEqual(caja["width"], 44)
+            eventos = page.evaluate("""() => { const a = []; window.gtag = (...x) => a.push(x);
+              const b = document.querySelector('a[data-cta="vivero:mapas"]');
+              b.addEventListener('click', (e) => e.preventDefault(), { once: true });
+              b.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })); return a; }""")
+            with self.subTest(ancho=ancho, medicion=True):
+                self.assertEqual(eventos, [])
 
     def _envio(self, query=""):
         page = self.pagina()
