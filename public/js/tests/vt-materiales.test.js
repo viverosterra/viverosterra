@@ -29,7 +29,11 @@ function mensajeDeMain(clave, m, capa) {
   lineas[lineas.length - 1] = M.CIERRE;
   lineas.splice(lineas.length - 2, 0, M.COLONIA);
   if (clave === 'tierra-negra') {
-    lineas.splice(lineas.findIndex((x) => x.startsWith('Área: ')) + 1, 0, `Capa: ${Math.round(Number(capa) * 100)} cm`);
+    // Entrega B de experiencia (reescritura 15): el cálculo en un renglón, costales o a granel, la colonia y una pregunta corta.
+    const area = lineas.find((x) => x.startsWith('Área: ')).slice('Área: '.length);
+    const m3 = lineas.find((x) => x.startsWith('Cantidad: ')).slice('Cantidad: '.length);
+    return [lineas[0], `Área: ${area}, capa de ${Math.round(Number(capa) * 100)} cm = ${m3} (cálculo de la web)`,
+      'En costales o a granel: ___', M.COLONIA, '¿Me dan el total con entrega?'].join('\n');
   }
   return lineas.join('\n');
 }
@@ -72,7 +76,8 @@ test('leerArea acepta miles y coma decimal y rechaza vacíos, negativos y áreas
 test('el mensaje es texto plano y termina con la misma pregunta en las cuatro calculadoras', () => {
   for (const cfg of Object.values(CFG)) {
     const t = M.textos(cfg, 20, cfg.clave === 'marmol' ? 4 : 0.08, M.calcular(cfg, 20, cfg.clave === 'marmol' ? 4 : 0.08), 'x');
-    assert.ok(t.mensaje.endsWith(M.CIERRE));
+    // Entrega B de experiencia (reescritura 15): la tierra negra cierra con una pregunta corta.
+    assert.ok(t.mensaje.endsWith(cfg.clave === 'tierra-negra' ? '¿Me dan el total con entrega?' : M.CIERRE));
     assert.doesNotMatch(t.mensaje, /<|disponibilidad|chica|mediana|grande/);
   }
 });
@@ -86,11 +91,20 @@ test('miles con coma en kg, sacos, costales y área, sin redondear decimales', (
 });
 
 test('con resultado, el mensaje conserva la colonia por llenar y la tierra negra manda la capa', () => {
-  for (const cfg of Object.values(CFG)) {
+  for (const cfg of Object.values(CFG).filter((x) => x.clave !== 'tierra-negra')) {
     const capa = cfg.clave === 'marmol' ? 5 : 0.08;
     assert.ok(M.textos(cfg, 30, capa, M.calcular(cfg, 30, capa), 'x').mensaje.endsWith(`\n${M.COLONIA}\n\n${M.CIERRE}`));
   }
   assert.match(M.CIERRE, /Tampico, Madero o Altamira\?$/);
   const cfg = CFG['tierra-negra'];
-  assert.match(M.textos(cfg, 30, 0.15, M.calcular(cfg, 30, 0.15)).mensaje, /Área: 30 m²\nCapa: 15 cm\nCantidad: 4.5 m³/);
+  // Entrega B de experiencia (reescritura 15): cálculo en un renglón, costales o a granel y la colonia.
+  assert.strictEqual(M.textos(cfg, 30, 0.15, M.calcular(cfg, 30, 0.15)).mensaje, 'Hola, quiero cotizar tierra negra vegetal.\n'
+    + `Área: 30 m², capa de 15 cm = 4.5 m³ (cálculo de la web)\nEn costales o a granel: ___\n${M.COLONIA}\n¿Me dan el total con entrega?`);
+});
+
+test('areaInvalida: 0, negativos y letras avisan; vacío no; los textos son los de componentes_materiales.py', () => {
+  for (const malo of ['0', '-4', 'abc', '200000']) assert.strictEqual(M.areaInvalida(malo), true, malo);
+  for (const bueno of ['', ' ', '30', '1,200', '12,5']) assert.strictEqual(M.areaInvalida(bueno), false, bueno);
+  assert.strictEqual(M.CTA_CALCULO, 'Enviar mi cálculo por WhatsApp');
+  assert.strictEqual(M.ERROR_AREA, 'Escribe el área en m², solo con números. Ejemplo: 30.');
 });

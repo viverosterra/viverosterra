@@ -24,6 +24,34 @@ NOMBRES_CIUDAD = {"cdmx": "CDMX", "guadalajara": "Guadalajara", "monterrey": "Mo
                   "puebla": "Puebla", "merida": "Mérida"}
 
 
+# Texto del cierre de cada artículo (Entrega B de experiencia): el precio "desde" de su tema y la garantía si aplica,
+# todo de datos.py. El pasto sin instalar, las plantas, los árboles y las palmas no llevan IVA.
+_PLANTAS_IVA = "Plantas, palmas y árboles no llevan IVA."
+_GARANTIA_PLANTAS = f"Garantía de {datos.GARANTIA_PLANTAS[0].lower()}{datos.GARANTIA_PLANTAS[1:]}".replace(
+    "(ver condiciones)", '(<a href="/politicas#garantia-plantas">ver condiciones</a>)')
+_COTIZA = "El precio depende de la especie y el tamaño: te lo damos por WhatsApp."
+LEDE = {
+    "pasto-natural": (f"Pasto San Agustín a {dinero(P['pasto_solo_m2'])}/m² solo el pasto (no lleva IVA) y desde "
+                      f"{dinero(P['pasto_instalado_m2'])}/m² instalado, con IVA, con garantía de arraigo de {datos.ARRAIGO} si "
+                      "lo instalamos nosotros."),
+    "pasto-sintetico": (f"Desde {dinero(P['sintetico_tienda_m2'])}/m² en rollo de 50 m²; el envío se cobra por rollo según "
+                        "tu estado."),
+    "riego": f"Riego automático instalado de {dinero(P['riego_m2'][0])} a {dinero(P['riego_m2'][1])}/m², según el sistema.",
+    "diseno": (f"Plan Esencial de {dinero(P['diseno'])} y Plan Completo de {dinero(P['diseno_completo'])}; el Premium, "
+               f"desde {dinero(P['diseno_premium'])}."),
+    "mantenimiento": f"Mantenimiento de jardín desde {dinero(P['mantenimiento_mes'])} al mes.",
+    "palmas": f"{datos.PALMAS_PRECIO}. {_PLANTAS_IVA} {_GARANTIA_PLANTAS}",
+    "palmas-cotizacion": f"{_COTIZA} {_PLANTAS_IVA} {_GARANTIA_PLANTAS}",
+    "arboles": f"Flamboyán desde {dinero(P['flamboyan'])} en ejemplar joven. {_PLANTAS_IVA} {_GARANTIA_PLANTAS}",
+    "banqueta": f"{_COTIZA} {_PLANTAS_IVA} {_GARANTIA_PLANTAS}",
+    "plantas": f"{_COTIZA} {_PLANTAS_IVA} {_GARANTIA_PLANTAS}",
+    "interior": f"{_COTIZA} {_PLANTAS_IVA} {_GARANTIA_PLANTAS}",
+    "tierra": (f"Costal de tierra negra a {dinero(P['tierra_negra_costal'])} y metro cúbico a {dinero(P['tierra_negra_m3'])}. "
+               f"{datos.SIN_MINIMO}"),
+    "tezontle": f"Costal de tezontle rojo desde {dinero(P['tezontle_costal'])}. {datos.SIN_MINIMO}",
+}
+
+
 def _desde(monto, antes="Desde", unidad=""):
     return {"antes": antes, "monto": monto, "unidad": unidad}
 
@@ -179,4 +207,4 @@ def de(slug):
         enlaces = enlaces[:2] + (PASTO_EN_ROLLO,)
     if slug in A_PRECIOS and not any(h == "/precios" for _t, h in enlaces):
         enlaces = (("lista de precios vigente", "/precios"),) + enlaces[:2]
-    return {**base, "tema": tema, "enlaces": enlaces[:3], "landing": LANDING.get(slug, base["landing"])}
+    return {**base, "tema": tema, "enlaces": enlaces[:3], "landing": LANDING.get(slug, base["landing"]), "lede": LEDE[tema]}

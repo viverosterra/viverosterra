@@ -103,8 +103,11 @@ PRECIOS_SECCIONES = {
 
 # Ruta exacta → (mensaje del menú y la barra, mensaje del pie o None para usar el mismo).
 RUTAS = {
-    "/blog": ("Hola, vi el blog de Viveros Terra y quiero cotizar", None),
-    "/catalogo": ("Hola, vi el catálogo y quiero cotizar una planta", None),
+    # Reescritura 9 (Entrega B de experiencia): el índice del blog pide qué, dónde y cuánto, como el mensaje general.
+    "/blog": ("Hola, quiero cotizar: ___\nColonia: ___\nMetros aprox.: ___", None),
+    # Reescritura 6 (Entrega B de experiencia): el mensaje del catálogo pide lo que el vendedor necesita para cotizar.
+    "/catalogo": ("Hola, vi el catálogo y quiero cotizar plantas.\nPlanta o plantas: ___\nTamaño aprox.: ___\nPiezas: ___\n"
+                  "Colonia de entrega: ___", None),
     "/precios": (PRECIOS, "Hola, tengo una pregunta sobre precios"),
     **{ruta: (texto, None) for ruta, texto in SERVICIOS.items()},
     **{ruta: (texto, None) for ruta, texto in EMPRESAS.items()},
@@ -192,6 +195,23 @@ def tema_blog(slug):
     """Servicio del artículo según su slug; "general" si no coincide ningún tema."""
     return next((servicio for servicio, claves in TEMAS_BLOG if any(c in slug for c in claves)), "general")
 
+
+# Huecos del mensaje de cada tema (reescritura 8 del informe de recorrido, Entrega B de experiencia): los mismos de
+# datos.MENSAJES[tema], así el chat que empieza en un artículo llega con colonia y medida como el de la página de servicio.
+def _huecos(tema):
+    import datos  # aquí y no arriba: datos no depende de este módulo y así este archivo se sigue leyendo solo
+    return datos.MENSAJES.get(tema, datos.MENSAJES["general"]).split("\n")[1:]
+
+
+def mensaje_blog(slug):
+    """Mensaje de WhatsApp del artículo: su primera línea (BLOG) y los huecos de su tema (tema_blog). No repite un hueco
+    que la primera línea ya trae (p. ej. "de ___ m²" no pide además los metros)."""
+    import datos
+    inicio = BLOG.get(slug, datos.MENSAJES["general"].split("\n")[0])
+    con_medida = "m²" in inicio
+    huecos = [h for h in _huecos(tema_blog(slug)) if not (con_medida and h.startswith("Metros"))]
+    return "\n".join([inicio, *huecos])
+
 # Etapa 2i: mensajes propios de las utilitarias, los de main (la firma la agrega datos.con_firma).
 UTILITARIAS = {
     "gracias": "Hola, acabo de enviar una cotización por el cotizador y quiero avanzar",
@@ -199,7 +219,8 @@ UTILITARIAS = {
     "politicas": "Hola, tengo una duda sobre envíos/devoluciones",
     "privacidad": "Hola, tengo una duda sobre el aviso de privacidad",
     "protocolo": "Hola, tengo dudas sobre el cuidado de mi pasto San Agustín",
-    "vivero": "Hola, quiero visitar el vivero o cotizar plantas.\nLo que busco: \nTamaño aprox.: ",
+    # Reescritura 10 (Entrega B de experiencia): los huecos con ___, como en el resto del sitio, y la colonia.
+    "vivero": "Hola, quiero visitar el vivero o cotizar plantas.\nLo que busco: ___\nTamaño aprox.: ___\nColonia: ___",
     "vivero_planta": "Hola, estoy buscando una planta en el vivero de Tampico, ¿la tienen?",
     "no_encontrada": "Hola, busqué una página en su sitio y no la encontré. Necesito: ___",
 }

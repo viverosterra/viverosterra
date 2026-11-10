@@ -99,3 +99,10 @@ test('con medida válida el botón dice "Enviar mi medida por WhatsApp" (el text
   assert.strictEqual(textos(8, 6, r, '', M, 1).cta, 'Enviar mi medida por WhatsApp');
   for (const { esperado } of CASOS.casos) assert.strictEqual(esperado.cta, 'Enviar mi medida por WhatsApp');
 });
+
+test('invalido: solo un lado escrito que no es un número mayor que 0 (vacío no es error; 1,000 m o más es área grande)', () => {
+  const { invalido, ERROR } = require('../vt-medidor.js');
+  for (const malo of ['0', '-4', 'abc', '0,0', ' x ']) assert.strictEqual(invalido(malo), true, malo);
+  for (const bueno of ['', '  ', '8', '10,5', '1000', '2500']) assert.strictEqual(invalido(bueno), false, bueno);
+  assert.strictEqual(ERROR, 'Escribe el largo y el ancho en metros, solo con números. Ejemplo: 8 y 6.');
+});

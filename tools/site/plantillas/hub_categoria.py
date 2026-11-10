@@ -5,6 +5,7 @@ especies con foto → tabla de precios (palmas) → "Arma tu lista" (un solo men
 sección después de la portada es opcional según el contenido (el orden no cambia). Sin JS propio."""
 import componentes as c
 import componentes_plantas as cp
+import datos
 from contenido import plantas_comun as pc
 from contenido import fotos_obra
 from plantillas import base
@@ -17,30 +18,58 @@ def pagina_ld(url):
     return {"@type": "WebPage", "@id": url, "url": url, "about": {"@id": pc.NEGOCIO}, "publisher": {"@id": pc.NEGOCIO}}
 # La portada lleva la Fig. 01; las especies siguen desde la 02 (una página nunca repite un número de figura).
 
+# Entrega B de experiencia: antes había 15 a 19 pantallas del celular sin CTA entre el hero y el cierre. Tras las
+# especies, los precios y las preguntas (y tras el filtro por necesidad y las subcategorías, si la página los trae) va una fila de WhatsApp con el mensaje de la página y, junto a la primera, la
+# prueba con cifras ya publicadas (no hay opinión propia de plantas) y la garantía de las plantas que sembramos.
+CTA_TEXTO = "Cotizar mis plantas"
+MAX_SIN_CTA = 6  # especies (dos por renglón en celular, ~1 pantalla por renglón) antes de partir la rejilla con un CTA
+
+
+def _fila(k, seccion, prueba=False):
+    fila = c.fila_seccion(k["portada"]["mensaje"], k["tipo"], seccion, k.get("cta_texto", CTA_TEXTO))
+    if not prueba:
+        return fila
+    cifras = (f"<b>{c.esc(datos.CLIENTES)}</b> clientes · <b>{c.esc(datos.VARIEDADES)}</b> variedades en el vivero · "
+              f"desde {datos.DESDE}")
+    garantia = c.esc(datos.GARANTIA_PLANTAS).replace("ver condiciones", '<a href="/politicas#garantia-plantas">ver condiciones</a>')
+    garantia = f'<p class="vt-promesa"><b>Garantía:</b> {garantia}</p>'
+    return fila + c.prueba_cta(dato=cifras) + garantia
+
 
 def _necesidad(k, n):
     x = k["necesidad"]
-    return c.bloque(n, "Por necesidad", "vt-h-necesidad", x["titulo"], cp.necesidades(x["items"], k["tipo"]),
+    return c.bloque(n, "Por necesidad", "vt-h-necesidad", x["titulo"], cp.necesidades(x["items"], k["tipo"]) + _fila(k, "necesidad"),
                     lede=x["lede"], tinte=True)
 
 
 def _subcategorias(k, n):
     x = k["subcategorias"]
-    return c.bloque(n, "Subcategorías", "vt-h-subcategorias", x["titulo"], cp.indice_subcategorias(x["items"]),
-                    lede=x.get("lede"))
+    return c.bloque(n, "Subcategorías", "vt-h-subcategorias", x["titulo"],
+                    cp.indice_subcategorias(x["items"]) + _fila(k, "subcategorias"), lede=x.get("lede"))
 
 
 def _especies(k, n):
     x = k["especies"]
     nota = f'<p class="vt-promesa">{x["nota"]}</p>' if x.get("nota") else ""
+    seccion = "destacadas" if k.get("_destacadas") else "especies"
+    items = tuple(x["items"])
+    # Una rejilla larga se parte en dos con una fila de WhatsApp en medio (más de MAX_SIN_CTA especies, ~6 pantallas).
+    if len(items) > MAX_SIN_CTA:
+        mitad = (len(items) + 1) // 2
+        rejilla = (cp.especies(items[:mitad], k["tipo"], primero=2) + _fila(k, f"{seccion}-medio")
+                   + cp.especies(items[mitad:], k["tipo"], primero=2 + mitad))
+    else:
+        rejilla = cp.especies(items, k["tipo"], primero=2)
     return c.bloque(n, x.get("rotulo", "En el vivero"), x.get("id", "vt-h-especies"), x["titulo"],
-                    cp.especies(x["items"], k["tipo"], primero=2) + nota, lede=x.get("lede"))
+                    rejilla + nota + _fila(k, seccion, prueba=seccion == "especies" or k.get("_primera")),
+                    lede=x.get("lede"))
 
 
 def _precios(k, n):
     x = k["precios"]
     tabla = c.tabla_especies(x["filas"], x["caption"], x["grupo"])
-    return c.bloque(n, "Precios", "vt-h-precios", x["titulo"], tabla + f'<p class="vt-promesa">{x["nota"]}</p>',
+    return c.bloque(n, "Precios", "vt-h-precios", x["titulo"],
+                    tabla + f'<p class="vt-promesa">{x["nota"]}</p>' + _fila(k, "precios"),
                     lede=x.get("lede"), tinte=True, id_seccion="precios")
 
 
@@ -57,7 +86,7 @@ def _garantia(k, n):
 
 def _faq(k, n):
     x = k["faq"]
-    return c.bloque_dos(n, "Preguntas", "vt-h-faq", x["titulo"], "", c.faq(x["preguntas"]), tinte=True)
+    return c.bloque_dos(n, "Preguntas", "vt-h-faq", x["titulo"], "", c.faq(x["preguntas"]) + _fila(k, "faq"), tinte=True)
 
 
 def _guias(k, n):
@@ -71,7 +100,7 @@ def _relacionados(k, n):
 
 
 SECCIONES = (("necesidad", _necesidad), ("subcategorias", _subcategorias), ("especies", _especies),
-             ("destacadas", lambda k, n: _especies(dict(k, especies=k["destacadas"]), n)), ("precios", _precios),
+             ("destacadas", lambda k, n: _especies(dict(k, especies=k["destacadas"], _destacadas=True, _primera=not k.get("especies")), n)), ("precios", _precios),
              ("lista", _lista), ("garantia", _garantia), ("faq", _faq), ("guias", _guias),
              ("relacionados", _relacionados))
 

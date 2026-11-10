@@ -156,7 +156,7 @@
 .vt-tienda .vt-tarjeta-p__precio b,.vt-tienda .vt-vecino__precio b,.vt-tienda .vt-recomendado__precio b{padding:0 4px;background:var(--vt-tag);color:var(--vt-tag-ink);font-size:1.25em}
 .vt-tienda .vt-tarjeta-p__puesto{display:block;font-size:var(--vt-text-xs);color:var(--vt-field)}
 .vt-tienda main .vt-tarjeta-p__pago{font-size:var(--vt-text-xs);color:var(--vt-muted)}
-.vt-tienda .vt-tarjeta-p .vt-btn,.vt-tienda .vt-vecino .vt-btn{width:100%;margin-top:auto}
+.vt-tienda .vt-tarjeta-p .vt-btn,.vt-tienda .vt-vecino .vt-btn{width:100%;margin-top:auto;white-space:normal;text-align:center}
 /* celular: tarjeta horizontal (foto de 112 px a la izquierda; datos, precio y "+ Agregar" a la derecha) para que el
    catálogo de 9 no triplique el largo de la página */
 @media (max-width:767px){

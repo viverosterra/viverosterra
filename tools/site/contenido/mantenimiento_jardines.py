@@ -61,19 +61,19 @@ MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
 ]}
 
 PLANES = (
-    {"rotulo": "Plan 1 · Hasta 200 m²", "titulo": "Residencial básico", "precio": BASICO, "unidad": "/mes",
+    {"cta": "Cotizar el plan básico", "rotulo": "Plan 1 · Hasta 200 m²", "titulo": "Residencial básico", "precio": BASICO, "unidad": "/mes",
      "detalle": "Visita mensual; cada 21 días en lluvias si tu jardín lo pide",
      "puntos": ("Poda de pasto, arbustos y plantas", "Fertilización trimestral", "Control de plagas a solicitud",
                 "Limpieza y recolección de residuos", "Reporte con fotos de cada visita"),
      "mensaje": (f"Hola, me interesa el plan de mantenimiento Residencial básico (desde {dinero(BASICO)}/mes).\n"
                  "Colonia: ___\nMetros aprox. del jardín: ___\nFrecuencia que busco (mensual o cada 21 días): ___")},
-    {"rotulo": "Plan 2 · 200 a 500 m²", "titulo": "Residencial premium", "precio_texto": PREMIUM,
+    {"cta": "Cotizar el plan premium", "rotulo": "Plan 2 · 200 a 500 m²", "titulo": "Residencial premium", "precio_texto": PREMIUM,
      "rec": True, "detalle": "Visita cada 15 días",
      "puntos": ("Poda especializada de pasto, arbustos y palmas", "Fertilización mensual",
                 "Control de plagas preventivo", "Revisión del sistema de riego", "Reporte con fotos de cada visita"),
      "mensaje": (f"Hola, me interesa el plan de mantenimiento Residencial premium ({PREMIUM.lower()}, visita cada 15 días).\n"
                  "Colonia: ___\nMetros aprox. del jardín: ___\nTengo palmas o sistema de riego: ___")},
-    {"rotulo": "Plan 3 · 500 m² o más", "titulo": "Empresa e industria", "precio_texto": COTIZA,
+    {"cta": "Cotizar para mi empresa", "rotulo": "Plan 3 · 500 m² o más", "titulo": "Empresa e industria", "precio_texto": COTIZA,
      "detalle": f"Visita semanal con cuadrilla · REPSE {datos.REPSE} y factura {datos.FACTURA}",
      "puntos": ("Poda con cuadrilla", "Fertilización quincenal", "Programa anual de control de plagas",
                 "Operación del sistema de riego", "Contrato de servicios y reporte con fotos de cada visita"),
@@ -185,6 +185,9 @@ CONTENIDO = {
     "respuesta": respuestas.de("/mantenimiento-jardines-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-mantenimiento",
     "prefijo": "mantenimiento",
+    # Entrega B de experiencia: CTA tras "qué incluye" y tras la garantía (antes, 14.5 pantallas sin CTA en línea).
+    "ctas": {"prueba": (MENSAJE, "Cotizar mi mantenimiento"), "incluye": (MENSAJE, "Pedir mi plan de visitas"),
+             "garantia": (PLANES[0]["mensaje"], "Cotizar el plan básico"), "faq": (MENSAJE, "Preguntar por WhatsApp")},
     "meta": META,
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Mantenimiento de jardines", None)),
@@ -355,3 +358,5 @@ PARIDAD = {
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). «Sin permanencia forzada» sale del hero y sigue en los planes.')
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: botones de plan con texto propio (reescritura 5); filas de WhatsApp tras las opiniones, «qué incluye», la garantía y las preguntas.'

@@ -118,7 +118,8 @@
     return [
       `Hola Viveros Terra 🌺 ${verbo} Nochebuenas ${cfg.temporada}:`,
       ...cot.lineas.map((l) => `• ${descripcion(l)}`),
-      `Total: ${piezasTexto(cot.piezas)} · Escalón: ${cot.nombreEscalon} · Total estimado: ${dinero(cot.total)}`,
+      // El nombre del escalón es vocabulario interno: el mensaje del cliente dice piezas y total (Entrega B de experiencia).
+      `Total: ${piezasTexto(cot.piezas)} · Total estimado: ${dinero(cot.total)}`,
       cot.preventa ? textoPreventa(cfg) : '',
       entregaTexto ? `Entrega: ${entregaTexto}` : '',
       extras.tipo ? `Tipo de cliente: ${extras.tipo}` : '',
@@ -144,13 +145,24 @@
 
   const esDuplicado = (previo, clave, ahora) => Boolean(previo && previo.clave === clave && ahora - previo.t < VENTANA_DUPLICADO_MS);
 
-  // Antes de usar el cotizador invita; después muestra el total. Dentro del cotizador lleva al ticket.
-  function textoBarra(cot, usado, dentro, cfg) {
+  // Antes de usar el cotizador invita; después muestra el total. Dentro del cotizador lleva al ticket. Fuera del cotizador,
+  // con pedido (Entrega B de experiencia), la barra manda el pedido escrito por WhatsApp (whatsapp: su enlace).
+  function textoBarra(cot, usado, dentro, cfg, whatsapp) {
     const verbo = cfg.modo === 'preventa' ? 'Apartar' : 'Cotizar';
     if (!usado || !cot.piezas) return { texto: `${verbo} mi pedido`, href: '#cotizador' };
     if (dentro) return { texto: `${piezasTexto(cot.piezas)} · ${dinero(cot.total)} · Ver total`, href: '#nb-ticket' };
+    if (whatsapp) return { texto: `${cfg.modo === 'preventa' ? 'Apartar' : 'Enviar'} mi pedido · ${dinero(cot.total)}`, href: whatsapp };
     return { texto: `${verbo} · ${dinero(cot.total)}`, href: '#cotizador' };
   }
+
+  // Rango de piezas del escalón i ("1 a 11 piezas", "200 piezas o más"): lo que el cliente ve en vez del nombre interno.
+  function rangoEscalon(i, cfg) {
+    const desde = cfg.cortes[i];
+    if (desde === undefined) return '';
+    const hasta = cfg.cortes[i + 1];
+    return hasta === undefined ? `${desde} piezas o más` : `${desde} a ${hasta - 1} piezas`;
+  }
+  const precioAplicado = (cot, cfg) => (cot.nombreEscalon ? `${cot.nombreEscalon} (${rangoEscalon(cot.escalon, cfg)})` : '—');
 
   /* ---------- Interfaz ---------- */
 
@@ -202,7 +214,7 @@
     const hayMaximo = filasDe(caja).some((fila) => entero(campo(fila, 'cantidad').value) >= MAX_CANTIDAD);
     escribir(caja, 'piezas', piezasTexto(cot.piezas));
     escribir(caja, 'total', dinero(cot.total));
-    escribir(caja, 'escalon', cot.nombreEscalon || '—');
+    escribir(caja, 'escalon', precioAplicado(cot, cfg));
     escribir(caja, 'desglose', cot.descuento ? `Subtotal ${dinero(cot.subtotal)} · Preventa −${dinero(cot.descuento)}` : '');
     escribir(caja, 'vacio', conPiezas ? '' : 'Agrega al menos 1 pieza');
     escribir(caja, 'ahorro', cot.ahorro > 0 ? `Ahorras ${dinero(cot.ahorro)} vs. menudeo` : '');
@@ -277,10 +289,18 @@
     let usado = false;
     let foco = false;
     let cot = { piezas: 0, total: 0 };
+    let whatsapp = '';
     function refrescar() {
-      const { texto, href } = textoBarra(cot, usado, vistos.cotizador, cfg);
+      const { texto, href } = textoBarra(cot, usado, vistos.cotizador, cfg, whatsapp);
       enlaceBarra.textContent = texto;
       enlaceBarra.setAttribute('href', href);
+      if (href === whatsapp && whatsapp) { enlaceBarra.setAttribute('target', '_blank'); enlaceBarra.setAttribute('rel', 'noopener'); }
+      else { enlaceBarra.removeAttribute('target'); enlaceBarra.removeAttribute('rel'); }
+      // El encabezado también lleva el pedido escrito (window.VTBarra de terra.js); sin pedido vuelve al suyo.
+      if (win.VTBarra) {
+        if (usado && cot.piezas && whatsapp) win.VTBarra.prestar('nochebuenas', whatsapp, `${cfg.modo === 'preventa' ? 'Apartar' : 'Enviar'} mi pedido`);
+        else win.VTBarra.soltar('nochebuenas');
+      }
       barra.hidden = vistos.hero || vistos.ticket || foco || (vistos.cotizador && !(usado && cot.piezas));
     }
     const objetivos = { hero: doc.querySelector('[data-hero-cta]'), ticket: doc.getElementById('nb-ticket'), cotizador: doc.getElementById('cotizador') };
@@ -295,7 +315,7 @@
       refrescar();
     }
     return {
-      pintar(nuevo) { cot = nuevo; refrescar(); },
+      pintar(nuevo, enlaceWa) { cot = nuevo; whatsapp = enlaceWa || ''; refrescar(); },
       usar() { usado = true; },
       foco(valor) { foco = valor; refrescar(); },
     };
@@ -330,7 +350,7 @@
       pintarFilas(caja, cot, cfg);
       pintarResumen(caja, cot, sugerencia, extras.zona, cfg);
       if (cta) pintarCta(cta, cot, extras, cfg);
-      barra.pintar(cot);
+      barra.pintar(cot, cot.piezas ? enlace(cfg.wa, mensaje(cot, extras, cfg)) : '');
       if (sugerencia) nudgeMedido();
     }
     const alCambiar = () => { usoMedido(); barra.usar(); actualizar(); };
@@ -390,7 +410,7 @@
     }
   }
 
-  const api = { hoyMX, cotizar, nudge, entrega, mensaje, registro, enviarRegistro, esDuplicado, textoBarra };
+  const api = { hoyMX, cotizar, nudge, entrega, mensaje, registro, enviarRegistro, esDuplicado, textoBarra, rangoEscalon };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
     return;

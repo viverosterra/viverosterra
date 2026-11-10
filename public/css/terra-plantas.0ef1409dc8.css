@@ -76,10 +76,15 @@
 .vt-plantas .vt-lista li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--vt-line)}
 .vt-plantas .vt-lista__item{margin:0}
 .vt-plantas .vt-lista__ctrl{display:flex;align-items:center;gap:6px;margin:0}
-.vt-plantas .vt-lista-barra{position:fixed;inset:auto 0 0;z-index:var(--vt-z-bar);display:flex;justify-content:center;padding:8px var(--vt-gutter) calc(8px + env(safe-area-inset-bottom));background:var(--vt-bone);box-shadow:0 -1px 0 var(--vt-line)}
-.vt-plantas .vt-lista-barra[hidden]{display:none}
-.vt-plantas .vt-lista-barra .vt-btn{justify-content:center;width:min(100%,420px);transition:transform var(--vt-duration-fast) var(--vt-ease-out)}
-.vt-plantas .vt-lista-barra .vt-pulso{transform:scale(1.06)}
+.vt-plantas .vt-bar--lista .vt-bar__lista{flex:none;display:grid;justify-items:start;min-height:44px;padding:4px 12px;font-size:14px;line-height:1.25;text-align:left;transition:transform var(--vt-duration-fast) var(--vt-ease-out)}
+.vt-plantas .vt-bar--lista .vt-bar__lista[hidden]{display:none}
+.vt-plantas .vt-bar__lista small{font-size:12px;font-weight:600}
+.vt-plantas .vt-bar--lista .vt-pulso{transform:scale(1.06)}
+@media (min-width:1024px){.vt-plantas .vt-bar--lista{display:flex;max-width:600px;margin:0 auto}}
+.vt-plantas .vt-cat__fila{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:16px;border:1px solid var(--vt-line);background:var(--vt-card)}
+.vt-plantas .vt-cat__fila[hidden]{display:none}
+.vt-plantas .vt-cat__fila p{flex:1 1 220px;margin:0;font-weight:600}
+.vt-plantas .vt-cat__fila .vt-btn{white-space:normal;text-align:center}
 .vt-plantas .vt-dialogo__cabeza{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .vt-plantas .vt-dialogo__x{flex:none;width:44px;height:44px;margin:-10px -10px 0 0;border:0;border-radius:var(--vt-radius);background:none;color:var(--vt-ink);font:400 28px/1 var(--vt-font-sans);cursor:pointer}
 .vt-plantas .vt-dialogo__x:hover{background:var(--vt-bone-2)}
@@ -87,4 +92,4 @@
 .vt-plantas .vt-lista__vaciar{min-height:44px;margin-left:auto;padding:0 4px;border:0;background:none;color:var(--vt-muted);font:500 var(--vt-text-sm) var(--vt-font-sans);text-decoration:underline;cursor:pointer}
 .vt-plantas .vt-lista__vaciar:hover{color:var(--vt-ink)}
 @media (max-width:1279px),(max-height:820px){.vt-plantas .vt-portada .vt-etiqueta__nombre{display:block;margin-top:6px;font-size:19px}}
-@media (prefers-reduced-motion:reduce){.vt-plantas .vt-necesidades a,.vt-plantas .vt-lista-barra .vt-btn,.vt-plantas .vt-buscador__filtros summary::after{transition:none}.vt-plantas .vt-necesidades a:hover,.vt-plantas .vt-lista-barra .vt-pulso{transform:none}}
+@media (prefers-reduced-motion:reduce){.vt-plantas .vt-necesidades a,.vt-plantas .vt-bar__lista,.vt-plantas .vt-buscador__filtros summary::after{transition:none}.vt-plantas .vt-necesidades a:hover,.vt-plantas .vt-bar--lista .vt-pulso{transform:none}}

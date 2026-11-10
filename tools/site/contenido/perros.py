@@ -89,3 +89,5 @@ PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION),"reemplazos": {}, "retirados": {}}
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: «Se limpia con manguera y un limpiador enzimático» sale del hero (sigue en las preguntas).')
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: fila de WhatsApp y prueba social tras los modelos recomendados.'

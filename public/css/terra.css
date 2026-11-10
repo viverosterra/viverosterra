@@ -216,7 +216,7 @@
 .vt-flecha{transition:transform var(--vt-duration-fast)}
 .vt-btn:hover .vt-flecha{transform:translateX(3px)}
 .vt-cta{display:flex;flex-wrap:wrap;gap:10px;min-height:106px;align-content:flex-start}
-.vt-cta .vt-btn{flex:1 1 240px;min-height:52px}
+.vt-cta .vt-btn{flex:1 1 240px;min-height:52px;white-space:normal;text-align:center}
 .vt-pagina main .vt-promesa{margin:12px 0 0;font-size:var(--vt-text-sm);color:var(--vt-muted)}
 .vt-pagina main .vt-mt{margin-top:48px}
 .vt-precio-marca{padding:0 .22em;background:linear-gradient(transparent 12%,var(--vt-tag) 12%,var(--vt-tag) 92%,transparent 92%);color:var(--vt-tag-ink);font-weight:800;font-variant-numeric:tabular-nums}
@@ -628,7 +628,7 @@
 .vt-pagina main .vt-modo__n{font-size:var(--vt-text-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-muted)}
 .vt-modo__precio small{display:block;margin-top:4px;font-size:var(--vt-text-sm);color:var(--vt-muted)}
 .vt-modo__precio .vt-modo__mes{color:var(--vt-ink-2);font-weight:600}
-.vt-modo .vt-btn{width:100%;margin-top:auto}
+.vt-modo .vt-btn{width:100%;margin-top:auto;white-space:normal;text-align:center}
 
 /* ---------- proceso NOSOTROS / TÚ / JUNTOS ---------- */
 .vt-pasos{counter-reset:paso;display:grid;list-style:none;border-top:1px solid var(--vt-ink)}

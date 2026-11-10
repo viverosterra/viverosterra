@@ -34,8 +34,12 @@ def mensaje_de_main(clave, mensaje, capa):
     lineas[-1] = cm.CIERRE_MENSAJE
     lineas.insert(len(lineas) - 2, cm.COLONIA)
     if clave == "tierra-negra":
-        area = next(i for i, x in enumerate(lineas) if x.startswith("Área: "))
-        lineas.insert(area + 1, f"Capa: {round(float(capa) * 100)} cm")
+        # Entrega B de experiencia (reescritura 15): el cálculo en un renglón, costales o a granel, la colonia y una
+        # pregunta corta. Área y cantidad son las de main.
+        area = next(x for x in lineas if x.startswith("Área: "))[len("Área: "):]
+        m3 = next(x for x in lineas if x.startswith("Cantidad: "))[len("Cantidad: "):]
+        return "\n".join((lineas[0], f"Área: {area}, capa de {round(float(capa) * 100)} cm = {m3} (cálculo de la web)",
+                          cm.COSTALES_O_GRANEL, cm.COLONIA, cm.CIERRE_TIERRA))
     return "\n".join(lineas)
 
 
@@ -101,13 +105,16 @@ class MaterialesParidadTest(unittest.TestCase):
     def test_mensaje_con_la_colonia_y_cierre_de_la_zona(self):
         """Los cuatro mensajes con resultado conservan "Colonia de entrega: ___" (como el de la página) antes de la
         pregunta, que nombra Tampico, Madero y Altamira; el de tierra negra lleva también la capa."""
-        for clave, capa in (("tierra-negra", 0.08), ("tezontle", 0.06), ("marmol", 5), ("piedra-bola", 0)):
+        for clave, capa in (("tezontle", 0.06), ("marmol", 5), ("piedra-bola", 0)):
             mensaje = cm.textos(clave, 30, capa, cm.calculo(clave, 30, capa), "Control de maleza (6 cm)")["mensaje"]
             with self.subTest(clave=clave):
                 self.assertTrue(mensaje.endswith(f"\n{cm.COLONIA}\n\n{cm.CIERRE_MENSAJE}"))
                 self.assertIn("en Tampico, Madero o Altamira?", mensaje)
+        # Entrega B de experiencia (reescritura 15): tierra negra con la capa en el renglón del cálculo, costales o a
+        # granel y la colonia antes de una pregunta corta.
         tierra = cm.textos("tierra-negra", 30, 0.15, cm.calculo("tierra-negra", 30, 0.15))["mensaje"]
-        self.assertIn("Área: 30 m²\nCapa: 15 cm\nCantidad: 4.5 m³", tierra)
+        self.assertEqual(tierra, "Hola, quiero cotizar tierra negra vegetal.\nÁrea: 30 m², capa de 15 cm = 4.5 m³ (cálculo "
+                                 f"de la web)\nEn costales o a granel: ___\n{cm.COLONIA}\n¿Me dan el total con entrega?")
 
     def test_piedra_bola_con_la_regla_de_su_pregunta(self):
         """Piedra bola no tenía calculadora: su pregunta frecuente decía 1,200 a 1,500 kg para 10 m² (120 a 150 kg/m²).

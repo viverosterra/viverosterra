@@ -96,3 +96,5 @@ PARIDAD = {
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). «Cómo llegar» pasa de botón a enlace de texto; la colonia sale de la entrada (sigue en «En corto» y en «Cómo llegar»).')
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: mensaje del hero con sus huecos ___ y la colonia; botón del cierre «Preguntar si la tienen» (reescritura 10).'

@@ -549,3 +549,84 @@ test('reloj: recalcula cada 60 s solo con la página visible y al volver a la pe
   oyentes.visibilitychange();
   assert.strictEqual(veces, 2);
 });
+
+// ---------- préstamo de la barra fija y del encabezado (Entrega B de experiencia) ----------
+const { prestamos, prestamoVigente } = require('../terra.js');
+
+function nodo(atributos, texto) {
+  const el = {
+    atributos: { ...atributos },
+    getAttribute(n) { return n in this.atributos ? this.atributos[n] : null; },
+    setAttribute(n, v) { this.atributos[n] = String(v); },
+    textContent: texto || '',
+  };
+  return el;
+}
+
+function paginaConBarra() {
+  const rotulo = { nodeType: 3, nodeValue: 'Cotizar por WhatsApp' };
+  const go = nodo({ href: 'https://wa.me/1?text=generico', 'data-cta': 'servicio-pasto:barra' });
+  go.lastChild = rotulo;
+  const largo = nodo({}, 'Cotizar por WhatsApp');
+  const corto = nodo({}, 'Cotizar');
+  const cabeza = nodo({ href: 'https://wa.me/1?text=generico', 'data-cta': 'servicio-pasto:header' });
+  cabeza.querySelector = (s) => (s === '.vt-head__cta-largo' ? largo : s === '.vt-head__cta-corto' ? corto : null);
+  const doc = { querySelector: (s) => (s === '[data-vt-bar] .vt-bar__go' ? go : s === '.vt-head__cta' ? cabeza : null) };
+  return { doc, go, rotulo, cabeza, largo, corto };
+}
+
+test('prestamoVigente: el último préstamo con enlace; sin préstamos, null', () => {
+  assert.strictEqual(prestamoVigente([]), null);
+  assert.deepStrictEqual(prestamoVigente([{ clave: 'a', href: 'x' }, { clave: 'b', href: 'y' }]), { clave: 'b', href: 'y' });
+  assert.deepStrictEqual(prestamoVigente([{ clave: 'a', href: 'x' }, { clave: 'b', href: '' }]), { clave: 'a', href: 'x' });
+});
+
+test('una calculadora presta su enlace y su texto a la barra y al encabezado, y al soltar vuelven los del HTML', () => {
+  const p = paginaConBarra();
+  const b = prestamos(p.doc);
+  b.prestar('medidor', 'https://wa.me/1?text=medida', 'Enviar mi medida', 'Enviar');
+  assert.strictEqual(p.go.getAttribute('href'), 'https://wa.me/1?text=medida');
+  assert.strictEqual(p.rotulo.nodeValue, 'Enviar mi medida');
+  assert.strictEqual(p.cabeza.getAttribute('href'), 'https://wa.me/1?text=medida');
+  assert.strictEqual(p.largo.textContent, 'Enviar mi medida');
+  assert.strictEqual(p.corto.textContent, 'Enviar');
+  // El data-cta no cambia: el clic se sigue midiendo como <tipo>:barra y <tipo>:header.
+  assert.strictEqual(p.go.getAttribute('data-cta'), 'servicio-pasto:barra');
+  assert.strictEqual(p.cabeza.getAttribute('data-cta'), 'servicio-pasto:header');
+  b.soltar('medidor');
+  assert.strictEqual(p.go.getAttribute('href'), 'https://wa.me/1?text=generico');
+  assert.strictEqual(p.rotulo.nodeValue, 'Cotizar por WhatsApp');
+  assert.strictEqual(p.largo.textContent, 'Cotizar por WhatsApp');
+  assert.strictEqual(p.corto.textContent, 'Cotizar');
+});
+
+test('con dos préstamos manda el último; soltarlo devuelve el anterior; un enlace vacío equivale a soltar', () => {
+  const p = paginaConBarra();
+  const b = prestamos(p.doc);
+  b.prestar('medidor', 'https://wa.me/1?text=medida', 'Enviar mi medida');
+  b.prestar('simulador', 'https://wa.me/1?text=plan', 'Enviar mi plan de pago');
+  assert.strictEqual(p.rotulo.nodeValue, 'Enviar mi plan de pago');
+  assert.strictEqual(p.corto.textContent, 'Enviar', 'sin corto, el encabezado del celular dice "Enviar" (cabe a 320 px)');
+  b.prestar('medidor', 'https://wa.me/1?text=medida2', 'Enviar mi medida');
+  assert.strictEqual(p.go.getAttribute('href'), 'https://wa.me/1?text=medida2', 'el que cambió al último manda');
+  b.prestar('medidor', '', 'Enviar mi medida');
+  assert.strictEqual(p.go.getAttribute('href'), 'https://wa.me/1?text=plan');
+  b.soltar('simulador');
+  assert.strictEqual(p.go.getAttribute('href'), 'https://wa.me/1?text=generico');
+});
+
+test('un préstamo sin texto cambia solo el enlace y deja los textos del HTML', () => {
+  const p = paginaConBarra();
+  const b = prestamos(p.doc);
+  b.prestar('tienda', 'https://wa.me/1?text=estado');
+  assert.strictEqual(p.cabeza.getAttribute('href'), 'https://wa.me/1?text=estado');
+  assert.strictEqual(p.rotulo.nodeValue, 'Cotizar por WhatsApp');
+  assert.strictEqual(p.largo.textContent, 'Cotizar por WhatsApp');
+  assert.strictEqual(p.corto.textContent, 'Cotizar');
+});
+
+test('sin barra ni encabezado (páginas sin shell completo) prestar y soltar no fallan', () => {
+  const b = prestamos({ querySelector: () => null });
+  b.prestar('x', 'https://wa.me/1', 'Enviar');
+  b.soltar('x');
+});

@@ -157,7 +157,7 @@ class TiendaNavegadorTest(unittest.TestCase):
             with self.subTest(ancho=ancho, caso="barra"):
                 self.assertGreaterEqual(aviso["y"], 0)
                 self.assertLessEqual(aviso["y"] + aviso["height"], barra["y"])
-            # Desde el cotizador: el aviso no tapa "Cotizar por WhatsApp" ni "Agregar a mi cotización".
+            # Desde el cotizador: el aviso no tapa "Cotizar por WhatsApp" ni "Agregar a mi lista".
             page.evaluate("() => { const b = document.querySelector('#cta-add'); "
                           "window.scrollBy(0, b.getBoundingClientRect().bottom - innerHeight + 30); }")
             page.click("#cta-add")

@@ -97,7 +97,7 @@
     quote.className = 'btn btn--primary'; quote.href = '#cotizador'; quote.textContent = 'Cotizar este';
     quote.dataset.pick = model.slug;
     const add = document.createElement('button');
-    add.type = 'button'; add.className = 'btn btn--ghost'; add.textContent = 'Agregar';
+    add.type = 'button'; add.className = 'btn btn--ghost'; add.textContent = 'Agregar a mi lista';
     add.dataset.add = model.slug;
     actions.append(quote, add);
     body.append(small, name, meta, actions);

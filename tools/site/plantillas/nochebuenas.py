@@ -117,7 +117,8 @@ def _ticket(k, modo):
         "codigo": "Tu pedido", "aviso": f'Temporada {NB["temporada"]}', "nombre": '<span data-nb-o="piezas">1 pieza</span>',
         "cientifico": '<span data-nb-o="desglose" hidden></span>',
         "antes": "Total estimado", "monto": f'<span data-nb-o="total">{c.dinero(inicial)}</span>', "unidad": "MXN",
-        "filas": (("Escalón", f'<span data-nb-o="escalon">{NB["nombres_escalon"][0]}</span>'),),
+        # Precio aplicado con su rango de piezas (vt-nochebuenas.js lo cambia): el nombre del escalón solo no dice nada.
+        "filas": (("Precio aplicado", f'<span data-nb-o="escalon">{NB["nombres_escalon"][0]} (1 a {NB["cortes"][1] - 1} piezas)</span>'),),
     }, cordel=False)
     subir = '<button type="button" class="vt-btn vt-btn--linea vt-nb-subir" data-nb-accion="subir" hidden></button>'
     avisos = _aviso("nudge", "nudge") + subir + "".join(_aviso(nombre, tono) for nombre, tono in AVISOS)
@@ -137,7 +138,10 @@ def _cotizador(k, modo, n):
             '<span aria-hidden="true">+</span>Agregar otro tamaño o color</button>'
             f'{_aviso("tope", "")}'
             f"{_extras()}</div>")
-    cuerpo = f'<div class="vt-nb-nota" data-nb-cotizador{atributo_modo}>{hoja}{_ticket(k, modo)}</div>'
+    # Prueba social bajo el cotizador (Entrega B de experiencia): calificación de Google con su enlace y clientes atendidos
+    # (datos.py), fuera de [data-nb-cotizador] (ahí todo objetivo táctil mide 44 px). Sin garantía: Nochebuenas no lleva.
+    prueba = c.prueba_cta(dato=f"<b>{esc(datos.CLIENTES)}</b> clientes desde {datos.DESDE}")
+    cuerpo = f'<div class="vt-nb-nota" data-nb-cotizador{atributo_modo}>{hoja}{_ticket(k, modo)}</div>{prueba}'
     return c.bloque(next(n), "Cotizador", "vt-h-cotizador", x["titulo"], cuerpo, lede=x["lede"], tinte=True, id_seccion="cotizador")
 
 

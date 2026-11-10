@@ -37,6 +37,14 @@ class MedidorParidadTest(unittest.TestCase):
         self.assertNotIn(c.CTA_MEDIDA, html)
         self.assertNotIn("Cotizar por WhatsApp", js, "el texto sin medida es el del HTML: no se repite en el JS")
 
+    def test_aviso_de_entrada_invalida_igual_en_python_y_js(self):
+        """Entrega B de experiencia: con 0, negativos o letras el Medidor avisa bajo los campos (reescritura 2)."""
+        js = (Path(__file__).resolve().parents[3] / "public" / "js" / "vt-medidor.js").read_text(encoding="utf-8")
+        self.assertEqual(re.search(r"const ERROR = '([^']+)';", js).group(1), c.ERROR_MEDIDOR)
+        html = c.medidor("prueba", "servicio-pasto")
+        self.assertIn('aria-describedby="prueba-error"', html)
+        self.assertIn('<p class="vt-correo__error" id="prueba-error" data-vt-o="error" hidden></p>', html)
+
     def test_hay_casos_con_plazo_elegido_y_con_plazo_que_no_aplica(self):
         pedidos = [(caso["entrada"]["plazo"], caso["esperado"]["plazo"]) for caso in CASOS["casos"]]
         self.assertIn((6, 6), pedidos)

@@ -210,7 +210,7 @@ def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, local=False, titu
         f'{planes_cotizador("q")}'
         f'<div class="vt-cotizador__acciones"><a class="vt-btn vt-btn--wa" data-cta-wa data-cta="{tipo}:cotizador" '
         f'href="{href}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp</a>'
-        '<button class="vt-btn vt-btn--linea" type="button" id="cta-add">Agregar a mi cotización</button>'
+        '<button class="vt-btn vt-btn--linea" type="button" id="cta-add">Agregar a mi lista</button>'
         f'<p class="vt-promesa">{nota} {esc(datos.PROMESA_COMPLETA)}.</p></div></section>')
 
 
@@ -220,7 +220,7 @@ def lista_y_aviso():
     el aviso "<modelo> en tu lista · Ver"."""
     return (
         '<dialog class="vt-lista" id="cotizacion" aria-labelledby="cot-titulo"><div class="vt-lista__in">'
-        '<div class="vt-lista__cabeza"><h2 id="cot-titulo">Tu lista</h2><button class="vt-lista__cerrar" type="button" '
+        '<div class="vt-lista__cabeza"><h2 id="cot-titulo">Mi lista</h2><button class="vt-lista__cerrar" type="button" '
         'id="cot-close" aria-label="Cerrar">×</button></div><div class="vt-lista__cuerpo" id="cot-list"></div>'
         '<div class="vt-lista__pie" id="cot-foot" hidden><div class="vt-campo"><label for="cot-estado">Entrega</label>'
         '<div class="vt-control"><select id="cot-estado"><option value="">Selecciona tu estado</option>'
@@ -263,7 +263,7 @@ def tarjeta(m):
         f'data-landed-slug="{m["slug"]}"></span></p>'
         '<p class="vt-tarjeta-p__pago">Paga en mensualidades con tarjeta de crédito</p>'
         f'<button class="spec-card__add vt-btn vt-btn--linea" type="button" data-add="{m["slug"]}" '
-        f'aria-label="Agregar {esc(m["nombre"])} a mi cotización">+ Agregar</button></div></article>')
+        f'aria-label="Agregar a mi lista: {esc(m["nombre"])}">Agregar a mi lista</button></div></article>')
 
 
 def filtros(opciones=data.USO_FILTERS):
@@ -447,8 +447,8 @@ def comparativa(m):
             f'<dl><div><dt>Altura</dt><dd>{x["mm"]} mm</dd></div><div><dt>Peso</dt><dd>{x["peso"]} g/m²</dd></div>'
             f'<div><dt>Garantía</dt><dd>{garantia_texto(x)}</dd></div></dl>'
             f'<p class="vt-vecino__precio">Desde <b>${x["rollo"]}</b>/m²</p><button class="vt-btn vt-btn--linea" '
-            f'type="button" data-agregar="{esc(json.dumps(datos_modelo_js(x), ensure_ascii=False))}">+ Agregar · '
-            '1 rollo</button></article>')
+            f'type="button" data-agregar="{esc(json.dumps(datos_modelo_js(x), ensure_ascii=False))}">Agregar 1 rollo a '
+            'mi lista</button></article>')
     return (f'<div class="vt-vecinos">{"".join(tarjetas)}</div>'
             '<p class="vt-promesa"><a href="/pasto-sintetico#modelos">Ver los 9 modelos</a></p>')
 

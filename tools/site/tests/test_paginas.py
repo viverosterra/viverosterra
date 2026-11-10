@@ -81,7 +81,10 @@ class ContextoTest(unittest.TestCase):
 
     def test_mensajes_de_catalogo_precios_tienda_y_ciudad(self):
         firma = "\n\n" + datos.FIRMA
-        self.assertEqual(paginas.contexto("/catalogo")["mensaje"], "Hola, vi el catálogo y quiero cotizar una planta" + firma)
+        # Reescritura 6 (Entrega B de experiencia): el mensaje del catálogo pide planta, tamaño, piezas y colonia.
+        self.assertEqual(paginas.contexto("/catalogo")["mensaje"],
+                         "Hola, vi el catálogo y quiero cotizar plantas.\nPlanta o plantas: ___\nTamaño aprox.: ___\nPiezas: ___\n"
+                         "Colonia de entrega: ___" + firma)
         precios = paginas.contexto("/precios")
         self.assertEqual(precios["mensaje"], "Hola, vi la lista de precios y quiero cotizar.\nColonia: ___\nMetros aprox.: ___" + firma)
         self.assertEqual(precios["mensaje_pie"], "Hola, tengo una pregunta sobre precios" + firma)

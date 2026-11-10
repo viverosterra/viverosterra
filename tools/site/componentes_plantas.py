@@ -173,10 +173,16 @@ def _cargas(lista):
     return salida
 
 
-def rejilla_catalogo(especies_=None, tipo="catalogo"):
-    """Rejilla y estado sin resultados: un WhatsApp con mensaje_especial(<lo buscado>), que vt-catalogo.js rellena."""
+def rejilla_catalogo(especies_=None, tipo="catalogo", mensaje=None):
+    """Rejilla y estado sin resultados: un WhatsApp con mensaje_especial(<lo buscado>), que vt-catalogo.js rellena. Con
+    mensaje, una fila de WhatsApp (fila_rejilla) cada CADA_FILA tarjetas."""
     lista = especies_ or cd.ORDENADAS
-    tarjetas = "".join(tarjeta_catalogo(e, n, carga) for n, (e, carga) in enumerate(zip(lista, _cargas(lista)), 1))
+    piezas = []
+    for n, (e, carga) in enumerate(zip(lista, _cargas(lista)), 1):
+        piezas.append(tarjeta_catalogo(e, n, carga))
+        if mensaje and n % CADA_FILA == 0 and n < len(lista):
+            piezas.append(fila_rejilla(mensaje, tipo))
+    tarjetas = "".join(piezas)
     return (f'<ul class="vt-esps vt-esps--cat" data-vt-rejilla aria-label="Especies del catálogo">'
             f'{tarjetas}</ul>'
             '<div class="vt-cat__vacio" data-vt-vacio hidden><p>No hay especies con esos filtros. Quita alguno o '
@@ -186,7 +192,19 @@ def rejilla_catalogo(especies_=None, tipo="catalogo"):
             'Preguntar por WhatsApp</a></div>')
 
 
-def lista_catalogo(tipo):
+CTA_BARRA = "Cotizar plantas"
+CTA_REJILLA = "Cotizar o preguntar"
+CADA_FILA = 12  # tarjetas entre dos filas de WhatsApp en la rejilla (el mismo número que CADA_FILA de vt-catalogo.js)
+
+
+def fila_rejilla(mensaje, tipo):
+    """Fila de WhatsApp entre las tarjetas del catálogo (Entrega B de experiencia: antes, 39 pantallas sin CTA en línea).
+    Con lista, vt-catalogo.js le pone el mensaje de la lista; con filtros, solo se ve una cada CADA_FILA tarjetas."""
+    return (f'<li class="vt-cat__fila" data-vt-cta-rejilla data-hero-cta><p>¿Ya tienes tus plantas? Cotiza tu lista o '
+            f'pregúntanos por la que no encuentres.</p>{c.boton_wa(mensaje, f"{tipo}:rejilla", CTA_REJILLA)}</li>')
+
+
+def lista_catalogo(tipo, mensaje=datos.MENSAJES["plantas"]):
     """Diálogo para añadir (tamaño o medida especial y piezas), diálogo de la lista con un solo enlace de WhatsApp
     (data-cta <tipo>:sendWA; vt-catalogo.js le pone el mensaje) y la barra "Mi lista"."""
     return (
@@ -214,8 +232,14 @@ def lista_catalogo(tipo):
         '<p class="vt-dialogo__botones"><button type="button" class="vt-btn vt-btn--linea" data-vt-cerrar>Seguir viendo'
         '</button><button type="button" class="vt-lista__vaciar" data-vt-vaciar>Vaciar lista</button></p>'
         f'<p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p></dialog>'
-        '<div class="vt-lista-barra" data-vt-barra-lista hidden><button type="button" class="vt-btn vt-btn--tinta" '
-        'data-vt-abrir-lista>Mi lista <b data-vt-o="cuenta-lista">0</b></button>'
+        # Barra fija (Entrega B de experiencia): siempre lleva un WhatsApp; con lista, "Cotizar mi lista" va directo y el
+        # botón "Mi lista · n variedades · n piezas" abre la lista. Es la barra del shell (data-vt-bar): terra.js la
+        # esconde mientras se ve un CTA del hero o una fila de la rejilla.
+        f'<div class="vt-bar vt-bar--lista" data-vt-bar role="region" aria-label="Contacto rápido y mi lista">'
+        f'<a class="vt-btn vt-btn--wa vt-bar__go" data-cta="{esc(tipo)}:barra" href="{esc(datos.wa_url(datos.con_firma(mensaje)))}" '
+        f'target="_blank" rel="noopener">{WA_GLIFO}{CTA_BARRA}</a>'
+        '<button type="button" class="vt-btn vt-btn--tinta vt-bar__lista" data-vt-barra-lista data-vt-abrir-lista hidden>'
+        '<span>Mi lista <b data-vt-o="cuenta-lista">0</b></span><small data-vt-o="resumen-barra"></small></button>'
         '<p class="vt-sr" role="status" data-vt-o="aviso"></p></div>')
 
 

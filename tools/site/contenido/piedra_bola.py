@@ -138,6 +138,8 @@ PARIDAD = {
         "og:description": (DESCRIPCION, f"Sin “Pequeña, mediana y grande” ni “gratis”: {mc.MOTIVO_SIN_MEDIDAS}"),
     }),
     "reemplazos": {
+        # Reescritura 16 (Entrega B de experiencia): el formulario pide una cotización, no un pedido en firme.
+        "Escríbenos para cotizar": "¿Prefieres correo? Pide tu cotización aquí",
         # H1 con «en Tampico» (SEO fase 0, 2026-11-10): la consulta es «piedra bola de río Tampico».
         "Piedra bola de río para jardines y senderos": "Piedra bola de río en Tampico para jardines y senderos",
         "¿En qué tamaños se vende la piedra bola de río en Tampico?": "¿Cómo se vende la piedra bola de río en Tampico?",
@@ -154,3 +156,5 @@ PARIDAD = {
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). El lema del <h1> va en <span class="vt-serif"> (antes <em>). Entrada recortada: la zona de entrega sigue en «Entrega». Sin foto: no se agrega ninguna.')
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: con un resultado válido, la barra fija y el «Cotizar» del encabezado llevan el enlace de la calculadora y un texto corto; al borrarlo vuelven al genérico; aviso de área inválida; formulario de correo «Pedir cotización por correo».'

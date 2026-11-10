@@ -4,6 +4,7 @@ cotizador (estado, m², precio puesto, mensualidades) → para quién es → fic
 comparativa con 2 vecinos → envío por rollo y cómo comprar → garantía del modelo → preguntas → CTA final.
 Contenido: tools/site/contenido/ficha.py (desde tools/pasto/data.py). JS: tienda-pasto.js, vt-landed.js."""
 import componentes as c
+import datos
 import componentes_tienda as t
 from plantillas import base
 
@@ -19,7 +20,9 @@ def _portada(k):
     info = (f'<div class="{c.clase_titular(k["h1"], "vt-ficha__info")}"><p class="vt-kicker">{k["kicker"]}</p>'
             f'<h1 id="vt-h1">{k["h1"]}</h1><p class="vt-portada__lema vt-serif">{k["lema"]}</p>'
             f'{c.etiqueta(k["etiqueta"], cordel=False)}'
-            f'<div class="vt-portada__cta" data-hero-cta>{c.boton_wa(k["cierre"]["mensaje"], f"{tipo}:hero")}</div>'
+            # Reescritura 12 (Entrega B de experiencia): el botón dice qué modelo se cotiza ("por WhatsApp" no cabe a 320 px
+            # en el botón alto del hero sin partirse en dos renglones).
+            f'<div class="vt-portada__cta" data-hero-cta>{c.boton_wa(k["cierre"]["mensaje"], f"{tipo}:hero", "Cotizar " + c.esc(m["nombre"]))}</div>'
             f'{c.enlaces_portada((("Calcula tu pedido", "#comprar"),), tipo)}</div>')
     mas = (f'<div class="vt-ficha__mas">{t.existencia(m)}<p class="vt-lede">{k["lede"]}</p>{t.datos_modelo(m)}'
            f'{c.confianza()}</div>')
@@ -32,7 +35,8 @@ def _para_quien(k, n):
     p = k["para_quien"]
     checks = "".join(f"<li><span>{x}</span></li>" for x in p["si"]) + "".join(f'<li class="vt-checks__no"><span>{x}</span></li>' for x in p["no"])
     izquierda = f'<p class="vt-lede">{p["resumen"]}</p>{c.nota(*p["nota"])}'
-    return c.bloque_dos(n, "En resumen", "vt-h-resumen", p["titulo"], izquierda, f'<ul class="vt-checks">{checks}</ul>')
+    return c.bloque_dos(n, "En resumen", "vt-h-resumen", p["titulo"], izquierda,
+                        f'<ul class="vt-checks">{checks}</ul>' + _fila(k, "resumen", prueba=True))
 
 
 def _fotos(k, n):
@@ -45,7 +49,16 @@ def _pedido(k, n):
     p = k["pedido"]
     cuerpo = (f'<h3>{p["titulo_envio"]}</h3><p class="vt-lede">{p["lede"]}</p>{t.zonas_envio()}'
               f'{c.pasos(p["pasos"])}')
-    return c.bloque(n, "Tu pedido", "vt-h-pedido", p["titulo"], cuerpo, id_seccion="como-funciona")
+    return c.bloque(n, "Tu pedido", "vt-h-pedido", p["titulo"], cuerpo + _fila(k, "pedido"), id_seccion="como-funciona")
+
+
+def _fila(k, seccion, prueba=False):
+    """Entrega B de experiencia: WhatsApp en los tramos largos de la ficha (antes, 11.7 pantallas sin CTA), con lo que
+    el cliente ya eligió (tienda-pasto.js) y, tras el resumen, la prueba social de la tienda."""
+    fila = c.fila_seccion(k["cierre"]["mensaje"], k["tipo"], seccion, f"Cotizar {c.esc(k['modelo']['nombre'])}", contexto=True)
+    if not prueba:
+        return fila
+    return fila + c.prueba_cta(datos.OPINION_SINTETICO_TAMPICO, f"vendemos a todo México desde {datos.SINTETICO_NACIONAL_DESDE}")
 
 
 def render(k):
@@ -53,11 +66,11 @@ def render(k):
     secciones = (
         _portada(k),
         _para_quien(k, 1),
-        c.bloque(2, "Ficha técnica", "vt-h-ficha", k["ficha"]["titulo"], t.ficha_tecnica(m), tinte=True,
-                 id_seccion="ficha-tecnica"),
+        c.bloque(2, "Ficha técnica", "vt-h-ficha", k["ficha"]["titulo"], t.ficha_tecnica(m) + _fila(k, "ficha-tecnica"),
+                 tinte=True, id_seccion="ficha-tecnica"),
         _fotos(k, 3),
-        c.bloque(4, "Compáralo", "vt-h-compara", k["compara"]["titulo"], t.comparativa(m), lede=k["compara"]["lede"],
-                 tinte=True),
+        c.bloque(4, "Compáralo", "vt-h-compara", k["compara"]["titulo"], t.comparativa(m) + _fila(k, "compara"),
+                 lede=k["compara"]["lede"], tinte=True),
         _pedido(k, 5),
         c.garantia(dict(k["garantia"], numero=6, id_titulo="vt-h-garantia", rotulo="Garantía")),
         c.bloque_dos(7, "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"])),

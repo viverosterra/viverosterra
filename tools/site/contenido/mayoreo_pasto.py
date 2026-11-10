@@ -112,20 +112,20 @@ FIGURAS = (
 )
 
 PAQUETES = (
-    {"rotulo": "Paquete 1 · Solo pasto", "titulo": "Pasto de mayoreo para tu cuadrilla", "precio": MAYOREO,
+    {"cta": "Cotizar solo el pasto", "rotulo": "Paquete 1 · Solo pasto", "titulo": "Pasto de mayoreo para tu cuadrilla", "precio": MAYOREO,
      "unidad": "/m²", "detalle": f"en pedidos de {MINIMO} m² o más",
      "puntos": ("Pasto San Agustín cortado para tu pedido", "Entregas parciales según el avance de la obra",
                 f"Factura {datos.FACTURA} para persona física o moral"),
      "mensaje": ("Hola, quiero cotizar pasto San Agustín al mayoreo (solo pasto).\nEmpresa: ___\nObra y ubicación: ___\n"
                  "m² totales: ___\nEntregas (fechas o etapas): ___")},
-    {"rotulo": "Paquete 2 · Instalado", "titulo": "Pasto instalado en obra", "precio_texto": datos.SEGUN_COTIZACION,
+    {"cta": "Cotizar pasto instalado", "rotulo": "Paquete 2 · Instalado", "titulo": "Pasto instalado en obra", "precio_texto": datos.SEGUN_COTIZACION,
      "detalle": "según el terreno y el volumen", "rec": True,
      "puntos": ("Preparación básica del terreno y colocación con nuestra cuadrilla",
                 f"Garantía de arraigo de {datos.ARRAIGO} siguiendo el protocolo de riego",
                 f"REPSE {datos.REPSE} para trabajar dentro de tu obra"),
      "mensaje": ("Hola, quiero cotizar pasto instalado en una obra.\nEmpresa: ___\nObra y ubicación: ___\n"
                  "m² totales: ___\nEstado del terreno (nivelado, con tierra, con escombro): ___")},
-    {"rotulo": "Paquete 3 · Áreas verdes", "titulo": "Pasto, palmas y riego para la obra",
+    {"cta": "Cotizar pasto, palmas y riego", "rotulo": "Paquete 3 · Áreas verdes", "titulo": "Pasto, palmas y riego para la obra",
      "precio_texto": datos.SEGUN_COTIZACION, "detalle": "con un solo proveedor",
      "puntos": ('Pasto, <a href="/palmas-mayoreo-proyectos">palmas para proyectos</a> y árboles',
                 '<a href="/sistema-riego-tampico">Riego automático</a> para grandes áreas',
@@ -195,7 +195,7 @@ CONTENIDO = {
         "cotizador": "volumen",
     },
     "formulario": {
-        "titulo": "¿Compras prefiere correo? Pide la cotización por escrito",
+        "titulo": "¿Tu área de compras pide la cotización por correo? Solicítala aquí",
         "lede": b2b_comun.LEDE_CORREO,
         "pagina": "Mayoreo de pasto", "cta": "mayoreo:formulario",
         "cantidad": ("m² totales de la obra", "Ej. 1,200 m²", False, "decimal"),
@@ -271,3 +271,5 @@ PARIDAD = {
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). La respuesta directa (40 a 60 palabras) pasa, sin cambios, de la entrada del hero al bloque «En corto»; la entrada nueva conserva precio, mínimo y entrega por etapas.')
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: paquetes con texto de botón propio (reescritura 5); con un resultado válido, la barra fija y el «Cotizar» del encabezado llevan el enlace de la calculadora y un texto corto; al borrarlo vuelven al genérico (cotizador por volumen); titular del formulario de compras reescrito (reescritura 16).'

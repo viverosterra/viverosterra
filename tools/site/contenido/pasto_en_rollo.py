@@ -108,6 +108,9 @@ CONTENIDO = {
     "respuesta": respuestas.de("/pasto-en-rollo-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-pasto",
     "prefijo": "pasto",
+    # Entrega B de experiencia: CTA al terminar las opiniones (antes, 9.8 pantallas del hero al Medidor sin CTA).
+    "ctas": {"prueba": (datos.MENSAJES["pasto-natural"], "Cotizar mi patio"),
+             "garantia": (datos.MENSAJES["pasto-natural"], "Cotizar pasto instalado")},
     "meta": META,
     "jsonld": {"producto": PRODUCTO, "migas": MIGAS_LD, "howto": "Cómo instalar pasto en rollo San Agustín en Tampico",
                "speakable": entidad.SPEAKABLE},
@@ -344,3 +347,5 @@ PARIDAD = {
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: «Preparamos el suelo, tendemos tepes de 40 × 60 cm y te enseñamos a regarlo» sale del hero (el tepe va en la etiqueta y los pasos, en «Cómo se instala»); «mensualidades… desde $2,000» queda como enlace a #mensualidades, donde está el monto.')
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: botón y aviso del Medidor (entrada inválida sin borrar lo escrito); con un resultado válido, la barra fija y el «Cotizar» del encabezado llevan el enlace de la calculadora y un texto corto; al borrarlo vuelven al genérico; filas de WhatsApp tras las opiniones y la garantía; el simulador no manda un monto que el cliente no escribió.'

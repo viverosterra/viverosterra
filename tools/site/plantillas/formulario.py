@@ -45,7 +45,7 @@ def _cuestionario(k):
         f'<div class="vt-util__pie" id="main-footer"><button type="button" class="vt-btn vt-btn--linea" id="btn-prev" hidden>'
         f'← Anterior</button><p class="vt-util__cuenta" id="step-counter" role="status">Paso 1 de {total}</p>'
         f'<button type="button" class="vt-btn vt-btn--tinta" id="btn-next">Siguiente →</button>'
-        f'<button type="submit" class="vt-btn vt-btn--tinta" id="submit-btn" hidden>Enviar cuestionario</button></div>'
+        f'<button type="submit" class="vt-btn vt-btn--tinta" id="submit-btn" hidden>Enviar mis respuestas</button></div>'
         f'</form>'
         f'<p class="vt-promesa">Última actualización: <time datetime="{k["fecha_iso"]}">{k["fecha"]}</time></p>'
         f'</div></section>')

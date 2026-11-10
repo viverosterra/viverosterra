@@ -126,9 +126,9 @@ class BloquesTest(unittest.TestCase):
         self.assertNotIn("vt-etiqueta__sci", c.etiqueta(e))
         self.assertIn('<p class="vt-etiqueta__sci">X y</p>', c.etiqueta(dict(e, cientifico="X y")))
         items = ({"rotulo": "Opción 1", "titulo": "A", "precio": 139, "unidad": "/m²", "detalle": "d", "puntos": ("p",),
-                  "mensaje": "Hola A"},
+                  "mensaje": "Hola A", "cta": "Cotizar A"},  # Entrega B: cada opción dice qué se pide
                  {"rotulo": "Opción 2", "titulo": "B", "precio": 385, "unidad": "/m²", "detalle": "d", "puntos": ("q",),
-                  "mensaje": "Hola B", "rec": True, "nota": "n"})
+                  "mensaje": "Hola B", "rec": True, "nota": "n", "cta": "Cotizar B"})
         html = c.opciones(items, "servicio-sintetico")
         self.assertEqual(re.findall(r'data-cta="([^"]+)"', html), ["servicio-sintetico:opcion-1", "servicio-sintetico:opcion-2"])
         self.assertIn('<li class="vt-modo vt-modo--rec">', html)
@@ -164,7 +164,8 @@ class PlanesTest(unittest.TestCase):
         self.assertNotIn("vt-modo__mes", html)
 
     def test_por_cotizacion_y_sin_precio(self):
-        html = c.opciones((dict(self.BASE, precio_texto="Por cotización"), dict(self.BASE, titulo="Goteo")),
+        # Entrega B de experiencia: dos opciones contiguas no pueden decir el mismo texto de botón.
+        html = c.opciones((dict(self.BASE, precio_texto="Por cotización"), dict(self.BASE, titulo="Goteo", cta="Cotizar goteo")),
                           "servicio-mantenimiento")
         self.assertIn('<p class="vt-modo__precio">Por cotización <small>d</small></p>', html)
         self.assertEqual(html.count('class="vt-modo__precio"'), 1)
@@ -211,7 +212,8 @@ class MedidorTest(unittest.TestCase):
         self.assertIn('data-cta="home:medidor" data-vt-o="cta" data-hero-cta href="https://wa.me/', html)
         self.assertNotIn("data-vt-medidor data-hero-cta", html)
         self.assertIn('<span data-vt-o="cta-texto">Cotizar por WhatsApp</span>', html)
-        self.assertNotIn("cta-texto", c.medidor("prueba", "home"))
+        # Entrega B de experiencia: el botón de todos los medidores cambia de texto con una medida válida.
+        self.assertIn('<span data-vt-o="cta-texto">Cotizar por WhatsApp</span>', c.medidor("prueba", "home"))
 
     def test_renglon_vivo_bajo_las_medidas_sin_iva_en_solo_pasto_y_mayoreo(self):
         """Revisión de diseño (2026-11-09): el resultado se lee junto a los campos. El pasto sin instalar no lleva IVA:
@@ -224,14 +226,17 @@ class MedidorTest(unittest.TestCase):
                 self.assertEqual(r["iva"], modo == "instalado")
                 self.assertEqual(c.textos_medidor(largo, ancho, r)["vivo"], esperado)
         html = c.medidor("prueba", "home", resultado_vivo=True)
-        self.assertIn('</div></div><p class="vt-medidor__vivo" data-vt-o="vivo"></p><fieldset class="vt-opciones">', html)
+        # Entrega B de experiencia: el aviso de entrada inválida va entre las medidas y el renglón vivo (oculto sin error).
+        self.assertIn('</div></div><p class="vt-correo__error" id="prueba-error" data-vt-o="error" hidden></p>'
+                      '<p class="vt-medidor__vivo" data-vt-o="vivo"></p><fieldset class="vt-opciones">', html)
         self.assertNotIn("vt-medidor__vivo", c.medidor("prueba", "home"))
 
     def test_medidor_de_la_home_presta_su_enlace_a_la_barra(self):
         html = c.medidor("prueba", "home", boton_medida=True)
         self.assertIn(f'data-vt-barra="{c.CTA_MEDIDA_BARRA}"', html)
         self.assertEqual(c.CTA_MEDIDA_BARRA, "Enviar mi medida")
-        self.assertNotIn("data-vt-barra", c.medidor("prueba", "home"))
+        # Entrega B de experiencia: todos los medidores prestan su enlace a la barra y al encabezado.
+        self.assertIn(f'data-vt-barra="{c.CTA_MEDIDA_BARRA}"', c.medidor("prueba", "servicio-pasto"))
 
     def test_medidor_con_garantia_bajo_el_resultado(self):
         html = c.medidor("prueba", "home", garantia=True)

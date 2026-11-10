@@ -61,7 +61,7 @@ test('mensaje con el formato del dueño', () => {
 • 16 × Maceta 6" Roja
 • 4 × Maceta 7" Jaspeada
 • 6 × Colgante Rosa
-Total: 26 piezas · Escalón: Mayoreo · Total estimado: $4,254
+Total: 26 piezas · Total estimado: $4,254
 Entrega: Madero · 28 nov · Requiero factura
 Tipo de cliente: Restaurante/hotel`);
 });
@@ -99,7 +99,7 @@ test('mensaje en modo preventa y sin datos opcionales', () => {
   assert.strictEqual(nb.mensaje(c,{},{...cfg,modo:'preventa'}),
 `Hola Viveros Terra 🌺 Quiero apartar Nochebuenas 2026:
 • 1 × Maceta 6" Roja
-Total: 1 pieza · Escalón: Menudeo · Total estimado: $139`);
+Total: 1 pieza · Total estimado: $139`);
 });
 test('registro para Sheets', () => {
   assert.deepStrictEqual(nb.registro(nb.cotizar(mixto,cfg,FUERA),{zona:'Madero',fecha:'2026-11-28',tipo:'Gobierno',factura:true},cfg,
@@ -144,6 +144,10 @@ test('textos de la barra', () => {
   assert.deepStrictEqual(nb.textoBarra(c,true,true,cfg),{texto:'12 piezas · $1,357 · Ver total',href:'#nb-ticket'});
   assert.deepStrictEqual(nb.textoBarra(c,true,false,{...cfg,modo:'preventa'}),{texto:'Apartar · $1,357',href:'#cotizador'});
   assert.deepStrictEqual(nb.textoBarra(c,false,false,{...cfg,modo:'preventa'}),{texto:'Apartar mi pedido',href:'#cotizador'});
+  // Entrega B de experiencia: fuera del cotizador y con pedido, la barra manda el pedido escrito por WhatsApp.
+  assert.deepStrictEqual(nb.textoBarra(c,true,false,cfg,'https://wa.me/1?text=x'),{texto:'Enviar mi pedido · $1,357',href:'https://wa.me/1?text=x'});
+  assert.deepStrictEqual(nb.textoBarra(c,true,true,cfg,'https://wa.me/1?text=x'),{texto:'12 piezas · $1,357 · Ver total',href:'#nb-ticket'});
+  assert.deepStrictEqual(nb.textoBarra(vacia,true,false,cfg,''),{texto:'Cotizar mi pedido',href:'#cotizador'});
 });
 
 test('rosa y jaspeada son sobre pedido; la roja no', () => {
@@ -151,4 +155,9 @@ test('rosa y jaspeada son sobre pedido; la roja no', () => {
   assert.strictEqual(nb.cotizar([L('6',2)],conVariedades,FUERA).haySobrePedido,false);
   assert.strictEqual(nb.cotizar([L('6',2),L('7',1,'Rosa')],conVariedades,FUERA).haySobrePedido,true);
   assert.strictEqual(nb.cotizar([L('6',2,'Jaspeada')],conVariedades,FUERA).haySobrePedido,true);
+});
+
+test('el mensaje no nombra el escalón; el ticket dice el precio aplicado con su rango de piezas', () => {
+  assert.doesNotMatch(nb.mensaje(nb.cotizar(mixto,cfg,FUERA),{},cfg), /Escal/);
+  assert.deepStrictEqual([0,1,2,3].map((i) => nb.rangoEscalon(i,cfg)), ['1 a 11 piezas','12 a 49 piezas','50 a 199 piezas','200 piezas o más']);
 });
