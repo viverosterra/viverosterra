@@ -13,8 +13,9 @@ MINIMO = P["pasto_mayoreo_minimo_m2"]
 EMPRESAS = f"{', '.join(datos.CLIENTES_B2B[:-1])} y {datos.CLIENTES_B2B[-1]}"
 # Spec del hero (2026-11-09, §2): las metas ya no dicen "gratis"; dicen lo que sí pasa (precio a la vista y la promesa).
 COTIZA = f"Cotiza por WhatsApp: {datos.PROMESA[0].lower()}{datos.PROMESA[1:]}."
-DESCRIPCION = (f"Pasto San Agustín desde ${P['pasto_solo_m2']}/m², diseño de jardines y mantenimiento en Tampico. "
-               f"Precios con IVA a la vista. {COTIZA}")
+# Revisión (2026-11-09): sin "con IVA" (el pasto sin instalar no lleva IVA) y en 155 caracteres o menos.
+DESCRIPCION = (f"Pasto San Agustín desde ${P['pasto_solo_m2']}/m², jardines y mantenimiento en Tampico. "
+               f"Precios a la vista. {COTIZA}")
 
 META = {
     "title": "Viveros Terra · Jardinería, Pasto en Rollo y Paisajismo en Tampico",
@@ -143,32 +144,32 @@ CONTENIDO = {
         "lede": ("Pasto, jardinería, plantas y obra para empresas: para que llegues a la plática sabiendo cuánto cuesta. "
                  "Donde dice “desde”, el total depende de tus metros y del terreno."),
         "items": (
-            {"titulo": "Pasto natural", "servicio": "pasto-natural", "cotizar": "pasto natural",
+            {"titulo": "Pasto natural", "servicio": "pasto-natural", "cotizar": "pasto",
              "href": "/pasto-en-rollo-tampico",
              "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111,
              "texto": (f"San Agustín en rollo, cortado para tu pedido. {dinero(P['pasto_solo_m2'])}/m² solo pasto; "
                        "instalado en un día."),
              "desde": dinero(P["pasto_instalado_m2"]), "unidad": "/m² instalado"},
-            {"titulo": "Pasto sintético", "servicio": "pasto-sintetico", "cotizar": "pasto sintético",
+            {"titulo": "Pasto sintético", "servicio": "pasto-sintetico", "cotizar": "sintético",
              "href": "/pasto-sintetico",
              "img": "/img/pasto-sintetico/galeria/toscana-28-1-sm.webp", "ancho": 420, "alto": 560,
              "texto": (f"9 modelos con envío a todo México desde {datos.SINTETICO_NACIONAL_DESDE}. El envío se cobra por "
                        'rollo, según tu estado. ¿En Tampico? <a href="/pasto-sintetico-tampico">Lo instalamos</a>.'),
              "desde": dinero(P["sintetico_tienda_m2"]), "unidad": "/m² material"},
-            {"titulo": "Diseño, mantenimiento y riego", "servicio": "jardin", "cotizar": "diseño, mantenimiento o riego",
+            {"titulo": "Diseño, mantenimiento y riego", "servicio": "jardin", "cotizar": "jardín",
              "href": "/mantenimiento-jardines-tampico",
              "img": f"{OBRA}/mantenimiento-jardin-poda-tampico.webp", "ancho": 640, "alto": 960,
              "texto": (f'Plan Terra de <a href="/diseno-jardines-tampico">diseño</a> desde {dinero(P["diseno"])}. '
                        "Mantenimiento con poda, fertilización y control de plagas. "
                        f'<a href="/sistema-riego-tampico">Riego automático</a> desde {dinero(P["riego_m2"][0])}/m².'),
              "desde": dinero(P["mantenimiento_mes"]), "unidad": "/mes"},
-            {"titulo": "Plantas y palmas", "servicio": "plantas", "cotizar": "plantas o palmas",
+            {"titulo": "Plantas y palmas", "servicio": "plantas", "cotizar": "plantas",
              "href": "/plantas-palmas-arboles-tampico",
              "img": f"{OBRA}/palmas-en-costal-vivero.webp", "ancho": 640, "alto": 961,
              "texto": (f"{datos.VARIEDADES} variedades en el vivero. Las que sembramos nosotros llevan 30 días de "
                        "garantía de arraigo, con el riego indicado."),
              "desde": dinero(P["palma_desde"]), "unidad": "palma chica"},
-            {"titulo": "Empresas y constructoras", "servicio": "empresas", "cotizar": "un proyecto",
+            {"titulo": "Empresas y constructoras", "servicio": "empresas", "cotizar": "proyecto",
              "href": "/mayoreo-pasto-tampico",
              "img": f"{OBRA}/instalacion-tuberia-riego-jardin.webp", "ancho": 900, "alto": 600,
              "texto": (f"Mayoreo de pasto (solo pasto) desde {MINIMO} m², "
@@ -222,7 +223,7 @@ CONTENIDO = {
              "texto": f"El pasto llega del campo {datos.LLEGADA_PASTO}, se corta para tu pedido y va directo a tu jardín."},
             {"titulo": "El primer riego", "quien": "tu", "cuando": "Días 1 a 20",
              "texto": (f"{datos.PRIMER_RIEGO} Si una sección no arraiga en {datos.ARRAIGO}, la reponemos sin costo, "
-                       'siguiendo el protocolo de riego (<a href="/politicas">ver condiciones</a>).')},
+                       'siguiendo el protocolo de riego (<a href="/protocolo-cuidados-pasto-san-agustin">ver condiciones</a>).')},
         ),
     },
     "precios": {
@@ -284,8 +285,8 @@ CONTENIDO = {
 SERVICIOS_EN_INDICE = "Ahora es una fila del índice “Cinco formas de trabajar con nosotros”, con su precio."
 GUIA_EN_LISTA = "Sigue enlazada desde la lista “Guías para el clima de Tampico”, con el mismo texto de enlace."
 PASOS_VIEJOS = "Los 5 pasos genéricos se reemplazan por los 4 pasos con NOSOTROS / TÚ / JUNTOS (spec §4.1)."
-SIN_GRATIS = ("Decía “Cotización gratis hoy”: la home ya no dice “gratis” (spec del hero, 2026-11-09, §2); ahora dice que "
-              "los precios van con IVA a la vista y la promesa de respuesta en horario.")
+SIN_GRATIS = ("Decía “Cotización gratis hoy”: la home ya no dice “gratis” (spec del hero, 2026-11-09, §2); ahora dice "
+              "“Precios a la vista” (sin “con IVA”: el pasto sin instalar no lo lleva) y la promesa en horario.")
 PARIDAD = {
     "meta": {"description": (DESCRIPCION, SIN_GRATIS), "og:description": (DESCRIPCION, SIN_GRATIS)},
     "reemplazos": {

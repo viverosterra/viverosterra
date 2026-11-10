@@ -85,8 +85,22 @@ class TerraInicioCssTest(unittest.TestCase):
 
     def test_presupuesto(self):
         datos = activos.minificar_css(self.css).encode("utf-8")
-        self.assertLess(len(datos), 6 * 1024)
-        self.assertLess(len(gzip.compress(datos, mtime=0)), 2 * 1024)
+        # El spec pedía menos de 6 KB. Con el movimiento (Entrega 2) y las correcciones de la revisión de diseño
+        # (hero compacto en laptops bajas, etiqueta compacta de 1024 a 1279 px, tableta a dos columnas, renglón vivo
+        # del Medidor) sube a 8 KB, como se acordó, sin recortar estados de foco. Con gzip, menos de 2.5 KB.
+        self.assertLess(len(datos), 8 * 1024)
+        self.assertLess(len(gzip.compress(datos, mtime=0)), 2560)
+
+    def test_cortes_de_la_revision_de_diseno(self):
+        css = sin_comentarios(self.css)
+        for corte in ("@media (min-width:1024px) and (max-height:820px){",
+                      "@media (min-width:1024px) and (max-width:1279px),(min-width:1024px) and (max-height:820px){",
+                      "@media (min-width:768px) and (max-width:1023px){",
+                      "@media (max-width:359px),(max-width:559px) and (max-height:660px){",
+                      "@media (min-width:560px) and (max-width:1023px){.vt-inicio .vt-inicio__cta .vt-btn--wa{max-width:420px}}"):
+            with self.subTest(corte=corte):
+                self.assertIn(corte, css)
+        self.assertNotIn(".vt-bar", css, "la transición de la barra ya se apaga en terra.css para todo el sitio")
 
 
 if __name__ == "__main__":

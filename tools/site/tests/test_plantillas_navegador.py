@@ -250,10 +250,10 @@ class PlantillasNavegadorTest(unittest.TestCase):
         page.goto(self.base + "/", wait_until="load")
         return page
 
-    def test_home_precio_y_cta_en_la_primera_pantalla_de_tres_celulares(self):
-        """Precio y botón de la portada completos en la primera pantalla a 375×812, 375×667 y 320×640, aun con el
-        prefijo "Abierto ahora" puesto; la barra móvil está oculta y no tapa el precio."""
-        for ancho, alto in ((375, 812), (375, 667), (320, 640)):
+    def test_home_precio_y_cta_en_la_primera_pantalla_de_celulares(self):
+        """Precio y botón de la portada completos en la primera pantalla a 375×812, 375×667, 360×640 y 320×640, aun
+        con el prefijo "Abierto ahora" puesto; la barra móvil está oculta y no tapa el precio."""
+        for ancho, alto in ((375, 812), (375, 667), (360, 640), (320, 640)):
             page = self.pagina_a_la_hora(ancho, alto, "2026-11-16T16:00:00Z")
             page.wait_for_function("() => document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
             precio = page.locator(".vt-portada .vt-etiqueta__precio").bounding_box()
@@ -266,6 +266,137 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 self.assertLess(lede["y"], precio["y"])
                 self.assertLess(precio["y"], cta["y"])
 
+    def test_home_precio_y_cta_en_la_primera_pantalla_de_laptops_bajas(self):
+        """Revisión de diseño (2026-11-09): en pantallas bajas el hero se compacta; el precio de la etiqueta y el
+        botón de WhatsApp quedan completos sin desplazar, y la etiqueta no tapa el pie de la foto."""
+        for ancho, alto in ((1280, 620), (1366, 650), (1536, 730), (1440, 780), (1024, 650)):
+            page = self.pagina_a_la_hora(ancho, alto, "2026-11-16T16:00:00Z")
+            precio = page.locator(".vt-portada .vt-etiqueta__precio").bounding_box()
+            cta = page.locator(".vt-portada [data-hero-cta] .vt-btn--wa").bounding_box()
+            etiqueta = page.locator(".vt-portada .vt-etiqueta-x").bounding_box()
+            marco = page.locator(".vt-portada__foto .vt-fig__marco").bounding_box()
+            with self.subTest(ancho=ancho, alto=alto):
+                self.assertLessEqual(precio["y"] + precio["height"], alto)
+                self.assertLessEqual(cta["y"] + cta["height"], alto)
+                self.assertGreaterEqual(cta["height"], 62)
+                self.assertLessEqual(marco["y"] + marco["height"], alto)
+                self.assertLess(etiqueta["y"] + etiqueta["height"], marco["y"] + marco["height"])
+                self.assertGreater(etiqueta["y"], marco["y"])
+                self.assertFalse(page.locator(".vt-portada .vt-etiqueta__nombre").is_visible())  # versión compacta
+
+    def test_home_etiqueta_compacta_de_1024_a_1279_tapa_poco_la_foto(self):
+        """De 1024 a 1279 px la etiqueta colgada es la compacta (la de celular): cubre a lo más ~20 % de la foto y no
+        llega a su tercio superior (donde está el logo de la camisa). Desde 1280 (y con alto de sobra) va completa."""
+        for ancho, alto in ((1024, 800), (1100, 900), (1279, 900)):
+            page = self.pagina(ancho, alto)
+            page.goto(self.base + "/", wait_until="load")
+            e = page.locator(".vt-portada .vt-etiqueta-x").bounding_box()
+            m = page.locator(".vt-portada__foto .vt-fig__marco").bounding_box()
+            solape = (max(0, min(e["x"] + e["width"], m["x"] + m["width"]) - max(e["x"], m["x"]))
+                      * max(0, min(e["y"] + e["height"], m["y"] + m["height"]) - max(e["y"], m["y"])))
+            with self.subTest(ancho=ancho):
+                self.assertFalse(page.locator(".vt-portada .vt-etiqueta__nombre").is_visible())
+                self.assertLessEqual(solape / (m["width"] * m["height"]), 0.2)
+                self.assertGreater(e["y"], m["y"] + m["height"] / 3)
+                self.assertLess(e["y"] + e["height"], m["y"] + m["height"])
+                self.assertEqual(page.evaluate(SALIDOS_DEL_MAIN, ".vt-portada .vt-etiqueta-x"), [])
+        completa = self.pagina(1440, 900)
+        completa.goto(self.base + "/", wait_until="load")
+        self.assertTrue(completa.locator(".vt-portada .vt-etiqueta__nombre").is_visible())
+
+    def test_home_tableta_boton_con_tope_etiqueta_al_lado_y_foto_que_no_llena_la_pantalla(self):
+        for ancho, alto, lado_a_lado in ((560, 800, False), (640, 900, False), (768, 1024, True), (1023, 768, True)):
+            page = self.pagina(ancho, alto)
+            page.goto(self.base + "/", wait_until="load")
+            cta = page.locator(".vt-portada [data-hero-cta] .vt-btn--wa").bounding_box()
+            etiqueta = page.locator(".vt-portada .vt-etiqueta-x").bounding_box()
+            marco = page.locator(".vt-portada__foto .vt-fig__marco").bounding_box()
+            with self.subTest(ancho=ancho):
+                self.assertLessEqual(cta["width"], 420)
+                self.assertEqual(cta["x"] >= etiqueta["x"] + etiqueta["width"], lado_a_lado)
+                if lado_a_lado:
+                    self.assertAlmostEqual(cta["y"], etiqueta["y"], delta=2)
+                    self.assertLessEqual(marco["height"], alto * 0.8)
+                    self.assertAlmostEqual(marco["width"] / marco["height"], 16 / 9, places=1)
+                self.assertLessEqual(page.evaluate("() => document.documentElement.scrollWidth - document.documentElement.clientWidth"), 1)
+
+    def test_home_confianza_con_separadores_en_el_dom_que_no_se_pintan(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/", wait_until="load")
+        self.assertEqual(page.locator(".vt-inicio__confianza").evaluate("e => e.textContent"),
+                         f"{datos.PROMESA_COMPLETA} · {datos.GOOGLE} · {datos.CLIENTES} clientes")
+        self.assertEqual(page.locator(".vt-inicio__sep:visible").count(), 0)
+
+    def test_home_filas_de_seccion_esconden_la_barra_y_caben_a_320(self):
+        """Revisión de diseño: con una fila de WhatsApp de sección a la vista no hay dos botones iguales (la barra
+        fija se esconde) y sus textos largos no ensanchan la página a 320 px."""
+        oculta = "document.querySelector('[data-vt-bar]').classList.contains('is-oculta')"
+        page = self.pagina(320, 640)
+        page.goto(self.base + "/", wait_until="load")
+        for seccion in ("opiniones", "proceso", "precios", "faq"):
+            boton = page.locator(f'a[data-cta="home:{seccion}"]')
+            boton.scroll_into_view_if_needed()
+            page.wait_for_function(f"() => {oculta}")
+            caja = boton.bounding_box()
+            with self.subTest(seccion=seccion):
+                self.assertGreaterEqual(caja["x"], 0)
+                self.assertLessEqual(caja["x"] + caja["width"], 320)
+                self.assertGreaterEqual(caja["height"], 44)
+                self.assertEqual(page.evaluate(SALIDOS_DEL_MAIN, "main *"), [])
+        # Fuera de las filas (en las fotos de obra no hay ningún CTA propio) la barra vuelve.
+        page.evaluate("() => scrollTo(0, document.querySelector('.vt-obras').getBoundingClientRect().top + scrollY)")
+        page.wait_for_function(f"() => !{oculta}")
+
+    def test_home_medidor_renglon_vivo_barra_con_la_medida_y_garantia_solo_instalado(self):
+        """Revisión de diseño: el resultado se lee bajo Largo × Ancho; con medida válida la barra fija manda la misma
+        medida ("Enviar mi medida") y vuelve al genérico al borrarla; generate_lead sale una vez con el cta de la barra;
+        la garantía de arraigo solo se muestra en modo instalado."""
+        page = self.pagina(375, 667)
+        page.goto(self.base + "/", wait_until="load")
+        caja = page.locator("[data-vt-medidor]")
+        vivo, barra, garantia = caja.locator('[data-vt-o="vivo"]'), page.locator("[data-vt-bar] .vt-bar__go"), caja.locator('[data-vt-o="garantia"]')
+        generico = barra.get_attribute("href")
+        self.assertFalse(vivo.is_visible())
+        self.assertEqual(barra.text_content().strip(), "Cotizar por WhatsApp")
+        caja.locator('[data-vt-campo="largo"]').fill("8")
+        caja.locator('[data-vt-campo="ancho"]').fill("6")
+        self.assertEqual(vivo.inner_text(), "48 m² · desde $5,760 con IVA")
+        medidas = caja.locator(".vt-medidor__medidas").bounding_box()
+        self.assertAlmostEqual(vivo.bounding_box()["y"], medidas["y"] + medidas["height"], delta=24)
+        self.assertEqual(barra.text_content().strip(), "Enviar mi medida")
+        self.assertEqual(barra.get_attribute("href"), caja.locator('[data-vt-o="cta"]').get_attribute("href"))
+        self.assertTrue(garantia.is_visible())
+        for modo, texto in (("solo", "48 m² · $4,080"), ("mayoreo", "48 m² · $4,080")):
+            caja.locator(f'input[value="{modo}"]').check(force=True)
+            with self.subTest(modo=modo):
+                self.assertEqual(vivo.inner_text(), texto)
+                self.assertNotIn("IVA", vivo.inner_text())
+                self.assertFalse(garantia.is_visible())
+        caja.locator('input[value="instalado"]').check(force=True)
+        self.assertTrue(garantia.is_visible())
+        # El clic en la barra con la medida: un solo generate_lead, con el cta de la barra, y el mensaje firmado.
+        page.evaluate("() => { window.open = () => null; document.querySelector('[data-vt-bar] .vt-bar__go').addEventListener('click', (e) => e.preventDefault()); }")
+        page.evaluate("() => scrollTo(0, document.querySelector('.vt-medidor__medidas').getBoundingClientRect().top + scrollY - 150)")
+        page.wait_for_function("() => !document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
+        barra.click()
+        eventos = page.evaluate(
+            "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+        self.assertEqual(eventos, [["event", "generate_lead", {"method": "whatsapp", "cta_id": "home:barra", "service": "general"}]])
+        mensaje = unquote(barra.get_attribute("href").split("text=", 1)[1])
+        self.assertIn("Medidas: 8.00 × 6.00 m = 48 m²", mensaje)
+        self.assertTrue(mensaje.endswith(datos.FIRMA))
+        # Al borrar la medida, la barra vuelve a su enlace y texto genéricos.
+        caja.locator('[data-vt-campo="ancho"]').fill("")
+        self.assertEqual(barra.text_content().strip(), "Cotizar por WhatsApp")
+        self.assertEqual(barra.get_attribute("href"), generico)
+        self.assertFalse(vivo.is_visible())
+        # En pasto en rollo (sin los opcionales de la home) la barra no cambia.
+        otra = self.pagina(375, 667)
+        otra.goto(self.base + "/pasto-en-rollo-tampico/", wait_until="load")
+        otra.locator('[data-vt-campo="largo"]').fill("8")
+        otra.locator('[data-vt-campo="ancho"]').fill("6")
+        self.assertEqual(otra.locator("[data-vt-bar] .vt-bar__go").text_content().strip(), "Cotizar por WhatsApp")
+
     def test_home_objetivos_tactiles_del_hero_y_del_indice(self):
         page = self.pagina(375, 812)
         page.goto(self.base + "/", wait_until="load")
@@ -276,8 +407,9 @@ class PlantillasNavegadorTest(unittest.TestCase):
 
     def test_home_etiqueta_colgada_sobre_la_foto_en_escritorio(self):
         """Desde 1024 px la etiqueta cuelga sobre la esquina inferior izquierda de la foto, siempre derecha, sin tapar
-        el pie de la figura ni salirse por abajo."""
-        for ancho, alto in ((1024, 800), (1440, 900)):
+        el pie de la figura ni salirse por abajo. (A 1024×800 la foto ya no es 4:5: en pantallas de 820 px de alto o
+        menos toma la altura disponible; se mide con alto de sobra.)"""
+        for ancho, alto in ((1024, 900), (1440, 900)):
             page = self.pagina(ancho, alto)
             page.goto(self.base + "/", wait_until="load")
             etiqueta = page.locator(".vt-portada .vt-etiqueta-x").bounding_box()
@@ -440,23 +572,35 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 self.assertTrue(page.locator('#medidor [data-vt-campo="largo"]').is_visible())
 
     def test_home_dias_de_preventa_en_el_banner_solo_donde_caben(self):
-        """Desde 1024 px el banner dice los días que faltan; en celular no se muestra y el banner no crece."""
+        """Desde 1024 px el banner agrega los días que faltan al renglón de precios; abajo de eso la frase sustituye a
+        los precios (solo si hay texto) y el banner no crece. Con el reloj del cliente antes del build, nada."""
         hasta = datos.NOCHEBUENAS["preventa"]["hasta"]
-        casos = ((f"{hasta}T18:00:00Z", " · Último día de preventa"), ("2026-11-09T18:00:00Z", " · Preventa: faltan 21 días"),
-                 ("2026-11-29T18:00:00Z", " · Preventa: falta 1 día"), ("2026-12-05T18:00:00Z", ""))
+        precios = "Desde $89 en menudeo y desde $65 por volumen"
+        casos = ((f"{hasta}T18:00:00Z", "Último día de preventa"), ("2026-11-09T18:00:00Z", "Preventa: faltan 21 días"),
+                 ("2026-11-29T18:00:00Z", "Preventa: falta 1 día"), ("2026-12-05T18:00:00Z", ""),
+                 ("2026-10-20T18:00:00Z", ""))
         for instante, texto in casos:
             page = self.pagina_a_la_hora(1440, 900, instante)
             span = page.locator("[data-vt-hasta]")
             with self.subTest(instante=instante):
                 self.assertEqual(span.text_content(), texto)
                 self.assertEqual(span.is_visible(), bool(texto))
+                self.assertEqual(page.locator(".vt-navidad__precios").inner_text(), precios)
+                # El " · " entre precios y días lo pone el CSS, solo cuando hay texto.
+                self.assertEqual(span.evaluate("e => getComputedStyle(e, '::before').content"),
+                                 '" · "' if texto else "none")
         altos = {}
-        for ancho in (320, 375):
+        for ancho in (320, 375, 768):
             for instante in ("2026-11-09T18:00:00Z", "2026-12-05T18:00:00Z"):
                 page = self.pagina_a_la_hora(ancho, 812, instante)
-                self.assertFalse(page.locator("[data-vt-hasta]").is_visible())
-                altos.setdefault(ancho, set()).add(page.locator(".vt-navidad").bounding_box()["height"])
-        self.assertEqual([len(a) for a in altos.values()], [1, 1])
+                con_dias = instante.startswith("2026-11")
+                with self.subTest(ancho=ancho, instante=instante):
+                    self.assertEqual(page.locator(".vt-navidad__txt > span").inner_text(),
+                                     "Preventa: faltan 21 días" if con_dias else precios)
+                    self.assertEqual(page.locator(".vt-navidad__precios").is_visible(), not con_dias)
+                altos.setdefault(ancho, []).append(page.locator(".vt-navidad").bounding_box()["height"])
+        for ancho, (con_dias, sin_dias) in altos.items():
+            self.assertLessEqual(con_dias, sin_dias, ancho)
         escritorio = self.pagina_a_la_hora(1024, 800, "2026-11-09T18:00:00Z")
         sin = self.pagina_a_la_hora(1024, 800, "2026-12-05T18:00:00Z")
         self.assertEqual(escritorio.locator(".vt-navidad").bounding_box()["height"],
@@ -474,8 +618,10 @@ class PlantillasNavegadorTest(unittest.TestCase):
         page.click("#vt-calcula-patio")
         eventos = page.evaluate(
             "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
-        self.assertEqual(eventos, [["event", "select_content", {"content_type": "cta", "item_id": "home:banner-nochebuenas"}],
-                                   ["event", "select_content", {"content_type": "cta", "item_id": "vt-calcula-patio"}]])
+        self.assertEqual(eventos, [["event", "select_content", {"content_type": "cta", "item_id": "home:banner-nochebuenas",
+                                                                "cta_id": "home:banner-nochebuenas"}],
+                                   ["event", "select_content", {"content_type": "cta", "item_id": "vt-calcula-patio",
+                                                                "cta_id": "home:hero"}]])
 
     def test_menu_movil_con_whatsapp_a_la_vista(self):
         for ruta, tipo in (("/", "home"), ("/pasto-en-rollo-tampico/", "servicio-pasto")):
@@ -491,6 +637,10 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 self.assertGreaterEqual(caja["x"], 0)
                 self.assertLessEqual(caja["x"] + caja["width"], 375)
                 self.assertIn("Cotizar por WhatsApp", boton.inner_text())
+                # A todo lo ancho, con 16 px de aire arriba, y la barra fija escondida mientras el menú está abierto.
+                self.assertGreaterEqual(caja["width"], 375 - 2 * 16 - 1)
+                self.assertEqual(boton.evaluate("b => getComputedStyle(b).marginTop"), "16px")
+                self.assertEqual(page.locator("[data-vt-bar]").evaluate("b => getComputedStyle(b).visibility"), "hidden")
                 self.assertLessEqual(page.evaluate("() => document.documentElement.scrollWidth - document.documentElement.clientWidth"), 1)
 
     def test_home_boton_del_hero_sin_transicion_con_movimiento_reducido(self):

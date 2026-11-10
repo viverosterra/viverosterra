@@ -166,6 +166,13 @@ class DatosTest(unittest.TestCase):
         self.assertEqual(datos.horario_marca(), "1,2,3,4,5@09:00-18:00;6@09:00-14:00")
         self.assertEqual(datos.festivos_marca(), "12-25,01-01")
 
+    def test_fecha_de_la_version_es_un_dato_fijo_y_no_la_del_dia(self):
+        """data-vt-build sale de aquí: si fuera date.today(), el build dejaría de ser idempotente."""
+        self.assertRegex(datos.ACTUALIZADO, r"^20\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$")
+        self.assertLessEqual(datos.ACTUALIZADO, datos.NOCHEBUENAS["preventa"]["hasta"])
+        fuente = (Path(__file__).resolve().parents[1] / "datos.py").read_text(encoding="utf-8")
+        self.assertNotRegex(fuente, r"^\s*(?:import datetime|from datetime)|\.today\(\)(?!:)")
+
 
 if __name__ == "__main__":
     unittest.main()

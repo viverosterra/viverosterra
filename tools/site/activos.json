@@ -1,7 +1,7 @@
 {
  "terra.css": [
-  "/css/terra.d502e71fbf.css",
-  "/css/terra.ab136ce12d.css"
+  "/css/terra.3378f94ebc.css",
+  "/css/terra.d502e71fbf.css"
  ],
  "terra-tienda.css": [
   "/css/terra-tienda.5de7ef439d.css"
@@ -25,18 +25,18 @@
   "/css/terra-nochebuenas.e9bd20d074.css"
  ],
  "terra-temporada.css": [
-  "/css/terra-temporada.17008dbde5.css",
+  "/css/terra-temporada.03517f128e.css",
   "/css/terra-temporada.37fcaa4198.css"
  ],
  "terra-inicio.css": [
-  "/css/terra-inicio.9209ed5f89.css"
+  "/css/terra-inicio.570acd3362.css"
  ],
  "legacy-fixes.css": [
   "/css/legacy-fixes.725fd1c858.css",
   "/css/legacy-fixes.6fb87ff99e.css"
  ],
  "terra.js": [
-  "/js/terra.433baa2de8.js",
+  "/js/terra.649ca39d28.js",
   "/js/terra.88c051ced0.js"
  ]
 }

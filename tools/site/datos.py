@@ -50,6 +50,11 @@ def festivos_marca():
     return ",".join(FESTIVOS)
 
 
+# Fecha de esta versión del sitio (AAAA-MM-DD), para los data-vt-build del HTML: un visitante con el reloj antes de esta
+# fecha lo trae mal, y terra.js no le muestra "Abierto ahora" ni los días de preventa. Es un dato versionado (nunca
+# date.today(): el build debe ser idempotente); se sube a mano al publicar cambios.
+ACTUALIZADO = "2026-11-09"
+
 PROMESA = "Respondemos en menos de 1 hora en horario"
 PROMESA_COMPLETA = f"{PROMESA} · {HORARIO}"
 

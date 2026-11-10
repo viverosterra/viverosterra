@@ -74,7 +74,9 @@ class InicioTest(unittest.TestCase):
         self.assertIn(f'<a data-cta="home:hero" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a>', portada)
         confianza = re.search(r'<p class="vt-inicio__confianza">(.*?)</p>', portada, re.S).group(1)
         plano = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", confianza)).strip()
-        self.assertEqual(plano, f"{datos.PROMESA_COMPLETA} {datos.GOOGLE} {datos.CLIENTES} clientes")
+        # Con separadores reales en el DOM (decorativos: aria-hidden), para que sin CSS no se lea pegado.
+        self.assertEqual(plano, f"{datos.PROMESA_COMPLETA} · {datos.GOOGLE} · {datos.CLIENTES} clientes")
+        self.assertEqual(confianza.count('<span class="vt-inicio__sep" aria-hidden="true"> · </span>'), 2)
         self.assertNotIn("También:", portada)
         self.assertNotIn("vt-portada__tambien", portada)
         # En el DOM (y en celular) la etiqueta de precio va entre el lede y el botón; el cuadro de datos sigue igual.
@@ -90,7 +92,11 @@ class InicioTest(unittest.TestCase):
         for contenido in metas:
             self.assertNotRegex(contenido, r"(?i)gratis|gratuit|sin costo")
             self.assertIn("Cotiza por WhatsApp: respondemos en menos de 1 hora en horario.", contenido)
-        self.assertIn("Precios con IVA a la vista.", metas[0])
+        # Revisión (2026-11-09): sin "con IVA" en las metas (el pasto sin instalar no lleva IVA) y description ≤ 155.
+        for contenido in metas:
+            self.assertNotIn("IVA", contenido)
+        self.assertIn("Precios a la vista.", metas[0])
+        self.assertLessEqual(len(metas[0]), 155)
         self.assertEqual(metas[0], metas[1])
         self.assertNotRegex(TEXTO, r"(?i)\bgratis\b|\bgratuit\w*|\bsin cargo\b")
         self.assertEqual(len(re.findall(r"(?i)\bsin costo\b", TEXTO)), len(re.findall(r"la reponemos sin costo", TEXTO)))
@@ -98,7 +104,7 @@ class InicioTest(unittest.TestCase):
     def test_abierto_ahora_solo_marca_la_promesa_de_portada_y_cierre(self):
         """Spec del hero §3: el horario y los festivos viajan en data-*; la promesa queda contigua y el HTML no dice
         "Abierto ahora" (lo antepone terra.js en horario). Sin aria-live."""
-        marca = f'<span data-vt-horario="{datos.horario_marca()}" data-vt-festivos="{datos.festivos_marca()}">{datos.PROMESA_COMPLETA}</span>'
+        marca = f'<span data-vt-horario="{datos.horario_marca()}" data-vt-festivos="{datos.festivos_marca()}" data-vt-build="{datos.ACTUALIZADO}">{datos.PROMESA_COMPLETA}</span>'
         self.assertEqual(MAIN.count(marca), 2)
         self.assertEqual(MAIN.count("data-vt-horario"), 2)
         self.assertIn(marca, MAIN[MAIN.index('class="vt-portada"'):MAIN.index('id="vt-h-que"')])
@@ -112,49 +118,62 @@ class InicioTest(unittest.TestCase):
         self.assertEqual(medidor.count("data-hero-cta"), 1)
         self.assertIn('data-cta="home:medidor" data-vt-o="cta" data-hero-cta', medidor)
         self.assertIn('<span data-vt-o="cta-texto">Cotizar por WhatsApp</span>', medidor)
-        self.assertNotIn("Enviar mi medida", HTML)
-        garantia = re.search(r'<p class="vt-medidor__garantia">(.*?)</p>', medidor).group(1)
+        self.assertNotIn("Enviar mi medida por WhatsApp", HTML)  # lo escribe vt-medidor.js cuando hay medida
+        garantia = re.search(r'<p class="vt-medidor__garantia" data-vt-o="garantia">(.*?)</p>', medidor).group(1)
         self.assertEqual(re.sub(r"<[^>]+>", "", garantia), datos.GARANTIA_PASTO)
-        self.assertIn('<a href="/politicas">ver condiciones</a>', garantia)
+        self.assertIn('<a href="/protocolo-cuidados-pasto-san-agustin">ver condiciones</a>', garantia)
+        self.assertIn('<p class="vt-medidor__vivo" data-vt-o="vivo"></p>', medidor)
+        self.assertLess(medidor.index("vt-medidor__medidas"), medidor.index("vt-medidor__vivo"))
+        self.assertLess(medidor.index("vt-medidor__vivo"), medidor.index("¿Qué necesitas?"))
+        self.assertIn('data-vt-barra="Enviar mi medida"', MAIN)
         self.assertLess(medidor.index('data-vt-o="cta"'), medidor.index("vt-medidor__garantia"))
 
     def test_cada_servicio_del_indice_con_su_whatsapp(self):
         """Spec del hero §5: cada fila de "Qué hacemos" cotiza su servicio con el mensaje de datos.MENSAJES."""
         indice = MAIN[MAIN.index('class="vt-indice"'):MAIN.index('data-vt-medidor')]
         enlaces = re.findall(r'<a class="vt-indice__wa" data-cta="home:indice-([a-z-]+)" href="https://wa\.me/528333268008\?text=([^"]+)" '
-                             r'target="_blank" rel="noopener">(Cotizar [^<]+) <span aria-hidden="true">→</span></a>', indice)
+                             r'target="_blank" rel="noopener"><span class="vt-wa-g"><svg aria-hidden="true"><use href="#vt-i-wa"/></svg></span>'
+                             r'(Cotizar [^<]+)</a>', indice)
         self.assertEqual([s for s, _t, _r in enlaces], ["pasto-natural", "pasto-sintetico", "jardin", "plantas", "empresas"])
         for servicio, texto, rotulo in enlaces:
             with self.subTest(servicio=servicio):
                 self.assertEqual(unquote(texto), datos.mensaje(servicio))
-        self.assertEqual(len({rotulo for _s, _t, rotulo in enlaces}), 5)
+        # Textos cortos (no se parten en celular) y con el glifo de WhatsApp: la flecha es solo la de la fila.
+        self.assertEqual([rotulo for _s, _t, rotulo in enlaces],
+                         ["Cotizar pasto", "Cotizar sintético", "Cotizar jardín", "Cotizar plantas", "Cotizar proyecto"])
+        self.assertEqual(indice.count("→"), 5)
 
     def test_cta_de_whatsapp_al_final_de_opiniones_proceso_precios_y_preguntas(self):
         """Spec del hero §6: el tramo largo sin CTA ahora tiene uno al final de cada sección."""
-        limites = (("opiniones", 'id="vt-h-opiniones"', 'id="vt-h-como"'), ("proceso", 'id="vt-h-como"', 'id="vt-h-precios"'),
-                   ("precios", 'id="vt-h-precios"', 'id="vt-h-faq"'), ("faq", 'id="vt-h-faq"', 'id="vt-h-cobertura"'))
-        for seccion, inicio, fin in limites:
+        """Revisión de diseño (2026-11-09): cada fila esconde la barra fija mientras se ve (data-hero-cta), su botón
+        dice a qué invita y la promesa va solo bajo la primera y la última."""
+        limites = (("opiniones", 'id="vt-h-opiniones"', 'id="vt-h-como"', "Cotizar mi jardín por WhatsApp", True),
+                   ("proceso", 'id="vt-h-como"', 'id="vt-h-precios"', "Empezar por WhatsApp", False),
+                   ("precios", 'id="vt-h-precios"', 'id="vt-h-faq"', "Pedir mi precio por WhatsApp", False),
+                   ("faq", 'id="vt-h-faq"', 'id="vt-h-cobertura"', "Preguntar por WhatsApp", True))
+        for seccion, inicio, fin, texto, con_promesa in limites:
             tramo = MAIN[MAIN.index(inicio):MAIN.index(fin)]
             with self.subTest(seccion=seccion):
                 self.assertEqual(MAIN.count(f'data-cta="home:{seccion}"'), 1)
-                href = re.search(rf'<div class="vt-inicio__fila"><a class="vt-btn vt-btn--wa" data-cta="home:{seccion}" '
-                                 r'href="https://wa\.me/528333268008\?text=([^"]+)"', tramo).group(1)
-                self.assertEqual(unquote(href), datos.mensaje("general"))
+                boton = re.search(rf'<div class="vt-inicio__fila" data-hero-cta><a class="vt-btn vt-btn--wa" data-cta="home:{seccion}" '
+                                  r'href="https://wa\.me/528333268008\?text=([^"]+)" target="_blank" rel="noopener">(.*?)</a>', tramo)
+                self.assertEqual(unquote(boton.group(1)), datos.mensaje("general"))
+                self.assertEqual(re.sub(r"<[^>]+>", "", boton.group(2)), f"{texto}→")
                 cola = tramo[tramo.index(f'data-cta="home:{seccion}"'):]
-                self.assertIn(f'<p class="vt-promesa">{datos.PROMESA_COMPLETA}</p></div>', cola)
+                self.assertEqual(f'<p class="vt-promesa">{datos.PROMESA_COMPLETA}</p></div>' in cola, con_promesa)
                 self.assertNotRegex(cola, r"<(?:table|details|blockquote|ol)\b")
 
     def test_cierre_promesa_antes_del_boton_garantia_y_costo_de_visita_despues(self):
         """Spec del hero §7: lo último antes del botón es la promesa de respuesta; la garantía y la frase del costo de
         la visita van después."""
         cierre = MAIN[MAIN.index('class="vt-cierre"'):]
-        orden = [cierre.index(m) for m in ("data-vt-horario", 'data-cta="home:cierre"', datos.GARANTIA_PASTO[:40],
+        orden = [cierre.index(m) for m in ("data-vt-horario", 'data-cta="home:cierre"', "Pasto instalado: s" + datos.GARANTIA_PASTO[1:40],
                                            "agendamos una visita para medir y cotizar", datos.VISITA_COSTO,
                                            'class="vt-cierre__msg"')]
         self.assertEqual(orden, sorted(orden))
         entre = cierre[cierre.index("</span>", cierre.index("data-vt-horario")):cierre.index('<a class="vt-btn vt-btn--wa" data-cta="home:cierre"')]
         self.assertEqual(re.sub(r"<[^>]+>", "", entre).strip(), "", "nada de texto entre la promesa y el botón")
-        self.assertIn('(<a href="/politicas">ver condiciones</a>).', cierre)
+        self.assertIn('(<a href="/protocolo-cuidados-pasto-san-agustin">ver condiciones</a>).', cierre)
         self.assertIn(f"Llamar {datos.TELEFONO_VISIBLE}", cierre)
 
     def test_banner_con_los_dias_de_preventa_vacios_en_el_html(self):
@@ -162,7 +181,8 @@ class InicioTest(unittest.TestCase):
         hasta = datos.NOCHEBUENAS["preventa"]["hasta"]
         banner = re.search(r'<a class="vt-navidad".*?</a>', MAIN, re.S).group(0)
         self.assertEqual(banner.count("data-vt-hasta"), 1)
-        self.assertIn(f'<span class="vt-navidad__hasta" data-vt-hasta="{hasta}"></span>', banner)
+        self.assertIn(f'<span class="vt-navidad__precios">Desde $89 en menudeo y desde $65 por volumen</span>'
+                      f'<span class="vt-navidad__hasta" data-vt-hasta="{hasta}" data-vt-build="{datos.ACTUALIZADO}"></span>', banner)
         self.assertNotRegex(re.sub(r"<[^>]+>", "", banner), r"(?i)preventa|faltan")
         self.assertEqual(HTML.count("data-vt-hasta"), 1)
 
@@ -185,7 +205,10 @@ class InicioTest(unittest.TestCase):
                     self.assertIn('<li class="vt-logos__nombre">Renault</li>', HTML)
                 else:
                     self.assertIn(f'alt="{cliente}"', HTML)
-        self.assertIn('href="/politicas"', MAIN)
+        # Las tres menciones de la garantía de arraigo enlazan a las condiciones del pasto (antes, a /politicas).
+        self.assertEqual(MAIN.count('<a href="/protocolo-cuidados-pasto-san-agustin">ver condiciones</a>'), 3)
+        self.assertNotIn('href="/politicas"', MAIN)
+        self.assertTrue((paginas.PUBLIC / "protocolo-cuidados-pasto-san-agustin.html").is_file())
 
     def test_sin_css_viejo_ni_google_fonts(self):
         self.assertNotRegex(HTML, r"fonts\.googleapis|/css/(?:tailwind|design-system|servicios|legacy-fixes)")

@@ -69,27 +69,36 @@ CTA_WA = "Cotizar por WhatsApp"
 # Única variante, solo en el botón del Medidor cuando ya hay una medida válida (spec del hero, 2026-11-09, §4). El mismo
 # texto vive en public/js/vt-medidor.js (paridad en tests/test_medidor_paridad.py).
 CTA_MEDIDA = "Enviar mi medida por WhatsApp"
+# En la home, con medida válida la barra fija de celular manda la misma medida (vt-medidor.js lee el texto de data-vt-barra).
+CTA_MEDIDA_BARRA = "Enviar mi medida"
+# Condiciones de la garantía de arraigo del pasto: el protocolo de cuidados (la página no tiene un id en esa sección).
+CONDICIONES_PASTO = "/protocolo-cuidados-pasto-san-agustin"
 
 
-def boton_wa(mensaje, cta):
+def boton_wa(mensaje, cta, texto=CTA_WA):
+    """Botón de WhatsApp. `texto` solo cambia en las filas de sección de la home (revisión de diseño, 2026-11-09)."""
     href = esc(datos.wa_url(datos.con_firma(mensaje)))
     return (f'<a class="vt-btn vt-btn--wa" data-cta="{esc(cta)}" href="{href}" target="_blank" rel="noopener">'
-            f'{WA_GLIFO}{CTA_WA}<span class="vt-flecha" aria-hidden="true">→</span></a>')
+            f'{WA_GLIFO}{texto}<span class="vt-flecha" aria-hidden="true">→</span></a>')
 
 
 def promesa_horario():
     """La promesa única dentro de un <span> con el horario y los festivos de datos.py: en horario, terra.js le antepone
-    "Abierto ahora · ". Sin JS o fuera de horario se lee tal cual."""
-    return (f'<span data-vt-horario="{esc(datos.horario_marca())}" data-vt-festivos="{esc(datos.festivos_marca())}">'
-            f'{esc(datos.PROMESA_COMPLETA)}</span>')
+    "Abierto ahora · ". Sin JS o fuera de horario se lee tal cual. data-vt-build es la fecha de datos.ACTUALIZADO: un
+    cliente con el reloj antes de esa fecha no ve "Abierto ahora"."""
+    return (f'<span data-vt-horario="{esc(datos.horario_marca())}" data-vt-festivos="{esc(datos.festivos_marca())}" '
+            f'data-vt-build="{esc(datos.ACTUALIZADO)}">{esc(datos.PROMESA_COMPLETA)}</span>')
 
 
-def garantia_pasto():
-    """datos.GARANTIA_PASTO con "ver condiciones" enlazado a las políticas."""
+def garantia_pasto(prefijo=""):
+    """datos.GARANTIA_PASTO con "ver condiciones" enlazado al protocolo de cuidados del pasto. Con prefijo ("Pasto
+    instalado: "), la frase sigue en minúscula."""
     texto, condiciones = esc(datos.GARANTIA_PASTO), "ver condiciones"
     if texto.count(condiciones) != 1:
         raise ValueError("datos.GARANTIA_PASTO debe decir “ver condiciones” una sola vez")
-    return texto.replace(condiciones, f'<a href="/politicas">{condiciones}</a>')
+    if prefijo:
+        texto = esc(prefijo) + texto[0].lower() + texto[1:]
+    return texto.replace(condiciones, f'<a href="{CONDICIONES_PASTO}">{condiciones}</a>')
 
 
 def boton_tel(cta):
@@ -245,11 +254,12 @@ def testimonios(items):
 
 # ---------- índice de servicios, tablas y relacionados ----------
 def _cotizar_servicio(item, tipo):
-    """Enlace "Cotizar <servicio> →" de una fila del índice, con el mensaje de datos.MENSAJES de ese servicio."""
+    """Enlace "Cotizar <servicio>" de una fila del índice, con el glifo de WhatsApp (la flecha es la de la fila) y el
+    mensaje de datos.MENSAJES de ese servicio."""
     servicio = item["servicio"]
     return (f'<a class="vt-indice__wa" data-cta="{esc(tipo)}:indice-{esc(servicio)}" '
-            f'href="{esc(datos.wa_url(datos.mensaje(servicio)))}" target="_blank" rel="noopener">Cotizar {item["cotizar"]} '
-            '<span aria-hidden="true">→</span></a>')
+            f'href="{esc(datos.wa_url(datos.mensaje(servicio)))}" target="_blank" rel="noopener">{WA_GLIFO}'
+            f'Cotizar {item["cotizar"]}</a>')
 
 
 def indice(items, tipo=None):
@@ -495,8 +505,9 @@ def calculo_medidor(largo, ancho, modo):
         rotulo = f"Solo pasto (mayoreo desde {minimo} m²)"
         aviso = (f"El mayoreo aplica desde {minimo} m². Te faltan {math.ceil(minimo - m2)} m²; mientras, calculamos "
                  f"a ${precio}/m² (solo pasto).")
+    # iva: solo el pasto instalado lleva IVA; el renglón vivo de la home no dice "con IVA" en solo pasto ni en mayoreo.
     return {"m2": m2, "precio": precio, "desde": desde, "texto": texto, "rotulo": rotulo, "aviso": aviso,
-            "total": redondear(m2 * precio)}
+            "total": redondear(m2 * precio), "iva": modo == "instalado"}
 
 
 def textos_medidor(largo, ancho, r, colonia="", plazo=1):
@@ -526,7 +537,8 @@ def textos_medidor(largo, ancho, r, colonia="", plazo=1):
                          f"Colonia: {colonia or '___'}", "Te mando foto del área."))
     return {"medida": medida, "monto": dinero(r["total"]),
             "calc": f"{formato_m2(r['m2'])} m² × {desde}${r['precio']}/m², con IVA. {cierre_calc}",
-            "plan": plan, "plazo": plazo, "mensaje": mensaje, "cta": CTA_MEDIDA}
+            "plan": plan, "plazo": plazo, "mensaje": mensaje, "cta": CTA_MEDIDA,
+            "vivo": f"{formato_m2(r['m2'])} m² · {desde}{dinero(r['total'])}{' con IVA' if r['iva'] else ''}"}
 
 
 def plano_medidor(largo, ancho):
@@ -583,17 +595,22 @@ def _opcion_plazo(prefijo, plazo):
 VACIO_MEDIDOR = {"medida": "Escribe tus medidas", "monto": "—", "calc": "Escribe el largo y el ancho de tu patio."}
 
 
-def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None, boton_medida=False, garantia=False):
+def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None, boton_medida=False, garantia=False,
+            resultado_vivo=False):
     """Medidor: largo × ancho → plano a escala → etiqueta con el estimado y la forma de pago → WhatsApp con la medida.
     Los campos empiezan vacíos (8 y 6 son solo el ejemplo del placeholder y del plano): mientras el visitante no
     escriba, la etiqueta no muestra un estimado ajeno y el botón manda el mensaje genérico de la página (data-mensaje,
     con firma). vt-medidor.js calcula con los data-* de cada opción: los precios no viven en el JS. data-hero-cta: la
     barra móvil se esconde mientras el Medidor está a la vista, para que su CTA no compita. Con boton_medida=True (la
     home) solo el botón esconde la barra y su texto va en un <span> que vt-medidor.js cambia a CTA_MEDIDA cuando hay una
-    medida válida. Con garantia=True, la garantía de arraigo va bajo el botón, con su enlace a condiciones."""
+    medida válida, y la barra móvil toma ese enlace con el texto de data-vt-barra. Con garantia=True, la garantía de
+    arraigo va bajo el botón, con su enlace a condiciones (vt-medidor.js la esconde fuera del modo instalado). Con
+    resultado_vivo=True, un renglón bajo Largo × Ancho repite el resultado (textos_medidor["vivo"])."""
     marca_caja, marca_boton = ("", " data-hero-cta") if boton_medida else (" data-hero-cta", "")
+    marca_caja += f' data-vt-barra="{esc(CTA_MEDIDA_BARRA)}"' if boton_medida else ""
     texto_boton = f'<span data-vt-o="cta-texto">{CTA_WA}</span>' if boton_medida else CTA_WA
-    pie = f'<p class="vt-medidor__garantia">{garantia_pasto()}</p>' if garantia else ""
+    pie = f'<p class="vt-medidor__garantia" data-vt-o="garantia">{garantia_pasto()}</p>' if garantia else ""
+    vivo = '<p class="vt-medidor__vivo" data-vt-o="vivo"></p>' if resultado_vivo else ""
     generico = datos.con_firma(mensaje or datos.MENSAJES["general"])
     mayoreo = datos.con_firma(datos.MENSAJES["empresas"])
     opciones = "".join(_opcion_medidor(prefijo, k, m, modo) for k, m in MODOS_MEDIDOR.items())
@@ -606,7 +623,7 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None, bot
         f'<div class="vt-medidor__form" role="group" aria-label="Medidor de pasto">'
         f'<div class="vt-medidor__medidas">{campo.format(p=prefijo, n="largo", t="Largo", v=largo)}'
         f'<span class="vt-medidor__x" aria-hidden="true">×</span>{campo.format(p=prefijo, n="ancho", t="Ancho", v=ancho)}'
-        f'</div><fieldset class="vt-opciones"><legend>¿Qué necesitas?</legend>{opciones}</fieldset>'
+        f'</div>{vivo}<fieldset class="vt-opciones"><legend>¿Qué necesitas?</legend>{opciones}</fieldset>'
         f'<div class="vt-campo"><label for="{prefijo}-colonia">Colonia (opcional)</label><div class="vt-control">'
         f'<input type="text" id="{prefijo}-colonia" data-vt-campo="colonia" placeholder="Ej. Lomas de Rosales" '
         f'autocomplete="off"></div></div></div>'

@@ -21,6 +21,8 @@
 .vt-inicio main .vt-inicio__enlaces a:hover{color:var(--vt-field);text-decoration-thickness:2px}
 .vt-inicio main .vt-inicio__confianza{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0 0;padding-top:12px;border-top:1px solid var(--vt-line);font-size:var(--vt-text-xs);color:var(--vt-muted)}
 .vt-inicio .vt-inicio__confianza b{color:var(--vt-ink);font-weight:700}
+/* los separadores " · " van en el DOM para leerse sin CSS; con CSS separa el espacio de la fila */
+.vt-inicio .vt-inicio__sep{display:none}
 /* "Abierto ahora" (terra.js, solo en horario): el punto acompaña al texto, nunca va solo */
 .vt-inicio .is-abierto::before{content:"";display:inline-block;width:8px;height:8px;margin-right:6px;border-radius:50%;background:var(--vt-wa)}
 .vt-inicio .vt-inicio__confianza [data-vt-abierto]{color:var(--vt-field)}
@@ -32,8 +34,17 @@
   .vt-inicio .vt-portada__foto .vt-fig__marco{border-inline:0}
   .vt-inicio .vt-portada__foto figcaption{padding-inline:var(--vt-gutter)}
 }
-/* celulares angostos (320 px): titular en dos renglones y menos aire, para que el botón asome en la primera pantalla */
-@media (max-width:359px){
+/* de 560 a 1023 px el botón no se estira a todo lo ancho; desde 768 la etiqueta y el botón van lado a lado y la foto
+   baja a 16:9 para no ocupar una pantalla entera */
+@media (min-width:560px) and (max-width:1023px){.vt-inicio .vt-inicio__cta .vt-btn--wa{max-width:420px}}
+@media (min-width:768px) and (max-width:1023px){
+  .vt-inicio .vt-portada__grid{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);column-gap:32px;align-items:start}
+  .vt-inicio .vt-inicio__titulo,.vt-inicio .vt-portada__foto{grid-column:1 / -1}
+  .vt-inicio .vt-portada__foto .vt-fig__marco{aspect-ratio:16/9}
+}
+/* celulares angostos (320 px) o bajos (360×640): titular en dos renglones y menos aire, para que el botón quepa en la
+   primera pantalla */
+@media (max-width:359px),(max-width:559px) and (max-height:660px){
   .vt-inicio .vt-portada{padding-top:16px}
   .vt-inicio .vt-kicker{margin-bottom:8px;font-size:.75rem;letter-spacing:.02em}
   .vt-inicio main .vt-portada h1{font-size:2.3rem}
@@ -56,14 +67,44 @@
   .vt-inicio main .vt-inicio__enlaces{margin-top:16px}
   .vt-inicio .vt-portada .vt-datos{margin-top:80px}
 }
+/* de 1024 a 1279 px, o en pantallas bajas (laptops): la etiqueta colgada va en su versión compacta (la de celular, con
+   el ojal y el cordel a la izquierda) para no tapar el logo de la camisa */
+@media (min-width:1024px) and (max-width:1279px),(min-width:1024px) and (max-height:820px){
+  .vt-inicio .vt-portada .vt-etiqueta-x{width:296px;margin-left:-108px;transform-origin:22px -34px}
+  .vt-inicio .vt-portada .vt-etiqueta-x--cordel::before{left:21px;bottom:calc(100% - 26px)}
+  .vt-inicio main .vt-portada .vt-etiqueta{padding:14px 16px 12px 46px;-webkit-mask:radial-gradient(circle 6px at 22px 26px,transparent 98%,var(--vt-opaco) 100%);mask:radial-gradient(circle 6px at 22px 26px,transparent 98%,var(--vt-opaco) 100%)}
+  .vt-inicio main .vt-portada .vt-etiqueta::before{left:22px;top:26px;width:18px;height:18px}
+  .vt-inicio main .vt-portada .vt-etiqueta__cod{margin:0}
+  .vt-inicio main .vt-portada .vt-etiqueta__precio{margin:8px -16px 0 -46px;padding:8px 16px 9px 46px}
+  .vt-inicio main .vt-portada .vt-etiqueta__precio b{font-size:34px}
+  .vt-inicio main .vt-portada .vt-etiqueta__fila{border-bottom:0}
+  .vt-inicio main .vt-portada .vt-etiqueta__nombre,.vt-inicio main .vt-portada .vt-etiqueta__sci,.vt-inicio main .vt-portada .vt-etiqueta__nota{display:none}
+}
+/* laptops bajas (1280×620, 1366×650, 1536×730, 1440×780, 1024×650): hero compacto y foto recortada a la altura que
+   queda, para que el precio y el botón estén completos en la primera pantalla. 215 px = menú + banner + aires. */
+@media (min-width:1024px) and (max-height:820px){
+  .vt-inicio .vt-portada{padding-top:28px}
+  .vt-inicio main .vt-portada h1{font-size:min(4.25rem,1.4rem + 6vw)}
+  .vt-inicio main .vt-inicio__lema{margin-top:.35em;font-size:1.75rem}
+  .vt-inicio .vt-portada .vt-lede{margin-top:14px;font-size:1.125rem}
+  .vt-inicio .vt-inicio__trato{margin-top:20px}
+  .vt-inicio .vt-inicio__cta .vt-btn--wa{min-height:62px}
+  .vt-inicio .vt-portada__foto .vt-fig__marco{aspect-ratio:auto;height:calc(100vh - 215px);min-height:280px}
+  .vt-inicio .vt-portada .vt-etiqueta-x{margin-top:calc(max(280px,100vh - 215px) - 48px)}
+}
 
 /* ---------- Medidor: en celular el resultado sube bajo los campos; botón de dos renglones si hace falta ---------- */
 @media (max-width:639px){.vt-inicio .vt-medidor__plano{order:1}}
-.vt-inicio .vt-medidor .vt-btn{padding-block:8px;line-height:1.2;white-space:normal;text-align:center}
+/* (igual en las filas de WhatsApp de sección: sus textos largos no deben ensanchar la columna a 320 px) */
+.vt-inicio .vt-medidor .vt-btn,.vt-inicio .vt-inicio__fila .vt-btn{padding-block:8px;line-height:1.2;white-space:normal;text-align:center}
+/* renglón de resultado junto a los campos (vt-medidor.js lo llena); en tres columnas ya se ve la etiqueta al lado */
+.vt-inicio main .vt-medidor__vivo{margin:0;font-weight:700;font-variant-numeric:tabular-nums;color:var(--vt-soil)}
+.vt-inicio main .vt-medidor__vivo:empty{display:none}
+@media (min-width:1024px){.vt-inicio main .vt-medidor__vivo{display:none}}
 .vt-inicio main .vt-medidor__garantia{margin-top:12px;font-size:var(--vt-text-xs);line-height:1.45;color:var(--vt-muted)}
 
 /* ---------- Qué hacemos: WhatsApp de cada servicio, bajo su precio ---------- */
-.vt-inicio main .vt-indice__wa{display:inline-block;min-height:44px;padding-block:11px;font-weight:600}
+.vt-inicio main .vt-indice__wa{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600}
 
 /* ---------- WhatsApp al final de opiniones, proceso, precios y preguntas ---------- */
 .vt-inicio .vt-inicio__fila{margin-top:32px}
@@ -102,5 +143,4 @@
 @keyframes vt-inicio-foto{from{clip-path:inset(0 0 40% 0)}to{clip-path:inset(0)}}
 @keyframes vt-inicio-titulo{from{opacity:.6;transform:translateY(16px)}to{opacity:1;transform:none}}
 @keyframes vt-inicio-sube{from{opacity:.25;transform:translateY(16px)}to{opacity:1;transform:none}}
-/* la barra móvil oculta conserva su transición en terra.css (sin presupuesto para corregirlo allá): aquí se apaga en la home */
-@media (prefers-reduced-motion:reduce){.vt-inicio .vt-inicio__cta .vt-btn--wa,.vt-inicio .vt-bar.is-oculta{transition:none}}
+@media (prefers-reduced-motion:reduce){.vt-inicio .vt-inicio__cta .vt-btn--wa{transition:none}}

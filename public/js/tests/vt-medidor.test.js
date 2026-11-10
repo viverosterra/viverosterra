@@ -83,6 +83,17 @@ test('hay casos de paridad en la frontera de .5 de la mensualidad (Math.round fr
   assert.ok(frontera.length >= 2);
 });
 
+test('el renglón vivo dice "con IVA" solo en modo instalado', () => {
+  const de = (largo, ancho, modo) => textos(largo, ancho, calcular(largo, ancho, modo, CASOS.modos), '', M, 1).vivo;
+  assert.strictEqual(de(8, 6, 'instalado'), '48 m² · desde $5,760 con IVA');
+  assert.strictEqual(de(5, 4, 'solo'), '20 m² · $1,700');
+  assert.strictEqual(de(25, 24, 'mayoreo'), '600 m² · desde $36,000');
+  assert.strictEqual(de(10, 10, 'mayoreo'), '100 m² · $8,500');
+  assert.strictEqual(calcular(8, 6, 'instalado', CASOS.modos).iva, true);
+  assert.strictEqual(calcular(8, 6, 'solo', CASOS.modos).iva, false);
+  for (const { esperado } of CASOS.casos) assert.ok(esperado.vivo, 'cada caso de paridad trae su renglón vivo');
+});
+
 test('con medida válida el botón dice "Enviar mi medida por WhatsApp" (el texto sin medida queda en el HTML)', () => {
   const r = calcular(8, 6, 'instalado', CASOS.modos);
   assert.strictEqual(textos(8, 6, r, '', M, 1).cta, 'Enviar mi medida por WhatsApp');

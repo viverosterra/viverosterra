@@ -39,7 +39,8 @@
       rotulo = `Solo pasto (mayoreo desde ${m.minimo} m²)`;
       aviso = `El mayoreo aplica desde ${m.minimo} m². Te faltan ${Math.ceil(m.minimo - m2)} m²; mientras, calculamos a $${precio}/m² (solo pasto).`;
     }
-    return { m2, precio, desde, texto, rotulo, aviso, total: Math.round(m2 * precio) };
+    // iva: solo el pasto instalado lleva IVA; el renglón vivo no dice "con IVA" en solo pasto ni en mayoreo.
+    return { m2, precio, desde, texto, rotulo, aviso, total: Math.round(m2 * precio), iva: modo === 'instalado' };
   }
 
   // Texto del botón con una medida válida (componentes.CTA_MEDIDA). Sin medida vuelve el texto con el que llegó el HTML.
@@ -67,7 +68,8 @@
       `Estimado de la web: ${desde}${dinero(r.total)} con IVA`, `Me interesa: ${interes}`, `Colonia: ${colonia || '___'}`,
       'Te mando foto del área.'].join('\n');
     return { medida, monto: dinero(r.total), calc: `${formatoM2(r.m2)} m² × ${desde}$${r.precio}/m², con IVA. ${cierre}`,
-      plan, plazo: elegido, mensaje, cta: CTA_MEDIDA };
+      plan, plazo: elegido, mensaje, cta: CTA_MEDIDA,
+      vivo: formatoM2(r.m2) + ' m² · ' + desde + dinero(r.total) + (r.iva ? ' con IVA' : '') };
   }
 
   function plano(largo, ancho) {
@@ -121,6 +123,23 @@
     const rotuloCta = salida('cta-texto');
     const ctaSinMedida = rotuloCta ? rotuloCta.textContent : '';
     const rotular = (texto) => { if (rotuloCta) rotuloCta.textContent = texto; };
+    // Opcionales de la home: renglón de resultado bajo las medidas, garantía (solo en modo instalado) y la barra fija
+    // de celular, que con medida válida manda la misma medida (su texto llega en data-vt-barra) y sin ella vuelve a
+    // su enlace y texto de origen. El clic lo sigue midiendo terra.js con el data-cta de la barra.
+    const vivo = salida('vivo');
+    const garantia = salida('garantia');
+    const enBarra = caja.dataset.vtBarra ? document.querySelector('[data-vt-bar] .vt-bar__go') : null;
+    const rotuloBarra = enBarra && enBarra.lastChild && enBarra.lastChild.nodeType === 3 ? enBarra.lastChild : null;
+    const barraDeOrigen = enBarra ? { href: enBarra.getAttribute('href'), texto: rotuloBarra ? rotuloBarra.nodeValue : '' } : null;
+    function prestarABarra(href) {
+      if (!enBarra) return;
+      enBarra.setAttribute('href', href || barraDeOrigen.href);
+      if (rotuloBarra) rotuloBarra.nodeValue = href ? caja.dataset.vtBarra : barraDeOrigen.texto;
+    }
+    const extras = (texto, modo) => {
+      if (vivo) vivo.textContent = texto;
+      if (garantia) garantia.hidden = modo !== 'instalado';
+    };
     // Cada plazo muestra su mensualidad si aplica al total; si no, el monto mínimo de cotización y queda deshabilitado.
     function marcarPlazos(total) {
       const disponibles = total ? M.plazosDisponibles(total) : [];
@@ -145,6 +164,9 @@
       // Sin medida válida, el botón manda el mensaje de la página: nunca un estimado viejo ni el ejemplo del placeholder.
       salida('cta').setAttribute('href', enlace(wa, mensaje));
       rotular(ctaSinMedida);
+      prestarABarra('');
+      const elegido = caja.querySelector('input[name$="-modo"]:checked');
+      extras('', elegido ? elegido.value : 'instalado');
     }
     function actualizar() {
       const elegido = caja.querySelector('input[name$="-modo"]:checked');
@@ -173,6 +195,8 @@
       salida('aviso').hidden = !r.aviso;
       salida('cta').setAttribute('href', enlace(wa, t.mensaje));
       rotular(t.cta);
+      prestarABarra(enlace(wa, t.mensaje));
+      extras(t.vivo, elegido.value);
     }
     caja.addEventListener('input', actualizar);
     caja.addEventListener('change', actualizar);

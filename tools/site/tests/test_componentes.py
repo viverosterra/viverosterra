@@ -213,19 +213,43 @@ class MedidorTest(unittest.TestCase):
         self.assertIn('<span data-vt-o="cta-texto">Cotizar por WhatsApp</span>', html)
         self.assertNotIn("cta-texto", c.medidor("prueba", "home"))
 
+    def test_renglon_vivo_bajo_las_medidas_sin_iva_en_solo_pasto_y_mayoreo(self):
+        """Revisión de diseño (2026-11-09): el resultado se lee junto a los campos. El pasto sin instalar no lleva IVA:
+        "con IVA" solo en modo instalado (los demás textos heredados del Medidor no cambian)."""
+        casos = ((8, 6, "instalado", "48 m² · desde $5,760 con IVA"), (5, 4, "solo", "20 m² · $1,700"),
+                 (25, 24, "mayoreo", "600 m² · desde $36,000"), (10, 10, "mayoreo", "100 m² · $8,500"))
+        for largo, ancho, modo, esperado in casos:
+            r = c.calculo_medidor(largo, ancho, modo)
+            with self.subTest(modo=modo, largo=largo):
+                self.assertEqual(r["iva"], modo == "instalado")
+                self.assertEqual(c.textos_medidor(largo, ancho, r)["vivo"], esperado)
+        html = c.medidor("prueba", "home", resultado_vivo=True)
+        self.assertIn('</div></div><p class="vt-medidor__vivo" data-vt-o="vivo"></p><fieldset class="vt-opciones">', html)
+        self.assertNotIn("vt-medidor__vivo", c.medidor("prueba", "home"))
+
+    def test_medidor_de_la_home_presta_su_enlace_a_la_barra(self):
+        html = c.medidor("prueba", "home", boton_medida=True)
+        self.assertIn(f'data-vt-barra="{c.CTA_MEDIDA_BARRA}"', html)
+        self.assertEqual(c.CTA_MEDIDA_BARRA, "Enviar mi medida")
+        self.assertNotIn("data-vt-barra", c.medidor("prueba", "home"))
+
     def test_medidor_con_garantia_bajo_el_resultado(self):
         html = c.medidor("prueba", "home", garantia=True)
-        self.assertIn(f'<p class="vt-medidor__garantia">{c.garantia_pasto()}</p></div></div></div>', html)
+        self.assertIn(f'<p class="vt-medidor__garantia" data-vt-o="garantia">{c.garantia_pasto()}</p></div></div></div>', html)
         self.assertNotIn("vt-medidor__garantia", c.medidor("prueba", "home"))
 
     def test_garantia_de_pasto_con_enlace_a_condiciones(self):
         html = c.garantia_pasto()
         self.assertEqual(c.texto_plano(html), datos.GARANTIA_PASTO)
-        self.assertIn('(<a href="/politicas">ver condiciones</a>).', html)
+        # Las condiciones del pasto viven en el protocolo de cuidados (no en /politicas, que es general).
+        self.assertIn('(<a href="/protocolo-cuidados-pasto-san-agustin">ver condiciones</a>).', html)
+        prefijada = c.garantia_pasto("Pasto instalado: ")
+        self.assertTrue(prefijada.startswith("Pasto instalado: si una sección no arraiga"))
+        self.assertEqual(c.texto_plano(prefijada), "Pasto instalado: s" + datos.GARANTIA_PASTO[1:])
 
     def test_promesa_con_horario_para_abierto_ahora(self):
         html = c.promesa_horario()
-        self.assertEqual(html, f'<span data-vt-horario="{datos.horario_marca()}" data-vt-festivos="{datos.festivos_marca()}">'
+        self.assertEqual(html, f'<span data-vt-horario="{datos.horario_marca()}" data-vt-festivos="{datos.festivos_marca()}" data-vt-build="{datos.ACTUALIZADO}">'
                                f'{datos.PROMESA_COMPLETA}</span>')
         self.assertNotIn("aria-live", html)
         self.assertNotIn("Abierto", html)

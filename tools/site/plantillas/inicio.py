@@ -23,15 +23,24 @@ _FLOR = ('<svg class="vt-navidad__flor" viewBox="-16 -16 32 32" aria-hidden="tru
 
 def _banner_temporada(t):
     """Banner navideño, primero en <main>; todo el banner enlaza a la página de temporada. Vacío fuera de temporada.
-    El <span data-vt-hasta> sale vacío: terra.js escribe los días que faltan de preventa (solo días)."""
+    El <span data-vt-hasta> sale vacío: terra.js escribe los días que faltan de preventa (solo días); en celular esa
+    frase sustituye al renglón de precios (terra-temporada.css) para que el banner no crezca."""
     if not t:
         return ""
     return (f'<aside class="vt-navidad-x" aria-label="{t["aviso"]}"><a class="vt-navidad" data-cta="{TIPO}:banner-nochebuenas" '
             f'href="{t["href"]}">{_FLOR}<span class="vt-navidad__txt"><b>{t["titulo"]}<span class="vt-navidad__estado"> · '
-            f'{t["estado"]}</span></b><span>{t["texto"]}<span class="vt-navidad__hasta" data-vt-hasta="{t["hasta"]}"></span>'
+            f'{t["estado"]}</span></b><span><span class="vt-navidad__precios">{t["texto"]}</span>'
+            f'<span class="vt-navidad__hasta" data-vt-hasta="{t["hasta"]}" data-vt-build="{datos.ACTUALIZADO}"></span>'
             f'</span></span><span class="vt-navidad__cta">'
             f'Ver<span class="vt-navidad__mas"> nochebuenas</span><span class="vt-navidad__flecha" aria-hidden="true">→</span>'
             '</span></a></aside>')
+
+
+# Separador de la línea de confianza: real en el DOM (sin CSS no se lee pegado) y decorativo para el lector de pantalla.
+_SEP = '<span class="vt-inicio__sep" aria-hidden="true"> · </span>'
+# Filas de WhatsApp de sección: texto del botón y si llevan la promesa debajo (solo la primera y la última).
+_FILAS = {"opiniones": ("Cotizar mi jardín por WhatsApp", True), "proceso": ("Empezar por WhatsApp", False),
+          "precios": ("Pedir mi precio por WhatsApp", False), "faq": ("Preguntar por WhatsApp", True)}
 
 
 def _portada(p):
@@ -48,15 +57,17 @@ def _portada(p):
         f'<p class="vt-inicio__enlaces"><a id="vt-calcula-patio" data-cta="{TIPO}:hero" href="#medidor">Calcula tu patio '
         '<span aria-hidden="true">→</span></a>'
         f'<a data-cta="{TIPO}:hero" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a></p>'
-        f'<p class="vt-inicio__confianza">{c.promesa_horario()}<span><b>{esc(nota)}</b> {esc(resenas)}</span>'
+        f'<p class="vt-inicio__confianza">{c.promesa_horario()}{_SEP}<span><b>{esc(nota)}</b> {esc(resenas)}</span>{_SEP}'
         f'<span><b>{esc(datos.CLIENTES)}</b> clientes</span></p></div>'
         f'<div class="vt-portada__foto">{c.figura(p["foto"], principal=True)}</div></div>{c.cuadro_datos()}</div></section>')
 
 
 def _fila_wa(mensaje, seccion):
-    """WhatsApp y promesa al final de una sección larga (opiniones, proceso, precios y preguntas)."""
-    return (f'<div class="vt-inicio__fila">{c.boton_wa(mensaje, f"{TIPO}:{seccion}")}'
-            f'<p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p></div>')
+    """WhatsApp al final de una sección larga (opiniones, proceso, precios y preguntas). data-hero-cta: la barra fija
+    de celular se esconde mientras la fila se ve, para no mostrar dos botones iguales."""
+    texto, con_promesa = _FILAS[seccion]
+    promesa = f'<p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p>' if con_promesa else ""
+    return f'<div class="vt-inicio__fila" data-hero-cta>{c.boton_wa(mensaje, f"{TIPO}:{seccion}", texto)}{promesa}</div>'
 
 
 def _resenas():
@@ -72,7 +83,7 @@ def _cierre(ci):
         f'<h2 id="vt-cierre-titulo">{ci["titulo"]}</h2><p class="vt-lede">{ci["lede"]}</p>'
         f'<p class="vt-promesa">{c.promesa_horario()}</p>'
         f'<div class="vt-cta">{c.boton_wa(ci["mensaje"], f"{TIPO}:cierre")}{c.boton_tel(f"{TIPO}:cierre")}</div>'
-        f'<p class="vt-promesa">{c.garantia_pasto()}</p><p class="vt-promesa">{ci["visita"]}</p></div>'
+        f'<p class="vt-promesa">{c.garantia_pasto("Pasto instalado: ")}</p><p class="vt-promesa">{ci["visita"]}</p></div>'
         f'<p class="vt-cierre__msg"><b>El mensaje que se abre</b>{esc(datos.con_firma(ci["mensaje"]))}</p></div></section>')
 
 
@@ -85,7 +96,8 @@ def render(k):
         _portada(k["portada"]),
         c.bloque(1, "Qué hacemos", "vt-h-que", q["titulo"], c.indice(q["items"], TIPO), lede=q["lede"]),
         c.bloque(2, "Medidor", "vt-h-medidor", m["titulo"],
-                 c.medidor("inicio", TIPO, mensaje=k["portada"]["mensaje"], boton_medida=True, garantia=True),
+                 c.medidor("inicio", TIPO, mensaje=k["portada"]["mensaje"], boton_medida=True, garantia=True,
+                           resultado_vivo=True),
                  lede=m["lede"], tinte=True, id_seccion="medidor"),
         c.bloque(3, "Jardines entregados", "vt-h-obras", o["titulo"],
                  c.obras(o["figuras"]) + c.linea_prueba() + f'<h3 class="vt-mt">{o["titulo_clientes"]}</h3>' + c.logos(),
