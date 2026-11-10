@@ -180,7 +180,7 @@ class PlanesTest(unittest.TestCase):
                          {"titulo": "Goteo", "texto": "A la raíz.", "puntos": ("Menos agua",)}))
         self.assertTrue(html.startswith('<ul class="vt-modos vt-fichas">'))
         self.assertIn("<h3>Poda de pasto</h3><p>Corte parejo.</p></li>", html)
-        self.assertIn('<ul class="vt-checks"><li>Menos agua</li></ul>', html)
+        self.assertIn('<ul class="vt-checks"><li><span>Menos agua</span></li></ul>', html)
         self.assertNotIn("wa.me", html)
 
     def test_garantia_con_y_sin_cifra(self):
@@ -242,7 +242,7 @@ class MedidorTest(unittest.TestCase):
         html = c.garantia_pasto()
         self.assertEqual(c.texto_plano(html), datos.GARANTIA_PASTO)
         # Las condiciones del pasto viven en el protocolo de cuidados (no en /politicas, que es general).
-        self.assertIn('(<a href="/protocolo-cuidados-pasto-san-agustin">ver condiciones</a>).', html)
+        self.assertIn('(<a href="/protocolo-cuidados-pasto-san-agustin#garantia">ver condiciones</a>).', html)
         prefijada = c.garantia_pasto("Pasto instalado: ")
         self.assertTrue(prefijada.startswith("Pasto instalado: si una sección no arraiga"))
         self.assertEqual(c.texto_plano(prefijada), "Pasto instalado: s" + datos.GARANTIA_PASTO[1:])

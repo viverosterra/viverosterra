@@ -191,3 +191,15 @@ TEMAS_BLOG = (
 def tema_blog(slug):
     """Servicio del artículo según su slug; "general" si no coincide ningún tema."""
     return next((servicio for servicio, claves in TEMAS_BLOG if any(c in slug for c in claves)), "general")
+
+# Etapa 2i: mensajes propios de las utilitarias, los de main (la firma la agrega datos.con_firma).
+UTILITARIAS = {
+    "gracias": "Hola, acabo de enviar una cotización por el cotizador y quiero avanzar",
+    "cuestionario": "Hola, quiero empezar un proyecto de jardín en Tampico",
+    "politicas": "Hola, tengo una duda sobre envíos/devoluciones",
+    "privacidad": "Hola, tengo una duda sobre el aviso de privacidad",
+    "protocolo": "Hola, tengo dudas sobre el cuidado de mi pasto San Agustín",
+    "vivero": "Hola, quiero visitar el vivero o cotizar plantas.\nLo que busco: \nTamaño aprox.: ",
+    "vivero_planta": "Hola, estoy buscando una planta en el vivero de Tampico, ¿la tienen?",
+    "no_encontrada": "Hola, busqué una página en su sitio y no la encontré. Necesito: ___",
+}

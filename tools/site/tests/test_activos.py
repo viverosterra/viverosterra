@@ -22,11 +22,11 @@ class ActivosTest(unittest.TestCase):
         (self.pub / "blog").mkdir()
         self.registro = Path(tmp.name) / "activos.json"
         self.escribir(".vt-a{}")
-        (self.pub / "css" / "legacy-fixes.css").write_text(".pt-0{}", encoding="utf-8")
         (self.pub / "css" / "terra-tienda.css").write_text(".vt-tienda .vt-x{}", encoding="utf-8")
         (self.pub / "css" / "terra-plantas.css").write_text(".vt-plantas .vt-x{}", encoding="utf-8")
         (self.pub / "css" / "terra-materiales.css").write_text(".vt-materiales .vt-x{}", encoding="utf-8")
         (self.pub / "css" / "terra-precios.css").write_text(".vt-precios .vt-x{}", encoding="utf-8")
+        (self.pub / "css" / "terra-util.css").write_text(".vt-util .vt-x{}", encoding="utf-8")
         (self.pub / "css" / "terra-blog.css").write_text(".vt-blog .vt-x{}", encoding="utf-8")
         (self.pub / "css" / "terra-obras.css").write_text(".vt-mosaico{}", encoding="utf-8")
         (self.pub / "css" / "terra-nochebuenas.css").write_text(".vt-nochebuenas .vt-x{}", encoding="utf-8")
@@ -56,7 +56,6 @@ class ActivosTest(unittest.TestCase):
     def test_urls_con_hash_de_10(self):
         urls = activos.urls(self.pub)
         self.assertRegex(urls["terra.css"], r"^/css/terra\.[0-9a-f]{10}\.css$")
-        self.assertRegex(urls["legacy-fixes.css"], r"^/css/legacy-fixes\.[0-9a-f]{10}\.css$")
         self.assertRegex(urls["terra.js"], r"^/js/terra\.[0-9a-f]{10}\.js$")
         self.assertRegex(urls["terra-inicio.css"], r"^/css/terra-inicio\.[0-9a-f]{10}\.css$")
 

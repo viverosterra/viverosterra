@@ -9,6 +9,10 @@ import datos  # noqa: E402
 
 
 class ReglasGlobalesTest(unittest.TestCase):
+    def test_no_recorre_ni_nombra_la_carpeta_retirada(self):
+        self.assertNotIn("tools/servicios", c.__doc__)
+        self.assertNotIn('"servicios"', Path(c.__file__).read_text(encoding="utf-8"))
+
     def test_domicilio_con_sur_sin_duplicar(self):
         self.assertEqual(c.corregir_texto("Av. Álvaro Obregón 209, Col. Ampliación"), "Av. Álvaro Obregón 209 Sur, Col. Ampliación")
         self.assertEqual(c.corregir_texto("Obregón 209 Sur"), "Obregón 209 Sur")

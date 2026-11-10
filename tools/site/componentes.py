@@ -32,6 +32,11 @@ def dinero(n):
     return f"${redondear(n):,}"
 
 
+def dinero_exacto(n):
+    """Como dinero, pero respeta los centavos de un precio oficial: 446.6 → "$446.60", 754 → "$754"."""
+    return f"${n:,.2f}" if n != int(n) else f"${int(n):,}"
+
+
 def formato_m2(x):
     """Como x.toLocaleString('es-MX', {maximumFractionDigits: 1}): 48 → "48", 1234.5 → "1,234.5"."""
     texto = f"{x:,.1f}"
@@ -72,7 +77,7 @@ CTA_MEDIDA = "Enviar mi medida por WhatsApp"
 # En la home, con medida válida la barra fija de celular manda la misma medida (vt-medidor.js lee el texto de data-vt-barra).
 CTA_MEDIDA_BARRA = "Enviar mi medida"
 # Condiciones de la garantía de arraigo del pasto: el protocolo de cuidados (la página no tiene un id en esa sección).
-CONDICIONES_PASTO = "/protocolo-cuidados-pasto-san-agustin"
+CONDICIONES_PASTO = "/protocolo-cuidados-pasto-san-agustin#garantia"  # sección de condiciones (plantillas/protocolo.py)
 
 
 def boton_wa(mensaje, cta, texto=CTA_WA):
@@ -106,11 +111,17 @@ def boton_tel(cta):
             f'<svg class="vt-ico" aria-hidden="true"><use href="#vt-i-tel"/></svg>Llamar {datos.TELEFONO_VISIBLE}</a>')
 
 
-def fila_cta(mensaje, tipo, seccion, hero=False):
-    """WhatsApp + teléfono + promesa única. Con hero=True, terra.js oculta la barra móvil mientras se ve."""
+def boton_mapas(cta):
+    return (f'<a class="vt-btn vt-btn--linea" data-cta="{esc(cta)}" href="{esc(datos.MAPS_URL)}" target="_blank" '
+            f'rel="noopener">Cómo llegar</a>')
+
+
+def fila_cta(mensaje, tipo, seccion, hero=False, extra=""):
+    """WhatsApp + extra (otro botón, opcional) + teléfono + promesa única. Con hero=True, terra.js oculta la barra móvil
+    mientras se ve."""
     cta = f"{tipo}:{seccion}"
     marca = " data-hero-cta" if hero else ""
-    return (f'<div class="vt-cta"{marca}>{boton_wa(mensaje, cta)}{boton_tel(cta)}</div>'
+    return (f'<div class="vt-cta"{marca}>{boton_wa(mensaje, cta)}{extra}{boton_tel(cta)}</div>'
             f'<p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p>')
 
 
@@ -148,8 +159,9 @@ def etiqueta(e, cordel=True):
     filas = "".join(f'<p class="vt-etiqueta__fila"><span>{t}</span><b>{v}</b></p>' for t, v in e.get("filas", ()))
     nota = f'<p class="vt-etiqueta__nota">{e["nota"]}</p>' if e.get("nota") else ""
     sci = f'<p class="vt-etiqueta__sci">{e["cientifico"]}</p>' if e.get("cientifico") else ""
+    aviso = f'<span>{e["aviso"]}</span>' if e.get("aviso") else ""
     return (f'<div class="vt-etiqueta-x{" vt-etiqueta-x--cordel" if cordel else ""}"><div class="vt-etiqueta">'
-            f'<p class="vt-etiqueta__cod"><span>{e["codigo"]}</span><span>{e["aviso"]}</span></p>'
+            f'<p class="vt-etiqueta__cod"><span>{e["codigo"]}</span>{aviso}</p>'
             f'<p class="vt-etiqueta__nombre">{e["nombre"]}</p>{sci}'
             f'<p class="vt-etiqueta__precio"><small>{unidades(e["antes"])}</small><b>{e["monto"]}</b><span>{e["unidad"]}</span></p>'
             f'{filas}{nota}</div></div>')
@@ -336,7 +348,7 @@ def _precio_opcion(o):
     if "precio" in o:
         desde = "desde " if o.get("desde", True) else ""
         mes = f'<small class="vt-modo__mes">{linea_mensualidad(o["precio"])}</small>' if o.get("mensualidad") else ""
-        return (f'<p class="vt-modo__precio">{desde}<span class="vt-precio-marca">{dinero(o["precio"])}</span> '
+        return (f'<p class="vt-modo__precio">{desde}<span class="vt-precio-marca">{dinero_exacto(o["precio"])}</span> '
                 f'{o["unidad"]} <small>{o["detalle"]}</small>{mes}</p>')
     if "precio_texto" in o:
         detalle = f' <small>{o["detalle"]}</small>' if o.get("detalle") else ""
@@ -366,7 +378,7 @@ def fichas(items):
     """Tarjetas de lo que incluye un servicio, sin precio ni botón. items: titulo, texto y, opcional, puntos."""
     filas = []
     for f in items:
-        puntos = "".join(f"<li>{x}</li>" for x in f.get("puntos", ()))
+        puntos = "".join(f"<li><span>{x}</span></li>" for x in f.get("puntos", ()))
         lista = f'<ul class="vt-checks">{puntos}</ul>' if puntos else ""
         filas.append(f'<li class="vt-modo"><h3>{f["titulo"]}</h3><p>{f["texto"]}</p>{lista}</li>')
     return f'<ul class="vt-modos vt-fichas">{"".join(filas)}</ul>'
@@ -421,7 +433,7 @@ def garantia(g):
     cifra de la garantía; riego no tiene un plazo y la omite)."""
     no_aplica = ' class="vt-checks__no"'
     cifra = f'<p class="vt-grande">{g["grande"]}<small> {g["unidad"]}</small></p>' if g.get("grande") else ""
-    puntos = "".join(f'<li{"" if ok else no_aplica}>{t}</li>' for t, ok in g["puntos"])
+    puntos = "".join(f'<li{"" if ok else no_aplica}><span>{t}</span></li>' for t, ok in g["puntos"])
     ident = esc(g["id_titulo"])
     return (f'<section class="vt-bloque vt-bloque--tinte" aria-labelledby="{ident}"><div class="vt-wrap vt-dos">'
             f'<div><p class="vt-bloque__no"><b>{g["numero"]:02d}</b>{g["rotulo"]}</p><h2 id="{ident}">'
@@ -877,12 +889,14 @@ def formulario_correo(prefijo, f):
 
 # ---------- portada (primer pantallazo: qué, dónde, precio y CTA) ----------
 def portada(p, tipo, migas_items=None):
-    """p: kicker, h1, lede, etiqueta, mensaje, tambien y foto; opcional compacta (a 1024–1199 px la etiqueta va en su
-    versión de celular para que el CTA quede en la primera pantalla). Con migas_items, la ruta visible va arriba."""
+    """p: kicker, h1, lede, etiqueta, mensaje y foto; opcionales tambien (línea bajo el CTA), boton_extra (HTML de otro botón
+    junto a WhatsApp) y compacta (a 1024–1199 px la etiqueta va en su versión de celular para que el CTA quede en la primera
+    pantalla). Con migas_items, la ruta visible va arriba."""
     ruta = migas(migas_items) if migas_items else ""
     clase = "vt-portada vt-portada--compacta" if p.get("compacta") else "vt-portada"
+    tambien = f'<p class="vt-portada__tambien">{p["tambien"]}</p>' if p.get("tambien") else ""
     return (f'<section class="{clase}" aria-labelledby="vt-h1"><div class="vt-wrap">{ruta}<div class="vt-portada__grid">'
             f'<div><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1><p class="vt-lede">{p["lede"]}</p>'
-            f'<div class="vt-portada__trato">{etiqueta(p["etiqueta"])}<div>{fila_cta(p["mensaje"], tipo, "hero", hero=True)}'
-            f'<p class="vt-portada__tambien">{p["tambien"]}</p></div></div></div>'
+            f'<div class="vt-portada__trato">{etiqueta(p["etiqueta"])}<div>{fila_cta(p["mensaje"], tipo, "hero", hero=True, extra=p.get("boton_extra", ""))}'
+            f'{tambien}</div></div></div>'
             f'<div class="vt-portada__foto">{figura(p["foto"], principal=True)}</div></div>{cuadro_datos()}</div></section>')

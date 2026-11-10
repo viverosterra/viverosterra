@@ -10,7 +10,7 @@ class CiTest(unittest.TestCase):
         for paso in ("python tools/site/build.py", "git diff --exit-code -- public",
                      'test -z "$(git status --porcelain -- public)"', "playwright install --with-deps chromium",
                      "python -m unittest discover -s tests -v", "python -m unittest discover -s tests -t .",
-                     "python -m unittest discover -s tests -t tests", "node --test public/js/tests/*.test.js"):
+                     "node --test public/js/tests/*.test.js"):
             with self.subTest(paso=paso):
                 self.assertIn(paso, yml)
         self.assertNotIn("npm ", yml)

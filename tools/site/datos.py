@@ -80,7 +80,7 @@ PRECIOS = {
     "diseno_premium": 18000,
     "diseno_premium_descuento_desde": 150000,
     "riego_m2": (180, 320),
-    "sintetico_instalado_m2": (385, 650),
+    "sintetico_instalado_m2": (446.60, 754),  # precio final con IVA ($385 a $650 + IVA), decisión del dueño 2026-11-08
     "sintetico_tienda_m2": 139,
     "poda": 500,
     "flamboyan": 250,

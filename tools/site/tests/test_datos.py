@@ -48,7 +48,7 @@ class DatosTest(unittest.TestCase):
         self.assertEqual(p["mantenimiento_mes"], 750)
         self.assertEqual(p["diseno"], 3000)
         self.assertEqual(p["riego_m2"], (180, 320))
-        self.assertEqual(p["sintetico_instalado_m2"], (385, 650))
+        self.assertEqual(p["sintetico_instalado_m2"], (446.60, 754))
         self.assertEqual(p["sintetico_tienda_m2"], 139)
 
     def test_decisiones_del_dueno_2026_11_07(self):

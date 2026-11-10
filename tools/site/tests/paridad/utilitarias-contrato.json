@@ -1,0 +1,931 @@
+{
+ "/politicas": {
+  "fotos": [],
+  "anclas": [
+   "contacto",
+   "devoluciones",
+   "envios",
+   "facturacion",
+   "garantia-plantas",
+   "mensualidades",
+   "privacidad"
+  ],
+  "campos": [],
+  "form": null,
+  "medicion": {
+   "gtag_config": 1,
+   "gtag_event": 0,
+   "data_cta": [
+    "utilidad:cuerpo"
+   ]
+  }
+ },
+ "/politica-privacidad": {
+  "fotos": [],
+  "anclas": [],
+  "campos": [],
+  "form": null,
+  "medicion": {
+   "gtag_config": 1,
+   "gtag_event": 0,
+   "data_cta": [
+    "utilidad:cuerpo"
+   ]
+  }
+ },
+ "/gracias": {
+  "fotos": [],
+  "anclas": [],
+  "campos": [],
+  "form": null,
+  "medicion": {
+   "gtag_config": 1,
+   "gtag_event": 0,
+   "data_cta": [
+    "utilidad:cuerpo"
+   ]
+  }
+ },
+ "/cuestionario": {
+  "fotos": [
+   {
+    "src": "/img/diseno-jardin-instalacion-plantas-tampico.webp",
+    "srcset": null,
+    "alt": ""
+   }
+  ],
+  "anclas": [],
+  "campos": [
+   [
+    "input",
+    null,
+    "_subject",
+    "hidden",
+    "Nuevo cuestionario de jardín — Viveros Terra",
+    false
+   ],
+   [
+    "input",
+    null,
+    "_next",
+    "hidden",
+    "https://www.viverosterra.com/gracias",
+    false
+   ],
+   [
+    "input",
+    null,
+    "_template",
+    "hidden",
+    "table",
+    false
+   ],
+   [
+    "input",
+    null,
+    "_captcha",
+    "hidden",
+    "false",
+    false
+   ],
+   [
+    "input",
+    "nombre",
+    "nombre",
+    "text",
+    null,
+    true
+   ],
+   [
+    "input",
+    "whatsapp",
+    "whatsapp",
+    "tel",
+    null,
+    true
+   ],
+   [
+    "input",
+    null,
+    "email",
+    "email",
+    null,
+    false
+   ],
+   [
+    "select",
+    null,
+    "como_nos_conocio",
+    null,
+    null,
+    false
+   ],
+   [
+    "option",
+    [
+     "",
+     "Seleccionar..."
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "Página web"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "Instagram / Facebook"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "Referido de un cliente"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "Google"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "Otro"
+    ]
+   ],
+   [
+    "input",
+    null,
+    "direccion",
+    "text",
+    null,
+    false
+   ],
+   [
+    "input",
+    null,
+    "tipo_espacio",
+    "radio",
+    "Jardín frontal",
+    false
+   ],
+   [
+    "input",
+    null,
+    "tipo_espacio",
+    "radio",
+    "Jardín trasero",
+    false
+   ],
+   [
+    "input",
+    null,
+    "tipo_espacio",
+    "radio",
+    "Ambos",
+    false
+   ],
+   [
+    "input",
+    null,
+    "tipo_espacio",
+    "radio",
+    "Interior / patio",
+    false
+   ],
+   [
+    "input",
+    null,
+    "tipo_espacio",
+    "radio",
+    "Banqueta",
+    false
+   ],
+   [
+    "input",
+    null,
+    "tipo_espacio",
+    "radio",
+    "Plaza comercial",
+    false
+   ],
+   [
+    "input",
+    null,
+    "tipo_espacio",
+    "radio",
+    "Restaurante",
+    false
+   ],
+   [
+    "input",
+    "rb-otro-esp",
+    "tipo_espacio",
+    "radio",
+    "Otro",
+    false
+   ],
+   [
+    "input",
+    null,
+    "tipo_espacio_otro",
+    "text",
+    null,
+    false
+   ],
+   [
+    "input",
+    "area_pasto",
+    "area_pasto",
+    "number",
+    null,
+    false
+   ],
+   [
+    "input",
+    "area_jard",
+    "area_jardinera",
+    "number",
+    null,
+    false
+   ],
+   [
+    "input",
+    "area_total_input",
+    "area_total",
+    "number",
+    null,
+    false
+   ],
+   [
+    "input",
+    null,
+    "riego_instalado",
+    "radio",
+    "Sí",
+    false
+   ],
+   [
+    "input",
+    null,
+    "riego_instalado",
+    "radio",
+    "No",
+    false
+   ],
+   [
+    "input",
+    null,
+    "riego_instalado",
+    "radio",
+    "Parcial",
+    false
+   ],
+   [
+    "input",
+    null,
+    "instalar_riego",
+    "radio",
+    "Sí, de inmediato",
+    false
+   ],
+   [
+    "input",
+    null,
+    "instalar_riego",
+    "radio",
+    "En un futuro",
+    false
+   ],
+   [
+    "input",
+    null,
+    "instalar_riego",
+    "radio",
+    "No",
+    false
+   ],
+   [
+    "input",
+    null,
+    "hidroneumatico",
+    "radio",
+    "Sí",
+    false
+   ],
+   [
+    "input",
+    null,
+    "hidroneumatico",
+    "radio",
+    "No",
+    false
+   ],
+   [
+    "input",
+    null,
+    "hidroneumatico",
+    "radio",
+    "No sé",
+    false
+   ],
+   [
+    "textarea",
+    null,
+    "elementos_existentes",
+    null,
+    null,
+    false
+   ],
+   [
+    "input",
+    null,
+    "uso",
+    "checkbox",
+    "Convivencia familiar",
+    false
+   ],
+   [
+    "input",
+    null,
+    "uso",
+    "checkbox",
+    "Descanso",
+    false
+   ],
+   [
+    "input",
+    null,
+    "uso",
+    "checkbox",
+    "Juego de niños",
+    false
+   ],
+   [
+    "input",
+    null,
+    "uso",
+    "checkbox",
+    "Mascotas",
+    false
+   ],
+   [
+    "input",
+    null,
+    "uso",
+    "checkbox",
+    "Asados / reuniones",
+    false
+   ],
+   [
+    "input",
+    null,
+    "uso",
+    "checkbox",
+    "Imagen / fachada",
+    false
+   ],
+   [
+    "input",
+    null,
+    "uso",
+    "checkbox",
+    "Solo estético",
+    false
+   ],
+   [
+    "input",
+    null,
+    "estilo",
+    "checkbox",
+    "Tropical",
+    false
+   ],
+   [
+    "input",
+    null,
+    "estilo",
+    "checkbox",
+    "Minimalista",
+    false
+   ],
+   [
+    "input",
+    null,
+    "estilo",
+    "checkbox",
+    "Mediterráneo",
+    false
+   ],
+   [
+    "input",
+    null,
+    "estilo",
+    "checkbox",
+    "Japonés / zen",
+    false
+   ],
+   [
+    "input",
+    null,
+    "estilo",
+    "checkbox",
+    "Colorido",
+    false
+   ],
+   [
+    "input",
+    null,
+    "estilo",
+    "checkbox",
+    "Natural",
+    false
+   ],
+   [
+    "input",
+    null,
+    "estilo",
+    "checkbox",
+    "Sin preferencia",
+    false
+   ],
+   [
+    "input",
+    null,
+    "arboles_palmas",
+    "radio",
+    "Árboles",
+    false
+   ],
+   [
+    "input",
+    null,
+    "arboles_palmas",
+    "radio",
+    "Palmas",
+    false
+   ],
+   [
+    "input",
+    null,
+    "arboles_palmas",
+    "radio",
+    "Ambos",
+    false
+   ],
+   [
+    "input",
+    null,
+    "arboles_palmas",
+    "radio",
+    "Ninguno",
+    false
+   ],
+   [
+    "input",
+    null,
+    "mantenimiento",
+    "radio",
+    "Bajo mantenimiento",
+    false
+   ],
+   [
+    "input",
+    null,
+    "mantenimiento",
+    "radio",
+    "Moderado",
+    false
+   ],
+   [
+    "input",
+    null,
+    "mantenimiento",
+    "radio",
+    "Me da igual",
+    false
+   ],
+   [
+    "textarea",
+    null,
+    "plantas_preferencia",
+    null,
+    null,
+    false
+   ],
+   [
+    "textarea",
+    null,
+    "conservar",
+    null,
+    null,
+    false
+   ],
+   [
+    "textarea",
+    null,
+    "referencias",
+    null,
+    null,
+    false
+   ],
+   [
+    "input",
+    null,
+    "presupuesto_ejecucion",
+    "radio",
+    "$5,000–$15,000 MXN",
+    false
+   ],
+   [
+    "input",
+    null,
+    "presupuesto_ejecucion",
+    "radio",
+    "$15,000–$40,000 MXN",
+    false
+   ],
+   [
+    "input",
+    null,
+    "presupuesto_ejecucion",
+    "radio",
+    "$40,000–$80,000 MXN",
+    false
+   ],
+   [
+    "input",
+    null,
+    "presupuesto_ejecucion",
+    "radio",
+    "$80,000 MXN+",
+    false
+   ],
+   [
+    "input",
+    null,
+    "fecha_inicio",
+    "radio",
+    "Lo antes posible",
+    false
+   ],
+   [
+    "input",
+    null,
+    "fecha_inicio",
+    "radio",
+    "1–3 meses",
+    false
+   ],
+   [
+    "input",
+    null,
+    "fecha_inicio",
+    "radio",
+    "3–6 meses",
+    false
+   ],
+   [
+    "input",
+    null,
+    "fecha_inicio",
+    "radio",
+    "Más de 6 meses",
+    false
+   ],
+   [
+    "input",
+    null,
+    "fecha_inicio",
+    "radio",
+    "Solo el diseño por ahora",
+    false
+   ],
+   [
+    "input",
+    null,
+    "prioridad",
+    "radio",
+    "Que se vea increíble",
+    false
+   ],
+   [
+    "input",
+    null,
+    "prioridad",
+    "radio",
+    "Que sea funcional",
+    false
+   ],
+   [
+    "input",
+    null,
+    "prioridad",
+    "radio",
+    "Fácil de mantener",
+    false
+   ],
+   [
+    "input",
+    null,
+    "prioridad",
+    "radio",
+    "Valor a la propiedad",
+    false
+   ],
+   [
+    "textarea",
+    null,
+    "observaciones",
+    null,
+    null,
+    false
+   ]
+  ],
+  "form": [
+   "https://formsubmit.co/viverosterra@hotmail.com",
+   "POST"
+  ],
+  "medicion": {
+   "gtag_config": 1,
+   "gtag_event": 0,
+   "data_cta": [
+    "utilidad:cuerpo",
+    "utilidad:hero"
+   ]
+  }
+ },
+ "/datos-envio": {
+  "fotos": [],
+  "anclas": [],
+  "campos": [
+   [
+    "input",
+    "calle",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "input",
+    "colonia",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "input",
+    "cp",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "input",
+    "municipio",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "select",
+    "estado",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "input",
+    "ref",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "input",
+    "recibe",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "input",
+    "tel",
+    null,
+    "tel",
+    null,
+    false
+   ],
+   [
+    "input",
+    "quiere",
+    null,
+    "checkbox",
+    null,
+    false
+   ],
+   [
+    "input",
+    "rfc",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "input",
+    "fcp",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "input",
+    "razon",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "select",
+    "regimen",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "option",
+    [
+     "",
+     "Elige tu régimen"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "601 · General de Ley Personas Morales"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "603 · Personas Morales con Fines no Lucrativos"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "605 · Sueldos y Salarios e Ingresos Asimilados a Salarios"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "606 · Arrendamiento"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "612 · Personas Físicas con Actividades Empresariales y Profesionales"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "616 · Sin obligaciones fiscales"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "621 · Incorporación Fiscal"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "625 · Actividades Empresariales a través de Plataformas Tecnológicas"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "626 · Régimen Simplificado de Confianza"
+    ]
+   ],
+   [
+    "select",
+    "uso",
+    null,
+    null,
+    null,
+    false
+   ],
+   [
+    "option",
+    [
+     "",
+     "Elige el uso"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "G01 · Adquisición de mercancías"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "G03 · Gastos en general"
+    ]
+   ],
+   [
+    "option",
+    [
+     null,
+     "S01 · Sin efectos fiscales"
+    ]
+   ],
+   [
+    "input",
+    "correo",
+    null,
+    "email",
+    null,
+    false
+   ]
+  ],
+  "form": null,
+  "medicion": {
+   "gtag_config": 1,
+   "gtag_event": 0,
+   "data_cta": []
+  }
+ },
+ "/protocolo-cuidados-pasto-san-agustin": {
+  "fotos": [
+   {
+    "src": "/img/instalacion-pasto-rollo-san-agustin-tampico.webp",
+    "srcset": null,
+    "alt": ""
+   }
+  ],
+  "anclas": [],
+  "campos": [],
+  "form": null,
+  "medicion": {
+   "gtag_config": 1,
+   "gtag_event": 0,
+   "data_cta": []
+  }
+ },
+ "/vivero-tampico": {
+  "fotos": [
+   {
+    "src": "/img/portadas/arboles-tampico-viveros-terra-sm.webp",
+    "srcset": "/img/portadas/arboles-tampico-viveros-terra-sm.webp 560w, /img/portadas/arboles-tampico-viveros-terra.webp 960w",
+    "alt": "Equipo de Viveros Terra sembrando un árbol en un jardín de Tampico"
+   }
+  ],
+  "anclas": [],
+  "campos": [],
+  "form": null,
+  "medicion": {
+   "gtag_config": 1,
+   "gtag_event": 0,
+   "data_cta": []
+  }
+ }
+}

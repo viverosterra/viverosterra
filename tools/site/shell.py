@@ -21,7 +21,8 @@ VT_HERO_RE = re.compile(r'<section\b[^>]*class="vt-hero\b')
 # Hojas propias: las decide cada clase del <body> (la home lleva vt-inicio y, en temporada, también vt-temporada).
 BODY_RE = re.compile(r'<body class="([^"]*)">')
 HOJAS_POR_CLASE = {"tienda": "vt-tienda", "plantas": "vt-plantas", "materiales": "vt-materiales", "precios": "vt-precios",
-                   "blog": "vt-blog", "nochebuenas": "vt-nochebuenas", "temporada": "vt-temporada", "inicio": "vt-inicio"}
+                   "util": "vt-util", "blog": "vt-blog", "nochebuenas": "vt-nochebuenas", "temporada": "vt-temporada",
+                   "inicio": "vt-inicio"}
 OBRAS = 'class="vt-mosaico'
 CONTEO_BLOG_RE = re.compile(r'(<span data-vt-conteo="blog">)\d+(</span>)')
 
@@ -82,7 +83,7 @@ def aplicar(html, ruta, urls, public=PUBLIC):
     if encontradas != ["footer", "head", "header"]:
         raise ValueError(f"{ruta}: regiones del shell {encontradas}; debe haber head, header y footer, una de cada una")
     partes = {
-        "head": partials.head(urls, legacy="/css/tailwind.css" in html, obras=OBRAS in html, **hojas_del_body(html)),
+        "head": partials.head(urls, obras=OBRAS in html, **hojas_del_body(html)),
         "header": partials.header(ctx),
         "footer": partials.footer(ctx),
     }

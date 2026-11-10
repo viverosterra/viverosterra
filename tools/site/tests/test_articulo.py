@@ -127,9 +127,11 @@ class ArticuloTest(unittest.TestCase):
             with self.subTest(slug=slug):
                 self.assertIn(f"<span>{codigo}</span>", html)
                 # SEO fase 0 (2026-11-10): "Con IVA" en el encabezado de la etiqueta cubre todos sus renglones; no va
-                # si alguno es de pasto sin instalar, de palmas o de árboles (no llevan IVA) ni si se cotiza.
+                # si alguno es de pasto sin instalar, de palmas o de árboles (no llevan IVA) ni si se cotiza. Etapa 2i
+                # (2026-11-08): tampoco en las etiquetas de plantas (palmas por cotización, banqueta, plantas, interior).
                 con_iva = (tema["etiqueta"]["monto"] != datos.SEGUN_COTIZACION
-                           and tema["tema"] not in ("pasto-natural", "palmas", "arboles"))
+                           and tema["tema"] not in ("pasto-natural", "palmas", "palmas-cotizacion", "arboles", "banqueta",
+                                                    "plantas", "interior"))
                 self.assertEqual("<span>Con IVA</span>" in html, con_iva)
                 if tema["tema"] == "pasto-natural":
                     self.assertIn("<small>Instalado · desde</small><b>$120</b><span>/m² con IVA</span>", html)

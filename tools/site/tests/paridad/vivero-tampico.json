@@ -1,0 +1,58 @@
+{
+ "meta": {
+  "title": "Vivero en Tampico y Cd. Madero: dirección, horario y cómo llegar · Viveros Terra",
+  "description": "Visita el vivero de Viveros Terra en Av. Álvaro Obregón 209 Sur, Cd. Madero, frente a Walmart. Más de 200 variedades de plantas, palmas y árboles. Lunes a viernes de 9 a 18 h y sábado de 9 a 14 h.",
+  "robots": "index, follow",
+  "canonical": "https://www.viverosterra.com/vivero-tampico",
+  "og:type": "website",
+  "og:url": "https://www.viverosterra.com/vivero-tampico",
+  "og:title": "Vivero en Tampico y Cd. Madero: dirección, horario y cómo llegar · Viveros Terra",
+  "og:description": "Vivero en Tampico con +200 variedades de plantas, palmas y árboles. Productor directo, entrega en Madero y Altamira. Cotiza hoy.",
+  "og:image": "https://www.viverosterra.com/img/plantas-tropicales-tampico-viveros.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "Answer",
+  "BreadcrumbList",
+  "FAQPage",
+  "GeoCoordinates",
+  "ListItem",
+  "LocalBusiness",
+  "Offer",
+  "OfferCatalog",
+  "OpeningHoursSpecification",
+  "PostalAddress",
+  "Product",
+  "Question",
+  "SpeakableSpecification"
+ ],
+ "encabezados": [
+  "Vivero en Tampico y Ciudad Madero, desde 2007",
+  "Viveros Terra en Ciudad Madero, frente a Walmart",
+  "Categorías disponibles en el vivero",
+  "Palmas Tropicales",
+  "Plantas Ornamentales",
+  "Árboles para Jardín",
+  "Cómo llegar al vivero",
+  "¿Buscas una planta específica?",
+  "Explora el catálogo completo del vivero",
+  "Preguntas frecuentes sobre el vivero",
+  "Viveros Terra · Tampico"
+ ],
+ "faq": [
+  "¿Dónde está el vivero en Tampico?",
+  "¿Cuántas variedades de plantas tienen disponibles?",
+  "¿Hacen entregas a domicilio en Tampico?",
+  "¿Puedo comprar plantas al mayoreo para mi proyecto?"
+ ],
+ "precios": [
+  "$250",
+  "$85"
+ ],
+ "enlaces": [
+  "/arboles-ornamentales-tampico",
+  "/catalogo",
+  "/palmas-tropicales-tampico",
+  "/plantas-para-jardin-tampico"
+ ]
+}

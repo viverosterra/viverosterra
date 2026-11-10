@@ -7,7 +7,7 @@ Canonical, Product y migas del JSON-LD se conservan como estaban publicados; FAQ
 PARIDAD: tests/test_paridad.py.
 """
 import datos
-from componentes import dinero, mensualidades
+from componentes import dinero, dinero_exacto, mensualidades
 from contenido import seo
 
 P = datos.PRECIOS
@@ -182,7 +182,7 @@ CONTENIDO = {
             "columnas": ("Característica", "Pasto San Agustín (natural)", "Pasto sintético"),
             "filas": (
                 ("Precio instalado", f"desde {dinero(P['pasto_instalado_m2'])}/m²",
-                 f"desde {dinero(P['sintetico_instalado_m2'][0])}/m²"),
+                 f"desde {dinero_exacto(P['sintetico_instalado_m2'][0])}/m²"),
                 ("Vida útil", "15+ años con cuidado", "8-10 años"),
                 ("Mantenimiento", "Riego + poda quincenal", "Cepillado mensual"),
                 ("Riego", "Diario al instalar; después, según el clima", "Sin riego; solo un enjuague ocasional"),
@@ -294,6 +294,7 @@ OBJECIONES = "Las objeciones de la página anterior quedan en las preguntas, el 
 PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {
+        "$385": f"${int(P['sintetico_instalado_m2'][0])}",
         "Pasto San Agustín en rollo, instalado en un día": (
             "Pasto San Agustín en rollo, instalado en un día. Del campo a tu jardín, sin pasar por bodega."),
         "¿Cuánto cuesta ponerle pasto a mi jardín?": "Calcula el tuyo",

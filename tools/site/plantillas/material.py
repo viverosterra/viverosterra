@@ -33,7 +33,7 @@ def _que_es(k, n):
     if q.get("subtitulo"):
         cuerpo = f'<h3>{q["subtitulo"]}</h3>' + cuerpo
     if q.get("puntos"):
-        cuerpo += '<ul class="vt-checks vt-mt">' + "".join(f"<li>{x}</li>" for x in q["puntos"]) + "</ul>"
+        cuerpo += '<ul class="vt-checks vt-mt">' + "".join(f"<li><span>{x}</span></li>" for x in q["puntos"]) + "</ul>"
     if q.get("figuras"):
         cuerpo += c.obras(q["figuras"])
     return c.bloque(n(), "Qué es", "vt-h-que", q["titulo"], cuerpo, lede=q.get("lede"))

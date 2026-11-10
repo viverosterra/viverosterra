@@ -10,7 +10,7 @@ main). Los 9 modelos en existencia; para llevar hoy solo Toscana 18 y 28 (data.M
 import componentes_tienda as t
 import data
 import datos
-from componentes import dinero
+from componentes import dinero, dinero_exacto
 from contenido import seo
 
 SITE = data.SITE
@@ -18,14 +18,17 @@ URL = f"{SITE}/pasto-sintetico-tampico"
 GAL = t.GAL
 NEGOCIO = f"{SITE}/#negocio"
 INST_MIN, INST_MAX = datos.PRECIOS["sintetico_instalado_m2"]
+INST_MIN_TXT, INST_MAX_TXT = dinero_exacto(INST_MIN), dinero_exacto(INST_MAX)
 MIN_RETAIL = min(m["rollo"] for m in data.MODELOS)
 STOCK = [m for m in data.MODELOS if m["stock"]]
 HOY = " y ".join(m["nombre"] for m in STOCK)
 T18, T28 = data.BY_SLUG["toscana-18"], data.BY_SLUG["toscana-28"]
 APPLE_MAPS = f"https://maps.apple.com/?daddr={datos.GEO[0]},{datos.GEO[1]}&q=Viveros%20Terra"
 DOMICILIO = f"{datos.CALLE}, {datos.COLONIA}, {datos.CP} Cd. Madero, frente a Walmart"
-TITULO = f"Pasto Sintético Tampico Instalado desde ${INST_MIN} | Viveros Terra"
-DESCRIPCION = (f"Pasto sintético en Tampico, Madero y Altamira: instalado de ${INST_MIN} a ${INST_MAX}/m² o solo material desde "
+# Mapa de palabras clave (SEO fase 0): «Pasto Sintético Tampico Instalado desde $385 | Viveros Terra» (60). Con el precio
+# final con IVA (etapa 2i) esa forma mide 63; para caber en 60 sin quitar «desde» ni los centavos, va sin la marca.
+TITULO = f"Pasto Sintético Tampico Instalado desde {INST_MIN_TXT}/m²"
+DESCRIPCION = (f"Pasto sintético en Tampico, Madero y Altamira: instalado de {INST_MIN_TXT} a {INST_MAX_TXT}/m² o solo material desde "
                f"${MIN_RETAIL}/m². Visítanos en el showroom de Cd. Madero.")
 OG_IMG = f"{SITE}{GAL}/obra-residencial-tampico.webp"
 MENSAJE = datos.MENSAJES["pasto-sintetico"]
@@ -36,7 +39,7 @@ PREGUNTAS = (
      "para llevar hoy; los otros 7 modelos también están en existencia y llegan en 3 a 5 días. Atendemos de lunes a "
      "viernes de 9 a 18 h y sábado de 9 a 14 h."),
     ("¿Cuánto cuesta instalar pasto sintético en Tampico?",
-     f"La instalación cuesta desde ${INST_MIN}/m² y hasta ${INST_MAX}/m² en modelos premium. Incluye el material, la "
+     f"La instalación cuesta desde {INST_MIN_TXT}/m² y hasta {INST_MAX_TXT}/m² en modelos premium. Incluye el material, la "
      "colocación, las uniones, las orillas y el cepillado. Si tu espacio necesita retiro de lo existente, nivelación o "
      "base drenante, lo revisamos en la visita y te lo cotizamos aparte antes de empezar."),
     ("¿Cuánto cuesta el pasto sintético por m² en Tampico?",
@@ -90,7 +93,7 @@ SERVICIO = {
     "@type": "Service", "@id": f"{URL}#instalacion", "name": "Instalación de pasto sintético en Tampico",
     "serviceType": "Instalación de pasto sintético", "provider": {"@id": NEGOCIO},
     "areaServed": [{"@type": "City", "name": c} for c in ("Tampico", "Ciudad Madero", "Altamira")],
-    "offers": {"@type": "AggregateOffer", "priceCurrency": "MXN", "lowPrice": str(INST_MIN), "highPrice": str(INST_MAX),
+    "offers": {"@type": "AggregateOffer", "priceCurrency": "MXN", "lowPrice": f"{INST_MIN:.2f}", "highPrice": f"{INST_MAX:.2f}",
                "unitText": "m²"},
 }
 NEGOCIO_LD = {
@@ -133,7 +136,7 @@ CONTENIDO = {
                  f"{datos.SINTETICO_NACIONAL_DESDE}."),
         "etiqueta": {
             "codigo": "Sintético · Tampico", "aviso": "Con IVA", "nombre": "Pasto sintético instalado",
-            "antes": "Material y colocación · desde", "monto": dinero(INST_MIN), "unidad": "/m²",
+            "antes": "Material y colocación · desde", "monto": INST_MIN_TXT, "unidad": "/m²",
             "filas": (("Solo el material, en showroom", f"desde {dinero(MIN_RETAIL)} /m²"),
                       ("Toscana 18 y 28", "para llevar hoy")),
         },
@@ -176,7 +179,7 @@ CONTENIDO = {
     "precio": {
         "titulo": "Precio del pasto sintético en Tampico",
         "lede": (f"Precio por m² del material, con IVA. Entre más metros, menor precio. Instalación con material y "
-                 f"colocación de ${INST_MIN} a ${INST_MAX}/m² según el modelo."),
+                 f"colocación de {INST_MIN_TXT} a {INST_MAX_TXT}/m² según el modelo."),
         "tabla": {"columnas": ("Modelo", "2 a 9 m²", "10 a 49 m²", "Rollo 50 m²"),
                   "filas": tuple(_fila_precio(m) for m in data.MODELOS)},
         "caption": ("Si el modelo no está en el showroom, llega en 3 a 5 días hábiles. Lo enviamos en cuanto confirmas tu "
@@ -233,12 +236,14 @@ CONTENIDO = {
                  "cotizamos la instalación."),
         "mensaje": MENSAJE,
     },
-    "barra": {"nombre": "Pasto sintético en Tampico", "precio": f"Instalado desde ${INST_MIN}/m²"},
+    "barra": {"nombre": "Pasto sintético en Tampico", "precio": f"Instalado desde {INST_MIN_TXT}/m²"},
 }
 
 PARIDAD = {
-    "meta": seo.paridad(TITULO, DESCRIPCION),
-    "reemplazos": {},
+    "reemplazos": {"$385": f"${int(INST_MIN)}", "$650": INST_MAX_TXT},  # la captura guarda la parte entera
+    "meta": seo.paridad(TITULO, DESCRIPCION, {
+        "description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto sintético instalado era más IVA; se publica el precio final con IVA, $446.60 a $754/m²."),
+        "og:description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto sintético instalado era más IVA; se publica el precio final con IVA, $446.60 a $754/m².")}),
     "retirados": {
         "$250": ("Decisión del dueño (2026-11-07): el envío local en Tampico, Madero y Altamira no tiene precio fijo; "
                  "ahora dice “Envío local según tu colonia; te lo cotizamos.”"),

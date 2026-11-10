@@ -292,9 +292,10 @@ def contenido(slug):
             "foto": _foto(slug),
         },
         "precios": {
-            "titulo": 'Servicios y precios <span class="vt-serif">con IVA</span>',
+            "titulo": "Servicios y precios" if "palmas" in z["servicios"] else 'Servicios y precios <span class="vt-serif">con IVA</span>',
             "lede": f"Lo que hacemos en {corto}, con el precio de la lista oficial.",
-            "filas": lista_precios.filas_zona(z["servicios"], f"/{slug}"), "caption": f"Precios {datos.ANIO} con IVA.",
+            "filas": lista_precios.filas_zona(z["servicios"], f"/{slug}"),
+            "caption": f"Precios {datos.ANIO} con IVA" + (", salvo las palmas, que no llevan IVA." if "palmas" in z["servicios"] else "."),
             "cotizar": (f"Cotizar en {corto}", mensaje),
             "nota": datos.ANTICIPO,
         },
@@ -336,10 +337,11 @@ MOTIVO_AGGREGATE = ("AggregateOffer no admite unitText: el “desde” por m² p
 
 def paridad(slug):
     """Madero: "A minutos del vivero" pasa a "El vivero está en Ciudad Madero" (sin distancias ni tiempos)."""
-    reemplazos = {"A minutos del vivero": "El vivero está en Ciudad Madero"} if slug == "jardineria-ciudad-madero" else {}
+    reemplazos = ({"A minutos del vivero": "El vivero está en Ciudad Madero", "Servicios y precios con IVA": "Servicios y precios"}
+                  if slug == "jardineria-ciudad-madero" else {})
     motivo = "Renglón que la zona ya no publica (solo sus 4 servicios principales): sigue en /precios, enlazada desde la tabla."
     servicios = ZONAS[slug]["servicios"]
-    fuera = [P["sintetico_instalado_m2"][0]]  # el sintético no es de los 4 de ninguna zona
+    fuera = [385]  # el precio anterior del sintético instalado, en la captura; no es de los 4 de ninguna zona
     fuera += [] if "palmas" in servicios else [P["palma_desde"]]
     fuera += [] if "riego" in servicios else list(P["riego_m2"])
     return {"meta": seo.paridad(*SEO[slug]), "reemplazos": reemplazos, "retirados": {dinero(n): motivo for n in fuera},

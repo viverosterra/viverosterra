@@ -28,7 +28,7 @@ def _portada(k):
 
 def _cotizador(k):
     q = k["cotizador"]
-    calculo = "".join(f"<li>{x}</li>" for x in q["calculo"])
+    calculo = "".join(f"<li><span>{x}</span></li>" for x in q["calculo"])
     cuerpo = (f'<div class="vt-dos">{t.cotizador(k["default"], modelos=t.data.MODELOS, titulo=q["titulo_cotizador"], nivel=3, tipo=k["tipo"])}'
               f'<div><h3>{q["titulo_calculo"]}</h3><ul class="vt-checks vt-mt-s">{calculo}</ul></div></div>'
               f'<h3 class="vt-mt" id="envio">{q["titulo_envio"]}</h3><p class="vt-lede">{q["lede_envio"]}</p>'

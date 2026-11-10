@@ -106,7 +106,7 @@ PREGUNTAS = (
      "de Tamaulipas, el norte de Veracruz y San Luis Potosí. El flete se cotiza por ruta y volumen."),
     ("¿Qué pasa si una palma no arraiga?",
      "Las palmas que sembramos nosotros tienen garantía de arraigo de 30 días: si se regaron como te indicamos y no "
-     "prende, la reponemos sin costo. No cubre falta o exceso de riego, daños por terceros ni clima extremo. "
+     "prende, la reponemos. No cubre falta o exceso de riego, daños por terceros ni clima extremo. "
      '<a href="/politicas#garantia-plantas">Ver condiciones</a>.'),
     ("¿Tienen factura?",
      f"Sí. {datos.FACTURA} para persona física o moral, con tus datos fiscales validados "
@@ -250,7 +250,7 @@ CONTENIDO = {
         "titulo": "Garantía de arraigo de 30 días en las palmas que sembramos.", "grande": "30", "unidad": "días",
         "resumen": datos.GARANTIA_PLANTAS,
         "puntos": (
-            ("Si una palma que sembramos no prende en 30 días y se regó como te indicamos, la reponemos sin costo.", True),
+            ("Si una palma que sembramos no prende en 30 días y se regó como te indicamos, la reponemos.", True),
             ("Guía de cuidado por escrito al entregar.", True),
             (f"Factura {datos.FACTURA} y REPSE {datos.REPSE}.", True),
             ("No cubre falta o exceso de riego, daños por terceros o por clima extremo, ni palmas que siembra otra "

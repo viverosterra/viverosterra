@@ -1,0 +1,80 @@
+/* terra-util.css: hoja de las páginas utilitarias (Etapa 2i: políticas, privacidad, gracias, cuestionario, datos de envío,
+   protocolo, vivero y 404). Solo se carga en <body class="vt-pagina vt-util"> (shell.py); todo bajo .vt-util y con los
+   tokens de terra.css. Editorial sobre papel: la cabecera sin etiqueta de precio y formularios de línea firme. */
+.vt-util .vt-util__cabeza{padding:clamp(20px,3vw,40px) 0 clamp(24px,4vw,48px);border-bottom:1px solid var(--vt-line)}
+.vt-util .vt-util__intro{display:grid;gap:24px;align-items:center}
+.vt-util .vt-util__foto img{display:block;width:100%;height:clamp(150px,34vw,320px);object-fit:cover;border-radius:var(--vt-radius)}
+/* Foto vertical del cuestionario: el recorte horizontal deja al jardinero y el cepellón a la vista. */
+.vt-util .vt-util__foto img[src*="diseno-jardin-instalacion-plantas-tampico"]{object-position:50% 58%}
+@media (min-width:900px){.vt-util .vt-util__intro:has(.vt-util__foto){grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}}
+.vt-util .vt-util__estrecho{max-width:760px}
+.vt-util .vt-util__lista{display:grid;gap:12px;margin:0 0 24px;padding-left:22px}
+.vt-util .vt-util__adelanto{margin:0 0 12px;font-weight:600}
+.vt-util .vt-legal{display:grid;gap:24px;padding-block:clamp(28px,4vw,56px)}
+@media (min-width:1000px){.vt-util .vt-legal{grid-template-columns:230px minmax(0,1fr);gap:64px;align-items:start}.vt-util .vt-legal__indice{position:sticky;top:calc(var(--vt-head-h) + 24px)}}
+.vt-util .vt-legal__indice ol{display:flex;flex-wrap:wrap;gap:4px 16px;margin:0;padding:0;list-style:none}
+@media (min-width:1000px){.vt-util .vt-legal__indice ol{display:grid;gap:8px;border-left:2px solid var(--vt-line);padding-left:14px}}
+.vt-util .vt-legal__indice a{display:inline-block;padding:6px 0;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
+.vt-util .vt-legal__texto{max-width:68ch}
+.vt-util .vt-legal__texto section{scroll-margin-top:calc(var(--vt-head-h) + 16px);padding-block:0 32px}
+.vt-util .vt-legal__texto section + section{border-top:1px solid var(--vt-line);padding-top:28px}
+.vt-util .vt-legal__texto h2{margin:0 0 14px;font-size:clamp(1.45rem,1.2rem + 1vw,1.9rem);line-height:1.15}
+.vt-util .vt-legal__texto h3{margin:20px 0 8px;font-size:var(--vt-text-lg)}
+.vt-util .vt-legal__texto p{margin:0 0 12px;line-height:1.65}
+.vt-util .vt-legal__texto ul,.vt-util .vt-legal__texto ol{display:grid;gap:8px;margin:0 0 14px;padding-left:20px;line-height:1.6}
+.vt-util .vt-req{color:var(--vt-soil)}
+.vt-util .vt-util__pista{margin:4px 0 0;font-size:var(--vt-text-sm);color:var(--vt-muted)}
+.vt-util .vt-util__form,.vt-util .vt-paso,.vt-util .vt-util__tarjeta{display:grid;gap:18px}
+.vt-util .vt-paso h2{margin:0;font-size:clamp(1.4rem,1.2rem + .9vw,1.8rem)}
+.vt-util .vt-paso h2:focus{outline:none}
+.vt-util .vt-util__fila{display:grid;gap:16px}
+@media (min-width:640px){.vt-util .vt-util__fila--2{grid-template-columns:repeat(2,minmax(0,1fr))}.vt-util .vt-util__fila--3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.vt-util .vt-control input{font-size:16px;font-weight:500}
+.vt-util .vt-control input[type="checkbox"]{flex:none}
+.vt-util .vt-util__grupo{min-width:0;margin:0;padding:0;border:0}
+.vt-util .vt-util__grupo legend{padding:0;margin-bottom:8px;font-size:var(--vt-text-sm);font-weight:600}
+.vt-util .vt-pills{display:flex;flex-wrap:wrap;gap:8px}
+.vt-util .vt-pill{position:relative;display:inline-flex;cursor:pointer}
+.vt-util .vt-pill input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.vt-util .vt-pill span{display:block;min-height:44px;padding:10px 14px;border:1.5px solid var(--vt-line-ui);border-radius:var(--vt-radius);background:var(--vt-card);font-size:var(--vt-text-sm);transition:background var(--vt-duration-fast),color var(--vt-duration-fast)}
+.vt-util .vt-pill input:checked + span{border-color:var(--vt-field);background:var(--vt-field);color:var(--vt-on-dark)}
+.vt-util .vt-pill input:focus-visible + span{outline:2px solid var(--vt-field);outline-offset:2px}
+.vt-util .vt-pills--tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.vt-util .vt-pills--tarjetas .vt-pill,.vt-util .vt-pills--tarjetas span{width:100%}
+.vt-util .vt-pills--tarjetas small{display:block;font-size:var(--vt-text-xs);opacity:.85}
+.vt-util .vt-util__cond{margin-top:12px}
+.vt-util .vt-util__suma{display:flex;justify-content:space-between;margin:0;padding:12px 14px;background:var(--vt-field-100)}
+.vt-util .vt-wizard{display:flex;justify-content:space-between;gap:6px;margin:0 0 10px;padding:0;list-style:none;font-size:var(--vt-text-xs)}
+.vt-util .vt-wizard li{display:grid;justify-items:center;gap:2px;color:var(--vt-muted)}
+.vt-util .vt-wizard b{display:grid;place-items:center;width:28px;height:28px;border:1.5px solid var(--vt-line-ui);border-radius:50%}
+.vt-util .vt-wizard [aria-current] b,.vt-util .vt-wizard .is-hecho b{border-color:var(--vt-field);background:var(--vt-field);color:var(--vt-on-dark)}
+.vt-util .vt-wizard [aria-current]{color:var(--vt-ink)}
+.vt-util .vt-progreso{height:3px;margin-bottom:24px;background:var(--vt-line)}
+.vt-util .vt-progreso span{display:block;height:100%;background:var(--vt-field);transform:scaleX(.2);transform-origin:left;transition:transform var(--vt-duration-normal) var(--vt-ease-out)}
+.vt-util .vt-util__pie{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}
+.vt-util .vt-util__cuenta{margin:0;font-size:var(--vt-text-sm);color:var(--vt-muted)}
+.vt-util .vt-util__exito h2:focus{outline:none}
+.vt-util .vt-util__tarjeta{margin-bottom:16px;padding:20px;border:1px solid var(--vt-line);background:var(--vt-card);box-shadow:var(--vt-sombra-card)}
+.vt-util .vt-util__tarjeta h2{margin:0;font-size:var(--vt-text-lg)}
+.vt-util .vt-util__orden{display:flex;justify-content:space-between;gap:12px;margin-bottom:16px;padding:14px 16px;border:1px solid var(--vt-line);background:var(--vt-card)}
+.vt-util .vt-util__orden small{display:block;font-size:var(--vt-text-xs);color:var(--vt-muted)}
+.vt-util .vt-util__total{font-weight:700;white-space:nowrap}
+.vt-util .vt-util__casilla{display:flex;align-items:center;gap:10px;min-height:44px;font-weight:600;cursor:pointer}
+.vt-util .vt-util__casilla input{width:22px;height:22px;accent-color:var(--vt-field)}
+.vt-util .msg{display:none;margin:4px 0 0;font-size:var(--vt-text-sm);font-weight:600;color:var(--vt-soil)}
+.vt-util .vt-campo:has(.bad) .msg{display:block}
+.vt-util .vt-control:has(.bad){border-color:var(--vt-soil);border-width:2px;background:var(--vt-soil-100)}
+.vt-util .vt-util__error{margin:0 0 12px;padding:11px 13px;border:1px solid var(--vt-soil);background:var(--vt-soil-100);color:var(--vt-soil);font-weight:600}
+.vt-util #enviar{width:100%;justify-content:center}
+.vt-util .vt-util__datos{display:grid;gap:16px;margin:0}
+.vt-util .vt-util__datos dt{font-weight:700}
+.vt-util .vt-util__datos dd{margin:2px 0 0;color:var(--vt-ink-2)}
+.vt-util .vt-util__servicios{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:4px 24px;margin:20px 0 0;padding:0;list-style:none}
+.vt-util .vt-util__servicios a{display:block;padding:10px 0;border-bottom:1px solid var(--vt-line)}
+.vt-util .vt-util__cabeza h1{margin:0 0 12px;font-size:clamp(2.25rem,1.5rem + 3vw,4rem);line-height:1.02}
+.vt-util .vt-util__cabeza .vt-crumbs{margin-bottom:14px}
+.vt-util .vt-util__cabeza + .vt-bloque{padding-top:clamp(24px,3vw,44px)}
+/* Al final y con la misma especificidad que las reglas de arriba: un elemento hidden nunca se ve, aunque su regla le dé display. */
+.vt-util [hidden]{display:none}
+@media (prefers-reduced-motion:reduce){.vt-util .vt-progreso span,.vt-util .vt-pill span{transition:none}}
+.vt-util .vt-portada .vt-etiqueta__nombre{display:block}

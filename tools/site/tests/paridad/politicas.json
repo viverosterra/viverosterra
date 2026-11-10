@@ -1,0 +1,42 @@
+{
+ "meta": {
+  "title": "Políticas de Envío, Devoluciones y Privacidad · Viveros Terra",
+  "description": "Políticas de Viveros Terra: envíos a todo México (3-5 días), devoluciones (30 días), privacidad de datos, facturación CFDI 4.0 y contacto.",
+  "robots": "index, follow",
+  "canonical": "https://www.viverosterra.com/politicas",
+  "og:type": "article",
+  "og:url": "https://www.viverosterra.com/politicas",
+  "og:title": "Políticas · Viveros Terra",
+  "og:description": "Envíos, devoluciones, garantía de plantas, privacidad, facturación y contacto de Viveros Terra.",
+  "og:image": "https://www.viverosterra.com/img/pasto-sintetico-residencial-tampico.webp",
+  "og:locale": "es_MX"
+ },
+ "jsonld_tipos": [
+  "BreadcrumbList",
+  "ListItem"
+ ],
+ "encabezados": [
+  "Políticas de la Tienda",
+  "Política de Envíos",
+  "Política de Devoluciones",
+  "Garantía de arraigo de plantas y palmas",
+  "Pago en mensualidades con tarjeta de crédito",
+  "Facturación y Pagos",
+  "Aviso de Privacidad",
+  "Contacto",
+  "¿Dudas sobre tu pedido?",
+  "En este artículo",
+  "¿Listo para cotizar?"
+ ],
+ "faq": [],
+ "precios": [
+  "$1,400",
+  "$15,000,",
+  "$2,000,",
+  "$5,000,",
+  "$900"
+ ],
+ "enlaces": [
+  "/protocolo-cuidados-pasto-san-agustin"
+ ]
+}

@@ -15,6 +15,9 @@
  "terra-precios.css": [
   "/css/terra-precios.100f00ee24.css"
  ],
+ "terra-util.css": [
+  "/css/terra-util.8676dfc85b.css"
+ ],
  "terra-blog.css": [
   "/css/terra-blog.310bc010dc.css"
  ],
@@ -30,10 +33,6 @@
  ],
  "terra-inicio.css": [
   "/css/terra-inicio.570acd3362.css"
- ],
- "legacy-fixes.css": [
-  "/css/legacy-fixes.725fd1c858.css",
-  "/css/legacy-fixes.6fb87ff99e.css"
  ],
  "terra.js": [
   "/js/terra.649ca39d28.js",

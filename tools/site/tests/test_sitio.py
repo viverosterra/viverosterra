@@ -31,8 +31,8 @@ def nombre(path):
 
 
 class ShellEnTodoElSitioTest(unittest.TestCase):
-    def test_111_paginas_con_contexto(self):
-        self.assertEqual(len(PAGINAS), 111)
+    def test_112_paginas_con_contexto(self):
+        self.assertEqual(len(PAGINAS), 112)
         for path in PAGINAS:
             paginas.contexto(paginas.ruta_de(path))
 
@@ -73,7 +73,7 @@ class ShellEnTodoElSitioTest(unittest.TestCase):
         # activos.publicar() conserva la copia actual y la que sirve producción (tools/site/activos.json).
         for url in activos.urls().values():
             self.assertTrue((PUBLIC / url.lstrip("/")).is_file(), url)
-        for carpeta, patron in (("css", "terra.*.css"), ("css", "legacy-fixes.*.css"), ("js", "terra.*.js")):
+        for carpeta, patron in (("css", "terra.*.css"), ("js", "terra.*.js")):
             with self.subTest(patron=patron):
                 self.assertLessEqual(len(list((PUBLIC / carpeta).glob(patron))), 2)
 

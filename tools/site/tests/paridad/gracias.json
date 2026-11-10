@@ -1,0 +1,20 @@
+{
+ "meta": {
+  "title": "¡Gracias! Tu cotización está en camino · Viveros Terra",
+  "description": "Recibimos tu solicitud. Respondemos en menos de 1 hora en horario con tu cotización detallada por correo y WhatsApp.",
+  "robots": "noindex, follow",
+  "canonical": "https://www.viverosterra.com/gracias"
+ },
+ "jsonld_tipos": [],
+ "encabezados": [
+  "¡Recibimos tu cotización!",
+  "Qué sigue ahora"
+ ],
+ "faq": [],
+ "precios": [],
+ "enlaces": [
+  "/",
+  "/blog",
+  "/catalogo"
+ ]
+}

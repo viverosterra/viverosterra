@@ -125,7 +125,7 @@ class InicioTest(unittest.TestCase):
         self.assertNotIn("Enviar mi medida por WhatsApp", HTML)  # lo escribe vt-medidor.js cuando hay medida
         garantia = re.search(r'<p class="vt-medidor__garantia" data-vt-o="garantia">(.*?)</p>', medidor).group(1)
         self.assertEqual(re.sub(r"<[^>]+>", "", garantia), datos.GARANTIA_PASTO)
-        self.assertIn('<a href="/protocolo-cuidados-pasto-san-agustin">ver condiciones</a>', garantia)
+        self.assertIn('<a href="/protocolo-cuidados-pasto-san-agustin#garantia">ver condiciones</a>', garantia)
         self.assertIn('<p class="vt-medidor__vivo" data-vt-o="vivo"></p>', medidor)
         self.assertLess(medidor.index("vt-medidor__medidas"), medidor.index("vt-medidor__vivo"))
         self.assertLess(medidor.index("vt-medidor__vivo"), medidor.index("¿Qué necesitas?"))
@@ -177,7 +177,7 @@ class InicioTest(unittest.TestCase):
         self.assertEqual(orden, sorted(orden))
         entre = cierre[cierre.index("</span>", cierre.index("data-vt-horario")):cierre.index('<a class="vt-btn vt-btn--wa" data-cta="home:cierre"')]
         self.assertEqual(re.sub(r"<[^>]+>", "", entre).strip(), "", "nada de texto entre la promesa y el botón")
-        self.assertIn('(<a href="/protocolo-cuidados-pasto-san-agustin">ver condiciones</a>).', cierre)
+        self.assertIn('(<a href="/protocolo-cuidados-pasto-san-agustin#garantia">ver condiciones</a>).', cierre)
         self.assertIn(f"Llamar {datos.TELEFONO_VISIBLE}", cierre)
 
     def test_banner_con_los_dias_de_preventa_vacios_en_el_html(self):
@@ -210,7 +210,7 @@ class InicioTest(unittest.TestCase):
                 else:
                     self.assertIn(f'alt="{cliente}"', HTML)
         # Las tres menciones de la garantía de arraigo enlazan a las condiciones del pasto (antes, a /politicas).
-        self.assertEqual(MAIN.count('<a href="/protocolo-cuidados-pasto-san-agustin">ver condiciones</a>'), 3)
+        self.assertEqual(MAIN.count('<a href="/protocolo-cuidados-pasto-san-agustin#garantia">ver condiciones</a>'), 3)
         self.assertNotIn('href="/politicas"', MAIN)
         self.assertTrue((paginas.PUBLIC / "protocolo-cuidados-pasto-san-agustin.html").is_file())
 

@@ -21,15 +21,11 @@ import shell  # noqa: E402
 TITULO_MAX = 60
 DESCRIPCION_MIN, DESCRIPCION_MAX = 70, 155
 _APROBADO = "Título y descripción aprobados por el dueño (semana del 2026-11-09): no se tocan en la fase 0."
-_ETAPA_2I = "La rehace la rama feat/etapa-2i (plantilla nueva): su título y descripción del mapa se aplican ahí."
 _FUSION = ("Artículo marcado para fusionar con 301 en la fase 2 del plan SEO (mapa §3c): no se retitula una URL que va "
            "a desaparecer.")
 EXCEPCIONES_LARGO = {
     "/": _APROBADO,
     datos.NOCHEBUENAS["ruta"]: _APROBADO,
-    "/vivero-tampico": _ETAPA_2I,
-    "/politicas": _ETAPA_2I,
-    "/protocolo-cuidados-pasto-san-agustin": _ETAPA_2I,
     "/blog/jardin-bajo-presupuesto-tampico": _FUSION,
     "/blog/palmas-mas-vendidas-tampico-precios": _FUSION,
     "/blog/pasto-sintetico-para-perros": _FUSION,

@@ -26,7 +26,7 @@ IMG = "/img/precios/pasto-rollo-jardin"
 SOLO, INSTALADO = dinero(P["pasto_solo_m2"]), dinero(P["pasto_instalado_m2"])
 MANTENIMIENTO, DISENO = dinero(P["mantenimiento_mes"]), dinero(P["diseno"])
 SINTETICO = dinero(lp.SINTETICO_MIN)
-SINT_MIN, SINT_MAX = (dinero(x) for x in P["sintetico_instalado_m2"])
+SINT_MIN, SINT_MAX = (c.dinero_exacto(x) for x in P["sintetico_instalado_m2"])
 MENSAJE = mensajes_paginas.PRECIOS
 COTIZAR = mensajes_paginas.PRECIOS_SECCIONES
 TITULO = f"Precios de Jardinería en Tampico {datos.ANIO} | Viveros Terra"
@@ -209,7 +209,9 @@ PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION, {"description": (DESCRIPCION, SIN_IVA_EN_PASTO), "og:description": (DESCRIPCION, SIN_IVA_EN_PASTO)}),
     # SEO fase 0 (2026-11-10): el H1 decía «2026, con IVA» y cubría toda la lista; el pasto sin instalar, las plantas,
     # los árboles y las palmas no llevan IVA (regla del dueño). El IVA se explica en cada tabla.
-    "reemplazos": {"Precios de jardinería en Tampico 2026, con IVA": f"Precios de jardinería en Tampico {datos.ANIO}"},
+    # Etapa 2i (2026-11-08): el sintético instalado se publica a precio final con IVA; la captura guarda la parte entera.
+    "reemplazos": {"Precios de jardinería en Tampico 2026, con IVA": f"Precios de jardinería en Tampico {datos.ANIO}",
+                   "$385": SINT_MIN.split(".")[0], "$650": SINT_MAX},
     "retirados": {},
     "jsonld": {},
 }

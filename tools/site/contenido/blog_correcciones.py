@@ -26,6 +26,7 @@ def riego(m2_a, m2_b=None):
     return f"{dinero(R0 * m2_a)}–{dinero(R1 * (m2_b or m2_a))}"
 
 
+M_SINTETICO_IVA = "Decisión del dueño (2026-11-08): el pasto sintético instalado se publica a precio final con IVA."
 M_PLANTA = "Precio sin confirmar por el dueño: solo areca, coco plumoso, palma real y flamboyán tienen precio; lo demás es según cotización."
 M_VENDIDA = "\"Más vendida\" es un superlativo sin dato que lo respalde (regla del dueño); la URL no cambia."
 M_ESTAD = "Porcentaje sin fuente (no se publican estadísticas inventadas)."
@@ -507,6 +508,8 @@ REVISION = {
     ),
     "cuanto-cuesta-pasto-sintetico-mexico": (
         ("C298", "<td><strong>Toscana 28</strong> ★</td>", "<td><strong>Toscana 28</strong></td>", M_ESTRELLA),
+        ("C301", "cuesta de $385 a $650/m² con material y colocación;", "cuesta de $446.60 a $754/m² con IVA, material y colocación;", M_SINTETICO_IVA),
+        ("C302", "<strong>$385 a $650 por m²</strong> según el modelo, con material,", "<strong>$446.60 a $754 por m²</strong> con IVA, según el modelo, con material,", M_SINTETICO_IVA),
     ),
     "pasto-sintetico-para-perros": (
         ("C299", "<td><strong>Toscana 28</strong> ★</td>", "<td><strong>Toscana 28</strong></td>", M_ESTRELLA),

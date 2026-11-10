@@ -23,7 +23,7 @@ def _portada(k):
 
 def _para_quien(k, n):
     p = k["para_quien"]
-    checks = "".join(f"<li>{x}</li>" for x in p["si"]) + "".join(f'<li class="vt-checks__no">{x}</li>' for x in p["no"])
+    checks = "".join(f"<li><span>{x}</span></li>" for x in p["si"]) + "".join(f'<li class="vt-checks__no"><span>{x}</span></li>' for x in p["no"])
     izquierda = f'<p class="vt-lede">{p["resumen"]}</p>{c.nota(*p["nota"])}'
     return c.bloque_dos(n, "En resumen", "vt-h-resumen", p["titulo"], izquierda, f'<ul class="vt-checks">{checks}</ul>')
 

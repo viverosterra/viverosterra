@@ -72,14 +72,15 @@ def region(nombre, cuerpo):
 FUENTE_PRINCIPAL = "/fonts/archivo-latin.woff2"
 
 
-def head(urls, legacy, tienda=False, plantas=False, materiales=False, precios=False, blog=False, nochebuenas=False,
+def head(urls, tienda=False, plantas=False, materiales=False, precios=False, util=False, blog=False, nochebuenas=False,
          temporada=False, obras=False, inicio=False):
     """Favicon cuadrado (SVG y PNG de 192; /favicon.ico vive en la raíz de public/), geo de la tienda, fuente principal
-    precargada, CSS del shell (y legacy-fixes en páginas con Tailwind),
+    precargada, CSS del shell,
     GA4 una sola vez y terra.js diferido. Con tienda=True (páginas <body class="vt-pagina vt-tienda">), también
     terra-tienda.css. Con plantas=True (páginas <body class="vt-pagina vt-plantas">, Etapa 2e), terra-plantas.css. Con
     materiales=True (<body class="vt-pagina vt-materiales">, Etapa 2f), terra-materiales.css. Con precios=True
-    (<body class="vt-pagina vt-precios">, Etapa 2g), terra-precios.css. Con nochebuenas=True, terra-nochebuenas.css y
+    (<body class="vt-pagina vt-precios">, Etapa 2g), terra-precios.css. Con util=True (<body class="vt-pagina vt-util">,
+    Etapa 2i), terra-util.css. Con nochebuenas=True, terra-nochebuenas.css y
     geo.placename de Tampico (spec de Nochebuenas §5). Con inicio=True (la home, <body class="vt-pagina vt-inicio …">),
     terra-inicio.css; con temporada=True (clase vt-temporada), terra-temporada.css.
     Las meta keywords, last-modified, ai-content-declaration y language ya no se usan: no se
@@ -91,8 +92,6 @@ def head(urls, legacy, tienda=False, plantas=False, materiales=False, precios=Fa
         f'<meta name="geo.placename" content="{"Tampico" if nochebuenas else datos.CIUDAD}">',
         f'<link rel="preload" href="{FUENTE_PRINCIPAL}" as="font" type="font/woff2" crossorigin>',
     ]
-    if legacy:
-        lineas.append(f'<link rel="stylesheet" href="{urls["legacy-fixes.css"]}">')
     lineas += [
         f'<link rel="stylesheet" href="{urls["terra.css"]}">',
     ]
@@ -104,6 +103,8 @@ def head(urls, legacy, tienda=False, plantas=False, materiales=False, precios=Fa
         lineas.append(f'<link rel="stylesheet" href="{urls["terra-materiales.css"]}">')
     if precios:
         lineas.append(f'<link rel="stylesheet" href="{urls["terra-precios.css"]}">')
+    if util:
+        lineas.append(f'<link rel="stylesheet" href="{urls["terra-util.css"]}">')
     if obras:  # páginas con mosaico de fotos reales (class="vt-mosaico")
         lineas.append(f'<link rel="stylesheet" href="{urls["terra-obras.css"]}">')
     if blog:

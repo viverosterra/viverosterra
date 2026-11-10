@@ -37,7 +37,6 @@ class ShellTest(unittest.TestCase):
         html = shell.aplicar(PAGINA, "/blog/palma-areca-tampico", URLS)
         self.assertIn('<header class="vt-head" data-vt-tipo="blog"', html)
         self.assertIn('<footer class="vt-foot">', html)
-        self.assertIn("/css/legacy-fixes.0123456789.css", html)
         self.assertEqual(html.count("googletagmanager.com/gtag/js"), 1)
 
     def test_idempotente(self):
@@ -55,7 +54,7 @@ class ShellTest(unittest.TestCase):
         """La home lleva vt-inicio siempre y vt-temporada solo en temporada: cada hoja se decide por su clase, no por
         la cadena exacta del <body>."""
         urls = dict(URLS, **{f"terra-{n}.css": f"/css/terra-{n}.0123456789.css" for n in (
-            "tienda", "plantas", "materiales", "precios", "blog", "obras", "nochebuenas", "temporada", "inicio")})
+            "tienda", "plantas", "materiales", "precios", "util", "blog", "obras", "nochebuenas", "temporada", "inicio")})
 
         def hojas(clases):
             html = shell.aplicar(PAGINA.replace("<body>", f'<body class="{clases}">'), "/", urls)
@@ -66,6 +65,8 @@ class ShellTest(unittest.TestCase):
         self.assertEqual(hojas("vt-pagina vt-temporada"), ["terra-temporada"])
         self.assertEqual(hojas("vt-pagina vt-tienda"), ["terra-tienda"])
         self.assertEqual(hojas("vt-pagina vt-nochebuenas"), ["terra-nochebuenas"])
+        self.assertEqual(hojas("vt-pagina vt-util"), ["terra-util"])  # etapa 2i: convive con las hojas de main
+        self.assertEqual(hojas("vt-util vt-pagina vt-temporada"), ["terra-temporada", "terra-util"])
         self.assertEqual(hojas("vt-pagina vt-inicio-otra"), [])
         self.assertEqual(hojas("vt-pagina"), [])
 

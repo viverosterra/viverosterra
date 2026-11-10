@@ -78,7 +78,7 @@ def _aparte(items):
     salida = []
     for i, (titulo, puntos, nota) in enumerate(items):
         clase = ' class="vt-mt"' if i else ""
-        lista = "".join(f"<li>{x}</li>" for x in puntos)
+        lista = "".join(f"<li><span>{x}</span></li>" for x in puntos)
         salida.append(f"<h3{clase}>{titulo}</h3>" + (f'<ul class="vt-checks vt-mt-s">{lista}</ul>' if lista else "")
                       + f'<p class="vt-promesa">{nota}</p>')
     return "".join(salida)
@@ -116,7 +116,7 @@ def _pago(k, numero):
     """Un solo bloque de pago: anticipo, contado y mensualidades en tres renglones, y el simulador (los plazos y montos
     mínimos los muestra el propio simulador, sin repetir la tabla de planes)."""
     p = k["pago"]
-    puntos = "".join(f"<li>{t}</li>" for t in p["puntos"])
+    puntos = "".join(f"<li><span>{t}</span></li>" for t in p["puntos"])
     izquierda = f'<p class="vt-lede">{p["lede"]}</p><ul class="vt-checks vt-mt-s">{puntos}</ul>'
     if p.get("sim"):
         derecha = f'<h3>{p["titulo_sim"]}</h3>' + c.simulador(p["sim"]["servicio"], p["sim"]["monto"], k["tipo"])
