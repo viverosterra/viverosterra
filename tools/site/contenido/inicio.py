@@ -98,6 +98,8 @@ CONTENIDO = {
             "cientifico": "Stenotaphrum secundatum", "antes": "San Agustín instalado · desde",
             # "con IVA" va en la banda del instalado; la fila de solo pasto no lo lleva (dueño, 2026-11-10).
             "monto": dinero(P["pasto_instalado_m2"]), "unidad": "/m² con IVA",
+            # Decisión del dueño (2026-11-10): el instalado considera el terreno listo; la condición va pegada al precio.
+            "cond": datos.TERRENO_LISTO_CORTO,
             "filas": (("Solo pasto, tú lo instalas", f"{dinero(P['pasto_solo_m2'])} /m²"),),
             "nota": (f"Ejemplo: 8 × 6 m = 48 m² instalado × {dinero(P['pasto_instalado_m2'])} = "
                      f"{dinero(48 * P['pasto_instalado_m2'])}."),
@@ -120,7 +122,8 @@ CONTENIDO = {
              "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111,
              "texto": (f"San Agustín en rollo, cortado para tu pedido. {dinero(P['pasto_solo_m2'])}/m² solo pasto; "
                        "instalado en un día."),
-             "desde": dinero(P["pasto_instalado_m2"]), "unidad": "/m² instalado"},
+             "desde": dinero(P["pasto_instalado_m2"]), "unidad": "/m² instalado",
+             "cond": datos.TERRENO_LISTO_CORTO},  # decisión del dueño (2026-11-10)
             {"titulo": "Pasto sintético", "servicio": "pasto-sintetico", "cotizar": "sintético",
              "href": "/pasto-sintetico",
              "img": "/img/pasto-sintetico/galeria/toscana-28-1-sm.webp", "ancho": 420, "alto": 560,
@@ -194,7 +197,7 @@ CONTENIDO = {
              "texto": f"El pasto llega del campo {datos.LLEGADA_PASTO}, se corta para tu pedido y va directo a tu jardín."},
             {"titulo": "El primer riego", "quien": "tu", "cuando": "Días 1 a 20",
              "texto": (f"{datos.PRIMER_RIEGO} Si una sección no arraiga en {datos.ARRAIGO}, la reponemos sin costo, "
-                       'siguiendo el protocolo de riego (<a href="/protocolo-cuidados-pasto-san-agustin#garantia">ver condiciones</a>).')},
+                       f'{datos.GARANTIA_TERRENO}, siguiendo el protocolo de riego (<a href="/protocolo-cuidados-pasto-san-agustin#garantia">ver condiciones</a>).')},
         ),
     },
     "precios": {
@@ -205,8 +208,7 @@ CONTENIDO = {
                  "nada.", f"Desde el vivero, {datos.CALLE_CORTA}"),
         "filas": (
             {"nombre": "Pasto San Agustín instalado", "unidad": "/m²", "precio": P["pasto_instalado_m2"], "desde": True,
-             "rec": True, "detalle": (f"Preparación básica del suelo, tendido en un día y garantía de arraigo de "
-                                      f"{datos.ARRAIGO}.")},
+             "rec": True, "detalle": (f"{datos.INSTALADO_INCLUYE} Tendido en un día; arraigo en {datos.ARRAIGO}.")},
             {"nombre": "Pasto San Agustín, solo el pasto", "unidad": "/m²", "precio": P["pasto_solo_m2"],
              "detalle": "Se corta para tu pedido. Recoges en el vivero o te lo llevamos. No lleva IVA."},
             {"nombre": "Mayoreo de pasto, solo pasto", "unidad": "/m²", "precio": P["pasto_mayoreo_m2"], "desde": True,
@@ -222,7 +224,7 @@ CONTENIDO = {
             {"nombre": "Tezontle rojo", "unidad": "/costal", "precio": P["tezontle_costal"], "desde": True,
              "detalle": "También por m³ y en camión volteo de 14 m³."},
         ),
-        "caption": (f'Precios {datos.ANIO}. {datos.PASTO_SIN_IVA}; los demás lo incluyen. Lista completa en '
+        "caption": (f'Precios {datos.ANIO}. {datos.PASTO_SIN_IVA}; los demás lo incluyen. {datos.TERRENO_LISTO} Lista completa en '
                     '<a href="/precios">viverosterra.com/precios</a>.'),
     },
     "faq": {
@@ -322,3 +324,6 @@ PARIDAD = {
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: la portada usa el componente común (mismas piezas, mismos textos y mismo aspecto; clases vt-portada__*).')
+
+# Lo que cambia por la decisión del dueño del 2026-11-10 (terreno listo y garantía de arraigo).
+PARIDAD["terreno"] = 'decisión del dueño 2026-11-10: el instalado considera terreno listo; trabajos previos se cotizan aparte: etiqueta y fila «Pasto natural» con datos.TERRENO_LISTO_CORTO; «En corto», FAQ de precio y leyenda de la tabla con datos.TERRENO_LISTO; fila del instalado con datos.INSTALADO_INCLUYE. decisión del dueño 2026-11-10: la garantía de arraigo aplica con terreno listo: el paso «El primer riego» suma datos.GARANTIA_TERRENO.'

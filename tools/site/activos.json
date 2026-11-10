@@ -1,7 +1,7 @@
 {
  "terra.css": [
-  "/css/terra.2c9e1e6a1a.css",
-  "/css/terra.b637c7140a.css"
+  "/css/terra.b602565b7f.css",
+  "/css/terra.2c9e1e6a1a.css"
  ],
  "terra-tienda.css": [
   "/css/terra-tienda.86702f8f3e.css"
@@ -19,8 +19,8 @@
   "/css/terra-util.a6fb59a757.css"
  ],
  "terra-blog.css": [
-  "/css/terra-blog.78daa7b280.css",
-  "/css/terra-blog.310bc010dc.css"
+  "/css/terra-blog.add956c6f9.css",
+  "/css/terra-blog.78daa7b280.css"
  ],
  "terra-obras.css": [
   "/css/terra-obras.fd473f944c.css"
@@ -33,8 +33,8 @@
   "/css/terra-temporada.03517f128e.css"
  ],
  "terra-inicio.css": [
-  "/css/terra-inicio.5495c372bc.css",
-  "/css/terra-inicio.570acd3362.css"
+  "/css/terra-inicio.03ba3608f3.css",
+  "/css/terra-inicio.5495c372bc.css"
  ],
  "terra.js": [
   "/js/terra.3b24b47c51.js",

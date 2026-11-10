@@ -64,7 +64,7 @@ PREGUNTAS = (
     ("¿Cuál es el pedido mínimo para mayoreo de pasto en Tampico?",
      f"Para precios de mayoreo manejamos pedidos a partir de {MINIMO} m²: desde {dinero(MAYOREO)}/m² solo pasto (no lleva IVA). "
      f"Con menos de {MINIMO} m² también te atendemos, a {dinero(SOLO)}/m² solo pasto o desde {dinero(INSTALADO)}/m² "
-     'instalado (<a href="/pasto-en-rollo-tampico">pasto en rollo</a>).'),
+     f'instalado (<a href="/pasto-en-rollo-tampico">pasto en rollo</a>). {datos.TERRENO_LISTO_CORTO}'),
     ("¿Facturan CFDI para constructoras?",
      f"Sí, emitimos factura {datos.FACTURA} para constructoras, empresas y cualquier cliente que requiera comprobante "
      "fiscal. Solo necesitamos tu RFC y datos fiscales al momento de la compra."),
@@ -120,7 +120,7 @@ PAQUETES = (
                  "m² totales: ___\nEntregas (fechas o etapas): ___")},
     {"cta": "Cotizar pasto instalado", "rotulo": "Paquete 2 · Instalado", "titulo": "Pasto instalado en obra", "precio_texto": datos.SEGUN_COTIZACION,
      "detalle": "según el terreno y el volumen", "rec": True,
-     "puntos": ("Preparación básica del terreno y colocación con nuestra cuadrilla",
+     "puntos": (f"{datos.INSTALADO_INCLUYE} Colocación con nuestra cuadrilla.",
                 f"Garantía de arraigo de {datos.ARRAIGO} siguiendo el protocolo de riego",
                 f"REPSE {datos.REPSE} para trabajar dentro de tu obra"),
      "mensaje": ("Hola, quiero cotizar pasto instalado en una obra.\nEmpresa: ___\nObra y ubicación: ___\n"
@@ -135,6 +135,8 @@ PAQUETES = (
 )
 
 CONTENIDO = {
+    # Entrega C de experiencia: filas de WhatsApp tras los clientes y las preguntas (antes, 7.1 a 7.3 pantallas sin CTA).
+    "ctas": {"prueba": (MENSAJE, "Cotizar pasto para mi obra"), "faq": (MENSAJE, "Preguntar por WhatsApp")},
     "respuesta": respuestas.de("/mayoreo-pasto-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "b2b",
     "prefijo": "may",
@@ -185,7 +187,8 @@ CONTENIDO = {
         "filas": (
             (f"Menos de {MINIMO} m²", f"{dinero(SOLO)}/m² solo pasto", "Se cotiza según tu obra"),
             (f"{MINIMO} m² o más", f"desde {dinero(MAYOREO)}/m² solo pasto", "Por etapas, según el avance de obra"),
-            ("Pasto instalado en obra", f"desde {dinero(INSTALADO)}/m² instalado, con IVA", "Con nuestra cuadrilla"),
+            ("Pasto instalado en obra", f"desde {dinero(INSTALADO)}/m² instalado, con IVA. {datos.TERRENO_LISTO_CORTO}",
+             "Con nuestra cuadrilla"),
             ("Capacidad y calendario", "Por escrito en tu cotización, por entrega",
              f"El pasto llega del campo {datos.LLEGADA_PASTO}"),
         ),
@@ -211,7 +214,7 @@ CONTENIDO = {
         "lede": "Cada botón abre WhatsApp con la plantilla de ese paquete.",
         "items": PAQUETES,
         "nota": (f'¿Menos de {MINIMO} m²? <a href="/pasto-en-rollo-tampico">Pasto en rollo</a> a {dinero(SOLO)}/m² solo '
-                 f"pasto o desde {dinero(INSTALADO)}/m² instalado."),
+                 f"pasto o desde {dinero(INSTALADO)}/m² instalado. {datos.TERRENO_LISTO_CORTO}"),
     },
     "proceso": {"titulo": "Proceso de cotización", "lede": "De tu mensaje a la última entrega, todo por escrito.",
                 "pasos": PASOS},
@@ -220,7 +223,7 @@ CONTENIDO = {
         "resumen": f"Garantía de arraigo de {datos.ARRAIGO} con instalación contratada.",
         "puntos": (
             ("Si contratas la instalación y se sigue el protocolo de riego de 20 días, garantizamos el arraigo: si una "
-             f"sección no arraiga en {datos.ARRAIGO}, la reponemos sin costo.", True),
+             f"sección no arraiga en {datos.ARRAIGO}, la reponemos sin costo, {datos.GARANTIA_TERRENO}.", True),
             (f"Cortado para tu pedido: llega del campo {datos.LLEGADA_PASTO}; cada entrega por etapas llega fresca.", True),
             ("Protocolo de riego por escrito para quien riega la obra.", True),
             ("En mayoreo solo pasto, la instalación es de tu cuadrilla: la garantía de arraigo no aplica, pero te "
@@ -273,3 +276,9 @@ PARIDAD = {
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). La respuesta directa (40 a 60 palabras) pasa, sin cambios, de la entrada del hero al bloque «En corto»; la entrada nueva conserva precio, mínimo y entrega por etapas.')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: paquetes con texto de botón propio (reescritura 5); con un resultado válido, la barra fija y el «Cotizar» del encabezado llevan el enlace de la calculadora y un texto corto; al borrarlo vuelven al genérico (cotizador por volumen); titular del formulario de compras reescrito (reescritura 16).'
+
+# Lo que cambia por la decisión del dueño del 2026-11-10 (terreno listo y garantía de arraigo).
+PARIDAD["terreno"] = 'decisión del dueño 2026-11-10: el instalado considera terreno listo; trabajos previos se cotizan aparte: el paquete instalado dice datos.INSTALADO_INCLUYE (antes «Preparación básica del terreno»); tabla, nota y FAQ con datos.TERRENO_LISTO_CORTO. decisión del dueño 2026-11-10: la garantía de arraigo aplica con terreno listo: la garantía suma datos.GARANTIA_TERRENO.'
+
+# Lo que cambia por la Entrega C de experiencia (ritmo y movimiento).
+PARIDAD["ritmo"] = 'Entrega C de experiencia (2026-11-10), ritmo y movimiento: filas de WhatsApp «Cotizar pasto para mi obra» tras los clientes y «Preguntar por WhatsApp» tras las preguntas (antes, 7.3 pantallas sin CTA); revelado por scroll de encabezados y figuras y balanceo de la etiqueta en escritorio.'

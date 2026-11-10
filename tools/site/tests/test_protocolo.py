@@ -22,9 +22,11 @@ class ProtocoloTest(unittest.TestCase):
         posiciones = [self.html.index(d) for d in ("Días 1 – 7", "Días 8 – 14", "Días 15 – 20")]
         self.assertEqual(posiciones, sorted(posiciones))
 
-    def test_garantia_con_ancla_y_sus_cinco_condiciones(self):
+    def test_garantia_con_ancla_y_sus_seis_condiciones(self):
+        """Seis desde la decisión del dueño del 2026-11-10: el terreno listo o preparado por Viveros Terra."""
         self.assertIn('id="garantia"', self.html)
-        self.assertEqual(len(K["garantia"]["condiciones"]), 5)
+        self.assertEqual(len(K["garantia"]["condiciones"]), 6)
+        self.assertIn(datos.GARANTIA_TERRENO_CONDICION, self.html)
         self.assertIn("El problema fue reportado antes del día 21", self.html)
         self.assertIn("la reponemos sin costo", self.html)
 

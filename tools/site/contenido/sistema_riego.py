@@ -147,6 +147,8 @@ SECTORES = (
 )
 
 CONTENIDO = {
+    # Entrega C de experiencia: CTA tras la garantía (antes, 6.9 pantallas de los sistemas al simulador sin CTA).
+    "ctas": {"garantia": (MENSAJE, "Cotizar mi sistema de riego")},
     "respuesta": respuestas.de("/sistema-riego-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-riego",
     "prefijo": "riego",
@@ -194,6 +196,7 @@ CONTENIDO = {
         "rotulo": "Sistemas",
         "titulo": "Tipos de sistema según tu jardín",
         "lede": "Diseñamos el sistema según el tamaño del área, el tipo de plantas y tu presupuesto.",
+        "fila": True,  # Entrega C: en celular los tres sistemas van en fila (antes, 1.4 pantallas apilados)
         "items": SISTEMAS,
     },
     "precio": {
@@ -214,6 +217,8 @@ CONTENIDO = {
         "titulo": "Aspersión, goteo o microaspersión",
         "lede": "Los tres sistemas de riego automático más usados en jardines residenciales y comerciales de Tampico.",
         "comparativa": {
+            # Entrega C: plegada en celular; «ideal para» y la cobertura repiten las tres tarjetas de sistema.
+            "plegable": "Los tres sistemas, lado a lado",
             "columnas": ("Característica", "Aspersores emergentes", "Riego por goteo", "Microaspersión"),
             "filas": (
                 ("Ideal para", "Pasto y áreas grandes", "Plantas y arriates", "Camellones"),
@@ -273,7 +278,7 @@ CONTENIDO = {
             {"titulo": "Pasto en Rollo", "href": "/pasto-en-rollo-tampico",
              "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111,
              "texto": (f"San Agustín desde {dinero(P['pasto_solo_m2'])}/m² · Instalado desde "
-                       f"{dinero(P['pasto_instalado_m2'])}/m²")},
+                       f"{dinero(P['pasto_instalado_m2'])}/m². {datos.TERRENO_LISTO_CORTO}")},
             {"titulo": "Diseño de Jardines", "href": "/diseno-jardines-tampico",
              "img": f"{OBRA}/diseno-jardin-paisajismo-tampico.webp", "ancho": 640, "alto": 427,
              "texto": f"Plan Terra desde {dinero(P['diseno'])} · Propuesta visual incluida"},
@@ -322,3 +327,9 @@ PARIDAD = {
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Kicker: «Riego · Tampico, Madero y Altamira» (un renglón). Entrada recortada: «campos deportivos con pasto natural» sale del hero (sigue en la sección de proyectos).')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: botones de sistema con texto propio (reescritura 5); el simulador no manda un monto que el cliente no escribió.'
+
+# Lo que cambia por la decisión del dueño del 2026-11-10 (terreno listo y garantía de arraigo).
+PARIDAD["terreno"] = 'decisión del dueño 2026-11-10: el instalado considera terreno listo; trabajos previos se cotizan aparte: tarjeta de pasto en «Otros servicios» con datos.TERRENO_LISTO_CORTO.'
+
+# Lo que cambia por la Entrega C de experiencia (ritmo y movimiento).
+PARIDAD["ritmo"] = 'Entrega C de experiencia (2026-11-10), ritmo y movimiento: sin banda (su garantía no está en datos.py); fila «Cotizar mi sistema de riego» tras la garantía; los tres sistemas en fila en celular; plegada en celular «Los tres sistemas, lado a lado» (ideal para y cobertura repiten las tarjetas); relleno y fondos alternados; primera pregunta cerrada; revelado por scroll de encabezados y figuras y balanceo de la etiqueta en escritorio.'

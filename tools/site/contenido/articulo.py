@@ -76,7 +76,16 @@ class _Pagina:
             "relacionados_titulo": doc["relacionados_titulo"], "relacionados": tuple(doc["relacionados"]),
         }
         self.PARIDAD = {**(doc.get("paridad") or {"reemplazos": {}, "retirados": {}}), "jsonld": {"Organization": M_AUTOR, **({"ImageObject": M_LOGO} if "ImageObject" in json.dumps(doc["jsonld"]) else {})},
-                        "hero": HERO}
+                        "hero": HERO, "terreno": TERRENO, "ritmo": RITMO}
+
+
+RITMO = ("Entrega C de experiencia (2026-11-10), ritmo y movimiento: WhatsApp de texto junto al CTA de media lectura y una "
+         "línea «Preguntar por WhatsApp» cada 3 secciones después (antes, 7.6 pantallas sin WhatsApp en línea); revelado por "
+         "scroll de los encabezados.")
+# Decisión del dueño del 2026-11-10 (terreno listo y garantía de arraigo), en los artículos que dan el precio del instalado.
+TERRENO = ("decisión del dueño 2026-11-10: el instalado considera terreno listo; trabajos previos se cotizan aparte: la etiqueta y la entrada del tema pasto llevan datos.TERRENO_LISTO_CORTO; en «¿Cuánto cuesta hacer un "
+           "jardín…?» y «Jardín con bajo presupuesto» las filas del instalado dicen la condición (antes «El instalado "
+           "incluye preparación básica»). decisión del dueño 2026-11-10: la garantía de arraigo aplica con terreno listo: en «Errores del pasto San Agustín» la garantía es datos.GARANTIA_PASTO.")
 
 
 def pagina(slug):

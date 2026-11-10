@@ -83,6 +83,7 @@ CTA_MEDIDA_BARRA = "Enviar mi medida"
 ERROR_MEDIDOR = "Escribe el largo y el ancho en metros, solo con números. Ejemplo: 8 y 6."
 # Condiciones de la garantía de arraigo del pasto: el protocolo de cuidados (la página no tiene un id en esa sección).
 CONDICIONES_PASTO = "/protocolo-cuidados-pasto-san-agustin#garantia"  # sección de condiciones (plantillas/protocolo.py)
+CONDICIONES_PLANTAS = "/politicas#garantia-plantas"  # condiciones de la garantía de plantas (contenido/politicas.py)
 
 
 def boton_wa(mensaje, cta, texto=CTA_WA):
@@ -109,6 +110,19 @@ def garantia_pasto(prefijo=""):
     if prefijo:
         texto = esc(prefijo) + texto[0].lower() + texto[1:]
     return texto.replace(condiciones, f'<a href="{CONDICIONES_PASTO}">{condiciones}</a>')
+
+
+def garantia_plantas():
+    """datos.GARANTIA_PLANTAS con "ver condiciones" enlazado a la garantía de plantas de Políticas."""
+    texto, condiciones = esc(datos.GARANTIA_PLANTAS), "ver condiciones"
+    if texto.count(condiciones) != 1:
+        raise ValueError("datos.GARANTIA_PLANTAS debe decir “ver condiciones” una sola vez")
+    return texto.replace(condiciones, f'<a href="{CONDICIONES_PLANTAS}">{condiciones}</a>')
+
+
+def tierra_negra_cruzada():
+    """Venta cruzada junto a la condición de terreno listo (pasto en rollo y Medidor): solo el enlace."""
+    return f'<a href="{datos.TIERRA_NEGRA_RUTA}">{esc(datos.TIERRA_NEGRA_CRUZADA)}</a>'
 
 
 def boton_tel(cta):
@@ -173,9 +187,18 @@ def respuesta(r):
     return f'<section class="vt-respuesta" aria-label="En corto"><div class="vt-wrap">{texto}{fecha}</div></section>'
 
 
-def bloque(numero, rotulo, id_titulo, titulo, cuerpo, lede=None, tinte=False, id_seccion=None):
-    """Sección numerada con encabezado a dos columnas (título y entrada)."""
-    clase = "vt-bloque vt-bloque--tinte" if tinte else "vt-bloque"
+# Ritmo (Entrega C de experiencia): el relleno vertical de una sección según su papel. "apoyo" (fotos extra, pago,
+# preguntas, cobertura, relacionados) va más compacta; "clave" (precio, planes, la banda de garantía) lleva más aire.
+RITMOS = {None: "", "apoyo": " vt-bloque--apoyo", "clave": " vt-bloque--clave"}
+
+
+def _clase_bloque(tinte, ritmo):
+    return ("vt-bloque vt-bloque--tinte" if tinte else "vt-bloque") + RITMOS[ritmo]
+
+
+def bloque(numero, rotulo, id_titulo, titulo, cuerpo, lede=None, tinte=False, id_seccion=None, ritmo=None):
+    """Sección numerada con encabezado a dos columnas (título y entrada). ritmo: None, "apoyo" o "clave"."""
+    clase = _clase_bloque(tinte, ritmo)
     ident = f' id="{esc(id_seccion)}"' if id_seccion else ""
     entrada = f'<p class="vt-lede">{lede}</p>' if lede else ""
     return (f'<section class="{clase}"{ident} aria-labelledby="{esc(id_titulo)}"><div class="vt-wrap">'
@@ -183,9 +206,9 @@ def bloque(numero, rotulo, id_titulo, titulo, cuerpo, lede=None, tinte=False, id
             f'<div class="vt-bloque__cabeza"><h2 id="{esc(id_titulo)}">{titulo}</h2>{entrada}</div>{cuerpo}</div></section>')
 
 
-def bloque_dos(numero, rotulo, id_titulo, titulo, izquierda, derecha, tinte=False, id_seccion=None):
+def bloque_dos(numero, rotulo, id_titulo, titulo, izquierda, derecha, tinte=False, id_seccion=None, ritmo=None):
     """Sección numerada a dos columnas: título y apoyo a la izquierda, contenido a la derecha."""
-    clase = "vt-bloque vt-bloque--tinte" if tinte else "vt-bloque"
+    clase = _clase_bloque(tinte, ritmo)
     ident = f' id="{esc(id_seccion)}"' if id_seccion else ""
     return (f'<section class="{clase}"{ident} aria-labelledby="{esc(id_titulo)}"><div class="vt-wrap vt-dos"><div>'
             f'<p class="vt-bloque__no"><b>{numero:02d}</b>{rotulo}</p><h2 id="{esc(id_titulo)}">{titulo}</h2>{izquierda}</div>'
@@ -194,9 +217,16 @@ def bloque_dos(numero, rotulo, id_titulo, titulo, izquierda, derecha, tinte=Fals
 
 # ---------- etiqueta de precio y cuadro de datos ----------
 def etiqueta(e, cordel=True):
-    """Etiqueta amarilla de precio. e: codigo, aviso, nombre, cientifico, antes, monto, unidad, filas, nota. El
-    envoltorio lleva la sombra y, con cordel=True, el cordel que cuelga del ojal (solo en escritorio)."""
-    filas = "".join(f'<p class="vt-etiqueta__fila"><span>{t}</span><b>{v}</b></p>' for t, v in e.get("filas", ()))
+    """Etiqueta amarilla de precio. e: codigo, aviso, nombre, cientifico, antes, monto, unidad, filas, nota y cond. El
+    envoltorio lleva la sombra y, con cordel=True, el cordel que cuelga del ojal (solo en escritorio). cond: la condición
+    del precio en una línea chica pegada a la banda amarilla, visible también en la etiqueta compacta del celular
+    (datos.TERRENO_LISTO_CORTO junto al pasto instalado: decisión del dueño, 2026-11-10)."""
+    cond = f'<p class="vt-etiqueta__cond">{esc(e["cond"])}</p>' if e.get("cond") else ""
+    filas = [f'<p class="vt-etiqueta__fila"><span>{t}</span><b>{v}</b></p>' for t, v in e.get("filas", ())]
+    if cond and e.get("cond_fila"):  # la condición es de una fila (el instalado en /precios): va debajo de ella
+        i = e["cond_fila"]
+        filas, cond = filas[:i] + [cond] + filas[i:], ""
+    filas = "".join(filas)
     nota = f'<p class="vt-etiqueta__nota">{e["nota"]}</p>' if e.get("nota") else ""
     sci = f'<p class="vt-etiqueta__sci">{e["cientifico"]}</p>' if e.get("cientifico") else ""
     aviso = f'<span>{e["aviso"]}</span>' if e.get("aviso") else ""
@@ -204,7 +234,7 @@ def etiqueta(e, cordel=True):
             f'<p class="vt-etiqueta__cod"><span>{e["codigo"]}</span>{aviso}</p>'
             f'<p class="vt-etiqueta__nombre">{e["nombre"]}</p>{sci}'
             f'<p class="vt-etiqueta__precio"><small>{unidades(e["antes"])}</small><b>{e["monto"]}</b><span>{e["unidad"]}</span></p>'
-            f'{filas}{nota}</div></div>')
+            f'{cond}{filas}{nota}</div></div>')
 
 
 DATOS_EMPRESA = (
@@ -250,11 +280,11 @@ def mosaico(figuras, desde):
     return f'<div class="vt-mosaico{plano}">{items}</div>'
 
 
-def bloque_obras(numero, datos_obras, html_previo):
+def bloque_obras(numero, datos_obras, html_previo, ritmo=None):
     """Sección de fotos de obra. La numeración sigue después de las figuras que ya trae la página."""
     desde = html_previo.count("<b>Fig. ") + 1
     return bloque(numero, "Fotos reales", "vt-h-obras", datos_obras["titulo"], mosaico(datos_obras["figuras"], desde),
-                  lede=datos_obras["lede"])
+                  lede=datos_obras["lede"], ritmo=ritmo)
 
 
 def nota(texto, firma):
@@ -294,13 +324,18 @@ def logos():
     return f'<ul class="vt-logos" aria-label="Clientes de Viveros Terra">{"".join(_logo(*l) for l in LOGOS)}</ul>'
 
 
-def testimonios(items):
+def testimonios(items, fila=False):
     """Opiniones reales con nombre (publicadas con permiso del dueño). items: (cita, nombre, servicio · lugar). La
-    primera va destacada a todo lo ancho; las demás, compactas."""
+    primera va destacada a todo lo ancho; las demás, compactas. fila=True (servicios, Entrega C de experiencia): en
+    celular van una junto a otra con desplazamiento horizontal (scroll-snap), en vez de apiladas; la lista se puede
+    enfocar para recorrerla con el teclado."""
     destacado = ' class="vt-testimonios__dest"'
     filas = "".join(f'<li{destacado if i == 0 else ""}><figure class="vt-testimonio"><blockquote>'
                     f'<p>“{cita}”</p></blockquote><figcaption><b>{nombre}</b><span>{detalle}</span></figcaption></figure>'
                     f'</li>' for i, (cita, nombre, detalle) in enumerate(items))
+    if fila:
+        return (f'<ul class="vt-testimonios vt-testimonios--fila" tabindex="0" aria-label="Opiniones de clientes">'
+                f'{filas}</ul>')
     return f'<ul class="vt-testimonios">{filas}</ul>'
 
 
@@ -324,7 +359,8 @@ def indice(items, tipo=None):
         f'<h3><a href="{esc(i["href"])}">{i["titulo"]}</a></h3><p>{i["texto"]}</p>'
         f'<p class="vt-indice__desde">desde <span class="vt-precio-marca">{i["desde"]}</span> {i["unidad"]}'
         f'{_cotizar_servicio(i, tipo) if tipo and i.get("servicio") else ""}</p>'
-        f'<span class="vt-indice__ir" aria-hidden="true">→</span></li>'
+        + (f'<p class="vt-indice__cond">{esc(i["cond"])}</p>' if i.get("cond") else "")
+        + '<span class="vt-indice__ir" aria-hidden="true">→</span></li>'
         for n, i in enumerate(items, 1))
     return f'<ol class="vt-indice">{filas}</ol>'
 
@@ -353,6 +389,13 @@ def tabla_comparativa(columnas, filas, caption):
                      '</tr>' for f in filas)
     return (f'<table class="vt-tabla vt-tabla--comparar"><caption>{caption}</caption><thead><tr>{cabeza}</tr></thead>'
             f'<tbody>{cuerpo}</tbody></table>')
+
+
+def plegable(titulo, contenido):
+    """Contenido cerrado en celular para acortar la página; terra.js lo abre desde 768 px (data-vt-plegable). El
+    título queda a la vista como <h3> dentro del <summary>."""
+    return (f'<details class="vt-plegable vt-mt" data-vt-plegable><summary class="vt-plegable__resumen">'
+            f'<h3>{titulo}</h3></summary>{contenido}</details>')
 
 
 def tabla_especies(filas, caption, grupo):
@@ -396,7 +439,7 @@ def _precio_opcion(o):
     return ""
 
 
-def opciones(items, tipo):
+def opciones(items, tipo, fila=False):
     """Formas de contratar o planes (máx. 3, spec §3.3), cada uno con su propio mensaje de WhatsApp (data-cta
     <tipo>:opcion-<n>). items: rotulo, titulo, puntos, mensaje y, opcionales, precio (número) con unidad y detalle,
     desde (False para un precio cerrado), mensualidad (True: línea con el plazo más largo), precio_texto (en vez de
@@ -415,7 +458,8 @@ def opciones(items, tipo):
     textos = [o.get("cta", CTA_WA) for o in items]
     if len(items) > 1 and len(set(textos)) != len(textos):
         raise ValueError(f"opciones contiguas con el mismo texto de botón: {textos} (cada una dice qué se pide)")
-    return f'<ul class="vt-modos">{"".join(filas)}</ul>'
+    # fila=True (Entrega C de experiencia): en celular, las opciones van una junto a otra con desplazamiento horizontal.
+    return f'<ul class="vt-modos{" vt-modos--fila" if fila else ""}">{"".join(filas)}</ul>'
 
 
 def fichas(items):
@@ -428,13 +472,14 @@ def fichas(items):
     return f'<ul class="vt-modos vt-fichas">{"".join(filas)}</ul>'
 
 
-def relacionados(items):
+def relacionados(items, fila=False):
     """Tarjetas del sistema: foto, título con enlace (toda la tarjeta lo abre) y texto. items: titulo, href, texto, img,
-    ancho, alto."""
+    ancho, alto. fila=True (servicios, Entrega C de experiencia): en celular, una junto a otra con desplazamiento
+    horizontal."""
     filas = "".join(f'<li class="vt-tarjeta"><img src="{esc(i["img"])}" width="{i["ancho"]}" height="{i["alto"]}" alt="" '
                     f'loading="lazy" decoding="async"><h3><a href="{esc(i["href"])}">{i["titulo"]}</a></h3>'
                     f'<p>{i["texto"]}</p></li>' for i in items)
-    return f'<ul class="vt-relacionados">{filas}</ul>'
+    return f'<ul class="vt-relacionados{" vt-relacionados--fila" if fila else ""}">{filas}</ul>'
 
 
 def cobertura(zonas, por_proyecto, sectores=()):
@@ -474,20 +519,27 @@ def howto(nombre, items):
 
 def garantia(g):
     """g: titulo, id_titulo, numero, rotulo, resumen, puntos (texto, si_aplica), pie y, opcionales, grande y unidad (la
-    cifra de la garantía; riego no tiene un plazo y la omite) y cta_html (fila de CTA bajo el pie)."""
+    cifra de la garantía; riego no tiene un plazo y la omite), cta_html (fila de CTA bajo el pie) y banda (Entrega C de
+    experiencia: la garantía real de datos.py como banda oscura a media página, en verde profundo como el cierre, con
+    la cifra grande, sus condiciones enlazadas y un CTA)."""
     no_aplica = ' class="vt-checks__no"'
     cifra = f'<p class="vt-grande">{g["grande"]}<small> {g["unidad"]}</small></p>' if g.get("grande") else ""
     puntos = "".join(f'<li{"" if ok else no_aplica}><span>{t}</span></li>' for t, ok in g["puntos"])
     ident = esc(g["id_titulo"])
-    return (f'<section class="vt-bloque vt-bloque--tinte" aria-labelledby="{ident}"><div class="vt-wrap vt-dos">'
+    if g.get("banda") and not g.get("cta_html"):
+        raise ValueError("la banda de garantía lleva un CTA (cta_html)")
+    clase = "vt-bloque vt-banda vt-bloque--clave" if g.get("banda") else "vt-bloque vt-bloque--tinte"
+    return (f'<section class="{clase}" aria-labelledby="{ident}"><div class="vt-wrap vt-dos">'
             f'<div><p class="vt-bloque__no"><b>{g["numero"]:02d}</b>{g["rotulo"]}</p><h2 id="{ident}">'
             f'{g["titulo"]}</h2>{cifra}'
             f'<p class="vt-promesa">{g["resumen"]}</p></div><div><ul class="vt-checks">{puntos}</ul>'
             f'<p class="vt-promesa">{g["pie"]}</p>{g.get("cta_html", "")}</div></div></section>')
 
 
-def faq(preguntas):
-    items = "".join(f'<details{" open" if i == 0 else ""}><summary>{q}</summary><p>{a}</p></details>'
+def faq(preguntas, abierta=True):
+    """Preguntas en acordeón; la primera abierta salvo abierta=False (servicios, Entrega C de experiencia: su primera
+    respuesta, la del precio, ya está en «En corto» y en la sección de precio)."""
+    items = "".join(f'<details{" open" if i == 0 and abierta else ""}><summary>{q}</summary><p>{a}</p></details>'
                     for i, (q, a) in enumerate(preguntas))
     return f'<div class="vt-faq">{items}</div>'
 
@@ -593,10 +645,15 @@ def textos_medidor(largo, ancho, r, colonia="", plazo=1):
     # Decisión del dueño (2026-11-10): el pasto sin instalar (solo pasto y mayoreo) no lleva IVA; "con IVA" solo
     # acompaña al instalado, en la etiqueta, el cálculo, el renglón vivo y el mensaje.
     iva = IVA_INSTALADO if r["iva"] else ""
-    mensaje = "\n".join((f"Hola, quiero cotizar {r['texto']}.", f"Medidas: {medida}",
-                         f"Estimado de la web: {desde}{dinero(r['total'])} {iva or SIN_IVA}", f"Me interesa: {interes}",
-                         f"Colonia: {colonia or '___'}", "Te mando foto del área."))
-    return {"medida": medida, "monto": dinero(r["total"]),
+    # Decisión del dueño (2026-11-10): el instalado considera el terreno listo; en ese modo el estimado lo dice y el
+    # mensaje pregunta por el terreno (en solo pasto y mayoreo no aplica).
+    terreno = datos.TERRENO_LISTO_MEDIDOR if r["iva"] else ""
+    renglones = (f"Hola, quiero cotizar {r['texto']}.", f"Medidas: {medida}",
+                 f"Estimado de la web: {desde}{dinero(r['total'])} {iva or SIN_IVA}", f"Me interesa: {interes}",
+                 f"Colonia: {colonia or '___'}") + ((datos.TERRENO_LISTO_PREGUNTA,) if terreno else ()) + (
+                     "Te mando foto del área.",)
+    mensaje = "\n".join(renglones)
+    return {"medida": medida, "monto": dinero(r["total"]), "terreno": terreno,
             "calc": f"{formato_m2(r['m2'])} m² × {desde}${r['precio']}/m²{', ' + iva if iva else ' ' + SIN_IVA}. {cierre_calc}",
             "plan": plan, "plazo": plazo, "mensaje": mensaje, "cta": CTA_MEDIDA, "iva": iva,
             "vivo": f"{formato_m2(r['m2'])} m² · {desde}{dinero(r['total'])}{' ' + iva if iva else ''}"}
@@ -700,6 +757,8 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None, bot
         f'<p class="vt-etiqueta__precio is-vacio"><small data-vt-o="rotulo">{MODOS_MEDIDOR[modo]["rotulo"]}</small>'
         f'<b data-vt-o="monto">{VACIO_MEDIDOR["monto"]}</b>'
         f'<span data-vt-o="iva">{IVA_INSTALADO if modo == "instalado" else ""}</span></p>'
+        f'<p class="vt-medidor__terreno" data-vt-o="terreno"{"" if modo == "instalado" else " hidden"}>'
+        f'{esc(datos.TERRENO_LISTO_MEDIDOR)} {tierra_negra_cruzada()}</p>'
         f'<p class="vt-medidor__calc" data-vt-o="calc">{VACIO_MEDIDOR["calc"]}</p>'
         f'<p class="vt-medidor__aviso" data-vt-o="aviso" hidden></p>'
         f'<fieldset class="vt-opciones vt-opciones--plazo"><legend>Forma de pago: contado o mensualidades con tarjeta de '
@@ -970,6 +1029,14 @@ def enlace_tel(cta):
 def enlace_wa(mensaje, cta, texto=CTA_WA):
     """WhatsApp como enlace de texto (cabeceras de lectura: artículo e índice del blog), con el mensaje ya firmado."""
     return (texto, datos.wa_url(datos.con_firma(mensaje)), cta, 'target="_blank" rel="noopener"')
+
+
+def wa_texto(mensaje, cta, texto):
+    """WhatsApp como enlace de texto en medio de una lectura (blog, Entrega C de experiencia): el glifo, el texto y la
+    flecha, sin botón."""
+    href = esc(datos.wa_url(datos.con_firma(mensaje)))
+    return (f'<a class="vt-wa-texto" data-cta="{esc(cta)}" href="{href}" target="_blank" rel="noopener">{WA_GLIFO}'
+            f'{texto}<span class="vt-flecha" aria-hidden="true">→</span></a>')
 
 
 def enlace_portada(enlace, tipo):

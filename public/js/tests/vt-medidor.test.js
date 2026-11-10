@@ -52,11 +52,17 @@ test('el plano conserva la proporción y nunca dibuja menos de 24 unidades', () 
   assert.strictEqual(angosto.h, 24);
 });
 
-test('el mensaje es texto plano de seis renglones y termina pidiendo la foto', () => {
+// Decisión del dueño (2026-11-10): en modo instalado el mensaje pregunta si el terreno está listo (siete renglones);
+// solo pasto sigue con seis.
+test('el mensaje es texto plano, pregunta por el terreno en instalado y termina pidiendo la foto', () => {
   const r = calcular(8, 6, 'instalado', CASOS.modos);
   const renglones = textos(8, 6, r, '', M, 1).mensaje.split('\n');
-  assert.strictEqual(renglones.length, 6);
-  assert.strictEqual(renglones[5], 'Te mando foto del área.');
+  assert.strictEqual(renglones.length, 7);
+  assert.strictEqual(renglones[5], '¿Mi terreno está limpio, nivelado y con tierra negra?: ___');
+  assert.strictEqual(renglones[6], 'Te mando foto del área.');
+  const solo = textos(8, 6, calcular(8, 6, 'solo', CASOS.modos), '', M, 1).mensaje.split('\n');
+  assert.strictEqual(solo.length, 6);
+  assert.strictEqual(solo[5], 'Te mando foto del área.');
 });
 
 test('enlace arma wa.me con el número que le da la página y codifica todo el texto', () => {

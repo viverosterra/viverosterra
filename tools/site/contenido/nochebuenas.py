@@ -133,6 +133,7 @@ CONFIANZA = {"titulo": "Referencias y factura",
              "clientes": "Empresas e instituciones que han confiado en Viveros Terra"}
 COMO = {
     "titulo": "Cómo funciona tu pedido",
+    "cta": "Empezar mi pedido por WhatsApp",  # Entrega C de experiencia: fila de WhatsApp al terminar los pasos
     "pasos": (
         {"titulo": "Cotizas en línea", "quien": "tu", "cuando": "En esta página",
          "texto": "Eliges tamaño, color y cantidad. El total se calcula al momento."},
@@ -235,3 +236,8 @@ PARIDAD = {"reemplazos": {}, "retirados": {}}
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: el botón principal sigue siendo el del cotizador (texto aprobado), con el estilo del hero; el WhatsApp pasa de botón a enlace de texto («Pedir por WhatsApp» en temporada); lema nuevo: «Roja, rosa y jaspeada, al mismo precio.» (de «mismo precio», que ahora va en la línea de confianza); en celular la etiqueta muestra una fila.')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: con pedido, la barra fija y el encabezado mandan el pedido escrito por WhatsApp; el mensaje dice piezas y total, sin el nombre del escalón; el ticket dice «Precio aplicado: Mayoreo (12 a 49 piezas)»; calificación de Google con su enlace junto al botón del pedido (sin garantía).'
+
+# Lo que cambia por la Entrega C de experiencia (ritmo y movimiento) frente a la versión anterior.
+PARIDAD["ritmo"] = ('Entrega C de experiencia (2026-11-10), ritmo y movimiento: fila de WhatsApp «Empezar mi pedido por '
+                    'WhatsApp» al terminar «Cómo funciona tu pedido» (antes, 8.5 pantallas sin CTA); sin garantía; '
+                    'revelado por scroll de encabezados y figuras.')

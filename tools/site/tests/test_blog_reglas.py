@@ -51,7 +51,9 @@ ESPECIE_SIN_PRECIO_RE = re.compile(
 SIN_VERIFICAR = (
     ("más vendido", r"m[aá]s vendid[ao]s?"),
     ("gratis", r"\bgratis\b|\bgratuit\w*"),
-    ("sin costo", r"\bsin costo\b(?! ?, siguiendo)|\bsin cargo\b"),
+    # La garantía de pasto aprobada; desde la decisión del dueño del 2026-11-10 dice "sin costo, siempre que el terreno
+    # estuviera listo… y se haya seguido el protocolo de riego" (datos.GARANTIA_PASTO).
+    ("sin costo", r"\bsin costo\b(?! ?, (?:siguiendo|siempre que el terreno estuviera listo))|\bsin cargo\b"),
     ("certificación", r"\bSENASICA\b"),
     ("marca", r"\bOasis\b"),
     ("terminal", r"\bClip\b"),

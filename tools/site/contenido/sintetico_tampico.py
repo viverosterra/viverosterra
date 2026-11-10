@@ -107,6 +107,8 @@ OBRAS = tuple({"src": f"{GAL}/{n}-sm.webp", "srcset": f"{GAL}/{n}-sm.webp 560w, 
               for i, (n, w, h, alt, cap) in enumerate(data.OBRAS, 2))
 
 CONTENIDO = {
+    # Entrega C de experiencia: CTA de la banda de garantía (antes, 7.4 pantallas del cotizador al cierre sin CTA).
+    "ctas": {"prueba": (MENSAJE, "Cotizar mi pasto sintético"), "garantia": (MENSAJE, "Cotizar pasto sintético instalado")},
     "respuesta": respuestas.de("/pasto-sintetico-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-sintetico",
     "prefijo": "sintetico",
@@ -190,6 +192,7 @@ CONTENIDO = {
                 "lede": "Cotizamos después de ver el terreno, porque la base es lo que decide cuánto dura el pasto.",
                 "pasos": PASOS},
     "garantia": {
+        "banda": True,  # Entrega C: banda oscura a media página con la garantía de fábrica (tools/pasto/data.py)
         "titulo": "Garantía de fábrica de 3 a 8 años, según el modelo.", "grande": "3–8", "unidad": "años",
         "resumen": "La gestionamos nosotros, con el material que instalamos o que compras en el showroom.",
         "puntos": (("Garantía de fábrica de 3 a 8 años según el modelo; la gestionamos nosotros.", True),
@@ -248,3 +251,6 @@ PARIDAD = {
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: «enviamos a todo México desde 2012» sale del hero (está en la tienda /pasto-sintetico, enlazada).')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: las dos opciones con texto de botón propio; nombres de la lista unificados («Mi lista», «Agregar a mi lista»).'
+
+# Lo que cambia por la Entrega C de experiencia (ritmo y movimiento).
+PARIDAD["ritmo"] = 'Entrega C de experiencia (2026-11-10), ritmo y movimiento: banda oscura de garantía (garantía de fábrica de tools/pasto/data.py) con CTA «Cotizar pasto sintético instalado»; fila «Cotizar mi pasto sintético» tras la prueba (antes, 6 pantallas sin CTA); relleno y fondos alternados; opiniones en fila en celular; primera pregunta cerrada; revelado por scroll de encabezados y figuras y balanceo de la etiqueta en escritorio.'

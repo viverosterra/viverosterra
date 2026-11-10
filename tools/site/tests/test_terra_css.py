@@ -50,11 +50,14 @@ class TerraCssTest(unittest.TestCase):
 
     def test_todo_selector_es_del_shell(self):
         css = re.sub(r"@font-face\{[^}]*\}", "", sin_comentarios(self.css))
+        # Entrega C de experiencia (2026-11-10): el movimiento de todo el sitio trae sus @keyframes (cuadros from/to/%)
+        # y el revelado por scroll va bajo @supports.
+        css = re.sub(r"@keyframes [\w-]+\{(?:[^{}]*\{[^}]*\})*\s*\}", "", css)
         ajenos = []
         for selector in re.findall(r"([^{}]+)\{", css):
             selector = selector.strip()
             # @container: la foto de portada en celular se mide a sí misma (Entrega A de experiencia, 2026-11-10).
-            if selector.startswith(("@media", "@container")) or selector == ":root":
+            if selector.startswith(("@media", "@container", "@supports")) or selector == ":root":
                 continue
             ajenos += [p.strip() for p in selector.split(",") if ".vt-" not in p]
         self.assertEqual(ajenos, [])
@@ -98,8 +101,13 @@ class TerraCssTest(unittest.TestCase):
         # terra-inicio.css (que baja de 8 a menos de 3 KB) y entra aquí, después de limpiar las reglas viejas de
         # .vt-portada (--compacta, --apaisada, __tambien, tres copias de la etiqueta compacta). Topes: 56 KB brutos y
         # 11 KB con gzip. En la home el total de las dos hojas no cambia; en las demás páginas son ~1.1 KB más con gzip.
-        self.assertLess(len(gzip.compress(datos, mtime=0)), 11 * 1024)
-        self.assertLess(len(datos), 56 * 1024)
+        # Decisión del 2026-11-10 (Entrega C de experiencia): el movimiento sobrio pasa de terra-inicio.css a todo el
+        # sitio (balanceo de la etiqueta, revelado por scroll y sus @keyframes), con la banda oscura de garantía, el
+        # ritmo de secciones, las filas con desplazamiento del celular, los estados :active/:hover y la condición de
+        # terreno listo del precio (decisión del dueño). Topes: 60 KB brutos y 12 KB con gzip (+0.8 KB gzip en cada
+        # página; la home baja ~0.2 KB en terra-inicio.css).
+        self.assertLess(len(gzip.compress(datos, mtime=0)), 12 * 1024)
+        self.assertLess(len(datos), 60 * 1024)
 
     def test_menu_movil_con_whatsapp_ancho_y_sin_barra_debajo(self):
         css = sin_comentarios(self.css)

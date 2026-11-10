@@ -39,6 +39,12 @@ def _que_es(k, n):
     return c.bloque(n(), "Qué es", "vt-h-que", q["titulo"], cuerpo, lede=q.get("lede"))
 
 
+def _fila(k, seccion, texto):
+    """Fila de WhatsApp al final de una sección larga (Entrega C de experiencia: ningún tramo de más de 6 pantallas del
+    celular sin CTA), con el mensaje de la página."""
+    return c.fila_seccion(k["portada"]["mensaje"], k["tipo"], seccion, texto)
+
+
 def _precio(k, n):
     p = k["precio"]
     cuerpo = cm.presentaciones(p["filas"], p["caption"])
@@ -48,8 +54,9 @@ def _precio(k, n):
         cuerpo += f'<p class="vt-promesa">{p["nota"]}</p>'
     for t in p.get("tablas", ()):
         cuerpo += f'<h3 class="vt-mt">{t["titulo"]}</h3>' + c.tabla_comparativa(t["columnas"], t["filas"], t["caption"])
+    cuerpo += _fila(k, "precio", f'Cotizar {k["calculadora"]["nombre"]}')
     return c.bloque(n(), "Precio", "vt-h-precio", p["titulo"], cuerpo, lede=p.get("lede"), tinte=True,
-                    id_seccion="precio")
+                    id_seccion="precio", ritmo="clave")
 
 
 def _usos(k, n):
@@ -107,7 +114,9 @@ def render(k):
     secciones += [_precio(k, n), _usos(k, n), _calculadora(k, n), _entrega(k, n)]
     secciones += [_extra(k, n, clave) for clave in ("galeria", "opiniones") if k.get(clave)]
     f = k["faq"]
-    secciones.append(c.bloque_dos(n(), "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]), tinte=True))
+    secciones.append(c.bloque_dos(n(), "Preguntas", "vt-h-faq", f["titulo"], "",
+                                  c.faq(f["preguntas"]) + _fila(k, "faq", "Preguntar por WhatsApp"), tinte=True,
+                                  ritmo="apoyo"))
     secciones += [_extra(k, n, clave) for clave in ("combinaciones", "instalacion") if k.get(clave)]
     ci = k["cierre"]
     cierre = cm.cierre(ci, k["portada"]["mensaje"], tipo)

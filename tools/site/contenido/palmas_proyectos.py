@@ -181,6 +181,8 @@ PAQUETES = (
 )
 
 CONTENIDO = {
+    # Entrega C de experiencia: filas de WhatsApp tras los clientes y las preguntas (antes, 7.1 a 7.3 pantallas sin CTA).
+    "ctas": {"prueba": (MENSAJE, "Cotizar palmas para mi proyecto"), "faq": (MENSAJE, "Preguntar por WhatsApp")},
     "tipo": "b2b",
     "prefijo": "pal",
     "meta": META,
@@ -377,3 +379,6 @@ PARIDAD = {
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada a los precios de datos.PALMAS_PRECIO; la zona de entrega (Tamaulipas, Veracruz y San Luis Potosí) sigue en cobertura y la factura, en la línea de confianza.')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: paquetes con texto de botón propio; con un resultado válido, la barra fija y el «Cotizar» del encabezado llevan el enlace de la calculadora y un texto corto; al borrarlo vuelven al genérico (armador de palmas: «Cotizar mis palmas»); titular del formulario de compras reescrito.'
+
+# Lo que cambia por la Entrega C de experiencia (ritmo y movimiento).
+PARIDAD["ritmo"] = 'Entrega C de experiencia (2026-11-10), ritmo y movimiento: filas de WhatsApp «Cotizar palmas para mi proyecto» tras los clientes y «Preguntar por WhatsApp» tras las preguntas (antes, 7.1 pantallas sin CTA); revelado por scroll de encabezados y figuras y balanceo de la etiqueta en escritorio.'

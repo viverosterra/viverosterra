@@ -52,6 +52,8 @@ M_TITULO = "El título prometía un plazo de recuperación que el artículo ya n
 M_REDACCION = "Redacción y formato: sin cambio de dato."
 M_SIN_DATO = "Dato sin verificar por el dueño."
 M_RANGO = "Rango total sin confirmar por el dueño."
+M_TERRENO = ("Decisión del dueño 2026-11-10: el instalado considera terreno listo; trabajos previos se cotizan aparte "
+             "(datos.TERRENO_LISTO_CORTO e INSTALADO_INCLUYE).")
 M_SIN_PESO = "Sin peso de costal: el dueño no lo tiene."
 
 GARANTIA_SINTETICO = "de 3 a 8 años según modelo"
@@ -144,7 +146,7 @@ FILAS = {
         ("C041", "<li>Tierra negra 8 m³ = $12,000</li>\n<li>5 palmas grandes + 20 plantas ornamentales = $18,000</li>", f"<li>Tierra negra, camión de 8 m³ = {CAMION_8}</li>\n<li>5 palmas grandes + 20 plantas ornamentales: {SEGUN}</li>", M_TIERRA),
         ("C042", "<li>Riego automatizado completo 250 m² = $40,000</li>\n<li>Tezontle, bordillos y acabados = $12,000</li>\n<li>Mano de obra total = $10,000</li>\n<li><strong>Total: $119,750 MXN</strong></li>", f"<li>Riego automatizado completo 250 m²: {riego(250)}</li>\n<li>Tezontle, bordillos y acabados: {SEGUN}</li>\n<li>Mano de obra: {SEGUN}</li>\n<li><strong>Total: {SEGUN}</strong></li>", M_RIEGO),
         ("C043", "Ejemplo: jardín premium 250 m² → $120,000 MXN", "Ejemplo: jardín premium de 250 m²", M_CASO),
-        ("C044", "<td>Pasto San Agustín (instalado)</td><td>$85/m²</td><td>Incluye mano de obra básica</td>", "<td>Pasto San Agustín</td><td>$85/m² solo pasto · desde $120/m² instalado</td><td>El instalado incluye preparación básica y colocación</td>", "Precio oficial: $85 solo pasto y desde $120 instalado."),
+        ("C044", "<td>Pasto San Agustín (instalado)</td><td>$85/m²</td><td>Incluye mano de obra básica</td>", f"<td>Pasto San Agustín</td><td>$85/m² solo pasto · desde $120/m² instalado</td><td>{datos.INSTALADO_INCLUYE} {datos.TERRENO_LISTO_CORTO}</td>", "Precio oficial: $85 solo pasto y desde $120 instalado."),
         ("C045", "Camión 8 m³ desde $12,000", f"Camión de 8 m³: {CAMION_8}", M_TIERRA),
         ("C046", "<td>Diseño Plan Terra Esencial</td><td>$3,000–$6,000</td>", "<td>Diseño Plan Terra Esencial</td><td>$3,000</td>", M_DISENO),
         ("C047", "<td>Diseño Plan Terra Completo</td><td>$6,500–$18,000</td>", "<td>Diseño Plan Terra Completo</td><td>$6,500</td>", M_DISENO),
@@ -421,13 +423,18 @@ REVISION = {
         ("C239", "¿Cuánto cuesta un jardín mediano? ($15,000–$50,000 MXN)", "¿Cuánto cuesta un jardín mediano?", M_RANGO),
         ("C240", "¿Cuánto cuesta un jardín premium? ($50,000–$200,000+ MXN)", "¿Cuánto cuesta un jardín premium?", M_RANGO),
         ("C241", "(Plan Terra Completo desde $6,500)", f"(Plan Terra Completo, {dinero(P['diseno_completo'])})", M_DISENO),
+        ("C303", "El pasto en rollo San Agustín cuesta desde $120/m² instalado, y el diseño profesional desde $3,000.",
+         f"El pasto en rollo San Agustín cuesta desde $120/m² instalado ({datos.TERRENO_LISTO_CORTO[0].lower()}"
+         f"{datos.TERRENO_LISTO_CORTO[1:-1]}), y el diseño profesional desde $3,000.", M_TERRENO),
+        ("C304", "<li>Pasto San Agustín en rollo: desde $120/m² instalado con mano de obra</li>",
+         f"<li>Pasto San Agustín en rollo: desde $120/m² instalado, con mano de obra. {datos.TERRENO_LISTO_CORTO}</li>", M_TERRENO),
         ("C242", "Guía de precios 2026 para jardines en Tampico: desde $5,000 hasta $200,000+ con desglose por componente y 3 casos reales.", "Guía de precios 2026 para jardines en Tampico, con desglose por componente y 3 ejemplos.", M_CASO),
     ),
     "jardin-bajo-presupuesto-tampico": (
         ("C243", "3 paquetes reales de jardín según presupuesto.", "3 paquetes de ejemplo según presupuesto.", M_CASO),
         ("C244", "tres niveles de inversión reales, con los precios", "tres niveles de inversión, con los precios", M_CASO),
         ("C245", "<td>Área aproximada</td><td>30–45 m²</td><td>80–120 m²</td><td>150–200 m²</td>", "<td>Área aproximada</td><td>25 m²</td><td>80–90 m²</td><td>150–200 m²</td>", M_PAQUETES),
-        ("C246", "<td>Pasto instalado</td><td>Sí</td><td>Sí</td><td>Sí (premium)</td>", f"<td>Pasto instalado ({PASTO_I}/m²)</td><td>Sí</td><td>Sí</td><td>Sí</td>", M_PAQUETES),
+        ("C246", "<td>Pasto instalado</td><td>Sí</td><td>Sí</td><td>Sí (premium)</td>", f"<td>Pasto instalado ({PASTO_I}/m²). {datos.TERRENO_LISTO_CORTO}</td><td>Sí</td><td>Sí</td><td>Sí</td>", M_PAQUETES),
         ("C247", "<td>Tierra negra</td><td>1–2 m³</td><td>3–5 m³</td><td>6–10 m³</td>", "<td>Tierra negra</td><td>1 m³</td><td>3 m³</td><td>Camión de 8 m³</td>", M_PAQUETES),
         ("C248", "<td>Plantas ornamentales</td><td>5–8 básicas</td><td>12–15 + 2 palmas</td><td>25+ + 3 palmas medianas</td>", f"<td>Plantas ornamentales</td><td>{SEGUN_CELDA}, con lo que reste</td><td>{SEGUN_CELDA}, con 2 palmas</td><td>{SEGUN_CELDA}, con 3 palmas medianas</td>", M_PAQUETES),
         ("C249", "<td>Sistema de riego</td><td>No</td><td>Básico (aspersores)</td><td>Automatizado completo</td>", f"<td>Sistema de riego ({RIEGO_M2})</td><td>Se cotiza aparte</td><td>Se cotiza aparte</td><td>Se cotiza aparte</td>", M_PAQUETES),

@@ -51,11 +51,23 @@ def indice_movil(items):
             f'<nav aria-label="En este artículo"><ol>{filas}</ol></nav></details>')
 
 
-def cta_medio(tema, tipo):
-    """CTA de texto a media lectura (solo menos de 1024 px); en escritorio lo sustituye cta_margen, bajo el índice fijo."""
+def cta_medio(tema, tipo, mensaje):
+    """CTA de texto a media lectura (solo menos de 1024 px); en escritorio lo sustituye cta_margen, bajo el índice fijo.
+    Entrega C de experiencia: junto al enlace al servicio, el WhatsApp como enlace de texto (antes, 7.6 pantallas del
+    celular sin un WhatsApp en línea entre la cabecera y el producto)."""
     href, texto = tema["landing"]
     return (f'<aside class="vt-art__medio" aria-label="Siguiente paso"><p>{tema["titulo"]}</p>'
-            f'<a data-cta="{tipo}:medio" href="{esc(href)}">{texto}<span class="vt-flecha" aria-hidden="true">→</span></a></aside>')
+            f'<a data-cta="{tipo}:medio" href="{esc(href)}">{texto}<span class="vt-flecha" aria-hidden="true">→</span></a>'
+            f'{c.wa_texto(mensaje, f"{tipo}:medio-wa", "Preguntar por WhatsApp")}</aside>')
+
+
+LECTURA = "¿Tu caso es distinto? Cuéntanos tu colonia y los metros:"
+
+
+def cta_lectura(mensaje, tipo, n):
+    """Línea discreta de WhatsApp entre dos secciones largas del artículo (Entrega C de experiencia)."""
+    return (f'<p class="vt-art__wa">{LECTURA} {c.wa_texto(mensaje, f"{tipo}:lectura-{n}", "Preguntar por WhatsApp")}'
+            '</p>')
 
 
 def cta_margen(tema, tipo):

@@ -8,7 +8,7 @@ PARIDAD: tests/test_paridad.py.
 """
 import datos
 import entidad
-from componentes import dinero, dinero_exacto, mensualidades
+from componentes import dinero, dinero_exacto, garantia_pasto, mensualidades, tierra_negra_cruzada
 from contenido import seo
 from contenido import respuestas
 
@@ -72,7 +72,7 @@ PREGUNTAS = (
     ("¿Cuánto tiempo tarda en arraigar el pasto San Agustín?",
      f"En el clima cálido y húmedo de Tampico arraiga en {datos.ARRAIGO} con riego abundante y diario. "
      f"{datos.PRIMER_RIEGO} Con instalación contratada, si una sección no arraiga en ese plazo, la reponemos sin costo, "
-     'siguiendo el protocolo de riego (<a href="/politicas">ver condiciones</a>). Guía: '
+     f'{datos.GARANTIA_TERRENO}, siguiendo el protocolo de riego (<a href="/politicas">ver condiciones</a>). Guía: '
      f'<a href="{GUIA_ERRORES}">los 5 errores que matan el pasto San Agustín</a>.'),
     ("¿Cómo se paga el pasto en rollo?",
      f"{datos.ANTICIPO} También puedes pagar en mensualidades con tarjeta de crédito en cotizaciones desde "
@@ -127,6 +127,7 @@ CONTENIDO = {
             "codigo": "Pasto · 01", "aviso": "Tepe 40 × 60 cm", "nombre": "Pasto San Agustín",
             "cientifico": "Stenotaphrum secundatum", "antes": "Instalado · desde",
             "monto": dinero(P["pasto_instalado_m2"]), "unidad": "/m²",
+            "cond": datos.TERRENO_LISTO_CORTO,  # decisión del dueño (2026-11-10): el instalado considera terreno listo
             "filas": (("Solo pasto, tú lo instalas", f"{dinero(P['pasto_solo_m2'])} /m²"),
                       (f"Mayoreo, solo pasto, {MINIMO} m² o más", f"desde {dinero(P['pasto_mayoreo_m2'])} /m²")),
         },
@@ -163,13 +164,14 @@ CONTENIDO = {
     },
     "precio": {
         "titulo": "¿Cuánto cuesta el pasto San Agustín en Tampico?",
-        "lede": (f"Desde {dinero(P['pasto_instalado_m2'])}/m² instalado (con IVA incluido) en Tampico, Madero y Altamira, con preparación "
-                 f"básica del suelo y garantía de arraigo de {datos.ARRAIGO}; {dinero(P['pasto_solo_m2'])}/m² solo el "
+        "lede": (f"Desde {dinero(P['pasto_instalado_m2'])}/m² instalado (con IVA incluido) en Tampico, Madero y Altamira, con "
+                 f"garantía de arraigo de {datos.ARRAIGO}. {datos.TERRENO_LISTO_CORTO} "
+                 f"{dinero(P['pasto_solo_m2'])}/m² solo el "
                  f"pasto, y desde {dinero(P['pasto_mayoreo_m2'])}/m² en mayoreo de {MINIMO} m² o más con factura "
                  f"{datos.FACTURA}. {datos.PASTO_SIN_IVA}. Precios {datos.ANIO}."),
         "filas": (
             {"nombre": "Pasto con instalación", "unidad": "/m²", "precio": P["pasto_instalado_m2"], "desde": True,
-             "rec": True, "detalle": (f"Preparación básica del suelo, tendido en un día, garantía de arraigo de "
+             "rec": True, "detalle": (f"{datos.INSTALADO_INCLUYE} Tendido en un día, arraigo en "
                                       f"{datos.ARRAIGO} y protocolo de riego.")},
             {"nombre": "Solo el pasto", "unidad": "/m²", "precio": P["pasto_solo_m2"],
              "detalle": (f"Tú lo instalas. Recoges en el vivero de {datos.CALLE_CORTA} o te lo llevamos (la entrega se "
@@ -189,7 +191,7 @@ CONTENIDO = {
         "comparativa": {
             "columnas": ("Característica", "Pasto San Agustín (natural)", "Pasto sintético"),
             "filas": (
-                ("Precio instalado", f"desde {dinero(P['pasto_instalado_m2'])}/m²",
+                ("Precio instalado", f"desde {dinero(P['pasto_instalado_m2'])}/m². {datos.TERRENO_LISTO_CORTO}",
                  f"desde {dinero_exacto(P['sintetico_instalado_m2'][0])}/m²"),
                 ("Vida útil", "15+ años con cuidado", "8-10 años"),
                 ("Mantenimiento", "Riego + poda quincenal", "Cepillado mensual"),
@@ -198,11 +200,17 @@ CONTENIDO = {
                  "Terrazas, azoteas, áreas sin riego y zonas para mascotas"),
             ),
             "caption": "Pasto natural o sintético, según tu espacio.",
+            # Entrega C: plegada en celular; el cierre de abajo (a la vista) resume la recomendación y el precio
+            # instalado ya está en la sección de precio.
+            "plegable": "Pasto natural o sintético, renglón por renglón",
             "cierre": ("Si tu jardín tiene tierra y puedes regarlo, el San Agustín cuesta menos por metro y dura más. Si "
                        "es una terraza, una azotea o un área sin riego, te conviene el sintético: también lo vendemos e "
                        'instalamos en Tampico (<a href="/pasto-sintetico-tampico">ver pasto sintético</a>).'),
         },
         "titulo_2": "Pasto de vivero vs pasto de mercado",
+        # Entrega C: plegada en celular; repite la frescura (lema del hero), el arraigo y la factura (garantía) y la
+        # forma de pago (sección de pago).
+        "plegable_2": True,
         "comparativa_2": {
             "columnas": ("Característica", "Viveros Terra", "Pasto de mercado"),
             "filas": (
@@ -221,9 +229,9 @@ CONTENIDO = {
         "lede": ("Lo que hace que el pasto arraigue es el agua de las primeras semanas. Por eso te lo explicamos ahí "
                  "mismo, en tu jardín."),
         "pasos": (
-            {"titulo": "Preparación del suelo", "quien": "nosotros", "cuando": "Día de instalación",
-             "texto": ("Nivelamos, retiramos piedras grandes y agregamos 3 a 5 cm de tierra negra si hace falta. Nunca "
-                       "te cobramos preparación sin avisarte antes.")},
+            # Decisión del dueño (2026-11-10): el precio considera el terreno listo; lo que falte se cotiza aparte.
+            {"titulo": "Terreno listo para instalar", "quien": "juntos", "cuando": "Antes de instalar",
+             "texto": f"{datos.TERRENO_LISTO} {tierra_negra_cruzada()}"},
             {"titulo": "Tendido de los tepes", "quien": "nosotros", "cuando": "Día de instalación",
              "texto": ("Tepes de 40 × 60 cm en patrón de ladrillo, uniones desfasadas y sin huecos, presionados para que "
                        "la raíz toque el suelo.")},
@@ -240,12 +248,13 @@ CONTENIDO = {
         ),
     },
     "garantia": {
+        "banda": True,  # Entrega C: banda oscura a media página con la garantía real (datos.GARANTIA_PASTO)
         "titulo": "Si no arraiga, lo reponemos.",
         "grande": "15–20", "unidad": "días",
-        "resumen": f"Garantía de arraigo de {datos.ARRAIGO} con instalación contratada.",
+        "resumen": garantia_pasto(),
         "puntos": (
             ("Si contratas la instalación y sigues el protocolo de riego de 20 días, garantizamos el arraigo: si una "
-             f"sección no arraiga en {datos.ARRAIGO}, la reponemos sin costo.", True),
+             f"sección no arraiga en {datos.ARRAIGO}, la reponemos sin costo, {datos.GARANTIA_TERRENO}.", True),
             (f"Cortado para tu pedido: llega del campo {datos.LLEGADA_PASTO}; no son rollos viejos de bodega.", True),
             ("Protocolo por escrito: qué hacer cada día y qué señales revisar.", True),
             (f"Factura {datos.FACTURA} para persona física o moral.", True),
@@ -302,6 +311,8 @@ OBJECIONES = "Las objeciones de la página anterior quedan en las preguntas, el 
 PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {
+        # decisión del dueño 2026-11-10: el instalado considera terreno listo; trabajos previos se cotizan aparte
+        "Preparación del suelo": "Terreno listo para instalar",
         "$385": f"${int(P['sintetico_instalado_m2'][0])}",
         "Pasto San Agustín en rollo, instalado en un día": (
             "Pasto San Agustín en rollo, instalado en un día. Del campo a tu jardín, sin pasar por bodega."),
@@ -349,3 +360,9 @@ PARIDAD = {
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: «Preparamos el suelo, tendemos tepes de 40 × 60 cm y te enseñamos a regarlo» sale del hero (el tepe va en la etiqueta y los pasos, en «Cómo se instala»); «mensualidades… desde $2,000» queda como enlace a #mensualidades, donde está el monto.')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: botón y aviso del Medidor (entrada inválida sin borrar lo escrito); con un resultado válido, la barra fija y el «Cotizar» del encabezado llevan el enlace de la calculadora y un texto corto; al borrarlo vuelven al genérico; filas de WhatsApp tras las opiniones y la garantía; el simulador no manda un monto que el cliente no escribió.'
+
+# Lo que cambia por la decisión del dueño del 2026-11-10 (terreno listo y garantía de arraigo).
+PARIDAD["terreno"] = 'decisión del dueño 2026-11-10: el instalado considera terreno listo; trabajos previos se cotizan aparte: etiqueta con datos.TERRENO_LISTO_CORTO; «En corto» y la FAQ de precio con datos.TERRENO_LISTO (la entrada de «En corto» queda en zona y precio de solo pasto para caber en 60 palabras); fila de precio con datos.INSTALADO_INCLUYE; el paso «Preparación del suelo» pasa a «Terreno listo para instalar» (con la venta cruzada de tierra negra); Medidor con datos.TERRENO_LISTO_MEDIDOR y el renglón del terreno en el mensaje. decisión del dueño 2026-11-10: la garantía de arraigo aplica con terreno listo: la garantía (FAQ y puntos) suma datos.GARANTIA_TERRENO.'
+
+# Lo que cambia por la Entrega C de experiencia (ritmo y movimiento).
+PARIDAD["ritmo"] = 'Entrega C de experiencia (2026-11-10), ritmo y movimiento: banda oscura de garantía a media página con datos.GARANTIA_PASTO (condiciones enlazadas) y su CTA; relleno variado (apoyo/clave) y fondos alternados (el proceso pasa a tinte); en celular, opiniones y relacionados en fila con desplazamiento, sectores y zonas a dos columnas, logos a tres; plegadas en celular (abiertas desde 768 px) las dos comparativas —«Pasto de vivero vs pasto de mercado» repite la frescura del lema, el arraigo y la factura de la garantía y la forma de pago, y «Pasto natural o sintético» se resume en el cierre que sigue a la vista—; la primera pregunta empieza cerrada (repite «En corto» y el precio). Sin texto retirado; revelado por scroll de encabezados y figuras y balanceo de la etiqueta en escritorio.'

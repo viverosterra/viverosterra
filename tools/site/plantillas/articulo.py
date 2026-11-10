@@ -15,7 +15,7 @@ NEGOCIO = entidad.REF
 def render(k):
     faq = f'<h2 id="preguntas">{k["faq_titulo"]}</h2>{c.faq(k["faq"])}' if k["faq"] else ""
     cuerpo = (f'<div class="vt-wrap vt-art"><article class="vt-art__cuerpo" aria-labelledby="vt-h1">{cb.respuesta(k["respuesta"])}'
-              f'{cb.indice_movil(k["indice"])}{_con_cta_medio(k["cuerpo"], cb.cta_medio(k["tema"], k["tipo"]))}{faq}'
+              f'{cb.indice_movil(k["indice"])}{_con_cta_medio(k["cuerpo"], cb.cta_medio(k["tema"], k["tipo"], k["mensaje"]), k)}{faq}'
               f'{cb.enlaces(k["tema"]["enlaces"])}</article>'
               f'<aside class="vt-art__margen">{cb.indice(k["indice"])}{cb.cta_margen(k["tema"], k["tipo"])}</aside></div>')
     grafo = _grafo(k)
@@ -25,12 +25,40 @@ def render(k):
                           precargas=_precarga(k["cuerpo"]), clase_body="vt-pagina vt-blog")
 
 
-def _con_cta_medio(cuerpo, cta):
+# Entrega C de experiencia: además del CTA de media lectura, una línea discreta de WhatsApp al empezar una sección (antes
+# de un H2 o un H3, nunca a media sección) cada vez que se acumulan unos LECTURA_PESO caracteres de lectura (texto; cada
+# imagen y cada tabla cuentan como un tramo de texto), para que ningún tramo del celular pase de 6 pantallas sin un
+# WhatsApp en línea. Medido a 375 px: ~1,000 caracteres por pantalla.
+LECTURA_PESO = 2400
+PESO_IMAGEN, PESO_TABLA = 400, 900
+CORTE_RE = re.compile(r"<h[23]\b")
+
+
+def _peso(fragmento):
+    texto = re.sub(r"<[^>]+>", "", fragmento)
+    return len(texto) + PESO_IMAGEN * fragmento.count("<img") + PESO_TABLA * fragmento.count("<table")
+
+
+def _con_cta_medio(cuerpo, cta, k):
     """El CTA va al cerrar la sección del segundo H2 (antes del tercero) para no separar un título de su texto; si el artículo
-    tiene menos de tres H2, al final del cuerpo."""
+    tiene menos de tres H2, al final del cuerpo. Las líneas de lectura van antes de los H2 o H3 donde el peso acumulado
+    desde el último CTA llega a LECTURA_PESO (no a menos de un tercio de LECTURA_PESO del final)."""
     h2 = [m.start() for m in re.finditer(r"<h2\b", cuerpo)]
-    pos = h2[2] if len(h2) > 2 else len(cuerpo)
-    return f"{cuerpo[:pos]}{cta}{cuerpo[pos:]}"
+    medio = h2[2] if len(h2) > 2 else len(cuerpo)
+    cortes, previo, n = [], 0, 0
+    for pos in sorted({m.start() for m in CORTE_RE.finditer(cuerpo)} | {medio}):
+        if pos == medio:
+            cortes.append((pos, cta))
+            previo = pos
+        elif _peso(cuerpo[previo:pos]) >= LECTURA_PESO and _peso(cuerpo[pos:]) >= LECTURA_PESO / 3:
+            n += 1
+            cortes.append((pos, cb.cta_lectura(k["mensaje"], k["tipo"], n)))
+            previo = pos
+    salida, desde = [], 0
+    for pos, html in cortes:
+        salida += [cuerpo[desde:pos], html]
+        desde = pos
+    return "".join(salida) + cuerpo[desde:]
 
 
 def _migas_ld(k):

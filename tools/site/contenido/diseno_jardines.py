@@ -10,7 +10,7 @@ Etapa 4); FAQPage sale de las preguntas visibles. PARIDAD: tests/test_paridad.py
 import datos
 import entidad
 import mensajes_paginas
-from componentes import dinero, mensualidades
+from componentes import dinero, garantia_plantas, mensualidades
 from contenido import seo
 from contenido import respuestas
 
@@ -206,7 +206,9 @@ CONTENIDO = {
     "tipo": "servicio-diseno",
     "prefijo": "diseno",
     # Entrega B de experiencia: CTA al terminar las opiniones (antes, 8 pantallas del hero a los planes sin CTA).
-    "ctas": {"prueba": (MENSAJE, "Cotizar mi diseño")},
+    "ctas": {"prueba": (MENSAJE, "Cotizar mi diseño"),
+             # Entrega C: CTA de la banda de garantía.
+             "garantia": (MENSAJE, "Cotizar diseño y obra")},
     "meta": META,
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Diseño de jardines", None)),
@@ -250,6 +252,7 @@ CONTENIDO = {
                  "lista de plantas y materiales y la cotización de la obra; el costo se descuenta si contratas el "
                  f'proyecto. Precios {datos.ANIO}; lista completa en <a href="/precios">viverosterra.com/precios</a>.'),
         "items": PLANES,
+        "fila": True,  # Entrega C: en celular los tres planes van en fila (antes, 2.9 pantallas apilados)
         "tabla": COMPARA,
     },
     "objecion": {
@@ -268,6 +271,9 @@ CONTENIDO = {
                  "Te quedas con los planos, el render, el plan de riego y el plan de mantenimiento"),
             ),
             "caption": "Lo que pasa con el pago del diseño.",
+            # Entrega C: plegada en celular; el descuento ya está en la entrada de los planes, «En corto», el paso 5, la
+            # garantía y las preguntas, y lo que te quedas es lo que incluye cada plan.
+            "plegable": "Lo que pasa con el pago del diseño, plan por plan",
             "cierre": "Garantía de precio: la cotización de la obra se respeta 30 días.",
         },
     },
@@ -275,8 +281,9 @@ CONTENIDO = {
                 "lede": "Cinco pasos; el último solo si decides que ejecutemos la obra.",
                 "pasos": PASOS},
     "garantia": {
+        "banda": True,  # Entrega C: banda oscura a media página con la garantía real (datos.GARANTIA_PLANTAS)
         "titulo": "Garantía de arraigo de 30 días en las plantas que sembramos.", "grande": "30", "unidad": "días",
-        "resumen": "En las plantas que sembramos nosotros al ejecutar tu proyecto, con el riego indicado.",
+        "resumen": garantia_plantas(),
         "puntos": (
             ("Si una planta que sembramos no prende en 30 días y se regó como te indicamos, la reponemos.",
              True),
@@ -319,7 +326,7 @@ CONTENIDO = {
             {"titulo": "Pasto en Rollo San Agustín", "href": "/pasto-en-rollo-tampico",
              "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111,
              "texto": (f"Pasto desde {dinero(P['pasto_solo_m2'])}/m² · Instalado desde "
-                       f"{dinero(P['pasto_instalado_m2'])}/m²")},
+                       f"{dinero(P['pasto_instalado_m2'])}/m². {datos.TERRENO_LISTO_CORTO}")},
             {"titulo": "Sistema de Riego", "href": "/sistema-riego-tampico",
              "img": f"{OBRA}/instalacion-tuberia-riego-jardin.webp", "ancho": 900, "alto": 600,
              "texto": f"Automatizado · Ahorra {datos.RIEGO_AHORRO} de agua"},
@@ -365,3 +372,9 @@ PARIDAD = {
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: la condición del descuento (Premium, proyectos de más de $150,000) sale del hero y sigue en «En corto» y en los planes; kicker: «Diseño · Tampico, Madero y Altamira» (un renglón).')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: botones de plan con texto propio (reescritura 5); fila de WhatsApp tras las opiniones; el paso «Estudio de gustos» dice cuándo llega el cuestionario (reescritura 19); el simulador no manda un monto que el cliente no escribió.'
+
+# Lo que cambia por la decisión del dueño del 2026-11-10 (terreno listo y garantía de arraigo).
+PARIDAD["terreno"] = 'decisión del dueño 2026-11-10: el instalado considera terreno listo; trabajos previos se cotizan aparte: tarjeta de pasto en «Otros servicios» con datos.TERRENO_LISTO_CORTO.'
+
+# Lo que cambia por la Entrega C de experiencia (ritmo y movimiento).
+PARIDAD["ritmo"] = 'Entrega C de experiencia (2026-11-10), ritmo y movimiento: banda oscura de garantía con datos.GARANTIA_PLANTAS (condiciones enlazadas) y CTA «Cotizar diseño y obra»; los tres planes en fila con desplazamiento en celular; plegada en celular la tabla «Lo que pasa con el pago del diseño» (el descuento está en la entrada de planes, «En corto», el paso 5, la garantía y la FAQ; lo que te quedas es lo que incluye cada plan); relacionados y opiniones en fila; primera pregunta cerrada; revelado por scroll de encabezados y figuras y balanceo de la etiqueta en escritorio.'

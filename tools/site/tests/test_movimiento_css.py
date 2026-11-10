@@ -1,4 +1,6 @@
-"""Movimiento de la home (spec del hero, 2026-11-09, §8) en terra-inicio.css y terra-temporada.css: solo transform,
+"""Movimiento del sitio (spec del hero, 2026-11-09, §8; desde la Entrega C de experiencia, 2026-11-10, el balanceo de la
+etiqueta y el revelado por scroll son de todas las plantillas y viven en terra.css; la foto que se descubre sigue solo en
+la home) en terra.css, terra-inicio.css, terra-temporada.css y terra-blog.css: solo transform,
 opacity y clip-path; toda animación dentro de prefers-reduced-motion:no-preference; una vez y de 900 ms o menos; sin
 will-change ni bucles; el balanceo y la foto solo desde 1024 px; el revelado por scroll bajo @supports y nunca sobre
 el titular, el lede, los precios, el Medidor ni los botones; los hovers con transform solo donde hay hover."""
@@ -12,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from test_terra_css import sin_comentarios  # noqa: E402
 
 CSS = Path(__file__).resolve().parents[3] / "public" / "css"
-HOJAS = ("terra-inicio.css", "terra-temporada.css")
+HOJAS = ("terra.css", "terra-inicio.css", "terra-temporada.css", "terra-blog.css")
 PERMITIDAS = {"transform", "opacity", "clip-path"}
 SIN_MOVIMIENTO = "@media (prefers-reduced-motion:no-preference)"
 INTOCABLES = re.compile(r"h1|vt-lede|precio|etiqueta|medidor|vt-btn|vt-cta|vt-(?:inicio|portada)__(?:cta|trato|lema|titulo)|vt-tabla")
@@ -83,36 +85,46 @@ class MovimientoCssTest(unittest.TestCase):
                 self.assertNotIn("will-change", cuerpo)
 
     def test_balanceo_de_la_etiqueta_y_foto_solo_desde_1024(self):
-        inicio = self.hojas["terra-inicio.css"]
-        for nombre, selector in (("vt-inicio-balanceo", ".vt-inicio .vt-portada .vt-etiqueta-x"),
-                                 ("vt-inicio-foto", ".vt-inicio .vt-portada__foto .vt-fig__marco")):
-            usos = [(ctx, sel, cuerpo) for ctx, sel, cuerpo in inicio if f"animation:{nombre} " in cuerpo]
+        """Entrega C: el balanceo es de toda portada con etiqueta colgada (no la de sin foto, que no lleva el
+        translateY); la foto que se descubre, solo en la home."""
+        for hoja, nombre, selector in (
+                ("terra.css", "vt-balanceo", ".vt-pagina .vt-portada:not(.vt-portada--sinfoto) .vt-etiqueta-x"),
+                ("terra-inicio.css", "vt-inicio-foto", ".vt-inicio .vt-portada__foto .vt-fig__marco")):
+            usos = [(ctx, sel, cuerpo) for n, ctx, sel, cuerpo in self.todas if f"animation:{nombre} " in cuerpo]
             with self.subTest(animacion=nombre):
                 self.assertEqual([sel for _c, sel, _b in usos], [selector])
                 self.assertIn("@media (min-width:1024px)", usos[0][0])
-        balanceo = [cuerpo for ctx, _sel, cuerpo in inicio if ctx == ("@keyframes vt-inicio-balanceo",)]
+                self.assertTrue(any(f"animation:{nombre} " in c for _x, s_, c in self.hojas[hoja] if s_ == selector))
+        balanceo = [cuerpo for _n, ctx, _sel, cuerpo in self.todas if ctx == ("@keyframes vt-balanceo",)]
         self.assertEqual(re.findall(r"rotate\((-?[\d.]+)deg\)", "".join(balanceo)), ["4", "-2", ".8"])
         self.assertTrue(all("opacity" not in c for c in balanceo), "el precio se lee desde el primer cuadro")
-        origen = next(cuerpo for _c, sel, cuerpo in inicio if "animation:vt-inicio-balanceo " in cuerpo)
+        origen = next(cuerpo for _n, _c, sel, cuerpo in self.todas if "animation:vt-balanceo " in cuerpo)
         self.assertIn("transform-origin:50% -40px", origen)  # donde nace el cordel
-        foto = "".join(cuerpo for ctx, _sel, cuerpo in inicio if ctx == ("@keyframes vt-inicio-foto",))
+        foto = "".join(cuerpo for _n, ctx, _sel, cuerpo in self.todas if ctx == ("@keyframes vt-inicio-foto",))
         self.assertIn("clip-path", foto)
         self.assertNotIn("opacity", foto)
 
-    def test_revelado_por_scroll_solo_en_encabezados_y_figuras_de_obra(self):
-        revelados = [(sel, cuerpo) for ctx, sel, cuerpo in self.hojas["terra-inicio.css"] if "animation-timeline" in cuerpo]
-        self.assertEqual(sorted(sel for sel, _c in revelados), [".vt-inicio .vt-obras .vt-fig__marco", ".vt-inicio main .vt-bloque h2"])
+    def test_revelado_por_scroll_solo_en_encabezados_y_figuras(self):
+        revelados = [(sel, cuerpo) for _n, ctx, sel, cuerpo in self.todas if "animation-timeline" in cuerpo]
+        self.assertEqual(sorted(sel for sel, _c in revelados),
+                         [".vt-pagina main :is(.vt-bloque,.vt-art__cuerpo) h2",
+                          ".vt-pagina main :is(.vt-obras,.vt-mosaico,.vt-nb-galeria) .vt-fig__marco"])
         for selector, _cuerpo in revelados:
             self.assertIsNone(INTOCABLES.search(selector))
         # Las fotos parten de opacity .25 (se anima el marco: el pie conserva su contraste). Los encabezados parten de
         # .6 y no de .25: axe revisa también lo que aún no entra en pantalla, y a .25 un h2 no cumple 3:1 (Lighthouse
         # bajaba accesibilidad de 100 a 97). A .6 la tinta sobre hueso queda arriba de 3:1.
-        for nombre, opacidad in (("vt-inicio-sube", ".25"), ("vt-inicio-titulo", ".6")):
-            cuadros = "".join(c for ctx, _s, c in self.hojas["terra-inicio.css"] if ctx == (f"@keyframes {nombre}",))
+        for nombre, opacidad in (("vt-sube", ".25"), ("vt-titulo", ".6")):
+            cuadros = "".join(c for _n, ctx, _s, c in self.todas if ctx == (f"@keyframes {nombre}",))
             with self.subTest(keyframes=nombre):
                 self.assertIn(f"opacity:{opacidad}", cuadros)
                 self.assertIn("translateY(16px)", cuadros)
-        self.assertIn("animation:vt-inicio-titulo ", next(c for s, c in revelados if s.endswith("h2")))
+        self.assertIn("animation:vt-titulo ", next(c for s, c in revelados if s.endswith("h2")))
+
+    def test_la_home_ya_no_repite_lo_que_es_de_todo_el_sitio(self):
+        inicio = (CSS / "terra-inicio.css").read_text(encoding="utf-8")
+        for nombre in ("vt-inicio-balanceo", "vt-inicio-titulo", "vt-inicio-sube", "animation-timeline"):
+            self.assertNotIn(nombre, sin_comentarios(inicio))
 
     def test_nada_anima_la_opacidad_del_titular_el_lede_el_precio_ni_el_cta(self):
         """Medido: la opacidad sobre el contenido de la primera pantalla retrasa el LCP móvil 300 ms."""

@@ -202,10 +202,13 @@ def _confianza(k, n):
     return c.bloque(next(n), "Confianza", "vt-h-confianza", x["titulo"], cuerpo)
 
 
-def _como(k, n):
+def _como(k, n, modo):
+    """Pasos del pedido y fechas. Entrega C de experiencia: fila de WhatsApp al final (antes, 8.5 pantallas de los
+    segmentos al cierre sin CTA). Nochebuenas nunca lleva garantía."""
     x = k["como"]
     fechas = "".join(f'<li data-nb-hasta="{f}">{t}</li>' for f, t in x["fechas"])
-    return c.bloque(next(n), "Tu pedido", "vt-h-como", x["titulo"], c.pasos(x["pasos"]) + f'<ul class="vt-nb-fechas">{fechas}</ul>', tinte=True)
+    fila = c.fila_seccion(k["mensajes"][modo], TIPO, "como", x["cta"])
+    return c.bloque(next(n), "Tu pedido", "vt-h-como", x["titulo"], c.pasos(x["pasos"]) + f'<ul class="vt-nb-fechas">{fechas}</ul>' + fila, tinte=True)
 
 
 def _cuidados(k, n):
@@ -303,7 +306,7 @@ def _secciones(k, modo):
     n = itertools.count(1)
     if modo == SIN_MODO_COTIZADOR:
         return (_portada(k, modo), _galeria(k, modo, n), _cuidados(k, n), _faq(k, modo, n), _cierre(k, modo))
-    return (_portada(k, modo), _cotizador(k, modo, n), _tabla(k, modo, n), _para(k, n), _galeria(k, modo, n), _confianza(k, n), _como(k, n),
+    return (_portada(k, modo), _cotizador(k, modo, n), _tabla(k, modo, n), _para(k, n), _galeria(k, modo, n), _confianza(k, n), _como(k, n, modo),
             _cuidados(k, n), _faq(k, modo, n), _datos_planta(k, n), _cierre(k, modo))
 
 

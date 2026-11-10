@@ -186,8 +186,9 @@ def precios():
     limite = f"{int(preventa['hasta'][8:])} de {entidad.mes_largo(preventa['hasta'])}"
     return (
         f"Pasto San Agustín en rollo, solo el pasto: {_dinero(P['pasto_solo_m2'])} por m² (no lleva IVA)",
-        (f"Pasto San Agustín instalado: desde {_dinero(P['pasto_instalado_m2'])} por m², con IVA incluido. Incluye "
-         "preparación básica del terreno, colocación y garantía de arraigo con condiciones"),
+        # Decisión del dueño (2026-11-10): el instalado considera el terreno listo; lo que falte se cotiza aparte.
+        (f"Pasto San Agustín instalado: desde {_dinero(P['pasto_instalado_m2'])} por m², con IVA incluido, con "
+         f"colocación y garantía de arraigo con condiciones. {datos.TERRENO_LISTO}"),
         (f"Pasto San Agustín al mayoreo: desde {_dinero(P['pasto_mayoreo_m2'])} por m², solo el pasto, en pedidos de "
          f"{P['pasto_mayoreo_minimo_m2']} m² o más (no lleva IVA)"),
         (f"Mantenimiento de jardines: desde {_dinero(P['mantenimiento_mes'])} al mes en el plan residencial; los planes "

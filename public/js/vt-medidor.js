@@ -49,6 +49,11 @@
   // Mismos textos que componentes.IVA_INSTALADO y componentes.SIN_IVA (paridad en casos-medidor.json).
   const IVA_INSTALADO = 'con IVA';
   const SIN_IVA = '(no lleva IVA)';
+  // Decisión del dueño (2026-11-10): el instalado considera el terreno listo (datos.TERRENO_LISTO_MEDIDOR y
+  // datos.TERRENO_LISTO_PREGUNTA; paridad en tests/test_terreno_listo.py y casos-medidor.json). El texto bajo el
+  // estimado vive en el HTML; aquí solo se muestra u oculta según el modo.
+  const TERRENO_MEDIDOR = 'Estimado con terreno listo. Limpieza, herbicida, tierra negra o nivelación se cotizan aparte.';
+  const TERRENO_PREGUNTA = '¿Mi terreno está limpio, nivelado y con tierra negra?: ___';
 
   // plazo: 1 (contado) o las mensualidades elegidas; si no aplican a ese total, contado.
   function textos(largo, ancho, r, colonia, M, plazo) {
@@ -70,10 +75,11 @@
     const cierre = r.desde ? 'Al medir te damos el precio cerrado.' : 'La entrega se cotiza según tu colonia.';
     // El pasto sin instalar (solo pasto y mayoreo) no lleva IVA: "con IVA" solo acompaña al instalado.
     const iva = r.iva ? IVA_INSTALADO : '';
+    const terreno = r.iva ? TERRENO_MEDIDOR : '';
     const mensaje = [`Hola, quiero cotizar ${r.texto}.`, `Medidas: ${medida}`,
       'Estimado de la web: ' + desde + dinero(r.total) + ' ' + (iva || SIN_IVA), `Me interesa: ${interes}`,
-      `Colonia: ${colonia || '___'}`, 'Te mando foto del área.'].join('\n');
-    return { medida, monto: dinero(r.total),
+      `Colonia: ${colonia || '___'}`, ...(terreno ? [TERRENO_PREGUNTA] : []), 'Te mando foto del área.'].join('\n');
+    return { medida, monto: dinero(r.total), terreno,
       calc: formatoM2(r.m2) + ' m² × ' + desde + '$' + r.precio + '/m²' + (iva ? ', ' + iva : ' ' + SIN_IVA) + '. ' + cierre,
       plan, plazo: elegido, mensaje, cta: CTA_MEDIDA, iva,
       vivo: formatoM2(r.m2) + ' m² · ' + desde + dinero(r.total) + (iva ? ' ' + iva : '') };
@@ -140,6 +146,7 @@
     // enlace y texto de origen. El clic lo sigue midiendo terra.js con el data-cta de la barra o del encabezado.
     const vivo = salida('vivo');
     const garantia = salida('garantia');
+    const terreno = salida('terreno');
     const clave = 'medidor:' + (caja.id || salida('cta').getAttribute('data-cta'));
     function prestarABarra(href) {
       const barra = root.VTBarra;
@@ -166,6 +173,7 @@
       if (ivaJuntoAlMonto) ivaJuntoAlMonto.textContent = modo === 'instalado' ? IVA_INSTALADO : '';
       if (vivo) vivo.textContent = texto;
       if (garantia) garantia.hidden = modo !== 'instalado';
+      if (terreno) terreno.hidden = modo !== 'instalado';
     };
     // Cada plazo muestra su mensualidad si aplica al total; si no, el monto mínimo de cotización y queda deshabilitado.
     function marcarPlazos(total) {
