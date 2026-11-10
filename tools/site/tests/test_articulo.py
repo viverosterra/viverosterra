@@ -81,8 +81,11 @@ class ArticuloTest(unittest.TestCase):
         for slug in articulo.CLAVES:
             nodo = next(n for n in self.grafo(slug) if n["@type"] == "Article")
             with self.subTest(slug=slug):
-                self.assertEqual(nodo["author"]["name"], datos.AUTOR_BLOG)
+                # SEO fase 1: autor y publisher son la entidad única por @id (antes el autor era una Organization
+                # suelta con el nombre del equipo); la firma visible sigue siendo datos.AUTOR_BLOG.
+                self.assertEqual(nodo["author"], {"@id": f"{datos.SITIO}/#negocio"})
                 self.assertEqual(nodo["publisher"], {"@id": f"{datos.SITIO}/#negocio"})
+                self.assertIn(f"<b>Por</b> {datos.AUTOR_BLOG}", html_de(slug))
 
     def test_migas_del_jsonld_iguales_a_las_visibles(self):
         for slug in articulo.CLAVES:
@@ -161,8 +164,9 @@ class ArticuloTest(unittest.TestCase):
         tarjetas = re.findall(r'<h3><a href="(/blog/[^"]+)"', html)
         self.assertEqual(len(tarjetas), len(set(tarjetas)))
         self.assertEqual(len(tarjetas), 54)
-        lista = next(d for d in (json.loads(b) for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S))
-                     if d.get("@type") == "ItemList")
+        # SEO fase 1: el Blog y la lista van en un solo @graph.
+        lista = next(n for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)
+                     for n in json.loads(b).get("@graph", ()) if n.get("@type") == "ItemList")
         self.assertEqual([i["position"] for i in lista["itemListElement"]], list(range(1, 55)))
         self.assertEqual({i["url"] for i in lista["itemListElement"]}, {f"{datos.SITIO}{t}" for t in tarjetas})
 

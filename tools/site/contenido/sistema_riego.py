@@ -9,9 +9,11 @@ deportes es solo del sintético. Título y descripción (también en Open Graph 
 Canonical, Service y migas como estaban publicados; FAQPage de las preguntas visibles y HowTo de los 5 pasos visibles. PARIDAD: tests/test_paridad.py.
 """
 import datos
+import entidad
 import mensajes_paginas
 from componentes import dinero, mensualidades
 from contenido import seo
+from contenido import respuestas
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -50,10 +52,8 @@ SERVICIO = {
     "description": ("Instalación profesional de sistemas de riego automatizado para jardines residenciales, comerciales e "
                     "industriales en Tampico, Madero y Altamira, Tamaulipas. Aspersores emergentes, riego por goteo y "
                     "programadores digitales."),
-    "provider": {"@type": "LocalBusiness", "name": datos.NOMBRE, "telephone": datos.TELEFONO_TEL,
-                 "address": {"@type": "PostalAddress", "streetAddress": datos.CALLE, "addressLocality": datos.CIUDAD,
-                             "addressRegion": "Tamaulipas", "postalCode": datos.CP, "addressCountry": "MX"}},
-    "areaServed": ["Tampico", "Ciudad Madero", "Altamira", "Tamaulipas", "Norte Veracruz"],
+    "provider": entidad.REF,  # SEO fase 1: la entidad única por @id (antes, un LocalBusiness suelto)
+    "areaServed": [{"@type": "City", "name": ciudad} for ciudad in entidad.CIUDADES],
 }
 MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "Inicio", "item": SITE},
@@ -147,11 +147,12 @@ SECTORES = (
 )
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/sistema-riego-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-riego",
     "prefijo": "riego",
     "meta": META,
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "howto": "Cómo instalar un sistema de riego automático en Tampico",
-               "speakable": ("h1", "h2", ".vt-faq summary")},
+               "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Riego automático", None)),
     "portada": {
         "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
@@ -284,6 +285,8 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "jsonld": {"PostalAddress": ("SEO fase 1: iba dentro del LocalBusiness suelto del provider; ahora el provider es la entidad única por @id y la "
+                              "dirección completa vive en el nodo #negocio de la home y de /vivero-tampico.")},
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {
         "Aspersores Emergentes": "Aspersores emergentes",

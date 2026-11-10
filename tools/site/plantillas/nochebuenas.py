@@ -9,6 +9,7 @@ import json
 
 import componentes as c
 import datos
+import entidad
 from contenido.nochebuenas_fotos import FOTOS
 from partials import WA_GLIFO, esc
 from plantillas import base
@@ -280,7 +281,7 @@ def _grafo(k, modo):
     url, negocio = meta["canonical"], {"@id": j["negocio"]}
     migas, faq = f"{url}#migas", f"{url}#faq"
     # Nodo mínimo: la ficha completa vive en la home; aquí solo se nombra para que el @id resuelva dentro de este grafo.
-    empresa = {"@type": "LocalBusiness", "@id": j["negocio"], "name": datos.NOMBRE, "url": datos.SITIO, "telephone": datos.TELEFONO_TEL}
+    empresa = entidad.negocio_minimo()
     pagina = {"@type": "WebPage", "@id": url, "url": url, "name": meta["title"], "inLanguage": "es-MX", "about": negocio,
               "publisher": negocio, "dateModified": NB["ultima_actualizacion"], "breadcrumb": {"@id": migas}, "mainEntity": {"@id": faq},
               "primaryImageOfPage": {"@type": "ImageObject", "url": j["imagen"]}}
@@ -306,6 +307,6 @@ def render(k, modo=None):
     modo = modo or NB["modo"]
     abierta = modo != SIN_MODO_COTIZADOR
     hero = _foto(next(f for f in FOTOS if f["uso"] == "hero"), 1, SIZES_HERO)
-    return base.documento(_meta(k, modo), "\n".join(_secciones(k, modo)), jsonld_bloques=({"@context": CONTEXTO, "@graph": _grafo(k, modo)},),
+    return base.documento({**_meta(k, modo), "migas": k["migas"]}, "\n".join(_secciones(k, modo)), jsonld_bloques=({"@context": CONTEXTO, "@graph": _grafo(k, modo)},),
                           precargas=(base.precarga_imagen(hero),), scripts=SCRIPTS if abierta else (),
                           head_extra=(_config(modo),) if abierta else (), tras_main=_barra(k["portadas"][modo]["cta"]) if abierta else "", clase_body=CLASE_BODY)

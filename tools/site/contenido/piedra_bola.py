@@ -148,7 +148,6 @@ PARIDAD = {
     "jsonld": {
         "Offer": ("El Offer publicaba $350 e “InStock”: ni el precio está en datos.py ni hay dato de existencias. Sin "
                   "oferta no sale el Product: el dueño la dejó según cotización (2026-11-08)."),
-        "LocalBusiness": mc.MOTIVO_LOCALBUSINESS,
         "Product": mc.MOTIVO_SIN_PRODUCTO,
         "Brand": "Iba dentro del Product, que ya no sale (sin precio en datos.py; revisión 2f).",
     },

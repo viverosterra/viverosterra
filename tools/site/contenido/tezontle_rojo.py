@@ -216,7 +216,7 @@ CONTENIDO = {
             (f"Tezontle rojo volcánico decorativo para jardines en Tampico. Costal desde {COSTAL}. Uso en senderos, "
              "bordes, arriates y macetas. Entrega a domicilio en Tampico, Madero y Altamira."),
             f"{SITE}/img/tezontle-rojo-jardin-tampico-sendero.jpg", sku="VT-TEZ-001",
-            ofertas=(mc.oferta(f"{URL}#solicitar-pedido", "costal", desde=P["tezontle_costal"]),)),
+            ofertas=(mc.oferta(f"{URL}#solicitar-pedido", "costal", desde=P["tezontle_costal"], agregada=True),)),
         "negocio": mc.NEGOCIO,
         "migas": MIGAS_LD,
         "speakable": mc.SPEAKABLE,
@@ -246,7 +246,7 @@ PARIDAD = {
         "$350": ("Era el mármol a $350 en la comparativa; el dueño confirmó $250 el saco (datos.py) y la comparativa "
                  "usa ese."),
     },
-    "jsonld": {"LocalBusiness": mc.MOTIVO_LOCALBUSINESS},
+    "jsonld": {"Offer": mc.MOTIVO_OFERTA_DESDE},
     # Cifras que main publicaba y no salen (paridad.py no las captura: se declaran aquí).
     "cifras": {"Costal de 15 kg / Costal de 25–30 kg": mc.MOTIVO_PESO_COSTAL},
 }

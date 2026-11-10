@@ -94,6 +94,7 @@ def render(k):
     cuerpo = "\n".join((
         _banner_temporada(k["temporada"]),
         _portada(k["portada"]),
+        c.respuesta(k.get("respuesta")),
         c.bloque(1, "Qué hacemos", "vt-h-que", q["titulo"], c.indice(q["items"], TIPO), lede=q["lede"]),
         c.bloque(2, "Medidor", "vt-h-medidor", m["titulo"],
                  c.medidor("inicio", TIPO, mensaje=k["portada"]["mensaje"], boton_medida=True, garantia=True,
@@ -116,10 +117,10 @@ def render(k):
         _cierre(ci),
     ))
     j = k["jsonld"]
-    bloques = (
-        {"@context": CONTEXTO, **j["negocio"]},
-        {"@context": CONTEXTO, **c.faq_jsonld(f["preguntas"], speakable=j["speakable"])},
-    )
-    return base.documento(k["meta"], cuerpo, jsonld_bloques=bloques,
+    # SEO fase 1: un solo @graph con el sitio, el nodo completo del negocio y las preguntas; el WebPage (con su
+    # speakable) lo cierra entidad.completar.
+    bloques = ({"@context": CONTEXTO, "@graph": [j["sitio"], j["negocio"],
+                                                  c.faq_jsonld(f["preguntas"], speakable=j["speakable"])]},)
+    return base.documento(base.meta_de(k), cuerpo, jsonld_bloques=bloques,
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),), scripts=SCRIPTS,
                           clase_body="vt-pagina vt-inicio vt-temporada" if k["temporada"] else "vt-pagina vt-inicio")

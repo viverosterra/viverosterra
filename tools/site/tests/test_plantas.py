@@ -102,9 +102,11 @@ class HubTest(unittest.TestCase):
         self.assertEqual(len(numeros), len(set(numeros)))
 
     def test_json_ld_sin_localbusiness_recortado(self):
-        tipos = {n["@type"] for n in grafo(self.h)}
+        tipos = {t for n in grafo(self.h) for t in ([n["@type"]] if isinstance(n["@type"], str) else n["@type"])}
         self.assertTrue({"FAQPage", "BreadcrumbList", "ItemList"} <= tipos)
-        self.assertNotIn("LocalBusiness", tipos)
+        # SEO fase 1: el único LocalBusiness es el nodo mínimo de la entidad única (sin dirección recortada).
+        negocios = [n for n in grafo(self.h) if "LocalBusiness" in n["@type"]]
+        self.assertEqual([(n["@id"], "address" in n) for n in negocios], [(NEGOCIO, False)])
 
 
 SUBCATEGORIAS = ("/palmas-tropicales-tampico", "/plantas-para-jardin-tampico", "/arboles-ornamentales-tampico",
@@ -234,9 +236,10 @@ class JsonLdNegocioTest(unittest.TestCase):
 
     def test_oferta_de_palmas_con_minimo_y_vendedor(self):
         producto = next(n for n in grafo(html("/palmas-tropicales-tampico")) if n["@type"] == "Product")
-        self.assertEqual(producto["offers"], {
-            "@type": "Offer", "priceSpecification": {"@type": "PriceSpecification", "minPrice": 250, "priceCurrency": "MXN"},
-            "seller": {"@id": NEGOCIO}})
+        # SEO fase 1: el «desde» es un AggregateOffer con lowPrice (sin tope ni conteo) y el producto lleva su foto.
+        self.assertEqual(producto["offers"], {"@type": "AggregateOffer", "lowPrice": 250, "priceCurrency": "MXN",
+                                              "seller": {"@id": NEGOCIO}})
+        self.assertEqual(producto["image"], f"{datos.SITIO}/img/portadas/palma-real-jardin-residencial-tampico.webp")
 
     def test_garantia_de_30_dias_siempre_con_condiciones(self):
         """Toda frase que menciona la garantía de arraigo (visible, meta o JSON-LD) dice «con condiciones» o enlaza

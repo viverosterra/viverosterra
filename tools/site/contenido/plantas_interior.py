@@ -89,13 +89,12 @@ CONTENIDO = {
                "lede": "Dinos si es casa u oficina, cuánta luz tiene y la colonia; te respondemos con precio.",
                "mensaje": MENSAJE},
     "jsonld": {"migas": pc.migas_ld(NOMBRE, RUTA), "nodos": (pc.lista_ld(NOMBRE, [s for s, _t, _a in ESPECIES]),),
-               "speakable": ("#vt-h1", ".vt-portada .vt-lede", ".vt-faq details:first-child")},
+               "speakable": (".vt-portada .vt-lede", ".vt-faq details:first-child p")},
 }
 
 PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "jsonld": {
-        "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {

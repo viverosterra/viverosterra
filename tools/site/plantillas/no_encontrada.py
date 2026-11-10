@@ -18,5 +18,5 @@ def render(k):
                 f'<ul class="vt-util__servicios" id="vt-lista-404">{filas}</ul>'
                 f'<p class="vt-promesa" id="vt-vacio-404" role="status" hidden>{k["buscar"]["vacio"]}</p></div></section>')
     ci = k["cierre"]
-    return base.documento(k["meta"], "\n".join((cu.cabeza(k["cabeza"]), buscador, c.cierre(ci["titulo"], ci["lede"],
+    return base.documento(base.meta_de(k), "\n".join((cu.cabeza(k["cabeza"]), buscador, c.cierre(ci["titulo"], ci["lede"],
                           ci["mensaje"], k["tipo"]))), scripts=SCRIPTS, clase_body=CLASE_BODY)

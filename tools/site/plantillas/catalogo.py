@@ -45,7 +45,7 @@ def render(k):
     grafo = [pagina_ld(j["url"]),
              {"@type": "ItemList", "name": j["nombre"], "description": j["descripcion"], "url": j["url"],
               "numberOfItems": len(elementos), "itemListElement": elementos}, j["migas"]]
-    return base.documento(k["meta"], "\n".join((cabeza, rejilla, pedido, otras, garantia)),
+    return base.documento(base.meta_de(k), "\n".join((cabeza, rejilla, pedido, otras, garantia)),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},), head_extra=(datos_js(),),
                           tras_main=cp.lista_catalogo(tipo), scripts=("/js/vt-catalogo.js",),
                           clase_body="vt-pagina vt-plantas")

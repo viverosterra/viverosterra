@@ -11,6 +11,7 @@ canonical y Open Graph como estaban. PARIDAD: tests/test_paridad.py.
 import componentes as c  # primero: agrega tools/pasto al sys.path (data y mensualidades)
 import data
 import datos
+from contenido import respuestas
 import mensajes_paginas
 import mensualidades
 from contenido import lista_precios as lp
@@ -97,6 +98,7 @@ CATALOGO = {
 }
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/precios"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "precios",
     "meta": {
         "title": TITULO, "description": DESCRIPCION, "robots": "index, follow, max-image-preview:large",
@@ -107,6 +109,7 @@ CONTENIDO = {
     },
     "migas": (("Inicio", "/"), ("Precios", None)),
     "portada": {
+        "respuesta": True,  # la entrada ya responde con el precio, la unidad y la zona
         "compacta": True,
         "kicker": f"Lista de precios {datos.ANIO} · Tampico, Madero y Altamira",
         "h1": f'Precios de jardinería en Tampico <span class="vt-serif">{datos.ANIO}</span>',

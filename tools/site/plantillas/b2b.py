@@ -65,7 +65,7 @@ def _cobertura(k, numero):
 def render(k):
     tipo = k["tipo"]
     p, g, f, r, ci = k["proceso"], k["garantia"], k["faq"], k["relacionados"], k["cierre"]
-    secciones = [c.portada(k["portada"], tipo, k["migas"]), _prueba(k, 1), _escalas(k, 2), _correo(k, 3),
+    secciones = [c.portada(k["portada"], tipo, k["migas"]), c.respuesta(k.get("respuesta")), _prueba(k, 1), _escalas(k, 2), _correo(k, 3),
                  _documentacion(k, 4), _paquetes(k, 5),
                  c.bloque(6, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]), lede=p["lede"]),
                  c.garantia(dict(g, numero=7, id_titulo="vt-h-garantia", rotulo="Garantía")),
@@ -76,6 +76,6 @@ def render(k):
     j = k["jsonld"]
     speakable = [{"@type": "SpeakableSpecification", "cssSelector": list(j["speakable"])}]
     grafo = [j["producto"], *j.get("nodos", ()), c.faq_jsonld(f["preguntas"]), j["migas"], *speakable]
-    return base.documento(k["meta"], "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
+    return base.documento(base.meta_de(k), "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),),
                           scripts=SCRIPTS[k["escalas"]["cotizador"]])

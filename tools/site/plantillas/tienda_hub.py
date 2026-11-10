@@ -42,6 +42,7 @@ def render(k):
                                                                  "cierre", "barra"))
     secciones = (
         _portada(k),
+        c.respuesta(k.get("respuesta")),
         c.bloque(1, "Colección", "vt-h-modelos", mo["titulo"], t.catalogo(), lede=mo["lede"], id_seccion="modelos"),
         c.bloque(2, "Elegir", "vt-h-elegir", el["titulo"], t.selector_modelo(), tinte=True, id_seccion="elegir"),
         c.bloque(3, "Comparar", "vt-h-comparar", co["titulo"], t.comparador(), lede=co["lede"], id_seccion="comparar"),
@@ -62,7 +63,7 @@ def render(k):
     )
     grafo = [k["jsonld"][0], c.faq_jsonld(f["preguntas"]), k["jsonld"][1]]
     fuera = t.lista_y_aviso() + t.barra_compra(b["nombre"], b["precio"], cie["mensaje"], rollo=b["rollo"])
-    return base.documento(k["meta"], t.subnav() + "\n".join(secciones),
+    return base.documento(base.meta_de(k), t.subnav() + "\n".join(secciones),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),),
                           head_extra=(t.json_modelos(completo=True),), tras_main=fuera, scripts=SCRIPTS,

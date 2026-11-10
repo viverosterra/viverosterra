@@ -152,7 +152,7 @@ CONTENIDO = {
         "nodos": ({"@type": "ItemList", "name": "Plantas, palmas y árboles por subcategoría", "itemListElement": [
             {"@type": "ListItem", "position": i, "name": s["titulo"], "url": f"{SITE}{s['href']}"}
             for i, s in enumerate(pc.SUBCATEGORIAS, 1)]},),
-        "speakable": ("#vt-h1", ".vt-portada .vt-lede", ".vt-faq details:first-child"),
+        "speakable": (".vt-portada .vt-lede", ".vt-faq details:first-child p"),
     },
 }
 
@@ -160,7 +160,6 @@ PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION, {"og:description": (DESCRIPCION, "Decía «Desde $200»: precio sin confirmar (el dueño solo fijó palmas desde "
                                                 "$250, palma real $500 y flamboyán $250, 2026-11-07).")}),
     "jsonld": {
-        "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {

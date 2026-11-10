@@ -636,3 +636,7 @@
 .vt-bloque[id]{scroll-margin-top:calc(var(--vt-head-h) + 16px)}
 .vt-cotizar{font-weight:700}
 .vt-cotizar a{display:inline-block;margin-right:20px;padding:18px 0 8px}
+
+/* Respuesta directa bajo la portada (SEO fase 1): un párrafo sobrio con su rótulo y la fecha de los precios. */
+.vt-respuesta{padding-block:28px}
+.vt-respuesta .vt-lede{margin:0;max-width:72ch}

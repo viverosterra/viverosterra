@@ -31,7 +31,9 @@ CONTENIDO = {
                   ("/diseno-jardines-tampico", "Diseño de Jardines", "Plan Terra · Desde $3,000")),
 }
 M_REPETIDA = "Era la segunda tarjeta del mismo artículo: \"Todos\" ya no repite lo de \"Nuevos\", donde sigue con su otro título."
-PARIDAD = {"meta": seo.paridad(_DOC["meta"]["title"], _DOC["meta"]["description"]),
+M_PUBLISHER = ("SEO fase 1: el publisher del Blog es una referencia por @id a la entidad única #negocio; se retiran la "
+               "Organization suelta y su logo (el logo va en el nodo completo de la home).")
+PARIDAD = {"jsonld": {"Organization": M_PUBLISHER, "ImageObject": M_PUBLISHER}, "meta": seo.paridad(_DOC["meta"]["title"], _DOC["meta"]["description"]),
            "reemplazos": {"Las 8 palmas más vendidas en Tampico (con precios)": "8 palmas para jardines en Tampico (con precios)",
                           "Cómo Ahorrar Hasta 50% de Agua en Tu Jardín en Tampico": "Cómo Ahorrar Hasta 40% de Agua en Tu Jardín en Tampico"},
            "retirados": {"Cómo Instalar Pasto Sintético Tú Mismo: Paso a Paso": M_REPETIDA,

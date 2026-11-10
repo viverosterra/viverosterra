@@ -10,6 +10,7 @@ import datos
 from ciudades import CIUDADES
 from componentes import dinero
 from contenido import seo
+from contenido import respuestas
 from contenido.ficha import PASOS
 from esquema import breadcrumb_schema, product_schema
 
@@ -74,6 +75,7 @@ OBRAS = tuple({"src": f"{GAL}/{n}-sm.webp", "srcset": f"{GAL}/{n}-sm.webp 560w, 
               for i, (n, w, h, alt, cap) in enumerate(data.OBRAS, 2))
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/pasto-sintetico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "tienda",
     "meta": {
         "title": TITULO, "description": DESCRIPCION, "robots": "index, follow, max-image-preview:large", "canonical": URL,
@@ -157,7 +159,10 @@ CONTENIDO = {
     "default": DEFAULT,
 }
 
+M_VENDEDOR = ("SEO fase 1: el vendedor de cada producto es la entidad única #negocio por @id (antes, una Organization suelta "
+              "con nombre, URL y teléfono en cada oferta).")
 PARIDAD = {
+    "jsonld": {"Organization": M_VENDEDOR},
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {},
     "retirados": {},

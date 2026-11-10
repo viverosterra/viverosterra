@@ -49,7 +49,7 @@ def render(k):
     secciones.append(c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], k["tipo"]))
     faq = next(s["preguntas"] for s in k["secciones"] if s["tipo"] == "faq")
     grafo = list(k["jsonld"]) + [c.faq_jsonld(faq)]
-    return base.documento(k["meta"], t.subnav() + "\n".join(secciones),
+    return base.documento(base.meta_de(k), t.subnav() + "\n".join(secciones),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),),
                           head_extra=(t.json_modelos(), t.SCRIPT_PRECIO_PUESTO), tras_main=t.lista_y_aviso(),

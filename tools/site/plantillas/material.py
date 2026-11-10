@@ -122,5 +122,5 @@ def render(k):
         grafo.append(c.howto(k["instalacion"]["howto"], [(p["titulo"], p["texto"]) for p in k["instalacion"]["pasos"]]))
     grafo.append({"@type": "SpeakableSpecification", "cssSelector": list(j["speakable"])})
     precargas = (base.precarga_imagen(k["portada"]["foto"]),) if k["portada"].get("foto") else ()
-    return base.documento(k["meta"], "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
+    return base.documento(base.meta_de(k), "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=precargas, scripts=SCRIPTS, clase_body=CLASE_BODY)

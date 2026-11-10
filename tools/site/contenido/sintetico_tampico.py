@@ -12,6 +12,7 @@ import data
 import datos
 from componentes import dinero, dinero_exacto
 from contenido import seo
+from contenido import respuestas
 
 SITE = data.SITE
 URL = f"{SITE}/pasto-sintetico-tampico"
@@ -96,18 +97,6 @@ SERVICIO = {
     "offers": {"@type": "AggregateOffer", "priceCurrency": "MXN", "lowPrice": f"{INST_MIN:.2f}", "highPrice": f"{INST_MAX:.2f}",
                "unitText": "m²"},
 }
-NEGOCIO_LD = {
-    "@type": ["LocalBusiness", "Store"], "@id": NEGOCIO, "name": datos.NOMBRE, "url": SITE,
-    "telephone": datos.TELEFONO_TEL, "priceRange": "$$", "foundingDate": datos.FUNDACION,
-    "address": {"@type": "PostalAddress", "streetAddress": datos.CALLE,
-                "addressLocality": datos.CIUDAD, "addressRegion": "Tamaulipas", "postalCode": datos.CP,
-                "addressCountry": "MX"},
-    "geo": {"@type": "GeoCoordinates", "latitude": datos.GEO[0], "longitude": datos.GEO[1]},
-    "hasMap": datos.MAPS_URL,
-    "knowsAbout": ["Pasto sintético", "Instalación de pasto sintético", "Pasto en rollo", "Jardinería"],
-    "makesOffer": [{"@type": "Offer", "itemOffered": {"@id": f"{SITE}/pasto-sintetico/{m['slug']}#producto"}}
-                   for m in data.MODELOS] + [{"@type": "Offer", "itemOffered": {"@id": f"{URL}#instalacion"}}],
-}
 MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "Inicio", "item": SITE},
     {"@type": "ListItem", "position": 2, "name": "Pasto sintético en Tampico", "item": URL},
@@ -118,6 +107,7 @@ OBRAS = tuple({"src": f"{GAL}/{n}-sm.webp", "srcset": f"{GAL}/{n}-sm.webp 560w, 
               for i, (n, w, h, alt, cap) in enumerate(data.OBRAS, 2))
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/pasto-sintetico-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-sintetico",
     "prefijo": "sintetico",
     "meta": {
@@ -126,7 +116,7 @@ CONTENIDO = {
                ("og:description", DESCRIPCION), ("og:image", OG_IMG), ("og:locale", "es_MX")),
         "twitter": (("twitter:card", "summary_large_image"),),
     },
-    "jsonld": {"producto": NEGOCIO_LD, "nodos": (SERVICIO,), "migas": MIGAS_LD},
+    "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD},
     "migas": (("Inicio", "/"), ("Pasto sintético en Tampico", None)),
     "portada": {
         "kicker": "Pasto sintético · Tampico, Madero y Altamira",
@@ -239,7 +229,11 @@ CONTENIDO = {
     "barra": {"nombre": "Pasto sintético en Tampico", "precio": f"Instalado desde {INST_MIN_TXT}/m²"},
 }
 
+M_NEGOCIO = ("SEO fase 1: la página ya no redefine el negocio con otros campos (LocalBusiness + Store con dirección, "
+             "coordenadas y ofertas que apuntaban a productos de otras páginas): lleva el nodo mínimo de la entidad única "
+             "y el Service de instalación con su AggregateOffer; el nodo completo vive en la home y en /vivero-tampico.")
 PARIDAD = {
+    "jsonld": {tipo: M_NEGOCIO for tipo in ("Store", "PostalAddress", "GeoCoordinates", "Offer")},
     "reemplazos": {"$385": f"${int(INST_MIN)}", "$650": INST_MAX_TXT},  # la captura guarda la parte entera
     "meta": seo.paridad(TITULO, DESCRIPCION, {
         "description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto sintético instalado era más IVA; se publica el precio final con IVA, $446.60 a $754/m²."),

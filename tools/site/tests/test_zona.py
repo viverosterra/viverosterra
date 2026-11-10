@@ -70,7 +70,9 @@ class ZonaTest(unittest.TestCase):
             bloque = re.search(r'<script type="application/ld\+json">(.*?)</script>', html_de(ruta), re.S).group(1)
             grafo = json.loads(bloque)["@graph"]
             with self.subTest(ruta=ruta):
-                self.assertEqual([n["@type"] for n in grafo], ["BreadcrumbList", "Service", "FAQPage"])
+                # SEO fase 1: entidad.completar cierra el grafo con el WebPage y los nodos mínimos del negocio y del sitio.
+                self.assertEqual([n["@type"] for n in grafo], ["BreadcrumbList", "Service", "FAQPage",
+                                                               *["WebPage", ["GardenStore", "LocalBusiness"], "WebSite"]])
                 self.assertEqual(grafo[1]["provider"], {"@id": f"{datos.SITIO}/#negocio"})
                 oferta = grafo[1]["offers"]
                 self.assertEqual(oferta["@type"], "Offer")

@@ -58,7 +58,7 @@ def render(k):
     )
     grafo = list(k["jsonld"]) + [c.faq_jsonld(f["preguntas"])]
     fuera = t.lista_y_aviso() + t.barra_compra(b["nombre"], b["precio"], ci["mensaje"], rollo=b["rollo"])
-    return base.documento(k["meta"], t.subnav() + "\n".join(secciones),
+    return base.documento(base.meta_de(k), t.subnav() + "\n".join(secciones),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(t.foto_principal(m)),),
                           head_extra=(t.json_modelo(m), t.SCRIPT_PRECIO_PUESTO), tras_main=fuera, scripts=SCRIPTS,

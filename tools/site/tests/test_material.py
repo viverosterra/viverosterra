@@ -84,8 +84,12 @@ class MaterialTest(unittest.TestCase):
         for ruta in MIGRADAS:
             url = f"{datos.SITIO}{ruta}"
             with self.subTest(ruta=ruta):
-                self.assertIn({"@type": "WebPage", "@id": url, "url": url, "about": NEGOCIO, "publisher": NEGOCIO},
-                              grafo(html_de(ruta)))
+                # SEO fase 1: el WebPage además dice su nombre, su idioma y su sitio, y lleva el speakable.
+                pagina = next(n for n in grafo(html_de(ruta)) if n["@type"] == "WebPage")
+                self.assertEqual({clave: pagina[clave] for clave in ("@id", "url", "about", "publisher", "isPartOf")},
+                                 {"@id": url, "url": url, "about": NEGOCIO, "publisher": NEGOCIO,
+                                  "isPartOf": {"@id": f"{datos.SITIO}/#sitio"}})
+                self.assertEqual(pagina["speakable"]["cssSelector"], [".vt-portada .vt-lede", ".vt-faq details p"])
 
     def test_site_name_y_twitter_card(self):
         for ruta in MIGRADAS:

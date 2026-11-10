@@ -349,7 +349,8 @@ def con_plantilla():
     """Rutas ("public/…") de las páginas que salen de tools/site/generar.py: su texto vive en tools/site/contenido/ y
     ya trae las correcciones, así que los reemplazos por archivo de su HTML viejo no aplican (Etapas 2a y 2c)."""
     import generar  # noqa: E402  (solo aquí: generar importa las plantillas)
-    return {f"public/{salida}" for _r, salida, _p, _c in generar.PAGINAS}
+    # llms.txt y llms-full.txt también se generan (tools/site/llms.py, SEO fase 1): sus reemplazos viejos ya no aplican.
+    return {f"public/{salida}" for _r, salida, _p, _c in generar.PAGINAS} | {"public/llms.txt", "public/llms-full.txt"}
 
 
 def vigentes(entradas):

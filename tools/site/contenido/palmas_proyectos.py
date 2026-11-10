@@ -14,6 +14,7 @@ LocalBusiness recortado de main); las migas del JSON-LD son las visibles; ItemLi
 nuevos en PriceSpecification (minPrice: son precios “desde”).
 """
 import datos
+import entidad
 import mensajes_paginas
 from componentes import dinero
 from contenido import b2b_comun
@@ -67,18 +68,25 @@ SERVICIO = {
     "provider": {"@id": NEGOCIO},
     "areaServed": [{"@type": "State", "name": n} for n in ("Tamaulipas", "Veracruz", "San Luis Potosí")],
     # Precio "desde" del tamaño chico (el mínimo de datos.PALMAS_PROYECTO); las demás, según cotización.
-    "offers": {"@type": "Offer", "priceSpecification": {"@type": "PriceSpecification", "minPrice": P["palma_desde"],
-                                                        "priceCurrency": "MXN"}, "seller": {"@id": NEGOCIO}},
+    "offers": {"@type": "AggregateOffer", "lowPrice": P["palma_desde"], "priceCurrency": "MXN", "seller": {"@id": NEGOCIO}},
 }
 
 
+# Foto real de cada especie con precio, de las que ya muestra esta página (la portada son palmas reales del vivero).
+FOTOS_LD = {"Palma areca": "/img/especie-palma-areca-tampico.webp", "Coco plumoso": "/img/especie-coco-plumoso-tampico.webp",
+            "Palma real": "/img/portadas/palmas-reales-mayoreo-vivero-tampico.webp"}
+
+
 def _producto(nombre, cientifico, precio):
-    producto = {"@type": "Product", "name": nombre, "alternateName": cientifico}
-    if precio is not None:  # precio "desde": mínimo del tamaño chico, no un precio cerrado
-        producto["offers"] = {"@type": "Offer", "priceSpecification": {
-            "@type": "PriceSpecification", "minPrice": precio, "priceCurrency": "MXN"},
-            "description": "Tamaño chico; el precio sube con la altura."}
-    return producto
+    """SEO fase 1: solo las especies con precio "desde" en datos.py son Product (con su foto y un AggregateOffer con
+    lowPrice: el mínimo del tamaño chico, sin tope ni conteo de ofertas porque no existen). Las que van según cotización
+    quedan como elemento de la lista con su nombre científico: un Product sin precio ni foto es inválido para Google y
+    no se inventa ninguno de los dos."""
+    if precio is None:
+        return {"@type": "Thing", "name": nombre, "alternateName": cientifico}
+    return {"@type": "Product", "name": nombre, "alternateName": cientifico, "image": f"{SITE}{FOTOS_LD[nombre]}",
+            "offers": {"@type": "AggregateOffer", "lowPrice": precio, "priceCurrency": "MXN", "seller": {"@id": NEGOCIO},
+                       "description": "Tamaño chico; el precio sube con la altura."}}
 
 
 def _lista_es(nombres):
@@ -177,7 +185,7 @@ CONTENIDO = {
     "prefijo": "pal",
     "meta": META,
     "jsonld": {"producto": SERVICIO, "nodos": (ESPECIES_LD,), "migas": MIGAS_LD,
-               "speakable": ("h1", "h2", ".vt-faq summary")},
+               "speakable": (".vt-portada .vt-lede", entidad.SEL_FAQ)},
     # /empresas llega en la Etapa 3: entonces la ruta visible y MIGAS_LD pasan a Inicio › Empresas › Palmas.
     "migas": (("Inicio", "/"), ("Palmas para proyectos", None)),
     "portada": {
@@ -296,11 +304,9 @@ PARIDAD = {
     }),
     # Tipos del JSON-LD que ya no salen, con su motivo (paridad.comparar).
     "jsonld": {
-        "LocalBusiness": ("El Service apunta por @id a la entidad única #negocio de las demás páginas (el nodo completo "
-                          "vive en la home); se retira el LocalBusiness recortado de main. Revisión 2d."),
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección completa es del nodo #negocio.",
-        "AggregateOffer": ("La oferta del Service pasa a Offer con PriceSpecification (minPrice del tamaño chico): "
-                           "«desde $250» es un mínimo, no un rango de ofertas contadas. Revisión 2e."),
+        "Offer": ("SEO fase 1: los precios «desde» van como AggregateOffer con lowPrice (el mínimo del tamaño chico, "
+                  "sin tope ni conteo de ofertas): Google no lee el minPrice de un Offer como precio."),
     },
     "reemplazos": {
         "Productor directo de palmas para hoteles, fraccionamientos, gobierno e industria": (

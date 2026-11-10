@@ -17,6 +17,7 @@ if PASTO not in sys.path:
     sys.path.append(PASTO)  # al final: tools/pasto también tiene un build.py
 
 import datos  # noqa: E402
+import entidad  # noqa: E402
 import mensualidades  # noqa: E402
 from partials import WA_GLIFO, esc  # noqa: E402
 
@@ -131,6 +132,21 @@ def migas(items):
     partes = [f'<li aria-current="page">{texto}</li>' if href is None else f'<li><a href="{esc(href)}">{texto}</a></li>'
               for texto, href in items]
     return f'<nav class="vt-crumbs" aria-label="Ruta de navegación"><ol>{"".join(partes)}</ol></nav>'
+
+
+def respuesta(r):
+    """Respuesta directa de la página, justo después de la portada (SEO fase 1): un párrafo de 40 a 60 palabras con el
+    dato en la misma frase (precio, unidad y zona), marcado con data-vt-respuesta para el speakable del JSON-LD, y la
+    fecha de la última revisión de precios (datos.PRECIOS_ACTUALIZADOS; nunca la fecha del build). r: texto y fecha,
+    los dos opcionales (sin texto, la respuesta es la entrada de la portada y aquí solo va la fecha). Va fuera de la
+    portada para no empujar el precio ni el botón de WhatsApp de la primera pantalla."""
+    if not r:
+        return ""
+    texto = (f'<p class="vt-bloque__no"><b>En corto</b></p><p class="vt-lede" {entidad.ATRIBUTO_RESPUESTA}>{r["texto"]}</p>'
+             if r.get("texto") else "")
+    fecha = (f'<p class="vt-promesa">Actualizado: <time datetime="{esc(r["fecha"])}">{entidad.mes_largo(r["fecha"])}</time></p>'
+             if r.get("fecha") else "")
+    return f'<section class="vt-respuesta" aria-label="En corto"><div class="vt-wrap">{texto}{fecha}</div></section>'
 
 
 def bloque(numero, rotulo, id_titulo, titulo, cuerpo, lede=None, tinte=False, id_seccion=None):
@@ -893,10 +909,12 @@ def portada(p, tipo, migas_items=None):
     junto a WhatsApp) y compacta (a 1024–1199 px la etiqueta va en su versión de celular para que el CTA quede en la primera
     pantalla). Con migas_items, la ruta visible va arriba."""
     ruta = migas(migas_items) if migas_items else ""
+    # respuesta=True: la entrada ya es la respuesta directa de la página (precio, unidad y zona) y se marca para speakable.
+    marca = f" {entidad.ATRIBUTO_RESPUESTA}" if p.get("respuesta") else ""
     clase = "vt-portada vt-portada--compacta" if p.get("compacta") else "vt-portada"
     tambien = f'<p class="vt-portada__tambien">{p["tambien"]}</p>' if p.get("tambien") else ""
     return (f'<section class="{clase}" aria-labelledby="vt-h1"><div class="vt-wrap">{ruta}<div class="vt-portada__grid">'
-            f'<div><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1><p class="vt-lede">{p["lede"]}</p>'
+            f'<div><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1><p class="vt-lede"{marca}>{p["lede"]}</p>'
             f'<div class="vt-portada__trato">{etiqueta(p["etiqueta"])}<div>{fila_cta(p["mensaje"], tipo, "hero", hero=True, extra=p.get("boton_extra", ""))}'
             f'{tambien}</div></div></div>'
             f'<div class="vt-portada__foto">{figura(p["foto"], principal=True)}</div></div>{cuadro_datos()}</div></section>')

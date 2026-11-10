@@ -31,7 +31,7 @@ def _pago(p, numero, tipo):
 
 def render(k):
     tipo = k["tipo"]
-    secciones = [c.portada(k["portada"], tipo, k["migas"]), cz.saltos(k["saltos"])]
+    secciones = [c.portada(k["portada"], tipo, k["migas"]), c.respuesta(k.get("respuesta")), cz.saltos(k["saltos"])]
     numero = 0
     for numero, s in enumerate(k["secciones"], 1):
         secciones.append(_seccion(s, numero, tipo))
@@ -45,6 +45,6 @@ def render(k):
     ]
     j = k["jsonld"]
     grafo = [j["migas"], j["pagina"], j["catalogo"], c.faq_jsonld(f["preguntas"])]
-    return base.documento(k["meta"], "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
+    return base.documento(base.meta_de(k), "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),), scripts=SCRIPTS,
                           clase_body=CLASE_BODY)

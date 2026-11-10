@@ -10,9 +10,11 @@ corrigen el "Factura CFDI, factura CFDI" repetido (PARIDAD["meta"]). Revisión 2
 #negocio (PARIDAD["jsonld"]) y las migas del JSON-LD son las visibles. FAQPage de las preguntas visibles.
 """
 import datos
+import entidad
 import mensajes_paginas
 from componentes import dinero
 from contenido import b2b_comun
+from contenido import respuestas
 from contenido import seo
 
 P = datos.PRECIOS
@@ -133,13 +135,15 @@ PAQUETES = (
 )
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/mayoreo-pasto-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "b2b",
     "prefijo": "may",
     "meta": META,
-    "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": ("h1", "h2", ".vt-faq summary")},
+    "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": entidad.SPEAKABLE},
     # /empresas llega en la Etapa 3: entonces se inserta ("Empresas", "/empresas") aquí y en MIGAS_LD.
     "migas": (("Inicio", "/"), ("Pasto en rollo", "/pasto-en-rollo-tampico"), ("Mayoreo", None)),
     "portada": {
+        "respuesta": True,  # la entrada ya responde con el precio, el mínimo y la zona
         "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
         "kicker": "Constructoras · Fraccionamientos · Industria",
         "h1": 'Pasto al mayoreo <span class="vt-serif">para obras y fraccionamientos</span>',
@@ -263,8 +267,6 @@ PARIDAD = {
     },
     # Tipos del JSON-LD que ya no salen, con su motivo (paridad.comparar).
     "jsonld": {
-        "LocalBusiness": ("El provider del Service apunta por @id a la entidad única #negocio de las demás páginas (el "
-                          "nodo completo vive en la home), en vez de un LocalBusiness suelto. Revisión 2d."),
         "PostalAddress": "Iba dentro del LocalBusiness suelto del provider; la dirección completa es del nodo #negocio.",
     },
 }

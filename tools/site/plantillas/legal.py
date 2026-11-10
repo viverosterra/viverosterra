@@ -13,4 +13,4 @@ def render(k):
     if k.get("cierre"):
         ci = k["cierre"]
         cuerpo.append(c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], k["tipo"]))
-    return base.documento(k["meta"], "\n".join(cuerpo), jsonld_bloques=k["jsonld"], clase_body=CLASE_BODY)
+    return base.documento(base.meta_de(k), "\n".join(cuerpo), jsonld_bloques=k["jsonld"], clase_body=CLASE_BODY)

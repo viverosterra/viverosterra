@@ -63,10 +63,15 @@ class PreciosTest(unittest.TestCase):
         self.assertEqual(faq["mainEntity"][0]["acceptedAnswer"]["text"], datos.RESPUESTA_PRECIO_PASTO)
 
     def test_sin_fecha_de_vigencia_hasta_que_el_dueno_la_confirme(self):
-        """Pregunta pendiente al dueño: ni "vigente desde" ni el "septiembre 2026" de main, tampoco en el JSON-LD."""
+        """Pregunta pendiente al dueño: ni "vigente desde" ni el "septiembre 2026" de main. SEO fase 1 (2026-11-10): la
+        página sí dice cuándo se revisaron los precios por última vez ("Actualizado: noviembre de 2026" y dateModified),
+        con un dato versionado (datos.PRECIOS_ACTUALIZADOS), que no es una fecha de vigencia."""
         self.assertNotRegex(paridad.texto(HTML), r"(?i)vigente desde|actualizada en|(?:septiembre|noviembre) 2026")
         pagina = next(n for n in grafo() if n["@type"] == "WebPage")
-        self.assertNotIn("dateModified", pagina)
+        self.assertEqual(pagina["dateModified"], datos.PRECIOS_ACTUALIZADOS)
+        self.assertEqual(datos.PRECIOS_ACTUALIZADOS, "2026-11-10")
+        self.assertIn(f'<p class="vt-promesa">Actualizado: <time datetime="{datos.PRECIOS_ACTUALIZADOS}">noviembre de 2026'
+                      "</time></p>", HTML)
 
     def test_materiales_con_las_respuestas_del_dueno(self):
         """Tierra preparada, camiones de 5, 8 y 14 m³ y mármol con el precio de datos.py; piedra bola a granel según

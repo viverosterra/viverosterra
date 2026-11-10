@@ -15,6 +15,7 @@ from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
+FOTO_LD = "/img/portadas/palma-real-jardin-residencial-tampico.webp"  # la foto de la portada (image del Product)
 RUTA = "/palmas-tropicales-tampico"
 URL = f"{SITE}{RUTA}"
 NOMBRE = "Palmas tropicales"
@@ -136,13 +137,14 @@ CONTENIDO = {
         "migas": pc.migas_ld(NOMBRE, RUTA),
         "nodos": (
             {"@type": "Product", "name": "Palmas para jardín en Tampico", "brand": {"@type": "Brand", "name": datos.NOMBRE},
-             # Precio "desde" del tamaño chico (areca y coco plumoso), no un precio cerrado ni un conteo de ofertas.
-             "offers": {"@type": "Offer", "priceSpecification": {"@type": "PriceSpecification",
-                                                                 "minPrice": P["palma_desde"], "priceCurrency": "MXN"},
+             "image": f"{SITE}{FOTO_LD}",
+             # Precio "desde" del tamaño chico (areca y coco plumoso): AggregateOffer con lowPrice (SEO fase 1), sin
+             # tope ni conteo de ofertas porque no existen.
+             "offers": {"@type": "AggregateOffer", "lowPrice": P["palma_desde"], "priceCurrency": "MXN",
                         "seller": {"@id": pc.NEGOCIO}}},
             pc.lista_ld(NOMBRE, [s for s, _t, _a in ESPECIES]),
         ),
-        "speakable": ("#vt-h1", ".vt-portada .vt-lede", ".vt-faq details:first-child"),
+        "speakable": (".vt-portada .vt-lede", ".vt-faq details:first-child p"),
     },
 }
 
@@ -150,9 +152,6 @@ PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION, {clave: (DESCRIPCION, "La garantía de 30 días se publica siempre «con condiciones» (regla del dueño); el "
                                   "resto de la descripción no cambia.") for clave in ("description", "og:description")}),
     "jsonld": {
-        "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS + " La oferta de palmas lo nombra como seller.",
-        "AggregateOffer": ("Pasa a Offer con PriceSpecification (minPrice del tamaño chico): «desde $250» es un mínimo, "
-                           "no un rango de ofertas contadas (offerCount no tenía respaldo)."),
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {

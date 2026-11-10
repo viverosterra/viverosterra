@@ -173,9 +173,13 @@ class TiendaPublicadaTest(unittest.TestCase):
         self.assertIn("envío local según tu colonia", cuerpo)
         self.assertIn(f"Material desde <b>${min(m['rollo'] for m in data.MODELOS)}</b>/m²", cuerpo)
         self.assertNotIn("envío por rollo según tu estado", cuerpo)
-        self.assertTrue({"LocalBusiness", "Store", "Service", "FAQPage", "BreadcrumbList"} <= tipos)
-        # Como en main: sin HowTo ni SpeakableSpecification (el HowTo es del pasto en rollo).
+        # SEO fase 1: el negocio es la entidad única (GardenStore + LocalBusiness, nodo mínimo); ya no un Store propio.
+        self.assertTrue({"LocalBusiness", "GardenStore", "Service", "FAQPage", "BreadcrumbList", "WebPage"} <= tipos)
+        self.assertNotIn("Store", tipos)
+        # Sin HowTo (es del pasto en rollo). Desde la fase 1 el speakable va dentro del WebPage, nunca suelto.
         self.assertFalse({"HowTo", "SpeakableSpecification"} & tipos)
+        pagina = next(n for n in grafo(texto) if n["@type"] == "WebPage")
+        self.assertEqual(pagina["speakable"]["cssSelector"], ["[data-vt-respuesta]"])
 
     def test_barras_fijas_que_no_se_tapan(self):
         for ruta in TIENDA:

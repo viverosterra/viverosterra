@@ -156,4 +156,6 @@ def pagina(slug):
     return SimpleNamespace(CONTENIDO=contenido(m), PARIDAD={**PARIDAD, "meta": seo.paridad(*titulo_y_descripcion(m))})
 
 
-PARIDAD = {"reemplazos": {}, "retirados": {}}
+M_VENDEDOR = ("SEO fase 1: el vendedor de cada producto es la entidad única #negocio por @id (antes, una Organization suelta "
+              "con nombre, URL y teléfono en cada oferta).")
+PARIDAD = {"reemplazos": {}, "retirados": {}, "jsonld": {"Organization": M_VENDEDOR}}

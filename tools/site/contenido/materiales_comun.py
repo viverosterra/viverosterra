@@ -113,30 +113,37 @@ def producto(nombre, descripcion, imagen, sku=None, ofertas=()):
     return nodo
 
 
-def oferta(url, unidad, precio=None, desde=None, nombre=None, descripcion=None):
+def oferta(url, unidad, precio=None, desde=None, nombre=None, descripcion=None, agregada=False):
     """Offer con su precio por unidad (UnitPriceSpecification) de datos.py: precio exacto (también como price del Offer)
-    o, si es "desde", minPrice. Sin "InStock" (no hay dato de existencias) y con el seller por @id a #negocio."""
+    o, si es "desde", minPrice. Con agregada=True (el "desde" de un Product; SEO fase 1) el nodo es un AggregateOffer
+    con lowPrice: Google no lee el minPrice de la especificación como precio del producto (sin highPrice ni offerCount,
+    que no existen). El "desde" de un Service (las zonas) sigue como Offer. Sin "InStock" (no hay dato de existencias) y
+    con el seller por @id a #negocio."""
+    if agregada and desde is None:
+        raise ValueError("agregada=True es solo para precios «desde»")
     spec = {"@type": "UnitPriceSpecification", "priceCurrency": "MXN", "unitText": unidad}
     spec.update({"price": precio} if desde is None else {"minPrice": desde})
-    nodo = {"@type": "Offer", "url": url, "priceCurrency": "MXN"}
+    nodo = {"@type": "AggregateOffer" if agregada else "Offer", "url": url, "priceCurrency": "MXN"}
     if nombre:
         nodo["name"] = nombre
     if desde is None:
         nodo["price"] = precio
+    elif agregada:
+        nodo["lowPrice"] = desde
     if descripcion:
         nodo["description"] = descripcion
     return {**nodo, "priceSpecification": spec, "seller": NEGOCIO}
 
 
-SPEAKABLE = ("#vt-h1", ".vt-portada .vt-lede", ".vt-faq summary")
+SPEAKABLE = (".vt-portada .vt-lede", ".vt-faq details p")  # las respuestas, no los encabezados (SEO fase 1)
 
 # Motivos de paridad que se repiten en las cuatro páginas.
 MOTIVO_PRECIO = ("No está en datos.PRECIOS: el dueño lo dejó “según cotización” (respuestas del 2026-11-08) y nunca "
                  "se inventa.")
 MOTIVO_SIN_PRODUCTO = ("Sin precio en datos.py no hay oferta, y un Product sin oferta no sirve: la página queda como "
                        "WebPage ligada a #negocio (el dueño la dejó según cotización, 2026-11-08).")
-MOTIVO_LOCALBUSINESS = ("El seller del Product apunta por @id a la entidad única #negocio (el nodo completo vive en la "
-                        "home), en vez de un LocalBusiness suelto, como en 2d y 2e.")
+MOTIVO_OFERTA_DESDE = ("SEO fase 1: el precio del producto es un «desde», así que su oferta es un AggregateOffer con "
+                       "lowPrice (Google no lee el minPrice de un Offer como precio); el vendedor sigue por @id.")
 MOTIVO_AUTOR = ("Bloque de autor con “+18 años” y “Productor directo” (sin respaldo en datos.py); la entidad y el autor "
                 "son de la Etapa 4.")
 MOTIVO_PESO_COSTAL = ("Main publicaba dos pesos distintos para el mismo costal y el dueño no tiene el peso de los "

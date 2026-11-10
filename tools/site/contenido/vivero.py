@@ -2,10 +2,12 @@
 datos.py. Fuera (sin respaldo o contra una regla del dueño): "Lun–Sáb 9am–6pm" (el sábado cierra a las 14 h), "Variedades en
 stock", "te decimos si la tenemos disponible", "precios orientativos", "precios más bajos" y "+18 años"."""
 import datos
+import entidad
 import mensajes_paginas
 from componentes import boton_mapas, dinero
 from componentes_util import META_AUTOR_RETIRADA
 from contenido import seo
+from contenido import respuestas
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -25,11 +27,18 @@ PREGUNTAS = (
     ("¿Puedo comprar plantas al mayoreo para mi proyecto?", "Sí. Atendemos tanto a clientes particulares como a constructoras, arquitectos, hoteles y empresas. Escríbenos por WhatsApp con tu requerimiento y te cotizamos por volumen."),
 )
 MENSAJE = mensajes_paginas.UTILITARIAS["vivero"]
+# SEO fase 1: las categorías del vivero como lista de sus páginas (antes, un OfferCatalog con tres Product sin precio ni
+# foto: Google los marca como productos inválidos y no hay un precio real que ponerles).
+CATEGORIAS_LD = {"@type": "ItemList", "name": "Categorías del vivero", "itemListElement": [
+    {"@type": "ListItem", "position": n, "name": nombre, "url": f"{SITE}{ruta}"} for n, (nombre, ruta) in enumerate((
+        ("Palmas Tropicales", "/palmas-tropicales-tampico"), ("Plantas Ornamentales", "/plantas-para-jardin-tampico"),
+        ("Árboles para Jardín", "/arboles-ornamentales-tampico"), ("Catálogo completo", "/catalogo")), 1)]}
 # SEO fase 0 (mapa de palabras clave, 2026-11-10): título de 60 y descripción de 153; el mismo texto va en Open Graph.
 TITULO = f"Vivero en Tampico y Cd. Madero: {datos.VARIEDADES} Plantas | {datos.NOMBRE}"
 DESCRIPCION = ("Vivero en Cd. Madero, frente a Walmart: más de 200 variedades de plantas, palmas y árboles. "
                f"{datos.HORARIO}. Ve cómo llegar y visítanos.")
 CONTENIDO = {
+    "respuesta": respuestas.de("/vivero-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "vivero",
     "meta": {"title": TITULO, "description": DESCRIPCION,
              "robots": "index, follow", "canonical": URL,
@@ -64,19 +73,15 @@ CONTENIDO = {
                "lede": "Escríbenos con el nombre o una foto y te decimos qué opciones hay para tu espacio y el clima de Tampico.",
                "mensaje": mensajes_paginas.UTILITARIAS["vivero_planta"]},
     "jsonld": ({"@context": "https://schema.org", "@graph": [
-        {"@type": "LocalBusiness", "name": datos.NOMBRE, "description": f"Vivero en Ciudad Madero con más de 200 variedades de plantas, palmas y árboles. Atendemos Tampico, Madero y Altamira desde {datos.DESDE}.",
-         "telephone": datos.TELEFONO_TEL, "url": URL, "image": f"{SITE}/img/plantas-tropicales-tampico-viveros.png",
-         "address": {"@type": "PostalAddress", "streetAddress": datos.CALLE, "addressLocality": datos.CIUDAD, "addressRegion": "Tamaulipas", "postalCode": datos.CP, "addressCountry": "MX"},
-         "geo": {"@type": "GeoCoordinates", "latitude": datos.GEO[0], "longitude": datos.GEO[1]},
-         "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": list(d), "opens": a, "closes": c} for d, a, c in datos.HORARIO_LD],
-         "areaServed": ["Tampico", "Ciudad Madero", "Altamira", "Tamaulipas"],
-         "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Catálogo de plantas, palmas y árboles", "itemListElement": [
-             {"@type": "Offer", "itemOffered": {"@type": "Product", "name": n}} for n in ("Palmas Tropicales", "Plantas Ornamentales", "Árboles para jardín")]}},
+        entidad.negocio(),
+        CATEGORIAS_LD,
         {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in PREGUNTAS]},
         {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": SITE},
                                                         {"@type": "ListItem", "position": 2, "name": "Vivero en Tampico", "item": URL}]},
-        {"@type": "SpeakableSpecification", "cssSelector": ["h1", "h2", ".vt-faq summary"]}]},),
+        {"@type": "SpeakableSpecification", "cssSelector": list(entidad.SPEAKABLE)}]},),
 }
+M_CATALOGO = ("SEO fase 1: el OfferCatalog traía tres Product sin precio ni foto (inválidos para Google) y no hay un precio "
+              "real que ponerles; las categorías van como ItemList con el enlace a su página.")
 PARIDAD = {
     "reemplazos": {"Viveros Terra · Tampico": "Viveros Terra en Ciudad Madero, frente a Walmart",
                    "Categorías disponibles en el vivero": "Categorías en el vivero",
@@ -85,5 +90,5 @@ PARIDAD = {
     "retirados": {},
     "meta_retirada": META_AUTOR_RETIRADA,
     "meta": seo.paridad(TITULO, DESCRIPCION, {"og:description": (DESCRIPCION, "Sin “Productor directo”: el dueño no lo ha confirmado y 2d y 2f ya lo retiraron.")}),
-    "jsonld": {},
+    "jsonld": {tipo: M_CATALOGO for tipo in ("OfferCatalog", "Offer", "Product")},
 }

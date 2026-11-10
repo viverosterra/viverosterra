@@ -18,7 +18,9 @@ import paginas  # noqa: E402
 from test_reglas import textos_publicos  # noqa: E402
 
 P = datos.PRECIOS
-BASE_LD = {"Service", "FAQPage", "BreadcrumbList", "SpeakableSpecification"}
+# SEO fase 1: el speakable ya no es un nodo suelto (va dentro del WebPage) y entidad.completar cierra el grafo con el
+# WebPage y los nodos mínimos del negocio (GardenStore + LocalBusiness) y del sitio.
+BASE_LD = {"Service", "FAQPage", "BreadcrumbList", "WebPage", "GardenStore", "LocalBusiness", "WebSite"}
 # ruta, secciones propias de la página (entre opciones y la objeción), cifras visibles y tipos del JSON-LD.
 ESPERADO = {
     "diseno": {"ruta": "/diseno-jardines-tampico", "extra": (), "ld": BASE_LD,
@@ -126,10 +128,12 @@ class ComunTest(unittest.TestCase):
     def test_json_ld_conservado_y_faq_de_lo_visible(self):
         for clave, e in ESPERADO.items():
             _h, main, _t, grafo = pagina(clave)
-            nodos = {n["@type"]: n for n in grafo}
+            nodos = {tipo: n for n in grafo for tipo in ([n["@type"]] if isinstance(n["@type"], str) else n["@type"])}
             visibles = [componentes.texto_plano(s) for s in re.findall(r"<summary>(.*?)</summary>", main)]
             with self.subTest(pagina=clave):
                 self.assertEqual(set(nodos), e["ld"])
+                self.assertEqual(nodos["WebPage"]["speakable"]["cssSelector"], ["[data-vt-respuesta]", ".vt-faq details p"])
+                self.assertEqual(nodos["Service"]["provider"], {"@id": f"{datos.SITIO}/#negocio"})
                 self.assertEqual([q["name"] for q in nodos["FAQPage"]["mainEntity"]], visibles)
                 self.assertEqual(len(visibles), 8)
 

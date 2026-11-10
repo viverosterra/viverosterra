@@ -19,10 +19,11 @@ TEXTO = textos_publicos(HTML)
 
 
 def ld(tipo):
+    """Nodo del @graph de la home con ese tipo (SEO fase 1: un solo bloque con @graph)."""
     for bloque in re.findall(r'<script type="application/ld\+json">(.*?)</script>', HTML, re.S):
-        nodo = json.loads(bloque)
-        if nodo.get("@type") == tipo:
-            return nodo
+        for nodo in json.loads(bloque).get("@graph", ()):
+            if tipo in ([nodo["@type"]] if isinstance(nodo["@type"], str) else nodo["@type"]):
+                return nodo
     raise AssertionError(tipo)
 
 

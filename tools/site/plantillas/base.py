@@ -6,11 +6,29 @@ Sin Google Fonts ni CSS viejo: las fuentes y terra.css llegan con la región vt:
 import json
 from html import escape
 
+import entidad
+
 
 def jsonld(bloque):
     """<script> de JSON-LD compacto; "</" se escapa para que el texto nunca cierre el script."""
     texto = json.dumps(bloque, ensure_ascii=False, separators=(",", ":"))
     return '<script type="application/ld+json">' + texto.replace("</", "<\\/") + "</script>"
+
+
+def meta_de(k):
+    """La meta del contenido con sus migas visibles (k["migas"]), para que documento arme el BreadcrumbList de ellas, y
+    (las utilitarias las traen en k["cabeza"]) y con la fecha de su respuesta directa (k["respuesta"]["fecha"]) como dateModified del WebPage."""
+    modificado = (k.get("respuesta") or {}).get("fecha") or k["meta"].get("modificado")
+    migas = k.get("migas") or (k.get("cabeza") or {}).get("migas")
+    return {**k["meta"], "migas": migas, "modificado": modificado}
+
+
+def imagen_de(foto):
+    """Ruta de la versión más grande de la foto principal (la última del srcset o su src), para el og:image de las
+    páginas que no declaran uno: siempre una foto real que la página ya muestra."""
+    if foto.get("srcset"):
+        return foto["srcset"].split(",")[-1].split()[0]
+    return foto["src"]
 
 
 def precarga_imagen(f):
@@ -20,11 +38,16 @@ def precarga_imagen(f):
 
 
 def documento(meta, cuerpo, *, jsonld_bloques=(), precargas=(), scripts=(), head_extra=(), tras_main="",
-              clase_body="vt-pagina"):
+              clase_body="vt-pagina", imagen=None):
     """meta: title, description, robots, canonical, og (pares en el orden publicado) y, opcionales, alternos
     (hreflang, href) y twitter (pares name/content de la Twitter Card). head_extra: líneas después del JSON-LD (datos
     para el JS de la tienda). tras_main: marcado fijo fuera de <main> (lista de cotización, aviso y barra de compra).
-    clase_body "vt-pagina vt-tienda" hace que el shell agregue terra-tienda.css."""
+    clase_body "vt-pagina vt-tienda" hace que el shell agregue terra-tienda.css. meta["modificado"] (AAAA-MM-DD,
+    opcional) es el dateModified del WebPage. imagen: ruta de la foto principal de la página, para el og:image de las
+    que no declaran uno. meta["migas"] (opcional, lo pone meta_de): las migas visibles, para que el BreadcrumbList del
+    JSON-LD diga lo mismo. El grafo se cierra con entidad.completar y la meta social con entidad.meta_social."""
+    jsonld_bloques = entidad.completar(jsonld_bloques, meta, cuerpo, meta.get("migas"))
+    meta = entidad.meta_social(meta, imagen)
     lineas = [
         "<!DOCTYPE html>",
         '<html lang="es-MX">',

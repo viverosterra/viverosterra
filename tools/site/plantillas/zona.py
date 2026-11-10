@@ -33,5 +33,5 @@ def render(k):
     ]
     j = k["jsonld"]
     grafo = [j["migas"], j["servicio"], c.faq_jsonld(f["preguntas"])]
-    return base.documento(k["meta"], "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
+    return base.documento(base.meta_de(k), "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),))

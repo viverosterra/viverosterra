@@ -271,6 +271,5 @@ PARIDAD = {
                  "según cotización."),
     },
     "jsonld": {
-        "LocalBusiness": mc.MOTIVO_LOCALBUSINESS,
     },
 }

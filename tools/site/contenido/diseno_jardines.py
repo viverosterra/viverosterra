@@ -8,9 +8,11 @@ Título y descripción (también en Open Graph y Twitter Card): los de la fase 0
 Etapa 4); FAQPage sale de las preguntas visibles. PARIDAD: tests/test_paridad.py.
 """
 import datos
+import entidad
 import mensajes_paginas
 from componentes import dinero, mensualidades
 from contenido import seo
+from contenido import respuestas
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -42,16 +44,15 @@ META = {
 }
 
 # Service y migas como estaban publicados (texto sin acentos incluido: el grafo único es de la Etapa 4).
-_PROVEEDOR = {"@type": "LocalBusiness", "name": datos.NOMBRE, "telephone": datos.TELEFONO_TEL,
-              "address": {"@type": "PostalAddress", "streetAddress": datos.CALLE, "addressLocality": datos.CIUDAD,
-                          "addressRegion": "Tamaulipas", "postalCode": datos.CP, "addressCountry": "MX"}}
+# SEO fase 1: el proveedor es la entidad única por @id (antes, un LocalBusiness suelto con su dirección).
+_PROVEEDOR = entidad.REF
 SERVICIO = {
     "@type": "Service", "serviceType": "Diseno de Jardines", "name": "Diseno de Jardines Tampico - Plan Terra",
     "description": ("Servicio profesional de diseno de jardines residenciales, corporativos y de desarrollo en Tampico, "
                     "Ciudad Madero y Altamira. Plan Terra con propuesta visual, seleccion de plantas y planos segun el "
                     "nivel contratado."),
     "provider": _PROVEEDOR,
-    "areaServed": ["Tampico", "Ciudad Madero", "Altamira", "Tamaulipas"],
+    "areaServed": [{"@type": "City", "name": ciudad} for ciudad in entidad.CIUDADES],
     "offers": [
         {"@type": "Offer", "name": "Plan Terra Esencial", "price": str(ESENCIAL), "priceCurrency": "MXN",
          "description": ("Propuesta visual con montajes, diseno basado en gustos, lista de plantas, cotizacion y asesoria "
@@ -199,10 +200,11 @@ FIGURAS = (
 )
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/diseno-jardines-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-diseno",
     "prefijo": "diseno",
     "meta": META,
-    "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": ("h1", "h2", ".vt-faq summary")},
+    "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Diseño de jardines", None)),
     "portada": {
         "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
@@ -326,6 +328,8 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "jsonld": {"PostalAddress": ("SEO fase 1: iba dentro del LocalBusiness suelto del provider; ahora el provider es la entidad única por @id y la "
+                              "dirección completa vive en el nodo #negocio de la home y de /vivero-tampico.")},
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {
         "Diseño de jardines con plan y presupuesto claros": "Diseño de jardines en Tampico con plan y presupuesto claros",

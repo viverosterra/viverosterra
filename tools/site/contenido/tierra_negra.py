@@ -246,8 +246,7 @@ PARIDAD = {
         "$5,000": ("El “camión desde $5,000” no lo confirmó el dueño (2026-11-08): va la tabla de camiones de 5, 8 y "
                    "14 m³ de datos.py."),
     },
-    "jsonld": {"LocalBusiness": mc.MOTIVO_LOCALBUSINESS,
-               "AggregateOffer": ("Pasa a un Offer por presentación con su UnitPriceSpecification (costal, preparada, "
+    "jsonld": {"AggregateOffer": ("Pasa a un Offer por presentación con su UnitPriceSpecification (costal, preparada, "
                                   "m³ y los tres camiones, de datos.py): cada precio con su unidad, en vez de un rango "
                                   "sin unidad y sin InStock.")},
     # Cifras que main publicaba y no salen (paridad.py no las captura: se declaran aquí).

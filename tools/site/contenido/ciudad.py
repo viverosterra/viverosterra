@@ -9,6 +9,7 @@ from types import SimpleNamespace
 import componentes_tienda as t
 import data
 import datos
+import entidad
 from ciudades import CIUDADES
 from componentes import dinero
 from contenido import seo
@@ -50,11 +51,12 @@ def _producto(x, zona, url, desde):
         "@type": "Product", "name": f"Pasto sintético con envío a {x['nombre_largo']}",
         "brand": {"@type": "Brand", "name": datos.NOMBRE}, "image": [f"{SITE}{GAL}/{FOTO}.webp"],
         "description": f"Pasto sintético en rollo de 50 m² con envío a {x['nombre_largo']}, desde ${desde}/m² puesto en tu casa.",
+        # SEO fase 1: el precio es "desde" (el rollo del modelo más barato; el tope es el menudeo del más caro), así que
+        # va como AggregateOffer con lowPrice y highPrice, y con el vendedor por @id a la entidad única.
         "offers": {
-            "@type": "Offer", "priceCurrency": "MXN", "price": str(m["rollo"]),
-            "priceSpecification": {"@type": "UnitPriceSpecification", "price": str(m["rollo"]), "priceCurrency": "MXN",
-                                   "unitText": "m²"},
-            "availability": "https://schema.org/InStock", "url": url,
+            "@type": "AggregateOffer", "priceCurrency": "MXN", "lowPrice": str(m["rollo"]),
+            "highPrice": str(max(x["t1"] for x in data.MODELOS)), "offerCount": str(len(data.MODELOS)),
+            "availability": "https://schema.org/InStock", "url": url, "seller": entidad.REF,
             "shippingDetails": {
                 "@type": "OfferShippingDetails",
                 "shippingRate": {"@type": "MonetaryAmount", "value": str(data.ZONAS[zona]), "currency": "MXN"},
@@ -182,6 +184,11 @@ def contenido(x):
     }
 
 
+M_OFERTA = ("SEO fase 1: el precio de la página es un «desde» (rollo del modelo más barato), así que la oferta es un "
+            "AggregateOffer con lowPrice y highPrice y el vendedor por @id; ya no un Offer con un precio fijo.")
+M_JSONLD = {"Offer": M_OFERTA, "UnitPriceSpecification": M_OFERTA}
+
+
 def paridad(x):
     """La sección "Instálalo tú" pasa a la pregunta de instalación. En la zona B (Monterrey y Veracruz), 12 mensualidades
     sobre $19,998 son 1,666.5: la página decía $1,666 (round() de Python) y el cotizador cobra $1,667 (Math.round);
@@ -189,7 +196,7 @@ def paridad(x):
     reemplazos = {"Instalarlo tú mismo es sencillo": f"¿Quién lo instala en {x['nombre']}?"}
     if data.zona_de(x["estado"]) == "B":
         reemplazos["$1,666"] = "$1,667"
-    return {"meta": seo.paridad(*titulo_y_descripcion(x)), "reemplazos": reemplazos, "retirados": {}}
+    return {"meta": seo.paridad(*titulo_y_descripcion(x)), "reemplazos": reemplazos, "retirados": {}, "jsonld": M_JSONLD}
 
 
 def pagina(slug):

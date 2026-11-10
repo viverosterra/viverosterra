@@ -7,8 +7,10 @@ Canonical, Product y migas del JSON-LD se conservan como estaban publicados; FAQ
 PARIDAD: tests/test_paridad.py.
 """
 import datos
+import entidad
 from componentes import dinero, dinero_exacto, mensualidades
 from contenido import seo
+from contenido import respuestas
 
 P = datos.PRECIOS
 MINIMO = P["pasto_mayoreo_minimo_m2"]
@@ -48,9 +50,11 @@ PRODUCTO = {
                     f"${P['pasto_solo_m2']}/m² solo el pasto e instalado desde ${P['pasto_instalado_m2']}/m², con "
                     "garantía de arraigo."),
     "brand": {"@type": "Brand", "name": datos.NOMBRE},
+    # SEO fase 1: la foto real de la portada y el vendedor por @id a la entidad única (antes, un LocalBusiness suelto).
+    "image": f"{datos.SITIO}/img/despues-instalacion-pasto-san-agustin-tampico.webp",
     "offers": {"@type": "Offer", "priceCurrency": "MXN", "price": str(P["pasto_solo_m2"]),
                "priceValidUntil": datos.PRECIOS_VIGENTES_HASTA, "availability": "https://schema.org/InStock",
-               "seller": {"@type": "LocalBusiness", "name": datos.NOMBRE, "telephone": datos.TELEFONO_TEL}},
+               "seller": entidad.REF},
 }
 
 MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
@@ -101,11 +105,12 @@ SECTORES = (
 )
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/pasto-en-rollo-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-pasto",
     "prefijo": "pasto",
     "meta": META,
     "jsonld": {"producto": PRODUCTO, "migas": MIGAS_LD, "howto": "Cómo instalar pasto en rollo San Agustín en Tampico",
-               "speakable": ("h1", "h2", ".vt-faq summary")},
+               "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Pasto en rollo", None)),
     "portada": {
         "kicker": "Pasto natural · Tampico, Madero y Altamira",
