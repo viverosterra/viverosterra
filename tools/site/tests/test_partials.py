@@ -37,6 +37,27 @@ class HeadTest(unittest.TestCase):
         self.assertIn('<link rel="stylesheet" href="/css/terra-blog.g.css">', partials.head(urls, False, blog=True))
         self.assertNotIn("terra-blog", partials.head(urls, False, precios=True))
 
+    def test_favicon_cuadrado_svg_png_e_ico(self):
+        """SEO fase 0 (2026-11-10): el icono del sitio es cuadrado (SVG y PNG de 192) y no el logo de 1536×1024, que
+        Google no acepta como favicon; /favicon.ico existe para los navegadores que lo piden sin leer el HTML."""
+        h = partials.head(URLS, legacy=False)
+        self.assertIn('<link rel="icon" type="image/svg+xml" href="/img/favicon.svg">', h)
+        self.assertIn('<link rel="icon" type="image/png" sizes="192x192" href="/img/favicon-192.png">', h)
+        self.assertNotIn("logo-viveros-terra-tampico.png", h)
+        self.assertEqual(h.count('rel="icon"'), 2)
+        img = paginas.PUBLIC / "img"
+        svg = (img / "favicon.svg").read_text(encoding="utf-8")
+        ancho, alto = re.search(r'viewBox="0 0 (\d+) (\d+)"', svg).groups()
+        self.assertEqual(ancho, alto)
+        self.assertTrue(svg.lstrip().startswith("<svg") and svg.rstrip().endswith("</svg>"))
+        png = (img / "favicon-192.png").read_bytes()
+        self.assertEqual(png[:8], b"\x89PNG\r\n\x1a\n")
+        self.assertEqual((int.from_bytes(png[16:20], "big"), int.from_bytes(png[20:24], "big")), (192, 192))
+        ico = (paginas.PUBLIC / "favicon.ico").read_bytes()
+        self.assertEqual(ico[:4], b"\x00\x00\x01\x00", "cabecera de un .ico")
+        self.assertGreaterEqual(int.from_bytes(ico[4:6], "little"), 1)
+        self.assertEqual((ico[6], ico[7]), (48, 48), "primera imagen del .ico: 48 × 48")
+
     def test_region_con_gtag_unico_y_assets_con_hash(self):
         h = partials.head(URLS, legacy=False)
         self.assertTrue(h.startswith("<!-- vt:head -->\n") and h.endswith("\n<!-- /vt:head -->"))

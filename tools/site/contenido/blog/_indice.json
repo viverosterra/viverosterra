@@ -1,8 +1,8 @@
 {
  "slug": "/blog",
  "meta": {
-  "title": "Blog de Jardinería Tampico · Viveros Terra",
-  "description": "Blog de jardinería para el clima de Tampico. Guías de pasto San Agustín, palmas tropicales, árboles para banqueta, riego y diseño de jardines en Tamaulipas.",
+  "title": "Blog de Jardinería para Tampico | Viveros Terra",
+  "description": "Guías de jardinería para el clima de Tampico: pasto San Agustín, palmas, árboles, riego, plagas y temporada de lluvias. Aprende y cotiza con nosotros.",
   "robots": "index, follow",
   "canonical": "https://www.viverosterra.com/blog",
   "og": [
@@ -20,11 +20,11 @@
    ],
    [
     "og:title",
-    "Blog de Jardinería Tampico | Viveros Terra"
+    "Blog de Jardinería para Tampico | Viveros Terra"
    ],
    [
     "og:description",
-    "Guías prácticas de jardinería adaptadas al clima cálido-húmedo de Tampico y la zona Huasteca."
+    "Guías de jardinería para el clima de Tampico: pasto San Agustín, palmas, árboles, riego, plagas y temporada de lluvias. Aprende y cotiza con nosotros."
    ],
    [
     "og:image",
@@ -42,11 +42,11 @@
    ],
    [
     "twitter:title",
-    "Blog de Jardinería Tampico · Viveros Terra"
+    "Blog de Jardinería para Tampico | Viveros Terra"
    ],
    [
     "twitter:description",
-    "Guías prácticas de jardinería adaptadas al clima cálido-húmedo de Tampico y la zona Huasteca."
+    "Guías de jardinería para el clima de Tampico: pasto San Agustín, palmas, árboles, riego, plagas y temporada de lluvias. Aprende y cotiza con nosotros."
    ],
    [
     "twitter:image",

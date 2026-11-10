@@ -126,7 +126,14 @@ class ArticuloTest(unittest.TestCase):
             codigo = "Servicio relacionado" if tema["tema"] in ("riego", "diseno", "mantenimiento") else "Producto relacionado"
             with self.subTest(slug=slug):
                 self.assertIn(f"<span>{codigo}</span>", html)
-                self.assertEqual("<span>Con IVA</span>" in html, tema["etiqueta"]["monto"] != datos.SEGUN_COTIZACION)
+                # SEO fase 0 (2026-11-10): "Con IVA" en el encabezado de la etiqueta cubre todos sus renglones; no va
+                # si alguno es de pasto sin instalar, de palmas o de árboles (no llevan IVA) ni si se cotiza.
+                con_iva = (tema["etiqueta"]["monto"] != datos.SEGUN_COTIZACION
+                           and tema["tema"] not in ("pasto-natural", "palmas", "arboles"))
+                self.assertEqual("<span>Con IVA</span>" in html, con_iva)
+                if tema["tema"] == "pasto-natural":
+                    self.assertIn("<small>Instalado · desde</small><b>$120</b><span>/m² con IVA</span>", html)
+                    self.assertIn("<span>Solo el pasto</span><b>$85 /m²</b>", html)
 
     def test_cierre_segun_el_tema_del_articulo(self):
         esperado = {"cesped-amarillo-tampico-causas-soluciones": "mantenimiento", "errores-pasto-san-agustin-tampico": "mantenimiento",

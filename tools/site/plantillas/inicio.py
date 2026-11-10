@@ -119,7 +119,6 @@ def render(k):
     bloques = (
         {"@context": CONTEXTO, **j["negocio"]},
         {"@context": CONTEXTO, **c.faq_jsonld(f["preguntas"], speakable=j["speakable"])},
-        {"@context": CONTEXTO, **j["migas"]},
     )
     return base.documento(k["meta"], cuerpo, jsonld_bloques=bloques,
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),), scripts=SCRIPTS,

@@ -5,12 +5,13 @@ sin permanencia forzada y pago mensual.
 
 Precios de datos.PRECIOS (desde $750/mes; el residencial premium va "según cotización", datos.MANTENIMIENTO_PREMIUM,
 respuesta del dueño del 2026-11-07); frecuencias de
-datos.FRECUENCIAS_MANTENIMIENTO; visita con datos.VISITA_COSTO (su costo depende de la ubicación; nunca gratis). Título, descripción, canonical, Open Graph,
-Twitter Card, Service y migas como estaban publicados; FAQPage de las preguntas visibles. PARIDAD: tests/test_paridad.py.
+datos.FRECUENCIAS_MANTENIMIENTO; visita con datos.VISITA_COSTO (su costo depende de la ubicación; nunca gratis).
+Título y descripción (también en Open Graph y Twitter Card): los de la fase 0 de SEO (contenido/seo.py). Canonical, Service y migas como estaban publicados; FAQPage de las preguntas visibles. PARIDAD: tests/test_paridad.py.
 """
 import datos
 import mensajes_paginas
 from componentes import dinero
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -22,19 +23,19 @@ PREMIUM = datos.MANTENIMIENTO_PREMIUM  # el dueño no da precio "desde" para el 
 FRECUENCIAS = ", ".join(datos.FRECUENCIAS_MANTENIMIENTO[:-1]) + " o " + datos.FRECUENCIAS_MANTENIMIENTO[-1]
 MENSAJE = mensajes_paginas.SERVICIOS["/mantenimiento-jardines-tampico"]
 
+TITULO = f"Mantenimiento de Jardines Tampico desde {dinero(BASICO)} | Viveros Terra"
+DESCRIPCION = (f"Jardinero y mantenimiento de jardines en Tampico desde {dinero(BASICO)} al mes: poda, fertilización y control de "
+               "plagas con visitas programadas. Cotiza por WhatsApp.")
 META = {
-    "title": f"Mantenimiento de Jardines Tampico · desde {dinero(BASICO)}/mes",
-    "description": (f"Mantenimiento profesional de jardines en Tampico desde {dinero(BASICO)}/mes. Poda, fertilización y "
-                    "control de plagas. Planes residencial, empresarial e industrial."),
+    "title": TITULO,
+    "description": DESCRIPCION,
     "robots": "index, follow",
     "canonical": URL,
     "og": (
         ("og:type", "website"),
         ("og:url", URL),
-        ("og:title", f"Mantenimiento de Jardines Tampico desde {dinero(BASICO)}/mes | Viveros Terra"),
-        ("og:description", (f"Mantenimiento profesional de jardines en Tampico, Madero y Altamira desde "
-                            f"{dinero(BASICO)}/mes. Poda, fertilización, control de plagas y cuidados programados. "
-                            "Residencial, empresarial e industrial. Cotiza gratis por WhatsApp.")),
+        ("og:title", TITULO),
+        ("og:description", DESCRIPCION),
         ("og:image", f"{SITE}/img/mantenimiento-jardines-poda-pasto-tampico.webp"),
         ("og:locale", "es_MX"),
     ),
@@ -315,6 +316,7 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {
         "Mantenimiento de jardines en Tampico, cada mes": (
             "Mantenimiento de jardines y jardinero en Tampico con visitas programadas"),

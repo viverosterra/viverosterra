@@ -242,7 +242,12 @@ class ContenidoVisibleTest(unittest.TestCase):
     def test_pie_sin_iva_solo_en_esta_pagina(self):
         ctx = paginas.contexto(RUTA)
         self.assertNotIn("con IVA", partials.footer(ctx))
-        self.assertIn("con IVA incluido", partials.footer(paginas.contexto("/plantas-palmas-arboles-tampico")))
+        self.assertNotIn("Precios 2026", partials.footer(ctx))
+        # SEO fase 0 (2026-11-10): el pie de las demás páginas dice "Precios 2026" a secas; el IVA se explica junto a
+        # cada precio (el pasto sin instalar, las plantas, los árboles y las palmas no lo llevan).
+        otro = partials.footer(paginas.contexto("/plantas-palmas-arboles-tampico"))
+        self.assertIn(f"Tamaulipas · Precios {datos.ANIO}</p>", otro)
+        self.assertNotIn("IVA", otro)
 
     def test_menu_y_pie_llevan_nochebuenas_en_todo_el_sitio(self):
         ctx = paginas.contexto("/")

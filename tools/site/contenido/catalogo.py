@@ -13,23 +13,23 @@ import datos
 import mensajes_paginas
 from componentes import dinero
 from contenido import plantas_comun as pc
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
 RUTA = "/catalogo"
 URL = f"{SITE}{RUTA}"
-OG_DESCRIPCION = ("Más de 200 variedades de plantas, palmas y árboles con cotizador integrado, además de pasto y "
-                  "materiales para jardines en Tampico, Madero y Altamira.")
-TITULO = "Catálogo de plantas con precio en Tampico: arma tu lista y cotiza · Viveros Terra"
+TITULO = "Catálogo de Plantas y Árboles en Tampico | Viveros Terra"
 IMAGEN = f"{SITE}/img/plantas-tropicales-tampico-viveros.webp"
+DESCRIPCION = ("Catálogo con más de 200 plantas, palmas, árboles y pasto en Tampico. Filtra por categoría, arma tu lista y recibe la "
+               "cotización por WhatsApp.")
 META = {
     "title": TITULO,
-    "description": ("Más de 200 variedades de plantas, palmas, árboles y pasto en Tampico. Cotizador, filtros por categoría "
-                    "y entrega a domicilio. Viveros Terra."),
+    "description": DESCRIPCION,
     "robots": "index, follow",
     "canonical": URL,
     "og": (("og:type", "website"), ("og:url", URL), ("og:title", TITULO),
-           ("og:description", OG_DESCRIPCION),
+           ("og:description", DESCRIPCION),
            ("og:image", IMAGEN), ("og:image:width", "1200"), ("og:image:height", "630"),
            ("og:site_name", "Viveros Terra"), ("og:locale", "es_MX")),
     "twitter": (("twitter:card", "summary_large_image"), ("twitter:title", TITULO), ("twitter:image", IMAGEN)),
@@ -67,8 +67,8 @@ CONTENIDO = {
 }
 
 PARIDAD = {
-    "meta": {"og:description": (OG_DESCRIPCION, "Decía «Más de 200 variedades disponibles»: afirmación de existencias "
-                                                "sin verificar (el dueño no confirma disponibilidad en línea).")},
+    "meta": seo.paridad(TITULO, DESCRIPCION, {"og:description": (DESCRIPCION, "Decía «Más de 200 variedades disponibles»: afirmación de existencias "
+                                                "sin verificar (el dueño no confirma disponibilidad en línea).")}),
     "reemplazos": {
         "Pasto en Rollo Natural": "Pasto en rollo",
         "Materiales & Tierra": "Tierra negra",

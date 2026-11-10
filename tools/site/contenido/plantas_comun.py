@@ -27,7 +27,8 @@ GARANTIA = {
                ("Con el riego y los cuidados que te indicamos al entregar", True),
                ("Te decimos antes de sembrar qué especie va en sol, sombra o cerca del mar", True),
                ("Si te las llevas y las siembras tú, no aplica la garantía de arraigo", False)),
-    "pie": f"Recoges en {datos.DOMICILIO_CORTO} o te las llevamos en Tampico, Madero y Altamira.",
+    "pie": (f'Recoges en <a href="/vivero-tampico">el vivero de Cd. Madero</a> ({datos.CALLE_CORTA}) o te las llevamos '
+            "en Tampico, Madero y Altamira."),
 }
 
 # (clave, título, texto, filtro del catálogo). El conteo lo pone componentes_plantas.necesidades() en el build.

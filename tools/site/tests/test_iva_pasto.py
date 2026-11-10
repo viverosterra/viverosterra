@@ -1,7 +1,9 @@
 """Regla permanente del dueño (2026-11-09/10): el pasto natural sin instalar no lleva IVA. "Con IVA" o "IVA incluido"
 solo puede acompañar al pasto instalado (que ya lo incluye); nunca al precio de solo pasto ni al de mayoreo.
 
-Se revisa la home y las páginas de pasto natural (y la lista de precios, que repite los mismos datos). En cada bloque que
+Se revisan todas las páginas del sitio (desde la fase 0 de SEO, 2026-11-10; antes solo la home, las páginas de pasto
+natural y la lista de precios). Además, ningún H1 ni título dice "con IVA" (cubriría toda la página) y el menú y el pie,
+que salen en todas las páginas, tampoco: el IVA se explica junto a cada precio. En cada bloque que
 menciona el precio de solo pasto o el de mayoreo (un párrafo, un renglón de lista, una etiqueta de precio completa, una
 tabla con su leyenda, una respuesta del JSON-LD, una meta o un mensaje de WhatsApp), cada "con IVA" debe estar amarrado
 al instalado: lo último que se nombró antes, dentro de su misma frase o renglón, es el instalado o un precio que no es
@@ -22,9 +24,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import componentes as c  # noqa: E402
 import datos  # noqa: E402
 import paginas  # noqa: E402
+import partials  # noqa: E402
+import shell  # noqa: E402
 
 PUBLIC = paginas.PUBLIC
-PAGINAS = ("index.html", "pasto-en-rollo-tampico/index.html", "mayoreo-pasto-tampico/index.html", "precios/index.html")
+PAGINAS = tuple(sorted(str(p.relative_to(PUBLIC)) for p in shell.paginas_html()))
+PASTO_BLOG = ("cuando-plantar-pasto-tampico-calendario", "pasto-san-agustin-instalacion-mantenimiento",
+              "pasto-san-agustin-vs-japones")
 P = datos.PRECIOS
 SIN_IVA = tuple(str(P[k]) for k in ("pasto_solo_m2", "pasto_mayoreo_m2"))
 PRECIO_RE = re.compile(r"\$\s?(\d[\d,]*)")
@@ -99,6 +105,56 @@ class IvaDelPastoTest(unittest.TestCase):
             for nombre, piezas in bloques((PUBLIC / pagina).read_text(encoding="utf-8")):
                 hallazgos += [f"{pagina} · {nombre} · {frase[:160]}" for frase in faltas(piezas)]
         self.assertEqual(sorted(set(hallazgos)), [])
+
+    def test_se_revisa_todo_el_sitio(self):
+        self.assertGreater(len(PAGINAS), 100)
+        for pagina in ("index.html", "precios/index.html", *(f"blog/{slug}/index.html" for slug in PASTO_BLOG)):
+            self.assertIn(pagina, PAGINAS)
+
+    def test_ningun_h1_ni_titulo_dice_con_iva(self):
+        """Un "con IVA" en el H1 o en el <title> cubre toda la página, y casi todas citan algún precio que no lo lleva
+        (pasto solo, mayoreo, plantas). El H1 de /precios decía "2026, con IVA"."""
+        hallazgos = []
+        for pagina in PAGINAS:
+            html = (PUBLIC / pagina).read_text(encoding="utf-8")
+            for etiqueta, texto in re.findall(r"<(h1|title)\b[^>]*>(.*?)</\1>", html, re.S):
+                if POSITIVO_RE.search(plano(texto)):
+                    hallazgos.append(f"{pagina} · {etiqueta} · {plano(texto)}")
+        self.assertEqual(hallazgos, [])
+        self.assertIn(f"Precios de jardinería en Tampico {datos.ANIO}</h1>",
+                      re.sub(r"</?span[^>]*>", "", (PUBLIC / "precios/index.html").read_text(encoding="utf-8")))
+
+    def test_el_menu_y_el_pie_no_dicen_con_iva(self):
+        """El shell sale en todas las páginas: "Precios 2026 con IVA incluido" en el pie y "con IVA" junto a "Precios"
+        en el menú de celular cubrían también el pasto sin instalar."""
+        for ruta in ("/", "/precios", "/pasto-en-rollo-tampico", "/blog", "/pasto-sintetico", datos.NOCHEBUENAS["ruta"]):
+            ctx = paginas.contexto(ruta)
+            with self.subTest(ruta=ruta):
+                self.assertIsNone(POSITIVO_RE.search(plano(partials.header(ctx))))
+                self.assertIsNone(POSITIVO_RE.search(plano(partials.footer(ctx))))
+        hallazgos = []
+        for pagina in PAGINAS:
+            html = (PUBLIC / pagina).read_text(encoding="utf-8")
+            fuera = re.sub(r"<main\b.*</main>", " ", html, flags=re.S)
+            fuera = re.sub(r"<(script|style|svg|head)\b.*?</\1>", " ", fuera, flags=re.S)
+            if POSITIVO_RE.search(plano(fuera)):
+                hallazgos.append(pagina)
+        self.assertEqual(hallazgos, [])
+        self.assertIn(f"Precios {datos.ANIO}</p>", partials.footer(paginas.contexto("/")))
+        self.assertIn('href="/precios">Precios</a>', partials.header(paginas.contexto("/")))
+
+    def test_etiqueta_de_los_articulos_de_pasto_como_en_la_home(self):
+        """"Producto relacionado · Con IVA" cubría también el renglón "Solo el pasto $85": el IVA va, como en la
+        home, solo en el renglón del instalado."""
+        for slug in PASTO_BLOG:
+            html = (PUBLIC / "blog" / slug / "index.html").read_text(encoding="utf-8")
+            etiqueta = re.search(r'<div class="vt-etiqueta">(.*?)</div>', html, re.S).group(1)
+            piezas = [plano(p) for p in re.findall(r"<p\b[^>]*>(.*?)</p>", etiqueta, re.S)]
+            with self.subTest(slug=slug):
+                self.assertEqual(faltas(piezas), [])
+                self.assertIsNone(POSITIVO_RE.search(piezas[0]), piezas[0])
+                self.assertIn(f"Instalado · desde ${P['pasto_instalado_m2']} /m² con IVA", piezas)
+                self.assertIn(f"Solo el pasto ${P['pasto_solo_m2']} /m²", piezas)
 
     def test_llms_txt(self):
         lineas = (PUBLIC / "llms.txt").read_text(encoding="utf-8").split("\n")

@@ -14,6 +14,7 @@ import mensajes_paginas
 from componentes import dinero
 from contenido import catalogo_datos as cd
 from contenido import plantas_comun as pc
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -24,18 +25,18 @@ MENSAJE = mensajes_paginas.PLANTAS[RUTA]
 FLAMBOYAN = f"Flamboyán desde {dinero(P['flamboyan'])}"
 PALMAS_EN_CATALOGO = cd.cuenta({"cat": ["palmas"]})
 RIEGO = P["riego_m2"]
-OG_DESCRIPCION = ("Más de 200 variedades tropicales adaptadas al clima de Tampico. Palmas desde "
-                  f"{dinero(P['palma_desde'])}. Entrega a domicilio en Tampico, Madero y Altamira.")
 
+TITULO = "Plantas, Palmas y Árboles en Tampico | Viveros Terra"
+DESCRIPCION = ("Más de 200 variedades de plantas, palmas y árboles para el clima de Tampico: sol, sombra o salitre. Con entrega y "
+               "siembra. Arma tu lista y cotiza.")
 META = {
-    "title": "Plantas, palmas y árboles en Tampico: qué sembrar según tu jardín · Viveros Terra",
-    "description": ("Guía de plantas, palmas y árboles para el clima de Tampico: cuáles van en sol o sombra, cuáles "
-                    "aguantan salitre y cuánto crecen. Más de 200 variedades con entrega y siembra."),
+    "title": TITULO,
+    "description": DESCRIPCION,
     "robots": "index, follow",
     "canonical": URL,
     "og": (("og:type", "website"), ("og:url", URL),
-           ("og:title", "Plantas, palmas y árboles en Tampico: qué sembrar según tu jardín · Viveros Terra"),
-           ("og:description", OG_DESCRIPCION),
+           ("og:title", TITULO),
+           ("og:description", DESCRIPCION),
            ("og:image", f"{SITE}/img/paisajismo-alberca-plantas-tampico.webp"), ("og:locale", "es_MX")),
 }
 # Las tarjetas de especie del hub de main, en su orden y con su foto (decisión del dueño, 2026-11-08: las fotos quedan
@@ -156,8 +157,8 @@ CONTENIDO = {
 }
 
 PARIDAD = {
-    "meta": {"og:description": (OG_DESCRIPCION, "Decía «Desde $200»: precio sin confirmar (el dueño solo fijó palmas desde "
-                                                "$250, palma real $500 y flamboyán $250, 2026-11-07).")},
+    "meta": seo.paridad(TITULO, DESCRIPCION, {"og:description": (DESCRIPCION, "Decía «Desde $200»: precio sin confirmar (el dueño solo fijó palmas desde "
+                                                "$250, palma real $500 y flamboyán $250, 2026-11-07).")}),
     "jsonld": {
         "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",

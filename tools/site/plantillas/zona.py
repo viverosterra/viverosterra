@@ -10,7 +10,7 @@ import componentes_zonas as cz
 from plantillas import base
 
 CONTEXTO = "https://schema.org"
-VER_LISTA = ' <a href="/precios">Ver la lista completa</a>'
+VER_LISTA = ' <a href="/precios">Lista de precios de jardinería en Tampico</a>'
 
 
 def render(k):

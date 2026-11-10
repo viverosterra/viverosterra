@@ -63,7 +63,8 @@ def entrega(material):
         "lede": f"Lo recoges en el vivero o te lo llevamos. {datos.CONDICIONES_MATERIALES}",
         "items": (
             {"titulo": "Recoges en el vivero",
-             "texto": f"En {datos.DOMICILIO_CORTO} ({datos.REFERENCIA}). {datos.HORARIO}."},
+             "texto": (f'En el <a href="/vivero-tampico">vivero de Cd. Madero</a>: {datos.CALLE_CORTA} '
+                       f"({datos.REFERENCIA}). {datos.HORARIO}.")},
             {"titulo": "Te lo llevamos",
              "texto": (f"A Tampico, Ciudad Madero y Altamira; {datos.ZONAS_POR_PROYECTO}, por proyecto. "
                        f"{datos.ENTREGA_COBRO} Te decimos el costo antes de que confirmes.")},

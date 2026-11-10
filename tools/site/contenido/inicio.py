@@ -1,8 +1,9 @@
 """Contenido de la home (/). Solo datos: la plantilla es tools/site/plantillas/inicio.py.
 
 Copy de la maqueta aprobada (docs/diseno/hibrido/index.html) con los datos vivos de datos.py. Título, descripción,
-canonical, Open Graph y JSON-LD de negocio y migas se conservan como estaban publicados (los títulos se reescriben en la
-Etapa 3 y el grafo único llega en la Etapa 4). PARIDAD dice a dónde fue cada encabezado, pregunta, precio o enlace de la
+canonical, Open Graph y JSON-LD de negocio se conservan como estaban publicados (los títulos se reescriben en la
+Etapa 3 y el grafo único llega en la Etapa 4). Sin BreadcrumbList ni hreflang (SEO fase 0, 2026-11-10): la home no
+es una ruta y el sitio tiene un solo idioma. PARIDAD dice a dónde fue cada encabezado, pregunta, precio o enlace de la
 página anterior que ya no aparece igual (prueba: tools/site/tests/test_paridad.py).
 """
 import datos
@@ -33,7 +34,6 @@ META = {
         ("og:locale", "es_MX"),
         ("og:site_name", "Viveros Terra Tampico"),
     ),
-    "alternos": (("es-MX", datos.SITIO),),
     # Twitter Card como estaba publicada en main, salvo la descripción (sin "gratis").
     "twitter": (
         ("twitter:card", "summary_large_image"),
@@ -68,13 +68,6 @@ NEGOCIO = {
     "areaServed": ["Tampico", "Ciudad Madero", "Altamira", "Pánuco", "Tuxpan", "Victoria", "Tampico Centro",
                    "Madero Norte", "Madero Sur", "Altamira Industrial"],
 }
-
-MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
-    {"@type": "ListItem", "position": i, "name": nombre, "item": f"{datos.SITIO}{ruta}"}
-    for i, (nombre, ruta) in enumerate((("Inicio", ""), ("Pasto en Rollo Tampico", "/pasto-en-rollo-tampico"),
-                                         ("Plantas y Palmas", "/plantas-palmas-arboles-tampico"),
-                                         ("Diseño de Jardines", "/diseno-jardines-tampico"),
-                                         ("Catálogo", "/catalogo")), 1)]}
 
 OBRA = "/img/obra"
 
@@ -116,7 +109,7 @@ TEMPORADA = None if _NB["modo"] == "postemporada" else {
 CONTENIDO = {
     "meta": META,
     "temporada": TEMPORADA,
-    "jsonld": {"negocio": NEGOCIO, "migas": MIGAS_LD, "speakable": ("h1", "h2", ".vt-faq summary")},
+    "jsonld": {"negocio": NEGOCIO, "speakable": ("h1", "h2", ".vt-faq summary")},
     "portada": {
         "kicker": f"Vivero y cuadrilla propia · Desde {datos.DESDE}",
         "h1": "Pasto, jardines y plantas en Tampico.",
@@ -288,8 +281,12 @@ GUIA_EN_LISTA = "Sigue enlazada desde la lista “Guías para el clima de Tampic
 PASOS_VIEJOS = "Los 5 pasos genéricos se reemplazan por los 4 pasos con NOSOTROS / TÚ / JUNTOS (spec §4.1)."
 SIN_GRATIS = ("Decía “Cotización gratis hoy”: la home ya no dice “gratis” (spec del hero, 2026-11-09, §2); ahora dice "
               "“Precios a la vista” (sin “con IVA”: el pasto sin instalar no lo lleva) y la promesa en horario.")
+SIN_MIGAS = ("SEO fase 0 (2026-11-10): la home no es una ruta. Su BreadcrumbList (con sus ListItem) enumeraba cinco "
+             "secciones del menú (Inicio › Pasto › Plantas › Diseño › Catálogo) y Google pintaba esa lista como si fuera "
+             "la jerarquía de la página.")
 PARIDAD = {
     "meta": {"description": (DESCRIPCION, SIN_GRATIS), "og:description": (DESCRIPCION, SIN_GRATIS)},
+    "jsonld": {"BreadcrumbList": SIN_MIGAS, "ListItem": SIN_MIGAS},
     "reemplazos": {
         "Jardinería en Tampico, pasto en rollo y vivero desde 2007.": "Pasto, jardines y plantas en Tampico.",
         "¿Cuánto cuesta tu jardín?": "Mide tu patio. Te decimos cuánto cuesta.",

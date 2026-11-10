@@ -15,6 +15,7 @@ import mensajes_paginas
 from componentes import dinero
 from componentes_materiales import calculo, ejemplo
 from contenido import materiales_comun as mc
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -26,11 +27,9 @@ SACO = dinero(P["marmol_saco"])
 CONDICION = datos.MARMOL_CONDICION
 POR_M2 = tuple(dinero(n * P["marmol_saco"]) for n in (3, 5))  # 3 a 5 sacos por m² según la capa: $750 a $1,250
 MIGAS, MIGAS_LD = mc.migas(RUTA, "Mármol blanco")
-TITULO = f"Mármol Blanco para Jardín Tampico · {SACO} por Saco"
-DESCRIPCION = (f"Mármol blanco decorativo en Tampico. Saco a {SACO} · 3 sacos = 1 m² · Entrega en Madero y Altamira. "
-               "Senderos, albercas y arriates. Cotiza hoy.")
-DESCRIPCION_OG = (f"Piedra mármol blanca decorativa en Tampico. Saco a {SACO}. 3 sacos = 1 m². Entrega a domicilio. "
-                  "Cotiza por WhatsApp.")
+TITULO = f"Mármol Blanco para Jardín Tampico: Saco {SACO} | Viveros Terra"
+DESCRIPCION = (f"Mármol blanco decorativo para jardines, senderos y arriates en Tampico: saco a {SACO}, {CONDICION}. Entrega a "
+               "domicilio. Cotiza.")
 META = {
     "title": TITULO,
     "description": DESCRIPCION,
@@ -39,18 +38,17 @@ META = {
     "og": (
         ("og:type", "website"),
         ("og:url", URL),
-        ("og:title", "Mármol Blanco para Jardín Tampico · Viveros Terra"),
-        ("og:description", DESCRIPCION_OG),
+        ("og:title", TITULO),
+        ("og:description", DESCRIPCION),
         ("og:image", f"{SITE}/img/marmol-blanco-alberca-palmera-tampico.webp"),
         ("og:locale", "es_MX"),
         ("og:site_name", datos.NOMBRE),
     ),
-    # Twitter Card de main con el $250 por saco (datos.py) y sin el “Cotiza gratis” (regla del dueño).
+    # Twitter Card con el mismo título y la misma descripción (SEO fase 0, 2026-11-10).
     "twitter": (
         ("twitter:card", "summary_large_image"),
-        ("twitter:title", f"Mármol Blanco para Jardín Tampico · {SACO}/saco"),
-        ("twitter:description", "Mármol blanco decorativo en Tampico. 3 sacos = 1 m². Entrega a domicilio. Cotiza por "
-                                "WhatsApp."),
+        ("twitter:title", TITULO),
+        ("twitter:description", DESCRIPCION),
         ("twitter:image", f"{SITE}/img/marmol-blanco-alberca-palmera-tampico.webp"),
     ),
 }
@@ -100,15 +98,15 @@ COMBINACIONES = (
     {"titulo": "Mármol + Pasto San Agustín", "texto": ("Un sendero de mármol blanco que atraviesa el pasto verde. "
      '<a href="/pasto-en-rollo-tampico">Pasto en rollo San Agustín</a>.')},
     {"titulo": "Mármol + Tezontle Rojo", "texto": ("Zonas blancas de mármol y zonas rojas de tezontle: diseños bicolor "
-     'para paisajismo residencial y hotelero. <a href="/tezontle-rojo-tampico">Ver tezontle rojo</a>.')},
+     'para paisajismo residencial y hotelero. <a href="/tezontle-rojo-tampico">Tezontle rojo en Tampico</a>.')},
     {"titulo": "Mármol + palmas tropicales", "texto": ("Mármol blanco alrededor de palmas reales y árboles de ornato. "
-     '<a href="/plantas-palmas-arboles-tampico">Ver plantas y palmas</a>.')},
+     '<a href="/plantas-palmas-arboles-tampico">Plantas, palmas y árboles en Tampico</a>.')},
     {"titulo": "Mármol + Tierra Negra", "texto": ("Primero se prepara el arriate con tierra negra para plantar y luego se "
-     'cubre con mármol. <a href="/tierra-negra-vegetal-tampico">Ver tierra negra</a>.')},
+     'cubre con mármol. <a href="/tierra-negra-vegetal-tampico">Tierra negra en Tampico</a>.')},
     {"titulo": "Mármol + Riego automático", "texto": ("Goteo bajo el mármol, oculto: el mármol conserva la humedad y "
-     'protege la manguera del sol. <a href="/sistema-riego-tampico">Ver sistema de riego</a>.')},
+     'protege la manguera del sol. <a href="/sistema-riego-tampico">Sistema de riego en Tampico</a>.')},
     {"titulo": "Mármol + Diseño de jardín", "texto": ("¿Un proyecto completo con pasto, plantas, mármol y riego? Planes "
-     f'de diseño desde {dinero(P["diseno"])}. <a href="/diseno-jardines-tampico">Ver diseño de jardines</a>.')},
+     f'de diseño desde {dinero(P["diseno"])}. <a href="/diseno-jardines-tampico">Diseño de jardines en Tampico</a>.')},
 )
 PASOS = (
     {"titulo": "Limpia el área", "quien": "tu", "cuando": "Paso 1",
@@ -160,7 +158,7 @@ CONTENIDO = {
     "migas": MIGAS,
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
-        "h1": "Mármol blanco <em>para jardines y andadores</em>",
+        "h1": "Mármol blanco <em>para jardín en Tampico</em>",
         "lede": (f"Grava de mármol blanco triturado de {mc.MARMOL_MEDIDA} para arriates, andadores y bordes de alberca: "
                  f"{SACO} el saco, {CONDICION}; 3 sacos cubren 1 m². Por saco o por volumen, con entrega en Tampico, "
                  "Madero y Altamira."),
@@ -248,13 +246,15 @@ CONTENIDO = {
 }
 
 PARIDAD = {
-    "meta": {
+    "meta": seo.paridad(TITULO, DESCRIPCION, {
         "description": (DESCRIPCION, "Sin el “≈ 20 kg”: el dueño no tiene el peso del saco (2026-11-08); el $250 sí "
                                      "vuelve (datos.py)."),
-        "og:description": (DESCRIPCION_OG, "Sin el “≈ 20 kg” (el dueño no tiene el peso del saco) y sin “gratis” "
+        "og:description": (DESCRIPCION, "Sin el “≈ 20 kg” (el dueño no tiene el peso del saco) y sin “gratis” "
                                            "(regla del dueño); el $250 sí vuelve (datos.py)."),
-    },
+    }),
     "reemplazos": {
+        # H1 con «en Tampico» (SEO fase 0, 2026-11-10): la consulta es «mármol blanco para jardín Tampico».
+        "Mármol blanco para jardines y andadores": "Mármol blanco para jardín en Tampico",
         "Una sola presentación, precio claro": "¿Cuánto cuesta el mármol blanco en Tampico?",
         "Saco de Mármol Blanco": "¿Cuánto cuesta el mármol blanco en Tampico?",
         "¿Para qué se usa el mármol blanco en jardinería?": "¿Para qué sirve el mármol blanco en jardinería?",

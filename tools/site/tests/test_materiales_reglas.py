@@ -198,8 +198,9 @@ class MaterialesReglasTest(unittest.TestCase):
         """$250 el saco, IVA incluido y "sujeto a disponibilidad" junto al precio; Offer de 250 MXN con seller #negocio
         y sin InStock; el título, la descripción y las tarjetas sociales con el $250 como main."""
         html = html_de("/marmol-blanco-tampico")
-        self.assertIn("<title>Mármol Blanco para Jardín Tampico · $250 por Saco</title>", html)
-        for clave in ("description", "og:description", "twitter:title"):
+        # SEO fase 0 (2026-11-10): título de 60 o menos con la marca; el $250 sigue en título, descripción y tarjetas.
+        self.assertIn("<title>Mármol Blanco para Jardín Tampico: Saco $250 | Viveros Terra</title>", html)
+        for clave in ("description", "og:title", "og:description", "twitter:title", "twitter:description"):
             with self.subTest(clave=clave):
                 self.assertRegex(html, rf'(?:name|property)="{clave}" content="[^"]*\$250')
         texto = paridad.texto(paridad.principal(html))

@@ -9,15 +9,16 @@ import datos
 import mensajes_paginas
 from contenido import catalogo_datos as cd
 from contenido import plantas_comun as pc
+from contenido import seo
 
 SITE = datos.SITIO
 RUTA = "/arboles-para-banqueta-tampico"
 URL = f"{SITE}{RUTA}"
 NOMBRE = "Árboles para banqueta"
 MENSAJE = mensajes_paginas.PLANTAS[RUTA]
-TITULO = "Árboles para Banqueta en Tampico — Viveros Terra | Sin Daño al Concreto"
-DESCRIPCION = ("Árboles para banquetas en Tampico sin dañar concreto ni tuberías. Olivo Negro, Polyalthia, Neem, Fresno, "
-               "Crespón. Viveros Terra · 833 326 8008.")
+TITULO = "Árboles para Banqueta en Tampico y Madero | Viveros Terra"
+DESCRIPCION = ("Árboles para banqueta que no levantan el concreto ni dañan tuberías: olivo negro, polyalthia, neem, fresno y "
+               "crespón. Entrega y siembra en Tampico.")
 META = {"title": TITULO, "description": DESCRIPCION, "robots": "index, follow", "canonical": URL,
         "og": (("og:title", TITULO), ("og:description", DESCRIPCION), ("og:url", URL), ("og:type", "website"))}
 ESPECIES = (
@@ -92,6 +93,7 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": seo.paridad(TITULO, DESCRIPCION),
     "jsonld": {
         "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",

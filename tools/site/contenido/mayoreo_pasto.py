@@ -13,6 +13,7 @@ import datos
 import mensajes_paginas
 from componentes import dinero
 from contenido import b2b_comun
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -22,22 +23,20 @@ OBRA = "/img/obra"
 MAYOREO, MINIMO, SOLO, INSTALADO = (P["pasto_mayoreo_m2"], P["pasto_mayoreo_minimo_m2"], P["pasto_solo_m2"],
                                     P["pasto_instalado_m2"])
 MENSAJE = mensajes_paginas.EMPRESAS[RUTA]
-DESCRIPCION = (f"Pasto San Agustín en rollo al mayoreo desde ${MAYOREO}/m² en pedidos de {MINIMO} m² o más, para "
-               f"constructoras y proyectos en Tampico. Factura {datos.FACTURA} y entrega por etapas. Viveros Terra, desde "
-               f"{datos.DESDE}.")
-DESCRIPCION_OG = (f"Pasto San Agustín en rollo al mayoreo desde ${MAYOREO}/m² en pedidos de {MINIMO} m² o más, para "
-                  f"constructoras y proyectos en Tampico. Factura {datos.FACTURA} y entrega por etapas.")
+TITULO = f"Pasto en Rollo al Mayoreo desde ${MAYOREO}/m² | Viveros Terra"
+DESCRIPCION = (f"Pasto San Agustín al mayoreo desde ${MAYOREO}/m² en pedidos de {MINIMO} m² o más. Para constructoras y "
+               f"fraccionamientos en Tampico: {datos.FACTURA} y entrega por etapas.")
 
 META = {
-    "title": f"Pasto al mayoreo en Tampico desde ${MAYOREO}/m² para constructoras · Viveros Terra",
+    "title": TITULO,
     "description": DESCRIPCION,
     "robots": "index, follow",
     "canonical": URL,
     "og": (
         ("og:type", "website"),
         ("og:url", URL),
-        ("og:title", "Pasto al Mayoreo en Tampico para Constructoras · Viveros Terra"),
-        ("og:description", DESCRIPCION_OG),
+        ("og:title", TITULO),
+        ("og:description", DESCRIPCION),
         ("og:image", f"{SITE}/img/pasto-en-rollo-san-agustin-tampico.webp"),
         ("og:locale", "es_MX"),
     ),
@@ -241,10 +240,10 @@ CONTENIDO = {
 }
 
 PARIDAD = {
-    "meta": {
+    "meta": seo.paridad(TITULO, DESCRIPCION, {
         "description": (DESCRIPCION, "Corrige el “Factura CFDI, factura CFDI” repetido de main; el resto queda igual."),
-        "og:description": (DESCRIPCION_OG, "Corrige el “Factura CFDI, factura CFDI” repetido de main; el resto queda igual."),
-    },
+        "og:description": (DESCRIPCION, "Corrige el “Factura CFDI, factura CFDI” repetido de main; el resto queda igual."),
+    }),
     "reemplazos": {
         "Ventajas para tu empresa u obra": "Documentación para compras",
         "Precio preferencial por volumen": "¿Cuánto cuesta el pasto en rollo al mayoreo?",
