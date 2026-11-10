@@ -49,22 +49,22 @@ def _boton_wa(mensaje, cta, texto, clase="vt-btn vt-btn--linea"):
 
 
 def _portada(k, modo):
+    """El hero de marca común. Con la temporada abierta el botón principal lleva al cotizador (texto aprobado) y el
+    WhatsApp va de enlace de texto; cerrada, el botón es el aviso por WhatsApp y no hay etiqueta de precio."""
     p, abierta = k["portadas"][modo], modo != SIN_MODO_COTIZADOR
     hero = next(f for f in FOTOS if f["uso"] == "hero")
+    wa = datos.wa_url(datos.con_firma(k["mensajes"][modo]))
+    portada = {"kicker": p["kicker"], "h1": p["h1"], "lema": p["lema"], "lede": p["lede"],
+               "foto": _foto(hero, 1, SIZES_HERO), "pos": "50% 35%"}
     if abierta:
-        principal = (f'<a class="vt-btn vt-btn--wa" data-cta="{TIPO}:hero" href="#cotizador">{p["cta"]}'
-                     '<span class="vt-flecha" aria-hidden="true">→</span></a>')
-        ctas = principal + _boton_wa(k["mensajes"][modo], f"{TIPO}:hero", p["wa"])
-        trato = (f'<div class="vt-portada__trato">{c.etiqueta(k["etiquetas"][modo])}<div><div class="vt-cta" data-hero-cta>{ctas}</div>'
-                 f'<p class="vt-portada__tambien">{k["mismo_precio"]}</p></div></div>')
+        portada.update(
+            etiqueta=k["etiquetas"][modo], dato=k["mismo_precio"],
+            cta=(f'<a class="vt-btn vt-btn--wa" data-cta="{TIPO}:hero" href="#cotizador">{p["cta"]}'
+                 '<span class="vt-flecha" aria-hidden="true">→</span></a>'),
+            enlaces=((p["wa"], wa, f"{TIPO}:hero", 'target="_blank" rel="noopener"'),))
     else:
-        ctas = _boton_wa(k["mensajes"][modo], f"{TIPO}:hero", k["aviso"], "vt-btn vt-btn--wa")
-        trato = f'<div class="vt-portada__trato"><div class="vt-cta" data-hero-cta>{ctas}</div></div>'
-    return (f'<section class="vt-portada vt-nb-portada" aria-labelledby="vt-h1"><div class="vt-wrap">{c.migas(k["migas"])}'
-            f'<div class="vt-portada__grid"><div><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1>'
-            f'<p class="vt-lede">{p["lede"]}</p>{trato}</div>'
-            f'<div class="vt-portada__foto">{c.figura(_foto(hero, 1, SIZES_HERO), principal=True)}</div></div>'
-            f'{c.cuadro_datos(k["franja"])}</div></section>')
+        portada["cta"] = _boton_wa(k["mensajes"][modo], f"{TIPO}:hero", k["aviso"], "vt-btn vt-btn--wa")
+    return c.portada(portada, TIPO, k["migas"], datos_html=c.cuadro_datos(k["franja"]), clase="vt-nb-portada")
 
 
 def _opciones(pares, elegido=None):

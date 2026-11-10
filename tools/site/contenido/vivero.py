@@ -4,7 +4,7 @@ stock", "te decimos si la tenemos disponible", "precios orientativos", "precios 
 import datos
 import entidad
 import mensajes_paginas
-from componentes import boton_mapas, dinero
+from componentes import dinero
 from componentes_util import META_AUTOR_RETIRADA
 from contenido import seo
 from contenido import respuestas
@@ -48,10 +48,12 @@ CONTENIDO = {
              "twitter": (("twitter:card", "summary_large_image"),)},
     "migas": (("Inicio", "/"), ("Vivero en Tampico", None)),
     "portada": {"kicker": "Tampico · Madero · Altamira", "h1": 'Vivero en Tampico <span class="vt-serif">y Ciudad Madero, desde 2007</span>',
-                "lede": f"Pasto, plantas, palmas, árboles y materiales para jardín en {datos.CALLE}, {datos.COLONIA}, Cd. Madero, frente a Walmart.",
+                "lede": f"Pasto, plantas, palmas, árboles y materiales para jardín en {datos.CALLE_CORTA}, Cd. Madero, frente a Walmart.",
                 "etiqueta": {"codigo": "Vivero", "aviso": "", "nombre": "Palmas", "antes": "desde", "monto": dinero(P["palma_desde"]),
                              "unidad": "", "filas": (("Pasto", f"{dinero(P['pasto_solo_m2'])}/m²"), ("Plantas", "por tamaño"))},
-                "mensaje": MENSAJE, "boton_extra": boton_mapas("vivero:mapas"), "foto": FOTO},
+                "mensaje": MENSAJE, "foto": FOTO, "pos": "50% 66%",
+                "enlaces": (("Cómo llegar", datos.MAPS_URL, "vivero:mapas", 'target="_blank" rel="noopener"'),),
+                "dato": f"{datos.VARIEDADES} variedades en el vivero"},
     "donde": {"titulo": 'Viveros Terra en Ciudad Madero, <span class="vt-serif">frente a Walmart</span>', "lede": DONDE,
               "hechos": ({"titulo": f"{datos.VARIEDADES} variedades", "texto": "En el vivero"},
                          {"titulo": str(datos.DESDE), "texto": "Año de fundación"},
@@ -92,3 +94,5 @@ PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION, {"og:description": (DESCRIPCION, "Sin “Productor directo”: el dueño no lo ha confirmado y 2d y 2f ya lo retiraron.")}),
     "jsonld": {tipo: M_CATALOGO for tipo in ("OfferCatalog", "Offer", "Product")},
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). «Cómo llegar» pasa de botón a enlace de texto; la colonia sale de la entrada (sigue en «En corto» y en «Cómo llegar»).')

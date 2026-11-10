@@ -1,6 +1,6 @@
-"""terra-inicio.css: hoja propia de la home (hero nuevo, Medidor en celular, WhatsApp por servicio y CTA de sección).
-Todo bajo .vt-inicio, solo con tokens de terra.css (sin colores literales ni !important), con estados definidos,
-movimiento reducido y presupuesto propio (spec del hero, 2026-11-09: menos de 6 KB)."""
+"""terra-inicio.css: hoja propia de la home (Medidor en celular, WhatsApp por servicio, CTA de sección y movimiento).
+Todo bajo .vt-inicio, solo con tokens de terra.css (sin colores literales ni !important) y presupuesto propio. El hero
+salió de esta hoja el 2026-11-10 (Entrega A de experiencia): es el componente común y vive en terra.css."""
 import gzip
 import re
 import sys
@@ -44,63 +44,56 @@ class TerraInicioCssTest(unittest.TestCase):
         self.assertEqual(sorted(usados - definidos), [])
         self.assertEqual(re.findall(r"[{;]\s*(--[\w-]+)\s*:", sin_comentarios(self.css)), [], "la hoja no define tokens propios")
 
-    def test_boton_del_hero_alto_con_sombra_amarilla_y_estados(self):
+    # Entrega A de experiencia (2026-11-10): el hero es el componente común y su CSS vive en terra.css; sus reglas (botón
+    # alto con sombra amarilla y estados, enlaces de 44 px, etiqueta colgada, cortes de la revisión de diseño) se prueban
+    # en tests/test_portada.py. Aquí queda lo propio de la home.
+    def test_el_hero_ya_no_esta_en_esta_hoja(self):
         css = sin_comentarios(self.css)
-        boton = re.search(r"\.vt-inicio \.vt-inicio__cta \.vt-btn--wa\{([^}]*)\}", css).group(1)
-        alto = int(re.search(r"min-height:(\d+)px", boton).group(1))
-        self.assertTrue(62 <= alto <= 66, alto)
-        self.assertRegex(boton, r"box-shadow:\d+px \d+px 0 var\(--vt-tag\)")
-        for estado in (":hover", ":active", ":focus-visible"):
-            with self.subTest(estado=estado):
-                self.assertIn(f".vt-inicio .vt-inicio__cta .vt-btn--wa{estado}", css)
-        escritorio = css[css.index("@media (min-width:1024px)"):]
-        alto = int(re.search(r"\.vt-inicio \.vt-inicio__cta \.vt-btn--wa\{[^}]*min-height:(\d+)px", escritorio).group(1))
-        self.assertTrue(62 <= alto <= 66, alto)
+        for clase in ("vt-inicio__cta", "vt-inicio__lema", "vt-inicio__trato", "vt-portada__cta", "vt-portada__grid"):
+            with self.subTest(clase=clase):
+                self.assertNotIn(clase, css)
 
-    def test_objetivos_tactiles_foco_y_movimiento_reducido(self):
+    def test_objetivos_tactiles_y_solo_transform_en_transiciones(self):
         css = sin_comentarios(self.css)
-        self.assertGreaterEqual(css.count("min-height:44px"), 2)  # enlaces del hero y WhatsApp por servicio
-        self.assertIn("@media (prefers-reduced-motion:reduce)", css)
-        reducido = css[css.index("@media (prefers-reduced-motion:reduce)"):]
-        self.assertRegex(reducido, r"\.vt-inicio \.vt-inicio__cta \.vt-btn--wa[^{]*\{[^}]*transition:none")
-        # Solo se animan propiedades de composición (transform) y la sombra del botón; nunca layout.
+        self.assertGreaterEqual(css.count("min-height:44px"), 2)  # WhatsApp por servicio y enlace a las reseñas
+        # Solo se animan propiedades de composición; nunca layout.
         for transicion in re.findall(r"transition:([^;}]+)", css):
             for propiedad in re.findall(r"(?:^|,)\s*([a-z-]+)", transicion):
                 self.assertIn(propiedad, ("transform", "box-shadow", "none"), transicion)
 
-    def test_etiqueta_colgada_solo_en_escritorio_y_medidor_reordenado_solo_en_celular(self):
+    def test_medidor_reordenado_solo_en_celular_y_etiqueta_siempre_derecha(self):
         css = sin_comentarios(self.css)
         self.assertRegex(css, r"@media \(max-width:639px\)\{[^@]*\.vt-inicio \.vt-medidor__plano\{order:1\}")
-        escritorio = css[css.index("@media (min-width:1024px)"):]
-        self.assertIn(".vt-inicio .vt-portada .vt-etiqueta-x{", escritorio)
         # La etiqueta va siempre derecha: solo gira en el balanceo de entrada (Entrega 2), que termina sin rotación.
         for contextos, selector, cuerpo in reglas(self.css):
             if contextos != ("@keyframes vt-inicio-balanceo",) or selector == "100%":
                 self.assertNotIn("rotate(", cuerpo, selector)
 
     def test_abierto_ahora_con_punto_y_texto(self):
-        """El punto verde es decoración de la clase is-abierto, que terra.js solo pone junto con el texto."""
-        self.assertIn(".vt-inicio .is-abierto::before{", self.css)
-        self.assertIn("var(--vt-wa)", self.css)
+        """El punto verde es decoración de la clase is-abierto, que terra.js solo pone junto con el texto. Desde la
+        Entrega A de experiencia la regla es de todo el sitio (terra.css): la línea de confianza va en todos los héroes."""
+        terra = (CSS / "terra.css").read_text(encoding="utf-8")
+        self.assertIn(".vt-pagina .is-abierto::before{", terra)
+        self.assertIn("background:var(--vt-wa)", terra[terra.index(".vt-pagina .is-abierto::before{"):][:200])
 
     def test_presupuesto(self):
         datos = activos.minificar_css(self.css).encode("utf-8")
-        # El spec pedía menos de 6 KB. Con el movimiento (Entrega 2) y las correcciones de la revisión de diseño
-        # (hero compacto en laptops bajas, etiqueta compacta de 1024 a 1279 px, tableta a dos columnas, renglón vivo
-        # del Medidor) sube a 8 KB, como se acordó, sin recortar estados de foco. Con gzip, menos de 2.5 KB.
-        self.assertLess(len(datos), 8 * 1024)
-        self.assertLess(len(gzip.compress(datos, mtime=0)), 2560)
+        # Con el hero en terra.css (Entrega A de experiencia, 2026-11-10) la hoja baja de 8 KB a menos de 3 KB (antes:
+        # tope de 8 KB y 2.5 KB con gzip).
+        self.assertLess(len(datos), 3 * 1024)
+        self.assertLess(len(gzip.compress(datos, mtime=0)), 1024)
 
-    def test_cortes_de_la_revision_de_diseno(self):
-        css = sin_comentarios(self.css)
+    def test_cortes_de_la_revision_de_diseno_en_terra_css(self):
+        """Los cortes de la revisión de diseño del hero (2026-11-09) siguen, ahora en terra.css y para todo el sitio."""
+        css = sin_comentarios((CSS / "terra.css").read_text(encoding="utf-8"))
         for corte in ("@media (min-width:1024px) and (max-height:820px){",
                       "@media (min-width:1024px) and (max-width:1279px),(min-width:1024px) and (max-height:820px){",
                       "@media (min-width:768px) and (max-width:1023px){",
                       "@media (max-width:359px),(max-width:559px) and (max-height:660px){",
-                      "@media (min-width:560px) and (max-width:1023px){.vt-inicio .vt-inicio__cta .vt-btn--wa{max-width:420px}}"):
+                      "@media (min-width:560px) and (max-width:1023px){.vt-portada__cta .vt-btn{max-width:420px}}"):
             with self.subTest(corte=corte):
                 self.assertIn(corte, css)
-        self.assertNotIn(".vt-bar", css, "la transición de la barra ya se apaga en terra.css para todo el sitio")
+        self.assertNotIn(".vt-bar", sin_comentarios(self.css), "la transición de la barra ya se apaga en terra.css para todo el sitio")
 
 
 if __name__ == "__main__":

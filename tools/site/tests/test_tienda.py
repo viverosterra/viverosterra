@@ -95,7 +95,10 @@ class TiendaPublicadaTest(unittest.TestCase):
         self.assertIn('id="vt-models"', texto)
         self.assertIn('<dialog class="vt-lista" id="cotizacion"', texto)
         self.assertNotIn("gratis", cuerpo.lower())
-        self.assertIn('<p class="vt-enlace-sec"><a href="#modelos">Ver los 9 modelos</a></p>', cuerpo)
+        # Entrega A de experiencia: el precio puesto va en la etiqueta colgada y el enlace a los modelos, en la fila
+        # de enlaces de texto del hero (antes, un párrafo vt-enlace-sec).
+        self.assertIn('<div class="vt-etiqueta" data-landed-hero data-rollo="139" aria-live="polite">', cuerpo)
+        self.assertIn('<a data-cta="tienda:hero" href="#modelos">Ver los 9 modelos <span aria-hidden="true">→</span></a>', cuerpo)
         lista = next(n for n in grafo(texto) if n["@type"] == "ItemList")
         self.assertEqual(len(lista["itemListElement"]), 9)
 

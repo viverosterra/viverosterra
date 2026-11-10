@@ -4,8 +4,7 @@ portada (componentes.respuesta) y marcado con data-vt-respuesta para el speakabl
 
 Todas las cifras salen de datos.py (y de tools/pasto/data.py en la tienda). Reglas del dueño: el pasto sin instalar no
 lleva IVA; "con IVA" solo en lo instalado, el sintético y los servicios; la garantía del pasto, con condiciones; sin
-plazos de entrega ni "gratis". /precios y /mayoreo-pasto-tampico ya abren con el dato: su respuesta es la entrada de la
-portada (portada["respuesta"] = True) y aquí solo llevan la fecha. La fecha visible ("Actualizado: noviembre de 2026")
+plazos de entrega ni "gratis". La fecha visible ("Actualizado: noviembre de 2026")
 es datos.PRECIOS_ACTUALIZADOS; /vivero-tampico no habla de precios y no la lleva.
 """
 import sys
@@ -71,15 +70,23 @@ TEXTOS = {
         f"{datos.NOMBRE} es un vivero en {datos.CALLE}, {datos.COLONIA}, {datos.CP} {datos.CIUDAD}, Tamaulipas "
         f"({datos.REFERENCIA[0].lower()}{datos.REFERENCIA[1:]}), que atiende Tampico, Madero y Altamira desde "
         f"{datos.DESDE}. Abre {HORARIO}, con más de 200 variedades de plantas, palmas y árboles."),
+    # Entrega A de experiencia (2026-11-10): estas dos respuestas eran la entrada de la portada; con el hero de marca
+    # la entrada se acorta (2 a 3 renglones en celular) y el mismo texto, sin tocar, pasa al bloque "En corto".
+    "/precios": (
+        f"En Tampico, Madero y Altamira, el pasto San Agustín cuesta {dinero(P['pasto_solo_m2'])}/m² solo el pasto y desde "
+        f"{dinero(P['pasto_instalado_m2'])}/m² instalado. El mantenimiento de jardín cuesta desde "
+        f"{dinero(P['mantenimiento_mes'])}/mes, el diseño desde {dinero(P['diseno'])} y el pasto sintético desde "
+        f"{dinero(ROLLO_MIN)}/m²."),
+    "/mayoreo-pasto-tampico": (
+        f"En Viveros Terra el pasto San Agustín al mayoreo cuesta desde {dinero(P['pasto_mayoreo_m2'])}/m² (solo pasto) en "
+        f"pedidos de {P['pasto_mayoreo_minimo_m2']} m² o más, con factura {datos.FACTURA}; el pasto sin instalar no lleva "
+        "IVA. Entregamos por etapas según el avance de tu obra en Tampico, Madero y Altamira; fuera de la zona, por "
+        "proyecto."),
 }
-# Páginas cuya portada ya abre con el dato: la respuesta es su entrada y aquí solo se pone la fecha.
-SOLO_FECHA = ("/precios", "/mayoreo-pasto-tampico")
 SIN_FECHA = ("/vivero-tampico",)
-RUTAS = tuple(TEXTOS) + SOLO_FECHA
+RUTAS = tuple(TEXTOS)
 
 
 def de(ruta):
     """{"texto": …, "fecha": …} de la página para componentes.respuesta."""
-    if ruta in SOLO_FECHA:
-        return {"fecha": FECHA}
     return {"texto": TEXTOS[ruta], **({} if ruta in SIN_FECHA else {"fecha": FECHA})}

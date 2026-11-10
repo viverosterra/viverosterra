@@ -12,13 +12,20 @@ SCRIPTS = ("/js/vt-mensualidades.js", "/js/tienda-pasto.js", "/js/vt-landed.js")
 
 
 def _portada(k):
-    m = k["modelo"]
-    info = (f'<div class="vt-ficha__info"><p class="vt-kicker">{k["kicker"]}</p><h1 id="vt-h1">{k["h1"]}</h1>'
-            f'{t.existencia(m)}{c.etiqueta(k["etiqueta"], cordel=False)}<p class="vt-lede">{k["lede"]}</p>'
-            f'{t.datos_modelo(m)}</div>')
-    cotizador = t.cotizador(m, titulo=f"Precio y cotización del {m['nombre']}", tipo=k["tipo"])
+    """Cabecera de la ficha con el hero de marca: nombre, lema, etiqueta de precio y un solo botón de WhatsApp (en
+    celular todo antes de la galería: antes el hero no tenía CTA); la existencia, la entrada, los datos y la línea de
+    confianza van después de la foto."""
+    m, tipo = k["modelo"], k["tipo"]
+    info = (f'<div class="{c.clase_titular(k["h1"], "vt-ficha__info")}"><p class="vt-kicker">{k["kicker"]}</p>'
+            f'<h1 id="vt-h1">{k["h1"]}</h1><p class="vt-portada__lema vt-serif">{k["lema"]}</p>'
+            f'{c.etiqueta(k["etiqueta"], cordel=False)}'
+            f'<div class="vt-portada__cta" data-hero-cta>{c.boton_wa(k["cierre"]["mensaje"], f"{tipo}:hero")}</div>'
+            f'{c.enlaces_portada((("Calcula tu pedido", "#comprar"),), tipo)}</div>')
+    mas = (f'<div class="vt-ficha__mas">{t.existencia(m)}<p class="vt-lede">{k["lede"]}</p>{t.datos_modelo(m)}'
+           f'{c.confianza()}</div>')
+    cotizador = t.cotizador(m, titulo=f"Precio y cotización del {m['nombre']}", tipo=tipo)
     return (f'<section class="vt-ficha" aria-labelledby="vt-h1"><div class="vt-wrap">{c.migas(k["migas"])}'
-            f'<div class="vt-ficha__grid">{info}{t.galeria(m)}{cotizador}</div></div></section>')
+            f'<div class="vt-ficha__grid">{info}{t.galeria(m)}{mas}{cotizador}</div></div></section>')
 
 
 def _para_quien(k, n):

@@ -261,18 +261,9 @@ def otros(items, enlaces=()):
 
 # ---------- portada y cierre ----------
 def portada(p, tipo, migas_items):
-    """Como componentes.portada, con dos variantes: sin foto (tezontle y piedra bola no tenían foto de portada en main y
-    no se agrega ninguna) y con foto apaisada (la de tierra negra mide 3:2; se muestra 3:2 y no recortada a 4:5)."""
-    if p.get("foto") and p["foto"]["alto"] >= p["foto"]["ancho"]:
-        return c.portada(p, tipo, migas_items)
-    clases = ["vt-portada"] + (["vt-portada--compacta"] if p.get("compacta") else [])
-    clases.append("vt-portada--apaisada" if p.get("foto") else "vt-portada--sinfoto")
-    foto = f'<div class="vt-portada__foto">{c.figura(p["foto"], principal=True)}</div>' if p.get("foto") else ""
-    return (f'<section class="{" ".join(clases)}" aria-labelledby="vt-h1"><div class="vt-wrap">{c.migas(migas_items)}'
-            f'<div class="vt-portada__grid"><div><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1>'
-            f'<p class="vt-lede">{p["lede"]}</p><div class="vt-portada__trato">{c.etiqueta(p["etiqueta"])}<div>'
-            f'{c.fila_cta(p["mensaje"], tipo, "hero", hero=True)}<p class="vt-portada__tambien">{p["tambien"]}</p></div>'
-            f'</div></div>{foto}</div>{c.cuadro_datos()}</div></section>')
+    """El hero de marca común (componentes.portada). Tezontle y piedra bola no tenían foto de portada en main y no se
+    agrega ninguna: salen en la variante sin foto, con la etiqueta en la columna derecha en escritorio."""
+    return c.portada(p, tipo, migas_items)
 
 
 def cierre(ci, mensaje, tipo):

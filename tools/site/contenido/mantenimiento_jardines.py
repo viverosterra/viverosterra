@@ -189,8 +189,10 @@ CONTENIDO = {
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Mantenimiento de jardines", None)),
     "portada": {
-        "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
         "kicker": "Jardinería · Tampico, Madero y Altamira",
+        "pos": "50% 24%",
+        "dato": f"REPSE {datos.REPSE} y factura {datos.FACTURA} para empresas",
+        "enlaces": (("Elige tu plan", "#opciones"),),
         "h1": 'Mantenimiento de jardines y jardinero en Tampico <span class="vt-serif">con visitas programadas</span>',
         # Corta para que el precio y el CTA quepan en la primera pantalla del celular; las frecuencias van en la FAQ.
         "lede": "Poda, fertilización, control de plagas y riego para casas y empresas.",
@@ -200,8 +202,6 @@ CONTENIDO = {
             "filas": (("Otros planes", COTIZA),),
         },
         "mensaje": MENSAJE,
-        "tambien": (f'REPSE {datos.REPSE} y factura {datos.FACTURA} para empresas · '
-                    '<a href="#opciones">elige tu plan</a> · sin permanencia forzada'),
         "foto": {"src": "/img/portadas/mantenimiento-jardines-poda-pasto-tampico-sm.webp",
                  "srcset": ("/img/portadas/mantenimiento-jardines-poda-pasto-tampico-sm.webp 560w, "
                             "/img/portadas/mantenimiento-jardines-poda-pasto-tampico.webp 960w"),
@@ -353,3 +353,5 @@ PARIDAD = {
         "$1,500": "“Complementa tu proyecto” (tierra negra) sale; los materiales siguen en el menú y el pie.",
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). «Sin permanencia forzada» sale del hero y sigue en los planes.')

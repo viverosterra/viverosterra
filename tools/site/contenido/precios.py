@@ -109,20 +109,19 @@ CONTENIDO = {
     },
     "migas": (("Inicio", "/"), ("Precios", None)),
     "portada": {
-        "respuesta": True,  # la entrada ya responde con el precio, la unidad y la zona
-        "compacta": True,
-        "kicker": f"Lista de precios {datos.ANIO} · Tampico, Madero y Altamira",
+        "kicker": f"Precios {datos.ANIO} · Tampico, Madero y Altamira",
+        "pos": "40% 10%",
+        "dato": f"Factura {datos.FACTURA} · REPSE {datos.REPSE}",
+        "enlaces": (("Ver la lista", "#pasto"),
+                    (f"Hasta {max(mensualidades.PLAZOS)} mensualidades con tarjeta", "#mensualidades")),
         "h1": f'Precios de jardinería en Tampico <span class="vt-serif">{datos.ANIO}</span>',
-        "lede": (f"En Tampico, Madero y Altamira, el pasto San Agustín cuesta {SOLO}/m² solo el pasto y desde "
-                 f"{INSTALADO}/m² instalado. El mantenimiento de jardín cuesta desde {MANTENIMIENTO}/mes, el diseño desde "
-                 f"{DISENO} y el pasto sintético desde {SINTETICO}/m²."),
+        "lede": (f"Pasto San Agustín a {SOLO}/m² solo el pasto y desde {INSTALADO}/m² instalado, en Tampico, Madero y "
+                 "Altamira."),
         "etiqueta": {"codigo": f"Lista · {datos.ANIO}", "aviso": "MXN", "nombre": "Pasto San Agustín",
                      "antes": "solo el pasto", "monto": SOLO, "unidad": "/m²",
                      "filas": (("Instalado, con IVA", f"desde {INSTALADO}/m²"), ("Mantenimiento", f"desde {MANTENIMIENTO}/mes"),
                                ("Pasto sintético", f"desde {SINTETICO}/m²"))},
         "mensaje": MENSAJE,
-        "tambien": (f'<a href="#pasto">Ver la lista</a> · <a href="#mensualidades">Hasta {max(mensualidades.PLAZOS)} '
-                    f'mensualidades con tarjeta · ver plazos</a> · factura {datos.FACTURA} · REPSE {datos.REPSE}'),
         "foto": {"src": f"{IMG}-sm.webp", "srcset": f"{IMG}-sm.webp 560w, {IMG}.webp 960w",
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960, "alto": 1185, "numero": 1,
                  "alt": "Trabajador de Viveros Terra descargando pasto San Agustín en rollo de la camioneta",
@@ -218,3 +217,5 @@ PARIDAD = {
     "retirados": {},
     "jsonld": {},
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). La respuesta directa pasa, sin cambios, de la entrada del hero al bloque «En corto»; la entrada nueva deja los dos precios del pasto (mantenimiento, diseño y sintético van en la etiqueta y en la lista); kicker: «Precios 2026 · …» (un renglón).')

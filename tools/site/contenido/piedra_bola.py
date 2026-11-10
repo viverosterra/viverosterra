@@ -82,16 +82,16 @@ CONTENIDO = {
     "migas": MIGAS,
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
-        "h1": "Piedra bola de río en Tampico <em>para jardines y senderos</em>",
+        "dato": "Te damos el precio por escrito con la entrega",
+        "enlaces": (("Calcula cuántos kg necesitas", "#calculadora", "material:calculadora"),),
+        "h1": 'Piedra bola de río en Tampico <span class="vt-serif">para jardines y senderos</span>',
         "lede": ("Piedra de río natural, a granel, para senderos, jardines secos y fuentes. El precio se cotiza según "
-                 "la cantidad, con entrega en Tampico, Madero y Altamira."),
+                 "la cantidad."),
         "etiqueta": {"codigo": "Piedra bola", "aviso": "A granel", "nombre": "Por m²", "antes": "",
                      "monto": "120–150 kg", "unidad": "capa de 8 a 10 cm",
                      "filas": (("Venta", datos.PIEDRA_BOLA_VENTA.capitalize()), ("Precio", SEGUN)),
                      "nota": f"{datos.SIN_MINIMO} Te damos el precio por escrito con la entrega."},
         "mensaje": MENSAJE,
-        "tambien": 'O <a href="#calculadora" data-cta="material:calculadora">calcula cuántos kg necesitas</a>.',
-        "compacta": True,
     },
     "que_es": {
         "titulo": "¿Qué es la piedra bola de río y para qué sirve en jardines?",
@@ -152,3 +152,5 @@ PARIDAD = {
         "Brand": "Iba dentro del Product, que ya no sale (sin precio en datos.py; revisión 2f).",
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). El lema del <h1> va en <span class="vt-serif"> (antes <em>). Entrada recortada: la zona de entrega sigue en «Entrega». Sin foto: no se agrega ninguna.')

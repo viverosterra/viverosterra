@@ -94,10 +94,12 @@ CONTENIDO = {
     "migas": (("Inicio", "/"), ("Pasto sintético", None)),
     "portada": {
         "kicker": "Tienda · Envío a todo México",
-        "existencia": f"{len(data.MODELOS)} modelos en existencia · vendemos a todo México desde "
-                      f"{datos.SINTETICO_NACIONAL_DESDE}",
+        "existencia": f"{len(data.MODELOS)} modelos en existencia.",
+        "dato": f"Vendemos a todo México desde {datos.SINTETICO_NACIONAL_DESDE}",
         "h1": 'Pasto sintético <span class="vt-serif">con envío a todo México</span>',
         "rotulo_estado": "Precio puesto en tu puerta",
+        "codigo": "Sintético",
+        "pos": "50% 55%",
         "rollo": BARATO["rollo"],
         "nota_precio": f"+ envío desde {FLETE_MIN} por rollo. Elige tu estado para ver el precio puesto.",
         "mensualidades": 'Paga en mensualidades con tarjeta de crédito. <a href="#cotizador">Calcula tu plan</a>',
@@ -167,3 +169,5 @@ PARIDAD = {
     "reemplazos": {},
     "retirados": {},
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). El precio puesto por estado va en la etiqueta colgada (antes, resaltador); «vendemos a todo México desde 2012» pasa a la línea de confianza y las mensualidades, a un enlace al cotizador.')

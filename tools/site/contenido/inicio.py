@@ -320,3 +320,5 @@ PARIDAD = {
         "$0": "Era el marcador vacío del cotizador viejo (“$0 – $0”).",
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: la portada usa el componente común (mismas piezas, mismos textos y mismo aspecto; clases vt-portada__*).')

@@ -50,7 +50,7 @@ class InicioTest(unittest.TestCase):
     def test_h1_y_un_solo_h1(self):
         self.assertEqual(re.findall(r"<h1\b[^>]*>(.*?)</h1>", HTML, re.S),
                          ["Pasto, jardines y plantas en Tampico."])
-        self.assertIn('</h1><p class="vt-inicio__lema vt-serif">Con el precio por delante.</p>', MAIN)
+        self.assertIn('</h1><p class="vt-portada__lema vt-serif">Con el precio por delante.</p>', MAIN)
 
     def test_portada_con_precio_cta_y_foto_principal(self):
         portada = MAIN[:MAIN.index('id="vt-h-que"')]
@@ -74,18 +74,21 @@ class InicioTest(unittest.TestCase):
                       "de plantas, en Tampico, Madero y Altamira.</p>", portada)
         self.assertEqual(portada.count("vt-btn--wa"), 1)
         self.assertNotIn("vt-btn--linea", portada)
-        self.assertRegex(portada, r'<div class="vt-inicio__cta" data-hero-cta><a class="vt-btn vt-btn--wa" data-cta="home:hero" ')
-        self.assertIn('<a id="vt-calcula-patio" data-cta="home:hero" href="#medidor">Calcula tu patio <span aria-hidden="true">→</span></a>', portada)
+        self.assertRegex(portada, r'<div class="vt-portada__cta" data-hero-cta><a class="vt-btn vt-btn--wa" data-cta="home:hero" ')
+        self.assertIn('<a data-cta="home:hero" href="#medidor" id="vt-calcula-patio">Calcula tu patio <span aria-hidden="true">→</span></a>', portada)
         self.assertIn(f'<a data-cta="home:hero" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a>', portada)
-        confianza = re.search(r'<p class="vt-inicio__confianza">(.*?)</p>', portada, re.S).group(1)
+        confianza = re.search(r'<p class="vt-portada__confianza">(.*?)</p>', portada, re.S).group(1)
         plano = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", confianza)).strip()
         # Con separadores reales en el DOM (decorativos: aria-hidden), para que sin CSS no se lea pegado.
         self.assertEqual(plano, f"{datos.PROMESA_COMPLETA} · {datos.GOOGLE} · {datos.CLIENTES} clientes")
-        self.assertEqual(confianza.count('<span class="vt-inicio__sep" aria-hidden="true"> · </span>'), 2)
+        self.assertEqual(confianza.count('<span class="vt-portada__sep" aria-hidden="true"> · </span>'), 2)
         self.assertNotIn("También:", portada)
         self.assertNotIn("vt-portada__tambien", portada)
-        # En el DOM (y en celular) la etiqueta de precio va entre el lede y el botón; el cuadro de datos sigue igual.
-        orden = [portada.index(m) for m in ('class="vt-lede"', 'class="vt-etiqueta"', "data-hero-cta", 'class="vt-portada__foto"',
+        # Entrega A de experiencia (2026-11-10): la home usa el componente común, con la foto antes de la etiqueta en el
+        # DOM; sin vt-portada--pliegue, terra.css la manda al final en celular (order) y la etiqueta queda, como antes,
+        # entre el lede y el botón. El cuadro de datos sigue igual.
+        self.assertNotIn("vt-portada--pliegue", portada)
+        orden = [portada.index(m) for m in ('class="vt-lede"', 'class="vt-portada__foto"', 'class="vt-etiqueta"', "data-hero-cta",
                                             'class="vt-datos"')]
         self.assertEqual(orden, sorted(orden))
 

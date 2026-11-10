@@ -346,11 +346,12 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 self.assertLessEqual(page.evaluate("() => document.documentElement.scrollWidth - document.documentElement.clientWidth"), 1)
 
     def test_home_confianza_con_separadores_en_el_dom_que_no_se_pintan(self):
-        page = self.pagina(375, 812)
-        page.goto(self.base + "/", wait_until="load")
-        self.assertEqual(page.locator(".vt-inicio__confianza").evaluate("e => e.textContent"),
+        # Reloj fijo fuera de horario (domingo 23:00 en México): en horario terra.js antepone "Abierto ahora" y la
+        # prueba dependía de la hora en que corría.
+        page = self.pagina_a_la_hora(375, 812, "2026-11-16T05:00:00Z")
+        self.assertEqual(page.locator(".vt-portada__confianza").evaluate("e => e.textContent"),
                          f"{datos.PROMESA_COMPLETA} · {datos.GOOGLE} · {datos.CLIENTES} clientes")
-        self.assertEqual(page.locator(".vt-inicio__sep:visible").count(), 0)
+        self.assertEqual(page.locator(".vt-portada__sep:visible").count(), 0)
 
     def test_home_filas_de_seccion_esconden_la_barra_y_caben_a_320(self):
         """Revisión de diseño: con una fila de WhatsApp de sección a la vista no hay dos botones iguales (la barra

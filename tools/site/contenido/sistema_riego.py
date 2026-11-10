@@ -155,11 +155,13 @@ CONTENIDO = {
                "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Riego automático", None)),
     "portada": {
-        "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
-        "kicker": "Riego automático · Tampico, Madero y Altamira",
+        "kicker": "Riego · Tampico, Madero y Altamira",
+        "pos_d": "24% 50%",
+        "pos": "30% 45%",
+        "dato": "Fotos y medidas por WhatsApp para cotizar",
+        "enlaces": (("Mensualidades con tarjeta", "#mensualidades"),),
         "h1": f'Riego automático para jardines en Tampico <span class="vt-serif">que ahorra {AHORRO} de agua</span>',
-        "lede": ("Aspersión, goteo o microaspersión con programador, para casas, fraccionamientos, hoteles, industria y "
-                 "campos deportivos con pasto natural."),
+        "lede": "Aspersión, goteo o microaspersión con programador, para casas, fraccionamientos, hoteles e industria.",
         "etiqueta": {
             "codigo": "Riego · 01", "aviso": "Con IVA", "nombre": "Sistema de riego automático",
             "antes": "Instalado · según el sistema", "monto": f"{dinero(RIEGO_MIN)}–{dinero(RIEGO_MAX)}", "unidad": "/m²",
@@ -168,8 +170,6 @@ CONTENIDO = {
                       ("Instalación residencial", "1 a 2 días")),
         },
         "mensaje": MENSAJE,
-        "tambien": (f'Fotos y medidas por WhatsApp para cotizar · <a href="#mensualidades">mensualidades con tarjeta de '
-                    f'crédito</a> desde {DESDE_MENSUALIDADES}'),
         "foto": {"src": "/img/portadas/riego-pro-01-sm.webp",
                  "srcset": "/img/portadas/riego-pro-01-sm.webp 560w, /img/portadas/riego-pro-01.webp 960w",
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960, "alto": 640, "numero": 1,
@@ -318,3 +318,5 @@ PARIDAD = {
                     "ejemplo sale ahora de datos.PRECIOS['riego_m2']."),
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Kicker: «Riego · Tampico, Madero y Altamira» (un renglón). Entrada recortada: «campos deportivos con pasto natural» sale del hero (sigue en la sección de proyectos).')

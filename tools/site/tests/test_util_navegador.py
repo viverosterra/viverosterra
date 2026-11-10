@@ -275,7 +275,8 @@ class UtilitariasNavegadorTest(unittest.TestCase):
         for ancho in (320, 375, 1440):
             page = self.pagina(ancho)
             page.goto(self.base + "/vivero-tampico/", wait_until="load")
-            boton = page.locator('[data-hero-cta] a[data-cta="vivero:mapas"]')
+            # Entrega A de experiencia (2026-11-10): "Cómo llegar" es enlace de texto bajo el botón único del hero.
+            boton = page.locator('.vt-portada__enlaces a[data-cta="vivero:mapas"]')
             caja = boton.bounding_box()
             with self.subTest(ancho=ancho):
                 self.assertTrue(boton.is_visible())

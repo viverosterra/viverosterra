@@ -42,8 +42,8 @@ CONTENIDO = {
     "migas": (("Inicio", "/"), ("Plantas y palmas", pc.HUB), ("Arma tu lista", None)),
     "cabeza": {
         "h1": "Catálogo de Plantas, Palmas y Árboles en Tampico",
-        "lede": ("Especies del vivero con luz, riego y altura. Busca o filtra, añade a tu lista con tamaño y piezas, y "
-                 "mándala completa en un solo mensaje de WhatsApp."),
+        "lema": "Arma tu lista y mándala en un solo mensaje.",
+        "lede": "Especies del vivero con luz, riego y altura. Busca o filtra y añade a tu lista con tamaño y piezas.",
         "precios": (f"{datos.PALMAS_PRECIO}. Flamboyán desde {dinero(P['flamboyan'])}. Las demás especies, según "
                     "cotización por tamaño."),
         "mensaje": MENSAJE,
@@ -80,3 +80,5 @@ PARIDAD = {
     # El Floripondio duplicado no necesita entrada: la especie sigue (una vez) y la paridad la encuentra.
     "especies": {"reemplazos": {}, "retirados": {}},
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: lema nuevo: «Arma tu lista y mándala en un solo mensaje.» (de la entrada); un solo botón de WhatsApp y el teléfono de enlace.')

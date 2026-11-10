@@ -94,17 +94,22 @@ class OtrosTest(unittest.TestCase):
 
 
 class PortadaYCierreTest(unittest.TestCase):
-    P = {"kicker": "K", "h1": "H", "lede": "L", "mensaje": MENSAJE, "tambien": "T",
+    P = {"kicker": "K", "h1": "H", "lede": "L", "mensaje": MENSAJE,
          "etiqueta": {"codigo": "C", "aviso": "A", "nombre": "N", "antes": "", "monto": "$90", "unidad": "por costal"}}
 
-    def test_sin_foto_y_apaisada(self):
+    def test_sin_foto_y_con_foto(self):
+        """Entrega A de experiencia (2026-11-10): el hero de marca común. Sin foto, la variante --sinfoto (no se agrega
+        ninguna imagen); con foto, apaisada o vertical, la misma portada con su encuadre (pos y pos_d): la variante
+        --apaisada se retiró porque la etiqueta se cuelga de una foto 4:5 en escritorio."""
         sin = cm.portada(self.P, "material", (("Inicio", "/"), ("X", None)))
         self.assertIn('class="vt-portada vt-portada--sinfoto"', sin)
         self.assertNotIn("<img", sin)
         foto = {"src": "/img/a.webp", "ancho": 960, "alto": 640, "numero": 1, "alt": "a", "lugar": "l", "etapa": "e"}
-        self.assertIn("vt-portada--apaisada", cm.portada(dict(self.P, foto=foto), "material", (("Inicio", "/"),)))
-        vertical = dict(foto, ancho=900, alto=1200)
-        self.assertNotIn("vt-portada--", cm.portada(dict(self.P, foto=vertical), "material", (("Inicio", "/"),)))
+        for f in (foto, dict(foto, ancho=900, alto=1200)):
+            con = cm.portada(dict(self.P, foto=f, pos="50% 55%", pos_d="100% 50%"), "material", (("Inicio", "/"),))
+            self.assertIn('class="vt-portada vt-portada--pliegue"', con)
+            self.assertNotIn("vt-portada--apaisada", con)
+            self.assertIn('style="--vt-fp:50% 55%;--vt-fpd:100% 50%"', con)
 
     def test_cierre_con_foto_de_fondo_decorativa(self):
         html = cm.cierre({"titulo": "T", "lede": "L", "fondo": {"src": "/img/f.webp", "ancho": 1400, "alto": 933}},

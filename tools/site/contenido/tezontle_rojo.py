@@ -142,16 +142,16 @@ CONTENIDO = {
     "migas": MIGAS,
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
-        "h1": "Tezontle rojo en Tampico <em>por costal, m³ o camión</em>",
-        "lede": (f"En Viveros Terra el tezontle rojo cuesta desde {COSTAL} el costal; el m³ y el camión de 14 m³ se "
-                 "cotizan según el volumen y tu colonia. Para drenaje, senderos y control de maleza, con factura."),
+        "dato": f"Factura {datos.FACTURA}",
+        "enlaces": (("Calcula cuánto necesitas", "#calculadora", "material:calculadora"),),
+        "h1": 'Tezontle rojo en Tampico <span class="vt-serif">por costal, m³ o camión</span>',
+        "lede": (f"El tezontle rojo cuesta desde {COSTAL} el costal; el m³ y el camión de 14 m³ se cotizan según el volumen y "
+                 "tu colonia."),
         "etiqueta": {"codigo": "Tezontle rojo", "aviso": f"Precios {datos.ANIO}", "nombre": "Costal", "antes": "desde",
                      "monto": COSTAL, "unidad": "por costal",
                      "filas": (("Por m³", SEGUN), ("Camión volteo 14 m³", SEGUN)),
                      "nota": f"Factura {datos.FACTURA}. La entrega se cotiza según tu colonia."},
         "mensaje": MENSAJE,
-        "tambien": 'O <a href="#calculadora" data-cta="material:calculadora">calcula cuánto necesitas</a>.',
-        "compacta": True,
     },
     "que_es": {
         "titulo": "¿Por qué el tezontle funciona tan bien en Tampico?",
@@ -250,3 +250,5 @@ PARIDAD = {
     # Cifras que main publicaba y no salen (paridad.py no las captura: se declaran aquí).
     "cifras": {"Costal de 15 kg / Costal de 25–30 kg": mc.MOTIVO_PESO_COSTAL},
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). El lema del <h1> va en <span class="vt-serif"> (antes <em>). Entrada recortada: los usos (drenaje, senderos, control de maleza) siguen en «Usos». Sin foto: no se agrega ninguna.')

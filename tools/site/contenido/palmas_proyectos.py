@@ -189,12 +189,12 @@ CONTENIDO = {
     # /empresas llega en la Etapa 3: entonces la ruta visible y MIGAS_LD pasan a Inicio › Empresas › Palmas.
     "migas": (("Inicio", "/"), ("Palmas para proyectos", None)),
     "portada": {
-        "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
         "kicker": "Constructoras · Hoteles · Gobierno",
+        "pos": "50% 60%",
+        "dato": f"REPSE {datos.REPSE} · factura {datos.FACTURA}",
+        "enlaces": (("Arma tu lista de palmas", "#precio"),),
         "h1": 'Palmas al mayoreo <span class="vt-serif">para proyectos en Tampico</span>',
-        "lede": (f"En Viveros Terra la palma areca y el coco plumoso cuestan desde {DESDE} y la palma real desde {REAL} "
-                 "en tamaño chico; el precio sube con la altura. Entregamos en obra en Tampico, Madero y Altamira y, por "
-                 f"proyecto, en Tamaulipas, Veracruz y San Luis Potosí, con factura {datos.FACTURA}."),
+        "lede": f"{datos.PALMAS_PRECIO}. Entregamos en obra.",
         "etiqueta": {
             "codigo": "Palmas · 01", "aviso": "Precios 2026", "nombre": "Palma areca y coco plumoso",
             "cientifico": "Dypsis lutescens · Syagrus romanzoffiana", "antes": "Tamaño chico · desde", "monto": DESDE,
@@ -202,7 +202,6 @@ CONTENIDO = {
             "filas": (("Palma real, tamaño chico", f"desde {REAL}"), ("Otras especies y alturas", "Según cotización")),
         },
         "mensaje": MENSAJE,
-        "tambien": f'REPSE {datos.REPSE} · factura {datos.FACTURA} · <a href="#precio">arma tu lista de palmas</a>',
         "foto": {"src": "/img/portadas/palmas-reales-mayoreo-vivero-tampico-sm.webp",
                  "srcset": ("/img/portadas/palmas-reales-mayoreo-vivero-tampico-sm.webp 560w, "
                             "/img/portadas/palmas-reales-mayoreo-vivero-tampico.webp 694w"),
@@ -374,3 +373,5 @@ PARIDAD = {
         **{pr: RANGO_VIEJO for pr in ("$100", "$180", "$260")},
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada a los precios de datos.PALMAS_PRECIO; la zona de entrega (Tamaulipas, Veracruz y San Luis Potosí) sigue en cobertura y la factura, en la línea de confianza.')

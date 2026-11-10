@@ -60,22 +60,24 @@ CONTENIDO = {
     "migas": pc.migas(NOMBRE),
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
+        "pos_d": "36% 50%",
+        "pos": "40% 50%",
+        "dato": 'Garantía de 30 días en lo que sembramos, <a href="/politicas#garantia-plantas">con condiciones</a>',
+        "enlaces": ((f'Ver las {cd.cuenta({"cat": ["plantas"]})} plantas del catálogo', "/catalogo?cat=plantas", "plantas:catalogo"),),
+        "lema": "Elegidas para sol, humedad y salitre.",
         "h1": "Plantas para jardín que aguantan el calor de Tampico",
-        "lede": ("Ornamentales, tropicales y de cobertura elegidas para sol, humedad y salitre. Te decimos cuáles van en "
-                 "sol y cuáles en sombra, te las llevamos y, si quieres, las sembramos."),
+        "lede": ("Ornamentales, tropicales y de cobertura. Te decimos cuáles van en sol o en sombra, te las llevamos y, si "
+                 "quieres, las sembramos."),
         "etiqueta": {"codigo": "Jardín", "aviso": f"Precios {datos.ANIO}", "nombre": "Plantas para jardín",
                      "antes": "Precio", "monto": "Por tamaño", "unidad": datos.SEGUN_COTIZACION.lower(),
                      "nota": "Cotiza con una foto de tu espacio."},
         "mensaje": MENSAJE,
-        "tambien": ('O <a href="/catalogo?cat=plantas" data-cta="plantas:catalogo">ve las '
-                    f'{cd.cuenta({"cat": ["plantas"]})} plantas del catálogo</a>.'),
         "foto": {"src": "/img/portadas/jardin-residencial-tropical-tampico-sm.webp",
                  "srcset": ("/img/portadas/jardin-residencial-tropical-tampico-sm.webp 560w, "
                             "/img/portadas/jardin-residencial-tropical-tampico.webp 960w"),
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960, "alto": 640, "numero": 1,
                  "alt": "Jardín residencial con plantas tropicales en Tampico",
                  "lugar": "Jardín con plantas tropicales", "etapa": "Tampico"},
-        "compacta": True,
     },
     "especies": {"titulo": "Las más solicitadas en Tampico", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
     "lista": pc.LISTA,
@@ -114,3 +116,5 @@ PARIDAD = {
         "retirados": {},
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «Elegidas para sol, humedad y salitre.» (de la entrada).')

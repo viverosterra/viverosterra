@@ -108,8 +108,17 @@ def _preguntas_envio(x, zona):
     return tuple(items)
 
 
+# Encuadre de cada foto de portada (object-position; Entrega A de experiencia).
+ENCUADRES = {"obra-proyecto-01": "50% 40%", "obra-proyecto-02": "50% 45%", "obra-proyecto-03": "50% 55%",
+             "obra-proyecto-05": "50% 50%"}
+
+
+def _nombre_foto(x):
+    return FOTOS_PORTADA[CLAVES.index(x["slug"]) % len(FOTOS_PORTADA)]
+
+
 def _foto_portada(x):
-    nombre = FOTOS_PORTADA[CLAVES.index(x["slug"]) % len(FOTOS_PORTADA)]
+    nombre = _nombre_foto(x)
     return t.foto_obra(nombre, "(min-width: 1024px) 560px, 100vw", "Pasto de la colección instalado")
 
 
@@ -145,11 +154,16 @@ def contenido(x):
                                       (f"Envío a {x['nombre']}", url)]), _producto(x, zona, url, desde)),
         "migas": (("Inicio", "/"), ("Pasto sintético", "/pasto-sintetico"), (f"Envío a {x['nombre']}", None)),
         "portada": {
-            "kicker": f"Envío a {x['nombre_largo']} · 9 modelos en existencia",
+            "kicker": f"Envío a {x['nombre']} · 9 modelos",
             "h1": f'Pasto sintético en {x["nombre"]} <span class="vt-serif">con envío a tu casa</span>',
-            "respuesta": (f"Te enviamos el pasto sintético a {x['nombre_largo']} en 3 a 5 días hábiles. Desde "
-                          f"<b>${desde}/m²</b> ya con envío, en rollo de 50 m² con factura. Tú lo instalas con nuestra "
-                          "guía."),
+            "respuesta": (f"Te enviamos el pasto sintético a {x['nombre_largo']}. Desde <b>${desde}/m²</b> ya con envío, "
+                          "en rollo de 50 m² con factura."),
+            # Precio puesto en la ciudad, en la etiqueta (antes solo iba dentro del párrafo): los mismos datos del cuadro.
+            "etiqueta": {"codigo": "Con envío", "aviso": "Con factura", "nombre": m["nombre"],
+                         "antes": f"Puesto en {x['nombre']} · desde", "monto": f"${desde}", "unidad": "/m²",
+                         "filas": (("Flete por rollo", dinero(data.ZONAS[zona])),)},
+            "dato": "9 modelos en existencia",
+            "pos": ENCUADRES[_nombre_foto(x)],
             "mensaje": mensaje,
             "href_modelos": f"/pasto-sintetico?estado={estado}#modelos",
             "texto_modelos": "Ver los 9 modelos con precio puesto",
@@ -196,7 +210,12 @@ def paridad(x):
     reemplazos = {"Instalarlo tú mismo es sencillo": f"¿Quién lo instala en {x['nombre']}?"}
     if data.zona_de(x["estado"]) == "B":
         reemplazos["$1,666"] = "$1,667"
-    return {"meta": seo.paridad(*titulo_y_descripcion(x)), "reemplazos": reemplazos, "retirados": {}, "jsonld": M_JSONLD}
+    hero = ("Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp y enlaces de texto; el precio "
+            "puesto en la ciudad va en la etiqueta colgada (antes solo en el párrafo); de la entrada salen el plazo de "
+            "entrega (sigue en el cuadro de datos y en «¿Cuánto tarda?») y «Tú lo instalas con nuestra guía» (sigue en "
+            "«¿Quién lo instala?»); kicker en un renglón.")
+    return {"meta": seo.paridad(*titulo_y_descripcion(x)), "reemplazos": reemplazos, "retirados": {}, "jsonld": M_JSONLD,
+            "hero": hero}
 
 
 def pagina(slug):

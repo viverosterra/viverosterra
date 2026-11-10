@@ -58,22 +58,21 @@ CONTENIDO = {
     "migas": pc.migas(NOMBRE),
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
+        "pos": "50% 40%",
+        "enlaces": ((f"Ver las {DE_INTERIOR} plantas de interior", "/catalogo?uso=interior", "plantas:catalogo"),),
+        "lema": "Para el calor, la humedad y el aire acondicionado.",
         "h1": "Plantas de interior para casas y oficinas en Tampico",
-        "lede": ("Ficus lyrata, monstera, ZZ, sansiviera y más, para el calor, la humedad y el aire acondicionado de "
-                 "Tampico. Te las llevamos a domicilio."),
+        "lede": "Ficus lyrata, monstera, ZZ, sansiviera y más. Te las llevamos a domicilio.",
         "etiqueta": {"codigo": "Interior", "aviso": f"Precios {datos.ANIO}", "nombre": "Plantas de interior",
                      "antes": "Precio", "monto": "Por tamaño", "unidad": datos.SEGUN_COTIZACION.lower(),
                      "nota": "Cotiza con una foto del lugar."},
         "mensaje": MENSAJE,
-        "tambien": ('O <a href="/catalogo?uso=interior" data-cta="plantas:catalogo">ve las '
-                    f'{DE_INTERIOR} plantas de interior del catálogo</a>.'),
         "foto": {"src": "/img/portadas/plantas-ornamentales-tampico-viveros-terra-sm.webp",
                  "srcset": ("/img/portadas/plantas-ornamentales-tampico-viveros-terra-sm.webp 560w, "
                             "/img/portadas/plantas-ornamentales-tampico-viveros-terra.webp 960w"),
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960, "alto": 1440, "numero": 1,
                  "alt": "Plantas ornamentales con flor en una jardinera",
                  "lugar": "Plantas ornamentales", "etapa": "Tampico"},
-        "compacta": True,
     },
     "especies": {"titulo": "Las más solicitadas en Tampico", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
     "lista": pc.LISTA,
@@ -109,3 +108,5 @@ PARIDAD = {
         "retirados": {},
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «Para el calor, la humedad y el aire acondicionado.» (de la entrada).')

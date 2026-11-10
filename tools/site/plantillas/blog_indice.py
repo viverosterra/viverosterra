@@ -26,9 +26,10 @@ def lista_ld(secciones):
 
 def render(k):
     f = k["foto"]
-    portada = (f'<section class="vt-blog-p" aria-labelledby="vt-h1"><div class="vt-wrap">{c.migas(k["migas"])}<div class="vt-blog-p__g"><div>'
+    # Cabecera de lectura: titular con su lema en serif y el WhatsApp como enlace de texto (sin botón grande).
+    portada = (f'<section class="{c.clase_titular(k["h1"], "vt-blog-p")}" aria-labelledby="vt-h1"><div class="vt-wrap">{c.migas(k["migas"])}<div class="vt-blog-p__g"><div>'
                f'<p class="vt-kicker"><span data-vt-conteo="blog">52</span> guías · {c.datos.AUTOR_BLOG}</p><h1 id="vt-h1">{k["h1"]}</h1>'
-               f'<p class="vt-lede">{k["lede"]}</p>{c.fila_cta(k["mensaje"], k["tipo"], "hero", hero=True)}</div>'
+               f'<p class="vt-lede">{k["lede"]}</p>{c.enlaces_portada((c.enlace_wa(k["mensaje"], k["tipo"] + ":hero"),), k["tipo"])}</div>'
                f'<img src="{esc(f["src"])}" width="{f["ancho"]}" height="{f["alto"]}" alt="{esc(f["alt"])}" loading="eager" fetchpriority="high" decoding="async">'
                f'</div></div></section>')
     secciones = []

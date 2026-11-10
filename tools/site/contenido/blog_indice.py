@@ -19,9 +19,10 @@ def sin_repetidos(secciones):
 CONTENIDO = {
     "meta": _DOC["meta"], "jsonld": _DOC["jsonld"], "tipo": "blog", "foto": _DOC["foto"], "secciones": sin_repetidos(_DOC["secciones"]),
     "migas": (("Inicio", "/"), ("Blog", None)),
-    "h1": "Blog de Jardinería <span>para Tampico y Tamaulipas.</span>",
+    "h1": 'Blog de Jardinería <span class="vt-serif">para Tampico y Tamaulipas.</span>',
+    # El autor ("Por el equipo técnico…") ya va en el kicker, junto al conteo de guías.
     "lede": ("Guías prácticas, comparativas honestas y consejos de jardinería adaptados al clima cálido-húmedo del sur de "
-             f"Tamaulipas. Por el {datos.AUTOR_BLOG[0].lower()}{datos.AUTOR_BLOG[1:]}."),
+             "Tamaulipas."),
     "mensaje": "Hola, vi el blog de Viveros Terra y quiero cotizar",
     "servicios": (("/pasto-en-rollo-tampico", "Pasto en Rollo", "San Agustín · Japonés · Bermuda"),
                   ("/pasto-sintetico-tampico", "Pasto Sintético", "Venta e instalación profesional"),
@@ -39,3 +40,5 @@ PARIDAD = {"jsonld": {"Organization": M_PUBLISHER, "ImageObject": M_PUBLISHER}, 
            "retirados": {"Cómo Instalar Pasto Sintético Tú Mismo: Paso a Paso": M_REPETIDA,
                          "Pasto Sintético para Perros y Mascotas: Guía Completa": M_REPETIDA,
                          "$300": "La tarjeta de la Palma Areca decía desde $300; el precio oficial es desde $250 (datos.py)."}}
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: cabecera de lectura: el complemento del <h1> va en serif verde; el WhatsApp y el teléfono pasan de botones a enlaces de texto; «Por el equipo técnico de Viveros Terra» sale de la entrada (el autor ya va en el kicker).')

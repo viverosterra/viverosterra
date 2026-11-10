@@ -59,22 +59,22 @@ CONTENIDO = {
     "migas": pc.migas(NOMBRE),
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
+        "pos": "70% 42%",
+        "dato": 'Garantía de 30 días en lo que sembramos, <a href="/politicas#garantia-plantas">con condiciones</a>',
+        "enlaces": ((f'Ver los {cd.cuenta({"uso": ["banqueta"]})} árboles de banqueta', "/catalogo?uso=banqueta", "plantas:catalogo"),),
+        "lema": "De raíz profunda, para frentes y camellones.",
         "h1": "Árboles para banqueta que no levantan el pavimento",
-        "lede": ("Especies de raíz profunda para frentes y camellones: olivo negro, neem, fresno, encino y más. Te los "
-                 "llevamos y los sembramos con garantía de arraigo de 30 días, con condiciones."),
+        "lede": "Olivo negro, neem, fresno, encino y más. Te los llevamos y los sembramos.",
         "etiqueta": {"codigo": "Banqueta", "aviso": f"Precios {datos.ANIO}", "nombre": "Árboles para banqueta",
                      "antes": "Precio", "monto": "Por tamaño", "unidad": datos.SEGUN_COTIZACION.lower(),
                      "nota": "Cotiza con la medida de tu banqueta."},
         "mensaje": MENSAJE,
-        "tambien": ('O <a href="/catalogo?uso=banqueta" data-cta="plantas:catalogo">ve los '
-                    f'{cd.cuenta({"uso": ["banqueta"]})} árboles de banqueta del catálogo</a>.'),
         "foto": {"src": "/img/portadas/arboles-vivero-tampico-mayoreo-sm.webp",
                  "srcset": ("/img/portadas/arboles-vivero-tampico-mayoreo-sm.webp 560w, "
                             "/img/portadas/arboles-vivero-tampico-mayoreo.webp 960w"),
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960, "alto": 1440, "numero": 1,
                  "alt": "Árboles jóvenes en el vivero listos para sembrar en banqueta",
                  "lugar": "Árboles jóvenes en el vivero", "etapa": "Cd. Madero"},
-        "compacta": True,
     },
     "especies": {"titulo": "Las más solicitadas en Tampico", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
     "lista": pc.LISTA,
@@ -111,3 +111,5 @@ PARIDAD = {
         "retirados": {},
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «De raíz profunda, para frentes y camellones.» (de la entrada); la garantía de 30 días va en la línea de confianza, con sus condiciones.')

@@ -5,7 +5,7 @@
 .vt-blog main .vt-crumbs ol{display:block}
 .vt-blog main .vt-crumbs li{display:inline}
 .vt-blog .vt-art__cabeza{padding-block:0 8px}
-.vt-blog .vt-art__cabeza h1{font-size:clamp(2rem,1.3rem + 3vw,4rem);max-width:20ch;margin:8px 0 0}
+.vt-blog .vt-art__cabeza h1{max-width:22ch;margin:8px 0 0}
 .vt-blog .vt-art__dek{max-width:60ch;margin:16px 0 0;font-size:var(--vt-text-lg);color:var(--vt-ink-2)}
 .vt-blog .vt-art__meta{display:flex;flex-wrap:wrap;gap:4px 18px;margin:16px 0 0;font-size:var(--vt-text-sm);color:var(--vt-muted)}
 .vt-blog .vt-art__meta b{color:var(--vt-ink);font-weight:600}
@@ -62,9 +62,9 @@
 .vt-blog .vt-art__rel-c{margin:0;font-size:var(--vt-text-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--vt-muted)}
 .vt-blog .vt-blog-p{padding-block:0 32px}
 .vt-blog .vt-blog-p__g{display:grid;gap:24px;align-items:center}
+.vt-blog .vt-blog-p__g>*{min-width:0}
 .vt-blog .vt-blog-p img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
-.vt-blog .vt-blog-p h1{font-size:clamp(2.25rem,1.4rem + 3.4vw,4.5rem);line-height:1;margin:8px 0 12px}
-.vt-blog .vt-blog-p h1 span{display:block}
+.vt-blog .vt-blog-p h1{margin:8px 0 12px}
 .vt-blog .vt-blog-t{position:relative;border-top:1px solid var(--vt-line);padding-top:12px}
 .vt-blog .vt-blog-t img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;margin-bottom:10px}
 .vt-blog .vt-blog-t a::after{content:"";position:absolute;inset:0}

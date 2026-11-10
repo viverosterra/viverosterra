@@ -29,7 +29,7 @@ def cabeza(k):
         f = k["foto"]
         foto = (f'<div class="vt-util__foto"><img src="{esc(f["src"])}" width="{f["ancho"]}" height="{f["alto"]}" '
                 f'alt="{esc(f["alt"])}" loading="eager" fetchpriority="high" decoding="async"></div>')
-    return (f'<section class="vt-util__cabeza" aria-labelledby="vt-h1"><div class="vt-wrap">{ruta}'
+    return (f'<section class="vt-util__cabeza vt-titular vt-titular--larga" aria-labelledby="vt-h1"><div class="vt-wrap">{ruta}'
             f'<div class="vt-util__intro"><div><p class="vt-kicker">{k["kicker"]}</p><h1 id="vt-h1">{k["h1"]}</h1>'
             f'<p class="vt-lede">{k["lede"]}</p>{aviso}{extra}</div>{foto}</div></div></section>')
 

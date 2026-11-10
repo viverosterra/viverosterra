@@ -207,19 +207,18 @@ CONTENIDO = {
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Diseño de jardines", None)),
     "portada": {
-        "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
-        "kicker": "Diseño de jardines · Tampico, Madero y Altamira",
+        "kicker": "Diseño · Tampico, Madero y Altamira",
+        "pos": "50% 40%",
+        "dato": "Se descuenta si contratas la obra",
+        "enlaces": (("Compara los 3 planes", "#opciones"), ("Mensualidades con tarjeta", "#mensualidades")),
         "h1": 'Diseño de jardines en Tampico <span class="vt-serif">con plan y presupuesto claros</span>',
-        "lede": ("Te entregamos el diseño, la lista de plantas y materiales y el costo de la obra. Si nos contratas para "
-                 f"hacerla, el diseño se descuenta (en el Premium, en proyectos de más de {DESCUENTO_PREMIUM})."),
+        "lede": "Te entregamos el diseño, la lista de plantas y materiales y el costo de la obra.",
         "etiqueta": {
             "codigo": "Diseño · Plan Terra", "aviso": "Con IVA", "nombre": "Plan Terra Esencial",
             "antes": "Propuesta visual · 3 a 5 días", "monto": dinero(ESENCIAL), "unidad": "MXN",
             "filas": (("Plan Completo, con visita", dinero(COMPLETO)), ("Plan Premium", f"desde {dinero(PREMIUM)}")),
         },
         "mensaje": MENSAJE,
-        "tambien": (f'Se descuenta si contratas la obra · <a href="#opciones">compara los 3 planes</a> · '
-                    f'<a href="#mensualidades">mensualidades con tarjeta de crédito</a> desde {DESDE_MENSUALIDADES}'),
         "foto": {"src": "/img/portadas/diseno-jardines-tampico-proyecto-sm.webp",
                  "srcset": ("/img/portadas/diseno-jardines-tampico-proyecto-sm.webp 560w, "
                             "/img/portadas/diseno-jardines-tampico-proyecto.webp 960w"),
@@ -358,3 +357,5 @@ PARIDAD = {
         "$150": "“Aplica +$150k” de la tabla de planes ahora se escribe completo: “en proyectos de más de $150,000”.",
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: la condición del descuento (Premium, proyectos de más de $150,000) sale del hero y sigue en «En corto» y en los planes; kicker: «Diseño · Tampico, Madero y Altamira» (un renglón).')

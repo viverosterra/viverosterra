@@ -120,10 +120,11 @@ CONTENIDO = {
     "migas": (("Inicio", "/"), ("Pasto sintético en Tampico", None)),
     "portada": {
         "kicker": "Pasto sintético · Tampico, Madero y Altamira",
+        "pos": "50% 62%",
+        "dato": "Los 9 modelos en existencia",
+        "enlaces": (("Calcula tu material", "#cotizador"), ("Cómo llegar al showroom", "#showroom")),
         "h1": 'Pasto sintético en Tampico <span class="vt-serif">venta e instalación</span>',
-        "lede": (f"Llévate el material desde nuestro showroom en Cd. Madero o déjanos la instalación completa. Vendemos e "
-                 f"instalamos en la región desde {datos.DESDE} y enviamos a todo México desde "
-                 f"{datos.SINTETICO_NACIONAL_DESDE}."),
+        "lede": f"Llévate el material del showroom en Cd. Madero o déjanos la instalación completa. En la región desde {datos.DESDE}.",
         "etiqueta": {
             "codigo": "Sintético · Tampico", "aviso": "Con IVA", "nombre": "Pasto sintético instalado",
             "antes": "Material y colocación · desde", "monto": INST_MIN_TXT, "unidad": "/m²",
@@ -131,8 +132,6 @@ CONTENIDO = {
                       ("Toscana 18 y 28", "para llevar hoy")),
         },
         "mensaje": MENSAJE,
-        "tambien": (f'Los 9 modelos en existencia · <a href="#cotizador">calcula tu material</a> · '
-                    '<a href="#showroom">cómo llegar al showroom</a>'),
         "foto": {"src": f"{GAL}/obra-residencial-tampico-sm.webp", "srcset": f"{GAL}/obra-residencial-tampico-sm.webp "
                  f"560w, {GAL}/obra-residencial-tampico.webp 960w", "sizes": "(min-width: 1024px) 560px, 100vw",
                  "ancho": 960, "alto": 1440, "numero": 1,
@@ -245,3 +244,5 @@ PARIDAD = {
 }
 # Decisiones del dueño (2026-11-07): el testimonio de Sofía R. es real y se publica con permiso (textual, en
 # datos.OPINION_SINTETICO_TAMPICO); no se ofrece financiamiento propio a instaladores; el envío local no tiene precio fijo.
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: «enviamos a todo México desde 2012» sale del hero (está en la tienda /pasto-sintetico, enlazada).')

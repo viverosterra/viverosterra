@@ -24,10 +24,13 @@ def datos_js():
 
 def render(k):
     tipo, ca = k["tipo"], k["cabeza"]
-    cabeza = (f'<section class="vt-bloque vt-cat__cabeza" aria-labelledby="vt-h1"><div class="vt-wrap">'
-              f'{c.migas(k["migas"])}<h1 id="vt-h1">{ca["h1"]}</h1><p class="vt-lede">{ca["lede"]}</p>'
-              f'<p class="vt-cat__precios">{ca["precios"]}</p>{c.fila_cta(ca["mensaje"], tipo, "hero", hero=True)}'
-              '</div></section>')
+    # Cabecera con el hero de marca: lema en serif, un solo botón principal y el teléfono como enlace de texto.
+    cabeza = (f'<section class="{c.clase_titular(ca["h1"], "vt-bloque vt-cat__cabeza")}" aria-labelledby="vt-h1">'
+              f'<div class="vt-wrap">{c.migas(k["migas"])}<h1 id="vt-h1">{ca["h1"]}</h1>'
+              f'<p class="vt-portada__lema vt-serif">{ca["lema"]}</p><p class="vt-lede">{ca["lede"]}</p>'
+              f'<p class="vt-cat__precios">{ca["precios"]}</p>'
+              f'<div class="vt-portada__cta" data-hero-cta>{c.boton_wa(ca["mensaje"], f"{tipo}:hero")}</div>'
+              f'{c.enlaces_portada((), tipo)}</div></section>')
     rejilla = (f'<section class="vt-bloque vt-cat__rejilla" aria-labelledby="vt-h-rejilla"><div class="vt-wrap">'
                f'<h2 id="vt-h-rejilla" class="vt-sr">{k["rejilla"]["titulo"]}</h2>'
                f'{cp.filtros_catalogo(len(cd.ESPECIES))}{cp.rejilla_catalogo(tipo=tipo)}</div></section>')

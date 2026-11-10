@@ -174,7 +174,9 @@ class PreciosTest(unittest.TestCase):
                 self.assertEqual(unquote(m.group(1)), esperado)
 
     def test_portada_enlaza_a_mensualidades_y_tabla_dice_compra_minima(self):
-        self.assertIn('<a href="#mensualidades">Hasta 12 mensualidades con tarjeta · ver plazos</a>', HTML)
+        # Entrega A de experiencia: el enlace va en la fila de enlaces de texto del hero (con su flecha y su data-cta).
+        self.assertIn('<a data-cta="precios:hero" href="#mensualidades">Hasta 12 mensualidades con tarjeta '
+                      '<span aria-hidden="true">→</span></a>', HTML)
         self.assertIn('<th scope="col">Compra mínima</th>', HTML)
         self.assertNotIn("Desde (contado)", HTML)
 

@@ -60,8 +60,8 @@ CONTENIDO = {
         "kicker": "Mascotas · Envío a todo México",
         "h1": 'Pasto sintético para perros <span class="vt-serif">que drena y se limpia fácil</span>',
         "respuesta": ("Para perros conviene un pasto de 18 a 25 mm con fibra resistente, instalado sobre grava que drene. "
-                      f"Se limpia con manguera y un limpiador enzimático. Desde <b>{DESDE}/m²</b> con "
-                      f"{MAS_BARATO['nombre']}."),
+                      f"Desde <b>{DESDE}/m²</b> con {MAS_BARATO['nombre']}."),
+        "pos": "50% 40%",
         "mensaje": MENSAJE,
         "href_modelos": "/pasto-sintetico#modelos",
         "texto_modelos": "Ver precios con envío",
@@ -87,3 +87,5 @@ CONTENIDO = {
 
 PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION),"reemplazos": {}, "retirados": {}}
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: «Se limpia con manguera y un limpiador enzimático» sale del hero (sigue en las preguntas).')

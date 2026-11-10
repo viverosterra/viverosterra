@@ -1,0 +1,32 @@
+@media (max-width:639px){.vt-inicio .vt-medidor__plano{order:1}}
+.vt-inicio .vt-medidor .vt-btn,.vt-inicio .vt-inicio__fila .vt-btn{padding-block:8px;line-height:1.2;white-space:normal;text-align:center}
+.vt-inicio main .vt-medidor__vivo{margin:0;font-weight:700;font-variant-numeric:tabular-nums;color:var(--vt-soil)}
+.vt-inicio main .vt-medidor__vivo:empty{display:none}
+@media (min-width:1024px){.vt-inicio main .vt-medidor__vivo{display:none}}
+.vt-inicio main .vt-medidor__garantia{margin-top:12px;font-size:var(--vt-text-xs);line-height:1.45;color:var(--vt-muted)}
+.vt-inicio main .vt-indice__wa{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600}
+.vt-inicio .vt-inicio__fila{margin-top:32px}
+.vt-inicio .vt-inicio__fila .vt-btn{width:100%;min-height:52px}
+@media (min-width:560px){.vt-inicio .vt-inicio__fila .vt-btn{width:auto}}
+.vt-inicio .vt-cierre .vt-cta{margin-top:14px}
+.vt-inicio main .vt-inicio__resenas{margin:20px 0 0;font-size:var(--vt-text-sm);font-weight:600}
+.vt-inicio main .vt-inicio__resenas a{display:inline-block;min-height:44px;padding-block:11px}
+@media (prefers-reduced-motion:no-preference){
+@media (min-width:1024px){
+.vt-inicio .vt-portada .vt-etiqueta-x{transform-origin:50% -40px;animation:vt-inicio-balanceo .9s var(--vt-ease-out) both}
+.vt-inicio .vt-portada__foto .vt-fig__marco{animation:vt-inicio-foto .7s var(--vt-ease-out) both}
+}
+@supports (animation-timeline:view()){
+.vt-inicio main .vt-bloque h2{animation:vt-inicio-titulo linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+.vt-inicio .vt-obras .vt-fig__marco{animation:vt-inicio-sube linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+}
+}
+@keyframes vt-inicio-balanceo{
+0%{transform:translateY(-100%) rotate(4deg)}
+45%{transform:translateY(-100%) rotate(-2deg)}
+75%{transform:translateY(-100%) rotate(.8deg)}
+100%{transform:translateY(-100%)}
+}
+@keyframes vt-inicio-foto{from{clip-path:inset(0 0 40% 0)}to{clip-path:inset(0)}}
+@keyframes vt-inicio-titulo{from{opacity:.6;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes vt-inicio-sube{from{opacity:.25;transform:translateY(16px)}to{opacity:1;transform:none}}

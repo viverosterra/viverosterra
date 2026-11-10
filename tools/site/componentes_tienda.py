@@ -361,7 +361,9 @@ def galeria(m):
     for i, (idx, tipo, pie) in enumerate(m["gallery"]):
         base = f"{GAL}/{m['slug']}-{idx}"
         alt = ALT[tipo].format(n=m["nombre"], color=m["color"].lower(), mm=m["mm"], caption=pie.lower())
-        carga = 'loading="eager" fetchpriority="high"' if i == 0 else 'loading="lazy"'
+        # La segunda foto asoma junto a la principal en la primera pantalla del celular (la galería subió con el hero de
+        # marca): no va lazy, pero tampoco con prioridad.
+        carga = ('loading="eager" fetchpriority="high"', 'loading="eager"')[i] if i < 2 else 'loading="lazy"'
         # Las diapositivas 2+ están en la pista horizontal y Chrome las baja de inmediato aunque sean lazy: en celular
         # piden la copia de 420 px (no la de 720), así no le quitan ancho de banda a la foto principal ni al texto.
         tamanos = "(min-width: 1024px) 620px, 100vw" if i == 0 else "(min-width: 1024px) 620px, 240px"

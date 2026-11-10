@@ -52,6 +52,12 @@ def fechas(jsonld):
     return publicado, modificado or publicado
 
 
+# Lo que cambia en la cabecera de cada artículo (Entrega A de experiencia, 2026-11-10).
+HERO = ("Hero de lectura: titular en la escala común del sitio, lema en serif («Jardinería para el clima de Tampico.», "
+        "el mismo en todos) y WhatsApp y teléfono como enlaces de texto bajo la fecha (antes, sin CTA en la cabecera); "
+        "sin botón grande ni imagen nueva.")
+
+
 class _Pagina:
     def __init__(self, slug):
         doc, cuerpo = leer(slug)
@@ -69,7 +75,8 @@ class _Pagina:
             "tema": tema, "mensaje": paginas.contexto(ruta)["mensaje"].rsplit("\n\n", 1)[0],
             "relacionados_titulo": doc["relacionados_titulo"], "relacionados": tuple(doc["relacionados"]),
         }
-        self.PARIDAD = {**(doc.get("paridad") or {"reemplazos": {}, "retirados": {}}), "jsonld": {"Organization": M_AUTOR, **({"ImageObject": M_LOGO} if "ImageObject" in json.dumps(doc["jsonld"]) else {})}}
+        self.PARIDAD = {**(doc.get("paridad") or {"reemplazos": {}, "retirados": {}}), "jsonld": {"Organization": M_AUTOR, **({"ImageObject": M_LOGO} if "ImageObject" in json.dumps(doc["jsonld"]) else {})},
+                        "hero": HERO}
 
 
 def pagina(slug):

@@ -158,18 +158,18 @@ CONTENIDO = {
     "migas": MIGAS,
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
-        "h1": "Mármol blanco <em>para jardín en Tampico</em>",
-        "lede": (f"Grava de mármol blanco triturado de {mc.MARMOL_MEDIDA} para arriates, andadores y bordes de alberca: "
-                 f"{SACO} el saco, {CONDICION}; 3 sacos cubren 1 m². Por saco o por volumen, con entrega en Tampico, "
-                 "Madero y Altamira."),
+        "pos": "50% 55%",
+        "dato": "La entrega se cobra por viaje",
+        "enlaces": (("Calcula cuántos sacos necesitas", "#calculadora", "material:calculadora"),),
+        "h1": 'Mármol blanco <span class="vt-serif">para jardín en Tampico</span>',
+        "lede": (f"Grava de mármol blanco de {mc.MARMOL_MEDIDA} para arriates y andadores: {SACO} el saco, "
+                 f"{CONDICION}."),
         "etiqueta": {"codigo": "Mármol blanco", "aviso": f"Precios {datos.ANIO}", "nombre": "Saco", "antes": "",
                      "monto": SACO, "unidad": "por saco",
                      "filas": (("3 sacos cubren", "1 m²"), ("Por volumen (20 sacos o más)", SEGUN)),
                      "nota": f"{CONDICION[0].upper()}{CONDICION[1:]}. La entrega se cobra por viaje."},
         "mensaje": MENSAJE,
-        "tambien": 'O <a href="#calculadora" data-cta="material:calculadora">calcula cuántos sacos necesitas</a>.',
         "foto": PORTADA_FOTO,
-        "compacta": True,
     },
     "que_es": {
         "titulo": "¿Por qué el mármol blanco transforma cualquier jardín?",
@@ -273,3 +273,5 @@ PARIDAD = {
     "jsonld": {
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). El lema del <h1> va en <span class="vt-serif"> (antes <em>). Entrada recortada: «3 sacos cubren 1 m²» va en la etiqueta y la entrega, en su sección.')
