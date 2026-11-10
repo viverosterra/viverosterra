@@ -47,7 +47,8 @@ def main(salida):
         with sync_playwright() as pw:
             navegador = pw.chromium.launch()
             for ancho in ANCHOS:
-                contexto = navegador.new_context(viewport={"width": ancho, "height": 900})
+                # reduced_motion: la home se anima al cargar y al desplazar; la captura es del estado final.
+                contexto = navegador.new_context(viewport={"width": ancho, "height": 900}, reduced_motion="reduce")
                 contexto.route("**/*", lambda route: route.continue_()
                                if route.request.url.startswith(base) and "/api/" not in route.request.url
                                else route.abort())

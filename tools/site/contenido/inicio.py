@@ -109,7 +109,7 @@ TEMPORADA = None if _NB["modo"] == "postemporada" else {
     "aviso": "Temporada de Nochebuenas", "titulo": f"Nochebuenas {_NB['temporada']}", "estado": "Pedidos abiertos",
     "texto": (f"Desde {dinero(_NB['productos'][0]['precios'][0])} en menudeo y desde "
               f"{dinero(min(p['precios'][-1] for p in _NB['productos']))} por volumen"),
-    "cta": "Ver nochebuenas", "href": _NB["ruta"],
+    "cta": "Ver nochebuenas", "href": _NB["ruta"], "hasta": _NB["preventa"]["hasta"],
 }
 
 CONTENIDO = {

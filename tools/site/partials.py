@@ -176,6 +176,7 @@ def header(ctx):
 </div>
 <nav class="vt-mmenu" id="vt-mmenu" aria-label="Principal, móvil" hidden>
 {movil}
+<a class="vt-btn vt-btn--wa" data-cta="{tipo}:menu" href="{wa}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp</a>
 <p class="vt-mmenu__meta">{datos.CALLE}, Cd. Madero · <a data-cta="{tipo}:menu" href="tel:{datos.TELEFONO_TEL}">{datos.TELEFONO_VISIBLE}</a></p>
 </nav>
 </header>"""

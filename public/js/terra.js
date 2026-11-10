@@ -46,6 +46,15 @@
 
   const CATALOGO_RE = /^\/catalogo(\.html)?(?:[?#].*)?$/;
 
+  // CTAs que no abren WhatsApp ni teléfono pero sí se miden (select_content): el banner de temporada de la home y las
+  // anclas con data-cta ("Calcula tu patio"). item_id es el id del enlace o, si no tiene, su data-cta.
+  const BANNER_CTA = 'home:banner-nochebuenas';
+  function seleccion(a, href) {
+    const cta = a.getAttribute('data-cta');
+    if (!cta || !href || (cta !== BANNER_CTA && href.charAt(0) !== '#')) return null;
+    return { nombre: 'select_content', params: { content_type: 'cta', item_id: a.getAttribute('id') || cta } };
+  }
+
   function evento(a, contexto) {
     const href = a.getAttribute('href');
     if (href && CATALOGO_RE.test(href)) {
@@ -53,7 +62,7 @@
       return { nombre: 'select_content', params: { content_type: 'catalogo', item_id: 'catalogo', cta_id: cta, service: contexto.servicio } };
     }
     const tipo = tipoEnlace(href);
-    if (!tipo) return null;
+    if (!tipo) return seleccion(a, href);
     const cta = a.getAttribute('data-cta') || contexto.tipo + ':sin-etiqueta';
     if (tipo === 'tel') return { nombre: 'click_to_call', params: { link_type: 'tel', cta_id: cta, service: contexto.servicio } };
     return { nombre: 'generate_lead', params: { method: 'whatsapp', cta_id: cta, service: contexto.servicio } };
@@ -216,10 +225,10 @@
   function enMexico(fecha) {
     try {
       const partes = {};
-      new Intl.DateTimeFormat('en-US', { timeZone: ZONA, weekday: 'short', month: '2-digit', day: '2-digit',
+      new Intl.DateTimeFormat('en-US', { timeZone: ZONA, weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit',
         hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(fecha)
         .forEach((p) => { partes[p.type] = p.value; });
-      return { dia: DIAS[partes.weekday], fecha: partes.month + '-' + partes.day,
+      return { dia: DIAS[partes.weekday], fecha: partes.month + '-' + partes.day, anio: Number(partes.year),
         minuto: Number(partes.hour) * 60 + Number(partes.minute) };
     } catch (error) {
       // Fecha inválida o navegador sin zonas horarias: no se afirma que está abierto.
@@ -259,6 +268,31 @@
     });
   }
 
+  // Días que faltan para una fecha "AAAA-MM-DD" (la escribe el build en data-vt-hasta), contados con la fecha de México:
+  // 0 el mismo día, negativo después y null si la fecha no se puede leer.
+  const FECHA_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
+  const DIA_MS = 86400000;
+  function diasHasta(fecha, hasta) {
+    const m = String(hasta || '').match(FECHA_RE);
+    const hoy = enMexico(fecha);
+    if (!m || !hoy || !hoy.anio) return null;
+    const [mes, dia] = hoy.fecha.split('-').map(Number);
+    return Math.round((Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])) - Date.UTC(hoy.anio, mes - 1, dia)) / DIA_MS);
+  }
+
+  function textoPreventa(dias) {
+    if (dias === null || dias < 0) return '';
+    if (dias === 0) return ' · Último día de preventa';
+    return dias === 1 ? ' · Preventa: falta 1 día' : ' · Preventa: faltan ' + dias + ' días';
+  }
+
+  // Banner de temporada: solo días, sin horas ni cuenta regresiva; pasada la fecha el <span> queda vacío.
+  function preventa(doc, ahora) {
+    doc.querySelectorAll('[data-vt-hasta]').forEach((el) => {
+      el.textContent = textoPreventa(diasHasta(ahora, el.getAttribute('data-vt-hasta')));
+    });
+  }
+
   // Tablas plegables (<details data-vt-plegable>): salen cerradas para acortar la página en celular; desde 768 px se
   // abren. Quien la cierre a mano en escritorio la deja cerrada (solo se abre una vez, al cargar).
   const PLEGABLE_DESDE = '(min-width: 768px)';
@@ -269,14 +303,14 @@
 
   const api = { FIRMA, HERO_CTA, ABIERTO, tipoEnlace, conFirma, evento, eventoWhatsapp, abierto };
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas, plegables, horario };
+    module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas, plegables, horario, diasHasta, textoPreventa, preventa };
     return;
   }
   root.VTTerra = Object.freeze(api);
   root.VTMedicion = medicion(document, root);
   firmarAperturas(root);
   medir(document, root);
-  const alDia = () => horario(document, new Date());
+  const alDia = () => { horario(document, new Date()); preventa(document, new Date()); };
   const iniciar = () => { menu(document, root); barra(document, root); plegables(document, root); alDia(); };
   // Al volver a la pestaña se revisa otra vez: una página abierta desde la tarde no sigue diciendo "Abierto ahora".
   document.addEventListener('visibilitychange', () => { if (!document.hidden) alDia(); });

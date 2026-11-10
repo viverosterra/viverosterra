@@ -25,17 +25,18 @@
   "/css/terra-nochebuenas.e9bd20d074.css"
  ],
  "terra-temporada.css": [
+  "/css/terra-temporada.17008dbde5.css",
   "/css/terra-temporada.37fcaa4198.css"
  ],
  "terra-inicio.css": [
-  "/css/terra-inicio.86c851edfb.css"
+  "/css/terra-inicio.9209ed5f89.css"
  ],
  "legacy-fixes.css": [
   "/css/legacy-fixes.725fd1c858.css",
   "/css/legacy-fixes.6fb87ff99e.css"
  ],
  "terra.js": [
-  "/js/terra.45266926a2.js",
+  "/js/terra.433baa2de8.js",
   "/js/terra.88c051ced0.js"
  ]
 }

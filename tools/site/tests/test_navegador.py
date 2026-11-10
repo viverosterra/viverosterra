@@ -88,7 +88,8 @@ class NavegadorTest(unittest.TestCase):
         cls.servidor.server_close()
 
     def pagina(self, ancho=1440, alto=900):
-        contexto = self.navegador.new_context(viewport={"width": ancho, "height": alto})
+        # reduced_motion: la home se anima al cargar y al desplazar; aquí se mide el shell, no a media animación.
+        contexto = self.navegador.new_context(viewport={"width": ancho, "height": alto}, reduced_motion="reduce")
         self.addCleanup(contexto.close)
         base = self.base
 

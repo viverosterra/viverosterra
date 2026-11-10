@@ -22,12 +22,14 @@ _FLOR = ('<svg class="vt-navidad__flor" viewBox="-16 -16 32 32" aria-hidden="tru
 
 
 def _banner_temporada(t):
-    """Banner navideño, primero en <main>; todo el banner enlaza a la página de temporada. Vacío fuera de temporada."""
+    """Banner navideño, primero en <main>; todo el banner enlaza a la página de temporada. Vacío fuera de temporada.
+    El <span data-vt-hasta> sale vacío: terra.js escribe los días que faltan de preventa (solo días)."""
     if not t:
         return ""
     return (f'<aside class="vt-navidad-x" aria-label="{t["aviso"]}"><a class="vt-navidad" data-cta="{TIPO}:banner-nochebuenas" '
             f'href="{t["href"]}">{_FLOR}<span class="vt-navidad__txt"><b>{t["titulo"]}<span class="vt-navidad__estado"> · '
-            f'{t["estado"]}</span></b><span>{t["texto"]}</span></span><span class="vt-navidad__cta">'
+            f'{t["estado"]}</span></b><span>{t["texto"]}<span class="vt-navidad__hasta" data-vt-hasta="{t["hasta"]}"></span>'
+            f'</span></span><span class="vt-navidad__cta">'
             f'Ver<span class="vt-navidad__mas"> nochebuenas</span><span class="vt-navidad__flecha" aria-hidden="true">→</span>'
             '</span></a></aside>')
 
@@ -43,7 +45,7 @@ def _portada(p):
         f'<p class="vt-inicio__lema vt-serif">{p["lema"]}</p><p class="vt-lede">{p["lede"]}</p></div>'
         f'{c.etiqueta(p["etiqueta"])}'
         f'<div class="vt-inicio__trato"><div class="vt-inicio__cta" data-hero-cta>{c.boton_wa(p["mensaje"], f"{TIPO}:hero")}</div>'
-        f'<p class="vt-inicio__enlaces"><a data-cta="{TIPO}:hero" href="#medidor">Calcula tu patio '
+        f'<p class="vt-inicio__enlaces"><a id="vt-calcula-patio" data-cta="{TIPO}:hero" href="#medidor">Calcula tu patio '
         '<span aria-hidden="true">→</span></a>'
         f'<a data-cta="{TIPO}:hero" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a></p>'
         f'<p class="vt-inicio__confianza">{c.promesa_horario()}<span><b>{esc(nota)}</b> {esc(resenas)}</span>'
@@ -55,6 +57,11 @@ def _fila_wa(mensaje, seccion):
     """WhatsApp y promesa al final de una sección larga (opiniones, proceso, precios y preguntas)."""
     return (f'<div class="vt-inicio__fila">{c.boton_wa(mensaje, f"{TIPO}:{seccion}")}'
             f'<p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p></div>')
+
+
+def _resenas():
+    return (f'<p class="vt-inicio__resenas"><a href="{esc(datos.MAPS_URL)}" target="_blank" rel="noopener">'
+            'Ver las reseñas en Google</a></p>')
 
 
 def _cierre(ci):
@@ -83,7 +90,7 @@ def render(k):
         c.bloque(3, "Jardines entregados", "vt-h-obras", o["titulo"],
                  c.obras(o["figuras"]) + c.linea_prueba() + f'<h3 class="vt-mt">{o["titulo_clientes"]}</h3>' + c.logos(),
                  lede=o["lede"]),
-        c.bloque(4, "Opiniones", "vt-h-opiniones", op["titulo"], c.testimonios(op["items"]) + _fila_wa(mensaje, "opiniones"),
+        c.bloque(4, "Opiniones", "vt-h-opiniones", op["titulo"], c.testimonios(op["items"]) + _resenas() + _fila_wa(mensaje, "opiniones"),
                  lede=op["lede"]),
         c.bloque(5, "Cómo trabajamos", "vt-h-como", pr["titulo"], c.pasos(pr["pasos"]) + _fila_wa(mensaje, "proceso"),
                  lede=pr["lede"], tinte=True),

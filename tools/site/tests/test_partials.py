@@ -1,3 +1,4 @@
+import html
 import re
 import sys
 import unittest
@@ -101,6 +102,23 @@ class HeaderTest(unittest.TestCase):
         self.assertIn('<nav class="vt-mmenu" id="vt-mmenu" aria-label="Principal, móvil" hidden>', self.h)
         self.assertIn('aria-controls="vt-mmenu"', self.h)
 
+    def test_menu_movil_con_boton_de_whatsapp(self):
+        """Spec del hero §10: el menú móvil lleva su propio "Cotizar por WhatsApp" (<tipo>:menu) con el mensaje de la
+        página, hecho solo con clases que terra.css ya tiene (no admite reglas nuevas)."""
+        movil = self.h[self.h.index('<nav class="vt-mmenu"'):self.h.index("</nav>", self.h.index('<nav class="vt-mmenu"'))]
+        tipo = self.ctx["tipo"]
+        boton = re.search(rf'<a class="([^"]+)" data-cta="{tipo}:menu" href="(https://wa\.me/[^"]+)" target="_blank" '
+                          r'rel="noopener">(.*?)</a>', movil)
+        self.assertIsNotNone(boton)
+        self.assertEqual(boton.group(1), "vt-btn vt-btn--wa")
+        self.assertEqual(html.unescape(boton.group(2)), datos.wa_url(self.ctx["mensaje"]))
+        self.assertTrue(boton.group(3).endswith("Cotizar por WhatsApp"))
+        self.assertEqual(movil.count("https://wa.me/"), 1)
+        self.assertEqual(movil.count(f'data-cta="{tipo}:menu"'), 2)  # el botón y el teléfono
+        css = (paginas.PUBLIC / "css" / "terra.css").read_text(encoding="utf-8")
+        for clase in re.findall(r'class="([^"]+)"', movil):
+            for nombre in clase.split():
+                self.assertIn(f".{nombre}", css)
 
 if __name__ == "__main__":
     unittest.main()

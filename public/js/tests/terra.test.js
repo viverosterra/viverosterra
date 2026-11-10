@@ -412,3 +412,74 @@ test('fuera de horario el texto queda exactamente igual; al cerrar se retira el 
   assert.strictEqual(p.el.texto, p.promesa);
   assert.ok(!p.el.clases.has('is-abierto'));
 });
+
+// ---------- Entrega 2: días de preventa en el banner y select_content de la home ----------
+const { diasHasta, textoPreventa, preventa } = require('../terra.js');
+
+test('diasHasta cuenta días de calendario con la fecha de México, no la de UTC', () => {
+  assert.strictEqual(diasHasta(new Date('2026-11-09T18:00:00Z'), '2026-11-30'), 21);
+  assert.strictEqual(diasHasta(new Date('2026-11-29T18:00:00Z'), '2026-11-30'), 1);
+  assert.strictEqual(diasHasta(new Date('2026-11-30T18:00:00Z'), '2026-11-30'), 0);
+  // 2026-12-01T03:00Z todavía es 30 de noviembre a las 21:00 en México: sigue siendo el último día.
+  assert.strictEqual(diasHasta(new Date('2026-12-01T03:00:00Z'), '2026-11-30'), 0);
+  assert.strictEqual(diasHasta(new Date('2026-12-01T06:00:00Z'), '2026-11-30'), -1);
+  assert.strictEqual(diasHasta(new Date('2026-12-28T18:00:00Z'), '2027-01-02'), 5);
+  for (const malo of ['', null, '30/11/2026', '2026-13-40x']) assert.strictEqual(diasHasta(new Date('2026-11-09T18:00:00Z'), malo), null);
+  assert.strictEqual(diasHasta(new Date('no es fecha'), '2026-11-30'), null);
+});
+
+test('textoPreventa: faltan N días, falta 1 día, último día y nada después', () => {
+  assert.strictEqual(textoPreventa(21), ' · Preventa: faltan 21 días');
+  assert.strictEqual(textoPreventa(2), ' · Preventa: faltan 2 días');
+  assert.strictEqual(textoPreventa(1), ' · Preventa: falta 1 día');
+  assert.strictEqual(textoPreventa(0), ' · Último día de preventa');
+  assert.strictEqual(textoPreventa(-1), '');
+  assert.strictEqual(textoPreventa(null), '');
+});
+
+test('preventa escribe el texto en cada [data-vt-hasta]; la fecha llega del HTML, no de terra.js', () => {
+  const span = { textContent: '', getAttribute: (n) => (n === 'data-vt-hasta' ? '2026-11-30' : null) };
+  const doc = { querySelectorAll: (s) => (s === '[data-vt-hasta]' ? [span] : []) };
+  preventa(doc, new Date('2026-11-09T18:00:00Z'));
+  assert.strictEqual(span.textContent, ' · Preventa: faltan 21 días');
+  preventa(doc, new Date('2026-12-05T18:00:00Z'));
+  assert.strictEqual(span.textContent, '');
+  const fuente = fs.readFileSync(path.join(__dirname, '..', 'terra.js'), 'utf8');
+  assert.doesNotMatch(fuente, /20\d\d-\d\d-\d\d/);
+});
+
+test('el banner de Nochebuenas y "Calcula tu patio" mandan select_content con su item_id', () => {
+  const ctx = { tipo: 'home', servicio: 'general' };
+  assert.deepStrictEqual(evento(enlace({ href: '/post/nochebuenas-tampico-madero-mayoreo', 'data-cta': 'home:banner-nochebuenas' }), ctx),
+    { nombre: 'select_content', params: { content_type: 'cta', item_id: 'home:banner-nochebuenas' } });
+  assert.deepStrictEqual(evento(enlace({ href: '#medidor', 'data-cta': 'home:hero', id: 'vt-calcula-patio' }), ctx),
+    { nombre: 'select_content', params: { content_type: 'cta', item_id: 'vt-calcula-patio' } });
+  assert.deepStrictEqual(evento(enlace({ href: '#medidor', 'data-cta': 'home:hero' }), ctx),
+    { nombre: 'select_content', params: { content_type: 'cta', item_id: 'home:hero' } });
+  // Un ancla sin data-cta o un enlace interno cualquiera no se miden.
+  assert.strictEqual(evento(enlace({ href: '#precios' }), ctx), null);
+  assert.strictEqual(evento(enlace({ href: '/precios', 'data-cta': 'home:otro' }), ctx), null);
+});
+
+test('generate_lead y click_to_call no cambian con la medición nueva', () => {
+  const ctx = { tipo: 'home', servicio: 'general' };
+  assert.deepStrictEqual(evento(enlace({ href: 'https://wa.me/528333268008?text=Hola', 'data-cta': 'home:hero' }), ctx),
+    { nombre: 'generate_lead', params: { method: 'whatsapp', cta_id: 'home:hero', service: 'general' } });
+  assert.deepStrictEqual(evento(enlace({ href: 'tel:+528333268008', 'data-cta': 'home:hero' }), ctx),
+    { nombre: 'click_to_call', params: { link_type: 'tel', cta_id: 'home:hero', service: 'general' } });
+});
+
+test('el clic en el banner manda el evento, no toca el enlace y no falla si gtag no existe', () => {
+  const p = armarPagina();
+  const banner = new p.afuera.constructor(p.doc, { tag: 'a', atributos: { href: '/post/nochebuenas-tampico-madero-mayoreo', 'data-cta': 'home:banner-nochebuenas' }, padre: p.afuera });
+  medir(p.doc, p.win);
+  const e = despachar(banner, 'click');
+  assert.strictEqual(e.defaultPrevented, false);
+  assert.strictEqual(banner.getAttribute('href'), '/post/nochebuenas-tampico-madero-mayoreo');
+  assert.deepStrictEqual(p.enviados[p.enviados.length - 1], ['event', 'select_content', { content_type: 'cta', item_id: 'home:banner-nochebuenas' }]);
+  const sin = armarPagina();
+  delete sin.win.gtag;
+  const otro = new sin.afuera.constructor(sin.doc, { tag: 'a', atributos: { href: '#medidor', 'data-cta': 'home:hero' }, padre: sin.afuera });
+  medir(sin.doc, sin.win);
+  assert.doesNotThrow(() => despachar(otro, 'click'));
+});

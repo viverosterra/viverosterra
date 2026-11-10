@@ -70,7 +70,7 @@ class InicioTest(unittest.TestCase):
         self.assertEqual(portada.count("vt-btn--wa"), 1)
         self.assertNotIn("vt-btn--linea", portada)
         self.assertRegex(portada, r'<div class="vt-inicio__cta" data-hero-cta><a class="vt-btn vt-btn--wa" data-cta="home:hero" ')
-        self.assertIn('<a data-cta="home:hero" href="#medidor">Calcula tu patio <span aria-hidden="true">→</span></a>', portada)
+        self.assertIn('<a id="vt-calcula-patio" data-cta="home:hero" href="#medidor">Calcula tu patio <span aria-hidden="true">→</span></a>', portada)
         self.assertIn(f'<a data-cta="home:hero" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a>', portada)
         confianza = re.search(r'<p class="vt-inicio__confianza">(.*?)</p>', portada, re.S).group(1)
         plano = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", confianza)).strip()
@@ -156,6 +156,22 @@ class InicioTest(unittest.TestCase):
         self.assertEqual(re.sub(r"<[^>]+>", "", entre).strip(), "", "nada de texto entre la promesa y el botón")
         self.assertIn('(<a href="/politicas">ver condiciones</a>).', cierre)
         self.assertIn(f"Llamar {datos.TELEFONO_VISIBLE}", cierre)
+
+    def test_banner_con_los_dias_de_preventa_vacios_en_el_html(self):
+        """Spec del hero §9: el <span> sale vacío con la fecha de datos.py; terra.js escribe los días que faltan."""
+        hasta = datos.NOCHEBUENAS["preventa"]["hasta"]
+        banner = re.search(r'<a class="vt-navidad".*?</a>', MAIN, re.S).group(0)
+        self.assertEqual(banner.count("data-vt-hasta"), 1)
+        self.assertIn(f'<span class="vt-navidad__hasta" data-vt-hasta="{hasta}"></span>', banner)
+        self.assertNotRegex(re.sub(r"<[^>]+>", "", banner), r"(?i)preventa|faltan")
+        self.assertEqual(HTML.count("data-vt-hasta"), 1)
+
+    def test_enlace_a_las_resenas_de_google_en_opiniones(self):
+        opiniones = MAIN[MAIN.index('id="vt-h-opiniones"'):MAIN.index('id="vt-h-como"')]
+        self.assertIn(f'<p class="vt-inicio__resenas"><a href="{datos.MAPS_URL}" target="_blank" rel="noopener">'
+                      "Ver las reseñas en Google</a></p>", opiniones)
+        self.assertLess(opiniones.index("</ul>"), opiniones.index("vt-inicio__resenas"))
+        self.assertLess(opiniones.index("vt-inicio__resenas"), opiniones.index('data-cta="home:opiniones"'))
 
     def test_datos_y_copy_del_dueno(self):
         for frase in (datos.PROMESA_COMPLETA, datos.GOOGLE, datos.M2_INSTALADOS, f"REPSE {datos.REPSE}",

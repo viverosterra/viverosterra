@@ -11,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import activos  # noqa: E402
+from test_movimiento_css import reglas  # noqa: E402
 from test_terra_css import sin_comentarios  # noqa: E402
 
 CSS = Path(__file__).resolve().parents[3] / "public" / "css"
@@ -24,11 +25,12 @@ class TerraInicioCssTest(unittest.TestCase):
 
     def test_todo_selector_bajo_vt_inicio(self):
         ajenos = []
-        for selector in re.findall(r"([^{}]+)\{", sin_comentarios(self.css)):
-            selector = selector.strip()
-            if selector.startswith("@media"):
+        for contextos, selector, _cuerpo in reglas(self.css):
+            if any(c.startswith("@keyframes") for c in contextos):  # sus pasos (from, 40%, to) no son selectores
                 continue
             ajenos += [p.strip() for p in re.split(r",(?![^(]*\))", selector) if not ALCANCE.match(p.strip())]
+        nombres = re.findall(r"@keyframes ([\w-]+)", self.css)
+        self.assertEqual([n for n in nombres if not n.startswith("vt-inicio-")], [], "keyframes con prefijo propio")
         self.assertEqual(ajenos, [])
 
     def test_sin_colores_literales_ni_important(self):
@@ -71,7 +73,10 @@ class TerraInicioCssTest(unittest.TestCase):
         self.assertRegex(css, r"@media \(max-width:639px\)\{[^@]*\.vt-inicio \.vt-medidor__plano\{order:1\}")
         escritorio = css[css.index("@media (min-width:1024px)"):]
         self.assertIn(".vt-inicio .vt-portada .vt-etiqueta-x{", escritorio)
-        self.assertNotIn("rotate(", css, "la etiqueta va siempre derecha")
+        # La etiqueta va siempre derecha: solo gira en el balanceo de entrada (Entrega 2), que termina sin rotación.
+        for contextos, selector, cuerpo in reglas(self.css):
+            if contextos != ("@keyframes vt-inicio-balanceo",) or selector == "100%":
+                self.assertNotIn("rotate(", cuerpo, selector)
 
     def test_abierto_ahora_con_punto_y_texto(self):
         """El punto verde es decoración de la clase is-abierto, que terra.js solo pone junto con el texto."""
