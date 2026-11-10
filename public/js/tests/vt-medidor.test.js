@@ -82,3 +82,9 @@ test('hay casos de paridad en la frontera de .5 de la mensualidad (Math.round fr
   });
   assert.ok(frontera.length >= 2);
 });
+
+test('con medida válida el botón dice "Enviar mi medida por WhatsApp" (el texto sin medida queda en el HTML)', () => {
+  const r = calcular(8, 6, 'instalado', CASOS.modos);
+  assert.strictEqual(textos(8, 6, r, '', M, 1).cta, 'Enviar mi medida por WhatsApp');
+  for (const { esperado } of CASOS.casos) assert.strictEqual(esperado.cta, 'Enviar mi medida por WhatsApp');
+});

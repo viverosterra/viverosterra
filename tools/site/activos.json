@@ -27,12 +27,15 @@
  "terra-temporada.css": [
   "/css/terra-temporada.37fcaa4198.css"
  ],
+ "terra-inicio.css": [
+  "/css/terra-inicio.86c851edfb.css"
+ ],
  "legacy-fixes.css": [
   "/css/legacy-fixes.725fd1c858.css",
   "/css/legacy-fixes.6fb87ff99e.css"
  ],
  "terra.js": [
-  "/js/terra.88c051ced0.js",
-  "/js/terra.fb37c1434f.js"
+  "/js/terra.45266926a2.js",
+  "/js/terra.88c051ced0.js"
  ]
 }

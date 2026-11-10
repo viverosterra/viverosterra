@@ -4,6 +4,8 @@
      los que las páginas abren con window.open (calculadoras, catálogo, formulario de la home).
    - Mide los enlaces al catálogo (select_content), que antes medían los clic_catalogo_* sueltos.
    - Abre y cierra el menú (paneles de escritorio y menú móvil) y oculta la barra móvil mientras el CTA del hero se ve.
+   - En horario antepone "Abierto ahora · " a las promesas marcadas con data-vt-horario; el horario y los festivos
+     llegan de ese atributo y de data-vt-festivos (los escribe el build desde datos.py), nunca de este archivo.
    - Expone window.VTMedicion.whatsapp(ctaId, extra) para los WhatsApp que las páginas abren con window.open: manda el
      mismo generate_lead que un clic en enlace (seguro aunque gtag no exista).
    Las funciones puras se exportan para node --test. */
@@ -204,6 +206,59 @@
     heroes.forEach((h) => observador.observe(h));
   }
 
+  // "Abierto ahora": el horario llega como "<días>@HH:MM-HH:MM;<días>@HH:MM-HH:MM" (días separados por coma, lunes = 1,
+  // hora de México) y los festivos como "MM-DD,MM-DD", cada año. Se abre a la hora de apertura y a la de cierre ya está cerrado.
+  const ABIERTO = 'Abierto ahora';
+  const ZONA = 'America/Mexico_City';
+  const DIAS = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 };
+  const TRAMO_RE = /^([1-7](?:,[1-7])*)@(\d{2}):(\d{2})-(\d{2}):(\d{2})$/;
+
+  function enMexico(fecha) {
+    try {
+      const partes = {};
+      new Intl.DateTimeFormat('en-US', { timeZone: ZONA, weekday: 'short', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(fecha)
+        .forEach((p) => { partes[p.type] = p.value; });
+      return { dia: DIAS[partes.weekday], fecha: partes.month + '-' + partes.day,
+        minuto: Number(partes.hour) * 60 + Number(partes.minute) };
+    } catch (error) {
+      // Fecha inválida o navegador sin zonas horarias: no se afirma que está abierto.
+      return null;
+    }
+  }
+
+  function abierto(fecha, horario, festivos) {
+    const ahora = enMexico(fecha);
+    if (!ahora || !ahora.dia) return false;
+    if (String(festivos || '').split(',').includes(ahora.fecha)) return false;
+    return String(horario || '').split(';').some((tramo) => {
+      const m = tramo.match(TRAMO_RE);
+      if (!m || !m[1].split(',').includes(String(ahora.dia))) return false;
+      return ahora.minuto >= Number(m[2]) * 60 + Number(m[3]) && ahora.minuto < Number(m[4]) * 60 + Number(m[5]);
+    });
+  }
+
+  // El prefijo es texto dentro del elemento marcado (la promesa del HTML no se toca) y la clase is-abierto pinta el
+  // punto verde: el punto nunca va sin el texto. Fuera de horario se retira y el elemento queda como en el HTML.
+  function horario(doc, ahora) {
+    doc.querySelectorAll('[data-vt-horario]').forEach((el) => {
+      const si = abierto(ahora, el.getAttribute('data-vt-horario'), el.getAttribute('data-vt-festivos'));
+      const primero = el.firstChild;
+      const puesto = Boolean(primero && primero.hasAttribute && primero.hasAttribute('data-vt-abierto'));
+      el.classList.toggle('is-abierto', si);
+      if (si && !puesto) {
+        const marca = doc.createElement('b');
+        marca.setAttribute('data-vt-abierto', '');
+        marca.textContent = ABIERTO;
+        el.insertBefore(doc.createTextNode(' · '), primero);
+        el.insertBefore(marca, el.firstChild);
+      } else if (!si && puesto) {
+        el.removeChild(primero.nextSibling);
+        el.removeChild(primero);
+      }
+    });
+  }
+
   // Tablas plegables (<details data-vt-plegable>): salen cerradas para acortar la página en celular; desde 768 px se
   // abren. Quien la cierre a mano en escritorio la deja cerrada (solo se abre una vez, al cargar).
   const PLEGABLE_DESDE = '(min-width: 768px)';
@@ -212,16 +267,19 @@
     doc.querySelectorAll('details[data-vt-plegable]').forEach((d) => { d.open = true; });
   }
 
-  const api = { FIRMA, HERO_CTA, tipoEnlace, conFirma, evento, eventoWhatsapp };
+  const api = { FIRMA, HERO_CTA, ABIERTO, tipoEnlace, conFirma, evento, eventoWhatsapp, abierto };
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas, plegables };
+    module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas, plegables, horario };
     return;
   }
   root.VTTerra = Object.freeze(api);
   root.VTMedicion = medicion(document, root);
   firmarAperturas(root);
   medir(document, root);
-  const iniciar = () => { menu(document, root); barra(document, root); plegables(document, root); };
+  const alDia = () => horario(document, new Date());
+  const iniciar = () => { menu(document, root); barra(document, root); plegables(document, root); alDia(); };
+  // Al volver a la pestaña se revisa otra vez: una página abierta desde la tarde no sigue diciendo "Abierto ahora".
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) alDia(); });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
   else iniciar();
 })(typeof window !== 'undefined' ? window : globalThis);

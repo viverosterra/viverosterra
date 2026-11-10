@@ -203,6 +203,33 @@ class MedidorTest(unittest.TestCase):
         self.assertIn('value="1" checked', html)
         self.assertIn("data-hero-cta", html)  # la barra móvil se esconde mientras el Medidor está a la vista
 
+    def test_medidor_de_la_home_solo_el_boton_esconde_la_barra_y_cambia_de_texto(self):
+        """Spec del hero (2026-11-09, §4): la barra móvil ya no se oculta en todo el Medidor, solo con su botón a la
+        vista; el texto del botón va en un span que vt-medidor.js cambia cuando hay medida."""
+        html = c.medidor("prueba", "home", boton_medida=True)
+        self.assertEqual(html.count("data-hero-cta"), 1)
+        self.assertIn('data-cta="home:medidor" data-vt-o="cta" data-hero-cta href="https://wa.me/', html)
+        self.assertNotIn("data-vt-medidor data-hero-cta", html)
+        self.assertIn('<span data-vt-o="cta-texto">Cotizar por WhatsApp</span>', html)
+        self.assertNotIn("cta-texto", c.medidor("prueba", "home"))
+
+    def test_medidor_con_garantia_bajo_el_resultado(self):
+        html = c.medidor("prueba", "home", garantia=True)
+        self.assertIn(f'<p class="vt-medidor__garantia">{c.garantia_pasto()}</p></div></div></div>', html)
+        self.assertNotIn("vt-medidor__garantia", c.medidor("prueba", "home"))
+
+    def test_garantia_de_pasto_con_enlace_a_condiciones(self):
+        html = c.garantia_pasto()
+        self.assertEqual(c.texto_plano(html), datos.GARANTIA_PASTO)
+        self.assertIn('(<a href="/politicas">ver condiciones</a>).', html)
+
+    def test_promesa_con_horario_para_abierto_ahora(self):
+        html = c.promesa_horario()
+        self.assertEqual(html, f'<span data-vt-horario="{datos.horario_marca()}" data-vt-festivos="{datos.festivos_marca()}">'
+                               f'{datos.PROMESA_COMPLETA}</span>')
+        self.assertNotIn("aria-live", html)
+        self.assertNotIn("Abierto", html)
+
     def test_medidor_empieza_vacio_y_no_presenta_el_ejemplo_como_estimado(self):
         html = c.medidor("prueba", "home")
         self.assertIn('placeholder="8"', html)

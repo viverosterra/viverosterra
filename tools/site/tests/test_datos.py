@@ -160,6 +160,12 @@ class DatosTest(unittest.TestCase):
                 self.assertEqual(list(producto["precios"]), sorted(producto["precios"], reverse=True))
         self.assertEqual([p["clave"] for p in nb["productos"] if p.get("sobre_pedido")], ["12"])
 
+    def test_festivos_y_horario_para_abierto_ahora(self):
+        """terra.js lee el horario y los festivos de los data-* del HTML: salen de aquí, con lunes = 1."""
+        self.assertEqual(datos.FESTIVOS, ("12-25", "01-01"))
+        self.assertEqual(datos.horario_marca(), "1,2,3,4,5@09:00-18:00;6@09:00-14:00")
+        self.assertEqual(datos.festivos_marca(), "12-25,01-01")
+
 
 if __name__ == "__main__":
     unittest.main()

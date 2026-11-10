@@ -1,0 +1,52 @@
+.vt-inicio .vt-portada__grid{display:flex;flex-direction:column;gap:0}
+.vt-inicio .vt-kicker{margin-bottom:12px}
+.vt-inicio main .vt-portada h1{font-size:clamp(2.5rem,1.4rem + 6vw,5.75rem);line-height:.93;letter-spacing:-.022em}
+.vt-inicio main .vt-inicio__lema{margin:.5em 0 0;font-size:clamp(1.2rem,.62rem + 2.64vw,2.53rem);line-height:1.15;color:var(--vt-field)}
+.vt-inicio .vt-portada .vt-lede{max-width:38ch}
+.vt-inicio .vt-portada .vt-etiqueta-x,.vt-inicio .vt-inicio__trato{margin-top:18px}
+.vt-inicio .vt-inicio__cta .vt-btn--wa{width:100%;min-height:62px;font-size:1.1875rem;box-shadow:5px 5px 0 var(--vt-tag);transition:transform var(--vt-duration-fast) var(--vt-ease-out),box-shadow var(--vt-duration-fast) var(--vt-ease-out)}
+.vt-inicio .vt-inicio__cta .vt-btn--wa:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--vt-tag)}
+.vt-inicio .vt-inicio__cta .vt-btn--wa:active{transform:translate(5px,5px);box-shadow:0 0 0 var(--vt-tag)}
+.vt-inicio .vt-inicio__cta .vt-btn--wa:focus-visible{outline:2px solid var(--vt-field);outline-offset:8px}
+.vt-inicio main .vt-inicio__enlaces{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 18px;margin:12px 0 0;font-size:var(--vt-text-sm);font-weight:600}
+.vt-inicio main .vt-inicio__enlaces a{display:inline-flex;align-items:center;gap:.3em;min-height:44px;color:var(--vt-ink)}
+.vt-inicio main .vt-inicio__enlaces a:hover{color:var(--vt-field);text-decoration-thickness:2px}
+.vt-inicio main .vt-inicio__confianza{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0 0;padding-top:12px;border-top:1px solid var(--vt-line);font-size:var(--vt-text-xs);color:var(--vt-muted)}
+.vt-inicio .vt-inicio__confianza b{color:var(--vt-ink);font-weight:700}
+.vt-inicio .is-abierto::before{content:"";display:inline-block;width:8px;height:8px;margin-right:6px;border-radius:50%;background:var(--vt-wa)}
+.vt-inicio .vt-inicio__confianza [data-vt-abierto]{color:var(--vt-field)}
+.vt-inicio .vt-portada .vt-datos{margin-top:40px}
+@media (min-width:560px){.vt-inicio main .vt-inicio__enlaces{justify-content:flex-start;gap:0 28px}}
+@media (max-width:1023px){
+.vt-inicio .vt-portada__foto{margin:30px calc(var(--vt-gutter) * -1) 0}
+.vt-inicio .vt-portada__foto .vt-fig__marco{border-inline:0}
+.vt-inicio .vt-portada__foto figcaption{padding-inline:var(--vt-gutter)}
+}
+@media (max-width:359px){
+.vt-inicio .vt-portada{padding-top:16px}
+.vt-inicio .vt-kicker{margin-bottom:8px;font-size:.75rem;letter-spacing:.02em}
+.vt-inicio main .vt-portada h1{font-size:2.3rem}
+.vt-inicio .vt-portada .vt-lede{margin-top:10px;font-size:var(--vt-text-base)}
+.vt-inicio .vt-portada .vt-etiqueta-x,.vt-inicio .vt-inicio__trato{margin-top:14px}
+}
+@media (min-width:1024px){
+.vt-inicio .vt-portada{padding-top:72px}
+.vt-inicio .vt-portada__grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.74fr);grid-template-rows:auto auto;column-gap:88px}
+.vt-inicio .vt-inicio__titulo{grid-column:1;grid-row:1;align-self:end}
+.vt-inicio .vt-inicio__trato{grid-column:1;grid-row:2;align-self:start;margin-top:36px}
+.vt-inicio .vt-portada__foto{grid-column:2;grid-row:1 / 3}
+.vt-inicio .vt-portada .vt-etiqueta-x{position:absolute;top:0;left:0;grid-column:2;grid-row:1 / 3;z-index:2;width:272px;margin:calc(125% - 48px) 0 0 -76px;transform:translateY(-100%)}
+.vt-inicio .vt-portada .vt-lede{margin-top:24px;font-size:1.3125rem;line-height:1.5}
+.vt-inicio .vt-inicio__cta .vt-btn--wa{width:auto;min-height:66px;padding:0 34px;font-size:1.25rem}
+.vt-inicio main .vt-inicio__enlaces{margin-top:16px}
+.vt-inicio .vt-portada .vt-datos{margin-top:80px}
+}
+@media (max-width:639px){.vt-inicio .vt-medidor__plano{order:1}}
+.vt-inicio .vt-medidor .vt-btn{padding-block:8px;line-height:1.2;white-space:normal;text-align:center}
+.vt-inicio main .vt-medidor__garantia{margin-top:12px;font-size:var(--vt-text-xs);line-height:1.45;color:var(--vt-muted)}
+.vt-inicio main .vt-indice__wa{display:inline-block;min-height:44px;padding-block:11px;font-weight:600}
+.vt-inicio .vt-inicio__fila{margin-top:32px}
+.vt-inicio .vt-inicio__fila .vt-btn{width:100%;min-height:52px}
+@media (min-width:560px){.vt-inicio .vt-inicio__fila .vt-btn{width:auto}}
+.vt-inicio .vt-cierre .vt-cta{margin-top:14px}
+@media (prefers-reduced-motion:reduce){.vt-inicio .vt-inicio__cta .vt-btn--wa{transition:none}}

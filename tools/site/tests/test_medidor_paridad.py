@@ -1,6 +1,7 @@
 """El Medidor da lo mismo en Python (componentes.py, HTML inicial) y en JavaScript (public/js/vt-medidor.js).
 Los casos viven en public/js/tests/casos-medidor.json; node --test los corre contra el JS."""
 import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -24,6 +25,17 @@ class MedidorParidadTest(unittest.TestCase):
             obtenido.update(t)
             with self.subTest(entrada=e):
                 self.assertEqual(obtenido, caso["esperado"])
+
+    def test_texto_del_boton_igual_en_python_y_js(self):
+        """Sin medida, "Cotizar por WhatsApp" (HTML inicial); con medida válida, "Enviar mi medida por WhatsApp"."""
+        js = (Path(__file__).resolve().parents[3] / "public" / "js" / "vt-medidor.js").read_text(encoding="utf-8")
+        self.assertEqual(re.search(r"const CTA_MEDIDA = '([^']+)';", js).group(1), c.CTA_MEDIDA)
+        self.assertEqual(c.CTA_MEDIDA, "Enviar mi medida por WhatsApp")
+        self.assertEqual(c.CTA_WA, "Cotizar por WhatsApp")
+        html = c.medidor("prueba", "home", boton_medida=True)
+        self.assertIn(f'<span data-vt-o="cta-texto">{c.CTA_WA}</span>', html)
+        self.assertNotIn(c.CTA_MEDIDA, html)
+        self.assertNotIn("Cotizar por WhatsApp", js, "el texto sin medida es el del HTML: no se repite en el JS")
 
     def test_hay_casos_con_plazo_elegido_y_con_plazo_que_no_aplica(self):
         pedidos = [(caso["entrada"]["plazo"], caso["esperado"]["plazo"]) for caso in CASOS["casos"]]

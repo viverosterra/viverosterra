@@ -65,10 +65,31 @@ def etiquetas_no_permitidas(fragmento):
 
 
 # ---------- CTA (dos textos y nada más: "Cotizar por WhatsApp" y "Llamar 833 326 8008") ----------
+CTA_WA = "Cotizar por WhatsApp"
+# Única variante, solo en el botón del Medidor cuando ya hay una medida válida (spec del hero, 2026-11-09, §4). El mismo
+# texto vive en public/js/vt-medidor.js (paridad en tests/test_medidor_paridad.py).
+CTA_MEDIDA = "Enviar mi medida por WhatsApp"
+
+
 def boton_wa(mensaje, cta):
     href = esc(datos.wa_url(datos.con_firma(mensaje)))
     return (f'<a class="vt-btn vt-btn--wa" data-cta="{esc(cta)}" href="{href}" target="_blank" rel="noopener">'
-            f'{WA_GLIFO}Cotizar por WhatsApp<span class="vt-flecha" aria-hidden="true">→</span></a>')
+            f'{WA_GLIFO}{CTA_WA}<span class="vt-flecha" aria-hidden="true">→</span></a>')
+
+
+def promesa_horario():
+    """La promesa única dentro de un <span> con el horario y los festivos de datos.py: en horario, terra.js le antepone
+    "Abierto ahora · ". Sin JS o fuera de horario se lee tal cual."""
+    return (f'<span data-vt-horario="{esc(datos.horario_marca())}" data-vt-festivos="{esc(datos.festivos_marca())}">'
+            f'{esc(datos.PROMESA_COMPLETA)}</span>')
+
+
+def garantia_pasto():
+    """datos.GARANTIA_PASTO con "ver condiciones" enlazado a las políticas."""
+    texto, condiciones = esc(datos.GARANTIA_PASTO), "ver condiciones"
+    if texto.count(condiciones) != 1:
+        raise ValueError("datos.GARANTIA_PASTO debe decir “ver condiciones” una sola vez")
+    return texto.replace(condiciones, f'<a href="/politicas">{condiciones}</a>')
 
 
 def boton_tel(cta):
@@ -223,14 +244,24 @@ def testimonios(items):
 
 
 # ---------- índice de servicios, tablas y relacionados ----------
-def indice(items):
+def _cotizar_servicio(item, tipo):
+    """Enlace "Cotizar <servicio> →" de una fila del índice, con el mensaje de datos.MENSAJES de ese servicio."""
+    servicio = item["servicio"]
+    return (f'<a class="vt-indice__wa" data-cta="{esc(tipo)}:indice-{esc(servicio)}" '
+            f'href="{esc(datos.wa_url(datos.mensaje(servicio)))}" target="_blank" rel="noopener">Cotizar {item["cotizar"]} '
+            '<span aria-hidden="true">→</span></a>')
+
+
+def indice(items, tipo=None):
     """Filas tipo índice: foto, número, título con enlace (toda la fila lo abre), qué incluye, "desde" con la marca
-    amarilla y flecha."""
+    amarilla y flecha. Las filas con servicio y cotizar (la home, con su tipo) llevan además su enlace de WhatsApp bajo
+    el precio."""
     filas = "".join(
         f'<li><img src="{esc(i["img"])}" width="{i["ancho"]}" height="{i["alto"]}" alt="" loading="lazy" decoding="async">'
         f'<span class="vt-indice__n" aria-hidden="true">{n:02d}</span>'
         f'<h3><a href="{esc(i["href"])}">{i["titulo"]}</a></h3><p>{i["texto"]}</p>'
-        f'<p class="vt-indice__desde">desde <span class="vt-precio-marca">{i["desde"]}</span> {i["unidad"]}</p>'
+        f'<p class="vt-indice__desde">desde <span class="vt-precio-marca">{i["desde"]}</span> {i["unidad"]}'
+        f'{_cotizar_servicio(i, tipo) if tipo and i.get("servicio") else ""}</p>'
         f'<span class="vt-indice__ir" aria-hidden="true">→</span></li>'
         for n, i in enumerate(items, 1))
     return f'<ol class="vt-indice">{filas}</ol>'
@@ -495,7 +526,7 @@ def textos_medidor(largo, ancho, r, colonia="", plazo=1):
                          f"Colonia: {colonia or '___'}", "Te mando foto del área."))
     return {"medida": medida, "monto": dinero(r["total"]),
             "calc": f"{formato_m2(r['m2'])} m² × {desde}${r['precio']}/m², con IVA. {cierre_calc}",
-            "plan": plan, "plazo": plazo, "mensaje": mensaje}
+            "plan": plan, "plazo": plazo, "mensaje": mensaje, "cta": CTA_MEDIDA}
 
 
 def plano_medidor(largo, ancho):
@@ -552,12 +583,17 @@ def _opcion_plazo(prefijo, plazo):
 VACIO_MEDIDOR = {"medida": "Escribe tus medidas", "monto": "—", "calc": "Escribe el largo y el ancho de tu patio."}
 
 
-def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
+def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None, boton_medida=False, garantia=False):
     """Medidor: largo × ancho → plano a escala → etiqueta con el estimado y la forma de pago → WhatsApp con la medida.
     Los campos empiezan vacíos (8 y 6 son solo el ejemplo del placeholder y del plano): mientras el visitante no
     escriba, la etiqueta no muestra un estimado ajeno y el botón manda el mensaje genérico de la página (data-mensaje,
     con firma). vt-medidor.js calcula con los data-* de cada opción: los precios no viven en el JS. data-hero-cta: la
-    barra móvil se esconde mientras el Medidor está a la vista, para que su CTA no compita."""
+    barra móvil se esconde mientras el Medidor está a la vista, para que su CTA no compita. Con boton_medida=True (la
+    home) solo el botón esconde la barra y su texto va en un <span> que vt-medidor.js cambia a CTA_MEDIDA cuando hay una
+    medida válida. Con garantia=True, la garantía de arraigo va bajo el botón, con su enlace a condiciones."""
+    marca_caja, marca_boton = ("", " data-hero-cta") if boton_medida else (" data-hero-cta", "")
+    texto_boton = f'<span data-vt-o="cta-texto">{CTA_WA}</span>' if boton_medida else CTA_WA
+    pie = f'<p class="vt-medidor__garantia">{garantia_pasto()}</p>' if garantia else ""
     generico = datos.con_firma(mensaje or datos.MENSAJES["general"])
     mayoreo = datos.con_firma(datos.MENSAJES["empresas"])
     opciones = "".join(_opcion_medidor(prefijo, k, m, modo) for k, m in MODOS_MEDIDOR.items())
@@ -565,7 +601,7 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
     campo = ('<div class="vt-campo"><label for="{p}-{n}">{t}</label><div class="vt-control"><input id="{p}-{n}" '
              'data-vt-campo="{n}" inputmode="decimal" placeholder="{v}" autocomplete="off"><span>m</span></div></div>')
     return (
-        f'<div class="vt-medidor" data-vt-medidor data-hero-cta data-wa="{esc(datos.TELEFONO_WA)}" '
+        f'<div class="vt-medidor" data-vt-medidor{marca_caja} data-wa="{esc(datos.TELEFONO_WA)}" '
         f'data-mensaje="{esc(generico)}" data-mensaje-mayoreo="{esc(mayoreo)}">'
         f'<div class="vt-medidor__form" role="group" aria-label="Medidor de pasto">'
         f'<div class="vt-medidor__medidas">{campo.format(p=prefijo, n="largo", t="Largo", v=largo)}'
@@ -587,9 +623,9 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
         f'<fieldset class="vt-opciones vt-opciones--plazo"><legend>Forma de pago: contado o mensualidades con tarjeta de '
         f'crédito</legend>{plazos}</fieldset>'
         f'<p class="vt-medidor__plan" data-vt-o="plan"></p>'
-        f'<a class="vt-btn vt-btn--wa" data-cta="{tipo}:medidor" data-vt-o="cta" href="{esc(datos.wa_url(generico))}" '
-        f'target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp<span class="vt-flecha" aria-hidden="true">→'
-        f'</span></a></div></div></div>')
+        f'<a class="vt-btn vt-btn--wa" data-cta="{tipo}:medidor" data-vt-o="cta"{marca_boton} '
+        f'href="{esc(datos.wa_url(generico))}" target="_blank" rel="noopener">{WA_GLIFO}{texto_boton}'
+        f'<span class="vt-flecha" aria-hidden="true">→</span></a>{pie}</div></div></div>')
 
 
 # ---------- empresas: cotizador por volumen y armador de palmas (public/js/vt-b2b.js; casos en casos-b2b.json) ----------

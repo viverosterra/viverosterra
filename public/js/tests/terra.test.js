@@ -1,7 +1,11 @@
 // public/js/tests/terra.test.js
 const test = require('node:test');
 const assert = require('node:assert');
-const { FIRMA, HERO_CTA, tipoEnlace, conFirma, evento, eventoWhatsapp } = require('../terra.js');
+const fs = require('node:fs');
+const path = require('node:path');
+const { FIRMA, HERO_CTA, ABIERTO, tipoEnlace, conFirma, evento, eventoWhatsapp, abierto, horario } = require('../terra.js');
+
+const HORARIO = JSON.parse(fs.readFileSync(path.join(__dirname, 'casos-horario.json'), 'utf8'));
 
 function enlace(atributos) {
   return { getAttribute: (nombre) => (nombre in atributos ? atributos[nombre] : null) };
@@ -329,4 +333,82 @@ test('las tablas plegables se abren desde 768 px y siguen cerradas en celular', 
   const sinMatchMedia = crear();
   plegables(doc(sinMatchMedia), {});
   assert.deepStrictEqual(sinMatchMedia.map((d) => d.open), [false, false]);
+});
+
+test('abierto: cada caso de casos-horario.json (bordes de viernes y sábado, domingo, festivos y cambio de día en UTC)', () => {
+  for (const caso of HORARIO.casos) {
+    assert.strictEqual(abierto(new Date(caso.instante), HORARIO.horario, HORARIO.festivos), caso.abierto, caso.nota);
+  }
+});
+
+test('abierto usa el día y la hora de México, no los de UTC ni los de la máquina', () => {
+  // 2026-11-14T02:00Z es viernes 13 a las 20:00 en México (en UTC ya es sábado).
+  const instante = new Date('2026-11-14T02:00:00Z');
+  assert.strictEqual(abierto(instante, '5@09:00-23:00', ''), true);
+  assert.strictEqual(abierto(instante, '6@00:00-23:59', ''), false);
+  // 2026-12-26T02:00Z sigue siendo 25 de diciembre en México: festivo aunque el horario lo cubra.
+  const navidad = new Date('2026-12-26T02:00:00Z');
+  assert.strictEqual(abierto(navidad, '5,6@00:00-23:59', '12-25,01-01'), false);
+  assert.strictEqual(abierto(navidad, '5,6@00:00-23:59', ''), true);
+});
+
+test('abierto es falso sin horario, con horario ilegible o con una fecha inválida', () => {
+  const lunes = new Date('2026-11-16T16:00:00Z');
+  assert.strictEqual(abierto(lunes, '', ''), false);
+  assert.strictEqual(abierto(lunes, null, null), false);
+  assert.strictEqual(abierto(lunes, 'lunes a viernes', ''), false);
+  assert.strictEqual(abierto(new Date('no es fecha'), HORARIO.horario, HORARIO.festivos), false);
+});
+
+test('el horario y los festivos no viven en terra.js: llegan de los data-* del HTML', () => {
+  const fuente = fs.readFileSync(path.join(__dirname, '..', 'terra.js'), 'utf8');
+  assert.doesNotMatch(fuente, /\d{2}:\d{2}-\d{2}:\d{2}|['"]\d{2}-\d{2}['"]/);
+  assert.match(fuente, /data-vt-horario/);
+  assert.match(fuente, /data-vt-festivos/);
+  assert.match(fuente, /America\/Mexico_City/);
+});
+
+function paginaConPromesa() {
+  const promesa = 'Respondemos en menos de 1 hora en horario · Lun a vie 9 a 18 h, sáb 9 a 14 h';
+  const crear = (tag) => ({ tag, hijos: [], atributos: {}, clases: new Set(), textContent: '',
+    setAttribute(n, v) { this.atributos[n] = String(v); },
+    getAttribute(n) { return n in this.atributos ? this.atributos[n] : null; },
+    hasAttribute(n) { return n in this.atributos; },
+    get firstChild() { return this.hijos[0] || null; },
+    insertBefore(nuevo, ref) { const i = ref ? this.hijos.indexOf(ref) : this.hijos.length; this.hijos.splice(i, 0, nuevo); nuevo.padre = this; return nuevo; },
+    get nextSibling() { return this.padre.hijos[this.padre.hijos.indexOf(this) + 1] || null; },
+    removeChild(hijo) { this.hijos.splice(this.hijos.indexOf(hijo), 1); return hijo; },
+    get texto() { return this.hijos.length ? this.hijos.map((h) => h.texto).join('') : this.textContent; },
+  });
+  const texto = (t) => { const n = crear('#text'); n.textContent = t; return n; };
+  const el = crear('span');
+  el.atributos = { 'data-vt-horario': HORARIO.horario, 'data-vt-festivos': HORARIO.festivos };
+  el.classList = { toggle: (c, si) => (si ? el.clases.add(c) : el.clases.delete(c)) };
+  el.insertBefore(texto(promesa), null);
+  const doc = { createElement: crear, createTextNode: texto, querySelectorAll: (s) => (s === '[data-vt-horario]' ? [el] : []) };
+  return { doc, el, promesa };
+}
+
+test('en horario antepone "Abierto ahora · " a la promesa, una sola vez, y la marca con is-abierto', () => {
+  const p = paginaConPromesa();
+  const lunes = new Date('2026-11-16T16:00:00Z');
+  horario(p.doc, lunes);
+  horario(p.doc, lunes);
+  assert.strictEqual(ABIERTO, 'Abierto ahora');
+  assert.strictEqual(p.el.texto, 'Abierto ahora · ' + p.promesa);
+  assert.ok(p.el.clases.has('is-abierto'), 'el punto verde va con el texto, nunca solo');
+  assert.strictEqual(p.el.getAttribute('aria-live'), null);
+});
+
+test('fuera de horario el texto queda exactamente igual; al cerrar se retira el prefijo', () => {
+  const p = paginaConPromesa();
+  horario(p.doc, new Date('2026-11-15T18:00:00Z'));
+  assert.strictEqual(p.el.texto, p.promesa);
+  assert.strictEqual(p.el.hijos.length, 1);
+  assert.ok(!p.el.clases.has('is-abierto'));
+  horario(p.doc, new Date('2026-11-13T23:59:00Z'));
+  assert.strictEqual(p.el.texto, 'Abierto ahora · ' + p.promesa);
+  horario(p.doc, new Date('2026-11-14T00:00:00Z'));
+  assert.strictEqual(p.el.texto, p.promesa);
+  assert.ok(!p.el.clases.has('is-abierto'));
 });

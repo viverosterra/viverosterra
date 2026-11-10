@@ -35,6 +35,21 @@ HORARIO_LD = (
     (("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"), "09:00", "18:00"),
     (("Saturday",), "09:00", "14:00"),
 )
+# Días cerrados cada año (mes-día), además del domingo: "Abierto ahora" no se muestra (spec del hero, 2026-11-09).
+FESTIVOS = ("12-25", "01-01")
+_DIA_ISO = {"Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6, "Sunday": 7}
+
+
+def horario_marca():
+    """HORARIO_LD para el atributo data-vt-horario que lee terra.js: "1,2,3,4,5@09:00-18:00;6@09:00-14:00" (lunes = 1)."""
+    return ";".join(f"{','.join(str(_DIA_ISO[d]) for d in dias)}@{abre}-{cierra}" for dias, abre, cierra in HORARIO_LD)
+
+
+def festivos_marca():
+    """FESTIVOS para el atributo data-vt-festivos: "12-25,01-01"."""
+    return ",".join(FESTIVOS)
+
+
 PROMESA = "Respondemos en menos de 1 hora en horario"
 PROMESA_COMPLETA = f"{PROMESA} · {HORARIO}"
 

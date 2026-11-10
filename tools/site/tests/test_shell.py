@@ -1,3 +1,4 @@
+import re
 import sys
 import tempfile
 import unittest
@@ -49,6 +50,24 @@ class ShellTest(unittest.TestCase):
         self.assertIn('<a data-cta="blog:cuerpo" href="https://wa.me/528333268008?text=Hola">WhatsApp</a>', html)
         self.assertIn('<a data-cta="blog:cuerpo" href="tel:8333268008">Tel</a>', html)
         self.assertIn('<a href="/precios">Precios</a>', html)
+
+    def test_hojas_por_clase_del_body_en_cualquier_orden(self):
+        """La home lleva vt-inicio siempre y vt-temporada solo en temporada: cada hoja se decide por su clase, no por
+        la cadena exacta del <body>."""
+        urls = dict(URLS, **{f"terra-{n}.css": f"/css/terra-{n}.0123456789.css" for n in (
+            "tienda", "plantas", "materiales", "precios", "blog", "obras", "nochebuenas", "temporada", "inicio")})
+
+        def hojas(clases):
+            html = shell.aplicar(PAGINA.replace("<body>", f'<body class="{clases}">'), "/", urls)
+            return sorted(re.findall(r'href="/css/(terra-[a-z]+)\.', html))
+
+        self.assertEqual(hojas("vt-pagina vt-inicio vt-temporada"), ["terra-inicio", "terra-temporada"])
+        self.assertEqual(hojas("vt-pagina vt-inicio"), ["terra-inicio"])
+        self.assertEqual(hojas("vt-pagina vt-temporada"), ["terra-temporada"])
+        self.assertEqual(hojas("vt-pagina vt-tienda"), ["terra-tienda"])
+        self.assertEqual(hojas("vt-pagina vt-nochebuenas"), ["terra-nochebuenas"])
+        self.assertEqual(hojas("vt-pagina vt-inicio-otra"), [])
+        self.assertEqual(hojas("vt-pagina"), [])
 
     def test_falla_sin_regiones(self):
         with self.assertRaises(ValueError):

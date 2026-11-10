@@ -4,7 +4,8 @@
    vive ningún precio. Las mensualidades salen de vt-mensualidades.js (window.VTMensualidades), nunca de una fórmula
    propia. Mismo cálculo que componentes.calculo_medidor / textos_medidor (paridad en tests/casos-medidor.json).
    El número de WhatsApp y el mensaje genérico de la página también llegan del HTML (data-wa y data-mensaje en
-   [data-vt-medidor]). Las funciones puras se exportan para node --test. */
+   [data-vt-medidor]). Donde el botón trae data-vt-o="cta-texto" (la home), con medida válida dice "Enviar mi medida
+   por WhatsApp". Las funciones puras se exportan para node --test. */
 (function (root) {
   'use strict';
   const PLANO = { ancho: 360, alto: 190, x: 44, y: 56, minimo: 24 };
@@ -41,6 +42,9 @@
     return { m2, precio, desde, texto, rotulo, aviso, total: Math.round(m2 * precio) };
   }
 
+  // Texto del botón con una medida válida (componentes.CTA_MEDIDA). Sin medida vuelve el texto con el que llegó el HTML.
+  const CTA_MEDIDA = 'Enviar mi medida por WhatsApp';
+
   // plazo: 1 (contado) o las mensualidades elegidas; si no aplican a ese total, contado.
   function textos(largo, ancho, r, colonia, M, plazo) {
     const medida = `${largo.toFixed(2)} × ${ancho.toFixed(2)} m = ${formatoM2(r.m2)} m²`;
@@ -63,7 +67,7 @@
       `Estimado de la web: ${desde}${dinero(r.total)} con IVA`, `Me interesa: ${interes}`, `Colonia: ${colonia || '___'}`,
       'Te mando foto del área.'].join('\n');
     return { medida, monto: dinero(r.total), calc: `${formatoM2(r.m2)} m² × ${desde}$${r.precio}/m², con IVA. ${cierre}`,
-      plan, plazo: elegido, mensaje };
+      plan, plazo: elegido, mensaje, cta: CTA_MEDIDA };
   }
 
   function plano(largo, ancho) {
@@ -113,6 +117,10 @@
     const modos = leerModos(caja);
     const wa = caja.dataset.wa;
     const plazos = Array.from(caja.querySelectorAll('input[type="radio"][name$="-plazo"]'));
+    // Solo donde la página lo pide (data-vt-o="cta-texto"): el botón dice que manda la medida cuando ya hay una.
+    const rotuloCta = salida('cta-texto');
+    const ctaSinMedida = rotuloCta ? rotuloCta.textContent : '';
+    const rotular = (texto) => { if (rotuloCta) rotuloCta.textContent = texto; };
     // Cada plazo muestra su mensualidad si aplica al total; si no, el monto mínimo de cotización y queda deshabilitado.
     function marcarPlazos(total) {
       const disponibles = total ? M.plazosDisponibles(total) : [];
@@ -136,6 +144,7 @@
       marcarPlazos(0);
       // Sin medida válida, el botón manda el mensaje de la página: nunca un estimado viejo ni el ejemplo del placeholder.
       salida('cta').setAttribute('href', enlace(wa, mensaje));
+      rotular(ctaSinMedida);
     }
     function actualizar() {
       const elegido = caja.querySelector('input[name$="-modo"]:checked');
@@ -163,6 +172,7 @@
       salida('aviso').textContent = r.aviso;
       salida('aviso').hidden = !r.aviso;
       salida('cta').setAttribute('href', enlace(wa, t.mensaje));
+      rotular(t.cta);
     }
     caja.addEventListener('input', actualizar);
     caja.addEventListener('change', actualizar);
