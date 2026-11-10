@@ -1,7 +1,13 @@
 """Plantilla de la home (spec §3.3): portada con precio y CTA en el primer pantallazo móvil → cuadro de datos → qué
 hacemos (cada ruta con su precio) → Medidor → obras con pies FIG. y clientes → opiniones con nombre → proceso
-NOSOTROS / TÚ → precios → preguntas → cobertura por zona → CTA final. Sin formulario por correo: se cotiza por WhatsApp o con el Medidor. El contenido vive en tools/site/contenido/inicio.py."""
+NOSOTROS / TÚ → precios → preguntas → cobertura por zona → CTA final. Sin formulario por correo: se cotiza por WhatsApp o con el Medidor. El contenido vive en tools/site/contenido/inicio.py.
+
+Hero y conversión (docs/superpowers/specs/2026-11-09-home-hero-y-conversion-design.md, Entrega 1): la portada, la fila de
+WhatsApp de cada sección y el cierre son propios de la home y se visten con public/css/terra-inicio.css (todo bajo
+.vt-inicio); las demás páginas siguen con c.portada y c.cierre."""
 import componentes as c
+import datos
+from partials import esc
 from plantillas import base
 
 TIPO = "home"
@@ -16,37 +22,98 @@ _FLOR = ('<svg class="vt-navidad__flor" viewBox="-16 -16 32 32" aria-hidden="tru
 
 
 def _banner_temporada(t):
-    """Banner navideño, primero en <main>; todo el banner enlaza a la página de temporada. Vacío fuera de temporada."""
+    """Banner navideño, primero en <main>; todo el banner enlaza a la página de temporada. Vacío fuera de temporada.
+    El <span data-vt-hasta> sale vacío: terra.js escribe los días que faltan de preventa (solo días); en celular esa
+    frase sustituye al renglón de precios (terra-temporada.css) para que el banner no crezca."""
     if not t:
         return ""
     return (f'<aside class="vt-navidad-x" aria-label="{t["aviso"]}"><a class="vt-navidad" data-cta="{TIPO}:banner-nochebuenas" '
             f'href="{t["href"]}">{_FLOR}<span class="vt-navidad__txt"><b>{t["titulo"]}<span class="vt-navidad__estado"> · '
-            f'{t["estado"]}</span></b><span>{t["texto"]}</span></span><span class="vt-navidad__cta">'
+            f'{t["estado"]}</span></b><span><span class="vt-navidad__precios">{t["texto"]}</span>'
+            f'<span class="vt-navidad__hasta" data-vt-hasta="{t["hasta"]}" data-vt-build="{datos.ACTUALIZADO}"></span>'
+            f'</span></span><span class="vt-navidad__cta">'
             f'Ver<span class="vt-navidad__mas"> nochebuenas</span><span class="vt-navidad__flecha" aria-hidden="true">→</span>'
             '</span></a></aside>')
+
+
+# Separador de la línea de confianza: real en el DOM (sin CSS no se lee pegado) y decorativo para el lector de pantalla.
+_SEP = '<span class="vt-inicio__sep" aria-hidden="true"> · </span>'
+# Filas de WhatsApp de sección: texto del botón y si llevan la promesa debajo (solo la primera y la última).
+_FILAS = {"opiniones": ("Cotizar mi jardín por WhatsApp", True), "proceso": ("Empezar por WhatsApp", False),
+          "precios": ("Pedir mi precio por WhatsApp", False), "faq": ("Preguntar por WhatsApp", True)}
+
+
+def _portada(p):
+    """Portada de la home. p: kicker, h1, lema, lede, etiqueta, mensaje y foto. En el DOM (y en celular) la etiqueta de
+    precio va entre el lede y el botón; desde 1024 px terra-inicio.css la cuelga sobre la esquina de la foto. Un solo
+    botón (terra.js esconde la barra móvil mientras se ve), dos enlaces de texto y la línea de confianza."""
+    nota, _, resenas = datos.GOOGLE.partition(" ")
+    return (
+        '<section class="vt-portada" aria-labelledby="vt-h1"><div class="vt-wrap"><div class="vt-portada__grid">'
+        f'<div class="vt-inicio__titulo"><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1>'
+        f'<p class="vt-inicio__lema vt-serif">{p["lema"]}</p><p class="vt-lede">{p["lede"]}</p></div>'
+        f'{c.etiqueta(p["etiqueta"])}'
+        f'<div class="vt-inicio__trato"><div class="vt-inicio__cta" data-hero-cta>{c.boton_wa(p["mensaje"], f"{TIPO}:hero")}</div>'
+        f'<p class="vt-inicio__enlaces"><a id="vt-calcula-patio" data-cta="{TIPO}:hero" href="#medidor">Calcula tu patio '
+        '<span aria-hidden="true">→</span></a>'
+        f'<a data-cta="{TIPO}:hero" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a></p>'
+        f'<p class="vt-inicio__confianza">{c.promesa_horario()}{_SEP}<span><b>{esc(nota)}</b> {esc(resenas)}</span>{_SEP}'
+        f'<span><b>{esc(datos.CLIENTES)}</b> clientes</span></p></div>'
+        f'<div class="vt-portada__foto">{c.figura(p["foto"], principal=True)}</div></div>{c.cuadro_datos()}</div></section>')
+
+
+def _fila_wa(mensaje, seccion):
+    """WhatsApp al final de una sección larga (opiniones, proceso, precios y preguntas). data-hero-cta: la barra fija
+    de celular se esconde mientras la fila se ve, para no mostrar dos botones iguales."""
+    texto, con_promesa = _FILAS[seccion]
+    promesa = f'<p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p>' if con_promesa else ""
+    return f'<div class="vt-inicio__fila" data-hero-cta>{c.boton_wa(mensaje, f"{TIPO}:{seccion}", texto)}{promesa}</div>'
+
+
+def _resenas():
+    return (f'<p class="vt-inicio__resenas"><a href="{esc(datos.MAPS_URL)}" target="_blank" rel="noopener">'
+            'Ver las reseñas en Google</a></p>')
+
+
+def _cierre(ci):
+    """CTA final: lo último antes de los botones es la promesa de respuesta; la garantía de arraigo y el costo de la
+    visita van después."""
+    return (
+        '<section class="vt-cierre" aria-labelledby="vt-cierre-titulo"><div class="vt-wrap vt-cierre__grid"><div>'
+        f'<h2 id="vt-cierre-titulo">{ci["titulo"]}</h2><p class="vt-lede">{ci["lede"]}</p>'
+        f'<p class="vt-promesa">{c.promesa_horario()}</p>'
+        f'<div class="vt-cta">{c.boton_wa(ci["mensaje"], f"{TIPO}:cierre")}{c.boton_tel(f"{TIPO}:cierre")}</div>'
+        f'<p class="vt-promesa">{c.garantia_pasto("Pasto instalado: ")}</p><p class="vt-promesa">{ci["visita"]}</p></div>'
+        f'<p class="vt-cierre__msg"><b>El mensaje que se abre</b>{esc(datos.con_firma(ci["mensaje"]))}</p></div></section>')
 
 
 def render(k):
     q, m, o, op, pr, pc, f, co, ci = (k[s] for s in ("que_hacemos", "medidor", "obras", "opiniones", "proceso", "precios",
                                                       "faq", "cobertura", "cierre"))
+    mensaje = k["portada"]["mensaje"]
     cuerpo = "\n".join((
         _banner_temporada(k["temporada"]),
-        c.portada(k["portada"], TIPO),
-        c.bloque(1, "Qué hacemos", "vt-h-que", q["titulo"], c.indice(q["items"]), lede=q["lede"]),
-        c.bloque(2, "Medidor", "vt-h-medidor", m["titulo"], c.medidor("inicio", TIPO, mensaje=k["portada"]["mensaje"]), lede=m["lede"], tinte=True,
-                 id_seccion="medidor"),
+        _portada(k["portada"]),
+        c.bloque(1, "Qué hacemos", "vt-h-que", q["titulo"], c.indice(q["items"], TIPO), lede=q["lede"]),
+        c.bloque(2, "Medidor", "vt-h-medidor", m["titulo"],
+                 c.medidor("inicio", TIPO, mensaje=k["portada"]["mensaje"], boton_medida=True, garantia=True,
+                           resultado_vivo=True),
+                 lede=m["lede"], tinte=True, id_seccion="medidor"),
         c.bloque(3, "Jardines entregados", "vt-h-obras", o["titulo"],
                  c.obras(o["figuras"]) + c.linea_prueba() + f'<h3 class="vt-mt">{o["titulo_clientes"]}</h3>' + c.logos(),
                  lede=o["lede"]),
-        c.bloque(4, "Opiniones", "vt-h-opiniones", op["titulo"], c.testimonios(op["items"]), lede=op["lede"]),
-        c.bloque(5, "Cómo trabajamos", "vt-h-como", pr["titulo"], c.pasos(pr["pasos"]), lede=pr["lede"], tinte=True),
+        c.bloque(4, "Opiniones", "vt-h-opiniones", op["titulo"], c.testimonios(op["items"]) + _resenas() + _fila_wa(mensaje, "opiniones"),
+                 lede=op["lede"]),
+        c.bloque(5, "Cómo trabajamos", "vt-h-como", pr["titulo"], c.pasos(pr["pasos"]) + _fila_wa(mensaje, "proceso"),
+                 lede=pr["lede"], tinte=True),
         c.bloque_dos(6, "Precios", "vt-h-precios", pc["titulo"], f'<p class="vt-lede">{pc["lede"]}</p>' + c.nota(*pc["nota"]),
-                     c.tabla_precios(pc["filas"], pc["caption"]) + c.planes_mensualidades(), id_seccion="precios"),
+                     c.tabla_precios(pc["filas"], pc["caption"]) + c.planes_mensualidades() + _fila_wa(mensaje, "precios"),
+                     id_seccion="precios"),
         c.bloque_dos(7, "Preguntas", "vt-h-faq", f["titulo"], f'<h3 class="vt-mt">{f["titulo_guias"]}</h3>' + c.guias(f["guias"]),
-                     c.faq(f["preguntas"]), tinte=True),
+                     c.faq(f["preguntas"]) + _fila_wa(mensaje, "faq"), tinte=True),
         c.bloque(8, "Cobertura", "vt-h-cobertura", co["titulo"], c.cobertura(co["zonas"], co["por_proyecto"]),
                  lede=co["lede"]),
-        c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], TIPO),
+        _cierre(ci),
     ))
     j = k["jsonld"]
     bloques = (
@@ -56,4 +123,4 @@ def render(k):
     )
     return base.documento(k["meta"], cuerpo, jsonld_bloques=bloques,
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),), scripts=SCRIPTS,
-                          clase_body="vt-pagina vt-temporada" if k["temporada"] else "vt-pagina")
+                          clase_body="vt-pagina vt-inicio vt-temporada" if k["temporada"] else "vt-pagina vt-inicio")

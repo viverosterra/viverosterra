@@ -95,8 +95,11 @@ class PlantillasNavegadorTest(unittest.TestCase):
         cls.servidor.shutdown()
         cls.servidor.server_close()
 
-    def pagina(self, ancho=1440, alto=900):
-        contexto = self.navegador.new_context(viewport={"width": ancho, "height": alto})
+    def pagina(self, ancho=1440, alto=900, movimiento=False, js=True):
+        """Por omisión con prefers-reduced-motion: reduce, para no medir ni revisar contraste a media animación (la
+        home se anima al cargar y al desplazar desde la Entrega 2 del hero); movimiento=True lo prueba animado."""
+        contexto = self.navegador.new_context(viewport={"width": ancho, "height": alto}, java_script_enabled=js,
+                                              reduced_motion="no-preference" if movimiento else "reduce")
         self.addCleanup(contexto.close)
         base = self.base
         contexto.route("**/*", lambda r: r.continue_() if r.request.url.startswith(base) else r.abort())
@@ -213,6 +216,31 @@ class PlantillasNavegadorTest(unittest.TestCase):
             f"https://wa.me/{datos.TELEFONO_WA}?text="))
         self.assertEqual(caja.locator(".vt-medidor__res").get_attribute("role"), "status")
 
+    def test_medidor_con_iva_solo_en_modo_instalado(self):
+        """Dueño (2026-11-10): el pasto sin instalar no lleva IVA. En la etiqueta, el cálculo y el mensaje del Medidor,
+        "con IVA" solo aparece en modo instalado; en solo pasto y mayoreo (también cuando cae a solo pasto), nunca."""
+        for ruta in PAGINAS:
+            page = self.pagina(375, 812)
+            page.goto(self.base + ruta, wait_until="load")
+            caja = page.locator("[data-vt-medidor]")
+            etiqueta = caja.locator(".vt-medidor__res")
+            self.assertIn("con IVA", etiqueta.locator(".vt-etiqueta__precio").inner_text())  # arranca en instalado
+            caja.locator('input[value="solo"]').check(force=True)
+            self.assertNotIn("IVA", etiqueta.inner_text())  # sin medida todavía
+            for largo, ancho, modo, con_iva in ((8, 6, "instalado", True), (8, 6, "solo", False), (10, 10, "mayoreo", False),
+                                               (25, 24, "mayoreo", False)):
+                caja.locator('[data-vt-campo="largo"]').fill(str(largo))
+                caja.locator('[data-vt-campo="ancho"]').fill(str(ancho))
+                caja.locator(f'input[value="{modo}"]').check(force=True)
+                mensaje = unquote(caja.locator('[data-vt-o="cta"]').get_attribute("href").split("text=", 1)[1])
+                visible = etiqueta.inner_text() + " " + caja.locator(".vt-medidor__form").inner_text()
+                with self.subTest(ruta=ruta, modo=modo, largo=largo):
+                    self.assertEqual("con IVA" in visible, con_iva)
+                    self.assertEqual("con IVA" in mensaje, con_iva)
+                    if not con_iva:
+                        self.assertIn("(no lleva IVA)", caja.locator('[data-vt-o="calc"]').inner_text())
+                        self.assertRegex(mensaje, r"Estimado de la web: (?:desde )?\$[\d,]+ \(no lleva IVA\)")
+
     def test_medidor_empieza_vacio_y_manda_el_mensaje_generico(self):
         for ruta, mensaje in (("/", datos.MENSAJES["general"]), ("/pasto-en-rollo-tampico/", datos.MENSAJES["pasto-natural"])):
             page = self.pagina()
@@ -225,13 +253,432 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 href = caja.locator('[data-vt-o="cta"]').get_attribute("href")
                 self.assertEqual(unquote(href.split("text=", 1)[1]), datos.con_firma(mensaje))
 
-    def test_barra_movil_se_esconde_con_el_medidor_a_la_vista(self):
+    def test_barra_movil_se_esconde_solo_con_el_boton_del_medidor_a_la_vista(self):
+        """Spec del hero (2026-11-09, §4): en la home la barra ya no se oculta en todo el Medidor; solo mientras su
+        botón está a la vista. (Antes: se escondía con cualquier parte del Medidor en pantalla.)"""
         page = self.pagina(375, 812)
         page.goto(self.base + "/", wait_until="load")
-        page.locator("[data-vt-medidor] .vt-medidor__res").scroll_into_view_if_needed()
-        page.wait_for_function("() => document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
+        oculta = "document.querySelector('[data-vt-bar]').classList.contains('is-oculta')"
+        page.locator('[data-vt-medidor] [data-vt-o="cta"]').scroll_into_view_if_needed()
+        page.wait_for_function(f"() => {oculta}")
+        # Con los campos arriba de la pantalla (y el botón todavía abajo), la barra vuelve.
+        page.evaluate("() => scrollTo(0, document.querySelector('[data-vt-medidor]').getBoundingClientRect().top + scrollY - 80)")
+        page.wait_for_function(f"() => !{oculta}")
+        self.assertGreater(page.locator('[data-vt-medidor] [data-vt-o="cta"]').bounding_box()["y"], 812)
         page.locator("#vt-h-precios").scroll_into_view_if_needed()
+        page.wait_for_function(f"() => !{oculta}")
+
+    # ---------- hero nuevo de la home y conversión (spec 2026-11-09, Entrega 1) ----------
+    def pagina_a_la_hora(self, ancho, alto, instante):
+        page = self.pagina(ancho, alto)
+        page.clock.set_fixed_time(instante)
+        page.goto(self.base + "/", wait_until="load")
+        return page
+
+    def test_home_precio_y_cta_en_la_primera_pantalla_de_celulares(self):
+        """Precio y botón de la portada completos en la primera pantalla a 375×812, 375×667, 360×640 y 320×640, aun
+        con el prefijo "Abierto ahora" puesto; la barra móvil está oculta y no tapa el precio."""
+        for ancho, alto in ((375, 812), (375, 667), (360, 640), (320, 640)):
+            page = self.pagina_a_la_hora(ancho, alto, "2026-11-16T16:00:00Z")
+            page.wait_for_function("() => document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
+            precio = page.locator(".vt-portada .vt-etiqueta__precio").bounding_box()
+            cta = page.locator(".vt-portada [data-hero-cta] .vt-btn--wa").bounding_box()
+            lede = page.locator(".vt-portada .vt-lede").bounding_box()
+            with self.subTest(ancho=ancho, alto=alto):
+                self.assertLessEqual(precio["y"] + precio["height"], alto)
+                self.assertLessEqual(cta["y"] + cta["height"], alto)
+                self.assertGreaterEqual(cta["height"], 62)
+                self.assertLess(lede["y"], precio["y"])
+                self.assertLess(precio["y"], cta["y"])
+
+    def test_home_precio_y_cta_en_la_primera_pantalla_de_laptops_bajas(self):
+        """Revisión de diseño (2026-11-09): en pantallas bajas el hero se compacta; el precio de la etiqueta y el
+        botón de WhatsApp quedan completos sin desplazar, y la etiqueta no tapa el pie de la foto."""
+        for ancho, alto in ((1280, 620), (1366, 650), (1536, 730), (1440, 780), (1024, 650)):
+            page = self.pagina_a_la_hora(ancho, alto, "2026-11-16T16:00:00Z")
+            precio = page.locator(".vt-portada .vt-etiqueta__precio").bounding_box()
+            cta = page.locator(".vt-portada [data-hero-cta] .vt-btn--wa").bounding_box()
+            etiqueta = page.locator(".vt-portada .vt-etiqueta-x").bounding_box()
+            marco = page.locator(".vt-portada__foto .vt-fig__marco").bounding_box()
+            with self.subTest(ancho=ancho, alto=alto):
+                self.assertLessEqual(precio["y"] + precio["height"], alto)
+                self.assertLessEqual(cta["y"] + cta["height"], alto)
+                self.assertGreaterEqual(cta["height"], 62)
+                self.assertLessEqual(marco["y"] + marco["height"], alto)
+                self.assertLess(etiqueta["y"] + etiqueta["height"], marco["y"] + marco["height"])
+                self.assertGreater(etiqueta["y"], marco["y"])
+                self.assertFalse(page.locator(".vt-portada .vt-etiqueta__nombre").is_visible())  # versión compacta
+
+    def test_home_etiqueta_compacta_de_1024_a_1279_tapa_poco_la_foto(self):
+        """De 1024 a 1279 px la etiqueta colgada es la compacta (la de celular): cubre a lo más ~20 % de la foto y no
+        llega a su tercio superior (donde está el logo de la camisa). Desde 1280 (y con alto de sobra) va completa."""
+        for ancho, alto in ((1024, 800), (1100, 900), (1279, 900)):
+            page = self.pagina(ancho, alto)
+            page.goto(self.base + "/", wait_until="load")
+            e = page.locator(".vt-portada .vt-etiqueta-x").bounding_box()
+            m = page.locator(".vt-portada__foto .vt-fig__marco").bounding_box()
+            solape = (max(0, min(e["x"] + e["width"], m["x"] + m["width"]) - max(e["x"], m["x"]))
+                      * max(0, min(e["y"] + e["height"], m["y"] + m["height"]) - max(e["y"], m["y"])))
+            with self.subTest(ancho=ancho):
+                self.assertFalse(page.locator(".vt-portada .vt-etiqueta__nombre").is_visible())
+                self.assertLessEqual(solape / (m["width"] * m["height"]), 0.2)
+                self.assertGreater(e["y"], m["y"] + m["height"] / 3)
+                self.assertLess(e["y"] + e["height"], m["y"] + m["height"])
+                self.assertEqual(page.evaluate(SALIDOS_DEL_MAIN, ".vt-portada .vt-etiqueta-x"), [])
+        completa = self.pagina(1440, 900)
+        completa.goto(self.base + "/", wait_until="load")
+        self.assertTrue(completa.locator(".vt-portada .vt-etiqueta__nombre").is_visible())
+
+    def test_home_tableta_boton_con_tope_etiqueta_al_lado_y_foto_que_no_llena_la_pantalla(self):
+        for ancho, alto, lado_a_lado in ((560, 800, False), (640, 900, False), (768, 1024, True), (1023, 768, True)):
+            page = self.pagina(ancho, alto)
+            page.goto(self.base + "/", wait_until="load")
+            cta = page.locator(".vt-portada [data-hero-cta] .vt-btn--wa").bounding_box()
+            etiqueta = page.locator(".vt-portada .vt-etiqueta-x").bounding_box()
+            marco = page.locator(".vt-portada__foto .vt-fig__marco").bounding_box()
+            with self.subTest(ancho=ancho):
+                self.assertLessEqual(cta["width"], 420)
+                self.assertEqual(cta["x"] >= etiqueta["x"] + etiqueta["width"], lado_a_lado)
+                if lado_a_lado:
+                    self.assertAlmostEqual(cta["y"], etiqueta["y"], delta=2)
+                    self.assertLessEqual(marco["height"], alto * 0.8)
+                    self.assertAlmostEqual(marco["width"] / marco["height"], 16 / 9, places=1)
+                self.assertLessEqual(page.evaluate("() => document.documentElement.scrollWidth - document.documentElement.clientWidth"), 1)
+
+    def test_home_confianza_con_separadores_en_el_dom_que_no_se_pintan(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/", wait_until="load")
+        self.assertEqual(page.locator(".vt-inicio__confianza").evaluate("e => e.textContent"),
+                         f"{datos.PROMESA_COMPLETA} · {datos.GOOGLE} · {datos.CLIENTES} clientes")
+        self.assertEqual(page.locator(".vt-inicio__sep:visible").count(), 0)
+
+    def test_home_filas_de_seccion_esconden_la_barra_y_caben_a_320(self):
+        """Revisión de diseño: con una fila de WhatsApp de sección a la vista no hay dos botones iguales (la barra
+        fija se esconde) y sus textos largos no ensanchan la página a 320 px."""
+        oculta = "document.querySelector('[data-vt-bar]').classList.contains('is-oculta')"
+        page = self.pagina(320, 640)
+        page.goto(self.base + "/", wait_until="load")
+        for seccion in ("opiniones", "proceso", "precios", "faq"):
+            boton = page.locator(f'a[data-cta="home:{seccion}"]')
+            boton.scroll_into_view_if_needed()
+            page.wait_for_function(f"() => {oculta}")
+            caja = boton.bounding_box()
+            with self.subTest(seccion=seccion):
+                self.assertGreaterEqual(caja["x"], 0)
+                self.assertLessEqual(caja["x"] + caja["width"], 320)
+                self.assertGreaterEqual(caja["height"], 44)
+                self.assertEqual(page.evaluate(SALIDOS_DEL_MAIN, "main *"), [])
+        # Fuera de las filas (en las fotos de obra no hay ningún CTA propio) la barra vuelve.
+        page.evaluate("() => scrollTo(0, document.querySelector('.vt-obras').getBoundingClientRect().top + scrollY)")
+        page.wait_for_function(f"() => !{oculta}")
+
+    def test_home_medidor_renglon_vivo_barra_con_la_medida_y_garantia_solo_instalado(self):
+        """Revisión de diseño: el resultado se lee bajo Largo × Ancho; con medida válida la barra fija manda la misma
+        medida ("Enviar mi medida") y vuelve al genérico al borrarla; generate_lead sale una vez con el cta de la barra;
+        la garantía de arraigo solo se muestra en modo instalado."""
+        page = self.pagina(375, 667)
+        page.goto(self.base + "/", wait_until="load")
+        caja = page.locator("[data-vt-medidor]")
+        vivo, barra, garantia = caja.locator('[data-vt-o="vivo"]'), page.locator("[data-vt-bar] .vt-bar__go"), caja.locator('[data-vt-o="garantia"]')
+        generico = barra.get_attribute("href")
+        self.assertFalse(vivo.is_visible())
+        self.assertEqual(barra.text_content().strip(), "Cotizar por WhatsApp")
+        caja.locator('[data-vt-campo="largo"]').fill("8")
+        caja.locator('[data-vt-campo="ancho"]').fill("6")
+        self.assertEqual(vivo.inner_text(), "48 m² · desde $5,760 con IVA")
+        medidas = caja.locator(".vt-medidor__medidas").bounding_box()
+        self.assertAlmostEqual(vivo.bounding_box()["y"], medidas["y"] + medidas["height"], delta=24)
+        self.assertEqual(barra.text_content().strip(), "Enviar mi medida")
+        self.assertEqual(barra.get_attribute("href"), caja.locator('[data-vt-o="cta"]').get_attribute("href"))
+        self.assertTrue(garantia.is_visible())
+        for modo, texto in (("solo", "48 m² · $4,080"), ("mayoreo", "48 m² · $4,080")):
+            caja.locator(f'input[value="{modo}"]').check(force=True)
+            with self.subTest(modo=modo):
+                self.assertEqual(vivo.inner_text(), texto)
+                self.assertNotIn("IVA", vivo.inner_text())
+                self.assertFalse(garantia.is_visible())
+        caja.locator('input[value="instalado"]').check(force=True)
+        self.assertTrue(garantia.is_visible())
+        # El clic en la barra con la medida: un solo generate_lead, con el cta de la barra, y el mensaje firmado.
+        page.evaluate("() => { window.open = () => null; document.querySelector('[data-vt-bar] .vt-bar__go').addEventListener('click', (e) => e.preventDefault()); }")
+        page.evaluate("() => scrollTo(0, document.querySelector('.vt-medidor__medidas').getBoundingClientRect().top + scrollY - 150)")
         page.wait_for_function("() => !document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
+        barra.click()
+        eventos = page.evaluate(
+            "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+        self.assertEqual(eventos, [["event", "generate_lead", {"method": "whatsapp", "cta_id": "home:barra", "service": "general"}]])
+        mensaje = unquote(barra.get_attribute("href").split("text=", 1)[1])
+        self.assertIn("Medidas: 8.00 × 6.00 m = 48 m²", mensaje)
+        self.assertTrue(mensaje.endswith(datos.FIRMA))
+        # Al borrar la medida, la barra vuelve a su enlace y texto genéricos.
+        caja.locator('[data-vt-campo="ancho"]').fill("")
+        self.assertEqual(barra.text_content().strip(), "Cotizar por WhatsApp")
+        self.assertEqual(barra.get_attribute("href"), generico)
+        self.assertFalse(vivo.is_visible())
+        # En pasto en rollo (sin los opcionales de la home) la barra no cambia.
+        otra = self.pagina(375, 667)
+        otra.goto(self.base + "/pasto-en-rollo-tampico/", wait_until="load")
+        otra.locator('[data-vt-campo="largo"]').fill("8")
+        otra.locator('[data-vt-campo="ancho"]').fill("6")
+        self.assertEqual(otra.locator("[data-vt-bar] .vt-bar__go").text_content().strip(), "Cotizar por WhatsApp")
+
+    def test_home_objetivos_tactiles_del_hero_y_del_indice(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/", wait_until="load")
+        for enlace in page.locator(".vt-inicio__enlaces a, .vt-indice__wa, .vt-inicio__fila .vt-btn").all():
+            caja = enlace.bounding_box()
+            with self.subTest(enlace=enlace.inner_text()):
+                self.assertGreaterEqual(caja["height"], 44)
+
+    def test_home_etiqueta_colgada_sobre_la_foto_en_escritorio(self):
+        """Desde 1024 px la etiqueta cuelga sobre la esquina inferior izquierda de la foto, siempre derecha, sin tapar
+        el pie de la figura ni salirse por abajo. (A 1024×800 la foto ya no es 4:5: en pantallas de 820 px de alto o
+        menos toma la altura disponible; se mide con alto de sobra.)"""
+        for ancho, alto in ((1024, 900), (1440, 900)):
+            page = self.pagina(ancho, alto)
+            page.goto(self.base + "/", wait_until="load")
+            etiqueta = page.locator(".vt-portada .vt-etiqueta-x").bounding_box()
+            marco = page.locator(".vt-portada__foto .vt-fig__marco").bounding_box()
+            with self.subTest(ancho=ancho):
+                self.assertLess(etiqueta["x"], marco["x"])
+                self.assertGreater(etiqueta["x"] + etiqueta["width"], marco["x"])
+                self.assertGreater(etiqueta["y"], marco["y"])
+                self.assertLess(etiqueta["y"] + etiqueta["height"], marco["y"] + marco["height"])
+                self.assertEqual(page.locator(".vt-portada .vt-etiqueta-x").evaluate(
+                    "e => { const m = new DOMMatrix(getComputedStyle(e).transform); return [m.a, m.b, m.c, m.d]; }"),
+                    [1, 0, 0, 1])
+                self.assertAlmostEqual(marco["height"] / marco["width"], 5 / 4, places=1)
+                cta = page.locator(".vt-portada [data-hero-cta] .vt-btn--wa").bounding_box()
+                self.assertLessEqual(cta["y"] + cta["height"], alto)
+
+    def test_home_abierto_ahora_solo_en_horario(self):
+        """En horario, "Abierto ahora · " va antes de la promesa de la portada y del cierre; fuera de horario (y en
+        festivo) el texto queda exactamente como en el HTML."""
+        promesa = datos.PROMESA_COMPLETA
+        casos = (("2026-11-16T16:00:00Z", True), ("2026-11-14T19:59:00Z", True), ("2026-11-14T20:00:00Z", False),
+                 ("2026-11-15T18:00:00Z", False), ("2026-12-25T17:00:00Z", False))
+        for instante, abierto in casos:
+            page = self.pagina_a_la_hora(375, 812, instante)
+            textos = page.locator("[data-vt-horario]").all_inner_texts()
+            with self.subTest(instante=instante):
+                self.assertEqual(textos, [f"Abierto ahora · {promesa}" if abierto else promesa] * 2)
+                self.assertEqual(page.locator(".is-abierto").count(), 2 if abierto else 0)
+                self.assertEqual(page.locator("main [aria-live]").count(), 0)
+
+    def test_home_sin_javascript_se_lee_completa(self):
+        contexto = self.navegador.new_context(viewport={"width": 375, "height": 812}, java_script_enabled=False)
+        self.addCleanup(contexto.close)
+        base = self.base
+        contexto.route("**/*", lambda r: r.continue_() if r.request.url.startswith(base) else r.abort())
+        page = contexto.new_page()
+        page.goto(self.base + "/", wait_until="load")
+        self.assertEqual(page.locator("[data-vt-horario]").all_inner_texts(), [datos.PROMESA_COMPLETA] * 2)
+        self.assertTrue(page.locator(".vt-portada [data-hero-cta] .vt-btn--wa").is_visible())
+        self.assertEqual(page.locator('[data-vt-o="cta-texto"]').inner_text(), "Cotizar por WhatsApp")
+        self.assertTrue(page.locator(".vt-medidor__garantia").is_visible())
+
+    def test_home_medidor_en_celular_resultado_antes_del_plano_y_boton_con_medida(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/", wait_until="load")
+        caja = page.locator("[data-vt-medidor]")
+        campos = caja.locator(".vt-medidor__form").bounding_box()
+        resultado = caja.locator(".vt-medidor__res").bounding_box()
+        plano = caja.locator(".vt-medidor__plano").bounding_box()
+        self.assertLess(campos["y"], resultado["y"])
+        self.assertLess(resultado["y"] + resultado["height"], plano["y"] + 1)
+        boton = caja.locator('[data-vt-o="cta"]')
+        self.assertEqual(boton.inner_text().strip().splitlines()[0], "Cotizar por WhatsApp")
+        caja.locator('[data-vt-campo="largo"]').fill("8")
+        caja.locator('[data-vt-campo="ancho"]').fill("6")
+        self.assertEqual(caja.locator('[data-vt-o="cta-texto"]').inner_text(), "Enviar mi medida por WhatsApp")
+        self.assertIn("Medidas: 8.00 × 6.00 m = 48 m²", unquote(boton.get_attribute("href").split("text=", 1)[1]))
+        ancho = boton.bounding_box()
+        self.assertLessEqual(ancho["x"] + ancho["width"], 375)
+        self.assertEqual(boton.evaluate("b => b.scrollWidth <= b.clientWidth + 1"), True)
+        caja.locator('[data-vt-campo="ancho"]').fill("")
+        self.assertEqual(caja.locator('[data-vt-o="cta-texto"]').inner_text(), "Cotizar por WhatsApp")
+        # Desde 640 px el plano vuelve a ir antes del resultado (como antes).
+        page.set_viewport_size({"width": 1440, "height": 900})
+        self.assertLess(caja.locator(".vt-medidor__plano").bounding_box()["x"], caja.locator(".vt-medidor__res").bounding_box()["x"])
+
+    # ---------- Entrega 2 del hero: movimiento, días de preventa, reseñas, menú y medición ----------
+    OPACOS = """() => Array.from(document.querySelectorAll('main *')).filter((e) => {
+      const c = e.getBoundingClientRect();
+      return c.width && c.height && Number(getComputedStyle(e).opacity) < 1 && !e.matches('.vt-opciones input');  // radios ocultos a propósito
+    }).map((e) => e.tagName + '.' + e.className + ' ' + getComputedStyle(e).opacity)"""
+    RECORRER = """async () => { for (let y = 0; y <= document.documentElement.scrollHeight; y += Math.round(innerHeight / 2)) {
+      scrollTo(0, y); await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))); } }"""
+
+    def test_home_con_movimiento_reducido_no_anima_nada(self):
+        for ancho, alto in ((375, 812), (1440, 900)):
+            page = self.pagina(ancho, alto)
+            page.goto(self.base + "/", wait_until="load")
+            with self.subTest(ancho=ancho):
+                self.assertEqual(page.evaluate("() => document.getAnimations().length"), 0)
+                self.assertEqual(page.evaluate(self.OPACOS), [])
+                page.evaluate(self.RECORRER)
+                self.assertEqual(page.evaluate("() => document.getAnimations().length"), 0)
+                self.assertEqual(page.evaluate(self.OPACOS), [])
+
+    def test_home_animada_el_precio_el_titular_y_el_cta_se_leen_desde_el_primer_cuadro(self):
+        """Con movimiento y sin JavaScript: H1, lede, precio y botón nunca empiezan transparentes ni fuera de pantalla."""
+        for ancho, alto, js in ((375, 812, True), (1440, 900, True), (375, 812, False), (1440, 900, False)):
+            page = self.pagina(ancho, alto, movimiento=True, js=js)
+            page.goto(self.base + "/", wait_until="commit")
+            page.wait_for_selector(".vt-portada [data-hero-cta] .vt-btn--wa")
+            for selector in ("h1", ".vt-portada .vt-lede", ".vt-portada .vt-etiqueta__precio",
+                             ".vt-portada [data-hero-cta] .vt-btn--wa"):
+                elemento = page.locator(selector)
+                with self.subTest(ancho=ancho, js=js, selector=selector):
+                    self.assertTrue(elemento.is_visible())
+                    self.assertEqual(elemento.evaluate("""e => { for (let n = e; n; n = n.parentElement) {
+                      if (Number(getComputedStyle(n).opacity) < 1) return n.className; } return ''; }"""), "")
+                    caja = elemento.bounding_box()
+                    self.assertLessEqual(caja["y"] + caja["height"], alto)
+
+    def test_home_animaciones_de_entrada_una_vez_cortas_y_la_etiqueta_termina_derecha(self):
+        page = self.pagina(1440, 900, movimiento=True)
+        page.goto(self.base + "/", wait_until="load")
+        entrada = page.evaluate("""() => document.getAnimations().filter((a) => a instanceof CSSAnimation && a.timeline instanceof DocumentTimeline)
+          .map((a) => { const t = a.effect.getComputedTiming(); return [a.animationName, t.duration + t.delay, t.iterations,
+            a.effect.getKeyframes().flatMap((k) => Object.keys(k)).filter((p) => !['offset', 'easing', 'composite', 'computedOffset'].includes(p))]; })""")
+        self.assertEqual(sorted(a[0] for a in entrada), ["vt-inicio-balanceo", "vt-inicio-foto"])
+        for nombre, duracion, veces, propiedades in entrada:
+            with self.subTest(animacion=nombre):
+                self.assertLessEqual(duracion, 900)
+                self.assertEqual(veces, 1)
+                self.assertLessEqual(set(propiedades), {"transform", "clipPath", "opacity"})
+        page.evaluate("() => Promise.all(document.getAnimations().filter((a) => a instanceof CSSAnimation && a.timeline instanceof DocumentTimeline).map((a) => a.finished))")
+        self.assertEqual(page.locator(".vt-portada .vt-etiqueta-x").evaluate(
+            "e => { const m = new DOMMatrix(getComputedStyle(e).transform); return [m.a, m.b, m.c, m.d]; }"), [1, 0, 0, 1])
+        etiqueta = page.locator(".vt-portada .vt-etiqueta-x").bounding_box()
+        marco = page.locator(".vt-portada__foto .vt-fig__marco").bounding_box()
+        self.assertLess(etiqueta["y"] + etiqueta["height"], marco["y"] + marco["height"])
+        # En celular no hay balanceo ni recorte de la foto.
+        movil = self.pagina(375, 812, movimiento=True)
+        movil.goto(self.base + "/", wait_until="load")
+        self.assertEqual(movil.evaluate(
+            "() => document.getAnimations().filter((a) => a instanceof CSSAnimation && a.timeline instanceof DocumentTimeline).length"), 0)
+
+    def test_home_animada_axe_sin_violaciones_serias(self):
+        """Con movimiento, lo que aún no entra en pantalla está a medio revelar: debe seguir cumpliendo contraste
+        (Lighthouse corre axe así y exige accesibilidad 100)."""
+        script = AXE.read_text(encoding="utf-8")
+        for ancho, alto in ((375, 812), (1440, 900)):
+            page = self.pagina(ancho, alto, movimiento=True)
+            page.goto(self.base + "/", wait_until="load")
+            page.add_script_tag(content=script)
+            with self.subTest(ancho=ancho):
+                self.assertEqual(page.evaluate(AXE_PAGINA), [])
+
+    def test_home_animada_nada_queda_atorado_tras_recorrer_la_pagina(self):
+        for ancho, alto in ((375, 812), (1440, 900)):
+            page = self.pagina(ancho, alto, movimiento=True)
+            page.goto(self.base + "/", wait_until="load")
+            page.evaluate(self.RECORRER)
+            page.evaluate("() => scrollTo(0, document.documentElement.scrollHeight)")
+            page.wait_for_timeout(300)
+            with self.subTest(ancho=ancho):
+                self.assertEqual(page.evaluate(self.OPACOS), [])
+
+    def test_home_animada_el_salto_al_medidor_lo_deja_visible(self):
+        for ancho, alto in ((375, 812), (1440, 900)):
+            page = self.pagina(ancho, alto, movimiento=True)
+            page.goto(self.base + "/", wait_until="load")
+            page.click("#vt-calcula-patio")
+            page.wait_for_function("() => Math.abs(document.getElementById('medidor').getBoundingClientRect().top) < 120")
+            page.wait_for_timeout(200)
+            with self.subTest(ancho=ancho):
+                self.assertTrue(page.url.endswith("#medidor"))
+                self.assertEqual(page.evaluate("""() => Array.from(document.querySelectorAll('#medidor *')).filter((e) => {
+                  const c = e.getBoundingClientRect();
+                  return c.height && c.top < innerHeight && c.bottom > 0 && Number(getComputedStyle(e).opacity) < 1 && !e.matches('.vt-opciones input');
+                }).map((e) => e.tagName + ' ' + getComputedStyle(e).opacity)"""), [])
+                self.assertTrue(page.locator('#medidor [data-vt-campo="largo"]').is_visible())
+
+    def test_home_dias_de_preventa_en_el_banner_solo_donde_caben(self):
+        """Desde 1024 px el banner agrega los días que faltan al renglón de precios; abajo de eso la frase sustituye a
+        los precios (solo si hay texto) y el banner no crece. Con el reloj del cliente antes del build, nada."""
+        hasta = datos.NOCHEBUENAS["preventa"]["hasta"]
+        precios = "Desde $89 en menudeo y desde $65 por volumen"
+        casos = ((f"{hasta}T18:00:00Z", "Último día de preventa"), ("2026-11-09T18:00:00Z", "Preventa: faltan 21 días"),
+                 ("2026-11-29T18:00:00Z", "Preventa: falta 1 día"), ("2026-12-05T18:00:00Z", ""),
+                 ("2026-10-20T18:00:00Z", ""))
+        for instante, texto in casos:
+            page = self.pagina_a_la_hora(1440, 900, instante)
+            span = page.locator("[data-vt-hasta]")
+            with self.subTest(instante=instante):
+                self.assertEqual(span.text_content(), texto)
+                self.assertEqual(span.is_visible(), bool(texto))
+                self.assertEqual(page.locator(".vt-navidad__precios").inner_text(), precios)
+                # El " · " entre precios y días lo pone el CSS, solo cuando hay texto.
+                self.assertEqual(span.evaluate("e => getComputedStyle(e, '::before').content"),
+                                 '" · "' if texto else "none")
+        altos = {}
+        for ancho in (320, 375, 768):
+            for instante in ("2026-11-09T18:00:00Z", "2026-12-05T18:00:00Z"):
+                page = self.pagina_a_la_hora(ancho, 812, instante)
+                con_dias = instante.startswith("2026-11")
+                with self.subTest(ancho=ancho, instante=instante):
+                    self.assertEqual(page.locator(".vt-navidad__txt > span").inner_text(),
+                                     "Preventa: faltan 21 días" if con_dias else precios)
+                    self.assertEqual(page.locator(".vt-navidad__precios").is_visible(), not con_dias)
+                altos.setdefault(ancho, []).append(page.locator(".vt-navidad").bounding_box()["height"])
+        for ancho, (con_dias, sin_dias) in altos.items():
+            self.assertLessEqual(con_dias, sin_dias, ancho)
+        escritorio = self.pagina_a_la_hora(1024, 800, "2026-11-09T18:00:00Z")
+        sin = self.pagina_a_la_hora(1024, 800, "2026-12-05T18:00:00Z")
+        self.assertEqual(escritorio.locator(".vt-navidad").bounding_box()["height"],
+                         sin.locator(".vt-navidad").bounding_box()["height"])
+
+    def test_home_resenas_y_medicion_del_banner_y_del_ancla(self):
+        page = self.pagina(375, 812)
+        page.goto(self.base + "/", wait_until="load")
+        resenas = page.locator(".vt-inicio__resenas a")
+        self.assertEqual(resenas.get_attribute("href"), datos.MAPS_URL)
+        self.assertEqual((resenas.get_attribute("target"), resenas.get_attribute("rel")), ("_blank", "noopener"))
+        self.assertGreaterEqual(resenas.bounding_box()["height"], 44)
+        page.evaluate("() => document.querySelector('.vt-navidad').addEventListener('click', (e) => e.preventDefault())")
+        page.click(".vt-navidad")
+        page.click("#vt-calcula-patio")
+        eventos = page.evaluate(
+            "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
+        self.assertEqual(eventos, [["event", "select_content", {"content_type": "cta", "item_id": "home:banner-nochebuenas",
+                                                                "cta_id": "home:banner-nochebuenas"}],
+                                   ["event", "select_content", {"content_type": "cta", "item_id": "vt-calcula-patio",
+                                                                "cta_id": "home:hero"}]])
+
+    def test_menu_movil_con_whatsapp_a_la_vista(self):
+        for ruta, tipo in (("/", "home"), ("/pasto-en-rollo-tampico/", "servicio-pasto")):
+            page = self.pagina(375, 812)
+            page.goto(self.base + ruta, wait_until="load")
+            page.click(".vt-burger")
+            boton = page.locator(f'#vt-mmenu a[data-cta="{tipo}:menu"][href^="https://wa.me/"]')
+            boton.scroll_into_view_if_needed()
+            caja = boton.bounding_box()
+            with self.subTest(ruta=ruta):
+                self.assertTrue(boton.is_visible())
+                self.assertGreaterEqual(caja["height"], 44)
+                self.assertGreaterEqual(caja["x"], 0)
+                self.assertLessEqual(caja["x"] + caja["width"], 375)
+                self.assertIn("Cotizar por WhatsApp", boton.inner_text())
+                # A todo lo ancho, con 16 px de aire arriba, y la barra fija escondida mientras el menú está abierto.
+                self.assertGreaterEqual(caja["width"], 375 - 2 * 16 - 1)
+                self.assertEqual(boton.evaluate("b => getComputedStyle(b).marginTop"), "16px")
+                self.assertEqual(page.locator("[data-vt-bar]").evaluate("b => getComputedStyle(b).visibility"), "hidden")
+                self.assertLessEqual(page.evaluate("() => document.documentElement.scrollWidth - document.documentElement.clientWidth"), 1)
+
+    def test_home_boton_del_hero_sin_transicion_con_movimiento_reducido(self):
+        contexto = self.navegador.new_context(viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
+        self.addCleanup(contexto.close)
+        base = self.base
+        contexto.route("**/*", lambda r: r.continue_() if r.request.url.startswith(base) else r.abort())
+        page = contexto.new_page()
+        page.goto(self.base + "/", wait_until="load")
+        boton = page.locator(".vt-portada [data-hero-cta] .vt-btn--wa")
+        self.assertIn(boton.evaluate("b => getComputedStyle(b).transitionDuration"), ("0s", "0s, 0s"))
+        boton.focus()
+        self.assertNotEqual(boton.evaluate("b => getComputedStyle(b).outlineStyle"), "none")
 
     def test_clic_en_el_medidor_manda_generate_lead(self):
         page = self.pagina()
@@ -299,7 +746,8 @@ class PlantillasNavegadorTest(unittest.TestCase):
         self.assertFalse(caja.locator('[data-vt-o="aviso"]').is_visible())
         mensaje = self.mensaje(caja)
         self.assertIn("m² totales: 1,200 m²", mensaje)
-        self.assertIn("Estimado de la web: desde $72,000 con IVA (desde $60/m²)", mensaje)
+        # Dueño (2026-11-10): el mayoreo (pasto sin instalar) no lleva IVA; antes decía "con IVA".
+        self.assertIn("Estimado de la web: desde $72,000 (desde $60/m²; no lleva IVA)", mensaje)
         self.assertIn("Empresa: Mi empresa", mensaje)
         caja.locator('[data-vt-campo="m2"]').fill("")
         self.assertEqual(caja.locator('[data-vt-o="monto"]').inner_text(), "—")

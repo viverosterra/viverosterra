@@ -35,6 +35,26 @@ HORARIO_LD = (
     (("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"), "09:00", "18:00"),
     (("Saturday",), "09:00", "14:00"),
 )
+# Días cerrados cada año (mes-día), además del domingo: "Abierto ahora" no se muestra (spec del hero, 2026-11-09).
+FESTIVOS = ("12-25", "01-01")
+_DIA_ISO = {"Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6, "Sunday": 7}
+
+
+def horario_marca():
+    """HORARIO_LD para el atributo data-vt-horario que lee terra.js: "1,2,3,4,5@09:00-18:00;6@09:00-14:00" (lunes = 1)."""
+    return ";".join(f"{','.join(str(_DIA_ISO[d]) for d in dias)}@{abre}-{cierra}" for dias, abre, cierra in HORARIO_LD)
+
+
+def festivos_marca():
+    """FESTIVOS para el atributo data-vt-festivos: "12-25,01-01"."""
+    return ",".join(FESTIVOS)
+
+
+# Fecha de esta versión del sitio (AAAA-MM-DD), para los data-vt-build del HTML: un visitante con el reloj antes de esta
+# fecha lo trae mal, y terra.js no le muestra "Abierto ahora" ni los días de preventa. Es un dato versionado (nunca
+# date.today(): el build debe ser idempotente); se sube a mano al publicar cambios.
+ACTUALIZADO = "2026-11-09"
+
 PROMESA = "Respondemos en menos de 1 hora en horario"
 PROMESA_COMPLETA = f"{PROMESA} · {HORARIO}"
 
@@ -124,12 +144,16 @@ LLEGADA_PASTO = "una vez por semana, generalmente los viernes"
 ANTICIPO = ("No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos "
             "un anticipo.")
 # Una sola respuesta a "¿cuánto cuesta el pasto en rollo en Tampico?" en home, servicio y precios (spec §7.3).
+# Decisión del dueño (2026-11-10): el pasto natural sin instalar (solo pasto y mayoreo) no lleva IVA; "con IVA" solo
+# acompaña al instalado, que ya lo incluye (regla permanente: tests/test_iva_pasto.py).
+PASTO_SIN_IVA = "El pasto solo y el mayoreo no llevan IVA"
 RESPUESTA_PRECIO_PASTO = (
-    f"En Viveros Terra el pasto San Agustín en rollo cuesta ${PRECIOS['pasto_solo_m2']} por m² solo el pasto y desde "
+    f"En Viveros Terra el pasto San Agustín en rollo cuesta ${PRECIOS['pasto_solo_m2']} por m² solo el pasto (no lleva "
+    f"IVA) y desde "
     f"${PRECIOS['pasto_instalado_m2']} por m² instalado, con IVA incluido. El instalado incluye la preparación básica "
     f"del terreno, la colocación y una garantía de arraigo de {ARRAIGO}. En pedidos de "
-    f"{PRECIOS['pasto_mayoreo_minimo_m2']} m² o más, el mayoreo cuesta desde ${PRECIOS['pasto_mayoreo_m2']}/m². "
-    f"Precios {ANIO}, con IVA, para Tampico, Ciudad Madero y Altamira."
+    f"{PRECIOS['pasto_mayoreo_minimo_m2']} m² o más, el mayoreo cuesta desde ${PRECIOS['pasto_mayoreo_m2']}/m² (solo "
+    f"pasto; no lleva IVA). Precios {ANIO} para Tampico, Ciudad Madero y Altamira."
 )
 
 # Palmas y especies para proyectos (nombre, nombre científico, precio "desde" o None). Decisión del dueño (2026-11-07):

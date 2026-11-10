@@ -1,0 +1,23 @@
+{
+ "zona": "America/Mexico_City",
+ "horario": "1,2,3,4,5@09:00-18:00;6@09:00-14:00",
+ "festivos": "12-25,01-01",
+ "casos": [
+  {"instante": "2026-11-13T14:59:00Z", "abierto": false, "nota": "viernes 08:59"},
+  {"instante": "2026-11-13T15:00:00Z", "abierto": true, "nota": "viernes 09:00"},
+  {"instante": "2026-11-13T23:59:00Z", "abierto": true, "nota": "viernes 17:59"},
+  {"instante": "2026-11-14T00:00:00Z", "abierto": false, "nota": "viernes 18:00 (en UTC ya es sábado)"},
+  {"instante": "2026-11-14T15:00:00Z", "abierto": true, "nota": "sábado 09:00"},
+  {"instante": "2026-11-14T19:59:00Z", "abierto": true, "nota": "sábado 13:59"},
+  {"instante": "2026-11-14T20:00:00Z", "abierto": false, "nota": "sábado 14:00"},
+  {"instante": "2026-11-15T03:30:00Z", "abierto": false, "nota": "sábado 21:30 (en UTC ya es domingo)"},
+  {"instante": "2026-11-15T18:00:00Z", "abierto": false, "nota": "domingo 12:00"},
+  {"instante": "2026-11-16T00:30:00Z", "abierto": false, "nota": "domingo 18:30 (en UTC ya es lunes)"},
+  {"instante": "2026-11-16T16:00:00Z", "abierto": true, "nota": "lunes 10:00"},
+  {"instante": "2026-12-24T17:00:00Z", "abierto": true, "nota": "jueves 24 de diciembre, 11:00"},
+  {"instante": "2026-12-25T17:00:00Z", "abierto": false, "nota": "viernes 25 de diciembre, 11:00: festivo"},
+  {"instante": "2027-01-01T17:00:00Z", "abierto": false, "nota": "viernes 1 de enero, 11:00: festivo"},
+  {"instante": "2027-12-25T16:00:00Z", "abierto": false, "nota": "sábado 25 de diciembre de 2027, 10:00: festivo cada año"},
+  {"instante": "2027-01-02T16:00:00Z", "abierto": true, "nota": "sábado 2 de enero, 10:00"}
+ ]
+}

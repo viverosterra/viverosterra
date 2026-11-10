@@ -30,8 +30,7 @@ MENSAJE = mensajes_paginas.PRECIOS
 COTIZAR = mensajes_paginas.PRECIOS_SECCIONES
 TITULO = "Precios de jardinería en Tampico 2026: pasto, diseño y mantenimiento | Viveros Terra"
 DESCRIPCION = (f"Pasto San Agustín {SOLO}/m² o instalado desde {INSTALADO}/m², mantenimiento desde {MANTENIMIENTO}/mes, "
-               f"diseño desde {DISENO} y pasto sintético desde {SINTETICO}/m². Precios con IVA en Tampico, Madero y "
-               "Altamira.")
+               f"diseño desde {DISENO} y pasto sintético desde {SINTETICO}/m², en Tampico, Madero y Altamira.")
 ENLACES_FAQ = {
     "sintetico": ' Ve los <a href="/pasto-sintetico">9 modelos con precio</a>.',
     "garantia": ' Lee las <a href="/politicas#garantia-plantas">condiciones de la garantía</a>.',
@@ -40,7 +39,8 @@ ENLACES_FAQ = {
 PREGUNTAS = (
     ("¿Cuánto cuesta el pasto en rollo en Tampico?", datos.RESPUESTA_PRECIO_PASTO),
     ("¿Los precios incluyen IVA?",
-     f"Sí. Todos los precios de esta página incluyen IVA. Damos factura {datos.FACTURA} a persona física o moral y "
+     "Sí, salvo el pasto San Agustín sin instalar: el pasto solo y el mayoreo no llevan IVA; el instalado y los demás "
+     f"precios de esta página sí lo incluyen. Damos factura {datos.FACTURA} a persona física o moral y "
      f"tenemos registro REPSE {datos.REPSE} para contratos con empresas."),
     ("¿Por qué algunos precios dicen «desde»?",
      "Porque el total depende de los metros, del estado del terreno y del acceso a la obra. En la visita medimos y te "
@@ -112,9 +112,9 @@ CONTENIDO = {
         "lede": (f"En Tampico, Madero y Altamira, el pasto San Agustín cuesta {SOLO}/m² solo el pasto y desde "
                  f"{INSTALADO}/m² instalado. El mantenimiento de jardín cuesta desde {MANTENIMIENTO}/mes, el diseño desde "
                  f"{DISENO} y el pasto sintético desde {SINTETICO}/m²."),
-        "etiqueta": {"codigo": f"Lista · {datos.ANIO}", "aviso": "Con IVA", "nombre": "Pasto San Agustín",
+        "etiqueta": {"codigo": f"Lista · {datos.ANIO}", "aviso": "MXN", "nombre": "Pasto San Agustín",
                      "antes": "solo el pasto", "monto": SOLO, "unidad": "/m²",
-                     "filas": (("Instalado", f"desde {INSTALADO}/m²"), ("Mantenimiento", f"desde {MANTENIMIENTO}/mes"),
+                     "filas": (("Instalado, con IVA", f"desde {INSTALADO}/m²"), ("Mantenimiento", f"desde {MANTENIMIENTO}/mes"),
                                ("Pasto sintético", f"desde {SINTETICO}/m²"))},
         "mensaje": MENSAJE,
         "tambien": (f'<a href="#pasto">Ver la lista</a> · <a href="#mensualidades">Hasta {max(mensualidades.PLAZOS)} '
@@ -128,7 +128,8 @@ CONTENIDO = {
                ("Plantas", "plantas"), ("Mensualidades", "mensualidades"), ("Garantías", "garantias")),
     "secciones": (
         {"id": "pasto", "rotulo": "Pasto natural", "titulo": 'Pasto San Agustín <span class="vt-serif">en rollo</span>',
-         "filas": lp.PASTO, "concepto": "Producto", "caption": f"Precios {datos.ANIO} con IVA.",
+         "filas": lp.PASTO, "concepto": "Producto",
+         "caption": f"Precios {datos.ANIO}. El instalado incluye IVA. {datos.PASTO_SIN_IVA}.",
          "cotizar": ("Cotizar pasto por WhatsApp", COTIZAR["pasto"]),
          "nota": ("Solo el pasto: recoges en el vivero o se cobra la entrega según tu colonia. "
                   '<a href="/protocolo-cuidados-pasto-san-agustin">Protocolo de riego y garantía</a>.')},
@@ -198,7 +199,10 @@ CONTENIDO = {
     },
 }
 
+SIN_IVA_EN_PASTO = ("Decía «Precios con IVA» junto al precio del pasto solo: decisión del dueño (2026-11-09/10), el pasto sin "
+                    "instalar no lleva IVA; «con IVA» solo acompaña al instalado.")
 PARIDAD = {
+    "meta": {"description": (DESCRIPCION, SIN_IVA_EN_PASTO), "og:description": (DESCRIPCION, SIN_IVA_EN_PASTO)},
     "reemplazos": {},
     "retirados": {},
     "jsonld": {},

@@ -31,6 +31,7 @@ class ActivosTest(unittest.TestCase):
         (self.pub / "css" / "terra-obras.css").write_text(".vt-mosaico{}", encoding="utf-8")
         (self.pub / "css" / "terra-nochebuenas.css").write_text(".vt-nochebuenas .vt-x{}", encoding="utf-8")
         (self.pub / "css" / "terra-temporada.css").write_text(".vt-temporada .vt-x{}", encoding="utf-8")
+        (self.pub / "css" / "terra-inicio.css").write_text(".vt-inicio .vt-x{}", encoding="utf-8")
         (self.pub / "js" / "terra.js").write_text("void 0;", encoding="utf-8")
 
     def escribir(self, css):
@@ -57,6 +58,7 @@ class ActivosTest(unittest.TestCase):
         self.assertRegex(urls["terra.css"], r"^/css/terra\.[0-9a-f]{10}\.css$")
         self.assertRegex(urls["legacy-fixes.css"], r"^/css/legacy-fixes\.[0-9a-f]{10}\.css$")
         self.assertRegex(urls["terra.js"], r"^/js/terra\.[0-9a-f]{10}\.js$")
+        self.assertRegex(urls["terra-inicio.css"], r"^/css/terra-inicio\.[0-9a-f]{10}\.css$")
 
     def test_publicar_copia_la_fuente(self):
         urls = self.publicar()

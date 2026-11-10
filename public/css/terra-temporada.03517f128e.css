@@ -1,0 +1,24 @@
+.vt-temporada{--vt-navidad:#B11226;--vt-navidad-hondo:#860C1D}
+.vt-temporada main a.vt-navidad{display:flex;align-items:center;gap:12px;min-height:64px;padding:10px var(--vt-gutter);background:linear-gradient(100deg,var(--vt-navidad-hondo),var(--vt-navidad) 45%);border-bottom:3px solid var(--vt-tag);color:var(--vt-card);text-decoration:none}
+.vt-temporada main a.vt-navidad:hover{background:var(--vt-navidad-hondo);color:var(--vt-card)}
+.vt-temporada main a.vt-navidad:focus-visible{outline:3px solid var(--vt-tag);outline-offset:-6px}
+.vt-temporada .vt-navidad__flor{flex:none;width:34px;height:34px;color:var(--vt-tag)}
+.vt-temporada .vt-navidad__centro{fill:var(--vt-navidad)}
+.vt-temporada .vt-navidad__txt{flex:1;min-width:0;display:grid;gap:1px;font-size:var(--vt-text-xs);line-height:1.25}
+.vt-temporada .vt-navidad__txt b{font-size:var(--vt-text-sm);line-height:1.2}
+.vt-temporada .vt-navidad__estado,.vt-temporada .vt-navidad__mas{display:none}
+@media (max-width:1023px){.vt-temporada .vt-navidad__txt:has(.vt-navidad__hasta:not(:empty)) .vt-navidad__precios{display:none}}
+.vt-temporada .vt-navidad__cta{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border-radius:var(--vt-radius-tag);background:var(--vt-tag);color:var(--vt-tag-ink);font-size:var(--vt-text-sm);font-weight:700;white-space:nowrap}
+.vt-temporada .vt-navidad__flecha{transition:transform var(--vt-duration-fast) var(--vt-ease-out)}
+@media (hover:hover){.vt-temporada .vt-navidad:hover .vt-navidad__flecha{transform:translateX(3px)}}
+.vt-temporada .vt-navidad:active .vt-navidad__cta{transform:translateY(1px)}
+@media (min-width:768px){
+.vt-temporada main a.vt-navidad{justify-content:center;gap:20px;min-height:72px}
+.vt-temporada .vt-navidad__flor{width:44px;height:44px}
+.vt-temporada .vt-navidad__txt{flex:0 1 auto;font-size:var(--vt-text-base)}
+.vt-temporada .vt-navidad__txt b{font-size:var(--vt-text-lg)}
+.vt-temporada .vt-navidad__estado,.vt-temporada .vt-navidad__mas{display:inline}
+.vt-temporada .vt-navidad__cta{padding:0 18px;font-size:var(--vt-text-base)}
+}
+@media (min-width:1024px){.vt-temporada .vt-navidad__hasta:not(:empty)::before{content:" · "}}
+@media (prefers-reduced-motion:reduce){.vt-temporada .vt-navidad__flecha{transition:none}.vt-temporada .vt-navidad:hover .vt-navidad__flecha{transform:none}}

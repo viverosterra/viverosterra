@@ -87,8 +87,11 @@ class NavegadorTest(unittest.TestCase):
         cls.servidor.shutdown()
         cls.servidor.server_close()
 
-    def pagina(self, ancho=1440, alto=900):
-        contexto = self.navegador.new_context(viewport={"width": ancho, "height": alto})
+    def pagina(self, ancho=1440, alto=900, movimiento=False):
+        # reduced_motion: la home se anima al cargar y al desplazar; aquí se mide el shell, no a media animación.
+        # Con movimiento=True se prueba animada (axe y desborde de la home: test_home_animada_*).
+        contexto = self.navegador.new_context(viewport={"width": ancho, "height": alto},
+                                              reduced_motion="no-preference" if movimiento else "reduce")
         self.addCleanup(contexto.close)
         base = self.base
 
@@ -141,7 +144,14 @@ class NavegadorTest(unittest.TestCase):
         page.click(".vt-burger")
         self.assertTrue(page.locator("#vt-mmenu").is_visible())
         self.assertEqual(page.get_attribute(".vt-burger", "aria-expanded"), "true")
-        self.assertTrue(page.locator("[data-vt-bar]").is_visible())
+        # Revisión de diseño (2026-11-09): con el menú abierto la barra fija se esconde (el menú ya trae su WhatsApp);
+        # antes seguía visible. Al cerrar el menú, vuelve.
+        page.wait_for_function("() => getComputedStyle(document.querySelector('[data-vt-bar]')).visibility === 'hidden'")
+        boton = page.locator('#vt-mmenu a.vt-btn--wa[data-cta="blog:menu"]')
+        self.assertTrue(boton.is_visible())
+        self.assertGreaterEqual(boton.bounding_box()["width"], 375 - 2 * 16 - 1)
+        page.click(".vt-burger")
+        page.wait_for_function("() => getComputedStyle(document.querySelector('[data-vt-bar]')).visibility === 'visible'")
 
     def test_panel_de_jardin_en_escritorio(self):
         page = self.pagina(1440)
@@ -210,6 +220,21 @@ class NavegadorTest(unittest.TestCase):
         tel = page.locator('.vt-mmenu__meta a[href^="tel:"]').bounding_box()
         barra = page.locator("[data-vt-bar]").bounding_box()
         self.assertLessEqual(tel["y"] + tel["height"], barra["y"])
+
+    def test_home_animada_sin_violaciones_de_axe_ni_desborde(self):
+        """Las demás pruebas corren con movimiento reducido; la home (la única página que se anima) se revisa también
+        animada: axe del shell y borde derecho, al cargar y a media página."""
+        script = AXE.read_text(encoding="utf-8")
+        for ancho in (320, 375, 768, 1440):
+            page = self.pagina(ancho, movimiento=True)
+            page.goto(self.base + "/", wait_until="load")
+            page.add_script_tag(content=script)
+            with self.subTest(ancho=ancho):
+                self.assertEqual(page.evaluate(AXE_SHELL), [])
+                self.assertLessEqual(page.evaluate(BORDE_DERECHO), 1)
+                page.evaluate("() => scrollTo(0, document.documentElement.scrollHeight / 2)")
+                page.wait_for_function(QUIETO)
+                self.assertLessEqual(page.evaluate(BORDE_DERECHO), 1)
 
     def test_shell_sin_desbordar(self):
         for ancho in (320, 375, 768, 1440):

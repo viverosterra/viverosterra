@@ -4,7 +4,8 @@
    vive ningún precio. Las mensualidades salen de vt-mensualidades.js (window.VTMensualidades), nunca de una fórmula
    propia. Mismo cálculo que componentes.calculo_medidor / textos_medidor (paridad en tests/casos-medidor.json).
    El número de WhatsApp y el mensaje genérico de la página también llegan del HTML (data-wa y data-mensaje en
-   [data-vt-medidor]). Las funciones puras se exportan para node --test. */
+   [data-vt-medidor]). Donde el botón trae data-vt-o="cta-texto" (la home), con medida válida dice "Enviar mi medida
+   por WhatsApp". Las funciones puras se exportan para node --test. */
 (function (root) {
   'use strict';
   const PLANO = { ancho: 360, alto: 190, x: 44, y: 56, minimo: 24 };
@@ -38,8 +39,15 @@
       rotulo = `Solo pasto (mayoreo desde ${m.minimo} m²)`;
       aviso = `El mayoreo aplica desde ${m.minimo} m². Te faltan ${Math.ceil(m.minimo - m2)} m²; mientras, calculamos a $${precio}/m² (solo pasto).`;
     }
-    return { m2, precio, desde, texto, rotulo, aviso, total: Math.round(m2 * precio) };
+    // iva: solo el pasto instalado lleva IVA; el renglón vivo no dice "con IVA" en solo pasto ni en mayoreo.
+    return { m2, precio, desde, texto, rotulo, aviso, total: Math.round(m2 * precio), iva: modo === 'instalado' };
   }
+
+  // Texto del botón con una medida válida (componentes.CTA_MEDIDA). Sin medida vuelve el texto con el que llegó el HTML.
+  const CTA_MEDIDA = 'Enviar mi medida por WhatsApp';
+  // Mismos textos que componentes.IVA_INSTALADO y componentes.SIN_IVA (paridad en casos-medidor.json).
+  const IVA_INSTALADO = 'con IVA';
+  const SIN_IVA = '(no lleva IVA)';
 
   // plazo: 1 (contado) o las mensualidades elegidas; si no aplican a ese total, contado.
   function textos(largo, ancho, r, colonia, M, plazo) {
@@ -59,11 +67,15 @@
       plan = `O ${ultimo} mensualidades de ${dinero(total / ultimo)} con tarjeta de crédito (total ${dinero(total)}).`;
     }
     const cierre = r.desde ? 'Al medir te damos el precio cerrado.' : 'La entrega se cotiza según tu colonia.';
+    // El pasto sin instalar (solo pasto y mayoreo) no lleva IVA: "con IVA" solo acompaña al instalado.
+    const iva = r.iva ? IVA_INSTALADO : '';
     const mensaje = [`Hola, quiero cotizar ${r.texto}.`, `Medidas: ${medida}`,
-      `Estimado de la web: ${desde}${dinero(r.total)} con IVA`, `Me interesa: ${interes}`, `Colonia: ${colonia || '___'}`,
-      'Te mando foto del área.'].join('\n');
-    return { medida, monto: dinero(r.total), calc: `${formatoM2(r.m2)} m² × ${desde}$${r.precio}/m², con IVA. ${cierre}`,
-      plan, plazo: elegido, mensaje };
+      'Estimado de la web: ' + desde + dinero(r.total) + ' ' + (iva || SIN_IVA), `Me interesa: ${interes}`,
+      `Colonia: ${colonia || '___'}`, 'Te mando foto del área.'].join('\n');
+    return { medida, monto: dinero(r.total),
+      calc: formatoM2(r.m2) + ' m² × ' + desde + '$' + r.precio + '/m²' + (iva ? ', ' + iva : ' ' + SIN_IVA) + '. ' + cierre,
+      plan, plazo: elegido, mensaje, cta: CTA_MEDIDA, iva,
+      vivo: formatoM2(r.m2) + ' m² · ' + desde + dinero(r.total) + (iva ? ' ' + iva : '') };
   }
 
   function plano(largo, ancho) {
@@ -113,6 +125,30 @@
     const modos = leerModos(caja);
     const wa = caja.dataset.wa;
     const plazos = Array.from(caja.querySelectorAll('input[type="radio"][name$="-plazo"]'));
+    // Solo donde la página lo pide (data-vt-o="cta-texto"): el botón dice que manda la medida cuando ya hay una.
+    const rotuloCta = salida('cta-texto');
+    const ctaSinMedida = rotuloCta ? rotuloCta.textContent : '';
+    const rotular = (texto) => { if (rotuloCta) rotuloCta.textContent = texto; };
+    // Opcionales de la home: renglón de resultado bajo las medidas, garantía (solo en modo instalado) y la barra fija
+    // de celular, que con medida válida manda la misma medida (su texto llega en data-vt-barra) y sin ella vuelve a
+    // su enlace y texto de origen. El clic lo sigue midiendo terra.js con el data-cta de la barra.
+    const vivo = salida('vivo');
+    const garantia = salida('garantia');
+    const enBarra = caja.dataset.vtBarra ? document.querySelector('[data-vt-bar] .vt-bar__go') : null;
+    const rotuloBarra = enBarra && enBarra.lastChild && enBarra.lastChild.nodeType === 3 ? enBarra.lastChild : null;
+    const barraDeOrigen = enBarra ? { href: enBarra.getAttribute('href'), texto: rotuloBarra ? rotuloBarra.nodeValue : '' } : null;
+    function prestarABarra(href) {
+      if (!enBarra) return;
+      enBarra.setAttribute('href', href || barraDeOrigen.href);
+      if (rotuloBarra) rotuloBarra.nodeValue = href ? caja.dataset.vtBarra : barraDeOrigen.texto;
+    }
+    const ivaJuntoAlMonto = salida('iva');
+    const extras = (texto, modo) => {
+      // "con IVA" junto al monto solo en modo instalado (con o sin medida).
+      if (ivaJuntoAlMonto) ivaJuntoAlMonto.textContent = modo === 'instalado' ? IVA_INSTALADO : '';
+      if (vivo) vivo.textContent = texto;
+      if (garantia) garantia.hidden = modo !== 'instalado';
+    };
     // Cada plazo muestra su mensualidad si aplica al total; si no, el monto mínimo de cotización y queda deshabilitado.
     function marcarPlazos(total) {
       const disponibles = total ? M.plazosDisponibles(total) : [];
@@ -136,6 +172,10 @@
       marcarPlazos(0);
       // Sin medida válida, el botón manda el mensaje de la página: nunca un estimado viejo ni el ejemplo del placeholder.
       salida('cta').setAttribute('href', enlace(wa, mensaje));
+      rotular(ctaSinMedida);
+      prestarABarra('');
+      const elegido = caja.querySelector('input[name$="-modo"]:checked');
+      extras('', elegido ? elegido.value : 'instalado');
     }
     function actualizar() {
       const elegido = caja.querySelector('input[name$="-modo"]:checked');
@@ -163,6 +203,9 @@
       salida('aviso').textContent = r.aviso;
       salida('aviso').hidden = !r.aviso;
       salida('cta').setAttribute('href', enlace(wa, t.mensaje));
+      rotular(t.cta);
+      prestarABarra(enlace(wa, t.mensaje));
+      extras(t.vivo, elegido.value);
     }
     caja.addEventListener('input', actualizar);
     caja.addEventListener('change', actualizar);

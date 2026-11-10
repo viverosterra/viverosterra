@@ -127,6 +127,9 @@
 .vt-acc li a{display:block;padding:10px 0 10px 12px;font:400 var(--vt-text-base)/1.3 var(--vt-font-sans);color:var(--vt-ink-2);text-decoration:none}
 .vt-acc li a[aria-current="page"]{color:var(--vt-field);font-weight:600}
 .vt-mmenu__link{border-bottom:1px solid var(--vt-line)}
+/* WhatsApp del menú móvil a todo lo ancho; con el menú abierto la barra fija se esconde (no hay dos botones iguales) */
+.vt-mmenu .vt-btn{width:100%;margin-top:16px}
+.vt-head:has(.vt-burger[aria-expanded="true"])~.vt-bar{transform:translateY(110%);visibility:hidden}
 .vt-mmenu__meta{margin:14px 0 0;font-size:var(--vt-text-sm);color:var(--vt-muted)}
 .vt-mmenu__meta a{color:var(--vt-field);text-decoration:underline;text-underline-offset:2px}
 
@@ -186,7 +189,7 @@
 @media (min-width:1024px){.vt-bar{display:none}}
 
 @media (prefers-reduced-motion:reduce){
-  .vt-bar,.vt-nav__top::after,.vt-chev,.vt-btn{transition:none}
+  .vt-bar,.vt-bar.is-oculta,.vt-nav__top::after,.vt-chev,.vt-btn{transition:none}
 }
 
 /* =========================================================
