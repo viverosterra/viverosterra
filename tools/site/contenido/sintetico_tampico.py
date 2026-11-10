@@ -11,6 +11,7 @@ import componentes_tienda as t
 import data
 import datos
 from componentes import dinero
+from contenido import seo
 
 SITE = data.SITE
 URL = f"{SITE}/pasto-sintetico-tampico"
@@ -23,9 +24,9 @@ HOY = " y ".join(m["nombre"] for m in STOCK)
 T18, T28 = data.BY_SLUG["toscana-18"], data.BY_SLUG["toscana-28"]
 APPLE_MAPS = f"https://maps.apple.com/?daddr={datos.GEO[0]},{datos.GEO[1]}&q=Viveros%20Terra"
 DOMICILIO = f"{datos.CALLE}, {datos.COLONIA}, {datos.CP} Cd. Madero, frente a Walmart"
-TITULO = "Pasto Sintético en Tampico: Venta e Instalación | Viveros Terra"
-DESCRIPCION = (f"Venta e instalación de pasto sintético en Tampico, Madero y Altamira. Showroom en Cd. Madero, material "
-               f"desde ${MIN_RETAIL}/m² e instalado desde ${INST_MIN}/m².")
+TITULO = f"Pasto Sintético Tampico Instalado desde ${INST_MIN} | Viveros Terra"
+DESCRIPCION = (f"Pasto sintético en Tampico, Madero y Altamira: instalado de ${INST_MIN} a ${INST_MAX}/m² o solo material desde "
+               f"${MIN_RETAIL}/m². Visítanos en el showroom de Cd. Madero.")
 OG_IMG = f"{SITE}{GAL}/obra-residencial-tampico.webp"
 MENSAJE = datos.MENSAJES["pasto-sintetico"]
 
@@ -236,6 +237,7 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {},
     "retirados": {
         "$250": ("Decisión del dueño (2026-11-07): el envío local en Tampico, Madero y Altamira no tiene precio fijo; "

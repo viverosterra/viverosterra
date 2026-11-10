@@ -10,6 +10,7 @@ import componentes_tienda as t
 import data
 import datos
 from componentes import dinero
+from contenido import seo
 from esquema import breadcrumb_schema, product_schema
 
 CLAVES = tuple(m["slug"] for m in data.MODELOS)
@@ -77,11 +78,19 @@ def _fotos(m):
     return {"titulo": titulo, "rotulo": rotulo, "figuras": figuras}
 
 
+def titulo_y_descripcion(m):
+    """Título y descripción de la ficha (SEO fase 0, 2026-11-10): altura en mm en el título («pasto sintético 10 mm» es
+    la consulta), sin plazo de entrega (regla del dueño) y con los datos del modelo de tools/pasto/data.py."""
+    gar = f"con garantía de {m['garantia']} años" if m["garantia"] else "para uso decorativo"
+    modelo = m["nombre"].rsplit(" ", 1)[0]  # "Aruba 10" → "Aruba": la altura va aparte, con su unidad
+    titulo = f"Pasto Sintético {m['nombre']} mm desde ${m['rollo']}/m² | Viveros Terra"
+    descripcion = (f"Pasto sintético {modelo} de {m['mm']} mm y {m['peso']} g/m², {gar}. Desde ${m['rollo']}/m² en rollo, "
+                   "con factura y envío a todo México. Cotiza tus metros.")
+    return titulo, descripcion
+
+
 def _meta(m, url):
-    gar = f"garantía de {m['garantia']} años" if m["garantia"] else "uso decorativo"
-    titulo = f"Pasto Sintético {m['nombre']} desde ${m['rollo']}/m² · Envío a Todo México"
-    descripcion = (f"{m['nombre']}: {m['mm']} mm, {m['peso']} g/m² y {gar}. Desde ${m['rollo']}/m² en rollo, con factura "
-                   "y envío a todo México en 3 a 5 días.")
+    titulo, descripcion = titulo_y_descripcion(m)
     primera = f"{t.GAL}/{m['slug']}-{m['gallery'][0][0]}"
     return {
         "title": titulo, "description": descripcion, "robots": "index, follow, max-image-preview:large",
@@ -143,7 +152,8 @@ def contenido(m):
 
 
 def pagina(slug):
-    return SimpleNamespace(CONTENIDO=contenido(data.BY_SLUG[slug]), PARIDAD=PARIDAD)
+    m = data.BY_SLUG[slug]
+    return SimpleNamespace(CONTENIDO=contenido(m), PARIDAD={**PARIDAD, "meta": seo.paridad(*titulo_y_descripcion(m))})
 
 
 PARIDAD = {"reemplazos": {}, "retirados": {}}

@@ -3,13 +3,14 @@ tools/site/plantillas/servicio.py, con planes (cada uno con su mensaje y su lín
 objeción "¿y si no contrato la obra?", proceso, garantía de plantas condicionada y simulador.
 
 Precios de datos.PRECIOS (Esencial $3,000, Completo $6,500, Premium desde $18,000 y su descuento en proyectos de más
-de $150,000); mensualidades con la fórmula de tools/pasto/mensualidades.py. Título, descripción, canonical, Open Graph,
-Twitter Card, Service y migas del JSON-LD como estaban publicados en main (los acentos del JSON-LD los arregla la
+de $150,000); mensualidades con la fórmula de tools/pasto/mensualidades.py. 
+Título y descripción (también en Open Graph y Twitter Card): los de la fase 0 de SEO (contenido/seo.py). Canonical, Service y migas del JSON-LD como estaban publicados en main (los acentos del JSON-LD los arregla la
 Etapa 4); FAQPage sale de las preguntas visibles. PARIDAD: tests/test_paridad.py.
 """
 import datos
 import mensajes_paginas
 from componentes import dinero, mensualidades
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -21,19 +22,19 @@ DESDE_MENSUALIDADES = dinero(mensualidades.minimo_de(3))
 MENSAJE = mensajes_paginas.SERVICIOS["/diseno-jardines-tampico"]
 CONDICIONES = '<a href="/politicas#garantia-plantas">ver condiciones</a>'
 
+TITULO = f"Diseño de Jardines en Tampico desde {dinero(ESENCIAL)} | Viveros Terra"
+DESCRIPCION = (f"Diseño de jardines y paisajismo en Tampico en 3 planes: Esencial {dinero(ESENCIAL)}, Completo {dinero(COMPLETO)} y "
+               f"Premium desde {dinero(PREMIUM)}. Plan y presupuesto claros. Cotiza hoy.")
 META = {
-    "title": "Diseño de Jardines Tampico · Plan Terra",
-    "description": (f"Diseño profesional de jardines en Tampico. Plan Terra en 3 niveles: Esencial {dinero(ESENCIAL)}, "
-                    f"Completo {dinero(COMPLETO)}, Premium desde {dinero(PREMIUM)}. Descuento al contratar."),
+    "title": TITULO,
+    "description": DESCRIPCION,
     "robots": "index, follow",
     "canonical": URL,
     "og": (
         ("og:type", "website"),
         ("og:url", URL),
-        ("og:title", f"Diseño de Jardines Tampico | Plan Terra desde {dinero(ESENCIAL)} — Viveros Terra"),
-        ("og:description", ("Diseño profesional de jardines en Tampico, Madero y Altamira. Plan Terra en 3 niveles: "
-                            f"Esencial desde {dinero(ESENCIAL)}, Completo {dinero(COMPLETO)} y Premium con planos AutoCAD "
-                            "y render 3D. Cotiza gratis por WhatsApp.")),
+        ("og:title", TITULO),
+        ("og:description", DESCRIPCION),
         ("og:image", f"{SITE}/img/diseno-jardines-tampico-viveros-terra.webp"),
         ("og:locale", "es_MX"),
     ),
@@ -325,6 +326,7 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {
         "Diseño de jardines con plan y presupuesto claros": "Diseño de jardines en Tampico con plan y presupuesto claros",
         "Elige el plan que se ajusta a tu proyecto": "¿Cuánto cuesta un diseño de jardín en Tampico?",

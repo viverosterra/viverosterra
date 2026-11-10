@@ -14,6 +14,7 @@ import mensajes_paginas
 from componentes import dinero
 from componentes_materiales import ejemplo
 from contenido import materiales_comun as mc
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -26,32 +27,29 @@ CAMIONES_TEXTO = ", ".join(f"{m3} m³ a {dinero(precio)}" for m3, precio in CAMI
     f" y {CAMIONES[-1][0]} m³ a {dinero(CAMIONES[-1][1])}"
 MENSAJE = mensajes_paginas.MATERIALES[RUTA]
 MIGAS, MIGAS_LD = mc.migas(RUTA, "Tierra negra vegetal")
-DESCRIPCION = (f"Tierra negra vegetal en Tampico. Costal {COSTAL} · preparada {PREPARADA} · m³ {M3} · camión de "
-               f"{CAMIONES[0][0]} m³ {dinero(CAMIONES[0][1])}. Entrega a domicilio en Madero y Altamira. Cotiza por "
-               "WhatsApp.")
-DESCRIPCION_OG = (f"Tierra negra vegetal para jardín y pasto en Tampico. Costal {COSTAL}, preparada {PREPARADA}, m³ {M3} y "
-                  f"camión volteo de {CAMIONES[0][0]} m³ {dinero(CAMIONES[0][1])}. Cotiza por WhatsApp.")
+TITULO = f"Tierra Negra en Tampico: Costal {COSTAL} y Camión | Viveros Terra"
+DESCRIPCION = (f"Tierra negra vegetal en Tampico: costal {COSTAL}, preparada {PREPARADA}, m³ {M3} y camión de {CAMIONES[0][0]} m³ "
+               f"{dinero(CAMIONES[0][1])}. Entrega a domicilio en Madero y Altamira. Pide hoy.")
 
 META = {
-    "title": "Tierra Negra Vegetal Tampico · Costal y Camión Volteo",
+    "title": TITULO,
     "description": DESCRIPCION,
     "robots": "index, follow",
     "canonical": URL,
     "og": (
         ("og:type", "website"),
         ("og:url", URL),
-        ("og:title", "Tierra Negra Vegetal Tampico · Viveros Terra"),
-        ("og:description", DESCRIPCION_OG),
+        ("og:title", TITULO),
+        ("og:description", DESCRIPCION),
         ("og:image", f"{SITE}/img/camion-tierra-negra-entrega-tampico.webp"),
         ("og:locale", "es_MX"),
         ("og:site_name", datos.NOMBRE),
     ),
-    # Twitter Card como estaba publicada en main.
+    # Twitter Card con el mismo título y la misma descripción (SEO fase 0, 2026-11-10).
     "twitter": (
         ("twitter:card", "summary_large_image"),
-        ("twitter:title", "Tierra Negra Vegetal Tampico · Viveros Terra"),
-        ("twitter:description", "Tierra negra vegetal para jardín y pasto. Costal o camión volteo. Entrega Tampico, "
-                                "Madero, Altamira."),
+        ("twitter:title", TITULO),
+        ("twitter:description", DESCRIPCION),
         ("twitter:image", f"{SITE}/img/camion-tierra-negra-entrega-tampico.webp"),
     ),
 }
@@ -151,7 +149,7 @@ CONTENIDO = {
     "migas": MIGAS,
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
-        "h1": "Tierra negra vegetal <em>por costal o camión</em>",
+        "h1": "Tierra negra en Tampico <em>por costal, m³ o camión</em>",
         "lede": (f"En Viveros Terra la tierra negra vegetal cuesta {COSTAL} el costal y {M3} el m³ a granel; el camión "
                  f"volteo, {CAMIONES_TEXTO}. Para pasto, jardineras y siembra: recoges en el vivero o te la llevamos "
                  "en Tampico, Madero y Altamira."),
@@ -202,7 +200,7 @@ CONTENIDO = {
     "faq": {"titulo": "Todo sobre tierra negra en Tampico", "preguntas": PREGUNTAS},
     "otros": {"titulo": "Otros materiales para tu jardín",
               "items": mc.otros(RUTA, ("/tezontle-rojo-tampico", "/marmol-blanco-tampico", "/piedra-bola-rio-tampico")),
-              "enlaces": (("Pasto en rollo", "/pasto-en-rollo-tampico"), ("Plantas y palmas", "/plantas-palmas-arboles-tampico"),
+              "enlaces": (("Pasto en rollo en Tampico", "/pasto-en-rollo-tampico"), ("Plantas y palmas", "/plantas-palmas-arboles-tampico"),
                           ("Arma tu lista de plantas", "/catalogo"), ("Guía de jardines", "/blog/diseno-jardines-tampico-guia"))},
     "cierre": {"titulo": "Cotiza tu tierra negra",
                "lede": "Dinos la cantidad y tu colonia y te mandamos el precio con la entrega.",
@@ -227,13 +225,15 @@ CONTENIDO = {
 }
 
 PARIDAD = {
-    "meta": {
+    "meta": seo.paridad(TITULO, DESCRIPCION, {
         "description": (DESCRIPCION, "Sin el camión desde $5,000 (el dueño no lo confirmó: va el camión de 5 m³ de su "
                                      "tabla) y sin “gratis” (regla del dueño)."),
-        "og:description": (DESCRIPCION_OG, "Sin el camión desde $5,000 (el dueño no lo confirmó: va el camión de 5 m³ de "
+        "og:description": (DESCRIPCION, "Sin el camión desde $5,000 (el dueño no lo confirmó: va el camión de 5 m³ de "
                                            "su tabla) y sin “gratis” (regla del dueño)."),
-    },
+    }),
     "reemplazos": {
+        # H1 con «en Tampico» (SEO fase 0, 2026-11-10): la consulta es «tierra negra Tampico».
+        "Tierra negra vegetal por costal o camión": "Tierra negra en Tampico por costal, m³ o camión",
         "Elige el formato para tu proyecto": "¿Cuánto cuesta la tierra negra en Tampico?",
         "Costales de tierra negra": "¿Cuánto cuesta la tierra negra en Tampico?",
         "Tierra Negra Preparada": "¿Cuánto cuesta la tierra negra en Tampico?",

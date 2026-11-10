@@ -128,6 +128,10 @@ class PastoEnRolloTest(unittest.TestCase):
         self.assertEqual(MAIN.count('class="vt-pasos"'), 1)
         self.assertEqual(MAIN.count('class="vt-compra"'), 0)
         self.assertEqual(nodo("Product")["offers"]["price"], str(datos.PRECIOS["pasto_solo_m2"]))
+        # SEO fase 0 (2026-11-10): la vigencia del precio es un dato (datos.PRECIOS_VIGENTES_HASTA), no el año en curso.
+        self.assertEqual(nodo("Product")["offers"]["priceValidUntil"], datos.PRECIOS_VIGENTES_HASTA)
+        self.assertEqual(datos.PRECIOS_VIGENTES_HASTA, "2027-12-31")
+        self.assertGreater(datos.PRECIOS_VIGENTES_HASTA, datos.ACTUALIZADO)
 
 
 if __name__ == "__main__":

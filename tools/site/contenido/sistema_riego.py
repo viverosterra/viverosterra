@@ -5,12 +5,13 @@ mensaje), una sola sección de precio, la comparativa aspersión / goteo / micro
 
 Precio de datos.PRECIOS["riego_m2"] ($180 a $320/m²; el ejemplo de 100 m² sale de ahí) y ahorro de datos.RIEGO_AHORRO
 ("hasta 40%"). Los campos deportivos con pasto natural son un servicio real (decisión del dueño): la regla de no
-deportes es solo del sintético. Título, descripción, canonical, Open Graph, Twitter Card, Service y migas como estaban
-publicados; FAQPage de las preguntas visibles y HowTo de los 5 pasos visibles. PARIDAD: tests/test_paridad.py.
+deportes es solo del sintético. Título y descripción (también en Open Graph y Twitter Card): los de la fase 0 de SEO (contenido/seo.py).
+Canonical, Service y migas como estaban publicados; FAQPage de las preguntas visibles y HowTo de los 5 pasos visibles. PARIDAD: tests/test_paridad.py.
 """
 import datos
 import mensajes_paginas
 from componentes import dinero, mensualidades
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -22,23 +23,24 @@ DESDE_MENSUALIDADES = dinero(mensualidades.minimo_de(3))
 MENSAJE = mensajes_paginas.SERVICIOS["/sistema-riego-tampico"]
 AHORRO = datos.RIEGO_AHORRO
 
+TITULO = f"Sistema de Riego en Tampico: ${P['riego_m2'][0]} a ${P['riego_m2'][1]}/m² | Viveros Terra"
+DESCRIPCION = ("Instalación de riego automático en Tampico, Madero y Altamira: aspersión, goteo o microaspersión con programador, "
+               f"de ${P['riego_m2'][0]} a ${P['riego_m2'][1]}/m². Cotiza por WhatsApp.")
 META = {
-    "title": "Sistema de Riego Automático Tampico · Viveros Terra",
-    "description": (f"Instalación de sistemas de riego automático en Tampico. Ahorra {AHORRO} en agua. Aspersión, "
-                    "goteo y microaspersión. Cotiza por WhatsApp."),
+    "title": TITULO,
+    "description": DESCRIPCION,
     "robots": "index, follow",
     "canonical": URL,
     "og": (
-        ("og:title", "Sistema de Riego Automático Tampico · Viveros Terra"),
-        ("og:description", f"Instalación de sistemas de riego automático en Tampico. Ahorra {AHORRO} en agua. Cotiza por WhatsApp."),
+        ("og:title", TITULO),
+        ("og:description", DESCRIPCION),
         ("og:image", f"{SITE}/img/tecnico-terra-riego-industrial-tampico.avif"),
         ("og:locale", "es_MX"),
     ),
     "twitter": (
         ("twitter:card", "summary_large_image"),
-        ("twitter:title", "Sistema de Riego Automático Tampico · Viveros Terra"),
-        ("twitter:description", (f"Instalación de sistemas de riego automático en Tampico. Ahorra {AHORRO} en agua. "
-                                 "Cotiza por WhatsApp.")),
+        ("twitter:title", TITULO),
+        ("twitter:description", DESCRIPCION),
         ("twitter:image", f"{SITE}/img/sistema-riego-automatizado-tampico.webp"),
     ),
 }
@@ -282,6 +284,7 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {
         "Aspersores Emergentes": "Aspersores emergentes",
         "Riego por Goteo": "Riego por goteo",

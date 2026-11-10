@@ -68,6 +68,18 @@ class VercelTest(unittest.TestCase):
         fuentes = [r["source"] for r in self.cfg["headers"]]
         self.assertEqual(fuentes.index(HASH), len(fuentes) - 1, "la regla de assets con hash va al final y gana")
 
+    def test_las_pruebas_de_js_no_se_despliegan(self):
+        """SEO fase 0 (2026-11-10): public/js/tests (pruebas y casos de paridad) queda fuera del despliegue con
+        .vercelignore; ninguna página ni script publicado lo carga."""
+        ignorados = [linea.strip() for linea in (VERCEL.parent / ".vercelignore").read_text(encoding="utf-8").splitlines()
+                     if linea.strip() and not linea.startswith("#")]
+        self.assertEqual(ignorados, ["public/js/tests"])
+        self.assertTrue((paginas.PUBLIC / "js" / "tests").is_dir())
+        cargas = re.compile(r"""(?:src|href)=["'][^"']*js/tests/|fetch\(["'][^"']*js/tests/|import[^;]*js/tests/""")
+        usos = [str(p.relative_to(paginas.PUBLIC)) for ext in ("html", "js") for p in paginas.PUBLIC.rglob(f"*.{ext}")
+                if "/tests/" not in p.as_posix() and cargas.search(p.read_text(encoding="utf-8"))]
+        self.assertEqual(usos, [])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -142,7 +142,7 @@
     },
     {
       "source": "/venta-palmas-mayoreo-huasteca",
-      "destination": "/pasto-en-rollo-tampico",
+      "destination": "/palmas-mayoreo-proyectos",
       "permanent": true
     },
     {
@@ -226,22 +226,12 @@
       "permanent": true
     },
     {
-      "source": "/members",
-      "destination": "/",
-      "permanent": true
-    },
-    {
       "source": "/politica-de-privacidad",
       "destination": "/",
       "permanent": true
     },
     {
       "source": "/pol%C3%ADtica-de-privacidad",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/profile/:path*",
       "destination": "/",
       "permanent": true
     },
@@ -402,12 +392,12 @@
     },
     {
       "source": "/post/cuando-es-mejor-regar-mi-pasto-en-rollo-san-agustin-jardin",
-      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "destination": "/blog/cuando-regar-pasto-san-agustin-tampico",
       "permanent": true
     },
     {
       "source": "/post/cuando-es-mejor-regar-mi-pasto-en-rollo-san-agustin-jardin/",
-      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "destination": "/blog/cuando-regar-pasto-san-agustin-tampico",
       "permanent": true
     },
     {
@@ -462,7 +452,7 @@
     },
     {
       "source": "/post/tu-pasto-san-agustin-esta-amarillo",
-      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "destination": "/blog/cesped-amarillo-tampico-causas-soluciones",
       "permanent": true
     },
     {
@@ -497,17 +487,17 @@
     },
     {
       "source": "/post/rancho-productor-de-pasto-en-rollo-san-agust%C3%ADn-mayoreo-mejor-precio-y-env%C3%ADos-a-todo-m%C3%A9xico",
-      "destination": "/pasto-en-rollo-tampico",
+      "destination": "/mayoreo-pasto-tampico",
       "permanent": true
     },
     {
       "source": "/post/rancho-productor-de-pasto-en-rollo-san-agustÃ­n-mayoreo-mejor-precio-y-envÃ­os-a-todo-mÃ©xico",
-      "destination": "/pasto-en-rollo-tampico",
+      "destination": "/mayoreo-pasto-tampico",
       "permanent": true
     },
     {
       "source": "/post/pasto-en-rollo-por-mayoreo-precio-por-m2",
-      "destination": "/pasto-en-rollo-tampico",
+      "destination": "/mayoreo-pasto-tampico",
       "permanent": true
     },
     {
@@ -522,7 +512,7 @@
     },
     {
       "source": "/post/como-instalar-pasto-sintetico",
-      "destination": "/pasto-sintetico-tampico",
+      "destination": "/blog/como-instalar-pasto-sintetico",
       "permanent": true
     },
     {
@@ -547,17 +537,17 @@
     },
     {
       "source": "/post/cuidados-de-los-ficus-elastica-gu%C3%ADa-definitiva-para-un-%C3%A1rbol-del-caucho-saludable",
-      "destination": "/blog/plantas-interior-tampico",
+      "destination": "/blog/ficus-elastica-cuidados-tampico",
       "permanent": true
     },
     {
       "source": "/post/cuidados-de-los-ficus-elastica-guÃ­a-definitiva-para-un-Ã¡rbol-del-caucho-saludable",
-      "destination": "/blog/plantas-interior-tampico",
+      "destination": "/blog/ficus-elastica-cuidados-tampico",
       "permanent": true
     },
     {
       "source": "/post/como-cuidar-de-tu-ficus-elastica-hule-en-tampico-tamaulipas",
-      "destination": "/blog/plantas-interior-tampico",
+      "destination": "/blog/ficus-elastica-cuidados-tampico",
       "permanent": true
     },
     {
@@ -682,27 +672,27 @@
     },
     {
       "source": "/post/sistemas-de-riego-automatizado-tampico",
-      "destination": "/sistema-riego-tampico",
+      "destination": "/blog/sistema-riego-automatizado-tampico",
       "permanent": true
     },
     {
       "source": "/post/gu%C3%ADa-definitiva-del-sistema-de-riego-autom%C3%A1tico-en-m%C3%A9xico-ahorra-agua-y-optimiza-tu-jard%C3%ADn",
-      "destination": "/sistema-riego-tampico",
+      "destination": "/blog/sistema-riego-automatizado-tampico",
       "permanent": true
     },
     {
       "source": "/post/guÃ­a-definitiva-del-sistema-de-riego-automÃ¡tico-en-mÃ©xico-ahorra-agua-y-optimiza-tu-jardÃ­n",
-      "destination": "/sistema-riego-tampico",
+      "destination": "/blog/sistema-riego-automatizado-tampico",
       "permanent": true
     },
     {
       "source": "/post/por-qu%C3%A9-es-conveniente-un-sistema-de-riego",
-      "destination": "/sistema-riego-tampico",
+      "destination": "/blog/sistema-riego-automatico-conviene-tampico",
       "permanent": true
     },
     {
       "source": "/post/por-quÃ©-es-conveniente-un-sistema-de-riego",
-      "destination": "/sistema-riego-tampico",
+      "destination": "/blog/sistema-riego-automatico-conviene-tampico",
       "permanent": true
     },
     {
@@ -717,22 +707,22 @@
     },
     {
       "source": "/post/dise%C3%B1o-de-jardines-en-tampico-madero-y-altamira-tamaulipas-gu%C3%ADa-completa-2025",
-      "destination": "/diseno-jardines-tampico",
+      "destination": "/blog/diseno-jardines-tampico-guia",
       "permanent": true
     },
     {
       "source": "/post/diseÃ±o-de-jardines-en-tampico-madero-y-altamira-tamaulipas-guÃ­a-completa-2025",
-      "destination": "/diseno-jardines-tampico",
+      "destination": "/blog/diseno-jardines-tampico-guia",
       "permanent": true
     },
     {
       "source": "/post/c%C3%B3mo-dise%C3%B1ar-tu-jard%C3%ADn-en-tampico-tips-consejos-y-preparaciones-clave-de-viveros-terra",
-      "destination": "/diseno-jardines-tampico",
+      "destination": "/blog/diseno-jardines-tampico-guia",
       "permanent": true
     },
     {
       "source": "/post/cÃ³mo-diseÃ±ar-tu-jardÃ­n-en-tampico-tips-consejos-y-preparaciones-clave-de-viveros-terra",
-      "destination": "/diseno-jardines-tampico",
+      "destination": "/blog/diseno-jardines-tampico-guia",
       "permanent": true
     },
     {
@@ -792,12 +782,12 @@
     },
     {
       "source": "/post/cada-cu%C3%A1nto-hay-que-fertilizar-las-plantas-gu%C3%ADa-pr%C3%A1ctica-para-jardineros-modernos",
-      "destination": "/blog",
+      "destination": "/blog/fertilizacion-jardines-tampico-temporada-lluvias",
       "permanent": true
     },
     {
       "source": "/post/cada-cuÃ¡nto-hay-que-fertilizar-las-plantas-guÃ­a-prÃ¡ctica-para-jardineros-modernos",
-      "destination": "/blog",
+      "destination": "/blog/fertilizacion-jardines-tampico-temporada-lluvias",
       "permanent": true
     },
     {
@@ -827,7 +817,7 @@
     },
     {
       "source": "/post/tienes-problemas-de-hormigas",
-      "destination": "/blog",
+      "destination": "/blog/plagas-comunes-jardin-tampico",
       "permanent": true
     },
     {
@@ -843,16 +833,6 @@
     {
       "source": "/venta-pasto-sintetico-tampico/",
       "destination": "/pasto-sintetico-tampico",
-      "permanent": true
-    },
-    {
-      "source": "/preview-mapa-cobertura",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/preview-mapa-cobertura.html",
-      "destination": "/",
       "permanent": true
     },
     {

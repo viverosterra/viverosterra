@@ -10,6 +10,7 @@ import datos
 import mensajes_paginas
 from contenido import catalogo_datos as cd
 from contenido import plantas_comun as pc
+from contenido import seo
 
 SITE = datos.SITIO
 RUTA = "/plantas-de-interior-tampico"
@@ -17,9 +18,9 @@ URL = f"{SITE}{RUTA}"
 NOMBRE = "Plantas de interior"
 MENSAJE = mensajes_paginas.PLANTAS[RUTA]
 DE_INTERIOR = cd.cuenta({"uso": ["interior"]})
-TITULO = "Plantas de Interior en Tampico — Viveros Terra | Oficinas y Hogares"
-DESCRIPCION = ("Plantas de interior para Tampico, Madero y Altamira. Ficus Lyrata, Monstera, ZZ Plant, Sansiviera, Palma "
-               "Areca y más. Entrega a domicilio · 833 326 8008.")
+TITULO = "Plantas de Interior Tampico: Casa y Oficina | Viveros Terra"
+DESCRIPCION = ("Plantas de interior en Tampico: ficus lyrata, monstera, zamioculca, sansevieria y palma areca para casa u oficina. "
+               "Entrega en Madero y Altamira. Cotiza.")
 META = {"title": TITULO, "description": DESCRIPCION, "robots": "index, follow", "canonical": URL,
         "og": (("og:title", TITULO), ("og:description", DESCRIPCION), ("og:url", URL), ("og:type", "website"))}
 ESPECIES = (
@@ -81,7 +82,8 @@ CONTENIDO = {
     "guias": {"titulo": "Guías de plantas de interior", "items": (
         ("Plantas de interior para Tampico", "/blog/plantas-interior-tampico"),
         ("Ficus elastica (hule): cuidados", "/blog/ficus-elastica-cuidados-tampico"),
-        ("Palma areca en Tampico: cuidados", "/blog/palma-areca-tampico"))},
+        ("Palma areca en Tampico: cuidados", "/blog/palma-areca-tampico"),
+        ("Jardín en macetas para terraza", "/blog/jardin-en-macetas-terraza-tampico-guia"))},
     "relacionados": {"titulo": "Más servicios en Viveros Terra", "items": pc.otras_subcategorias(RUTA)},
     "cierre": {"titulo": "¿Listo para cotizar?",
                "lede": "Dinos si es casa u oficina, cuánta luz tiene y la colonia; te respondemos con precio.",
@@ -91,6 +93,7 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": seo.paridad(TITULO, DESCRIPCION),
     "jsonld": {
         "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",

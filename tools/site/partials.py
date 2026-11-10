@@ -45,7 +45,7 @@ MENU = (
      "items": (("Mayoreo de pasto", "/mayoreo-pasto-tampico"),
                ("Palmas para proyectos", "/palmas-mayoreo-proyectos"),
                ("Mantenimiento de áreas verdes", "/mantenimiento-jardines-tampico"))},
-    {"id": "precios", "texto": "Precios", "href": "/precios", "nota": "con IVA", "items": ()},
+    {"id": "precios", "texto": "Precios", "href": "/precios", "nota": "", "items": ()},
 )
 
 SPRITE = """<svg class="vt-sprite" width="0" height="0" aria-hidden="true" focusable="false">
@@ -55,7 +55,7 @@ SPRITE = """<svg class="vt-sprite" width="0" height="0" aria-hidden="true" focus
 <symbol id="vt-i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
 </svg>"""
 # Página de Nochebuenas (decisión del dueño, spec §2 y §4): las plantas no llevan IVA y ahí no se habla de garantías; es la única
-# página donde el menú móvil, el enlace de políticas y la línea legal cambian su texto.
+# página donde el enlace de políticas y la línea legal cambian su texto.
 TIPO_SIN_IVA_NI_GARANTIA = "nochebuenas"
 CHEV = '<svg class="vt-chev" aria-hidden="true"><use href="#vt-i-chev"/></svg>'
 WA_GLIFO = '<span class="vt-wa-g"><svg aria-hidden="true"><use href="#vt-i-wa"/></svg></span>'
@@ -74,7 +74,8 @@ FUENTE_PRINCIPAL = "/fonts/archivo-latin.woff2"
 
 def head(urls, legacy, tienda=False, plantas=False, materiales=False, precios=False, blog=False, nochebuenas=False,
          temporada=False, obras=False, inicio=False):
-    """Favicon, geo de la tienda, fuente principal precargada, CSS del shell (y legacy-fixes en páginas con Tailwind),
+    """Favicon cuadrado (SVG y PNG de 192; /favicon.ico vive en la raíz de public/), geo de la tienda, fuente principal
+    precargada, CSS del shell (y legacy-fixes en páginas con Tailwind),
     GA4 una sola vez y terra.js diferido. Con tienda=True (páginas <body class="vt-pagina vt-tienda">), también
     terra-tienda.css. Con plantas=True (páginas <body class="vt-pagina vt-plantas">, Etapa 2e), terra-plantas.css. Con
     materiales=True (<body class="vt-pagina vt-materiales">, Etapa 2f), terra-materiales.css. Con precios=True
@@ -84,7 +85,8 @@ def head(urls, legacy, tienda=False, plantas=False, materiales=False, precios=Fa
     Las meta keywords, last-modified, ai-content-declaration y language ya no se usan: no se
     reponen."""
     lineas = [
-        '<link rel="icon" type="image/png" href="/img/logo-viveros-terra-tampico.png">',
+        '<link rel="icon" type="image/svg+xml" href="/img/favicon.svg">',
+        '<link rel="icon" type="image/png" sizes="192x192" href="/img/favicon-192.png">',
         '<meta name="geo.region" content="MX-TAM">',
         f'<meta name="geo.placename" content="{"Tampico" if nochebuenas else datos.CIUDAD}">',
         f'<link rel="preload" href="{FUENTE_PRINCIPAL}" as="font" type="font/woff2" crossorigin>',
@@ -144,7 +146,8 @@ def _item_escritorio(item, ctx):
 
 
 def _item_movil(item, ctx):
-    nota = "" if ctx["tipo"] == TIPO_SIN_IVA_NI_GARANTIA and item["id"] == "precios" else f'<small>{esc(item["nota"])}</small>'
+    # "Precios" va sin nota (SEO fase 0, 2026-11-10: decía "con IVA", que cubría también el pasto sin instalar).
+    nota = f'<small>{esc(item["nota"])}</small>' if item["nota"] else ""
     if not item["items"]:
         actual = ' aria-current="page"' if item["href"] == ctx["ruta"] else ""
         return f'<a class="vt-mmenu__link" href="{item["href"]}"{actual}>{esc(item["texto"])}{nota}</a>'
@@ -184,7 +187,8 @@ def header(ctx):
 
 
 PIE = (
-    ("Servicios", (("Pasto en rollo", "/pasto-en-rollo-tampico"),
+    # Anclas que dicen qué hay y dónde (SEO fase 0, 2026-11-10): «Pasto en rollo en Tampico» y «Vivero en Cd. Madero».
+    ("Servicios", (("Pasto en rollo en Tampico", "/pasto-en-rollo-tampico"),
                    ("Mayoreo de pasto", "/mayoreo-pasto-tampico"),
                    ("Pasto sintético en Tampico", "/pasto-sintetico-tampico"),
                    ("Tienda de pasto sintético", "/pasto-sintetico"),
@@ -205,7 +209,7 @@ PIE = (
                ("Lomas del Chairel", "/jardineria-lomas-del-chairel-tampico"),
                ("Ciudad Madero", "/jardineria-ciudad-madero"),
                ("Altamira", "/jardineria-altamira"))),
-    ("Viveros Terra", (("Visítanos", "/vivero-tampico"),
+    ("Viveros Terra", (("Vivero en Cd. Madero", "/vivero-tampico"),
                        ("Precios", "/precios"),
                        ("Blog", "/blog"),
                        ("Políticas y garantías", "/politicas"),
@@ -248,7 +252,9 @@ def footer(ctx):
     tipo = ctx["tipo"]
     wa = esc(datos.wa_url(ctx["mensaje_pie"]))
     columnas = "\n".join(_columna(titulo, enlaces) for titulo, enlaces in _columnas_pie(tipo))
-    iva = "" if tipo == TIPO_SIN_IVA_NI_GARANTIA else f" · Precios {datos.ANIO} con IVA incluido"
+    # Sin "con IVA incluido" (SEO fase 0, 2026-11-10): el pie sale en todas las páginas y el pasto sin instalar, las
+    # plantas, los árboles y las palmas no llevan IVA; se explica junto a cada precio.
+    iva = "" if tipo == TIPO_SIN_IVA_NI_GARANTIA else f" · Precios {datos.ANIO}"
     celdas = "".join(f"<div><dt>{esc(t)}</dt><dd>{esc(v)}<small>{esc(s)}</small></dd></div>" for t, v, s in DATOS_PIE)
     redes = "".join(f'<a href="{url}" target="_blank" rel="noopener">{esc(nombre)}</a>' for nombre, url in datos.REDES)
     correo_visible = datos.CORREO_FORMULARIOS.replace("@", "@<wbr>")  # a 375 px corta después de la arroba

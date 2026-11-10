@@ -95,6 +95,9 @@ PRECIOS = {
     "tezontle_costal": 200,
     "marmol_saco": 250,
 }
+# Hasta cuándo valen los precios publicados (priceValidUntil del JSON-LD de Product). Es un dato versionado: se renueva a
+# mano cada año, antes de que venza (Google deja de mostrar el precio de una oferta vencida).
+PRECIOS_VIGENTES_HASTA = "2027-12-31"
 # Materiales: respuestas del dueño (2026-11-08). Tierra preparada a $100 el costal y camiones de tierra negra de 5, 8 y
 # 14 m³ a $3,500, $5,200 y $8,000 (nunca "camión desde $5,000": no lo confirmó). Mármol a $250 el saco, IVA incluido,
 # con sus palabras: "sujeto a disponibilidad" (solo junto al precio del mármol: test_materiales_reglas.py). El m³ y el

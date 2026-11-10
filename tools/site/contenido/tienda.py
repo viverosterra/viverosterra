@@ -9,6 +9,7 @@ import data
 import datos
 from ciudades import CIUDADES
 from componentes import dinero
+from contenido import seo
 from contenido.ficha import PASOS
 from esquema import breadcrumb_schema, product_schema
 
@@ -18,9 +19,9 @@ BARATO = t.barato()
 DEFAULT = data.BY_SLUG["toscana-28"]
 DESDE = dinero(BARATO["rollo"])
 FLETE_MIN = dinero(min(data.ZONAS.values()))
-TITULO = f"Pasto Sintético con Envío a Todo México · Desde {DESDE}/m² | Viveros Terra"
-DESCRIPCION = (f"Pasto sintético con envío a todo México desde {DESDE}/m². 9 modelos residenciales de 10 a 35 mm, factura "
-               f"{datos.FACTURA} y entrega en 3 a 5 días hábiles.")
+TITULO = f"Pasto Sintético desde {DESDE}/m² con Envío | Viveros Terra"
+DESCRIPCION = (f"Compra pasto sintético en línea desde {DESDE}/m²: 9 modelos de 10 a 35 mm, factura {datos.FACTURA} y envío a todo "
+               "México. Cotiza tu rollo.")
 GAL = t.GAL
 
 PREGUNTAS = (
@@ -40,7 +41,7 @@ PREGUNTAS = (
      "pago."),
     ("¿Dan factura?", f"Sí. Emitimos factura {datos.FACTURA} para persona física o moral en todos los pedidos."),
     ("¿Qué modelo me conviene?",
-     "Toscana 28 es el más vendido para jardines familiares. Para poco uso o presupuesto ajustado, Toscana 18. Para "
+     "Toscana 28 es buena opción para jardines familiares. Para poco uso o presupuesto ajustado, Toscana 18. Para "
      "perros y pisoteo diario, Irlanda 25 o Capri 20. Para el look más natural, los de 35 mm: Japonés, Mónaco y Bali."),
     ("¿Puedo instalarlo yo mismo?",
      f"Sí. Un jardín de {data.MIN_NACIONAL_M2} a {data.ROLLO_M2} m² se instala en un día. Te mandamos la guía de instalación con el pedido. En Tampico, "
@@ -157,6 +158,7 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {},
     "retirados": {},
 }

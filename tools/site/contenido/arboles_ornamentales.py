@@ -10,6 +10,7 @@ import datos
 import mensajes_paginas
 from componentes import dinero
 from contenido import plantas_comun as pc
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -18,9 +19,9 @@ URL = f"{SITE}{RUTA}"
 NOMBRE = "Árboles ornamentales"
 MENSAJE = mensajes_paginas.PLANTAS[RUTA]
 FLAMBOYAN = f"Flamboyán desde {dinero(P['flamboyan'])}"
-TITULO = "Árboles Ornamentales en Tampico — Viveros Terra | 25 Especies"
-DESCRIPCION = ("Árboles ornamentales para jardines en Tampico, Madero y Altamira. Flamboyán, Jacaranda, Ficus, Crespón, "
-               "Guayacán y más. Entrega a domicilio · 833 326 8008.")
+TITULO = f"Árboles Ornamentales en Tampico desde {dinero(P['flamboyan'])} | Viveros Terra"
+DESCRIPCION = (f"Árboles ornamentales para jardín en Tampico: flamboyán desde {dinero(P['flamboyan'])}, jacaranda, crespón y guayacán. "
+               "Con entrega y siembra en Madero y Altamira. Cotiza hoy.")
 META = {"title": TITULO, "description": DESCRIPCION, "robots": "index, follow", "canonical": URL,
         "og": (("og:title", TITULO), ("og:description", DESCRIPCION), ("og:url", URL), ("og:type", "website"))}
 ESPECIES = (
@@ -92,6 +93,7 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": seo.paridad(TITULO, DESCRIPCION),
     "jsonld": {
         "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",

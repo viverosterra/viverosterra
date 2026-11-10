@@ -11,6 +11,7 @@ import mensajes_paginas
 from componentes import dinero
 from contenido import catalogo_datos as cd
 from contenido import plantas_comun as pc
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -18,9 +19,9 @@ RUTA = "/plantas-para-jardin-tampico"
 URL = f"{SITE}{RUTA}"
 NOMBRE = "Plantas para jardín"
 MENSAJE = mensajes_paginas.PLANTAS[RUTA]
-TITULO = "Plantas para Jardín en Tampico — Viveros Terra | +74 Variedades"
-DESCRIPCION = ("Plantas para jardín en Tampico, Madero y Altamira. Ave de Paraíso, Bugambilea, Crotos, Helechos, Agaves y "
-               "más. Asesoría profesional · 833 326 8008.")
+TITULO = "Plantas para Jardín en Tampico: Sol y Sombra | Viveros Terra"
+DESCRIPCION = ("Plantas de exterior que aguantan el calor de Tampico: ave del paraíso, bugambilia, crotos y agaves. Te decimos "
+               "cuáles van en sol o sombra. Cotiza tu lista.")
 META = {"title": TITULO, "description": DESCRIPCION, "robots": "index, follow", "canonical": URL,
         "og": (("og:title", TITULO), ("og:description", DESCRIPCION), ("og:url", URL), ("og:type", "website"))}
 ESPECIES = (
@@ -83,7 +84,8 @@ CONTENIDO = {
     "guias": {"titulo": "Guías de plantas para jardín", "items": (
         ("Plantas que resisten la sal del Golfo", "/blog/plantas-resistentes-sal-golfo-tampico"),
         ("Bugambilia en Tampico: cuidados y floración", "/blog/buganvilia-tampico-cuidados-floracion"),
-        ("Duranta: cuidados y setos", "/blog/duranta-erecta-tampico-cuidados-seto"))},
+        ("Duranta: cuidados y setos", "/blog/duranta-erecta-tampico-cuidados-seto"),
+        ("Jardín en macetas para terraza", "/blog/jardin-en-macetas-terraza-tampico-guia"))},
     "relacionados": {"titulo": "Más servicios en Viveros Terra", "items": pc.otras_subcategorias(RUTA)},
     "cierre": {"titulo": "¿Listo para cotizar?",
                "lede": "Dinos si el lugar es de sol o de sombra, los metros y la colonia; te respondemos con precio.",
@@ -93,6 +95,7 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "meta": seo.paridad(TITULO, DESCRIPCION),
     "jsonld": {
         "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",

@@ -236,7 +236,9 @@ class InicioTest(unittest.TestCase):
         self.assertEqual([q["name"] for q in faq["mainEntity"]], visibles)
         self.assertEqual(len(visibles), 6)
         self.assertEqual(faq["mainEntity"][0]["acceptedAnswer"]["text"], datos.RESPUESTA_PRECIO_PASTO)
-        ld("BreadcrumbList")
+        # SEO fase 0 (2026-11-10): la home no es una ruta; su BreadcrumbList enumeraba el menú y Google pintaba
+        # "› … › Catálogo" como si fuera la jerarquía de la página.
+        self.assertNotIn("BreadcrumbList", HTML)
 
     def test_opiniones_reales_con_nombre_publicadas_con_permiso(self):
         """Decisión del dueño (2026-11-07): las cuatro opiniones con nombre de la home son reales y se conservan."""
@@ -259,7 +261,7 @@ class InicioTest(unittest.TestCase):
     def test_sin_prometer_visita_gratis(self):
         self.assertNotRegex(TEXTO, r"(?i)visitas?\W+(?:\w+\W+){0,3}?(?:sin costo|gratis|gratuita)|medir sin costo")
 
-    def test_seo_jardineria_cobertura_twitter_y_hreflang(self):
+    def test_seo_jardineria_cobertura_twitter_y_sin_hreflang(self):
         h2 = re.findall(r"<h2\b[^>]*>(.*?)</h2>", MAIN, re.S)
         self.assertTrue(any("Jardinería" in t for t in h2), h2)
         cobertura = MAIN[MAIN.index('id="vt-h-cobertura"'):MAIN.index('class="vt-cierre"')]
@@ -269,7 +271,8 @@ class InicioTest(unittest.TestCase):
             self.assertIn(f'href="{href}"', cobertura)
         for nombre in ("twitter:card", "twitter:title", "twitter:description", "twitter:image"):
             self.assertIn(f'<meta name="{nombre}" content=', HTML)
-        self.assertIn(f'<link rel="alternate" hreflang="es-MX" href="{datos.SITIO}">', HTML)
+        # SEO fase 0 (2026-11-10): el hreflang solo existía en la home y sin pareja (un solo idioma): no dice nada.
+        self.assertNotIn("hreflang", HTML)
 
     def test_una_opinion_destacada_y_tres_compactas(self):
         opiniones = MAIN[MAIN.index('id="vt-h-opiniones"'):MAIN.index('id="vt-h-como"')]

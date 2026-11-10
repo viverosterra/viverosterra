@@ -293,14 +293,17 @@ class PalmasTest(unittest.TestCase):
     def test_meta_sin_productor_directo_y_con_foto_de_palmas(self):
         html, _m, _t, _g = pagina("palmas")
         descripcion = re.search(r'<meta name="description" content="([^"]*)"', html).group(1)
-        self.assertTrue(descripcion.startswith("Palmas al mayoreo para proyectos B2B"))
+        # SEO fase 0 (2026-11-10): sin «B2B» (nadie lo busca) y en 155 caracteres o menos.
+        self.assertTrue(descripcion.startswith("Palmas al mayoreo para proyectos en Tamaulipas, Veracruz y SLP"))
+        self.assertNotIn("B2B", descripcion)
         imagen = re.search(r'<meta property="og:image" content="([^"]*)"', html).group(1)
         self.assertEqual(imagen, f"{datos.SITIO}/img/portadas/palmas-reales-mayoreo-vivero-tampico-og.webp")
         self.assertTrue((paginas.PUBLIC / imagen.split(datos.SITIO + "/", 1)[1]).is_file())
         for propiedad in ("og:description", "twitter:description"):
             with self.subTest(propiedad=propiedad):
-                self.assertRegex(html, rf'(?:property|name)="{propiedad}" content="12 especies \(palmas, cycas, bambú y '
-                                       r'yucca\)')
+                # Las 12 especies siguen dichas con exactitud (tres no son palmas), ya no al inicio del texto.
+                self.assertRegex(html, rf'(?:property|name)="{propiedad}" content="[^"]*12 especies \(palmas, cycas, '
+                                       r'bambú y yucca\)')
 
     def test_sin_precios_ni_proyectos_viejos(self):
         _h, _m, texto, _g = pagina("palmas")
