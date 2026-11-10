@@ -5,6 +5,7 @@ import datos
 import mensajes_paginas
 from componentes import boton_mapas, dinero
 from componentes_util import META_AUTOR_RETIRADA
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -24,14 +25,16 @@ PREGUNTAS = (
     ("¿Puedo comprar plantas al mayoreo para mi proyecto?", "Sí. Atendemos tanto a clientes particulares como a constructoras, arquitectos, hoteles y empresas. Escríbenos por WhatsApp con tu requerimiento y te cotizamos por volumen."),
 )
 MENSAJE = mensajes_paginas.UTILITARIAS["vivero"]
+# SEO fase 0 (mapa de palabras clave, 2026-11-10): título de 60 y descripción de 153; el mismo texto va en Open Graph.
+TITULO = f"Vivero en Tampico y Cd. Madero: {datos.VARIEDADES} Plantas | {datos.NOMBRE}"
+DESCRIPCION = ("Vivero en Cd. Madero, frente a Walmart: más de 200 variedades de plantas, palmas y árboles. "
+               f"{datos.HORARIO}. Ve cómo llegar y visítanos.")
 CONTENIDO = {
     "tipo": "vivero",
-    "meta": {"title": "Vivero en Tampico y Cd. Madero: dirección, horario y cómo llegar · Viveros Terra",
-             "description": "Visita el vivero de Viveros Terra en Av. Álvaro Obregón 209 Sur, Cd. Madero, frente a Walmart. Más de 200 variedades de plantas, palmas y árboles. Lunes a viernes de 9 a 18 h y sábado de 9 a 14 h.",
+    "meta": {"title": TITULO, "description": DESCRIPCION,
              "robots": "index, follow", "canonical": URL,
              "og": (("og:type", "website"), ("og:url", URL),
-                    ("og:title", "Vivero en Tampico y Cd. Madero: dirección, horario y cómo llegar · Viveros Terra"),
-                    ("og:description", "Vivero en Tampico con +200 variedades de plantas, palmas y árboles. Entrega en Madero y Altamira. Cotiza hoy."),
+                    ("og:title", TITULO), ("og:description", DESCRIPCION),
                     ("og:image", f"{SITE}/img/plantas-tropicales-tampico-viveros.webp"), ("og:locale", "es_MX")),
              "twitter": (("twitter:card", "summary_large_image"),)},
     "migas": (("Inicio", "/"), ("Vivero en Tampico", None)),
@@ -81,6 +84,6 @@ PARIDAD = {
                    "¿Buscas una planta específica?": "¿Buscas una planta específica?"},
     "retirados": {},
     "meta_retirada": META_AUTOR_RETIRADA,
-    "meta": {"og:description": (CONTENIDO["meta"]["og"][3][1], "Sin “Productor directo”: el dueño no lo ha confirmado y 2d y 2f ya lo retiraron.")},
+    "meta": seo.paridad(TITULO, DESCRIPCION, {"og:description": (DESCRIPCION, "Sin “Productor directo”: el dueño no lo ha confirmado y 2d y 2f ya lo retiraron.")}),
     "jsonld": {},
 }

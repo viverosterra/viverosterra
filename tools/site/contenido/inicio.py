@@ -217,7 +217,7 @@ CONTENIDO = {
              "texto": f"El pasto llega del campo {datos.LLEGADA_PASTO}, se corta para tu pedido y va directo a tu jardín."},
             {"titulo": "El primer riego", "quien": "tu", "cuando": "Días 1 a 20",
              "texto": (f"{datos.PRIMER_RIEGO} Si una sección no arraiga en {datos.ARRAIGO}, la reponemos sin costo, "
-                       'siguiendo el protocolo de riego (<a href="/protocolo-cuidados-pasto-san-agustin">ver condiciones</a>).')},
+                       'siguiendo el protocolo de riego (<a href="/protocolo-cuidados-pasto-san-agustin#garantia">ver condiciones</a>).')},
         ),
     },
     "precios": {

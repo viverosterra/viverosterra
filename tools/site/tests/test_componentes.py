@@ -242,7 +242,7 @@ class MedidorTest(unittest.TestCase):
         html = c.garantia_pasto()
         self.assertEqual(c.texto_plano(html), datos.GARANTIA_PASTO)
         # Las condiciones del pasto viven en el protocolo de cuidados (no en /politicas, que es general).
-        self.assertIn('(<a href="/protocolo-cuidados-pasto-san-agustin">ver condiciones</a>).', html)
+        self.assertIn('(<a href="/protocolo-cuidados-pasto-san-agustin#garantia">ver condiciones</a>).', html)
         prefijada = c.garantia_pasto("Pasto instalado: ")
         self.assertTrue(prefijada.startswith("Pasto instalado: si una sección no arraiga"))
         self.assertEqual(c.texto_plano(prefijada), "Pasto instalado: s" + datos.GARANTIA_PASTO[1:])

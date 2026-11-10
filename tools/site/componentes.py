@@ -77,7 +77,7 @@ CTA_MEDIDA = "Enviar mi medida por WhatsApp"
 # En la home, con medida válida la barra fija de celular manda la misma medida (vt-medidor.js lee el texto de data-vt-barra).
 CTA_MEDIDA_BARRA = "Enviar mi medida"
 # Condiciones de la garantía de arraigo del pasto: el protocolo de cuidados (la página no tiene un id en esa sección).
-CONDICIONES_PASTO = "/protocolo-cuidados-pasto-san-agustin"
+CONDICIONES_PASTO = "/protocolo-cuidados-pasto-san-agustin#garantia"  # sección de condiciones (plantillas/protocolo.py)
 
 
 def boton_wa(mensaje, cta, texto=CTA_WA):

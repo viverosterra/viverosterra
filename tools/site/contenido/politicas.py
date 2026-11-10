@@ -11,13 +11,17 @@ import mensajes_paginas
 import mensualidades
 from componentes import dinero
 from componentes_zonas import porcentaje_plazo
+from contenido import seo
 
 SITE = datos.SITIO
 URL = f"{SITE}/politicas"
 FLETE_MIN, FLETE_MAX = dinero(min(data.ZONAS.values())), dinero(max(data.ZONAS.values()))
 ACTUALIZADO = "noviembre 2026"
-DESCRIPCION = ("Políticas de Viveros Terra: envíos a todo México (3-5 días), devoluciones (7 días), privacidad de datos, "
-               "facturación CFDI 4.0 y contacto.")
+# SEO fase 0 (mapa de palabras clave, 2026-11-10). La descripción del mapa decía "en 3 a 5 días hábiles" y "devoluciones
+# en 30 días": el plazo de entrega no se anuncia (regla del dueño) y la devolución publicada es de 7 días naturales.
+TITULO = f"Políticas de Envío, Devolución y Garantías | {datos.NOMBRE}"
+DESCRIPCION = (f"Políticas de {datos.NOMBRE}: envíos de pasto sintético a todo México, devoluciones en 7 días naturales, "
+               f"garantías de arraigo y facturación {datos.FACTURA}.")
 UMBRALES = "; ".join(
     f"desde {dinero(minimo)}, {' o '.join(', '.join(str(p) for p in plazos).rsplit(', ', 1))}"
     f"{' mensualidades' if i == 0 else ''}" for i, (minimo, plazos) in enumerate(sorted(mensualidades.UMBRALES)))
@@ -149,10 +153,10 @@ SECCIONES = (
 CONTENIDO = {
     "tipo": "utilidad",
     "meta": {
-        "title": "Políticas de Envío, Devoluciones y Privacidad · Viveros Terra",
+        "title": TITULO,
         "description": DESCRIPCION, "robots": "index, follow", "canonical": URL,
-        "og": (("og:type", "article"), ("og:url", URL), ("og:title", "Políticas · Viveros Terra"),
-               ("og:description", "Envíos, devoluciones, garantía de plantas, privacidad, facturación y contacto de Viveros Terra."),
+        "og": (("og:type", "article"), ("og:url", URL), ("og:title", TITULO),
+               ("og:description", DESCRIPCION),
                ("og:image", f"{SITE}/img/pasto-sintetico-residencial-tampico.webp"), ("og:locale", "es_MX")),
         "twitter": (("twitter:card", "summary_large_image"),),
     },
@@ -173,6 +177,6 @@ PARIDAD = {
         "En este artículo": "El índice es de la página, con aria-label “En esta página” y sin título visible.",
         "¿Listo para cotizar?": "La columna lateral duplicaba el CTA; queda un solo CTA final con la promesa única.",
     },
-    "meta": {"description": (DESCRIPCION, "Decía devoluciones (30 días); la política publicada y la tienda dicen 7 días naturales.")},
+    "meta": seo.paridad(TITULO, DESCRIPCION, {"description": (DESCRIPCION, "Decía devoluciones (30 días); la política publicada y la tienda dicen 7 días naturales.")}),
     "jsonld": {},
 }

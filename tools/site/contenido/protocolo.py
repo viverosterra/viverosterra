@@ -3,23 +3,57 @@ palabras de main. La garantía usa la frase aprobada por el dueño (datos.GARANT
 Sin "experto", sin los contadores repetidos del hero y con un solo H1."""
 import datos
 import mensajes_paginas
-from componentes import dinero
+from componentes import dinero, howto
 import componentes_util as cu
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
 URL = f"{SITE}/protocolo-cuidados-pasto-san-agustin"
 FOTO = {"src": "/img/instalacion-pasto-rollo-san-agustin-tampico.webp", "ancho": 1024, "alto": 1536, "alt": ""}
 MENSAJE = mensajes_paginas.UTILITARIAS["protocolo"]
+# SEO fase 0 (mapa de palabras clave, 2026-11-10): título de 57 y descripción de 154; el mismo texto va en Open Graph.
+TITULO = f"Pasto San Agustín Recién Puesto: Cuidados | {datos.NOMBRE}"
+DESCRIPCION = ("Protocolo de 20 días para pasto San Agustín recién instalado: cuánto regar cada día, señales de arraigo y "
+               "condiciones de la garantía. Síguelo paso a paso.")
+MIGAS = (("Inicio", "/"), ("Pasto en rollo", "/pasto-en-rollo-tampico"), ("Protocolo de cuidados", None))
+FASES = (
+    {"dias": "Días 1 – 7", "titulo": "Fase crítica de arraigo — la más importante", "items": (
+        "<strong>Riego abundante 2 veces al día:</strong> mañana (7–9am) y tarde (5–7pm). Riega hasta que el suelo esté húmedo a 5 cm de profundidad.",
+        "Aunque llueva, revisa que el suelo siga húmedo a 5 cm. Si no lo está, riega igual.",
+        "<strong>NO pisar el pasto</strong> bajo ninguna circunstancia — las raíces apenas están anclando.",
+        "<strong>NO podar ni cortar</strong> — el pasto necesita toda su energía para arraigar.",
+        "<strong>NO aplicar fertilizante</strong> — puede quemar las raíces nuevas.",
+        "<strong>NO aplicar herbicidas ni insecticidas</strong> sin consultarnos primero.")},
+    {"dias": "Días 8 – 14", "titulo": "Fase de consolidación", "items": (
+        "<strong>Riego abundante y diario</strong>, sin saltarte ningún día. De preferencia por la mañana, antes de las 10am.",
+        "Puedes verificar el arraigo: jala suavemente una esquina del pasto — si resiste y no se levanta, está pegando bien.",
+        "Si ves zonas más claras o amarillas, aumenta el riego en esa zona específica.",
+        "Sigue sin podar ni fertilizar.", "Evita pisoteo frecuente aunque ya haya arraigo parcial.")},
+    {"dias": "Días 15 – 20", "titulo": "Fase de establecimiento", "items": (
+        "<strong>Sigue con riego abundante y diario</strong> hasta el día 20. Es lo que asegura que el pasto termine de arraigar.",
+        "<strong>Primera poda</strong> cuando el pasto supere 8 cm de altura — no cortes más del 30% de la hoja en un solo corte.",
+        "Puedes aplicar fertilizante granulado ligero (triple 17 o similar) después del día 20.",
+        "El pasto ya puede pisarse con normalidad si el arraigo es completo.")},
+)
+# JSON-LD (SEO fase 0; la página no publicaba ninguno): la página, su ruta y el plan visible por etapas como HowTo. Todo
+# sale del contenido de la página: nada que no se lea en ella.
+JSONLD = {"@context": "https://schema.org", "@graph": [
+    {"@type": "WebPage", "@id": f"{URL}#pagina", "url": URL, "name": TITULO, "description": DESCRIPCION, "inLanguage": "es-MX",
+     "about": {"@id": f"{SITE}/#negocio"}},
+    {"@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": i, "name": nombre, "item": f"{SITE}{href}".rstrip("/") if href else URL}
+        for i, (nombre, href) in enumerate(MIGAS, 1)]},
+    howto("Cómo cuidar el pasto San Agustín recién instalado: protocolo de 20 días",
+          [(f"{f['dias']}: {f['titulo']}", " ".join(f["items"])) for f in FASES]),
+]}
 CONTENIDO = {
     "tipo": "posventa",
-    "meta": {"title": "Protocolo de Cuidados · Pasto San Agustín · Viveros Terra",
-             "description": "Protocolo completo para pasto San Agustín recién instalado: riego abundante y diario del día 1 al 20, señales de arraigo y condiciones de garantía. Viveros Terra Tampico.",
+    "meta": {"title": TITULO, "description": DESCRIPCION,
              "robots": "index, follow", "canonical": URL,
-             "og": (("og:title", "Protocolo de Cuidados Pasto San Agustín · Viveros Terra"),
-                    ("og:description", "Plan de riego y cuidados para pasto San Agustín recién instalado. Garantía de arraigo en 15 a 20 días. Viveros Terra Tampico."),
+             "og": (("og:title", TITULO), ("og:description", DESCRIPCION),
                     ("og:url", URL), ("og:type", "article"))},
-    "cabeza": {"migas": (("Inicio", "/"), ("Pasto en rollo", "/pasto-en-rollo-tampico"), ("Protocolo de cuidados", None)),
+    "cabeza": {"migas": MIGAS,
                "kicker": f"Protocolo de Cuidados · arraigo en {datos.ARRAIGO} · pasto desde {dinero(P['pasto_solo_m2'])}/m²",
                "h1": 'Cómo cuidar tu Pasto <span class="vt-serif">San Agustín paso a paso.</span>',
                "lede": ("Protocolo oficial de Viveros Terra para el cuidado del pasto San Agustín recién instalado. Riego, "
@@ -31,25 +65,7 @@ CONTENIDO = {
              "lede": (f"El pasto que instalamos fue <strong>cortado para tu pedido directamente del campo</strong>. Seguir este "
                       f"protocolo durante los primeros {datos.ARRAIGO} es lo que asegura que arraigue. <strong>Guarda este "
                       "documento.</strong>"),
-             "fases": (
-                 {"dias": "Días 1 – 7", "titulo": "Fase crítica de arraigo — la más importante", "items": (
-                     "<strong>Riego abundante 2 veces al día:</strong> mañana (7–9am) y tarde (5–7pm). Riega hasta que el suelo esté húmedo a 5 cm de profundidad.",
-                     "Aunque llueva, revisa que el suelo siga húmedo a 5 cm. Si no lo está, riega igual.",
-                     "<strong>NO pisar el pasto</strong> bajo ninguna circunstancia — las raíces apenas están anclando.",
-                     "<strong>NO podar ni cortar</strong> — el pasto necesita toda su energía para arraigar.",
-                     "<strong>NO aplicar fertilizante</strong> — puede quemar las raíces nuevas.",
-                     "<strong>NO aplicar herbicidas ni insecticidas</strong> sin consultarnos primero.")},
-                 {"dias": "Días 8 – 14", "titulo": "Fase de consolidación", "items": (
-                     "<strong>Riego abundante y diario</strong>, sin saltarte ningún día. De preferencia por la mañana, antes de las 10am.",
-                     "Puedes verificar el arraigo: jala suavemente una esquina del pasto — si resiste y no se levanta, está pegando bien.",
-                     "Si ves zonas más claras o amarillas, aumenta el riego en esa zona específica.",
-                     "Sigue sin podar ni fertilizar.", "Evita pisoteo frecuente aunque ya haya arraigo parcial.")},
-                 {"dias": "Días 15 – 20", "titulo": "Fase de establecimiento", "items": (
-                     "<strong>Sigue con riego abundante y diario</strong> hasta el día 20. Es lo que asegura que el pasto termine de arraigar.",
-                     "<strong>Primera poda</strong> cuando el pasto supere 8 cm de altura — no cortes más del 30% de la hoja en un solo corte.",
-                     "Puedes aplicar fertilizante granulado ligero (triple 17 o similar) después del día 20.",
-                     "El pasto ya puede pisarse con normalidad si el arraigo es completo.")},
-             )},
+             "fases": FASES},
     "senales": {"titulo": 'Señales <span class="vt-serif">a Identificar</span>', "items": (
         {"titulo": "Señales de buen arraigo", "items": (
             "Color verde intenso y parejo en toda el área", "Al jalar suavemente, el pasto resiste y no se levanta",
@@ -83,11 +99,12 @@ CONTENIDO = {
                "lede": (f"Mándanos foto de tu pasto por WhatsApp y te ayudamos con el diagnóstico y la solución. "
                         f"{datos.DOMICILIO_COMPLETO}."),
                "mensaje": MENSAJE},
-    "jsonld": (),
+    "jsonld": (JSONLD,),
 }
 PARIDAD = {
     "reemplazos": {"Protocolo de Cuidados": "Cómo cuidar tu Pasto San Agustín paso a paso."},
     "retirados": {},
     "jsonld": {},
+    "meta": seo.paridad(TITULO, DESCRIPCION),
     "meta_retirada": cu.META_AUTOR_RETIRADA,
 }

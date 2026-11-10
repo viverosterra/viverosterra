@@ -4,6 +4,7 @@ de formularios, cobro con tarjeta), sin nombrar al proveedor de la terminal: ver
 toca: lo revisa el abogado del dueño."""
 import datos
 import mensajes_paginas
+from contenido import seo
 
 SITE = datos.SITIO
 URL = f"{SITE}/politica-privacidad"
@@ -60,11 +61,14 @@ SECCIONES = (
               "Posesión de los Particulares (LFPDPPP), publicada el 5 de julio de 2010, y su Reglamento, así como por los "
               "lineamientos del INAI."),)},
 )
+# SEO fase 0 (mapa de palabras clave, 2026-11-10): noindex, follow y fuera del sitemap. Google la mostraba para «vivero
+# ciudad madero» con un domicilio viejo; un aviso legal no debe competir por consultas locales.
+TITULO = f"Aviso de Privacidad | {datos.NOMBRE}"
+DESCRIPCION = (f"Aviso de privacidad de {datos.NOMBRE}: qué datos personales recabamos, para qué los usamos y cómo "
+               "contactarnos para ejercer tus derechos.")
 CONTENIDO = {
     "tipo": "utilidad",
-    "meta": {"title": "Política de Privacidad · Viveros Terra Tampico",
-             "description": "Política de privacidad y aviso de tratamiento de datos personales de Viveros Terra, empresa de jardinería en Tampico, Cd. Madero y Altamira.",
-             "robots": "index, follow", "canonical": URL, "og": ()},
+    "meta": {"title": TITULO, "description": DESCRIPCION, "robots": "noindex, follow", "canonical": URL, "og": ()},
     "cabeza": {"migas": (("Inicio", "/"), ("Aviso de privacidad", None)), "kicker": "Aviso de Privacidad Integral",
                "h1": "Política de Privacidad", "lede": f"Última actualización: {ACTUALIZADO}."},
     "secciones": SECCIONES,
@@ -72,4 +76,7 @@ CONTENIDO = {
                "mensaje": mensajes_paginas.UTILITARIAS["privacidad"]},
     "jsonld": (),
 }
-PARIDAD = {"reemplazos": {}, "retirados": {}, "jsonld": {}}
+NOINDEX = ("SEO fase 0 (2026-11-10): noindex, follow. Google la mostraba para búsquedas locales del vivero; sigue enlazada "
+           "desde el pie y desde /politicas.")
+PARIDAD = {"reemplazos": {}, "retirados": {}, "jsonld": {},
+           "meta": seo.paridad(TITULO, DESCRIPCION, {"robots": ("noindex, follow", NOINDEX)}, claves=("title", "description"))}
