@@ -5,12 +5,21 @@
    tests/casos-materiales.json y la misma lógica en tools/site/componentes_materiales.py (paridad Python–JS). Los precios
    y los factores (camiones de tierra negra y saco de mármol incluidos) llegan en data-material, escrito desde datos.py:
    aquí no vive ningún precio. El botón es un enlace de WhatsApp con data-cta (terra.js lo mide como generate_lead y lo
-   firma al hacer clic); sin área válida manda el mensaje de la página (data-mensaje). Las funciones puras se exportan para node --test. */
+   firma al hacer clic); sin área válida manda el mensaje de la página (data-mensaje). Con área válida el botón presta su
+   enlace a la barra fija y al encabezado (window.VTBarra de terra.js, texto de data-vt-barra). Las funciones puras se
+   exportan para node --test. */
 (function (root) {
   'use strict';
   const AREA_MAXIMA = 100000;
   const CIERRE = '¿Me pueden dar precio de entrega a domicilio en Tampico, Madero o Altamira?';
   const COLONIA = 'Colonia de entrega: ___';
+  // Tierra negra (reescritura 15): el cálculo en un renglón, costales o a granel, la colonia y una pregunta corta.
+  const COSTALES_O_GRANEL = 'En costales o a granel: ___';
+  const CIERRE_TIERRA = '¿Me dan el total con entrega?';
+  // Con área válida el botón dice que manda el cálculo (componentes_materiales.CTA_CALCULO); un área escrita que no es un
+  // número mayor que 0 avisa bajo el campo (ERROR_AREA) sin borrar lo escrito.
+  const CTA_CALCULO = 'Enviar mi cálculo por WhatsApp';
+  const ERROR_AREA = 'Escribe el área en m², solo con números. Ejemplo: 30.';
   const dinero = (n) => '$' + Math.round(n).toLocaleString('es-MX');
   // "3750" → "3,750" y "1250.5" → "1,250.5": separa miles sin redondear los decimales (igual que miles() en Python).
   function miles(n) {
@@ -27,6 +36,10 @@
     const n = Number(t);
     return n > 0 && n <= AREA_MAXIMA ? n : 0;
   }
+
+  // Error solo si se escribió algo que no es un área válida (0, negativo, letras); el vacío no es error. Un área de más
+  // de AREA_MAXIMA tampoco se calcula y también se avisa.
+  const areaInvalida = (texto) => String(texto == null ? '' : texto).trim() !== '' && !leerArea(texto);
 
   const m3De = (area, capa) => Math.ceil(area * capa * 10) / 10;
 
@@ -74,7 +87,9 @@
         presentacion = r.tramo === 'costales' ? `${c} costales (${dinero(r.costales * cfg.precio_costal)})`
           : r.tramo === 'm3' ? `${m3} m³ suelto (~${dinero(r.m3 * cfg.precio_m3)})` : camionTierra(cfg, r.m3);
         if (r.tramo === 'costales') equivalente = `${c} costales`;
-        lineas = [`Área: ${a} m²`, `Capa: ${Math.round(capa * 100)} cm`, `Cantidad: ${m3} m³`];
+        return { cantidad: `${m3} m³`, presentacion, equivalente,
+          mensaje: [`Hola, quiero cotizar ${cfg.texto}.`, `Área: ${a} m², capa de ${Math.round(capa * 100)} cm = ${m3} m³ (cálculo de la web)`,
+            COSTALES_O_GRANEL, COLONIA, CIERRE_TIERRA].join('\n') };
       } else {
         presentacion = { costales: `${c} costales`, m3: `${m3} m³ suelto`, camion: 'Camión 14 m³',
           camiones: `${miles(r.camiones)} camiones 14 m³` }[r.tramo];
@@ -108,13 +123,31 @@
     const nombres = ['cantidad', 'presentacion', 'equivalente', 'total', 'peso'].filter((n) => salida(n));
     const vacio = Object.fromEntries(nombres.map((n) => [n, salida(n).textContent]));
     const nota = salida('nota');
+    const rotulo = salida('cta-texto');
+    const sinCalculo = rotulo ? rotulo.textContent : '';
+    const error = salida('error');
+    const clave = 'material:' + salida('cta').getAttribute('data-cta');
+    function prestar(href) {
+      const barra = root.VTBarra;
+      if (!barra || !caja.dataset.vtBarra) return;
+      if (href) barra.prestar(clave, href, caja.dataset.vtBarra);
+      else barra.soltar(clave);
+    }
+    function avisar(malo) {
+      if (malo) area.setAttribute('aria-invalid', 'true');
+      else area.removeAttribute('aria-invalid');
+      if (error) { error.textContent = malo ? ERROR_AREA : ''; error.hidden = !malo; }
+    }
     function actualizar() {
       const a = leerArea(area.value);
       salida('cantidad').parentElement.classList.toggle('is-vacio', !a);
+      avisar(!a && areaInvalida(area.value));
       if (!a) {
         nombres.forEach((n) => { salida(n).textContent = vacio[n]; });
         if (nota) nota.hidden = true;
         salida('cta').setAttribute('href', enlace(caja.dataset.wa, caja.dataset.mensaje));
+        if (rotulo) rotulo.textContent = sinCalculo;
+        prestar('');
         return;
       }
       const g = capa ? Number(capa.value) : 0;
@@ -123,13 +156,15 @@
       nombres.forEach((n) => { salida(n).textContent = t[n]; });
       if (nota) { nota.textContent = t.nota; nota.hidden = false; }
       salida('cta').setAttribute('href', enlace(caja.dataset.wa, t.mensaje));
+      if (rotulo) rotulo.textContent = CTA_CALCULO;
+      prestar(enlace(caja.dataset.wa, t.mensaje));
     }
     caja.addEventListener('input', actualizar);
     caja.addEventListener('change', actualizar);
     actualizar();
   }
 
-  const api = { leerArea, calcular, textos, enlace, miles, CIERRE, COLONIA };
+  const api = { leerArea, areaInvalida, calcular, textos, enlace, miles, CIERRE, COLONIA, CTA_CALCULO, ERROR_AREA };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
     return;

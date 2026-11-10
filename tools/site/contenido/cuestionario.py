@@ -36,7 +36,7 @@ PASO_1 = (
                       "patron": PATRON_WHATSAPP, "ayuda": "Escribe tu número de WhatsApp con lada, por ejemplo +52 833 000 0000"}), columnas=2),
     cu.fila(cu.campo({"label": "Correo electrónico", "name": "email", "tipo": "email", "placeholder": "correo@ejemplo.com",
                       "completar": "email"}),
-            cu.campo({"label": "¿Cómo nos conoció?", "name": "como_nos_conocio", "tipo": "lista",
+            cu.campo({"label": "¿Cómo nos conociste?", "name": "como_nos_conocio", "tipo": "lista",
                       "opciones": (("", "Seleccionar..."), (None, "Página web"), (None, "Instagram / Facebook"),
                                    (None, "Referido de un cliente"), (None, "Google"), (None, "Otro"))}), columnas=2),
     cu.campo({"label": "Colonia / Fraccionamiento", "name": "direccion", "tipo": "text",
@@ -56,32 +56,33 @@ PASO_2 = (
                       "placeholder": "Ej. 80", "min": "0", "paso": "any"}), columnas=3),
     cu.SUMA_AREAS,
     cu.fila(
-        _radios("¿Tiene riego instalado?", "riego_instalado",
+        _radios("¿Tienes riego instalado?", "riego_instalado",
                 (("Sí", "Sí"), ("No", "No", _riego), ("Parcial", "Parcial", _riego)),
-                sub=cu.condicional("cond-riego", _radios("¿Considera instalar riego?", "instalar_riego",
+                sub=cu.condicional("cond-riego", _radios("¿Piensas instalar riego?", "instalar_riego",
                                                           _iguales("Sí, de inmediato", "En un futuro", "No")))),
         _radios("¿Presurizador hidroneumático?", "hidroneumatico", _iguales("Sí", "No", "No sé")), columnas=2),
     cu.campo({"label": "Elementos existentes a considerar", "name": "elementos_existentes", "tipo": "area",
               "placeholder": "Bardas, árboles, construcciones, pendientes del terreno..."}),
 )
 PASO_3 = (
-    _casillas("¿Cómo usará principalmente el jardín?", "uso",
+    _casillas("¿Cómo vas a usar el jardín?", "uso",
               (("Convivencia familiar", "Convivencia"), ("Descanso", "Descanso"), ("Juego de niños", "Niños"),
                ("Mascotas", "Mascotas"), ("Asados / reuniones", "Asados"), ("Imagen / fachada", "Imagen"),
                ("Solo estético", "Estético"))),
-    _casillas("Estilo que le atrae", "estilo",
+    _casillas("Estilo que te atrae", "estilo",
               (("Tropical", "Tropical"), ("Minimalista", "Minimalista"), ("Mediterráneo", "Mediterráneo"),
                ("Japonés / zen", "Zen"), ("Colorido", "Colorido"), ("Natural", "Natural"),
                ("Sin preferencia", "Sin preferencia"))),
-    cu.fila(_radios("¿Prefiere árboles o palmas?", "arboles_palmas", _iguales("Árboles", "Palmas", "Ambos", "Ninguno")),
+    cu.fila(_radios("¿Prefieres árboles o palmas?", "arboles_palmas", _iguales("Árboles", "Palmas", "Ambos", "Ninguno")),
             _radios("Nivel de mantenimiento", "mantenimiento",
                     (("Bajo mantenimiento", "Fácil"), ("Moderado", "Moderado"), ("Me da igual", "Me da igual"))), columnas=2),
-    cu.campo({"label": "Plantas que le gustan o quiere incluir", "name": "plantas_preferencia", "tipo": "area",
+    cu.campo({"label": "Plantas que te gustan o quieres incluir", "name": "plantas_preferencia", "tipo": "area",
               "placeholder": "Ej. buganvilias, helechos, palmeras, cactus — cualquier planta que tenga en mente..."}),
     cu.fila(cu.campo({"label": "Elementos o plantas a conservar", "name": "conservar", "tipo": "area",
                       "placeholder": "Árboles existentes, macetas, fuentes, pérgolas..."}),
-            cu.campo({"label": "Fotos de referencia", "name": "referencias", "tipo": "area",
-                      "placeholder": "Link de Pinterest / Instagram o descripción de lo que le gustó..."}), columnas=2),
+            # Es una caja de texto: se pide la liga o la descripción; las fotos se mandan por WhatsApp.
+            cu.campo({"label": "Liga o descripción de fotos de referencia", "name": "referencias", "tipo": "area",
+                      "placeholder": "Liga de Pinterest o Instagram, o describe lo que te gustó. Las fotos de tu jardín nos las mandas por WhatsApp."}), columnas=2),
 )
 PRESUPUESTOS = (("$5,000–$15,000 MXN", "$5,000 – $15,000 MXN", "Proyecto básico con plantas y detalles"),
                 ("$15,000–$40,000 MXN", "$15,000 – $40,000 MXN", "Proyecto medio con plantas y piso"),
@@ -90,12 +91,12 @@ PRESUPUESTOS = (("$5,000–$15,000 MXN", "$5,000 – $15,000 MXN", "Proyecto bá
 PASO_4 = (
     cu.opciones({"legend": "Inversión aproximada", "tipo": "radio", "name": "presupuesto_ejecucion", "clase_grupo": "vt-pills vt-pills--tarjetas",
                  "items": tuple((v, f"<b>{m}</b><small>{d}</small>") for v, m, d in PRESUPUESTOS)}),
-    _radios("¿Cuándo le gustaría iniciar la ejecución?", "fecha_inicio",
+    _radios("¿Cuándo te gustaría empezar la obra?", "fecha_inicio",
             (("Lo antes posible", "Lo antes posible"), ("1–3 meses", "1–3 meses"), ("3–6 meses", "3–6 meses"),
              ("Más de 6 meses", "Más de 6 meses"), ("Solo el diseño por ahora", "Solo el diseño"))),
 )
 PASO_5 = (
-    _radios("¿Cuál es su mayor prioridad?", "prioridad",
+    _radios("¿Qué es lo más importante para ti?", "prioridad",
             _iguales("Que se vea increíble", "Que sea funcional", "Fácil de mantener", "Valor a la propiedad")),
     cu.campo({"label": "¿Algo más que debamos saber?", "name": "observaciones", "tipo": "area",
               "placeholder": "Ideas especiales, limitaciones del terreno, preguntas... todo suma para el diseño."}),
@@ -105,8 +106,12 @@ CONTENIDO = {
     "meta": {"title": "Cuestionario de Proyecto — Viveros Terra", "description": DESCRIPCION, "robots": "noindex, follow",
              "canonical": URL, "og": ()},
     "cabeza": {"kicker": "Diseño de jardines", "h1": 'Tu jardín empieza aquí. <span class="vt-serif">Cuéntanos tu visión.</span>',
-               "lede": f"Tómate 4 minutos para contarnos qué necesitas. Nuestro diseñador creará una propuesta hecha exactamente para ti; {datos.PROMESA.lower().replace('respondemos', 'te respondemos')}.",
-               "aviso": f"{datos.VISITA_COSTO_CORTO} · Diseño personalizado · 4-5 minutos",
+               # Reescritura 17 (Entrega B de experiencia): un solo tiempo estimado, coherente con los 5 pasos, y la visita con costo
+               # con la frase oficial (datos.VISITA_COSTO).
+               "lede": ("Son 5 pasos y toma de 4 a 5 minutos. Solo tu nombre y tu WhatsApp son obligatorios; lo demás nos ayuda "
+                        "a proponerte un diseño a tu medida. Al enviarlo te escribimos por WhatsApp "
+                        f"{datos.PROMESA.replace('Respondemos ', '')}."),
+               "aviso": datos.VISITA_COSTO_CORTO,
                "foto": {"src": "/img/diseno-jardin-instalacion-plantas-tampico.webp", "ancho": 787, "alto": 1400, "alt": ""}},
     "form": {"accion": componentes.FORMULARIO_ACCION, "cta": "cuestionario:formulario",
              "ocultos": (("_subject", "Nuevo cuestionario de jardín — Viveros Terra"), ("_next", componentes.FORMULARIO_GRACIAS),
@@ -116,7 +121,7 @@ CONTENIDO = {
                  {"corto": "Tu espacio", "titulo": "Tu espacio", "pista": "No te preocupes si no tienes las medidas exactas — las tomamos en la visita.", "controles": PASO_2},
                  {"corto": "Estilo", "titulo": "Tu estilo y gustos", "pista": "Entre más nos cuentes, más personalizado será tu diseño.", "controles": PASO_3},
                  {"corto": "Inversión", "titulo": "Inversión estimada", "pista": "Esta info es solo para proponer opciones reales — no te compromete a nada.", "controles": PASO_4},
-                 {"corto": "Final", "titulo": "¡Ya casi! Una última pregunta", "pista": "Esto nos ayuda a priorizar lo que más le importa en el diseño.", "controles": PASO_5},
+                 {"corto": "Final", "titulo": "¡Ya casi! Una última pregunta", "pista": "Esto nos ayuda a priorizar lo que más te importa en el diseño.", "controles": PASO_5},
              )},
     "fecha": "14 de mayo, 2026", "fecha_iso": "2026-05-14",
     "sin_js": {"texto": "Este cuestionario necesita JavaScript. Si no puedes activarlo, cuéntanos de tu jardín por WhatsApp.",
@@ -129,3 +134,5 @@ PARIDAD = {"reemplazos": {"Tu jardín empieza aquí": "Tu jardín empieza aquí.
                     "canonical": (URL, "Spec §3.5: el cuestionario lleva noindex, follow y canonical; no tenía canonical.")},
            "jsonld": {},
            "meta_retirada": cu.META_AUTOR_RETIRADA,}
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: un solo trato (tú), un solo tiempo estimado (5 pasos, 4 a 5 minutos), «Liga o descripción de fotos de referencia», botón «Enviar mis respuestas» y borrador en sessionStorage.'

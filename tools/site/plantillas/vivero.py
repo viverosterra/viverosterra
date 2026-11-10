@@ -20,7 +20,8 @@ def render(k):
         c.bloque(2, "Categorías", "vt-h-categorias", ca["titulo"], c.fichas(ca["items"]), lede=ca["lede"], tinte=True),
         c.bloque(3, "Visítanos", "vt-h-llegar", l["titulo"], _datos(l["datos"]), id_seccion="como-llegar"),
         c.bloque_dos(4, "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]), tinte=True),
-        c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo),
+        # Reescritura 10 (Entrega B de experiencia): el botón dice qué se pregunta.
+        c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo, texto="Preguntar si la tienen"),
     ]
     return base.documento(base.meta_de(k), "\n".join(bloques), jsonld_bloques=k["jsonld"],
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),), clase_body=CLASE_BODY)

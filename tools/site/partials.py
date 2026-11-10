@@ -21,12 +21,16 @@ MENU = (
      "items": (("Instalado en Tampico", "/pasto-sintetico-tampico"),
                ("Tienda con envío a todo México", "/pasto-sintetico"),
                ("Para perros", "/pasto-sintetico/perros"))},
-    {"id": "jardin", "texto": "Jardín", "href": None,
+    # En celular, "Servicios de jardín" (reescritura 19); en escritorio no cabe y se queda "Jardín" (medido a 1100 px).
+    {"id": "jardin", "texto": "Jardín", "texto_movil": "Servicios de jardín", "href": None,
      "nota": f"desde ${P['mantenimiento_mes']}/mes",
      "items": (("Diseño de jardines", "/diseno-jardines-tampico"),
                ("Mantenimiento", "/mantenimiento-jardines-tampico"),
                ("Riego automático", "/sistema-riego-tampico"))},
-    {"id": "plantas", "texto": "Plantas y palmas", "href": "/plantas-palmas-arboles-tampico",
+    # Entrega B de experiencia: tierra, tezontle, mármol y piedra ya no viven en un grupo que solo dice "palmas". Un grupo
+    # "Materiales" propio no cabe en el menú de escritorio de 6 entradas a 1100 px (quedan ~39 px libres): el grupo se
+    # renombra "Plantas y materiales".
+    {"id": "plantas", "texto": "Plantas y materiales", "href": "/plantas-palmas-arboles-tampico",
      "nota": f"{datos.VARIEDADES} variedades",
      "items": (("Todo el vivero", "/plantas-palmas-arboles-tampico"),
                ("Palmas", "/palmas-tropicales-tampico"),
@@ -45,7 +49,14 @@ MENU = (
      "items": (("Mayoreo de pasto", "/mayoreo-pasto-tampico"),
                ("Palmas para proyectos", "/palmas-mayoreo-proyectos"),
                ("Mantenimiento de áreas verdes", "/mantenimiento-jardines-tampico"))},
-    {"id": "precios", "texto": "Precios", "href": "/precios", "nota": "", "items": ()},
+    # En escritorio, "Precios" abre además un panel con el vivero (dirección y horario) y el blog; en celular son dos
+    # entradas propias (MENU_MOVIL_EXTRA). Entrega B de experiencia: antes el menú no llevaba al vivero ni al blog.
+    {"id": "precios", "texto": "Precios", "href": "/precios", "nota": "", "items": (),
+     "items_escritorio": (("Lista de precios", "/precios"), ("Vivero y horario", "/vivero-tampico"), ("Blog", "/blog"))},
+)
+MENU_MOVIL_EXTRA = (
+    {"id": "vivero", "texto": "Vivero y horario", "href": "/vivero-tampico", "nota": "Cd. Madero", "items": ()},
+    {"id": "blog", "texto": "Blog", "href": "/blog", "nota": "guías", "items": ()},
 )
 
 SPRITE = """<svg class="vt-sprite" width="0" height="0" aria-hidden="true" focusable="false">
@@ -131,6 +142,7 @@ def _enlace(texto, href, ruta):
 
 def _item_escritorio(item, ctx):
     clase = "vt-nav__item is-activo" if item["id"] == ctx["activo"] else "vt-nav__item"
+    item = dict(item, items=item.get("items_escritorio") or item["items"])
     if not item["items"]:
         actual = ' aria-current="page"' if item["href"] == ctx["ruta"] else ""
         return f'<li class="{clase}"><a class="vt-nav__top" href="{item["href"]}"{actual}>{esc(item["texto"])}</a></li>'
@@ -149,13 +161,14 @@ def _item_escritorio(item, ctx):
 def _item_movil(item, ctx):
     # "Precios" va sin nota (SEO fase 0, 2026-11-10: decía "con IVA", que cubría también el pasto sin instalar).
     nota = f'<small>{esc(item["nota"])}</small>' if item["nota"] else ""
+    texto = item.get("texto_movil", item["texto"])
     if not item["items"]:
         actual = ' aria-current="page"' if item["href"] == ctx["ruta"] else ""
-        return f'<a class="vt-mmenu__link" href="{item["href"]}"{actual}>{esc(item["texto"])}{nota}</a>'
+        return f'<a class="vt-mmenu__link" href="{item["href"]}"{actual}>{esc(texto)}{nota}</a>'
     abierto = " open" if item["id"] == ctx["activo"] else ""
     enlaces = "".join(_enlace(t, h, ctx["ruta"]) for t, h in item["items"])
     fin = f'<span class="vt-acc__fin">{nota}{CHEV}</span>'
-    return f'<details class="vt-acc"{abierto}><summary>{esc(item["texto"])}{fin}</summary><ul>{enlaces}</ul></details>'
+    return f'<details class="vt-acc"{abierto}><summary>{esc(texto)}{fin}</summary><ul>{enlaces}</ul></details>'
 
 
 def header(ctx):
@@ -163,7 +176,7 @@ def header(ctx):
     tipo = ctx["tipo"]
     wa = esc(datos.wa_url(ctx["mensaje"]))
     escritorio = "\n".join(_item_escritorio(item, ctx) for item in MENU)
-    movil = "\n".join(_item_movil(item, ctx) for item in MENU)
+    movil = "\n".join(_item_movil(item, ctx) for item in MENU + MENU_MOVIL_EXTRA)
     cuerpo = f"""<a class="vt-skip" href="#main">Saltar al contenido</a>
 {SPRITE}
 <header class="vt-head" data-vt-tipo="{tipo}" data-vt-servicio="{ctx['servicio']}">

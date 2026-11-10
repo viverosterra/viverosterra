@@ -4,8 +4,9 @@
    vive ningún precio. Las mensualidades salen de vt-mensualidades.js (window.VTMensualidades), nunca de una fórmula
    propia. Mismo cálculo que componentes.calculo_medidor / textos_medidor (paridad en tests/casos-medidor.json).
    El número de WhatsApp y el mensaje genérico de la página también llegan del HTML (data-wa y data-mensaje en
-   [data-vt-medidor]). Donde el botón trae data-vt-o="cta-texto" (la home), con medida válida dice "Enviar mi medida
-   por WhatsApp". Las funciones puras se exportan para node --test. */
+   [data-vt-medidor]). Con medida válida el botón dice "Enviar mi medida por WhatsApp" y presta su enlace a la barra fija
+   y al encabezado (window.VTBarra de terra.js, con el texto de data-vt-barra); con una entrada inválida (0, negativos o
+   letras) avisa junto a los campos sin borrar lo escrito. Las funciones puras se exportan para node --test. */
 (function (root) {
   'use strict';
   const PLANO = { ancho: 360, alto: 190, x: 44, y: 56, minimo: 24 };
@@ -117,6 +118,9 @@
 
   // Mismos textos que componentes.VACIO_MEDIDOR: sin medida, la etiqueta queda igual que en el HTML.
   const VACIO = { medida: 'Escribe tus medidas', monto: '—', calc: 'Escribe el largo y el ancho de tu patio.' };
+  // Mismo texto que componentes.ERROR_MEDIDOR: un lado escrito que no es un número mayor que 0 (0, negativo o letras).
+  const ERROR = 'Escribe el largo y el ancho en metros, solo con números. Ejemplo: 8 y 6.';
+  const invalido = (valor) => String(valor == null ? '' : valor).trim() !== '' && !numero(valor) && !grande(valor);
 
   function iniciar(caja, M) {
     const campo = (nombre) => caja.querySelector(`[data-vt-campo="${nombre}"]`);
@@ -125,22 +129,36 @@
     const modos = leerModos(caja);
     const wa = caja.dataset.wa;
     const plazos = Array.from(caja.querySelectorAll('input[type="radio"][name$="-plazo"]'));
-    // Solo donde la página lo pide (data-vt-o="cta-texto"): el botón dice que manda la medida cuando ya hay una.
+    // Con una entrada inválida el plano vuelve al ejemplo de los placeholders (no se queda con la medida anterior).
+    const PLANO_VACIO = { largo: numero(campo('largo').placeholder) || 8, ancho: numero(campo('ancho').placeholder) || 6 };
+    // El botón dice que manda la medida cuando ya hay una (data-vt-o="cta-texto").
     const rotuloCta = salida('cta-texto');
     const ctaSinMedida = rotuloCta ? rotuloCta.textContent : '';
     const rotular = (texto) => { if (rotuloCta) rotuloCta.textContent = texto; };
-    // Opcionales de la home: renglón de resultado bajo las medidas, garantía (solo en modo instalado) y la barra fija
-    // de celular, que con medida válida manda la misma medida (su texto llega en data-vt-barra) y sin ella vuelve a
-    // su enlace y texto de origen. El clic lo sigue midiendo terra.js con el data-cta de la barra.
+    // Opcionales de la home: renglón de resultado bajo las medidas y garantía (solo en modo instalado). Con medida válida
+    // la barra fija y el encabezado mandan la misma medida (su texto llega en data-vt-barra) y sin ella vuelven a su
+    // enlace y texto de origen. El clic lo sigue midiendo terra.js con el data-cta de la barra o del encabezado.
     const vivo = salida('vivo');
     const garantia = salida('garantia');
-    const enBarra = caja.dataset.vtBarra ? document.querySelector('[data-vt-bar] .vt-bar__go') : null;
-    const rotuloBarra = enBarra && enBarra.lastChild && enBarra.lastChild.nodeType === 3 ? enBarra.lastChild : null;
-    const barraDeOrigen = enBarra ? { href: enBarra.getAttribute('href'), texto: rotuloBarra ? rotuloBarra.nodeValue : '' } : null;
+    const clave = 'medidor:' + (caja.id || salida('cta').getAttribute('data-cta'));
     function prestarABarra(href) {
-      if (!enBarra) return;
-      enBarra.setAttribute('href', href || barraDeOrigen.href);
-      if (rotuloBarra) rotuloBarra.nodeValue = href ? caja.dataset.vtBarra : barraDeOrigen.texto;
+      const barra = root.VTBarra;
+      if (!barra || !caja.dataset.vtBarra) return;
+      if (href) barra.prestar(clave, href, caja.dataset.vtBarra, caja.dataset.vtBarraCorto);
+      else barra.soltar(clave);
+    }
+    // Aviso de entrada inválida: el texto escrito se queda; el campo se marca con aria-invalid.
+    const error = salida('error');
+    function marcarInvalidos() {
+      let alguno = false;
+      ['largo', 'ancho'].forEach((n) => {
+        const malo = invalido(campo(n).value);
+        alguno = alguno || malo;
+        if (malo) campo(n).setAttribute('aria-invalid', 'true');
+        else campo(n).removeAttribute('aria-invalid');
+      });
+      if (error) { error.textContent = alguno ? ERROR : ''; error.hidden = !alguno; }
+      return alguno;
     }
     const ivaJuntoAlMonto = salida('iva');
     const extras = (texto, modo) => {
@@ -181,12 +199,19 @@
       const elegido = caja.querySelector('input[name$="-modo"]:checked');
       if (elegido) salida('rotulo').textContent = modos[elegido.value].rotulo;
       if (grande(campo('largo').value) || grande(campo('ancho').value)) {
+        marcarInvalidos();
         vacio('Cada lado debe medir menos de 1,000 m.', caja.dataset.mensajeMayoreo,
           'Para áreas tan grandes, escríbenos: lo cotizamos como proyecto de mayoreo.');
         return;
       }
+      const malos = marcarInvalidos();
       const largo = numero(campo('largo').value);
       const ancho = numero(campo('ancho').value);
+      if (malos) {
+        vacio(VACIO.calc, caja.dataset.mensaje, '');
+        dibujar(svg, PLANO_VACIO.largo, PLANO_VACIO.ancho, PLANO_VACIO.largo * PLANO_VACIO.ancho);
+        return;
+      }
       if (!largo || !ancho || !elegido) { vacio(VACIO.calc, caja.dataset.mensaje, ''); return; }
       const r = calcular(largo, ancho, elegido.value, modos);
       marcarPlazos(r.total);
@@ -212,7 +237,7 @@
     actualizar();
   }
 
-  const api = { numero, grande, calcular, textos, plano, enlace };
+  const api = { numero, grande, invalido, calcular, textos, plano, enlace, ERROR };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
     return;

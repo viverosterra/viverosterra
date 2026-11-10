@@ -33,7 +33,7 @@ def render(k):
               f'{c.enlaces_portada((), tipo)}</div></section>')
     rejilla = (f'<section class="vt-bloque vt-cat__rejilla" aria-labelledby="vt-h-rejilla"><div class="vt-wrap">'
                f'<h2 id="vt-h-rejilla" class="vt-sr">{k["rejilla"]["titulo"]}</h2>'
-               f'{cp.filtros_catalogo(len(cd.ESPECIES))}{cp.rejilla_catalogo(tipo=tipo)}</div></section>')
+               f'{cp.filtros_catalogo(len(cd.ESPECIES))}{cp.rejilla_catalogo(tipo=tipo, mensaje=ca["mensaje"])}</div></section>')
     p = k["pedido"]
     pedido = c.bloque(1, "¿No está?", "vt-h-pedido", p["titulo"], cp.pedido_especial(tipo), lede=p["lede"], tinte=True)
     r = k["relacionados"]
@@ -50,5 +50,5 @@ def render(k):
               "numberOfItems": len(elementos), "itemListElement": elementos}, j["migas"]]
     return base.documento(base.meta_de(k), "\n".join((cabeza, rejilla, pedido, otras, garantia)),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},), head_extra=(datos_js(),),
-                          tras_main=cp.lista_catalogo(tipo), scripts=("/js/vt-catalogo.js",),
+                          tras_main=cp.lista_catalogo(tipo, ca["mensaje"]), scripts=("/js/vt-catalogo.js",),
                           clase_body="vt-pagina vt-plantas")

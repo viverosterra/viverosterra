@@ -75,8 +75,12 @@ CTA_WA = "Cotizar por WhatsApp"
 # Única variante, solo en el botón del Medidor cuando ya hay una medida válida (spec del hero, 2026-11-09, §4). El mismo
 # texto vive en public/js/vt-medidor.js (paridad en tests/test_medidor_paridad.py).
 CTA_MEDIDA = "Enviar mi medida por WhatsApp"
-# En la home, con medida válida la barra fija de celular manda la misma medida (vt-medidor.js lee el texto de data-vt-barra).
+# Con medida válida la barra fija de celular y el encabezado mandan la misma medida (vt-medidor.js lee el texto de
+# data-vt-barra; en la home desde la revisión del hero, en todos los medidores desde la Entrega B de experiencia).
 CTA_MEDIDA_BARRA = "Enviar mi medida"
+# Aviso del Medidor con un lado escrito que no es un número mayor que 0 (reescritura 2 del informe de recorrido). El mismo
+# texto vive en public/js/vt-medidor.js (paridad en tests/test_medidor_paridad.py).
+ERROR_MEDIDOR = "Escribe el largo y el ancho en metros, solo con números. Ejemplo: 8 y 6."
 # Condiciones de la garantía de arraigo del pasto: el protocolo de cuidados (la página no tiene un id en esa sección).
 CONDICIONES_PASTO = "/protocolo-cuidados-pasto-san-agustin#garantia"  # sección de condiciones (plantillas/protocolo.py)
 
@@ -117,13 +121,33 @@ def boton_mapas(cta):
             f'rel="noopener">Cómo llegar</a>')
 
 
-def fila_cta(mensaje, tipo, seccion, hero=False, extra=""):
+def fila_cta(mensaje, tipo, seccion, hero=False, extra="", texto=CTA_WA):
     """WhatsApp + extra (otro botón, opcional) + teléfono + promesa única. Con hero=True, terra.js oculta la barra móvil
-    mientras se ve."""
+    mientras se ve. texto: el del botón de WhatsApp (dice qué se pide: Entrega B de experiencia)."""
     cta = f"{tipo}:{seccion}"
     marca = " data-hero-cta" if hero else ""
-    return (f'<div class="vt-cta"{marca}>{boton_wa(mensaje, cta)}{extra}{boton_tel(cta)}</div>'
+    return (f'<div class="vt-cta"{marca}>{boton_wa(mensaje, cta, texto)}{extra}{boton_tel(cta)}</div>'
             f'<p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p>')
+
+
+def fila_seccion(mensaje, tipo, seccion, texto, contexto=False):
+    """CTA de WhatsApp al final de una sección larga (Entrega B de experiencia: ningún tramo de más de 6 pantallas del
+    celular sin un CTA en línea), como las filas de la home: un solo botón con texto propio y la promesa. data-hero-cta:
+    la barra fija se esconde mientras se ve, para no mostrar dos botones iguales. contexto=True (tienda): tienda-pasto.js
+    le pone el mensaje con lo que el cliente ya eligió (data-vt-ctx)."""
+    marca = " data-vt-ctx" if contexto else ""
+    return (f'<div class="vt-cta vt-mt" data-hero-cta{marca}>{boton_wa(mensaje, f"{tipo}:{seccion}", texto)}</div>'
+            f'<p class="vt-promesa">{promesa_horario()}</p>')
+
+
+def prueba_cta(opiniones=(), dato=""):
+    """Prueba social junto a un CTA (Entrega B de experiencia): solo datos ya publicados en datos.py. Opiniones reales
+    del mismo tema (si las hay), la calificación de Google con el enlace a las reseñas y, opcional, una cifra propia."""
+    nota, _, resenas = datos.GOOGLE.partition(" ")
+    partes = [f"<b>{esc(nota)}</b> {esc(resenas)}"] + ([dato] if dato else [])
+    linea = (f'<p class="vt-promesa">{" · ".join(partes)} · <a href="{esc(datos.MAPS_URL)}" target="_blank" '
+             'rel="noopener">Ver las reseñas en Google</a></p>')
+    return (testimonios(opiniones) if opiniones else "") + linea
 
 
 # ---------- estructura ----------
@@ -376,7 +400,8 @@ def opciones(items, tipo):
     """Formas de contratar o planes (máx. 3, spec §3.3), cada uno con su propio mensaje de WhatsApp (data-cta
     <tipo>:opcion-<n>). items: rotulo, titulo, puntos, mensaje y, opcionales, precio (número) con unidad y detalle,
     desde (False para un precio cerrado), mensualidad (True: línea con el plazo más largo), precio_texto (en vez de
-    precio: "Por cotización"), nota y rec (recomendado)."""
+    precio: "Por cotización"), nota, rec (recomendado) y cta (texto del botón: dice qué se pide; dos opciones no
+    pueden decir lo mismo, Entrega B de experiencia)."""
     if len(items) > 3:
         raise ValueError("máximo 3 opciones por página (spec §3.3)")
     filas = []
@@ -386,7 +411,10 @@ def opciones(items, tipo):
         nota_html = f'<p class="vt-promesa">{o["nota"]}</p>' if o.get("nota") else ""
         filas.append(f'<li class="{clase}"><p class="vt-modo__n">{o["rotulo"]}</p><h3>{o["titulo"]}</h3>'
                      f'{_precio_opcion(o)}<ul class="vt-checks">{puntos}</ul>{nota_html}'
-                     f'{boton_wa(o["mensaje"], f"{tipo}:opcion-{i}")}</li>')
+                     f'{boton_wa(o["mensaje"], f"{tipo}:opcion-{i}", o.get("cta", CTA_WA))}</li>')
+    textos = [o.get("cta", CTA_WA) for o in items]
+    if len(items) > 1 and len(set(textos)) != len(textos):
+        raise ValueError(f"opciones contiguas con el mismo texto de botón: {textos} (cada una dice qué se pide)")
     return f'<ul class="vt-modos">{"".join(filas)}</ul>'
 
 
@@ -446,7 +474,7 @@ def howto(nombre, items):
 
 def garantia(g):
     """g: titulo, id_titulo, numero, rotulo, resumen, puntos (texto, si_aplica), pie y, opcionales, grande y unidad (la
-    cifra de la garantía; riego no tiene un plazo y la omite)."""
+    cifra de la garantía; riego no tiene un plazo y la omite) y cta_html (fila de CTA bajo el pie)."""
     no_aplica = ' class="vt-checks__no"'
     cifra = f'<p class="vt-grande">{g["grande"]}<small> {g["unidad"]}</small></p>' if g.get("grande") else ""
     puntos = "".join(f'<li{"" if ok else no_aplica}><span>{t}</span></li>' for t, ok in g["puntos"])
@@ -455,7 +483,7 @@ def garantia(g):
             f'<div><p class="vt-bloque__no"><b>{g["numero"]:02d}</b>{g["rotulo"]}</p><h2 id="{ident}">'
             f'{g["titulo"]}</h2>{cifra}'
             f'<p class="vt-promesa">{g["resumen"]}</p></div><div><ul class="vt-checks">{puntos}</ul>'
-            f'<p class="vt-promesa">{g["pie"]}</p></div></div></section>')
+            f'<p class="vt-promesa">{g["pie"]}</p>{g.get("cta_html", "")}</div></div></section>')
 
 
 def faq(preguntas):
@@ -474,10 +502,10 @@ def faq_jsonld(preguntas, speakable=None):
     return nodo
 
 
-def cierre(titulo, lede, mensaje, tipo):
-    """CTA final en verde profundo, con el mensaje que se abre a la vista."""
+def cierre(titulo, lede, mensaje, tipo, texto=CTA_WA):
+    """CTA final en verde profundo, con el mensaje que se abre a la vista. texto: el del botón (dice qué se pide)."""
     return (f'<section class="vt-cierre" aria-labelledby="vt-cierre-titulo"><div class="vt-wrap vt-cierre__grid"><div>'
-            f'<h2 id="vt-cierre-titulo">{titulo}</h2><p class="vt-lede">{lede}</p>{fila_cta(mensaje, tipo, "cierre")}</div>'
+            f'<h2 id="vt-cierre-titulo">{titulo}</h2><p class="vt-lede">{lede}</p>{fila_cta(mensaje, tipo, "cierre", texto=texto)}</div>'
             f'<p class="vt-cierre__msg"><b>El mensaje que se abre</b>{esc(datos.con_firma(mensaje))}</p></div></section>')
 
 
@@ -635,13 +663,14 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None, bot
     escriba, la etiqueta no muestra un estimado ajeno y el botón manda el mensaje genérico de la página (data-mensaje,
     con firma). vt-medidor.js calcula con los data-* de cada opción: los precios no viven en el JS. data-hero-cta: la
     barra móvil se esconde mientras el Medidor está a la vista, para que su CTA no compita. Con boton_medida=True (la
-    home) solo el botón esconde la barra y su texto va en un <span> que vt-medidor.js cambia a CTA_MEDIDA cuando hay una
-    medida válida, y la barra móvil toma ese enlace con el texto de data-vt-barra. Con garantia=True, la garantía de
+    home) solo el botón esconde la barra. En todos, el texto del botón va en un <span> que vt-medidor.js cambia a
+    CTA_MEDIDA cuando hay una medida válida, y la barra móvil y el encabezado toman ese enlace con el texto de
+    data-vt-barra; con un lado inválido, el aviso ERROR_MEDIDOR sale bajo los campos. Con garantia=True, la garantía de
     arraigo va bajo el botón, con su enlace a condiciones (vt-medidor.js la esconde fuera del modo instalado). Con
     resultado_vivo=True, un renglón bajo Largo × Ancho repite el resultado (textos_medidor["vivo"])."""
     marca_caja, marca_boton = ("", " data-hero-cta") if boton_medida else (" data-hero-cta", "")
-    marca_caja += f' data-vt-barra="{esc(CTA_MEDIDA_BARRA)}"' if boton_medida else ""
-    texto_boton = f'<span data-vt-o="cta-texto">{CTA_WA}</span>' if boton_medida else CTA_WA
+    marca_caja += f' data-vt-barra="{esc(CTA_MEDIDA_BARRA)}"'
+    texto_boton = f'<span data-vt-o="cta-texto">{CTA_WA}</span>'
     pie = f'<p class="vt-medidor__garantia" data-vt-o="garantia">{garantia_pasto()}</p>' if garantia else ""
     vivo = '<p class="vt-medidor__vivo" data-vt-o="vivo"></p>' if resultado_vivo else ""
     generico = datos.con_firma(mensaje or datos.MENSAJES["general"])
@@ -649,14 +678,16 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None, bot
     opciones = "".join(_opcion_medidor(prefijo, k, m, modo) for k, m in MODOS_MEDIDOR.items())
     plazos = "".join(_opcion_plazo(prefijo, p) for p in (1,) + tuple(mensualidades.PLAZOS))
     campo = ('<div class="vt-campo"><label for="{p}-{n}">{t}</label><div class="vt-control"><input id="{p}-{n}" '
-             'data-vt-campo="{n}" inputmode="decimal" placeholder="{v}" autocomplete="off"><span>m</span></div></div>')
+             'data-vt-campo="{n}" inputmode="decimal" placeholder="{v}" autocomplete="off" aria-describedby="{p}-error">'
+             '<span>m</span></div></div>')
     return (
         f'<div class="vt-medidor" data-vt-medidor{marca_caja} data-wa="{esc(datos.TELEFONO_WA)}" '
         f'data-mensaje="{esc(generico)}" data-mensaje-mayoreo="{esc(mayoreo)}">'
         f'<div class="vt-medidor__form" role="group" aria-label="Medidor de pasto">'
         f'<div class="vt-medidor__medidas">{campo.format(p=prefijo, n="largo", t="Largo", v=largo)}'
         f'<span class="vt-medidor__x" aria-hidden="true">×</span>{campo.format(p=prefijo, n="ancho", t="Ancho", v=ancho)}'
-        f'</div>{vivo}<fieldset class="vt-opciones"><legend>¿Qué necesitas?</legend>{opciones}</fieldset>'
+        f'</div><p class="vt-correo__error" id="{prefijo}-error" data-vt-o="error" hidden></p>{vivo}'
+        f'<fieldset class="vt-opciones"><legend>¿Qué necesitas?</legend>{opciones}</fieldset>'
         f'<div class="vt-campo"><label for="{prefijo}-colonia">Colonia (opcional)</label><div class="vt-control">'
         f'<input type="text" id="{prefijo}-colonia" data-vt-campo="colonia" placeholder="Ej. Lomas de Rosales" '
         f'autocomplete="off"></div></div></div>'
@@ -771,13 +802,15 @@ def resumen_palmas(filas):
     return f"{especies} · {piezas:,} piezas" if piezas else f"{especies} · cantidad por definir"
 
 
-def _campo(ident, campo, etiqueta, placeholder, unidad="", modo=None):
-    """Campo con su label visible; modo="decimal" o "numeric" pone el teclado numérico."""
+def _campo(ident, campo, etiqueta, placeholder, unidad="", modo=None, error=None):
+    """Campo con su label visible; modo="decimal" o "numeric" pone el teclado numérico. error: id del aviso que lo
+    describe (aria-describedby)."""
     teclado = f' inputmode="{modo}"' if modo else ' type="text"'
     sufijo = f"<span>{unidad}</span>" if unidad else ""
+    describe = f' aria-describedby="{esc(error)}"' if error else ""
     return (f'<div class="vt-campo"><label for="{esc(ident)}">{etiqueta}</label><div class="vt-control"><input '
             f'id="{esc(ident)}" data-vt-campo="{esc(campo)}"{teclado} placeholder="{esc(placeholder)}" '
-            f'autocomplete="off">{sufijo}</div></div>')
+            f'autocomplete="off"{describe}>{sufijo}</div></div>')
 
 
 def _datos_obra(prefijo):
@@ -787,9 +820,16 @@ def _datos_obra(prefijo):
 
 
 def _boton_cta(tipo, seccion, mensaje):
+    """Botón de los cotizadores de empresas: su texto va en un <span> que vt-b2b.js cambia con un resultado válido."""
     return (f'<a class="vt-btn vt-btn--wa" data-cta="{esc(tipo)}:{seccion}" data-vt-o="cta" '
-            f'href="{esc(datos.wa_url(mensaje))}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp'
-            '<span class="vt-flecha" aria-hidden="true">→</span></a>')
+            f'href="{esc(datos.wa_url(mensaje))}" target="_blank" rel="noopener">{WA_GLIFO}'
+            f'<span data-vt-o="cta-texto">{CTA_WA}</span><span class="vt-flecha" aria-hidden="true">→</span></a>')
+
+
+# Con resultado válido, los cotizadores de empresas prestan su enlace a la barra fija y al encabezado (Entrega B de
+# experiencia): botón y barra dicen qué se manda. Los mismos textos viven en public/js/vt-b2b.js.
+CTA_VOLUMEN = ("Enviar mi cálculo por WhatsApp", "Enviar mi cálculo")
+CTA_PALMAS = ("Cotizar mis palmas por WhatsApp", "Cotizar mis palmas")
 
 
 def cotizador_volumen(prefijo, tipo, mensaje):
@@ -800,6 +840,7 @@ def cotizador_volumen(prefijo, tipo, mensaje):
     modos = {k: {kk: v for kk, v in MODOS_MEDIDOR[k].items() if kk != "opcion"} for k in ("mayoreo", "solo")}
     return (
         f'<div class="vt-b2b" data-vt-volumen data-hero-cta data-wa="{esc(datos.TELEFONO_WA)}" '
+        f'data-vt-cta="{esc(CTA_VOLUMEN[0])}" data-vt-barra="{esc(CTA_VOLUMEN[1])}" '
         f'data-mensaje="{esc(generico)}" data-modos="{esc(json.dumps(modos, ensure_ascii=False, separators=(",", ":")))}">'
         '<div class="vt-b2b__form" role="group" aria-label="Cotizador de pasto por volumen">'
         f'{_campo(f"{prefijo}-m2", "m2", "m² totales de la obra", "Ej. 1,200", "m²", "decimal")}{_datos_obra(prefijo)}'
@@ -831,6 +872,7 @@ def armador_palmas(prefijo, tipo, mensaje, especies=datos.PALMAS_PROYECTO):
     filas = "".join(_fila_palma(prefijo, n, especies) for n in range(1, FILAS_PALMAS + 1))
     return (
         f'<div class="vt-b2b" data-vt-palmas data-hero-cta data-wa="{esc(datos.TELEFONO_WA)}" '
+        f'data-vt-cta="{esc(CTA_PALMAS[0])}" data-vt-barra="{esc(CTA_PALMAS[1])}" '
         f'data-mensaje="{esc(generico)}">'
         '<div class="vt-b2b__form" role="group" aria-label="Lista de palmas para cotizar">'
         f'<ol class="vt-b2b__filas" data-vt-filas>{filas}</ol>'

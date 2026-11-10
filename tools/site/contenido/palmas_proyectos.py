@@ -159,20 +159,20 @@ FIGURAS = (
 )
 
 PAQUETES = (
-    {"rotulo": "Paquete 1 · Fraccionamientos", "titulo": "Áreas comunes, camellones y casa muestra",
+    {"cta": "Cotizar para un fraccionamiento", "rotulo": "Paquete 1 · Fraccionamientos", "titulo": "Áreas comunes, camellones y casa muestra",
      "precio_texto": SEGUN_ALTURA,
      "puntos": ("Washingtonia y areca para accesos y camellones", "Entregas por etapas: la casa muestra primero",
                 "Siembra con nuestra cuadrilla y garantía de 30 días con el riego indicado"),
      "mensaje": ("Hola, quiero cotizar palmas para un fraccionamiento.\nEmpresa: ___\n"
                  "Áreas (accesos, camellones, casa muestra): ___\nEspecies y cantidad: ___\nUbicación: ___\n"
                  "Fecha de entrega: ___")},
-    {"rotulo": "Paquete 2 · Hoteles y comercios", "titulo": "Palmas de imagen para hoteles y comercios",
+    {"cta": "Cotizar para hotel o comercio", "rotulo": "Paquete 2 · Hoteles y comercios", "titulo": "Palmas de imagen para hoteles y comercios",
      "precio_texto": SEGUN_ALTURA,
      "puntos": ("Palma real, coco plumoso y areca", "Especies para el clima de la costa del Golfo",
                 'Diseño del área con el <a href="/diseno-jardines-tampico">Plan Terra</a>, si lo necesitas'),
      "mensaje": ("Hola, quiero cotizar palmas para un hotel o comercio.\nEmpresa: ___\nEspecies y cantidad: ___\n"
                  "Altura aprox.: ___\nUbicación: ___\nFecha de entrega: ___")},
-    {"rotulo": "Paquete 3 · Industria y gobierno", "titulo": "Perímetros y áreas públicas de bajo mantenimiento",
+    {"cta": "Cotizar para industria o gobierno", "rotulo": "Paquete 3 · Industria y gobierno", "titulo": "Perímetros y áreas públicas de bajo mantenimiento",
      "precio_texto": SEGUN_ALTURA,
      "puntos": ("Washingtonia y cycas para perímetros", f"REPSE {datos.REPSE} y factura {datos.FACTURA}",
                 '<a href="/mantenimiento-jardines-tampico">Mantenimiento</a> después de la entrega'),
@@ -235,7 +235,7 @@ CONTENIDO = {
         "cotizador": "palmas",
     },
     "formulario": {
-        "titulo": "¿Compras prefiere correo? Manda tu lista de palmas",
+        "titulo": "¿Tu área de compras pide la cotización por correo? Manda tu lista aquí",
         "lede": b2b_comun.LEDE_CORREO,
         "pagina": "Palmas para proyectos", "cta": "palmas:formulario",
         "cantidad": ("Lista de palmas (especie, altura y cantidad)", "Ej. 40 palma real de 3 m, 120 areca", True),
@@ -375,3 +375,5 @@ PARIDAD = {
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada a los precios de datos.PALMAS_PRECIO; la zona de entrega (Tamaulipas, Veracruz y San Luis Potosí) sigue en cobertura y la factura, en la línea de confianza.')
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: paquetes con texto de botón propio; con un resultado válido, la barra fija y el «Cotizar» del encabezado llevan el enlace de la calculadora y un texto corto; al borrarlo vuelven al genérico (armador de palmas: «Cotizar mis palmas»); titular del formulario de compras reescrito.'

@@ -70,7 +70,8 @@
     if (!Number.isFinite(m2) || m2 < min) {
       return { error: isPickup
         ? `En showroom vendemos desde ${MIN_SHOWROOM_M2} m².`
-        : `Para envío nacional el mínimo es ${MIN_NACIONAL_M2} m² (medio rollo).` };
+        // Reescritura 14 (Entrega B de experiencia): el aviso dice cómo seguir.
+        : `Para envío nacional el mínimo es ${MIN_NACIONAL_M2} m² (medio rollo). Sube a ${MIN_NACIONAL_M2} m² o elige "Recoger en showroom, Cd. Madero", donde vendemos desde ${MIN_SHOWROOM_M2} m².` };
     }
     const pm2 = precioM2(model, m2);
     const material = pm2 * m2;
@@ -464,18 +465,18 @@
     }
     const current = () => (modelSel ? models.find((m) => m.slug === modelSel.value) : null) || models[0];
 
-    const setM2 = (n) => { inp.value = String(clampM2(n)); update(); };
+    const setM2 = (n) => { inp.value = String(clampM2(n)); tocar(); update(); };
     $('#m2-minus').addEventListener('click', () => setM2((parseInt(inp.value, 10) || MIN_NACIONAL_M2) - 5));
     $('#m2-plus').addEventListener('click', () => setM2((parseInt(inp.value, 10) || 0) + 5));
     $$('[data-m2]').forEach((chip) => chip.addEventListener('click', () => setM2(parseInt(chip.dataset.m2, 10))));
-    inp.addEventListener('input', update);
+    inp.addEventListener('input', () => { tocar(); update(); });
     inp.addEventListener('change', () => setM2(parseInt(inp.value, 10)));
     sel.addEventListener('change', () => {
       writeStore({ ...memoryState, estado: sel.value });
       update();
       document.dispatchEvent(new CustomEvent('vt:estado', { detail: { estado: sinFleteNacional(sel.value) ? '' : sel.value } }));
     });
-    if (modelSel) modelSel.addEventListener('change', update);
+    if (modelSel) modelSel.addEventListener('change', () => { tocar(); update(); });
 
     $('#cta-add').addEventListener('click', () => addItem(current(), parseInt(inp.value, 10)));
     // La barra fija lleva el mismo mensaje del cotizador, pero se mide aparte (cta_id "<tipo>:barra").
@@ -545,7 +546,7 @@
       const otros = memoryState.items.filter((it) => it.slug !== model.slug);
       const msg = [
         `Hola, quiero cotizar el pasto sintético ${model.nombre}.`,
-        Number.isFinite(m2) ? `Necesito ${m2} m².` : '',
+        Number.isFinite(m2) && m2 > 0 ? `Necesito ${m2} m².` : '',
         otros.length ? `También en mi lista: ${otros.map((it) => `${it.nombre} (${it.m2} m²)`).join(', ')}.` : '',
         estado ? estadoLabel(estado) + '.' : '¿Me ayudan a calcular el envío a mi ciudad?',
         !error && conFlete ? envioLinea(q) : '',
@@ -553,7 +554,9 @@
         contado ? planLine(contado) : '',
         '¿Me confirman el precio final?',
       ].filter(Boolean).join('\n');
-      $$('[data-cta-wa]').forEach((a) => { a.href = waLink(msg); });
+      $$('[data-cta-wa]').filter((a) => !a.closest('#buybar')).forEach((a) => { a.href = waLink(msg); });
+      mensajeCotizador = msg;
+      pintarContexto();
     }
 
     update();
@@ -628,14 +631,81 @@
   }
 
   /* ---------- Sticky buy bar ---------- */
+  /* Visible en celular desde que el CTA del hero sale de la pantalla hacia arriba, salvo mientras se ve el cotizador
+     (#comprar), que tiene su propio botón (Entrega B de experiencia: antes solo aparecía pasado el cotizador). */
   function initBuybar() {
     const bar = $('#buybar');
     const anchor = $('#comprar');
-    if (!bar || !anchor) return;
-    const io = new IntersectionObserver(([en]) => {
-      bar.dataset.visible = String(!en.isIntersecting && en.boundingClientRect.top < 0);
+    if (!bar || !anchor || !('IntersectionObserver' in window)) return;
+    const hero = $('[data-hero-cta]');
+    const vistos = new Map();
+    const io = new IntersectionObserver((entradas) => {
+      entradas.forEach((en) => vistos.set(en.target, en.isIntersecting));
+      const heroArriba = !hero || (!vistos.get(hero) && hero.getBoundingClientRect().bottom < 0);
+      bar.dataset.visible = String(heroArriba && !vistos.get(anchor));
     });
     io.observe(anchor);
+    if (hero) io.observe(hero);
+  }
+
+  /* ---------- CTA según lo que ya eligió el cliente (Entrega B de experiencia) ----------
+     La barra de compra (#buybar), el "Cotizar" del encabezado (window.VTBarra de terra.js) y, en el hub, el botón del
+     hero llevan lo que el cliente ya hizo: con el cotizador usado, su mensaje; si no, con modelos en la lista, la lista
+     completa; si no, el mensaje de la página con el estado elegido (y el modelo, en la ficha). */
+  let mensajeCotizador = '';
+  let tocado = false;
+  function tocar() { tocado = true; }
+
+  function modeloDeFicha() {
+    try {
+      const m = JSON.parse(($('#vt-model') || {}).textContent || 'null');
+      return m && typeof m.nombre === 'string' ? m.nombre : '';
+    } catch (err) {
+      return '';
+    }
+  }
+
+  const estadoElegido = () => (memoryState.estado && !sinFleteNacional(memoryState.estado) ? memoryState.estado : '');
+
+  function mensajeBase(estado) {
+    const nombre = modeloDeFicha();
+    if (nombre) return `Hola, quiero cotizar el pasto sintético ${nombre}.\nMi estado: ${estado || '___'}\nMetros aprox.: ___`;
+    if (!estado || !(estado in ESTADO_ZONA)) return '';
+    return `Hola, quiero cotizar pasto sintético con envío a ${estado}.\nCiudad: ___\nMetros aprox.: ___\nModelo (si ya lo elegiste): ___`;
+  }
+
+  function contextoCta() {
+    if (tocado && mensajeCotizador) return { href: waLink(mensajeCotizador), texto: 'Enviar mi cotización' };
+    if (memoryState.items.length) return { href: waLink(listMessage(memoryState)), texto: 'Cotizar mi lista' };
+    const base = mensajeBase(estadoElegido());
+    return base ? { href: waLink(base), texto: '' } : null;
+  }
+
+  let ctaOriginal = null;
+  function pintarContexto() {
+    const bar = $('#buybar a[data-cta-wa]');
+    const hero = $('.vt-portada-hub [data-hero-cta] a[href*="wa.me"]');
+    const rotulo = bar && bar.lastChild && bar.lastChild.nodeType === 3 ? bar.lastChild : null;
+    if (!ctaOriginal) {
+      ctaOriginal = { bar: bar && bar.getAttribute('href'), barTexto: rotulo ? rotulo.nodeValue : '', hero: hero && hero.getAttribute('href') };
+    }
+    const ctx = contextoCta();
+    if (bar) bar.setAttribute('href', ctx ? ctx.href : ctaOriginal.bar);
+    if (rotulo) rotulo.nodeValue = (ctx && ctx.texto) || ctaOriginal.barTexto;
+    // Las filas de WhatsApp de la tienda (data-vt-ctx) llevan el mismo mensaje; su texto no cambia.
+    $$('[data-vt-ctx] a[href*="wa.me"]').forEach((a) => {
+      if (!a.dataset.vtOriginal) a.dataset.vtOriginal = a.getAttribute('href');
+      a.setAttribute('href', ctx ? ctx.href : a.dataset.vtOriginal);
+    });
+    // El hero del hub cambia solo con el estado elegido (reescritura 11); su texto no cambia.
+    if (hero) {
+      const base = mensajeBase(estadoElegido());
+      hero.setAttribute('href', base ? waLink(base) : ctaOriginal.hero);
+    }
+    if (window.VTBarra) {
+      if (ctx) window.VTBarra.prestar('tienda', ctx.href, ctx.texto);
+      else window.VTBarra.soltar('tienda');
+    }
   }
 
   function initToast() {
@@ -687,7 +757,9 @@
       selectModel: (slug) => { if (quote) quote.selectModel(slug); },
     });
     paintBuybarLanded(window.VTTienda.getEstado());
-    document.addEventListener('vt:estado', (e) => paintBuybarLanded((e.detail && e.detail.estado) || ''));
+    document.addEventListener('vt:estado', (e) => { paintBuybarLanded((e.detail && e.detail.estado) || ''); pintarContexto(); });
+    document.addEventListener('vt:lista', pintarContexto);
+    pintarContexto();
     document.dispatchEvent(new CustomEvent('vt:ready'));
   });
 })();

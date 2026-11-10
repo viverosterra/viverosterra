@@ -6,6 +6,7 @@ preguntas → CTA. Perros: respuesta directa → criterios → modelos → pregu
 contenido (k["secciones"]). Sin cotizador en la página: el CTA lleva al de la tienda con el estado elegido y a
 WhatsApp; la barra móvil del shell queda (paginas.py). Contenido: contenido/ciudad.py y contenido/perros.py."""
 import componentes as c
+import datos
 import componentes_tienda as t
 from plantillas import base
 
@@ -35,10 +36,18 @@ def _cuerpo(s):
     raise ValueError(f"Sección desconocida: {tipo}")
 
 
+def _fila(k):
+    """Entrega B de experiencia: tras los modelos recomendados, WhatsApp con el mensaje de la página y la prueba social
+    de la tienda (la opinión real de pasto sintético y la calificación de Google con su enlace)."""
+    return (c.fila_seccion(k["cierre"]["mensaje"], k["tipo"], "modelos", "Cotizar mi pedido", contexto=True)
+            + c.prueba_cta(datos.OPINION_SINTETICO_TAMPICO, f"vendemos a todo México desde {datos.SINTETICO_NACIONAL_DESDE}"))
+
+
 def render(k):
     secciones = [_portada(k)]
     for n, s in enumerate(k["secciones"], 1):
-        secciones.append(c.bloque(n, s["rotulo"], f"vt-h-{s['id']}", s["titulo"], _cuerpo(s), lede=s.get("lede"),
+        cuerpo = _cuerpo(s) + (_fila(k) if s["tipo"] == "modelos" else "")
+        secciones.append(c.bloque(n, s["rotulo"], f"vt-h-{s['id']}", s["titulo"], cuerpo, lede=s.get("lede"),
                                   tinte=n % 2 == 0, id_seccion=s["id"]))
     ci = k["cierre"]
     secciones.append(c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], k["tipo"]))

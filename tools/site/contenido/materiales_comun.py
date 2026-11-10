@@ -84,7 +84,7 @@ def pregunta_condiciones(material, pregunta=None):
 
 def pedido(ejemplo):
     return {
-        "titulo": "Escríbenos para cotizar",
+        "titulo": "¿Prefieres correo? Pide tu cotización aquí",  # reescritura 16 (Entrega B de experiencia)
         "lede": (f"Si prefieres el correo, mándanos tu pedido y te respondemos en horario de atención ({datos.HORARIO}). "
                  f'También puedes llamar al <a href="tel:{datos.TELEFONO_TEL}" data-cta="material:cuerpo">'
                  f"{datos.TELEFONO_VISIBLE}</a>."),

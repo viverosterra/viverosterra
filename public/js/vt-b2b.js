@@ -164,13 +164,29 @@
     });
   }
 
+  // Con resultado válido el botón dice qué manda (data-vt-cta) y presta su enlace a la barra fija y al encabezado
+  // (window.VTBarra de terra.js, texto de data-vt-barra); sin resultado vuelve al texto del HTML y suelta la barra.
+  function rotulador(caja, win) {
+    const rotulo = caja.querySelector('[data-vt-o="cta-texto"]');
+    const original = rotulo ? rotulo.textContent : '';
+    const clave = 'b2b:' + caja.querySelector('[data-vt-o="cta"]').getAttribute('data-cta');
+    return (href) => {
+      if (rotulo) rotulo.textContent = href && caja.dataset.vtCta ? caja.dataset.vtCta : original;
+      const barra = win.VTBarra;
+      if (!barra || !caja.dataset.vtBarra) return;
+      if (href) barra.prestar(clave, href, caja.dataset.vtBarra);
+      else barra.soltar(clave);
+    };
+  }
+
   function camposObra(caja) {
     const valor = (n) => caja.querySelector(`[data-vt-campo="${n}"]`).value;
     return { empresa: valor('empresa'), obra: valor('obra'), fecha: valor('fecha') };
   }
 
-  function iniciarVolumen(caja, calcular) {
+  function iniciarVolumen(caja, calcular, win) {
     const modos = JSON.parse(caja.dataset.modos);
+    const rotular = rotulador(caja, win);
     const salida = (n) => caja.querySelector(`[data-vt-o="${n}"]`);
     const vacio = { medida: salida('m2').textContent, monto: salida('monto').textContent, calc: salida('calc').textContent };
     function actualizar() {
@@ -185,6 +201,7 @@
         salida('aviso').textContent = '';
         salida('aviso').hidden = true;
         salida('cta').setAttribute('href', enlace(caja.dataset.wa, caja.dataset.mensaje));
+        rotular('');
         prellenar(Object.assign({ cantidad: '' }, prellenadoObra(camposObra(caja))));
         return;
       }
@@ -198,13 +215,15 @@
       salida('aviso').textContent = r.aviso;
       salida('aviso').hidden = !r.aviso;
       salida('cta').setAttribute('href', enlace(caja.dataset.wa, t.mensaje));
+      rotular(enlace(caja.dataset.wa, t.mensaje));
       prellenar(Object.assign({ cantidad: prellenadoVolumen(m2) }, prellenadoObra(camposObra(caja))));
     }
     caja.addEventListener('input', actualizar);
     actualizar();
   }
 
-  function iniciarPalmas(caja) {
+  function iniciarPalmas(caja, win) {
+    const rotular = rotulador(caja, win);
     const lista = caja.querySelector('[data-vt-filas]');
     const agregar = caja.querySelector('[data-vt-agregar]');
     const salida = (n) => caja.querySelector(`[data-vt-o="${n}"]`);
@@ -218,6 +237,7 @@
       salida('resumen').textContent = resumenPalmas(f);
       salida('lista').textContent = f.map(lineaPalma).filter(Boolean).join('\n');
       salida('cta').setAttribute('href', enlace(caja.dataset.wa, mensaje || caja.dataset.mensaje));
+      rotular(mensaje ? enlace(caja.dataset.wa, mensaje) : '');
       prellenar(Object.assign({ cantidad: prellenadoPalmas(f) }, prellenadoObra(camposObra(caja))));
     }
     // Copia del último renglón, vacía y con ids nuevos (cada label sigue apuntando a su control).
@@ -248,8 +268,8 @@
   root.VTB2B = Object.freeze(api);
   const arrancar = () => {
     document.querySelectorAll('[data-vt-correo]').forEach((f) => iniciarCorreo(f, root));
-    if (root.VTMedidor) document.querySelectorAll('[data-vt-volumen]').forEach((c) => iniciarVolumen(c, root.VTMedidor.calcular));
-    document.querySelectorAll('[data-vt-palmas]').forEach(iniciarPalmas);
+    if (root.VTMedidor) document.querySelectorAll('[data-vt-volumen]').forEach((c) => iniciarVolumen(c, root.VTMedidor.calcular, root));
+    document.querySelectorAll('[data-vt-palmas]').forEach((c) => iniciarPalmas(c, root));
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arrancar);
   else arrancar();

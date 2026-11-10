@@ -164,3 +164,5 @@ PARIDAD = {"reemplazos": {}, "retirados": {}, "jsonld": {"Organization": M_VENDE
                     "serif; botón de WhatsApp bajo la etiqueta (antes el hero no tenía CTA en celular) con enlace al "
                     "cotizador y al teléfono; la existencia, la entrada y los datos van después del botón (en celular, "
                     "después de la galería); en celular y pantallas bajas la etiqueta muestra una fila.")}
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: botón del hero con el modelo (reescritura 12); barra de compra desde que el hero sale de la pantalla; filas de WhatsApp tras el resumen (con la prueba social), la ficha técnica, la comparativa y «Tu pedido»; «Agregar 1 rollo a mi lista».'

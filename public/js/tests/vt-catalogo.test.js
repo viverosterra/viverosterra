@@ -4,7 +4,10 @@ const c = require('../vt-catalogo.js');
 const casos = require('./casos-catalogo.json');
 
 test('el mensaje de la lista es el mismo que armaba sendWA() en main', () => {
-  for (const { lista, mensaje } of casos.mensajes) assert.equal(c.mensajeLista(lista), mensaje);
+  // El mensaje de main con el cambio declarado (reescritura 7, Entrega B de experiencia): la colonia de entrega antes de
+  // una pregunta más corta.
+  const declarado = (m) => m.replace('\n\n¿Pueden darme precio y disponibilidad?', '\nColonia de entrega: ___\n\n¿Me dan precio y disponibilidad?');
+  for (const { lista, mensaje } of casos.mensajes) assert.equal(c.mensajeLista(lista), declarado(mensaje));
   assert.equal(c.mensajeLista([]), '');
   assert.ok(c.enlaceLista(casos.mensajes[0].lista).startsWith('https://wa.me/528333268008?text=Hola%20Viveros%20Terra'));
 });

@@ -61,18 +61,18 @@ MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
 ]}
 
 SISTEMAS = (
-    {"rotulo": "Sistema 1 · Pasto", "titulo": "Aspersores emergentes",
+    {"cta": "Cotizar aspersores", "rotulo": "Sistema 1 · Pasto", "titulo": "Aspersores emergentes",
      "puntos": ("Cobertura uniforme de 2 a 15 m", "Ideal para pasto San Agustín", "Se ocultan en el suelo cuando no riegan"),
      "nota": "Para áreas de pasto: emergen al regar y cubren toda el área verde de forma pareja.",
      "mensaje": ("Hola, quiero cotizar riego con aspersores emergentes para mi pasto.\nColonia: ___\n"
                  "Metros aprox. del jardín: ___\nLes mando fotos del espacio.")},
-    {"rotulo": "Sistema 2 · Plantas", "titulo": "Riego por goteo",
+    {"cta": "Cotizar goteo", "rotulo": "Sistema 2 · Plantas", "titulo": "Riego por goteo",
      "puntos": ("Lleva el agua directo a la raíz", "Ideal para plantas, arbustos, árboles y camellones",
                 "Menos maleza: solo humedece donde hace falta"),
      "nota": "Para arriates y jardineras: la forma más eficiente de regar plantas ornamentales.",
      "mensaje": ("Hola, quiero cotizar riego por goteo para mis plantas.\nColonia: ___\nMetros aprox. de jardineras: ___\n"
                  "Les mando fotos del espacio.")},
-    {"rotulo": "Sistema 3 · Grandes áreas", "titulo": "Industrial y deportivo",
+    {"cta": "Cotizar un área grande", "rotulo": "Sistema 3 · Grandes áreas", "titulo": "Industrial y deportivo",
      "puntos": ("Aspersores de largo alcance", "Controladores con varios programas",
                 "De 500 m² hasta campos deportivos completos"),
      "nota": "Para parques industriales, escuelas, áreas de gobierno y campos deportivos con pasto natural.",
@@ -320,3 +320,5 @@ PARIDAD = {
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Kicker: «Riego · Tampico, Madero y Altamira» (un renglón). Entrada recortada: «campos deportivos con pasto natural» sale del hero (sigue en la sección de proyectos).')
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: botones de sistema con texto propio (reescritura 5); el simulador no manda un monto que el cliente no escribió.'

@@ -7,8 +7,11 @@
      public/js/tests/casos-catalogo.json), con data-cta="catalogo:sendWA": terra.js lo mide (generate_lead con el mismo
      cta_id que VTMedicion.whatsapp('sendWA') de main) y lo firma al hacer clic. Sin window.open.
    - La lista se guarda en sessionStorage en cada pintar() y vuelve al recargar o al regresar de otra página, solo con
-     especies de #vt-catalogo-datos (validarLista). Con la lista llena, el "Cotizar" de la cabecera lleva el mismo
-     mensaje de la lista (sigue midiéndose como <tipo>:header).
+     especies de #vt-catalogo-datos (validarLista). Con la lista llena, la barra fija ("Cotizar mi lista", directo, sin
+     abrir la lista) y el "Cotizar" de la cabecera llevan el mismo mensaje de la lista (window.VTBarra de terra.js; se
+     siguen midiendo como <tipo>:barra y <tipo>:header), y el botón "Mi lista · n variedades · n piezas" abre la lista.
+     Las filas de WhatsApp entre las tarjetas ([data-vt-cta-rejilla]) también la mandan, y con filtros solo se ve una
+     cada CADA_FILA tarjetas visibles.
    - /catalogo?q=<nombre>&add=<slug> (el "Agregar en Arma tu lista" de las subcategorías) abre el diálogo de esa especie;
      un slug desconocido se ignora.
    El texto de las especies llega del HTML (data-*) y de #vt-catalogo-datos; nunca se usa innerHTML.
@@ -23,6 +26,7 @@
   const PULSO_MS = 200;
   const MAX_ITEMS = 200;
   const MAX_TAMANO = 60; // maxlength del campo "Otro tamaño o medida especial"
+  const CADA_FILA = 12; // tarjetas visibles entre dos filas de WhatsApp (≈ 4 pantallas del celular; múltiplo de 2, 3 y 4 columnas)
 
   function normalizar(texto) {
     return String(texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
@@ -131,11 +135,14 @@
     return plural(lista.length, 'variedad', 'variedades') + ' · ' + plural(total, 'pieza', 'piezas');
   }
 
+  // Reescritura 7 (Entrega B de experiencia): la colonia de entrega por llenar antes de la pregunta, que es más corta.
+  const COLONIA = 'Colonia de entrega: ___';
+  const PREGUNTA = '¿Me dan precio y disponibilidad?';
   function mensajeLista(lista) {
     if (!lista.length) return '';
     const lineas = lista.map((i) => `• ${i.name} (${i.sz}) × ${i.qty}`).join('\n');
     const total = lista.reduce((s, i) => s + i.qty, 0);
-    return `Hola Viveros Terra\n\nQuisiera cotizar lo siguiente:\n\n${lineas}\n\nTotal: ${lista.length} variedad${lista.length > 1 ? 'es' : ''}, ${total} unidad${total > 1 ? 'es' : ''}\n\n¿Pueden darme precio y disponibilidad?`;
+    return `Hola Viveros Terra\n\nQuisiera cotizar lo siguiente:\n\n${lineas}\n\nTotal: ${lista.length} variedad${lista.length > 1 ? 'es' : ''}, ${total} unidad${total > 1 ? 'es' : ''}\n${COLONIA}\n\n${PREGUNTA}`;
   }
 
   function enlaceLista(lista) {
@@ -148,6 +155,23 @@
   }
 
   // ---------- DOM ----------
+  // Una fila de WhatsApp entre las tarjetas solo si la preceden CADA_FILA tarjetas visibles desde la anterior y le
+  // sigue alguna: con filtros no se juntan filas seguidas ni queda una al final.
+  function repartirFilas(rejilla) {
+    let desde = 0;
+    let pendiente = null;
+    Array.from(rejilla.children).forEach((el) => {
+      if (el.hasAttribute('data-vt-cta-rejilla')) {
+        el.hidden = true;
+        if (desde >= CADA_FILA) pendiente = el;
+        return;
+      }
+      if (el.hidden) return;
+      if (pendiente) { pendiente.hidden = false; pendiente = null; desde = 0; }
+      desde += 1;
+    });
+  }
+
   function filtrar(doc, win) {
     const caja = doc.querySelector('[data-vt-filtros]');
     const rejilla = doc.querySelector('[data-vt-rejilla]');
@@ -171,6 +195,7 @@
         if (ok) visibles += 1;
       });
       cuenta.textContent = plural(visibles, 'especie', 'especies');
+      repartirFilas(rejilla);
       if (vacio) vacio.hidden = visibles > 0;
       if (!visibles) sinResultados();
       if (nFiltros) nFiltros.textContent = contarFiltros(filtros) ? ' (' + contarFiltros(filtros) + ')' : '';
@@ -232,8 +257,8 @@
     const fuente = doc.getElementById('vt-catalogo-datos');
     const dAgregar = doc.getElementById('vt-agregar');
     const dLista = doc.getElementById('vt-lista');
-    const barra = doc.querySelector('[data-vt-barra-lista]');
-    if (!fuente || !dAgregar || !dLista || !barra || typeof dAgregar.showModal !== 'function') return;
+    const abrirLista = doc.querySelector('[data-vt-abrir-lista]');
+    if (!fuente || !dAgregar || !dLista || !abrirLista || typeof dAgregar.showModal !== 'function') return;
     let especies;
     try {
       especies = JSON.parse(fuente.textContent);
@@ -246,11 +271,10 @@
     const n = dAgregar.querySelector('[data-vt-campo="n"]');
     const enviar = dLista.querySelector('[data-vt-o="enviar"]');
     const items = dLista.querySelector('[data-vt-o="items"]');
-    const aviso = barra.querySelector('[data-vt-o="aviso"]');
-    const abrirLista = barra.querySelector('[data-vt-abrir-lista]');
+    const aviso = doc.querySelector('[data-vt-o="aviso"]');
     const botones = Array.from(doc.querySelectorAll('[data-vt-agregar]'));
-    const cabecera = doc.querySelector('.vt-head [data-cta$=":header"]');
-    const cabeceraHref = cabecera ? cabecera.getAttribute('href') : '';
+    const filas = Array.from(doc.querySelectorAll('[data-vt-cta-rejilla] a[href*="wa.me"]'));
+    filas.forEach((a) => { a.dataset.vtOriginal = a.getAttribute('href'); });
     const store = almacen(win);
     const conocida = (slug) => Object.prototype.hasOwnProperty.call(especies, slug);
     let seleccion = leerLista(store, especies);
@@ -282,14 +306,20 @@
     }
 
     function pintar() {
-      barra.hidden = seleccion.length === 0;
-      barra.querySelector('[data-vt-o="cuenta-lista"]').textContent = String(seleccion.length);
+      abrirLista.hidden = seleccion.length === 0;
+      abrirLista.querySelector('[data-vt-o="cuenta-lista"]').textContent = String(seleccion.length);
+      const detalle = abrirLista.querySelector('[data-vt-o="resumen-barra"]');
+      if (detalle) detalle.textContent = seleccion.length ? resumen(seleccion) : '';
       dLista.querySelector('[data-vt-o="resumen"]').textContent = seleccion.length ? resumen(seleccion) : 'Tu lista está vacía.';
       enviar.hidden = seleccion.length === 0;
       enviar.setAttribute('href', enlaceLista(seleccion));
       items.replaceChildren(...seleccion.map((it, i) => fila(doc, it, i)));
       botones.forEach(marcar);
-      if (cabecera) cabecera.setAttribute('href', seleccion.length ? enlaceLista(seleccion) : cabeceraHref);
+      filas.forEach((a) => a.setAttribute('href', seleccion.length ? enlaceLista(seleccion) : a.dataset.vtOriginal));
+      if (win.VTBarra) {
+        if (seleccion.length) win.VTBarra.prestar('catalogo', enlaceLista(seleccion), 'Cotizar mi lista');
+        else win.VTBarra.soltar('catalogo');
+      }
       guardarLista(store, seleccion);
     }
 
@@ -371,7 +401,7 @@
     campo.addEventListener('input', () => enlace.setAttribute('href', WA + encodeURIComponent(mensajeEspecial(campo.value))));
   }
 
-  const api = { GRUPOS, CLAVE, normalizar, leerFiltros, escribirFiltros, hayFiltros, contarFiltros, coincide, cantidad,
+  const api = { GRUPOS, CLAVE, CADA_FILA, normalizar, leerFiltros, escribirFiltros, hayFiltros, contarFiltros, coincide, cantidad,
     agregar, cambiar, quitar, enLista, validarLista, guardarLista, leerLista, resumen, mensajeLista, enlaceLista,
     mensajeEspecial };
   if (typeof module !== 'undefined' && module.exports) {

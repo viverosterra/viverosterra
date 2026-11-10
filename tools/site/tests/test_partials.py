@@ -84,7 +84,8 @@ class HeaderTest(unittest.TestCase):
 
     def test_menu_de_seis_entradas_en_orden(self):
         textos = re.findall(r'class="vt-nav__top"[^>]*>([^<]+)', self.h)
-        self.assertEqual(textos, ["Pasto natural", "Pasto sintético", "Jardín", "Plantas y palmas", "Empresas", "Precios"])
+        # Entrega B de experiencia: "Plantas y palmas" pasa a "Plantas y materiales" (tierra, tezontle, mármol y piedra).
+        self.assertEqual(textos, ["Pasto natural", "Pasto sintético", "Jardín", "Plantas y materiales", "Empresas", "Precios"])
 
     def test_seccion_activa_y_pagina_actual(self):
         self.assertEqual(self.h.count("vt-nav__item is-activo"), 1)
@@ -100,13 +101,24 @@ class HeaderTest(unittest.TestCase):
 
     def test_paneles_con_ids_existentes(self):
         controles = re.findall(r'aria-controls="([^"]+)"', self.h)
-        self.assertEqual(len(controles), 6)
+        # Entrega B de experiencia: "Precios" abre en escritorio un panel con el vivero y el blog (7 = 6 paneles + burger).
+        self.assertEqual(len(controles), 7)
         for control in controles:
             self.assertIn(f'id="{control}"', self.h)
 
     def test_precios_es_enlace_actual_en_su_pagina(self):
         h = partials.header(paginas.contexto("/precios"))
-        self.assertIn('<a class="vt-nav__top" href="/precios" aria-current="page">Precios</a>', h)
+        self.assertIn('<a class="vt-nav__top" href="/precios">Precios</a>', h)
+        self.assertIn('<li><a href="/precios" aria-current="page">Lista de precios</a></li>', h)
+        self.assertIn('<a class="vt-mmenu__link" href="/precios" aria-current="page">Precios</a>', h)
+
+    def test_menu_lleva_al_vivero_y_al_blog(self):
+        """Entrega B de experiencia (reescritura 19): entradas al vivero (dirección y horario) y al blog en escritorio y en
+        celular; en celular, "Servicios de jardín"."""
+        for ruta in ("/vivero-tampico", "/blog"):
+            with self.subTest(ruta=ruta):
+                self.assertEqual(self.h.count(f'href="{ruta}"'), 2)
+        self.assertIn("<summary>Servicios de jardín", self.h)
 
     def test_enlaces_del_menu_existen(self):
         for item in partials.MENU:

@@ -143,7 +143,11 @@ class ComponentesPlantasTest(unittest.TestCase):
     def test_lista_en_dialogos_con_un_solo_enlace_de_whatsapp(self):
         html = cp.lista_catalogo("catalogo")
         self.assertEqual(html.count("<dialog"), 2)
-        self.assertEqual(html.count("https://wa.me/"), 1)
+        dialogos = "".join(re.findall(r"<dialog.*?</dialog>", html, re.S))
+        self.assertEqual(dialogos.count("https://wa.me/"), 1)
+        # Entrega B de experiencia: la barra fija lleva además su propio WhatsApp (catalogo:barra), con o sin lista.
+        self.assertEqual(html.count("https://wa.me/"), 2)
+        self.assertIn('data-cta="catalogo:barra"', html)
         self.assertIn('data-cta="catalogo:sendWA" data-vt-o="enviar"', html)
         self.assertIn('<label for="vt-agregar-tam">', html)
         self.assertIn('role="status"', html)

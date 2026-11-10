@@ -35,7 +35,9 @@ class TerraPlantasCssTest(unittest.TestCase):
 
     def test_hidden_gana(self):
         for regla in (".vt-plantas [hidden]{display:none}", ".vt-plantas .vt-esp[hidden]{display:none}",
-                      ".vt-plantas .vt-lista-barra[hidden]{display:none}"):
+                      # Entrega B de experiencia: la barra de la lista pasó a ser la del shell con el botón "Mi lista".
+                      ".vt-plantas .vt-bar--lista .vt-bar__lista[hidden]{display:none}",
+                      ".vt-plantas .vt-cat__fila[hidden]{display:none}"):
             self.assertIn(regla, self.css)
 
     def test_presupuesto(self):

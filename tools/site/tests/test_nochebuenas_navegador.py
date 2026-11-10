@@ -1,5 +1,6 @@
 """Página de Nochebuenas en Chromium: casos del dueño, controles, mensaje de WhatsApp, registro que falla, fechas, barra fija,
 desbordes y axe. Todo lo que no sea localhost se bloquea. Se salta sin Playwright."""
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -90,7 +91,8 @@ class NochebuenasNavegadorTest(unittest.TestCase):
         page = self.abrir(self.contexto())
         self.poner(page, 0, "6", 12)
         self.assertEqual(self.salida(page, "total"), "$1,428")
-        self.assertEqual(self.salida(page, "escalon"), "Mayoreo")
+        # Entrega B de experiencia: el ticket dice el precio aplicado con su rango de piezas.
+        self.assertEqual(self.salida(page, "escalon"), "Mayoreo (12 a 49 piezas)")
         self.assertFalse(page.locator('[data-nb-o="nudge"]').is_visible())
 
     def test_pedido_mixto_y_mensaje_completo(self):
@@ -107,7 +109,7 @@ class NochebuenasNavegadorTest(unittest.TestCase):
         self.assertEqual(self.salida(page, "entrega"), "Entrega incluida")
         href = unquote(page.locator(CTA).get_attribute("href"))
         for parte in ('16 × Maceta 6" Roja', '4 × Maceta 7" Jaspeada', "6 × Colgante Rosa",
-                      "Total: 26 piezas · Escalón: Mayoreo · Total estimado: $4,254", "Entrega: Madero · Requiero factura"):
+                      "Total: 26 piezas · Total estimado: $4,254", "Entrega: Madero · Requiero factura"):
             with self.subTest(parte=parte):
                 self.assertIn(parte, href)
 
@@ -210,8 +212,9 @@ class NochebuenasNavegadorTest(unittest.TestCase):
         barra.wait_for(state="hidden")
         self.ir_a(page, "#vt-h-galeria")
         barra.wait_for(state="visible")
-        expect(enlace).to_have_text("Cotizar · $1,428")
-        expect(enlace).to_have_attribute("href", "#cotizador")
+        # Entrega B de experiencia: fuera del cotizador y con pedido, la barra manda el pedido escrito por WhatsApp.
+        expect(enlace).to_have_text("Enviar mi pedido · $1,428")
+        expect(enlace).to_have_attribute("href", re.compile(r"^https://wa\.me/"))
 
     def test_enfocar_piezas_selecciona_todo(self):
         page = self.abrir(self.contexto())

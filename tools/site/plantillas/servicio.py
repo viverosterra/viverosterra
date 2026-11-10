@@ -27,6 +27,14 @@ def _scripts(k):
             + (("/js/vt-simulador.js",) if k["pago"].get("sim") else ()))
 
 
+def _cta(k, clave):
+    """Fila de CTA al final de una sección larga (Entrega B de experiencia): k["ctas"][clave] = (mensaje, texto)."""
+    if clave not in k.get("ctas", {}):
+        return ""
+    mensaje, texto = k["ctas"][clave]
+    return c.fila_seccion(mensaje, k["tipo"], clave, texto)
+
+
 def _prueba(k, numero):
     pr = k["prueba"]
     cuerpo = c.obras(pr["figuras"], c.nota(*pr["nota"]))
@@ -34,7 +42,7 @@ def _prueba(k, numero):
         cuerpo += f'<h3 class="vt-mt">{pr["titulo_opinion"]}</h3>' + c.testimonios(pr["opiniones"])
     if pr.get("titulo_clientes"):
         cuerpo += f'<h3 class="vt-mt">{pr["titulo_clientes"]}</h3>' + c.logos()
-    return c.bloque(numero, "Prueba", "vt-h-prueba", pr["titulo"], cuerpo, lede=pr["lede"])
+    return c.bloque(numero, "Prueba", "vt-h-prueba", pr["titulo"], cuerpo + _cta(k, "prueba"), lede=pr["lede"])
 
 
 def _precio(k, numero):
@@ -70,7 +78,8 @@ def _opciones(k, numero):
 def _incluye(k, numero):
     """Qué incluye el servicio, en tarjetas sin precio (mantenimiento: lo que se hace en cada visita)."""
     i = k["incluye"]
-    return c.bloque(numero, "Qué incluye", "vt-h-incluye", i["titulo"], c.fichas(i["items"]), lede=i.get("lede"))
+    return c.bloque(numero, "Qué incluye", "vt-h-incluye", i["titulo"], c.fichas(i["items"]) + _cta(k, "incluye"),
+                    lede=i.get("lede"))
 
 
 def _aparte(items):
@@ -151,9 +160,11 @@ def render(k):
             secciones.append(armar(k, numero))
             numero += 1
     secciones.append(c.bloque(numero, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]), lede=p["lede"]))
-    secciones.append(c.garantia(dict(g, numero=numero + 1, id_titulo="vt-h-garantia", rotulo="Garantía")))
+    secciones.append(c.garantia(dict(g, numero=numero + 1, id_titulo="vt-h-garantia", rotulo="Garantía",
+                                     cta_html=_cta(k, "garantia"))))
     secciones.append(_pago(k, numero + 2))
-    secciones.append(c.bloque_dos(numero + 3, "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]), tinte=True))
+    secciones.append(c.bloque_dos(numero + 3, "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]) + _cta(k, "faq"),
+                                  tinte=True))
     numero += 4
     for clave, armar in (("visita", _visita), ("cobertura", _cobertura), ("relacionados", _relacionados)):
         if clave in k:

@@ -1,10 +1,27 @@
 // public/js/vt-simulador.js
 /* Simulador de mensualidades para servicios (monto de una cotización). Depende de vt-mensualidades.js.
-   Las filas se crean una sola vez y solo se actualizan: así el foco del teclado no se pierde al cambiar de plan. */
+   Las filas se crean una sola vez y solo se actualizan: así el foco del teclado no se pierde al cambiar de plan.
+   El monto del HTML es un ejemplo: mientras el cliente no escriba uno, el mensaje no lleva ninguna cifra (reescritura 3
+   del informe de recorrido) y pide colonia y metros. Con un monto escrito, el mensaje lleva ese monto y la forma de pago,
+   y el enlace se presta a la barra fija y al encabezado (window.VTBarra de terra.js). mensaje() se exporta para
+   node --test. */
 (function () {
   'use strict';
   const WA = '528333268008';
   const money = (n) => '$' + Math.round(n).toLocaleString('es-MX');
+  const BARRA = 'Enviar mi plan de pago';
+
+  // contado: el monto que escribió el cliente (0 si no escribió nada); plazo: el elegido (0 = contado) y su total.
+  function mensaje(servicio, contado, plazo, total) {
+    if (!contado) {
+      return [`Hola, quiero cotizar ${servicio} y me interesa pagar con tarjeta en mensualidades.`,
+        plazo ? `Me interesa: ${plazo} mensualidades con tarjeta de crédito.` : '', 'Colonia: ___', 'Metros aprox.: ___']
+        .filter(Boolean).join('\n');
+    }
+    const pago = plazo ? `Me interesa pagar en ${plazo} mensualidades con tarjeta de crédito (total ${money(total)}).`
+      : 'Pagaría de contado.';
+    return [`Hola, quiero cotizar ${servicio}.`, `Mi cotización es de ${money(contado)}.`, pago, 'Colonia: ___'].join('\n');
+  }
 
   function buildRow(plazo) {
     const label = document.createElement('label');
@@ -61,6 +78,9 @@
     list.textContent = '';
     filas.forEach((f) => list.appendChild(f.label));
     let plan = 0;
+    // El monto del HTML es un ejemplo: cuenta solo cuando el cliente lo cambia.
+    let escrito = false;
+    const clave = 'simulador:' + (wa.getAttribute('data-cta') || '');
 
     function paint() {
       const contado = Math.max(0, Math.round(Number(input.value) || 0));
@@ -77,21 +97,27 @@
         paintAmount(f.amt, amountParts(M, p));
       });
       const elegido = planes.find((p) => p.plazo === plan && p.disponible);
-      const pago = !contado ? ''
-        : elegido ? `Me interesa pagar en ${elegido.plazo} mensualidades con tarjeta de crédito (total ${money(elegido.total)}).`
-          : 'Pagaría de contado.';
-      const msg = [`Hola, quiero cotizar ${servicio}.`, contado ? `Mi cotización es de ${money(contado)}.` : '', pago]
-        .filter(Boolean).join('\n');
+      const propio = escrito ? contado : 0;
+      const msg = mensaje(servicio, propio, elegido ? elegido.plazo : 0, elegido ? elegido.total : 0);
       wa.href = `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+      const barra = window.VTBarra; // init(root) recibe la caja del simulador: la barra vive en window
+      if (barra) {
+        if (propio) barra.prestar(clave, wa.href, BARRA);
+        else barra.soltar(clave);
+      }
     }
 
     filas.forEach((f) => f.radio.addEventListener('change', () => {
       if (f.radio.checked) { plan = f.plazo; paint(); }
     }));
-    input.addEventListener('input', paint);
+    input.addEventListener('input', () => { escrito = true; paint(); });
     paint();
   }
 
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { mensaje, BARRA };
+    return;
+  }
   function start() { document.querySelectorAll('[data-simulador]').forEach(init); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();

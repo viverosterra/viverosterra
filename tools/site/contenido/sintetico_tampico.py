@@ -150,12 +150,12 @@ CONTENIDO = {
     "opciones": {
         "titulo": "Compra el material o te lo instalamos",
         "items": (
-            {"rotulo": "Opción 1", "titulo": "Compras el material", "precio": MIN_RETAIL, "unidad": "/m²",
+            {"cta": "Cotizar el material", "rotulo": "Opción 1", "titulo": "Compras el material", "precio": MIN_RETAIL, "unidad": "/m²",
              "detalle": "Material con IVA, cortado a tu medida",
              "puntos": ("Desde 2 m², cortado a tu medida", f"{HOY} para llevar hoy",
                         "Kit de pegamento, cinta y clavos", "Envío local según tu colonia; te lo cotizamos."),
              "mensaje": "Hola, quiero comprar pasto sintético en el showroom. ¿Tienen existencia?\nModelo: ___\nMetros: ___"},
-            {"rotulo": "Opción 2", "titulo": "Nosotros lo instalamos", "precio": INST_MIN, "unidad": "/m²",
+            {"cta": "Cotizar la instalación", "rotulo": "Opción 2", "titulo": "Nosotros lo instalamos", "precio": INST_MIN, "unidad": "/m²",
              "detalle": "Material y colocación", "rec": True,
              "puntos": (datos.VISITA_COSTO_CORTO, "Colocación, uniones, orillas y cepillado",
                         "Material con garantía de fábrica"),
@@ -246,3 +246,5 @@ PARIDAD = {
 # datos.OPINION_SINTETICO_TAMPICO); no se ofrece financiamiento propio a instaladores; el envío local no tiene precio fijo.
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: «enviamos a todo México desde 2012» sale del hero (está en la tienda /pasto-sintetico, enlazada).')
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: las dos opciones con texto de botón propio; nombres de la lista unificados («Mi lista», «Agregar a mi lista»).'

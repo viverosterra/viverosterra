@@ -416,12 +416,12 @@ class PlantillasNavegadorTest(unittest.TestCase):
         self.assertEqual(barra.text_content().strip(), "Cotizar por WhatsApp")
         self.assertEqual(barra.get_attribute("href"), generico)
         self.assertFalse(vivo.is_visible())
-        # En pasto en rollo (sin los opcionales de la home) la barra no cambia.
+        # Entrega B de experiencia: en pasto en rollo (sin los opcionales de la home) la barra también toma la medida.
         otra = self.pagina(375, 667)
         otra.goto(self.base + "/pasto-en-rollo-tampico/", wait_until="load")
         otra.locator('[data-vt-campo="largo"]').fill("8")
         otra.locator('[data-vt-campo="ancho"]').fill("6")
-        self.assertEqual(otra.locator("[data-vt-bar] .vt-bar__go").text_content().strip(), "Cotizar por WhatsApp")
+        self.assertEqual(otra.locator("[data-vt-bar] .vt-bar__go").text_content().strip(), "Enviar mi medida")
 
     def test_home_objetivos_tactiles_del_hero_y_del_indice(self):
         page = self.pagina(375, 812)
@@ -1091,8 +1091,10 @@ class PlantillasNavegadorTest(unittest.TestCase):
             with self.subTest(ruta=ruta):
                 self.assertEqual(caja.locator('[data-vt-o="cantidad"]').inner_text(), cantidad)
                 self.assertIn(f"Área: {area} m²", mensaje)
-                self.assertTrue(mensaje.endswith("Colonia de entrega: ___\n\n¿Me pueden dar precio de entrega a domicilio en "
-                                                 "Tampico, Madero o Altamira?"))
+                # Entrega B de experiencia (reescritura 15): la tierra negra cierra con una pregunta corta.
+                cierre = ("Colonia de entrega: ___\n¿Me dan el total con entrega?" if "tierra-negra" in ruta else
+                          "Colonia de entrega: ___\n\n¿Me pueden dar precio de entrega a domicilio en Tampico, Madero o Altamira?")
+                self.assertTrue(mensaje.endswith(cierre))
                 self.assertNotIn("is-vacio", caja.locator(".vt-calc__cantidad").get_attribute("class"))
             page.evaluate("(a) => a.addEventListener('click', (e) => e.preventDefault())", enlace.element_handle())
             enlace.click()

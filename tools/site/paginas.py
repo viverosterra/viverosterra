@@ -84,7 +84,7 @@ def contexto(ruta):
     slug = ruta[len("/blog/"):] if ruta.startswith("/blog/") else None
     if slug:
         servicio = mensajes_paginas.tema_blog(slug)
-        texto = mensajes_paginas.BLOG.get(slug, texto)
+        texto = mensajes_paginas.mensaje_blog(slug)
     if ruta in mensajes_paginas.RUTAS:
         texto, texto_pie = mensajes_paginas.RUTAS[ruta]
     if ruta == datos.NOCHEBUENAS["ruta"]:

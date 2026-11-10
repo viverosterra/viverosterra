@@ -81,7 +81,10 @@ def etiqueta_de(tema):
 def producto(tema, mensaje, tipo):
     href, texto = tema["landing"]
     return (f'<section class="vt-art__producto" aria-labelledby="vt-art-prod"><div class="vt-wrap vt-art__producto-grid"><div>'
-            f'<h2 id="vt-art-prod">{tema["titulo"]}</h2><div class="vt-cta"><a class="vt-btn vt-btn--tinta" '
+            f'<h2 id="vt-art-prod">{tema["titulo"]}</h2>'
+            # El precio "desde" del tema y la garantía si aplica (Entrega B de experiencia; textos de datos.py).
+            + (f'<p class="vt-lede">{tema["lede"]}</p>' if tema.get("lede") else "")
+            + f'<div class="vt-cta"><a class="vt-btn vt-btn--tinta" '
             f'data-cta="{tipo}:landing" href="{esc(href)}">{texto}<span class="vt-flecha" aria-hidden="true">→</span></a>'
             f'{c.boton_wa(mensaje, f"{tipo}:cierre")}</div><p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p></div>'
             f'{c.etiqueta(etiqueta_de(tema))}</div></section>')

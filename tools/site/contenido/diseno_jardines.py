@@ -73,7 +73,7 @@ MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
 ]}
 
 PLANES = (
-    {"rotulo": "Plan 1 · Remoto", "titulo": "Esencial", "precio": ESENCIAL, "desde": False, "unidad": "MXN",
+    {"cta": f"Quiero el Esencial ({dinero(ESENCIAL)})", "rotulo": "Plan 1 · Remoto", "titulo": "Esencial", "precio": ESENCIAL, "desde": False, "unidad": "MXN",
      "mensualidad": True, "detalle": "Visualiza tu jardín antes de invertir · entrega en 3 a 5 días hábiles",
      "puntos": ("Propuesta visual con montajes fotográficos personalizados",
                 "Diseño basado en el estudio de tus gustos y preferencias",
@@ -84,7 +84,7 @@ PLANES = (
                 f"Los {dinero(ESENCIAL)} se descuentan si contratas la obra"),
      "mensaje": (f"Hola, me interesa el Plan Terra Esencial ({dinero(ESENCIAL)}).\nColonia: ___\nMetros aprox.: ___\n"
                  "Les mando fotos del espacio.")},
-    {"rotulo": "Plan 2 · Con visita", "titulo": "Completo", "precio": COMPLETO, "desde": False, "unidad": "MXN",
+    {"cta": f"Quiero el Completo ({dinero(COMPLETO)})", "rotulo": "Plan 2 · Con visita", "titulo": "Completo", "precio": COMPLETO, "desde": False, "unidad": "MXN",
      "mensualidad": True, "rec": True, "detalle": "Del diseño al jardín terminado · entrega en 10 días hábiles",
      "puntos": ("Todo lo del Esencial",
                 "Visita técnica al sitio (1 hora con el diseñador)",
@@ -98,7 +98,7 @@ PLANES = (
                 f"Los {dinero(COMPLETO)} se descuentan si contratas la obra"),
      "mensaje": (f"Hola, me interesa el Plan Terra Completo ({dinero(COMPLETO)}).\nColonia: ___\nMetros aprox.: ___\n"
                  "Les mando fotos del espacio.")},
-    {"rotulo": "Plan 3 · Proyecto ejecutivo", "titulo": "Premium", "precio": PREMIUM, "unidad": "MXN",
+    {"cta": "Cotizar el Premium", "rotulo": "Plan 3 · Proyecto ejecutivo", "titulo": "Premium", "precio": PREMIUM, "unidad": "MXN",
      "mensualidad": True, "detalle": "Hoteles, corporativos, fraccionamientos y desarrollos · entrega en 15 a 21 días hábiles",
      "puntos": ("Todo lo del Completo",
                 "2 visitas técnicas (diagnóstico y presentación en sitio)",
@@ -173,8 +173,10 @@ PASOS = (
      "texto": ("Nos mandas fotos del espacio, medidas aproximadas, tu estilo preferido y el uso que le darás al "
                "jardín.")},
     {"titulo": "Estudio de gustos y preferencias", "quien": "juntos", "cuando": "Antes de diseñar",
-     "texto": ("Tu asesor te manda un cuestionario breve: colores, texturas, cuánto mantenimiento puedes darle, si hay "
-               "mascotas o niños y cuánto sol recibe cada zona.")},
+     # Reescritura 19 (Entrega B de experiencia): cuándo llega el cuestionario y cuántos pasos tiene.
+     "texto": ("Después de tu primer mensaje te mandamos por WhatsApp un cuestionario de 5 pasos para conocer tus "
+               "gustos: colores, texturas, cuánto mantenimiento puedes darle, si hay mascotas o niños y cuánto sol "
+               "recibe cada zona.")},
     {"titulo": "Elegimos el Plan Terra correcto para ti", "quien": "nosotros", "cuando": "Al cotizar",
      "texto": ("Te recomendamos Esencial, Completo o Premium según la complejidad del proyecto y si necesitas "
                "entregables técnicos.")},
@@ -203,6 +205,8 @@ CONTENIDO = {
     "respuesta": respuestas.de("/diseno-jardines-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-diseno",
     "prefijo": "diseno",
+    # Entrega B de experiencia: CTA al terminar las opiniones (antes, 8 pantallas del hero a los planes sin CTA).
+    "ctas": {"prueba": (MENSAJE, "Cotizar mi diseño")},
     "meta": META,
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Diseño de jardines", None)),
@@ -359,3 +363,5 @@ PARIDAD = {
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: la condición del descuento (Premium, proyectos de más de $150,000) sale del hero y sigue en «En corto» y en los planes; kicker: «Diseño · Tampico, Madero y Altamira» (un renglón).')
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: botones de plan con texto propio (reescritura 5); fila de WhatsApp tras las opiniones; el paso «Estudio de gustos» dice cuándo llega el cuestionario (reescritura 19); el simulador no manda un monto que el cliente no escribió.'

@@ -123,6 +123,18 @@ def _mensaje(cfg, titulo, lineas):
     return "\n".join((f"Hola, quiero cotizar {cfg['texto']}.", "", titulo, *lineas, COLONIA, "", CIERRE_MENSAJE))
 
 
+# Tierra negra (reescritura 15 del informe de recorrido, Entrega B de experiencia): el cálculo en un renglón y lo que el
+# vendedor necesita para cerrar (costales o a granel y la colonia), con una pregunta corta.
+COSTALES_O_GRANEL = "En costales o a granel: ___"
+CIERRE_TIERRA = "¿Me dan el total con entrega?"
+
+
+def _mensaje_tierra(cfg, area, capa_cm, m3):
+    return "\n".join((f"Hola, quiero cotizar {cfg['texto']}.",
+                      f"Área: {area} m², capa de {capa_cm} cm = {m3} m³ (cálculo de la web)", COSTALES_O_GRANEL, COLONIA,
+                      CIERRE_TIERRA))
+
+
 def textos(clave, area, capa, r, uso=""):
     """Lo que muestra la etiqueta y el mensaje de WhatsApp. Iguales a los de main salvo lo que pide el dueño o la
     revisión: el camión de tierra negra con su tamaño y precio de datos.py en vez del "desde $5,000" (camion_tierra),
@@ -139,7 +151,8 @@ def textos(clave, area, capa, r, uso=""):
                             f"{m3} m³ suelto (~{c.dinero(r['m3'] * cfg['precio_m3'])})" if r["tramo"] == "m3" else
                             camion_tierra(r["m3"]))
             equivalente = f"{costales} costales" if r["tramo"] == "costales" else f"~{costales} costales"
-            lineas = (f"Área: {a} m²", f"Capa: {round(capa * 100)} cm", f"Cantidad: {m3} m³")
+            return {"cantidad": f"{m3} m³", "presentacion": presentacion, "equivalente": equivalente,
+                    "mensaje": _mensaje_tierra(cfg, a, round(capa * 100), m3)}
         else:
             presentacion = {"costales": f"{costales} costales", "m3": f"{m3} m³ suelto", "camion": "Camión 14 m³",
                             "camiones": f"{miles(r['camiones'])} camiones 14 m³"}[r["tramo"]]
@@ -173,6 +186,11 @@ def datos_js(clave):
 
 
 VACIO = {"cantidad": "Escribe el área", "fila": "—"}
+# Con área válida (reescritura 1 del informe de recorrido): el botón y la barra dicen que mandan el cálculo. Los mismos
+# textos viven en public/js/vt-materiales.js (paridad en tests/test_componentes_materiales.py).
+CTA_CALCULO = "Enviar mi cálculo por WhatsApp"
+CTA_CALCULO_BARRA = "Enviar mi cálculo"
+ERROR_AREA = "Escribe el área en m², solo con números. Ejemplo: 30."
 # Filas de la etiqueta por calculadora: (rótulo, salida). La nota va aparte.
 FILAS = {
     "tierra-negra": (("Presentación sugerida", "presentacion"), ("Equivalente en costales", "equivalente")),
@@ -201,7 +219,9 @@ def calculadora(prefijo, tipo, clave, mensaje, nombre):
     """Área (y capa) → etiqueta con la cantidad en banda, la presentación sugerida y su equivalente → WhatsApp con el
     resultado. Solo el resultado (cantidad, filas y nota de mármol) es role="status": la nota fija y el botón no se
     vuelven a leer en cada tecla. Empieza vacía: sin área, el botón manda el mensaje de la página (data-mensaje, con firma). data-cta conserva el
-    cta_id que medía main con VTMedicion.whatsapp (p. ej. material:cotizarCalculado)."""
+    cta_id que medía main con VTMedicion.whatsapp (p. ej. material:cotizarCalculado). Con área válida el botón dice
+    CTA_CALCULO y presta su enlace a la barra fija y al encabezado (data-vt-barra); con un área inválida avisa
+    ERROR_AREA bajo el campo sin borrar lo escrito (Entrega B de experiencia)."""
     cfg = CALCULADORAS[clave]
     generico = datos.con_firma(mensaje)
     capa = _select(prefijo, cfg) if "capas" in cfg else ""
@@ -210,17 +230,19 @@ def calculadora(prefijo, tipo, clave, mensaje, nombre):
     nota_dinamica = '<p class="vt-medidor__calc" data-vt-o="nota" hidden></p>' if clave == "marmol" else ""
     return (
         f'<div class="vt-b2b" data-vt-material data-hero-cta data-wa="{esc(datos.TELEFONO_WA)}" '
+        f'data-vt-barra="{esc(CTA_CALCULO_BARRA)}" '
         f'data-mensaje="{esc(generico)}" data-material="{esc(json.dumps(datos_js(clave), ensure_ascii=False, separators=(",", ":")))}">'
         f'<div class="vt-b2b__form" role="group" aria-label="Calculadora de {esc(nombre)}">'
-        f'{c._campo(f"{prefijo}-area", "area", "Área a cubrir", "Ej. 30", "m²", "decimal")}{capa}</div>'
+        f'{c._campo(f"{prefijo}-area", "area", "Área a cubrir", "Ej. 30", "m²", "decimal", error=f"{prefijo}-error")}'
+        f'<p class="vt-correo__error" id="{esc(prefijo)}-error" data-vt-o="error" hidden></p>{capa}</div>'
         '<div class="vt-etiqueta-x"><div class="vt-etiqueta vt-medidor__res">'
         '<p class="vt-etiqueta__cod"><span>Tu cálculo</span><span>Aproximado</span></p>'
         '<div class="vt-calc__res" role="status"><p class="vt-etiqueta__precio vt-calc__cantidad is-vacio">'
         f'<small>Necesitas</small><b data-vt-o="cantidad">{VACIO["cantidad"]}</b></p>{filas}{nota_dinamica}</div>'
         f'<p class="vt-medidor__calc">{NOTAS[clave]}</p>'
         f'<a class="vt-btn vt-btn--wa" data-cta="{esc(tipo)}:{cfg["cta"]}" data-vt-o="cta" '
-        f'href="{esc(datos.wa_url(generico))}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp'
-        '<span class="vt-flecha" aria-hidden="true">→</span></a></div></div></div>')
+        f'href="{esc(datos.wa_url(generico))}" target="_blank" rel="noopener">{WA_GLIFO}'
+        f'<span data-vt-o="cta-texto">{c.CTA_WA}</span><span class="vt-flecha" aria-hidden="true">→</span></a></div></div></div>')
 
 
 # ---------- precio por presentación ----------
@@ -299,6 +321,7 @@ def formulario_pedido(prefijo, cta, ejemplo_detalle, aviso):
         '<input type="hidden" name="_captcha" value="false">'
         '<input class="vt-correo__miel" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">'
         f'<div class="vt-correo__campos">{"".join(campos)}</div>'
-        '<div class="vt-correo__pie"><button type="submit" class="vt-btn vt-btn--tinta">Enviar solicitud de pedido'
+        # Reescritura 16 (Entrega B de experiencia): es una solicitud de cotización, no un pedido en firme.
+        '<div class="vt-correo__pie"><button type="submit" class="vt-btn vt-btn--tinta">Pedir cotización por correo'
         '</button><p class="vt-correo__estado" role="status" data-vt-o="correo-estado"></p>'
         f'<p class="vt-correo__aviso">{aviso}</p></div></form>')

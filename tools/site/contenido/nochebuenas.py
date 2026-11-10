@@ -233,3 +233,5 @@ CONTENIDO = {
 PARIDAD = {"reemplazos": {}, "retirados": {}}
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: el botón principal sigue siendo el del cotizador (texto aprobado), con el estilo del hero; el WhatsApp pasa de botón a enlace de texto («Pedir por WhatsApp» en temporada); lema nuevo: «Roja, rosa y jaspeada, al mismo precio.» (de «mismo precio», que ahora va en la línea de confianza); en celular la etiqueta muestra una fila.')
+# Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
+PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: con pedido, la barra fija y el encabezado mandan el pedido escrito por WhatsApp; el mensaje dice piezas y total, sin el nombre del escalón; el ticket dice «Precio aplicado: Mayoreo (12 a 49 piezas)»; calificación de Google con su enlace junto al botón del pedido (sin garantía).'

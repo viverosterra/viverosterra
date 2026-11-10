@@ -4,6 +4,7 @@ oferta → cotizador con envío y tabla de fletes → ciudades → comparativa d
 (TÚ / NOSOTROS / JUNTOS) → instálalo tú → preguntas → CTA final (Tampico). Contenido: tools/site/contenido/tienda.py.
 JS: tienda-pasto.js (cotizador y lista), tienda-hub.js (filtros, selector, precio puesto, comparador), vt-landed.js."""
 import componentes as c
+import datos
 import componentes_tienda as t
 from plantillas import base
 
@@ -33,11 +34,20 @@ def _portada(k):
 def _cotizador(k):
     q = k["cotizador"]
     calculo = "".join(f"<li><span>{x}</span></li>" for x in q["calculo"])
+    # Junto al CTA del cotizador, la prueba social de la tienda (Entrega B de experiencia): opinión real de pasto sintético
+    # y calificación de Google con el enlace a las reseñas.
+    prueba = c.prueba_cta(datos.OPINION_SINTETICO_TAMPICO, f"vendemos a todo México desde {datos.SINTETICO_NACIONAL_DESDE}")
     cuerpo = (f'<div class="vt-dos">{t.cotizador(k["default"], modelos=t.data.MODELOS, titulo=q["titulo_cotizador"], nivel=3, tipo=k["tipo"])}'
-              f'<div><h3>{q["titulo_calculo"]}</h3><ul class="vt-checks vt-mt-s">{calculo}</ul></div></div>'
+              f'<div><h3>{q["titulo_calculo"]}</h3><ul class="vt-checks vt-mt-s">{calculo}</ul>{prueba}</div></div>'
               f'<h3 class="vt-mt" id="envio">{q["titulo_envio"]}</h3><p class="vt-lede">{q["lede_envio"]}</p>'
               f'{t.tabla_envio()}<p class="vt-promesa">{q["nota_envio"]}</p>')
     return c.bloque(4, "Cotizador", "vt-h-cotizador", q["titulo"], cuerpo, tinte=True, id_seccion="cotizador")
+
+
+def _fila(k, seccion, texto):
+    """Entrega B de experiencia: WhatsApp en los tramos largos del hub (antes, 12 pantallas sin CTA); tienda-pasto.js le
+    pone lo que el cliente ya eligió (estado, cotizador o lista)."""
+    return c.fila_seccion(k["cierre"]["mensaje"], k["tipo"], seccion, texto, contexto=True)
 
 
 def render(k):
@@ -48,17 +58,19 @@ def render(k):
         _portada(k),
         c.respuesta(k.get("respuesta")),
         c.bloque(1, "Colección", "vt-h-modelos", mo["titulo"], t.catalogo(), lede=mo["lede"], id_seccion="modelos"),
-        c.bloque(2, "Elegir", "vt-h-elegir", el["titulo"], t.selector_modelo(), tinte=True, id_seccion="elegir"),
+        c.bloque(2, "Elegir", "vt-h-elegir", el["titulo"], t.selector_modelo() + _fila(k, "quiz", "Pedir mi recomendación"),
+                 tinte=True, id_seccion="elegir"),
         c.bloque(3, "Comparar", "vt-h-comparar", co["titulo"], t.comparador(), lede=co["lede"], id_seccion="comparar"),
         _cotizador(k),
         c.bloque(5, "Ciudades", "vt-h-ciudades", ci["titulo"],
-                 t.ciudades_destacadas(ci["items"]) + f'<p class="vt-promesa">{ci["perros"]}</p>', lede=ci["lede"],
-                 id_seccion="ciudades"),
+                 t.ciudades_destacadas(ci["items"]) + f'<p class="vt-promesa">{ci["perros"]}</p>'
+                 + _fila(k, "ciudades", "Cotizar con envío a mi ciudad"), lede=ci["lede"], id_seccion="ciudades"),
         c.bloque(6, "Comparativa", "vt-h-comparativa", cp["titulo"],
-                 t.tabla_modelos() + f'<p class="vt-promesa">{cp["nota"]}</p>', tinte=True, id_seccion="comparativa"),
+                 t.tabla_modelos() + f'<p class="vt-promesa">{cp["nota"]}</p>' + _fila(k, "comparativa", "Cotizar mi modelo"),
+                 tinte=True, id_seccion="comparativa"),
         c.bloque(7, "Obras", "vt-h-obras", ob["titulo"], c.obras(ob["figuras"], c.nota(*ob["nota"])), id_seccion="obras"),
-        c.bloque(8, "Tu pedido", "vt-h-pedido", pe["titulo"], c.pasos(pe["pasos"]), tinte=True,
-                 id_seccion="como-funciona"),
+        c.bloque(8, "Tu pedido", "vt-h-pedido", pe["titulo"], c.pasos(pe["pasos"]) + _fila(k, "pedido", "Empezar mi pedido"),
+                 tinte=True, id_seccion="como-funciona"),
         c.bloque(9, "Instálalo tú", "vt-h-diy", ins["titulo"], c.pasos(ins["pasos"]) +
                  f'<p class="vt-promesa">{ins["guia"]}</p>', lede=ins["lede"], id_seccion="instalacion"),
         c.bloque_dos(10, "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]), tinte=True,
