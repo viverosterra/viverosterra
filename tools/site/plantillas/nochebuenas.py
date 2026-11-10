@@ -23,8 +23,10 @@ PRODUCTO_INICIAL = "6"
 VARIEDAD_INICIAL = "Roja"
 SIZES_HERO = "(min-width: 1024px) 560px, 100vw"
 # Cuánto ocupa cada foto de la galería en escritorio (plantilla editorial, no rejilla uniforme): ver .vt-nb-galeria.
+# Por pares: las fotos impares a 7 de 12 columnas y las pares a 5, un poco más abajo.
 SIZES_GALERIA = {"detalle": "(min-width: 1024px) 58vw, 100vw", "grupo": "(min-width: 1024px) 34vw, 100vw",
-                 "kraft": "(min-width: 1024px) 66vw, 100vw"}
+                 "invernadero": "(min-width: 1024px) 58vw, 100vw", "bracteas": "(min-width: 1024px) 34vw, 100vw",
+                 "hileras": "(min-width: 1024px) 58vw, 100vw", "kraft": "(min-width: 1024px) 34vw, 100vw"}
 SIN_MODO_COTIZADOR = "postemporada"
 
 

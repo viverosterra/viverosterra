@@ -79,9 +79,8 @@
 .vt-nochebuenas .vt-nb-galeria{display:grid;gap:20px}
 @media (min-width:768px){
 .vt-nochebuenas .vt-nb-galeria{grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;align-items:start}
-.vt-nochebuenas .vt-nb-galeria__f--detalle{grid-column:1 / span 7}
-.vt-nochebuenas .vt-nb-galeria__f--grupo{grid-column:8 / span 5;margin-top:56px}
-.vt-nochebuenas .vt-nb-galeria__f--kraft{grid-column:3 / span 8}
+.vt-nochebuenas .vt-nb-galeria>:nth-child(odd){grid-column:1 / span 7}
+.vt-nochebuenas .vt-nb-galeria>:nth-child(even){grid-column:8 / span 5;margin-top:56px}
 }
 .vt-nochebuenas .vt-nb-sellos{display:grid;gap:16px;list-style:none}
 .vt-nochebuenas .vt-nb-sellos b{display:block;font-size:var(--vt-text-h3);font-weight:800;line-height:1.1;font-variation-settings:"wdth" 85}

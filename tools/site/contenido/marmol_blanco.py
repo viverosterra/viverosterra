@@ -73,8 +73,14 @@ FIGURAS = (
      "alt": "Mármol blanco como borde decorativo con suculentas en un jardín", "lugar": "Arriate", "etapa": "Suculentas"},
     {"src": "/img/marmol-blanco-maceta-decorativa-tampico.webp", "ancho": 1200, "alto": 1180, "numero": 4,
      "alt": "Mármol blanco en una maceta decorativa con suculenta", "lugar": "Maceta", "etapa": "Capa decorativa"},
+    {"src": "/img/marmol-blanco-costales-vivero-tampico-1200.webp", "ancho": 1200, "alto": 904, "numero": 5,
+     "srcset": ("/img/marmol-blanco-costales-vivero-tampico-640.webp 640w, "
+                "/img/marmol-blanco-costales-vivero-tampico-1200.webp 1200w"),
+     "sizes": "(min-width: 900px) 50vw, 100vw",
+     "alt": "Decenas de costales de malla con piedra de mármol blanco apilados sobre una lona en el vivero",
+     "lugar": "Costales en el vivero", "etapa": "Listos para entrega"},
 )
-FIGURA_SACO = {"src": "/img/marmol-blanco-saco-costal-tampico.webp", "ancho": 1024, "alto": 1536, "numero": 5,
+FIGURA_SACO = {"src": "/img/marmol-blanco-saco-costal-tampico.webp", "ancho": 1024, "alto": 1536, "numero": 6,
                "alt": "Saco de mármol blanco triturado", "lugar": "Saco de mármol blanco", "etapa": "Por saco"}
 USOS = (
     {"titulo": "Senderos y caminos", "texto": "Caminos firmes y permeables dentro del jardín, con un brillo natural que se "
