@@ -4,7 +4,7 @@ Datos, no HTML: los usan las plantillas de tools/site (fichas, hub, ciudades) y 
 """
 import re
 
-from data import SITE, WA_NUMBER
+from data import SITE
 
 GAL = "/img/pasto-sintetico/galeria"
 
@@ -30,7 +30,9 @@ RETURNS = {
     "merchantReturnDays": 7, "returnMethod": "https://schema.org/ReturnByMail",
     "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility",
 }
-SELLER = {"@type": "Organization", "name": "Viveros Terra", "url": SITE, "telephone": f"+{WA_NUMBER}"}
+# SEO fase 1: el vendedor es la entidad única del sitio por @id (tools/site/entidad.py define el nodo); antes, una
+# Organization suelta en cada producto.
+SELLER = {"@id": f"{SITE}/#negocio"}
 
 
 def product_schema(m, *, with_id=True):

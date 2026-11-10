@@ -12,6 +12,7 @@ import data
 import datos
 from componentes import dinero, dinero_exacto
 from contenido import seo
+from contenido import respuestas
 
 SITE = data.SITE
 URL = f"{SITE}/pasto-sintetico-tampico"
@@ -96,18 +97,6 @@ SERVICIO = {
     "offers": {"@type": "AggregateOffer", "priceCurrency": "MXN", "lowPrice": f"{INST_MIN:.2f}", "highPrice": f"{INST_MAX:.2f}",
                "unitText": "m²"},
 }
-NEGOCIO_LD = {
-    "@type": ["LocalBusiness", "Store"], "@id": NEGOCIO, "name": datos.NOMBRE, "url": SITE,
-    "telephone": datos.TELEFONO_TEL, "priceRange": "$$", "foundingDate": datos.FUNDACION,
-    "address": {"@type": "PostalAddress", "streetAddress": datos.CALLE,
-                "addressLocality": datos.CIUDAD, "addressRegion": "Tamaulipas", "postalCode": datos.CP,
-                "addressCountry": "MX"},
-    "geo": {"@type": "GeoCoordinates", "latitude": datos.GEO[0], "longitude": datos.GEO[1]},
-    "hasMap": datos.MAPS_URL,
-    "knowsAbout": ["Pasto sintético", "Instalación de pasto sintético", "Pasto en rollo", "Jardinería"],
-    "makesOffer": [{"@type": "Offer", "itemOffered": {"@id": f"{SITE}/pasto-sintetico/{m['slug']}#producto"}}
-                   for m in data.MODELOS] + [{"@type": "Offer", "itemOffered": {"@id": f"{URL}#instalacion"}}],
-}
 MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "Inicio", "item": SITE},
     {"@type": "ListItem", "position": 2, "name": "Pasto sintético en Tampico", "item": URL},
@@ -118,6 +107,7 @@ OBRAS = tuple({"src": f"{GAL}/{n}-sm.webp", "srcset": f"{GAL}/{n}-sm.webp 560w, 
               for i, (n, w, h, alt, cap) in enumerate(data.OBRAS, 2))
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/pasto-sintetico-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-sintetico",
     "prefijo": "sintetico",
     "meta": {
@@ -126,14 +116,15 @@ CONTENIDO = {
                ("og:description", DESCRIPCION), ("og:image", OG_IMG), ("og:locale", "es_MX")),
         "twitter": (("twitter:card", "summary_large_image"),),
     },
-    "jsonld": {"producto": NEGOCIO_LD, "nodos": (SERVICIO,), "migas": MIGAS_LD},
+    "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD},
     "migas": (("Inicio", "/"), ("Pasto sintético en Tampico", None)),
     "portada": {
         "kicker": "Pasto sintético · Tampico, Madero y Altamira",
+        "pos": "50% 62%",
+        "dato": "Los 9 modelos en existencia",
+        "enlaces": (("Calcula tu material", "#cotizador"), ("Cómo llegar al showroom", "#showroom")),
         "h1": 'Pasto sintético en Tampico <span class="vt-serif">venta e instalación</span>',
-        "lede": (f"Llévate el material desde nuestro showroom en Cd. Madero o déjanos la instalación completa. Vendemos e "
-                 f"instalamos en la región desde {datos.DESDE} y enviamos a todo México desde "
-                 f"{datos.SINTETICO_NACIONAL_DESDE}."),
+        "lede": f"Llévate el material del showroom en Cd. Madero o déjanos la instalación completa. En la región desde {datos.DESDE}.",
         "etiqueta": {
             "codigo": "Sintético · Tampico", "aviso": "Con IVA", "nombre": "Pasto sintético instalado",
             "antes": "Material y colocación · desde", "monto": INST_MIN_TXT, "unidad": "/m²",
@@ -141,8 +132,6 @@ CONTENIDO = {
                       ("Toscana 18 y 28", "para llevar hoy")),
         },
         "mensaje": MENSAJE,
-        "tambien": (f'Los 9 modelos en existencia · <a href="#cotizador">calcula tu material</a> · '
-                    '<a href="#showroom">cómo llegar al showroom</a>'),
         "foto": {"src": f"{GAL}/obra-residencial-tampico-sm.webp", "srcset": f"{GAL}/obra-residencial-tampico-sm.webp "
                  f"560w, {GAL}/obra-residencial-tampico.webp 960w", "sizes": "(min-width: 1024px) 560px, 100vw",
                  "ancho": 960, "alto": 1440, "numero": 1,
@@ -239,7 +228,11 @@ CONTENIDO = {
     "barra": {"nombre": "Pasto sintético en Tampico", "precio": f"Instalado desde {INST_MIN_TXT}/m²"},
 }
 
+M_NEGOCIO = ("SEO fase 1: la página ya no redefine el negocio con otros campos (LocalBusiness + Store con dirección, "
+             "coordenadas y ofertas que apuntaban a productos de otras páginas): lleva el nodo mínimo de la entidad única "
+             "y el Service de instalación con su AggregateOffer; el nodo completo vive en la home y en /vivero-tampico.")
 PARIDAD = {
+    "jsonld": {tipo: M_NEGOCIO for tipo in ("Store", "PostalAddress", "GeoCoordinates", "Offer")},
     "reemplazos": {"$385": f"${int(INST_MIN)}", "$650": INST_MAX_TXT},  # la captura guarda la parte entera
     "meta": seo.paridad(TITULO, DESCRIPCION, {
         "description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto sintético instalado era más IVA; se publica el precio final con IVA, $446.60 a $754/m²."),
@@ -251,3 +244,5 @@ PARIDAD = {
 }
 # Decisiones del dueño (2026-11-07): el testimonio de Sofía R. es real y se publica con permiso (textual, en
 # datos.OPINION_SINTETICO_TAMPICO); no se ofrece financiamiento propio a instaladores; el envío local no tiene precio fijo.
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: «enviamos a todo México desde 2012» sale del hero (está en la tienda /pasto-sintetico, enlazada).')

@@ -4,7 +4,7 @@ NOSOTROS / TÚ → precios → preguntas → cobertura por zona → CTA final. S
 
 Hero y conversión (docs/superpowers/specs/2026-11-09-home-hero-y-conversion-design.md, Entrega 1): la portada, la fila de
 WhatsApp de cada sección y el cierre son propios de la home y se visten con public/css/terra-inicio.css (todo bajo
-.vt-inicio); las demás páginas siguen con c.portada y c.cierre."""
+.vt-inicio). Desde la Entrega A de experiencia (2026-11-10) la portada es el componente común c.portada."""
 import componentes as c
 import datos
 from partials import esc
@@ -36,30 +36,19 @@ def _banner_temporada(t):
             '</span></a></aside>')
 
 
-# Separador de la línea de confianza: real en el DOM (sin CSS no se lee pegado) y decorativo para el lector de pantalla.
-_SEP = '<span class="vt-inicio__sep" aria-hidden="true"> · </span>'
 # Filas de WhatsApp de sección: texto del botón y si llevan la promesa debajo (solo la primera y la última).
 _FILAS = {"opiniones": ("Cotizar mi jardín por WhatsApp", True), "proceso": ("Empezar por WhatsApp", False),
           "precios": ("Pedir mi precio por WhatsApp", False), "faq": ("Preguntar por WhatsApp", True)}
 
 
 def _portada(p):
-    """Portada de la home. p: kicker, h1, lema, lede, etiqueta, mensaje y foto. En el DOM (y en celular) la etiqueta de
-    precio va entre el lede y el botón; desde 1024 px terra-inicio.css la cuelga sobre la esquina de la foto. Un solo
-    botón (terra.js esconde la barra móvil mientras se ve), dos enlaces de texto y la línea de confianza."""
-    nota, _, resenas = datos.GOOGLE.partition(" ")
-    return (
-        '<section class="vt-portada" aria-labelledby="vt-h1"><div class="vt-wrap"><div class="vt-portada__grid">'
-        f'<div class="vt-inicio__titulo"><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1>'
-        f'<p class="vt-inicio__lema vt-serif">{p["lema"]}</p><p class="vt-lede">{p["lede"]}</p></div>'
-        f'{c.etiqueta(p["etiqueta"])}'
-        f'<div class="vt-inicio__trato"><div class="vt-inicio__cta" data-hero-cta>{c.boton_wa(p["mensaje"], f"{TIPO}:hero")}</div>'
-        f'<p class="vt-inicio__enlaces"><a id="vt-calcula-patio" data-cta="{TIPO}:hero" href="#medidor">Calcula tu patio '
-        '<span aria-hidden="true">→</span></a>'
-        f'<a data-cta="{TIPO}:hero" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a></p>'
-        f'<p class="vt-inicio__confianza">{c.promesa_horario()}{_SEP}<span><b>{esc(nota)}</b> {esc(resenas)}</span>{_SEP}'
-        f'<span><b>{esc(datos.CLIENTES)}</b> clientes</span></p></div>'
-        f'<div class="vt-portada__foto">{c.figura(p["foto"], principal=True)}</div></div>{c.cuadro_datos()}</div></section>')
+    """Portada de la home: el hero de marca común (componentes.portada), del que es la referencia. pliegue=False: en
+    celular la etiqueta de precio va entre el lede y el botón y la foto al final (diseño aprobado el 2026-11-09); desde
+    1024 px terra.css cuelga la etiqueta sobre la esquina de la foto. Un solo botón, dos enlaces de texto y la línea de
+    confianza con los clientes atendidos."""
+    hero = dict(p, enlaces=(("Calcula tu patio", "#medidor", None, 'id="vt-calcula-patio"'),),
+                dato=f"<b>{esc(datos.CLIENTES)}</b> clientes")
+    return c.portada(hero, TIPO, pliegue=False)
 
 
 def _fila_wa(mensaje, seccion):
@@ -94,6 +83,7 @@ def render(k):
     cuerpo = "\n".join((
         _banner_temporada(k["temporada"]),
         _portada(k["portada"]),
+        c.respuesta(k.get("respuesta")),
         c.bloque(1, "Qué hacemos", "vt-h-que", q["titulo"], c.indice(q["items"], TIPO), lede=q["lede"]),
         c.bloque(2, "Medidor", "vt-h-medidor", m["titulo"],
                  c.medidor("inicio", TIPO, mensaje=k["portada"]["mensaje"], boton_medida=True, garantia=True,
@@ -116,10 +106,10 @@ def render(k):
         _cierre(ci),
     ))
     j = k["jsonld"]
-    bloques = (
-        {"@context": CONTEXTO, **j["negocio"]},
-        {"@context": CONTEXTO, **c.faq_jsonld(f["preguntas"], speakable=j["speakable"])},
-    )
-    return base.documento(k["meta"], cuerpo, jsonld_bloques=bloques,
+    # SEO fase 1: un solo @graph con el sitio, el nodo completo del negocio y las preguntas; el WebPage (con su
+    # speakable) lo cierra entidad.completar.
+    bloques = ({"@context": CONTEXTO, "@graph": [j["sitio"], j["negocio"],
+                                                  c.faq_jsonld(f["preguntas"], speakable=j["speakable"])]},)
+    return base.documento(base.meta_de(k), cuerpo, jsonld_bloques=bloques,
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),), scripts=SCRIPTS,
                           clase_body="vt-pagina vt-inicio vt-temporada" if k["temporada"] else "vt-pagina vt-inicio")

@@ -375,7 +375,8 @@ class JsonLdTest(unittest.TestCase):
     def test_grafo_completo(self):
         tipos = [n["@type"] for n in self.nodos]
         self.assertEqual(tipos.count("Product"), 5)
-        for tipo in ("WebPage", "FAQPage", "BreadcrumbList", "LocalBusiness"):
+        # SEO fase 1: el negocio es la entidad única, de tipo GardenStore + LocalBusiness.
+        for tipo in ("WebPage", "FAQPage", "BreadcrumbList", ["GardenStore", "LocalBusiness"]):
             self.assertEqual(tipos.count(tipo), 1)
         pagina = next(n for n in self.nodos if n["@type"] == "WebPage")
         negocio = {"@id": f"{datos.SITIO}/#negocio"}
@@ -389,9 +390,10 @@ class JsonLdTest(unittest.TestCase):
         self.assertTrue(pagina["primaryImageOfPage"]["url"].startswith(datos.SITIO + "/img/nochebuenas/"))
 
     def test_nodo_minimo_del_negocio(self):
-        nodo = next(n for n in self.nodos if n["@type"] == "LocalBusiness")
-        self.assertEqual(nodo, {"@type": "LocalBusiness", "@id": f"{datos.SITIO}/#negocio", "name": datos.NOMBRE, "url": datos.SITIO,
-                                "telephone": datos.TELEFONO_TEL})
+        # SEO fase 1: el mismo nodo mínimo de todas las páginas (tools/site/entidad.py), con la URL canónica de la home.
+        nodo = next(n for n in self.nodos if "LocalBusiness" in n["@type"])
+        self.assertEqual(nodo, {"@type": ["GardenStore", "LocalBusiness"], "@id": f"{datos.SITIO}/#negocio",
+                                "name": datos.NOMBRE, "url": f"{datos.SITIO}/", "telephone": datos.TELEFONO_TEL})
 
     def test_ofertas_por_escalon(self):
         rangos = [(1, 11), (12, 49), (50, 199), (200, None)]

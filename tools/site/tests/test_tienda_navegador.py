@@ -30,9 +30,11 @@ CORTADOS = """() => Array.from(document.querySelectorAll('.spec-card')).map((car
   const cortado = b.right > c.right + 0.5 || boton.scrollWidth > boton.clientWidth + 1;
   return cortado ? card.querySelector('.spec-card__name').textContent.trim() : null;
 }).filter(Boolean)"""
+# Entrega A de experiencia (2026-11-10): en la ficha la galería sube a la primera pantalla; sus fotos 2 a 4 siguen a la
+# derecha, fuera de la ventana (pista con scroll horizontal), así que "en pantalla" se mide también en horizontal.
 LAZY_EN_PANTALLA = """() => Array.from(document.images).filter((i) => {
   const r = i.getBoundingClientRect();
-  return i.loading === 'lazy' && r.top < innerHeight && r.bottom > 0 && r.width > 200;
+  return i.loading === 'lazy' && r.top < innerHeight && r.bottom > 0 && r.left < innerWidth && r.right > 0 && r.width > 200;
 }).map((i) => i.src)"""
 
 # El aviso visible y sin transición en curso (la caja se mide ya en su lugar).

@@ -53,7 +53,8 @@ class TerraCssTest(unittest.TestCase):
         ajenos = []
         for selector in re.findall(r"([^{}]+)\{", css):
             selector = selector.strip()
-            if selector.startswith("@media") or selector == ":root":
+            # @container: la foto de portada en celular se mide a sí misma (Entrega A de experiencia, 2026-11-10).
+            if selector.startswith(("@media", "@container")) or selector == ":root":
                 continue
             ajenos += [p.strip() for p in selector.split(",") if ".vt-" not in p]
         self.assertEqual(ajenos, [])
@@ -90,11 +91,15 @@ class TerraCssTest(unittest.TestCase):
         # sustituye, en cada página migrada, ~70 KB de CSS viejo (tailwind, design-system, servicios y <style>).
         # Se mide la copia publicada (activos.minificar_css: sin comentarios ni sangría), que es la que se transfiere.
         datos = activos.minificar_css(self.css).encode("utf-8")
-        self.assertLess(len(gzip.compress(datos, mtime=0)), 10 * 1024)
         # Decisión del 2026-11-09 (revisión del hero): el tope bruto sube de 48 a 50 KB para el WhatsApp del menú
         # móvil a todo lo ancho, esconder la barra fija con el menú abierto y apagar su transición con movimiento
-        # reducido. El de gzip (lo que se transfiere) sigue en 10 KB.
-        self.assertLess(len(datos), 50 * 1024)
+        # reducido.
+        # Decisión del 2026-11-10 (Entrega A de experiencia): el hero de marca es de todo el sitio y su CSS sale de
+        # terra-inicio.css (que baja de 8 a menos de 3 KB) y entra aquí, después de limpiar las reglas viejas de
+        # .vt-portada (--compacta, --apaisada, __tambien, tres copias de la etiqueta compacta). Topes: 56 KB brutos y
+        # 11 KB con gzip. En la home el total de las dos hojas no cambia; en las demás páginas son ~1.1 KB más con gzip.
+        self.assertLess(len(gzip.compress(datos, mtime=0)), 11 * 1024)
+        self.assertLess(len(datos), 56 * 1024)
 
     def test_menu_movil_con_whatsapp_ancho_y_sin_barra_debajo(self):
         css = sin_comentarios(self.css)
@@ -125,10 +130,12 @@ class TerraCssTest(unittest.TestCase):
         self.assertIn(".vt-tabla--especies thead,.vt-tabla__cotiza{display:none}", self.css)
 
     def test_componentes_de_materiales(self):
-        """Etapa 2f: portada sin foto y apaisada, cierre con la foto de fondo de main, otros materiales con miniatura y
-        "Según cotización" en la tabla sin desbordar a 320 px."""
-        for selector in (".vt-portada--sinfoto .vt-portada__grid", ".vt-portada--apaisada .vt-portada__foto .vt-fig__marco",
-                         ".vt-cierre--foto", ".vt-otros img", ".vt-tabla__p--cotiza"):
+        """Etapa 2f: portada sin foto, cierre con la foto de fondo de main, otros materiales con miniatura y "Según
+        cotización" en la tabla sin desbordar a 320 px. Entrega A de experiencia (2026-11-10): sin foto, la etiqueta
+        ocupa la columna derecha en escritorio; la variante apaisada se retiró (la foto se encuadra con object-position)."""
+        self.assertIn(".vt-portada--sinfoto .vt-etiqueta-x{position:relative;", self.css)
+        self.assertNotIn("vt-portada--apaisada", self.css)
+        for selector in (".vt-cierre--foto", ".vt-otros img", ".vt-tabla__p--cotiza"):
             with self.subTest(selector=selector):
                 self.regla(selector)
         self.assertIn("opacity:.15", self.regla(".vt-cierre__fondo"))

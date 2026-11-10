@@ -33,5 +33,6 @@ def render(k):
                  lede=g["lede"], tinte=True, id_seccion="garantia"),
         c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo),
     ]
-    return base.documento(k["meta"], "\n".join(bloques), jsonld_bloques=k["jsonld"],
-                          precargas=(base.precarga_imagen(k["cabeza"]["foto"]),), clase_body=CLASE_BODY)
+    return base.documento(base.meta_de(k), "\n".join(bloques), jsonld_bloques=k["jsonld"],
+                          precargas=(base.precarga_imagen(k["cabeza"]["foto"]),), clase_body=CLASE_BODY,
+                          imagen=base.imagen_de(k["cabeza"]["foto"]))

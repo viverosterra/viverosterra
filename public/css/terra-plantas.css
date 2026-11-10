@@ -42,7 +42,9 @@
 
 /* catálogo: cabeza, buscador y filtros */
 .vt-plantas .vt-bloque.vt-cat__cabeza{padding-block:20px 8px}
-.vt-plantas .vt-cat__cabeza h1{margin:12px 0 8px;font-size:clamp(2rem,1.4rem + 2.6vw,3.5rem);line-height:1.02}
+.vt-plantas .vt-cat__cabeza h1{margin:12px 0 0}
+.vt-plantas .vt-cat__cabeza .vt-lede{margin-top:12px}
+.vt-plantas .vt-cat__cabeza .vt-portada__cta{max-width:420px}
 .vt-plantas .vt-cat__precios{margin:0 0 12px;font-weight:600}
 .vt-plantas .vt-bloque.vt-cat__rejilla{padding-top:8px;padding-bottom:calc(var(--vt-bar-h) + 32px)}
 .vt-plantas .vt-buscador{display:grid;gap:12px;margin:0 0 8px}
@@ -100,6 +102,6 @@
 
 /* hub y subcategorías: en celular terra.css oculta el nombre de la etiqueta; aquí se ve para que el precio nunca quede
    como un «DESDE $250» suelto (dice de qué especie es) */
-@media (max-width:1199px){.vt-plantas .vt-portada .vt-etiqueta__nombre{display:block;margin-top:6px;font-size:19px}}
+@media (max-width:1279px),(max-height:820px){.vt-plantas .vt-portada .vt-etiqueta__nombre{display:block;margin-top:6px;font-size:19px}}
 
 @media (prefers-reduced-motion:reduce){.vt-plantas .vt-necesidades a,.vt-plantas .vt-lista-barra .vt-btn,.vt-plantas .vt-buscador__filtros summary::after{transition:none}.vt-plantas .vt-necesidades a:hover,.vt-plantas .vt-lista-barra .vt-pulso{transform:none}}

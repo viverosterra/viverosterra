@@ -109,8 +109,13 @@ class PastoEnRolloTest(unittest.TestCase):
         self.assertNotRegex(TEXTO, r"(?i)visitas?\W+(?:\w+\W+){0,3}?(?:sin costo|gratis|gratuita)|medir sin costo")
 
     def test_json_ld_conservado_y_generado_de_lo_visible(self):
-        self.assertEqual({n["@type"] for n in GRAFO},
-                         {"Product", "FAQPage", "HowTo", "BreadcrumbList", "SpeakableSpecification"})
+        # SEO fase 1: el speakable va dentro del WebPage (ya no suelto) y el grafo cierra con el WebPage y los nodos
+        # mínimos del negocio y del sitio; el Product lleva su foto y el vendedor por @id.
+        self.assertEqual({t for n in GRAFO for t in ([n["@type"]] if isinstance(n["@type"], str) else n["@type"])},
+                         {"Product", "FAQPage", "HowTo", "BreadcrumbList", "WebPage", "GardenStore", "LocalBusiness", "WebSite"})
+        self.assertEqual(nodo("WebPage")["speakable"]["cssSelector"], ["[data-vt-respuesta]", ".vt-faq details p"])
+        self.assertEqual(nodo("Product")["offers"]["seller"], {"@id": f"{datos.SITIO}/#negocio"})
+        self.assertEqual(nodo("Product")["image"], f"{datos.SITIO}/img/despues-instalacion-pasto-san-agustin-tampico.webp")
         visibles = [re.sub(r"<[^>]+>", "", s) for s in re.findall(r"<summary>(.*?)</summary>", MAIN)]
         self.assertEqual([q["name"] for q in nodo("FAQPage")["mainEntity"]], visibles)
         self.assertEqual(len(visibles), 8)

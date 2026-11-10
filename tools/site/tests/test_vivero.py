@@ -39,13 +39,16 @@ class ViveroTest(unittest.TestCase):
         self.assertIn('"closes":"14:00"', self.html)
         self.assertNotIn("InStock", self.html)
 
-    def test_como_llegar_es_boton_junto_a_whatsapp(self):
-        fila = re.search(r'<div class="vt-cta" data-hero-cta>(.*?)</div>', self.html, re.S).group(1)
-        boton = re.search(r'<a class="vt-btn vt-btn--linea" data-cta="vivero:mapas" href="([^"]+)"[^>]*>(.*?)</a>', fila)
-        self.assertEqual(boton.group(1), datos.MAPS_URL)
-        self.assertIn("Cómo llegar", boton.group(2))
-        self.assertLess(fila.index("vt-btn--wa"), fila.index("vivero:mapas"))
-        self.assertLess(fila.index("vivero:mapas"), fila.index("tel:"))
+    def test_como_llegar_es_enlace_junto_a_whatsapp(self):
+        """Entrega A de experiencia (2026-11-10): un solo botón en el hero; "Cómo llegar" y el teléfono son enlaces de
+        texto bajo el WhatsApp (antes, botones de línea)."""
+        trato = re.search(r'<div class="vt-portada__trato">(.*?)</div></div>', self.html, re.S).group(1)
+        enlace = re.search(r'<a data-cta="vivero:mapas" href="([^"]+)" target="_blank" rel="noopener">(.*?)</a>', trato)
+        self.assertEqual(enlace.group(1), datos.MAPS_URL)
+        self.assertIn("Cómo llegar", enlace.group(2))
+        self.assertLess(trato.index("vt-btn--wa"), trato.index("vivero:mapas"))
+        self.assertLess(trato.index("vivero:mapas"), trato.index("tel:"))
+        self.assertNotIn("vt-btn--linea", trato)
         self.assertNotIn("vt-portada__tambien", self.html)
 
     def test_enlaces_a_mapas_etiquetados(self):

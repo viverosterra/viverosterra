@@ -15,6 +15,9 @@
    para que el banner no crezca */
 .vt-temporada .vt-navidad__estado,.vt-temporada .vt-navidad__mas{display:none}
 @media (max-width:1023px){.vt-temporada .vt-navidad__txt:has(.vt-navidad__hasta:not(:empty)) .vt-navidad__precios{display:none}}
+/* Antes de que terra.js escriba los días que faltan, el renglón de precios ocupa el mismo renglón único (cortado con
+   puntos suspensivos si no cabe): al llegar la frase el banner no cambia de alto ni empuja la portada (CLS). */
+@media (max-width:1023px){.vt-temporada .vt-navidad__txt>span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}}
 .vt-temporada .vt-navidad__cta{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border-radius:var(--vt-radius-tag);background:var(--vt-tag);color:var(--vt-tag-ink);font-size:var(--vt-text-sm);font-weight:700;white-space:nowrap}
 .vt-temporada .vt-navidad__flecha{transition:transform var(--vt-duration-fast) var(--vt-ease-out)}
 @media (hover:hover){.vt-temporada .vt-navidad:hover .vt-navidad__flecha{transform:translateX(3px)}}

@@ -10,9 +10,6 @@ from contenido import catalogo_datos as cd
 SITE = datos.SITIO
 HUB = "/plantas-palmas-arboles-tampico"
 NEGOCIO = f"{SITE}/#negocio"  # la entidad única de las demás páginas (el nodo completo vive en la home)
-# Motivo de paridad del LocalBusiness de main: plantillas/hub_categoria.py pone el WebPage con about y publisher por @id.
-MOTIVO_LOCAL_BUSINESS = ("Nodo recortado de main; el WebPage de la página lo nombra por @id (about y publisher) en la "
-                         "entidad única #negocio de la home; el grafo completo es de la Etapa 4.")
 # Clave: slug; valor: por qué no va en el hub ni en las subcategorías. Vacía por decisión del dueño (2026-11-08): las
 # fotos quedan como en main y los cambios de fotos van en otra etapa (la revisión del lote C marcó coco plumoso, escena
 # de hotel con alberca, y palma areca, macetas junto a una alberca de diseño).

@@ -6,9 +6,10 @@ import re
 import componentes as c
 import componentes_blog as cb
 import datos
+import entidad
 from plantillas import base
 
-NEGOCIO = {"@id": f"{datos.SITIO}/#negocio"}
+NEGOCIO = entidad.REF
 
 
 def render(k):
@@ -20,7 +21,7 @@ def render(k):
     grafo = _grafo(k)
     html = "\n".join((cb.cabeza(k), cuerpo, cb.producto(k["tema"], k["mensaje"], k["tipo"]),
                       cb.relacionados(k["relacionados_titulo"] or "También te puede interesar", k["relacionados"])))
-    return base.documento(k["meta"], html, jsonld_bloques=({"@context": "https://schema.org", "@graph": grafo},),
+    return base.documento(base.meta_de(k), html, jsonld_bloques=({"@context": "https://schema.org", "@graph": grafo},),
                           precargas=_precarga(k["cuerpo"]), clase_body="vt-pagina vt-blog")
 
 
@@ -42,10 +43,24 @@ def _migas_ld(k):
 
 def _grafo(k):
     """Grafo del artículo: autor editorial y publisher por @id a #negocio; migas y preguntas salen de lo visible."""
-    autor = {"@type": "Organization", "name": datos.AUTOR_BLOG}
-    nodos = [{**n, "author": autor, "publisher": NEGOCIO} if n.get("@type") == "Article" else n
+    nodos = [_articulo_ld(k, n) if n.get("@type") == "Article" else n
              for n in k["jsonld"]["@graph"] if n.get("@type") not in ("FAQPage", "BreadcrumbList")]
     return nodos + [_migas_ld(k)] + ([c.faq_jsonld(k["faq"])] if k["faq"] else [])
+
+
+def _articulo_ld(k, nodo):
+    """Article completo (SEO fase 1): autor y publisher son la entidad única por @id (la firma visible sigue siendo
+    datos.AUTOR_BLOG); la descripción que falte es la de la página; la imagen que falte es la primera foto del cuerpo
+    o, si el artículo no muestra ninguna, la que ya declara en su og:image (nunca una inventada); las fechas son las
+    del encabezado de la fuente (sin dateModified, la de publicación); mainEntityOfPage es el WebPage de la página."""
+    meta = k["meta"]
+    foto = re.search(r'<img src="([^"]+)"', k["cuerpo"])
+    imagen = nodo.get("image") or (f"{datos.SITIO}{foto.group(1)}" if foto else dict(meta["og"]).get("og:image"))
+    completo = {**nodo, "description": nodo.get("description") or meta["description"],
+                "datePublished": k["publicado_iso"], "dateModified": k["actualizado_iso"],
+                "mainEntityOfPage": {"@id": meta["canonical"]}, "inLanguage": entidad.IDIOMA,
+                "author": NEGOCIO, "publisher": NEGOCIO}
+    return {**completo, "image": imagen} if imagen else completo
 
 
 def _precarga(cuerpo):

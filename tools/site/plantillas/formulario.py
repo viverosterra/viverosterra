@@ -75,5 +75,5 @@ def render(k):
     cuerpo = cu.cabeza(k["cabeza"]) + "\n" + VISTAS[k["vista"]](k)
     foto = k["cabeza"].get("foto")
     precargas = (base.precarga_imagen(foto),) if foto else ()
-    return base.documento(k["meta"], cuerpo, jsonld_bloques=k.get("jsonld", ()), precargas=precargas,
+    return base.documento(base.meta_de(k), cuerpo, jsonld_bloques=k.get("jsonld", ()), precargas=precargas,
                           scripts=k.get("scripts", ()), clase_body=CLASE_BODY)

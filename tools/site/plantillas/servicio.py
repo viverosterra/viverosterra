@@ -139,7 +139,7 @@ def _relacionados(k, numero):
 def render(k):
     tipo = k["tipo"]
     g, f, ci, p = k["garantia"], k["faq"], k["cierre"], k["proceso"]
-    secciones = [c.portada(k["portada"], tipo, k["migas"]), _prueba(k, 1)]
+    secciones = [c.portada(k["portada"], tipo, k["migas"]), c.respuesta(k.get("respuesta")), _prueba(k, 1)]
     numero = 2
     obras = fotos_obra.seccion(k["meta"]["canonical"])
     if obras:
@@ -172,7 +172,7 @@ def render(k):
     if tienda:
         b = k["barra"]
         fuera = t.lista_y_aviso() + t.barra_compra(b["nombre"], b["precio"], ci["mensaje"])
-    return base.documento(k["meta"], (t.subnav() if tienda else "") + "\n".join(secciones),
+    return base.documento(base.meta_de(k), (t.subnav() if tienda else "") + "\n".join(secciones),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),), scripts=_scripts(k),
                           head_extra=(t.json_modelos(),) if tienda else (), tras_main=fuera,

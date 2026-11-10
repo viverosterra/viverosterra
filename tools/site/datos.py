@@ -9,6 +9,9 @@ from urllib.parse import quote
 
 SITIO = "https://www.viverosterra.com"
 NOMBRE = "Viveros Terra"
+# El otro nombre con que aparece el negocio (canal de YouTube, LinkedIn y el og:site_name de la home): va como
+# alternateName del JSON-LD para que no se lea como otra empresa.
+NOMBRE_ALTERNO = "Viveros Terra Tampico"
 GA4_ID = "G-RMZCVJ734M"
 ANIO = 2026
 
@@ -98,6 +101,11 @@ PRECIOS = {
 # Hasta cuándo valen los precios publicados (priceValidUntil del JSON-LD de Product). Es un dato versionado: se renueva a
 # mano cada año, antes de que venza (Google deja de mostrar el precio de una oferta vencida).
 PRECIOS_VIGENTES_HASTA = "2027-12-31"
+# Última revisión de los precios publicados (AAAA-MM-DD): sale visible como "Actualizado: <mes> de <año>" junto a la
+# respuesta directa de las páginas con precio y como dateModified de su WebPage. Dato versionado (nunca date.today():
+# el build es idempotente); se sube a mano cuando el dueño confirma o cambia un precio. Último cambio: 2026-11-10 (el
+# pasto sin instalar no lleva IVA).
+PRECIOS_ACTUALIZADOS = "2026-11-10"
 # Materiales: respuestas del dueño (2026-11-08). Tierra preparada a $100 el costal y camiones de tierra negra de 5, 8 y
 # 14 m³ a $3,500, $5,200 y $8,000 (nunca "camión desde $5,000": no lo confirmó). Mármol a $250 el saco, IVA incluido,
 # con sus palabras: "sujeto a disponibilidad" (solo junto al precio del mármol: test_materiales_reglas.py). El m³ y el

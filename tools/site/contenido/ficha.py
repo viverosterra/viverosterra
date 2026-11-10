@@ -112,7 +112,8 @@ def contenido(m):
         "jsonld": (breadcrumb_schema([("Inicio", SITE), ("Pasto Sintético", f"{SITE}/pasto-sintetico"),
                                       (m["nombre"], url)]), product_schema(m)),
         "migas": (("Inicio", "/"), ("Pasto sintético", "/pasto-sintetico"), (m["nombre"], None)),
-        "kicker": f"Pasto sintético · N.º {m['n']:02d} de 09 · {m['tag']}",
+        "kicker": f"Pasto sintético · N.º {m['n']:02d} de 09",
+        "lema": f"{m['tag']}.",  # el rótulo del modelo (tools/pasto/data.py), antes al final del kicker
         "h1": f'<span class="vt-ficha__pre">Pasto sintético</span> {m["nombre"]}{insignia}',
         "lede": m["lede"],
         "etiqueta": {
@@ -156,4 +157,10 @@ def pagina(slug):
     return SimpleNamespace(CONTENIDO=contenido(m), PARIDAD={**PARIDAD, "meta": seo.paridad(*titulo_y_descripcion(m))})
 
 
-PARIDAD = {"reemplazos": {}, "retirados": {}}
+M_VENDEDOR = ("SEO fase 1: el vendedor de cada producto es la entidad única #negocio por @id (antes, una Organization suelta "
+              "con nombre, URL y teléfono en cada oferta).")
+PARIDAD = {"reemplazos": {}, "retirados": {}, "jsonld": {"Organization": M_VENDEDOR},
+           "hero": ("Entrega A de experiencia (2026-11-10), hero de marca: el rótulo del modelo pasa del kicker al lema en "
+                    "serif; botón de WhatsApp bajo la etiqueta (antes el hero no tenía CTA en celular) con enlace al "
+                    "cotizador y al teléfono; la existencia, la entrada y los datos van después del botón (en celular, "
+                    "después de la galería); en celular y pantallas bajas la etiqueta muestra una fila.")}

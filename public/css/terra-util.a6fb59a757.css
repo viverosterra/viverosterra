@@ -1,5 +1,6 @@
 .vt-util .vt-util__cabeza{padding:clamp(20px,3vw,40px) 0 clamp(24px,4vw,48px);border-bottom:1px solid var(--vt-line)}
 .vt-util .vt-util__intro{display:grid;gap:24px;align-items:center}
+.vt-util .vt-util__intro>*{min-width:0}
 .vt-util .vt-util__foto img{display:block;width:100%;height:clamp(150px,34vw,320px);object-fit:cover;border-radius:var(--vt-radius)}
 .vt-util .vt-util__foto img[src*="diseno-jardin-instalacion-plantas-tampico"]{object-position:50% 58%}
 @media (min-width:900px){.vt-util .vt-util__intro:has(.vt-util__foto){grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}}
@@ -67,7 +68,7 @@
 .vt-util .vt-util__datos dd{margin:2px 0 0;color:var(--vt-ink-2)}
 .vt-util .vt-util__servicios{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:4px 24px;margin:20px 0 0;padding:0;list-style:none}
 .vt-util .vt-util__servicios a{display:block;padding:10px 0;border-bottom:1px solid var(--vt-line)}
-.vt-util .vt-util__cabeza h1{margin:0 0 12px;font-size:clamp(2.25rem,1.5rem + 3vw,4rem);line-height:1.02}
+.vt-util .vt-util__cabeza h1{margin:0 0 12px}
 .vt-util .vt-util__cabeza .vt-crumbs{margin-bottom:14px}
 .vt-util .vt-util__cabeza + .vt-bloque{padding-top:clamp(24px,3vw,44px)}
 .vt-util [hidden]{display:none}

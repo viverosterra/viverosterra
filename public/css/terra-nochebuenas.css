@@ -2,8 +2,6 @@
    todo bajo .vt-nochebuenas y con los tokens de terra.css. La pieza principal es la nota de pedido: una hoja blanca con
    renglones y, encima de ella, la etiqueta amarilla del total. Móvil primero. */
 
-/* Portada: en celular el H1 cede para que el precio y el CTA entren en la primera pantalla. */
-@media (max-width:1023px){.vt-nochebuenas .vt-portada h1{font-size:clamp(2.25rem,1.6rem + 3.4vw,3.25rem)}}
 
 /* ---------- nota de pedido ---------- */
 .vt-nochebuenas .vt-nb-nota{display:grid;grid-template-columns:minmax(0,1fr)}

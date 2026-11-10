@@ -9,9 +9,11 @@ deportes es solo del sintético. Título y descripción (también en Open Graph 
 Canonical, Service y migas como estaban publicados; FAQPage de las preguntas visibles y HowTo de los 5 pasos visibles. PARIDAD: tests/test_paridad.py.
 """
 import datos
+import entidad
 import mensajes_paginas
 from componentes import dinero, mensualidades
 from contenido import seo
+from contenido import respuestas
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -50,10 +52,8 @@ SERVICIO = {
     "description": ("Instalación profesional de sistemas de riego automatizado para jardines residenciales, comerciales e "
                     "industriales en Tampico, Madero y Altamira, Tamaulipas. Aspersores emergentes, riego por goteo y "
                     "programadores digitales."),
-    "provider": {"@type": "LocalBusiness", "name": datos.NOMBRE, "telephone": datos.TELEFONO_TEL,
-                 "address": {"@type": "PostalAddress", "streetAddress": datos.CALLE, "addressLocality": datos.CIUDAD,
-                             "addressRegion": "Tamaulipas", "postalCode": datos.CP, "addressCountry": "MX"}},
-    "areaServed": ["Tampico", "Ciudad Madero", "Altamira", "Tamaulipas", "Norte Veracruz"],
+    "provider": entidad.REF,  # SEO fase 1: la entidad única por @id (antes, un LocalBusiness suelto)
+    "areaServed": [{"@type": "City", "name": ciudad} for ciudad in entidad.CIUDADES],
 }
 MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "Inicio", "item": SITE},
@@ -147,18 +147,21 @@ SECTORES = (
 )
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/sistema-riego-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-riego",
     "prefijo": "riego",
     "meta": META,
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "howto": "Cómo instalar un sistema de riego automático en Tampico",
-               "speakable": ("h1", "h2", ".vt-faq summary")},
+               "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Riego automático", None)),
     "portada": {
-        "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
-        "kicker": "Riego automático · Tampico, Madero y Altamira",
+        "kicker": "Riego · Tampico, Madero y Altamira",
+        "pos_d": "24% 50%",
+        "pos": "30% 45%",
+        "dato": "Fotos y medidas por WhatsApp para cotizar",
+        "enlaces": (("Mensualidades con tarjeta", "#mensualidades"),),
         "h1": f'Riego automático para jardines en Tampico <span class="vt-serif">que ahorra {AHORRO} de agua</span>',
-        "lede": ("Aspersión, goteo o microaspersión con programador, para casas, fraccionamientos, hoteles, industria y "
-                 "campos deportivos con pasto natural."),
+        "lede": "Aspersión, goteo o microaspersión con programador, para casas, fraccionamientos, hoteles e industria.",
         "etiqueta": {
             "codigo": "Riego · 01", "aviso": "Con IVA", "nombre": "Sistema de riego automático",
             "antes": "Instalado · según el sistema", "monto": f"{dinero(RIEGO_MIN)}–{dinero(RIEGO_MAX)}", "unidad": "/m²",
@@ -167,8 +170,6 @@ CONTENIDO = {
                       ("Instalación residencial", "1 a 2 días")),
         },
         "mensaje": MENSAJE,
-        "tambien": (f'Fotos y medidas por WhatsApp para cotizar · <a href="#mensualidades">mensualidades con tarjeta de '
-                    f'crédito</a> desde {DESDE_MENSUALIDADES}'),
         "foto": {"src": "/img/portadas/riego-pro-01-sm.webp",
                  "srcset": "/img/portadas/riego-pro-01-sm.webp 560w, /img/portadas/riego-pro-01.webp 960w",
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960, "alto": 640, "numero": 1,
@@ -284,6 +285,8 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "jsonld": {"PostalAddress": ("SEO fase 1: iba dentro del LocalBusiness suelto del provider; ahora el provider es la entidad única por @id y la "
+                              "dirección completa vive en el nodo #negocio de la home y de /vivero-tampico.")},
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {
         "Aspersores Emergentes": "Aspersores emergentes",
@@ -315,3 +318,5 @@ PARIDAD = {
                     "ejemplo sale ahora de datos.PRECIOS['riego_m2']."),
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Kicker: «Riego · Tampico, Madero y Altamira» (un renglón). Entrada recortada: «campos deportivos con pasto natural» sale del hero (sigue en la sección de proyectos).')

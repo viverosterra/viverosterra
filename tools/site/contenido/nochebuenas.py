@@ -71,16 +71,18 @@ ETIQUETA = {"codigo": "Nochebuena", "aviso": f"Precios {ANIO}", "nombre": "Por v
             "filas": (('Maceta 5", menudeo', dinero(DESDE_MENUDEO)), (f"Mayoreo, {MINIMO_MAYOREO} piezas", dinero(DESDE_MAYOREO)),
                       (f"{PIEZAS_PROYECTO} piezas o más", dinero(DESDE_VOLUMEN)))}
 ETIQUETA_PREVENTA = dict(ETIQUETA, antes="Precio de referencia, desde")
+# Lema del hero (Entrega A de experiencia): sale de "mismo_precio", sin promesas nuevas.
+LEMA = "Roja. Rosa y jaspeada, sobre pedido."
 PORTADAS = {
     "temporada": {"kicker": f"Temporada {ANIO} · Pedidos abiertos", "h1": f"Nochebuenas {ANIO} en Tampico: menudeo y mayoreo",
-                  "lede": SUBTITULO, "cta": "Cotizar mi pedido", "wa": "WhatsApp"},
+                  "lema": LEMA, "lede": SUBTITULO, "cta": "Cotizar mi pedido", "wa": "Pedir por WhatsApp"},
     "preventa": {"kicker": f"Preventa {ANIO} · Apartado abierto", "h1": f"Aparta tus Nochebuenas {ANIO} para tu empresa",
                  "lede": ("Precios de referencia por volumen · Factura CFDI · Entrega en Tampico, Madero y Altamira"),
-                 "cta": "Apartar mi pedido", "wa": "Apartar por WhatsApp"},
+                 "lema": LEMA, "cta": "Apartar mi pedido", "wa": "Apartar por WhatsApp"},
     "postemporada": {"kicker": f"Temporada {ANIO} cerrada · Gracias", "h1": "Nochebuenas en Tampico: cuidados y próxima temporada",
                      "lede": ("Gracias por esta temporada. Aquí siguen los cuidados, las fotos y las preguntas de siempre. "
                               "Te avisamos cuando abra la próxima temporada."),
-                     "cta": ""},
+                     "lema": "Gracias por esta temporada.", "cta": ""},
 }
 AVISO = "Avísame en la próxima temporada"
 
@@ -229,3 +231,5 @@ CONTENIDO = {
 }
 
 PARIDAD = {"reemplazos": {}, "retirados": {}}
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: el botón principal sigue siendo el del cotizador (texto aprobado), con el estilo del hero; el WhatsApp pasa de botón a enlace de texto («Pedir por WhatsApp» en temporada); lema nuevo: «Roja, rosa y jaspeada, al mismo precio.» (de «mismo precio», que ahora va en la línea de confianza); en celular la etiqueta muestra una fila.')

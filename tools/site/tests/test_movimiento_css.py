@@ -15,7 +15,7 @@ CSS = Path(__file__).resolve().parents[3] / "public" / "css"
 HOJAS = ("terra-inicio.css", "terra-temporada.css")
 PERMITIDAS = {"transform", "opacity", "clip-path"}
 SIN_MOVIMIENTO = "@media (prefers-reduced-motion:no-preference)"
-INTOCABLES = re.compile(r"h1|vt-lede|precio|etiqueta|medidor|vt-btn|vt-cta|vt-inicio__(?:cta|trato|lema|titulo)|vt-tabla")
+INTOCABLES = re.compile(r"h1|vt-lede|precio|etiqueta|medidor|vt-btn|vt-cta|vt-(?:inicio|portada)__(?:cta|trato|lema|titulo)|vt-tabla")
 
 
 def reglas(css):

@@ -81,8 +81,8 @@ ZONAS = {
         nombre="Club Campestre y Country Club", municipio="Tampico", corto="Club Campestre",
         h1="Jardinería en Club Campestre", accent="y Country Club, Tampico",
         colonias=(("Club Campestre", "89217"), ("Country Club", "89218"), ("Sierra Morena", "89210")),
-        lede=("Instalación de pasto, diseño de jardín, riego automático y mantenimiento para las casas de Club "
-              "Campestre, Country Club y Sierra Morena, en Tampico."),
+        lede=("Pasto, diseño de jardín, riego automático y mantenimiento para las casas de Club Campestre, Country "
+              "Club y Sierra Morena."),
         servicios=("riego", "pasto", "mantenimiento", "diseno"),
         retos=(
             ("Jardines grandes", "En lotes amplios, el riego automático por zonas ahorra agua y tiempo. Lo diseñamos "
@@ -134,8 +134,8 @@ ZONAS = {
         nombre="Lomas del Chairel", municipio="Tampico", corto="Lomas del Chairel",
         h1="Jardinería en Lomas del Chairel", accent="y Colinas de San Gerardo",
         colonias=(("Lomas del Chairel", "89360"), ("Colinas de San Gerardo", "89367"), ("Flamboyanes", "89330")),
-        lede=("Pasto en rollo, riego, diseño y mantenimiento para las casas cerca de la laguna del Chairel: Lomas del "
-              "Chairel, Colinas de San Gerardo y Flamboyanes."),
+        lede=("Pasto, riego, diseño y mantenimiento junto a la laguna del Chairel: Lomas del Chairel, Colinas de San "
+              "Gerardo y Flamboyanes."),
         servicios=("riego", "pasto", "diseno", "mantenimiento"),
         retos=(
             ("Humedad y lluvias", "Cerca de la laguna el suelo tarda más en secar. Un buen drenaje y tierra bien "
@@ -163,7 +163,7 @@ ZONAS = {
         colonias=(("Playa Miramar", "89506"), ("Jardín 20 de Noviembre", "89440"), ("Residencial del Parque", "89514"),
                   ("Ampliación Unidad Nacional", "89510")),
         lede=("Nuestro vivero está en Ciudad Madero. Instalamos pasto, diseñamos y damos mantenimiento en Playa "
-              "Miramar, Jardín 20 de Noviembre y el resto de la ciudad."),
+              "Miramar y el resto de la ciudad."),
         servicios=("pasto", "palmas", "diseno", "mantenimiento"),
         kicker_sin_cp=True,
         retos=(
@@ -213,6 +213,18 @@ ZONAS = {
     ),
 }
 CLAVES = tuple(ZONAS)
+
+
+# Encuadre de cada foto de portada (object-position; Entrega A de experiencia): pos en celular (recorte apaisado) y
+# pos_d en escritorio (recorte 4:5), para no cortar cabezas ni el logo de la camisa.
+ENCUADRES = {
+    "jardineria-lomas-de-rosales-tampico": {"pos": "50% 40%"},
+    "jardineria-country-club-tampico": {"pos": "40% 50%", "pos_d": "36% 50%"},
+    "jardineria-aguila-tampico": {"pos": "50% 24%"},
+    "jardineria-lomas-del-chairel-tampico": {"pos": "30% 45%", "pos_d": "24% 50%"},
+    "jardineria-ciudad-madero": {"pos": "50% 50%", "pos_d": "45% 50%"},
+    "jardineria-altamira": {"pos": "50% 62%"},
+}
 
 
 def _foto(slug):
@@ -279,8 +291,7 @@ def contenido(slug):
         },
         "migas": (("Inicio", "/"), (f"Jardinería en {z['nombre']}", None)),
         "portada": {
-            "compacta": True,
-            "kicker": f"{z['municipio']}, Tamaulipas" + ("" if z.get("kicker_sin_cp") else f" · CP {cps}"),
+            "kicker": f"{z['municipio']}, Tamaulipas" if z.get("kicker_sin_cp") else f"{z['municipio']} · CP {cps}",
             "h1": f'{z["h1"]} <span class="vt-serif">{z["accent"]}</span>',
             "lede": z["lede"],
             "etiqueta": {"codigo": f"Zona · {corto}", "aviso": "Con IVA", "nombre": "Pasto instalado",
@@ -288,7 +299,9 @@ def contenido(slug):
                          "filas": (("Mantenimiento", f"desde {MANTENIMIENTO}/mes"),
                                    ("Diseño", f"desde {dinero(P['diseno'])}"))},
             "mensaje": mensaje,
-            "tambien": f'{datos.VISITA_COSTO_CORTO} · <a href="#precios">servicios y precios</a>',
+            "enlaces": (("Servicios y precios", "#precios"),),
+            "dato": datos.VISITA_COSTO_CORTO,
+            **ENCUADRES[slug],
             "foto": _foto(slug),
         },
         "precios": {
@@ -344,8 +357,13 @@ def paridad(slug):
     fuera = [385]  # el precio anterior del sintético instalado, en la captura; no es de los 4 de ninguna zona
     fuera += [] if "palmas" in servicios else [P["palma_desde"]]
     fuera += [] if "riego" in servicios else list(P["riego_m2"])
+    hero = ("Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp; el teléfono y «Servicios y "
+            "precios» van de enlaces de texto; el costo de la visita pasa a la línea de confianza (promesa con horario y "
+            "calificación de Google); kicker en un renglón (municipio y CP, sin «, Tamaulipas»); en Country Club, Lomas "
+            "del Chairel y Madero la entrada se acorta sin quitar colonias de la página (siguen en cobertura); en celular "
+            "la foto sube a la primera pantalla y la etiqueta muestra una fila.")
     return {"meta": seo.paridad(*SEO[slug]), "reemplazos": reemplazos, "retirados": {dinero(n): motivo for n in fuera},
-            "jsonld": {"AggregateOffer": MOTIVO_AGGREGATE}}
+            "jsonld": {"AggregateOffer": MOTIVO_AGGREGATE}, "hero": hero}
 
 
 def pagina(slug):

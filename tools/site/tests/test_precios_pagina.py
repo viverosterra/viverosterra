@@ -63,10 +63,15 @@ class PreciosTest(unittest.TestCase):
         self.assertEqual(faq["mainEntity"][0]["acceptedAnswer"]["text"], datos.RESPUESTA_PRECIO_PASTO)
 
     def test_sin_fecha_de_vigencia_hasta_que_el_dueno_la_confirme(self):
-        """Pregunta pendiente al dueño: ni "vigente desde" ni el "septiembre 2026" de main, tampoco en el JSON-LD."""
+        """Pregunta pendiente al dueño: ni "vigente desde" ni el "septiembre 2026" de main. SEO fase 1 (2026-11-10): la
+        página sí dice cuándo se revisaron los precios por última vez ("Actualizado: noviembre de 2026" y dateModified),
+        con un dato versionado (datos.PRECIOS_ACTUALIZADOS), que no es una fecha de vigencia."""
         self.assertNotRegex(paridad.texto(HTML), r"(?i)vigente desde|actualizada en|(?:septiembre|noviembre) 2026")
         pagina = next(n for n in grafo() if n["@type"] == "WebPage")
-        self.assertNotIn("dateModified", pagina)
+        self.assertEqual(pagina["dateModified"], datos.PRECIOS_ACTUALIZADOS)
+        self.assertEqual(datos.PRECIOS_ACTUALIZADOS, "2026-11-10")
+        self.assertIn(f'<p class="vt-promesa">Actualizado: <time datetime="{datos.PRECIOS_ACTUALIZADOS}">noviembre de 2026'
+                      "</time></p>", HTML)
 
     def test_materiales_con_las_respuestas_del_dueno(self):
         """Tierra preparada, camiones de 5, 8 y 14 m³ y mármol con el precio de datos.py; piedra bola a granel según
@@ -169,7 +174,9 @@ class PreciosTest(unittest.TestCase):
                 self.assertEqual(unquote(m.group(1)), esperado)
 
     def test_portada_enlaza_a_mensualidades_y_tabla_dice_compra_minima(self):
-        self.assertIn('<a href="#mensualidades">Hasta 12 mensualidades con tarjeta · ver plazos</a>', HTML)
+        # Entrega A de experiencia: el enlace va en la fila de enlaces de texto del hero (con su flecha y su data-cta).
+        self.assertIn('<a data-cta="precios:hero" href="#mensualidades">Hasta 12 mensualidades con tarjeta '
+                      '<span aria-hidden="true">→</span></a>', HTML)
         self.assertIn('<th scope="col">Compra mínima</th>', HTML)
         self.assertNotIn("Desde (contado)", HTML)
 

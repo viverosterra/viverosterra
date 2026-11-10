@@ -149,18 +149,19 @@ CONTENIDO = {
     "migas": MIGAS,
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
-        "h1": "Tierra negra en Tampico <em>por costal, m³ o camión</em>",
-        "lede": (f"En Viveros Terra la tierra negra vegetal cuesta {COSTAL} el costal y {M3} el m³ a granel; el camión "
-                 f"volteo, {CAMIONES_TEXTO}. Para pasto, jardineras y siembra: recoges en el vivero o te la llevamos "
-                 "en Tampico, Madero y Altamira."),
+        "pos_d": "88% 50%",
+        "pos": "50% 55%",
+        "dato": "La entrega se cotiza según tu colonia",
+        "enlaces": (("Calcula cuánta necesitas", "#calculadora", "material:calculadora"),),
+        "h1": 'Tierra negra en Tampico <span class="vt-serif">por costal, m³ o camión</span>',
+        "lede": (f"La tierra negra vegetal cuesta {COSTAL} el costal y {M3} el m³ a granel. Recoges en el vivero o te la "
+                 "llevamos."),
         "etiqueta": {"codigo": "Tierra negra", "aviso": f"Precios {datos.ANIO}", "nombre": "Costal", "antes": "",
                      "monto": COSTAL, "unidad": "por costal",
                      "filas": (("Por m³ a granel", M3), (f"Camión volteo {CAMIONES[0][0]} m³", dinero(CAMIONES[0][1]))),
                      "nota": "La entrega se cotiza según tu colonia."},
         "mensaje": MENSAJE,
-        "tambien": 'O <a href="#calculadora" data-cta="material:calculadora">calcula cuánta necesitas</a>.',
         "foto": PORTADA_FOTO,
-        "compacta": True,
     },
     "que_es": {
         "titulo": "¿Por qué el suelo de Tampico necesita tierra negra?",
@@ -246,10 +247,11 @@ PARIDAD = {
         "$5,000": ("El “camión desde $5,000” no lo confirmó el dueño (2026-11-08): va la tabla de camiones de 5, 8 y "
                    "14 m³ de datos.py."),
     },
-    "jsonld": {"LocalBusiness": mc.MOTIVO_LOCALBUSINESS,
-               "AggregateOffer": ("Pasa a un Offer por presentación con su UnitPriceSpecification (costal, preparada, "
+    "jsonld": {"AggregateOffer": ("Pasa a un Offer por presentación con su UnitPriceSpecification (costal, preparada, "
                                   "m³ y los tres camiones, de datos.py): cada precio con su unidad, en vez de un rango "
                                   "sin unidad y sin InStock.")},
     # Cifras que main publicaba y no salen (paridad.py no las captura: se declaran aquí).
     "cifras": {"Costal ≈ 20 kg / Costales de 30–40 kg": mc.MOTIVO_PESO_COSTAL},
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). El lema del <h1> va en <span class="vt-serif"> (antes <em>: cursiva sintética). Entrada recortada: los precios del camión (5, 8 y 14 m³) salen del hero y siguen en la tabla de presentaciones; la foto apaisada se recorta a 4:5 en escritorio con su encuadre.')

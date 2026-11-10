@@ -60,21 +60,22 @@ CONTENIDO = {
     "migas": pc.migas(NOMBRE),
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
+        "pos": "50% 66%",
+        "dato": 'Garantía de 30 días en lo que sembramos, <a href="/politicas#garantia-plantas">con condiciones</a>',
+        "enlaces": (("Ver los 25 árboles del catálogo", "/catalogo?cat=arboles", "plantas:catalogo"),),
+        "lema": "De sombra y de flor, para el clima de Tamaulipas.",
         "h1": "Árboles ornamentales para jardines en Tampico",
-        "lede": (f"{FLAMBOYAN}. Árboles de sombra y de flor elegidos para el clima de Tamaulipas: te los llevamos y los "
-                 "sembramos con garantía de arraigo de 30 días, con condiciones."),
+        "lede": f"{FLAMBOYAN}. Te los llevamos y los sembramos.",
         "etiqueta": {"codigo": "Árboles", "aviso": f"Precios {datos.ANIO}", "nombre": "Flamboyán",
                      "cientifico": "Delonix regia", "antes": "desde", "monto": dinero(P["flamboyan"]), "unidad": "",
                      "nota": "Los demás árboles, según especie y tamaño."},
         "mensaje": MENSAJE,
-        "tambien": 'O <a href="/catalogo?cat=arboles" data-cta="plantas:catalogo">ve los 25 árboles del catálogo</a>.',
         "foto": {"src": "/img/portadas/arboles-tampico-viveros-terra-sm.webp",
                  "srcset": ("/img/portadas/arboles-tampico-viveros-terra-sm.webp 560w, "
                             "/img/portadas/arboles-tampico-viveros-terra.webp 960w"),
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960, "alto": 1280, "numero": 1,
                  "alt": "Equipo de Viveros Terra sembrando un árbol ornamental en Tampico",
                  "lugar": "Siembra de un árbol ornamental", "etapa": "Tampico"},
-        "compacta": True,
     },
     "especies": {"titulo": "Las más solicitadas en Tampico", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
     "lista": pc.LISTA,
@@ -89,13 +90,12 @@ CONTENIDO = {
                "lede": "Dinos qué árbol buscas, la altura y la colonia; te respondemos con precio por tamaño.",
                "mensaje": MENSAJE},
     "jsonld": {"migas": pc.migas_ld(NOMBRE, RUTA), "nodos": (pc.lista_ld(NOMBRE, [s for s, _t, _a in ESPECIES]),),
-               "speakable": ("#vt-h1", ".vt-portada .vt-lede", ".vt-faq details:first-child")},
+               "speakable": (".vt-portada .vt-lede", ".vt-faq details:first-child p")},
 }
 
 PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "jsonld": {
-        "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {
@@ -114,3 +114,5 @@ PARIDAD = {
         "retirados": {},
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «De sombra y de flor, para el clima de Tamaulipas.» (de la entrada); la garantía de 30 días va en la línea de confianza, con sus condiciones.')

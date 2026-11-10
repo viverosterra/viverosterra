@@ -17,6 +17,7 @@ if PASTO not in sys.path:
     sys.path.append(PASTO)  # al final: tools/pasto también tiene un build.py
 
 import datos  # noqa: E402
+import entidad  # noqa: E402
 import mensualidades  # noqa: E402
 from partials import WA_GLIFO, esc  # noqa: E402
 
@@ -131,6 +132,21 @@ def migas(items):
     partes = [f'<li aria-current="page">{texto}</li>' if href is None else f'<li><a href="{esc(href)}">{texto}</a></li>'
               for texto, href in items]
     return f'<nav class="vt-crumbs" aria-label="Ruta de navegación"><ol>{"".join(partes)}</ol></nav>'
+
+
+def respuesta(r):
+    """Respuesta directa de la página, justo después de la portada (SEO fase 1): un párrafo de 40 a 60 palabras con el
+    dato en la misma frase (precio, unidad y zona), marcado con data-vt-respuesta para el speakable del JSON-LD, y la
+    fecha de la última revisión de precios (datos.PRECIOS_ACTUALIZADOS; nunca la fecha del build). r: texto y fecha,
+    los dos opcionales (sin texto, la respuesta es la entrada de la portada y aquí solo va la fecha). Va fuera de la
+    portada para no empujar el precio ni el botón de WhatsApp de la primera pantalla."""
+    if not r:
+        return ""
+    texto = (f'<p class="vt-bloque__no"><b>En corto</b></p><p class="vt-lede" {entidad.ATRIBUTO_RESPUESTA}>{r["texto"]}</p>'
+             if r.get("texto") else "")
+    fecha = (f'<p class="vt-promesa">Actualizado: <time datetime="{esc(r["fecha"])}">{entidad.mes_largo(r["fecha"])}</time></p>'
+             if r.get("fecha") else "")
+    return f'<section class="vt-respuesta" aria-label="En corto"><div class="vt-wrap">{texto}{fecha}</div></section>'
 
 
 def bloque(numero, rotulo, id_titulo, titulo, cuerpo, lede=None, tinte=False, id_seccion=None):
@@ -887,16 +903,96 @@ def formulario_correo(prefijo, f):
         f'<p class="vt-correo__aviso">{f["aviso"]}</p></div></form>')
 
 
-# ---------- portada (primer pantallazo: qué, dónde, precio y CTA) ----------
-def portada(p, tipo, migas_items=None):
-    """p: kicker, h1, lede, etiqueta, mensaje y foto; opcionales tambien (línea bajo el CTA), boton_extra (HTML de otro botón
-    junto a WhatsApp) y compacta (a 1024–1199 px la etiqueta va en su versión de celular para que el CTA quede en la primera
-    pantalla). Con migas_items, la ruta visible va arriba."""
+# ---------- portada: hero de marca (Entrega A de experiencia, 2026-11-10) ----------
+# Un solo componente para todas las plantillas; la home es la referencia. CSS: .vt-portada* en public/css/terra.css.
+SEP_CONFIANZA = '<span class="vt-portada__sep" aria-hidden="true"> · </span>'
+H1_LARGO = 40  # con más caracteres (sin contar el lema), el titular usa la escala larga (--vt-text-h1-larga)
+SERIF_RE = re.compile(r'<span class="vt-serif">.*?</span>', re.S)
+
+
+def titular_largo(h1):
+    """True si el titular, sin su lema en serif, pasa de H1_LARGO caracteres."""
+    return len(texto_plano(SERIF_RE.sub("", h1))) > H1_LARGO
+
+
+def clase_titular(h1, extra=""):
+    """Clases de una cabecera que no es portada (artículo, blog, catálogo, ficha) para usar la misma escala de titular."""
+    return " ".join(x for x in (extra, "vt-titular", "vt-titular--larga" if titular_largo(h1) else "") if x)
+
+
+def enlace_tel(cta):
+    """El teléfono como enlace de texto (en la portada dejó de ser botón)."""
+    return f'<a data-cta="{esc(cta)}" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a>'
+
+
+def enlace_wa(mensaje, cta, texto=CTA_WA):
+    """WhatsApp como enlace de texto (cabeceras de lectura: artículo e índice del blog), con el mensaje ya firmado."""
+    return (texto, datos.wa_url(datos.con_firma(mensaje)), cta, 'target="_blank" rel="noopener"')
+
+
+def enlace_portada(enlace, tipo):
+    """Enlace de texto de la portada con su flecha. enlace: (texto, href) o (texto, href, data-cta, atributos extra)."""
+    texto, href, *resto = enlace
+    cta = resto[0] if resto and resto[0] else f"{tipo}:hero"
+    extra = f" {resto[1]}" if len(resto) > 1 and resto[1] else ""
+    return f'<a data-cta="{esc(cta)}" href="{esc(href)}"{extra}>{texto} <span aria-hidden="true">→</span></a>'
+
+
+def enlaces_portada(enlaces, tipo, telefono=True):
+    """Fila de enlaces de texto bajo el botón: los propios de la página y, al final, el teléfono."""
+    partes = [enlace_portada(e, tipo) for e in enlaces] + ([enlace_tel(f"{tipo}:hero")] if telefono else [])
+    return f'<p class="vt-portada__enlaces">{"".join(partes)}</p>' if partes else ""
+
+
+def confianza(dato=""):
+    """Línea de confianza: la promesa única (con "Abierto ahora" en horario), la calificación de Google y, si la hay,
+    un dato real propio de la página (HTML corto)."""
+    nota, _, resenas = datos.GOOGLE.partition(" ")
+    partes = [promesa_horario(), f"<span><b>{esc(nota)}</b> {esc(resenas)}</span>"] + ([f"<span>{dato}</span>"] if dato else [])
+    return f'<p class="vt-portada__confianza">{SEP_CONFIANZA.join(partes)}</p>'
+
+
+def estilo_foto(p):
+    """Encuadre de la foto de portada (object-position): pos en celular y pos_d en escritorio, si difiere."""
+    variables = [f"{nombre}:{p[clave]}" for nombre, clave in (("--vt-fp", "pos"), ("--vt-fpd", "pos_d")) if p.get(clave)]
+    return f' style="{esc(";".join(variables))}"' if variables else ""
+
+
+def clase_portada(p, pliegue=True, extra=""):
+    """Clases de la sección: escala larga según el titular, sin foto, y --pliegue (en celular la foto va entre el
+    titular y la etiqueta y todo llena la primera pantalla) cuando hay foto."""
+    clases = ["vt-portada"] + ([extra] if extra else [])
+    if titular_largo(p["h1"]):
+        clases.append("vt-portada--larga")
+    if not (p.get("etiqueta") or p.get("etiqueta_html")):
+        clases.append("vt-portada--sinprecio")
+    if not p.get("foto"):
+        clases.append("vt-portada--sinfoto")
+    elif pliegue:
+        clases.append("vt-portada--pliegue")
+    return " ".join(clases)
+
+
+def portada(p, tipo, migas_items=None, pliegue=True, datos_html=None, clase=""):
+    """Hero de marca. p: kicker, h1, lede y mensaje; opcionales lema (frase en serif bajo el titular, si el <h1> no la
+    trae ya en un <span class="vt-serif">), etiqueta (precio colgado; o etiqueta_html si la página arma la suya), foto con pos y pos_d (object-position), cta (HTML
+    del botón principal si no es el WhatsApp de siempre), enlaces (enlace_portada), telefono (False lo quita), dato
+    (dato propio para la línea de confianza), medio (HTML entre el lede y la foto: controles propios de la página) y
+    respuesta (el lede es la respuesta directa, speakable). pliegue=False solo en la home: en celular la foto va al
+    final. Un solo botón relleno; terra.js esconde la barra móvil mientras se ve (data-hero-cta)."""
     ruta = migas(migas_items) if migas_items else ""
-    clase = "vt-portada vt-portada--compacta" if p.get("compacta") else "vt-portada"
-    tambien = f'<p class="vt-portada__tambien">{p["tambien"]}</p>' if p.get("tambien") else ""
-    return (f'<section class="{clase}" aria-labelledby="vt-h1"><div class="vt-wrap">{ruta}<div class="vt-portada__grid">'
-            f'<div><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1><p class="vt-lede">{p["lede"]}</p>'
-            f'<div class="vt-portada__trato">{etiqueta(p["etiqueta"])}<div>{fila_cta(p["mensaje"], tipo, "hero", hero=True, extra=p.get("boton_extra", ""))}'
-            f'{tambien}</div></div></div>'
-            f'<div class="vt-portada__foto">{figura(p["foto"], principal=True)}</div></div>{cuadro_datos()}</div></section>')
+    # respuesta=True: la entrada ya es la respuesta directa de la página (precio, unidad y zona) y se marca para speakable.
+    marca = f" {entidad.ATRIBUTO_RESPUESTA}" if p.get("respuesta") else ""
+    lema = f'<p class="vt-portada__lema vt-serif">{p["lema"]}</p>' if p.get("lema") else ""
+    foto = f'<div class="vt-portada__foto"{estilo_foto(p)}>{figura(p["foto"], principal=True)}</div>' if p.get("foto") else ""
+    precio = p.get("etiqueta_html") or (etiqueta(p["etiqueta"]) if p.get("etiqueta") else "")
+    boton = p.get("cta") or boton_wa(p["mensaje"], f"{tipo}:hero")
+    cuadro = cuadro_datos() if datos_html is None else datos_html
+    return (
+        f'<section class="{clase_portada(p, pliegue, clase)}" aria-labelledby="vt-h1"><div class="vt-wrap">'
+        f'<div class="vt-portada__grid"><div class="vt-portada__pliegue">{ruta}'
+        f'<div class="vt-portada__titulo"><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1>{lema}'
+        f'<p class="vt-lede"{marca}>{p["lede"]}</p>{p.get("medio", "")}</div>{foto}{precio}</div>'
+        f'<div class="vt-portada__trato"><div class="vt-portada__cta" data-hero-cta>{boton}</div>'
+        f'{enlaces_portada(p.get("enlaces", ()), tipo, p.get("telefono", True))}{confianza(p.get("dato", ""))}</div>'
+        f'</div>{cuadro}</div></section>')

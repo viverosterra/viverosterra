@@ -10,9 +10,11 @@ corrigen el "Factura CFDI, factura CFDI" repetido (PARIDAD["meta"]). Revisión 2
 #negocio (PARIDAD["jsonld"]) y las migas del JSON-LD son las visibles. FAQPage de las preguntas visibles.
 """
 import datos
+import entidad
 import mensajes_paginas
 from componentes import dinero
 from contenido import b2b_comun
+from contenido import respuestas
 from contenido import seo
 
 P = datos.PRECIOS
@@ -133,19 +135,21 @@ PAQUETES = (
 )
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/mayoreo-pasto-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "b2b",
     "prefijo": "may",
     "meta": META,
-    "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": ("h1", "h2", ".vt-faq summary")},
+    "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": entidad.SPEAKABLE},
     # /empresas llega en la Etapa 3: entonces se inserta ("Empresas", "/empresas") aquí y en MIGAS_LD.
     "migas": (("Inicio", "/"), ("Pasto en rollo", "/pasto-en-rollo-tampico"), ("Mayoreo", None)),
     "portada": {
-        "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
         "kicker": "Constructoras · Fraccionamientos · Industria",
+        "pos": "50% 20%",
+        "dato": f"REPSE {datos.REPSE} · factura {datos.FACTURA}",
+        "enlaces": (("Calcula tu obra por m²", "#precio"),),
         "h1": 'Pasto al mayoreo <span class="vt-serif">para obras y fraccionamientos</span>',
-        "lede": (f"En Viveros Terra el pasto San Agustín al mayoreo cuesta desde {dinero(MAYOREO)}/m² (solo pasto) en "
-                 f"pedidos de {MINIMO} m² o más, con factura {datos.FACTURA}; el pasto sin instalar no lleva IVA. Entregamos por etapas según el "
-                 "avance de tu obra en Tampico, Madero y Altamira; fuera de la zona, por proyecto."),
+        "lede": (f"Desde {dinero(MAYOREO)}/m² (solo pasto, no lleva IVA) en pedidos de {MINIMO} m² o más. Entregamos por "
+                 "etapas según el avance de tu obra."),
         "etiqueta": {
             "codigo": "Mayoreo · 01", "aviso": "Solo pasto", "nombre": "Pasto San Agustín para obra",
             "cientifico": "Stenotaphrum secundatum", "antes": "Mayoreo · desde", "monto": dinero(MAYOREO),
@@ -153,7 +157,6 @@ CONTENIDO = {
             "filas": (("Pedido mínimo", f"{MINIMO} m²"), (f"Con menos de {MINIMO} m²", f"{dinero(SOLO)}/m² solo pasto")),
         },
         "mensaje": MENSAJE,
-        "tambien": (f'REPSE {datos.REPSE} · factura {datos.FACTURA} · <a href="#precio">calcula tu obra por m²</a>'),
         "foto": {"src": "/img/portadas/instalacion-pasto-rollo-san-agustin-tampico-sm.webp",
                  "srcset": ("/img/portadas/instalacion-pasto-rollo-san-agustin-tampico-sm.webp 560w, "
                             "/img/portadas/instalacion-pasto-rollo-san-agustin-tampico.webp 960w"),
@@ -263,8 +266,8 @@ PARIDAD = {
     },
     # Tipos del JSON-LD que ya no salen, con su motivo (paridad.comparar).
     "jsonld": {
-        "LocalBusiness": ("El provider del Service apunta por @id a la entidad única #negocio de las demás páginas (el "
-                          "nodo completo vive en la home), en vez de un LocalBusiness suelto. Revisión 2d."),
         "PostalAddress": "Iba dentro del LocalBusiness suelto del provider; la dirección completa es del nodo #negocio.",
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). La respuesta directa (40 a 60 palabras) pasa, sin cambios, de la entrada del hero al bloque «En corto»; la entrada nueva conserva precio, mínimo y entrega por etapas.')

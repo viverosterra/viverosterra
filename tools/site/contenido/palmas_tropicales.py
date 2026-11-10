@@ -15,6 +15,7 @@ from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
+FOTO_LD = "/img/portadas/palma-real-jardin-residencial-tampico.webp"  # la foto de la portada (image del Product)
 RUTA = "/palmas-tropicales-tampico"
 URL = f"{SITE}{RUTA}"
 NOMBRE = "Palmas tropicales"
@@ -91,23 +92,23 @@ CONTENIDO = {
     "migas": pc.migas(NOMBRE),
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
+        "pos": "50% 24%",
+        "dato": 'Garantía de 30 días en lo que sembramos, <a href="/politicas#garantia-plantas">con condiciones</a>',
+        "enlaces": ((f'Ver las {cd.cuenta({"cat": ["palmas"]})} palmas del catálogo', "/catalogo?cat=palmas", "plantas:catalogo"),),
+        "lema": "Te las llevamos y las sembramos.",
         "h1": "Palmas para jardín en Tampico, tropicales y exóticas",
-        "lede": (f"{datos.PALMAS_PRECIO}. También washingtonia, del viajero, bismarckia y exóticas. Te las llevamos y "
-                 "las sembramos con garantía de arraigo de 30 días, con condiciones."),
+        "lede": f"{datos.PALMAS_PRECIO}.",
         "etiqueta": {"codigo": "Palmas", "aviso": f"Precios {datos.ANIO}", "nombre": "Areca y coco plumoso", "antes": "desde",
                      "monto": dinero(P["palma_desde"]), "unidad": "tamaño chico",
                      "filas": (("Palma real", f"desde {dinero(P['palma_real'])}"),),
                      "nota": "El precio sube con la altura."},
         "mensaje": MENSAJE,
-        "tambien": ('O <a href="/catalogo?cat=palmas" data-cta="plantas:catalogo">ve las '
-                    f'{cd.cuenta({"cat": ["palmas"]})} palmas del catálogo</a>.'),
         "foto": {"src": "/img/portadas/palma-real-jardin-residencial-tampico-sm.webp",
                  "srcset": ("/img/portadas/palma-real-jardin-residencial-tampico-sm.webp 560w, "
                             "/img/portadas/palma-real-jardin-residencial-tampico.webp 900w"),
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 900, "alto": 1600, "numero": 1,
                  "alt": "Palma real sembrada en un jardín residencial de Tampico",
                  "lugar": "Palma real en un jardín", "etapa": "Tampico"},
-        "compacta": True,
     },
     "especies": {"titulo": "Palmas de jardín y exóticas en el vivero", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
     "precios": {
@@ -136,13 +137,14 @@ CONTENIDO = {
         "migas": pc.migas_ld(NOMBRE, RUTA),
         "nodos": (
             {"@type": "Product", "name": "Palmas para jardín en Tampico", "brand": {"@type": "Brand", "name": datos.NOMBRE},
-             # Precio "desde" del tamaño chico (areca y coco plumoso), no un precio cerrado ni un conteo de ofertas.
-             "offers": {"@type": "Offer", "priceSpecification": {"@type": "PriceSpecification",
-                                                                 "minPrice": P["palma_desde"], "priceCurrency": "MXN"},
+             "image": f"{SITE}{FOTO_LD}",
+             # Precio "desde" del tamaño chico (areca y coco plumoso): AggregateOffer con lowPrice (SEO fase 1), sin
+             # tope ni conteo de ofertas porque no existen.
+             "offers": {"@type": "AggregateOffer", "lowPrice": P["palma_desde"], "priceCurrency": "MXN",
                         "seller": {"@id": pc.NEGOCIO}}},
             pc.lista_ld(NOMBRE, [s for s, _t, _a in ESPECIES]),
         ),
-        "speakable": ("#vt-h1", ".vt-portada .vt-lede", ".vt-faq details:first-child"),
+        "speakable": (".vt-portada .vt-lede", ".vt-faq details:first-child p"),
     },
 }
 
@@ -150,9 +152,6 @@ PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION, {clave: (DESCRIPCION, "La garantía de 30 días se publica siempre «con condiciones» (regla del dueño); el "
                                   "resto de la descripción no cambia.") for clave in ("description", "og:description")}),
     "jsonld": {
-        "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS + " La oferta de palmas lo nombra como seller.",
-        "AggregateOffer": ("Pasa a Offer con PriceSpecification (minPrice del tamaño chico): «desde $250» es un mínimo, "
-                           "no un rango de ofertas contadas (offerCount no tenía respaldo)."),
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {
@@ -167,3 +166,5 @@ PARIDAD = {
         "retirados": {},
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «Te las llevamos y las sembramos.» (de la entrada); la lista de especies y la garantía de 30 días salen de la entrada (la garantía va en la línea de confianza, con sus condiciones).')

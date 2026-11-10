@@ -90,5 +90,6 @@ def render(k):
     j = k["jsonld"]
     speakable = {"@type": "SpeakableSpecification", "cssSelector": list(j["speakable"])}
     grafo = [pagina_ld(k["meta"]["canonical"]), *j.get("nodos", ()), c.faq_jsonld(k["faq"]["preguntas"]), j["migas"], speakable]
-    return base.documento(k["meta"], "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
-                          precargas=(base.precarga_imagen(k["portada"]["foto"]),), clase_body="vt-pagina vt-plantas")
+    return base.documento(base.meta_de(k), "\n".join(secciones), jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
+                          precargas=(base.precarga_imagen(k["portada"]["foto"]),), clase_body="vt-pagina vt-plantas",
+                          imagen=base.imagen_de(k["portada"]["foto"]))

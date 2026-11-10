@@ -91,9 +91,13 @@ CONTENIDO = {
     "migas": pc.migas(),
     "portada": {
         "kicker": f"Vivero en Cd. Madero · desde {datos.DESDE}",
+        "pos": "50% 66%",
+        "dato": 'Garantía de 30 días en lo que sembramos, <a href="/politicas#garantia-plantas">con condiciones</a>',
+        "enlaces": (("Arma tu lista", "/catalogo", "plantas:catalogo"),),
+        "lema": f"{datos.VARIEDADES} variedades para el clima del Golfo.",
         "h1": "Plantas, palmas y árboles de nuestro vivero en Tampico",
-        "lede": (f"{datos.VARIEDADES} variedades para el clima del Golfo: te decimos cuáles van en sol o sombra, cuáles "
-                 "aguantan salitre y cuánto crecen. Te las llevamos y, si quieres, las sembramos."),
+        "lede": ("Te decimos cuáles van en sol o sombra, cuáles aguantan salitre y cuánto crecen. Te las llevamos y, si "
+                 "quieres, las sembramos."),
         "etiqueta": {"codigo": "Vivero", "aviso": f"Precios {datos.ANIO}", "nombre": "Areca y coco plumoso", "antes": "desde",
                      "monto": dinero(P["palma_desde"]), "unidad": "tamaño chico",
                      # Flamboyán antes que palma real: "$500 … Flamboyán" lo marcaría test_consistencia ("flamboyán a $500").
@@ -101,14 +105,12 @@ CONTENIDO = {
                                ("Palma real", f"desde {dinero(P['palma_real'])}")),
                      "nota": "El precio sube con la altura; las demás especies, según cotización."},
         "mensaje": MENSAJE,
-        "tambien": 'O <a href="/catalogo" data-cta="plantas:catalogo">arma tu lista</a> y mándala en un solo mensaje.',
         "foto": {"src": "/img/portadas/arboles-tampico-viveros-terra-sm.webp",
                  "srcset": ("/img/portadas/arboles-tampico-viveros-terra-sm.webp 560w, "
                             "/img/portadas/arboles-tampico-viveros-terra.webp 960w"),
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960, "alto": 1280, "numero": 1,
                  "alt": "Equipo de Viveros Terra sembrando un árbol en un jardín de Tampico",
                  "lugar": "Siembra de un árbol", "etapa": "Tampico"},
-        "compacta": True,
     },
     "necesidad": {"titulo": "¿Qué necesita tu jardín?",
                   "lede": "Elige por sol, salitre o tamaño y te llevamos al catálogo con el filtro puesto.",
@@ -152,7 +154,7 @@ CONTENIDO = {
         "nodos": ({"@type": "ItemList", "name": "Plantas, palmas y árboles por subcategoría", "itemListElement": [
             {"@type": "ListItem", "position": i, "name": s["titulo"], "url": f"{SITE}{s['href']}"}
             for i, s in enumerate(pc.SUBCATEGORIAS, 1)]},),
-        "speakable": ("#vt-h1", ".vt-portada .vt-lede", ".vt-faq details:first-child"),
+        "speakable": (".vt-portada .vt-lede", ".vt-faq details:first-child p"),
     },
 }
 
@@ -160,7 +162,6 @@ PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION, {"og:description": (DESCRIPCION, "Decía «Desde $200»: precio sin confirmar (el dueño solo fijó palmas desde "
                                                 "$250, palma real $500 y flamboyán $250, 2026-11-07).")}),
     "jsonld": {
-        "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS,
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {
@@ -231,3 +232,5 @@ PARIDAD = {
         },
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «+200 variedades para el clima del Golfo.» (era el arranque de la entrada).')

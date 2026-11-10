@@ -10,6 +10,7 @@ import datos
 from ciudades import CIUDADES
 from componentes import dinero
 from contenido import seo
+from contenido import respuestas
 from contenido.ficha import PASOS
 from esquema import breadcrumb_schema, product_schema
 
@@ -74,6 +75,7 @@ OBRAS = tuple({"src": f"{GAL}/{n}-sm.webp", "srcset": f"{GAL}/{n}-sm.webp 560w, 
               for i, (n, w, h, alt, cap) in enumerate(data.OBRAS, 2))
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/pasto-sintetico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "tienda",
     "meta": {
         "title": TITULO, "description": DESCRIPCION, "robots": "index, follow, max-image-preview:large", "canonical": URL,
@@ -92,10 +94,12 @@ CONTENIDO = {
     "migas": (("Inicio", "/"), ("Pasto sintético", None)),
     "portada": {
         "kicker": "Tienda · Envío a todo México",
-        "existencia": f"{len(data.MODELOS)} modelos en existencia · vendemos a todo México desde "
-                      f"{datos.SINTETICO_NACIONAL_DESDE}",
+        "existencia": f"{len(data.MODELOS)} modelos en existencia.",
+        "dato": f"Vendemos a todo México desde {datos.SINTETICO_NACIONAL_DESDE}",
         "h1": 'Pasto sintético <span class="vt-serif">con envío a todo México</span>',
         "rotulo_estado": "Precio puesto en tu puerta",
+        "codigo": "Sintético",
+        "pos": "50% 55%",
         "rollo": BARATO["rollo"],
         "nota_precio": f"+ envío desde {FLETE_MIN} por rollo. Elige tu estado para ver el precio puesto.",
         "mensualidades": 'Paga en mensualidades con tarjeta de crédito. <a href="#cotizador">Calcula tu plan</a>',
@@ -157,8 +161,13 @@ CONTENIDO = {
     "default": DEFAULT,
 }
 
+M_VENDEDOR = ("SEO fase 1: el vendedor de cada producto es la entidad única #negocio por @id (antes, una Organization suelta "
+              "con nombre, URL y teléfono en cada oferta).")
 PARIDAD = {
+    "jsonld": {"Organization": M_VENDEDOR},
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {},
     "retirados": {},
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). El precio puesto por estado va en la etiqueta colgada (antes, resaltador); «vendemos a todo México desde 2012» pasa a la línea de confianza y las mensualidades, a un enlace al cotizador.')

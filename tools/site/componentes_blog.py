@@ -9,14 +9,23 @@ SERVICIOS = ("riego", "diseno", "mantenimiento")
 SIN_IVA = ("pasto-natural", "palmas", "palmas-cotizacion", "arboles", "banqueta", "plantas", "interior")
 
 
+# Lema de los artículos (Entrega A de experiencia): el mismo para todos, tomado de la descripción del blog ("consejos
+# de jardinería adaptados al clima…").
+LEMA = "Jardinería para el clima de Tampico."
+
+
 def cabeza(k):
     dek = f'<p class="vt-art__dek">{k["dek"]}</p>' if k["dek"] else ""
     rotulo = "Actualizado" if k["actualizado_iso"] != k["publicado_iso"] else "Publicado"
     fechas = f'<span><b>{rotulo}</b> <time datetime="{esc(k["actualizado_iso"])}">{k["actualizado"]}</time></span>'
     tiempo = f'<span>{k["minutos"]} min de lectura</span>' if k["minutos"] else ""
-    return (f'<header class="vt-art__cabeza"><div class="vt-wrap">{c.migas(k["migas"])}<p class="vt-kicker">{k["kicker"]}</p>'
-            f'<h1 id="vt-h1">{k["h1"]}</h1>{dek}<p class="vt-art__meta"><span><b>Por</b> {esc(k["autor"])}</span>{fechas}{tiempo}</p>'
-            f'</div></header>')
+    # Hero de lectura (Entrega A de experiencia): la escala de titular del sitio, el lema en serif y el WhatsApp como
+    # enlace de texto (con su data-cta ":hero", la barra fija no tapa la respuesta directa al cargar); sin botón grande.
+    enlaces = c.enlaces_portada((c.enlace_wa(k["mensaje"], f'{k["tipo"]}:hero'),), k["tipo"])
+    return (f'<header class="{c.clase_titular(k["h1"], "vt-art__cabeza")}"><div class="vt-wrap">{c.migas(k["migas"])}'
+            f'<p class="vt-kicker">{k["kicker"]}</p><h1 id="vt-h1">{k["h1"]}</h1>'
+            f'<p class="vt-portada__lema vt-serif">{LEMA}</p>{dek}'
+            f'<p class="vt-art__meta"><span><b>Por</b> {esc(k["autor"])}</span>{fechas}{tiempo}</p>{enlaces}</div></header>')
 
 
 def respuesta(r):

@@ -14,15 +14,10 @@ SCRIPTS = ("/js/vt-mensualidades.js", "/js/tienda-pasto.js", "/js/vt-landed.js")
 
 
 def _portada(k):
+    """El hero de marca común: la respuesta directa es el lede; la ciudad lleva su precio puesto en la etiqueta."""
     p = k["portada"]
-    acciones = (f'<div class="vt-cta" data-hero-cta>{c.boton_wa(p["mensaje"], k["tipo"] + ":hero")}'
-                f'<a class="vt-btn vt-btn--linea" href="{p["href_modelos"]}">{p["texto_modelos"]}</a></div>'
-                f'<p class="vt-promesa">{c.esc(t.datos.PROMESA_COMPLETA)}</p>')
-    copia = (f'<div><p class="vt-kicker">{p["kicker"]}</p><h1 id="vt-h1">{p["h1"]}</h1><p class="vt-lede">'
-             f'{p["respuesta"]}</p>{acciones}</div>')
-    return (f'<section class="vt-portada vt-portada-t" aria-labelledby="vt-h1"><div class="vt-wrap">{c.migas(k["migas"])}'
-            f'<div class="vt-portada__grid">{copia}<div class="vt-portada__foto">{c.figura(p["foto"], principal=True)}'
-            f'</div></div>{c.cuadro_datos(p["datos"])}</div></section>')
+    portada = dict(p, lede=p["respuesta"], enlaces=((p["texto_modelos"], p["href_modelos"]),))
+    return c.portada(portada, k["tipo"], k["migas"], datos_html=c.cuadro_datos(p["datos"]), clase="vt-portada-t")
 
 
 def _cuerpo(s):
@@ -49,7 +44,7 @@ def render(k):
     secciones.append(c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], k["tipo"]))
     faq = next(s["preguntas"] for s in k["secciones"] if s["tipo"] == "faq")
     grafo = list(k["jsonld"]) + [c.faq_jsonld(faq)]
-    return base.documento(k["meta"], t.subnav() + "\n".join(secciones),
+    return base.documento(base.meta_de(k), t.subnav() + "\n".join(secciones),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),),
                           head_extra=(t.json_modelos(), t.SCRIPT_PRECIO_PUESTO), tras_main=t.lista_y_aviso(),

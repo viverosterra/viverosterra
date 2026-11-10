@@ -9,16 +9,28 @@
 .vt-tienda .vt-ficha{padding:20px 0 var(--vt-space-section)}
 .vt-tienda .vt-ficha__grid{display:grid;gap:28px;margin-top:16px}
 .vt-tienda .vt-ficha__grid>*,.vt-tienda .vt-portada__grid>*{min-width:0}
-.vt-tienda main .vt-ficha h1{font-size:var(--vt-text-h1);line-height:.95}
 .vt-tienda .vt-ficha__pre{display:block;font-size:var(--vt-text-h3);font-weight:600;letter-spacing:0;color:var(--vt-ink-2)}
 .vt-tienda .vt-ficha__insignia{margin-left:.2em;padding:2px 8px;vertical-align:middle;border:1px solid var(--vt-field);font-size:var(--vt-text-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--vt-field)}
 .vt-tienda main .vt-existencia{display:flex;flex-wrap:wrap;gap:4px 14px;margin:12px 0 16px;font-size:var(--vt-text-sm);font-weight:600;color:var(--vt-field)}
 .vt-tienda .vt-existencia span::before{content:"● ";color:var(--vt-field)}
 .vt-tienda .vt-ficha .vt-etiqueta-x{max-width:420px}
-.vt-tienda .vt-ficha .vt-lede{margin-top:16px}
+.vt-tienda .vt-ficha .vt-lede{margin:0 0 16px}
+.vt-tienda .vt-ficha .vt-portada__cta{margin-top:18px}
+.vt-tienda .vt-ficha .vt-portada__confianza{margin-top:18px}
+.vt-tienda .vt-ficha__info .vt-etiqueta-x{margin-top:16px}
+@media (max-width:767px),(max-height:820px){
+.vt-tienda .vt-ficha .vt-etiqueta{padding-top:34px}
+.vt-tienda .vt-ficha .vt-etiqueta__nombre,.vt-tienda main .vt-ficha .vt-etiqueta__fila~.vt-etiqueta__fila{display:none}
+.vt-tienda main .vt-ficha .vt-etiqueta__precio{margin-top:0}
+.vt-tienda main .vt-ficha .vt-etiqueta__fila{border-bottom:0}
+}
+@media (max-width:767px),(max-height:820px){.vt-tienda .vt-ficha{padding-top:12px}.vt-tienda .vt-ficha__grid{margin-top:8px}}
+.vt-tienda main .vt-ficha .vt-existencia{margin:0 0 14px}
+@media (max-width:559px) and (max-height:700px){.vt-tienda .vt-portada-hub .vt-lede{display:none}.vt-tienda .vt-portada-hub .vt-campo{margin-top:8px}}
+.vt-tienda .vt-portada{--vt-sobre:49px}
 @media (min-width:1024px){
-.vt-tienda .vt-ficha__grid{grid-template-columns:7fr 5fr;grid-template-areas:"gal info" "gal cot";align-items:start;column-gap:48px}
-.vt-tienda .vt-ficha__info{grid-area:info}.vt-tienda .vt-galeria{grid-area:gal;position:sticky;top:calc(var(--vt-head-h) + 16px)}.vt-tienda .vt-ficha .vt-cotizador{grid-area:cot}
+.vt-tienda .vt-ficha__grid{grid-template-columns:7fr 5fr;grid-template-areas:"gal info" "gal mas" "gal cot";align-items:start;column-gap:48px}
+.vt-tienda .vt-ficha__info{grid-area:info}.vt-tienda .vt-ficha__mas{grid-area:mas}.vt-tienda .vt-galeria{grid-area:gal;position:sticky;top:calc(var(--vt-head-h) + 16px)}.vt-tienda .vt-ficha .vt-cotizador{grid-area:cot}
 }
 .vt-tienda .vt-galeria__pista{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;scrollbar-width:none}
 .vt-tienda .vt-galeria__pista::-webkit-scrollbar{display:none}
@@ -169,13 +181,7 @@
 .vt-tienda main .quiz__actions .btn--primary{background:var(--vt-field);color:var(--vt-card)}
 .vt-tienda .vt-comparador{display:grid;gap:14px;max-width:640px}
 .vt-tienda main .vt-comparador__res{margin:0;padding:12px 14px;border-left:3px solid var(--vt-field);background:var(--vt-card);font-weight:600}
-.vt-tienda .vt-portada-t .vt-cta .vt-btn{white-space:normal;text-align:center}
-.vt-tienda .vt-portada-t .vt-campo{max-width:420px;margin-top:18px}
-.vt-tienda main .vt-enlace-sec{margin:12px 0 0;font-size:var(--vt-text-sm);font-weight:700}
-.vt-tienda main .vt-enlace-sec a{color:var(--vt-field);text-underline-offset:3px}
-.vt-tienda main .vt-precio-puesto{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;margin:14px 0 0}
-.vt-tienda .vt-precio-puesto b{padding:2px 8px;background:var(--vt-tag);color:var(--vt-tag-ink);font-size:var(--vt-text-precio);font-weight:800;line-height:1}
-.vt-tienda .vt-precio-puesto small{flex-basis:100%;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
+.vt-tienda .vt-portada-t .vt-campo{max-width:420px;margin-top:14px}
 .vt-tienda .is-updating b{animation:vt-pulso .6s var(--vt-ease-out)}
 @keyframes vt-pulso{from{opacity:.4}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.vt-tienda .is-updating b{animation:none}.vt-tienda .vt-aviso,.vt-tienda .vt-compra{transition:none}}

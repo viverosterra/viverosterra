@@ -9,6 +9,7 @@ from types import SimpleNamespace
 import componentes_tienda as t
 import data
 import datos
+import entidad
 from ciudades import CIUDADES
 from componentes import dinero
 from contenido import seo
@@ -50,11 +51,12 @@ def _producto(x, zona, url, desde):
         "@type": "Product", "name": f"Pasto sintético con envío a {x['nombre_largo']}",
         "brand": {"@type": "Brand", "name": datos.NOMBRE}, "image": [f"{SITE}{GAL}/{FOTO}.webp"],
         "description": f"Pasto sintético en rollo de 50 m² con envío a {x['nombre_largo']}, desde ${desde}/m² puesto en tu casa.",
+        # SEO fase 1: el precio es "desde" (el rollo del modelo más barato; el tope es el menudeo del más caro), así que
+        # va como AggregateOffer con lowPrice y highPrice, y con el vendedor por @id a la entidad única.
         "offers": {
-            "@type": "Offer", "priceCurrency": "MXN", "price": str(m["rollo"]),
-            "priceSpecification": {"@type": "UnitPriceSpecification", "price": str(m["rollo"]), "priceCurrency": "MXN",
-                                   "unitText": "m²"},
-            "availability": "https://schema.org/InStock", "url": url,
+            "@type": "AggregateOffer", "priceCurrency": "MXN", "lowPrice": str(m["rollo"]),
+            "highPrice": str(max(x["t1"] for x in data.MODELOS)), "offerCount": str(len(data.MODELOS)),
+            "availability": "https://schema.org/InStock", "url": url, "seller": entidad.REF,
             "shippingDetails": {
                 "@type": "OfferShippingDetails",
                 "shippingRate": {"@type": "MonetaryAmount", "value": str(data.ZONAS[zona]), "currency": "MXN"},
@@ -106,8 +108,17 @@ def _preguntas_envio(x, zona):
     return tuple(items)
 
 
+# Encuadre de cada foto de portada (object-position; Entrega A de experiencia).
+ENCUADRES = {"obra-proyecto-01": "50% 40%", "obra-proyecto-02": "50% 45%", "obra-proyecto-03": "50% 55%",
+             "obra-proyecto-05": "50% 50%"}
+
+
+def _nombre_foto(x):
+    return FOTOS_PORTADA[CLAVES.index(x["slug"]) % len(FOTOS_PORTADA)]
+
+
 def _foto_portada(x):
-    nombre = FOTOS_PORTADA[CLAVES.index(x["slug"]) % len(FOTOS_PORTADA)]
+    nombre = _nombre_foto(x)
     return t.foto_obra(nombre, "(min-width: 1024px) 560px, 100vw", "Pasto de la colección instalado")
 
 
@@ -143,11 +154,16 @@ def contenido(x):
                                       (f"Envío a {x['nombre']}", url)]), _producto(x, zona, url, desde)),
         "migas": (("Inicio", "/"), ("Pasto sintético", "/pasto-sintetico"), (f"Envío a {x['nombre']}", None)),
         "portada": {
-            "kicker": f"Envío a {x['nombre_largo']} · 9 modelos en existencia",
+            "kicker": f"Envío a {x['nombre']} · 9 modelos",
             "h1": f'Pasto sintético en {x["nombre"]} <span class="vt-serif">con envío a tu casa</span>',
-            "respuesta": (f"Te enviamos el pasto sintético a {x['nombre_largo']} en 3 a 5 días hábiles. Desde "
-                          f"<b>${desde}/m²</b> ya con envío, en rollo de 50 m² con factura. Tú lo instalas con nuestra "
-                          "guía."),
+            "respuesta": (f"Te enviamos el pasto sintético a {x['nombre_largo']}. Desde <b>${desde}/m²</b> ya con envío, "
+                          "en rollo de 50 m² con factura."),
+            # Precio puesto en la ciudad, en la etiqueta (antes solo iba dentro del párrafo): los mismos datos del cuadro.
+            "etiqueta": {"codigo": "Con envío", "aviso": "Con factura", "nombre": m["nombre"],
+                         "antes": f"Puesto en {x['nombre']} · desde", "monto": f"${desde}", "unidad": "/m²",
+                         "filas": (("Flete por rollo", dinero(data.ZONAS[zona])),)},
+            "dato": "9 modelos en existencia",
+            "pos": ENCUADRES[_nombre_foto(x)],
             "mensaje": mensaje,
             "href_modelos": f"/pasto-sintetico?estado={estado}#modelos",
             "texto_modelos": "Ver los 9 modelos con precio puesto",
@@ -182,6 +198,11 @@ def contenido(x):
     }
 
 
+M_OFERTA = ("SEO fase 1: el precio de la página es un «desde» (rollo del modelo más barato), así que la oferta es un "
+            "AggregateOffer con lowPrice y highPrice y el vendedor por @id; ya no un Offer con un precio fijo.")
+M_JSONLD = {"Offer": M_OFERTA, "UnitPriceSpecification": M_OFERTA}
+
+
 def paridad(x):
     """La sección "Instálalo tú" pasa a la pregunta de instalación. En la zona B (Monterrey y Veracruz), 12 mensualidades
     sobre $19,998 son 1,666.5: la página decía $1,666 (round() de Python) y el cotizador cobra $1,667 (Math.round);
@@ -189,7 +210,12 @@ def paridad(x):
     reemplazos = {"Instalarlo tú mismo es sencillo": f"¿Quién lo instala en {x['nombre']}?"}
     if data.zona_de(x["estado"]) == "B":
         reemplazos["$1,666"] = "$1,667"
-    return {"meta": seo.paridad(*titulo_y_descripcion(x)), "reemplazos": reemplazos, "retirados": {}}
+    hero = ("Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp y enlaces de texto; el precio "
+            "puesto en la ciudad va en la etiqueta colgada (antes solo en el párrafo); de la entrada salen el plazo de "
+            "entrega (sigue en el cuadro de datos y en «¿Cuánto tarda?») y «Tú lo instalas con nuestra guía» (sigue en "
+            "«¿Quién lo instala?»); kicker en un renglón.")
+    return {"meta": seo.paridad(*titulo_y_descripcion(x)), "reemplazos": reemplazos, "retirados": {}, "jsonld": M_JSONLD,
+            "hero": hero}
 
 
 def pagina(slug):

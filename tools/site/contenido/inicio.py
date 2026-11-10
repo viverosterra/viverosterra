@@ -7,6 +7,8 @@ es una ruta y el sitio tiene un solo idioma. PARIDAD dice a dónde fue cada enca
 página anterior que ya no aparece igual (prueba: tools/site/tests/test_paridad.py).
 """
 import datos
+from contenido import respuestas
+import entidad
 from componentes import dinero
 
 P = datos.PRECIOS
@@ -41,32 +43,6 @@ META = {
         ("twitter:description", f"Pasto en rollo, diseño de jardines y mantenimiento en Tampico. {COTIZA}"),
         ("twitter:image", f"{datos.SITIO}/img/jardineria-areas-verdes-tampico.webp"),
     ),
-}
-
-NEGOCIO = {
-    "@type": "LocalBusiness",
-    "@id": f"{datos.SITIO}/#negocio",
-    "foundingDate": datos.FUNDACION,
-    "name": datos.NOMBRE,
-    "hasMap": datos.MAPS_URL,
-    "description": ("Especialistas en pasto en rollo San Agustín, venta e instalación de pasto sintético, diseño de "
-                    "jardines, sistemas de riego y mantenimiento de áreas verdes en Tampico, Ciudad Madero y Altamira, "
-                    "Tamaulipas."),
-    "url": datos.SITIO,
-    "telephone": datos.TELEFONO_TEL,
-    "email": datos.CORREO_FORMULARIOS,
-    "image": f"{datos.SITIO}/img/jardineria-areas-verdes-tampico.jpg",
-    "address": {"@type": "PostalAddress", "streetAddress": datos.CALLE, "addressLocality": datos.CIUDAD,
-                "addressRegion": "Tamaulipas", "postalCode": datos.CP, "addressCountry": "MX"},
-    "geo": {"@type": "GeoCoordinates", "latitude": datos.GEO[0], "longitude": datos.GEO[1]},
-    "openingHoursSpecification": [
-        {"@type": "OpeningHoursSpecification", "dayOfWeek": list(dias) if len(dias) > 1 else dias[0], "opens": abre,
-         "closes": cierra} for dias, abre, cierra in datos.HORARIO_LD],
-    "sameAs": ["https://www.facebook.com/viverosterra/", "https://www.instagram.com/viverosterramx",
-               "https://www.linkedin.com/company/viveros-terra-tampico"],
-    "priceRange": "$$",
-    "areaServed": ["Tampico", "Ciudad Madero", "Altamira", "Pánuco", "Tuxpan", "Victoria", "Tampico Centro",
-                   "Madero Norte", "Madero Sur", "Altamira Industrial"],
 }
 
 OBRA = "/img/obra"
@@ -107,9 +83,10 @@ TEMPORADA = None if _NB["modo"] == "postemporada" else {
 }
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/"),  # SEO fase 1: respuesta directa bajo la portada
     "meta": META,
     "temporada": TEMPORADA,
-    "jsonld": {"negocio": NEGOCIO, "speakable": ("h1", "h2", ".vt-faq summary")},
+    "jsonld": {"sitio": entidad.sitio(), "negocio": entidad.negocio(), "speakable": entidad.SPEAKABLE},
     "portada": {
         "kicker": f"Vivero y cuadrilla propia · Desde {datos.DESDE}",
         "h1": "Pasto, jardines y plantas en Tampico.",
@@ -343,3 +320,5 @@ PARIDAD = {
         "$0": "Era el marcador vacío del cotizador viejo (“$0 – $0”).",
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: la portada usa el componente común (mismas piezas, mismos textos y mismo aspecto; clases vt-portada__*).')

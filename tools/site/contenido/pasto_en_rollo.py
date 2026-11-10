@@ -7,8 +7,10 @@ Canonical, Product y migas del JSON-LD se conservan como estaban publicados; FAQ
 PARIDAD: tests/test_paridad.py.
 """
 import datos
+import entidad
 from componentes import dinero, dinero_exacto, mensualidades
 from contenido import seo
+from contenido import respuestas
 
 P = datos.PRECIOS
 MINIMO = P["pasto_mayoreo_minimo_m2"]
@@ -48,9 +50,11 @@ PRODUCTO = {
                     f"${P['pasto_solo_m2']}/m² solo el pasto e instalado desde ${P['pasto_instalado_m2']}/m², con "
                     "garantía de arraigo."),
     "brand": {"@type": "Brand", "name": datos.NOMBRE},
+    # SEO fase 1: la foto real de la portada y el vendedor por @id a la entidad única (antes, un LocalBusiness suelto).
+    "image": f"{datos.SITIO}/img/despues-instalacion-pasto-san-agustin-tampico.webp",
     "offers": {"@type": "Offer", "priceCurrency": "MXN", "price": str(P["pasto_solo_m2"]),
                "priceValidUntil": datos.PRECIOS_VIGENTES_HASTA, "availability": "https://schema.org/InStock",
-               "seller": {"@type": "LocalBusiness", "name": datos.NOMBRE, "telephone": datos.TELEFONO_TEL}},
+               "seller": entidad.REF},
 }
 
 MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
@@ -101,18 +105,21 @@ SECTORES = (
 )
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/pasto-en-rollo-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-pasto",
     "prefijo": "pasto",
     "meta": META,
     "jsonld": {"producto": PRODUCTO, "migas": MIGAS_LD, "howto": "Cómo instalar pasto en rollo San Agustín en Tampico",
-               "speakable": ("h1", "h2", ".vt-faq summary")},
+               "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Pasto en rollo", None)),
     "portada": {
         "kicker": "Pasto natural · Tampico, Madero y Altamira",
+        "pos": "50% 4%",
+        "dato": f"Garantía de arraigo de {datos.ARRAIGO} con instalación",
+        "enlaces": (("Calcula tu patio", "#precio"), ("Mensualidades con tarjeta", "#mensualidades")),
         "h1": ('Pasto San Agustín en rollo, instalado en un día. '
                '<span class="vt-serif">Del campo a tu jardín, sin pasar por bodega.</span>'),
-        "lede": (f"Cortado para tu pedido: llega del campo {datos.LLEGADA_PASTO}. Preparamos el suelo, tendemos tepes "
-                 "de 40 × 60 cm y te enseñamos a regarlo."),
+        "lede": f"Cortado para tu pedido: llega del campo {datos.LLEGADA_PASTO}.",
         "etiqueta": {
             "codigo": "Pasto · 01", "aviso": "Tepe 40 × 60 cm", "nombre": "Pasto San Agustín",
             "cientifico": "Stenotaphrum secundatum", "antes": "Instalado · desde",
@@ -121,8 +128,6 @@ CONTENIDO = {
                       (f"Mayoreo, solo pasto, {MINIMO} m² o más", f"desde {dinero(P['pasto_mayoreo_m2'])} /m²")),
         },
         "mensaje": datos.MENSAJES["pasto-natural"],
-        "tambien": (f'Garantía de arraigo de {datos.ARRAIGO} con instalación · <a href="#precio">calcula tu patio</a> · '
-                    f'<a href="#mensualidades">mensualidades con tarjeta de crédito</a> desde {DESDE_MENSUALIDADES}'),
         "foto": {"src": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111, "numero": 1,
                  "alt": "Rollos de pasto San Agustín recién cortados, cargados en la camioneta de reparto.",
                  "lugar": "Rollos recién cortados · en la camioneta de reparto", "etapa": "Cd. Madero"},
@@ -337,3 +342,5 @@ PARIDAD = {
             "o con el Medidor, con la promesa única (spec §3.3, §4.3)."),
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: «Preparamos el suelo, tendemos tepes de 40 × 60 cm y te enseñamos a regarlo» sale del hero (el tepe va en la etiqueta y los pasos, en «Cómo se instala»); «mensualidades… desde $2,000» queda como enlace a #mensualidades, donde está el monto.')

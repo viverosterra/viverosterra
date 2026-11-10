@@ -9,9 +9,11 @@ datos.FRECUENCIAS_MANTENIMIENTO; visita con datos.VISITA_COSTO (su costo depende
 Título y descripción (también en Open Graph y Twitter Card): los de la fase 0 de SEO (contenido/seo.py). Canonical, Service y migas como estaban publicados; FAQPage de las preguntas visibles. PARIDAD: tests/test_paridad.py.
 """
 import datos
+import entidad
 import mensajes_paginas
 from componentes import dinero
 from contenido import seo
+from contenido import respuestas
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -47,10 +49,8 @@ SERVICIO = {
     "description": ("Servicio profesional de mantenimiento de jardines residenciales, corporativos e industriales en "
                     "Tampico, Ciudad Madero y Altamira. Incluye poda, fertilizacion, control de plagas y revision "
                     f"general. Desde {BASICO} pesos mensuales con cotizacion personalizada segun el espacio."),
-    "provider": {"@type": "LocalBusiness", "name": datos.NOMBRE, "telephone": datos.TELEFONO_TEL,
-                 "address": {"@type": "PostalAddress", "streetAddress": datos.CALLE, "addressLocality": datos.CIUDAD,
-                             "addressRegion": "Tamaulipas", "postalCode": datos.CP, "addressCountry": "MX"}},
-    "areaServed": ["Tampico", "Ciudad Madero", "Altamira", "Tamaulipas"],
+    "provider": entidad.REF,  # SEO fase 1: la entidad única por @id (antes, un LocalBusiness suelto)
+    "areaServed": [{"@type": "City", "name": ciudad} for ciudad in entidad.CIUDADES],
     "offers": {"@type": "Offer", "priceCurrency": "MXN", "price": str(BASICO),
                "description": (f"Servicio mensual desde {BASICO} pesos con cotizacion personalizada segun tamano, tipo "
                                "y ubicacion del jardin.")},
@@ -182,14 +182,17 @@ SECTORES = (
 )
 
 CONTENIDO = {
+    "respuesta": respuestas.de("/mantenimiento-jardines-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-mantenimiento",
     "prefijo": "mantenimiento",
     "meta": META,
-    "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": ("h1", "h2", ".vt-faq summary")},
+    "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Mantenimiento de jardines", None)),
     "portada": {
-        "compacta": True,  # a 1024–1199 px el CTA queda en la primera pantalla
         "kicker": "Jardinería · Tampico, Madero y Altamira",
+        "pos": "50% 24%",
+        "dato": f"REPSE {datos.REPSE} y factura {datos.FACTURA} para empresas",
+        "enlaces": (("Elige tu plan", "#opciones"),),
         "h1": 'Mantenimiento de jardines y jardinero en Tampico <span class="vt-serif">con visitas programadas</span>',
         # Corta para que el precio y el CTA quepan en la primera pantalla del celular; las frecuencias van en la FAQ.
         "lede": "Poda, fertilización, control de plagas y riego para casas y empresas.",
@@ -199,8 +202,6 @@ CONTENIDO = {
             "filas": (("Otros planes", COTIZA),),
         },
         "mensaje": MENSAJE,
-        "tambien": (f'REPSE {datos.REPSE} y factura {datos.FACTURA} para empresas · '
-                    '<a href="#opciones">elige tu plan</a> · sin permanencia forzada'),
         "foto": {"src": "/img/portadas/mantenimiento-jardines-poda-pasto-tampico-sm.webp",
                  "srcset": ("/img/portadas/mantenimiento-jardines-poda-pasto-tampico-sm.webp 560w, "
                             "/img/portadas/mantenimiento-jardines-poda-pasto-tampico.webp 960w"),
@@ -316,6 +317,8 @@ CONTENIDO = {
 }
 
 PARIDAD = {
+    "jsonld": {"PostalAddress": ("SEO fase 1: iba dentro del LocalBusiness suelto del provider; ahora el provider es la entidad única por @id y la "
+                              "dirección completa vive en el nodo #negocio de la home y de /vivero-tampico.")},
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {
         "Mantenimiento de jardines en Tampico, cada mes": (
@@ -350,3 +353,5 @@ PARIDAD = {
         "$1,500": "“Complementa tu proyecto” (tierra negra) sale; los materiales siguen en el menú y el pie.",
     },
 }
+# Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). «Sin permanencia forzada» sale del hero y sigue en los planes.')

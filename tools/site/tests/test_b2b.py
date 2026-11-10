@@ -30,6 +30,8 @@ SIN_CONFIRMAR = ("50 por especie", "50 ejemplares", "por especie mínimo", "el d
                  "maniobra en obra va incluida", "productor directo", "maniobra de plantación", "cuadrilla, supervisión",
                  "llegue fresca")
 NEGOCIO = f"{datos.SITIO}/#negocio"
+# SEO fase 1: entidad.completar cierra cada grafo con el WebPage y los nodos mínimos del negocio y del sitio.
+CIERRE = ["WebPage", ["GardenStore", "LocalBusiness"], "WebSite"]
 # Migas visibles de cada página (las del JSON-LD dicen lo mismo).
 MIGAS = {"mayoreo": ["Inicio", "Pasto en rollo", "Mayoreo"], "palmas": ["Inicio", "Palmas para proyectos"]}
 PRECIOS_VIEJOS_PALMAS = ("$850", "$1,200", "$1,500", "$1,600", "$1,800", "$2,000", "$2,200", "$2,400", "$2,800",
@@ -227,7 +229,10 @@ class MayoreoTest(unittest.TestCase):
 
     def test_json_ld_como_estaba_publicado(self):
         _h, _m, _t, grafo = pagina("mayoreo")
-        self.assertEqual([n["@type"] for n in grafo], ["Service", "FAQPage", "BreadcrumbList", "SpeakableSpecification"])
+        # SEO fase 1: sin SpeakableSpecification suelto (va en el WebPage, que apunta a la entrada: ya es la respuesta).
+        self.assertEqual([n["@type"] for n in grafo], ["Service", "FAQPage", "BreadcrumbList", *CIERRE])
+        self.assertEqual(grafo[3]["speakable"]["cssSelector"], ["[data-vt-respuesta]", ".vt-faq details p"])
+        self.assertEqual(grafo[3]["dateModified"], datos.PRECIOS_ACTUALIZADOS)
 
     def test_tabla_sin_columna_unidad(self):
         """La unidad va con el precio ("$85/m²"): en celular cada tarjeta tiene una línea menos."""
@@ -346,19 +351,22 @@ class PalmasTest(unittest.TestCase):
     def test_json_ld_con_precios_nuevos(self):
         _h, _m, texto, grafo = pagina("palmas")
         servicio = grafo[0]
-        self.assertEqual(servicio["offers"], {
-            "@type": "Offer", "priceSpecification": {"@type": "PriceSpecification", "minPrice": 250, "priceCurrency": "MXN"},
-            "seller": {"@id": "https://www.viverosterra.com/#negocio"}})
+        # SEO fase 1: los «desde» son AggregateOffer con lowPrice (mínimo del tamaño chico, sin tope ni conteo); las
+        # especies según cotización ya no son Product (un Product sin precio ni foto es inválido).
+        negocio = {"@id": "https://www.viverosterra.com/#negocio"}
+        self.assertEqual(servicio["offers"], {"@type": "AggregateOffer", "lowPrice": 250, "priceCurrency": "MXN",
+                                              "seller": negocio})
         lista = next(n for n in grafo if n["@type"] == "ItemList")["itemListElement"]
         ofertas = {e["item"]["name"]: e["item"]["offers"] for e in lista if "offers" in e["item"]}
-        self.assertEqual({n: o["priceSpecification"] for n, o in ofertas.items()},
-                         {n: {"@type": "PriceSpecification", "minPrice": p, "priceCurrency": "MXN"}
+        self.assertEqual({n: (o["@type"], o["lowPrice"], o["priceCurrency"], o["seller"]) for n, o in ofertas.items()},
+                         {n: ("AggregateOffer", p, "MXN", negocio)
                           for n, p in (("Palma areca", 250), ("Coco plumoso", 250), ("Palma real", 500))})
-        self.assertTrue(all("price" not in o for o in ofertas.values()))  # precios "desde": mínimo, no cerrado
+        self.assertTrue(all("price" not in o and "highPrice" not in o for o in ofertas.values()))  # mínimo, no cerrado
+        self.assertEqual([e["item"]["@type"] for e in lista].count("Product"), 3)
+        self.assertTrue(all("alternateName" in e["item"] for e in lista))
         self.assertEqual(len(lista), 12)
         self.assertNotIn("InStock", texto)
-        self.assertEqual([n["@type"] for n in grafo],
-                         ["Service", "ItemList", "FAQPage", "BreadcrumbList", "SpeakableSpecification"])
+        self.assertEqual([n["@type"] for n in grafo], ["Service", "ItemList", "FAQPage", "BreadcrumbList", *CIERRE])
 
 
 if __name__ == "__main__":
