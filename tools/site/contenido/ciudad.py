@@ -11,6 +11,7 @@ import data
 import datos
 from ciudades import CIUDADES
 from componentes import dinero
+from contenido import seo
 from esquema import breadcrumb_schema
 
 CLAVES = tuple(x["slug"] for x in CIUDADES)
@@ -110,15 +111,25 @@ def _foto_portada(x):
     return t.foto_obra(nombre, "(min-width: 1024px) 560px, 100vw", "Pasto de la colección instalado")
 
 
+def titulo_y_descripcion(x):
+    """Título y descripción de la ciudad (SEO fase 0, 2026-11-10): el precio puesto en la ciudad en el título mientras
+    quepa en 60 caracteres (si no, «con Envío») y sin plazo de entrega (regla del dueño)."""
+    desde = data.landed_m2(t.barato(), data.zona_de(x["estado"]))
+    titulo = f"Pasto Sintético en {x['nombre']} desde ${desde}/m² | Viveros Terra"
+    if len(titulo) > 60:
+        titulo = f"Pasto Sintético en {x['nombre']} con Envío | Viveros Terra"
+    descripcion = (f"Pasto sintético con envío a {x['nombre']} desde ${desde}/m² puesto en tu domicilio: 9 modelos de "
+                   f"10 a 35 mm, con factura {datos.FACTURA}. Cotiza tu rollo.")
+    return titulo, descripcion
+
+
 def contenido(x):
     zona = data.zona_de(x["estado"])
     url = f"{SITE}/pasto-sintetico/envio/{x['slug']}"
     m = t.barato()
     desde = data.landed_m2(m, zona)
     estado = data.estado_slug(x["estado"])
-    titulo = f"Pasto sintético en {x['nombre']} con envío · desde ${desde}/m² | Viveros Terra"
-    descripcion = (f"Pasto sintético con envío a {x['nombre_largo']} desde ${desde}/m² puesto en tu casa. 9 modelos de "
-                   "10 a 35 mm, entrega en 3 a 5 días hábiles y factura.")
+    titulo, descripcion = titulo_y_descripcion(x)
     mensaje = f"Hola, quiero cotizar pasto sintético con envío a {x['nombre']}.\nMetros aprox.: ___\nModelo: ___"
     return {
         "tipo": "ciudad",
@@ -178,7 +189,7 @@ def paridad(x):
     reemplazos = {"Instalarlo tú mismo es sencillo": f"¿Quién lo instala en {x['nombre']}?"}
     if data.zona_de(x["estado"]) == "B":
         reemplazos["$1,666"] = "$1,667"
-    return {"reemplazos": reemplazos, "retirados": {}}
+    return {"meta": seo.paridad(*titulo_y_descripcion(x)), "reemplazos": reemplazos, "retirados": {}}
 
 
 def pagina(slug):

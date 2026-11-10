@@ -25,12 +25,12 @@ def permitido_borrar(doc):
 
 
 class BlogParidadTest(unittest.TestCase):
-    def test_son_52_articulos(self):
-        self.assertEqual(len(articulo.CLAVES), 52)
-        self.assertEqual(len(articulo.CLAVES), len(list(paridad_blog.DIR_TEXTO.glob("*.txt"))))
+    def test_son_54_articulos(self):
+        self.assertEqual(len(articulo.CLAVES), 54)
+        self.assertEqual(len(articulo.CLAVES) - len(articulo.NUEVOS), len(list(paridad_blog.DIR_TEXTO.glob("*.txt"))))
 
     def test_nada_se_agrega_al_texto_del_articulo(self):
-        for slug in articulo.CLAVES:
+        for slug in (s for s in articulo.CLAVES if s not in articulo.NUEVOS):
             viejo = paridad_blog.viejo_corregido(slug, bc.de(slug) + bc.TODOS)
             insertado, _borrado = paridad_blog.diferencias(viejo, paridad_blog.cuerpo_nuevo(html_de(slug)))
             with self.subTest(slug=slug):
@@ -39,7 +39,7 @@ class BlogParidadTest(unittest.TestCase):
     def test_lo_que_se_borra_es_la_envoltura(self):
         """Solo salen el índice, los CTA y la barra lateral anteriores (anotados por la extracción) y la portada, que la
         plantilla vuelve a poner."""
-        for slug in articulo.CLAVES:
+        for slug in (s for s in articulo.CLAVES if s not in articulo.NUEVOS):
             doc, _cuerpo = articulo.leer(slug)
             viejo = paridad_blog.viejo_corregido(slug, bc.de(slug) + bc.TODOS)
             _ins, borrado = paridad_blog.diferencias(viejo, paridad_blog.cuerpo_nuevo(html_de(slug)))
@@ -51,6 +51,8 @@ class BlogParidadTest(unittest.TestCase):
     def test_mismas_fotos_en_el_mismo_orden(self):
         captura = json.loads(paridad_blog.FOTOS.read_text(encoding="utf-8"))
         for ruta, viejas in captura.items():
+            if ruta.removeprefix("/blog/") in articulo.NUEVOS:
+                continue
             nuevas = paridad_materiales.fotos(paridad.archivo(ruta).read_text(encoding="utf-8"))
             with self.subTest(ruta=ruta):
                 self.assertEqual([re.sub(r"^(\.\./)+", "/", f["src"]) for f in viejas], [f["src"] for f in nuevas])

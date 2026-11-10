@@ -94,14 +94,17 @@ class MaterialTest(unittest.TestCase):
                 self.assertIn('<meta property="og:site_name" content="Viveros Terra">', html)
                 self.assertIn('<meta name="twitter:card" content="summary_large_image">', html)
         marmol = html_de("/marmol-blanco-tampico")
-        self.assertIn('<meta name="twitter:title" content="Mármol Blanco para Jardín Tampico · $250/saco">', marmol)
+        # SEO fase 0 (2026-11-10): la Twitter Card lleva el mismo título de la página.
+        self.assertIn('<meta name="twitter:title" content="Mármol Blanco para Jardín Tampico: Saco $250 | Viveros Terra">',
+                      marmol)
         self.assertNotIn("gratis", " ".join(re.findall(r'<meta name="twitter:[^>]*>', marmol)))
 
     def test_sitemap_con_la_fecha_de_la_revision(self):
         mapa = SITEMAP.read_text(encoding="utf-8")
         for ruta in MIGRADAS:
             with self.subTest(ruta=ruta):
-                self.assertIn(f"<loc>{datos.SITIO}{ruta}</loc><lastmod>2026-11-08</lastmod>", mapa)
+                # 2026-11-10: título, descripción y H1 de la fase 0 de SEO (antes, 2026-11-08: revisión de materiales).
+                self.assertIn(f"<loc>{datos.SITIO}{ruta}</loc><lastmod>2026-11-10</lastmod>", mapa)
 
     def test_hoja_de_materiales(self):
         for ruta in MIGRADAS:

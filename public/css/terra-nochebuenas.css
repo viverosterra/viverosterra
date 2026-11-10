@@ -1,0 +1,146 @@
+/* terra-nochebuenas.css: hoja de la página de temporada. Solo se carga en <body class="vt-pagina vt-nochebuenas"> (shell.py);
+   todo bajo .vt-nochebuenas y con los tokens de terra.css. La pieza principal es la nota de pedido: una hoja blanca con
+   renglones y, encima de ella, la etiqueta amarilla del total. Móvil primero. */
+
+/* Portada: en celular el H1 cede para que el precio y el CTA entren en la primera pantalla. */
+@media (max-width:1023px){.vt-nochebuenas .vt-portada h1{font-size:clamp(2.25rem,1.6rem + 3.4vw,3.25rem)}}
+
+/* ---------- nota de pedido ---------- */
+.vt-nochebuenas .vt-nb-nota{display:grid;grid-template-columns:minmax(0,1fr)}
+.vt-nochebuenas .vt-nb-hoja{position:relative;padding:0 16px 32px;border:1.5px solid var(--vt-ink);border-radius:var(--vt-radius);background:var(--vt-card);box-shadow:var(--vt-sombra-card)}
+.vt-nochebuenas main .vt-nb-hoja__cab{display:flex;justify-content:space-between;gap:12px;margin:0 -16px;padding:10px 16px;background:var(--vt-ink);color:var(--vt-on-dark);font-size:var(--vt-text-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.vt-nochebuenas .vt-nb-linea{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:18px 0;border-bottom:1px dashed var(--vt-line-strong)}
+.vt-nochebuenas .vt-nb-campo{display:grid;gap:4px;min-width:0}
+.vt-nochebuenas :is(.vt-nb-campo>span,.vt-nb-cant__campo>span,.vt-nb-linea__sub span){font-size:var(--vt-text-xs);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--vt-muted)}
+.vt-nochebuenas :is(.vt-nb-campo select,.vt-nb-campo input,.vt-nb-cant input){width:100%;min-width:0;min-height:48px;padding:0 10px;border:1.5px solid var(--vt-line-ui);border-radius:var(--vt-radius);background:var(--vt-card);color:var(--vt-ink);font:600 1rem/1.2 var(--vt-font-sans);transition:border-color var(--vt-duration-fast)}
+.vt-nochebuenas :is(.vt-nb-campo select,.vt-nb-campo input,.vt-nb-cant input):hover{border-color:var(--vt-ink)}
+.vt-nochebuenas .vt-nb-cant{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;grid-template-rows:auto 48px;gap:4px 0;align-items:stretch}
+.vt-nochebuenas .vt-nb-cant__campo{display:contents}
+.vt-nochebuenas .vt-nb-cant__campo>span{grid-column:1 / -1;grid-row:1}
+.vt-nochebuenas .vt-nb-cant input{grid-column:2;grid-row:2;min-height:0;padding:0;border-inline:0;border-radius:0;border-color:var(--vt-ink);text-align:center;font-size:1.125rem;font-weight:800;font-variant-numeric:tabular-nums;appearance:textfield}
+.vt-nochebuenas .vt-nb-cant input::-webkit-outer-spin-button,.vt-nochebuenas .vt-nb-cant input::-webkit-inner-spin-button{margin:0;-webkit-appearance:none}
+.vt-nochebuenas .vt-nb-paso{grid-row:2;min-width:44px;min-height:44px;padding:0;border:1.5px solid var(--vt-ink);border-radius:var(--vt-radius);background:var(--vt-bone-2);color:var(--vt-ink);font:700 1.375rem/1 var(--vt-font-sans);cursor:pointer;transition:background var(--vt-duration-fast),color var(--vt-duration-fast)}
+.vt-nochebuenas .vt-nb-paso[data-nb-accion="mas"]{grid-column:3}
+.vt-nochebuenas .vt-nb-paso:hover{background:var(--vt-ink);color:var(--vt-on-dark)}
+.vt-nochebuenas :is(.vt-nb-paso,.vt-nb-agregar):active{background:var(--vt-field-deep);color:var(--vt-on-dark);transform:translateY(1px)}
+.vt-nochebuenas :is(.vt-nb-paso,.vt-nb-quitar,.vt-nb-agregar,.vt-nb-para__wa):focus-visible{outline:2px solid var(--vt-field);outline-offset:2px}
+.vt-nochebuenas main .vt-nb-linea__sub{display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-end;gap:2px;margin:0}
+.vt-nochebuenas .vt-nb-linea__sub b{font-size:1.5rem;font-weight:800;line-height:1.5;font-variant-numeric:tabular-nums;font-variation-settings:"wdth" 85}
+.vt-nochebuenas .vt-nb-quitar{grid-column:1 / -1;justify-self:end;min-height:44px;padding:0 4px;border:0;background:none;color:var(--vt-soil);font:600 var(--vt-text-sm)/1 var(--vt-font-sans);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.vt-nochebuenas .vt-nb-quitar:is(:hover,:active){color:var(--vt-ink)}
+.vt-nochebuenas .vt-nb-agregar{width:100%;margin-top:16px;cursor:pointer}
+.vt-nochebuenas .vt-nb-agregar:disabled{border-color:var(--vt-line);color:var(--vt-muted);cursor:not-allowed}
+.vt-nochebuenas .vt-nb-extras{margin-top:12px}
+.vt-nochebuenas .vt-nb-extras summary{display:flex;align-items:center;min-height:44px;font-size:var(--vt-text-sm);font-weight:700;cursor:pointer}
+.vt-nochebuenas .vt-nb-extras summary:hover{color:var(--vt-field-deep)}
+.vt-nochebuenas .vt-nb-extras__rejilla{display:grid;gap:12px;padding-top:8px}
+.vt-nochebuenas .vt-nb-linea__sub small{font-size:var(--vt-text-xs);color:var(--vt-muted);font-variant-numeric:tabular-nums}
+.vt-nochebuenas .vt-nb-check{display:flex;align-items:center;gap:10px;min-height:48px;font-size:var(--vt-text-sm);font-weight:600;cursor:pointer}
+.vt-nochebuenas .vt-nb-check input{flex:none;width:22px;height:22px;accent-color:var(--vt-field)}
+
+/* La etiqueta del total cuelga sobre el borde de la hoja: una pieza encima de otra. */
+.vt-nochebuenas .vt-nb-ticket{position:relative;margin-top:-18px;padding-inline:12px;scroll-margin-top:calc(var(--vt-head-h) + 16px)}
+.vt-nochebuenas main .vt-nb-ticket .vt-etiqueta__sci{font:600 var(--vt-text-sm)/1.3 var(--vt-font-sans);color:var(--vt-ink-2)}
+.vt-nochebuenas .vt-nb-ticket .vt-etiqueta-x{width:100%}
+.vt-nochebuenas main .vt-nb-ticket .vt-etiqueta__precio{padding-block:14px 16px}
+.vt-nochebuenas main .vt-nb-ticket .vt-etiqueta__precio b{font-size:var(--vt-text-precio);line-height:1}
+.vt-nochebuenas .vt-nb-ticket .vt-etiqueta__precio b span{font:inherit;letter-spacing:inherit}
+.vt-nochebuenas .vt-nb-avisos{display:grid;gap:8px;margin-top:14px}
+.vt-nochebuenas main .vt-nb-aviso{margin:0;padding:10px 12px;border-left:3px solid var(--vt-line-strong);background:var(--vt-card);font-size:var(--vt-text-sm);line-height:1.4;color:var(--vt-ink-2)}
+.vt-nochebuenas main .vt-nb-aviso--ahorro{border-left-color:var(--vt-field);color:var(--vt-field-deep);font-weight:700}
+.vt-nochebuenas main .vt-nb-aviso--tag{border-left-color:var(--vt-ink);background:var(--vt-tag);color:var(--vt-tag-ink);font-weight:700}
+.vt-nochebuenas main .vt-nb-aviso--alerta{border-left-color:var(--vt-soil);background:var(--vt-soil-100);color:var(--vt-soil);font-weight:700}
+.vt-nochebuenas .vt-nb-ticket>.vt-nb-aviso{margin-top:8px}
+.vt-nochebuenas .vt-nb-subir{width:100%;cursor:pointer}
+.vt-nochebuenas main .vt-nb-aviso--nudge{border-left-color:var(--vt-field);background:var(--vt-field-100);color:var(--vt-field-deep);font-weight:700}
+.vt-nochebuenas .vt-nb-enviar{width:100%;min-height:56px;margin-top:14px;font-size:1.0625rem}
+.vt-nochebuenas .vt-nb-enviar[aria-disabled="true"]{background:var(--vt-line);color:var(--vt-muted);cursor:not-allowed}
+
+/* ---------- tabla: cinco columnas también a 320 px ---------- */
+.vt-nochebuenas .vt-nb-tabla{table-layout:auto;max-width:64rem}
+.vt-nochebuenas .vt-nb-tabla :is(th,td){padding:12px 6px;vertical-align:middle}
+.vt-nochebuenas .vt-nb-tabla thead th{font-size:12px;letter-spacing:0;line-height:1.25}
+.vt-nochebuenas .vt-nb-tabla th small{display:block;margin-top:2px;font-size:10px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--vt-muted)}
+.vt-nochebuenas .vt-nb-tabla tbody th{font-size:13px;font-weight:700;line-height:1.2}
+.vt-nochebuenas .vt-nb-tabla td{text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.vt-nochebuenas .vt-nb-tabla thead th:not(:first-child){text-align:right}
+.vt-nochebuenas .vt-nb-tabla tr:hover th{background:var(--vt-field-100)}
+.vt-nochebuenas .vt-nb-tabla td:last-child{background:var(--vt-tag);color:var(--vt-tag-ink)}
+.vt-nochebuenas main .vt-nb-nota-tabla{max-width:60ch;margin:16px 0 0;color:var(--vt-ink-2)}
+@media (min-width:640px){
+  .vt-nochebuenas .vt-nb-tabla :is(th,td){padding:16px 14px}
+  .vt-nochebuenas .vt-nb-tabla :is(thead th,th small){font-size:var(--vt-text-xs)}
+  .vt-nochebuenas .vt-nb-tabla tbody th{font-size:17px}
+  .vt-nochebuenas .vt-nb-tabla td{font-size:20px}
+}
+
+/* ---------- ¿para quién?: lista editorial, la primera manda ---------- */
+.vt-nochebuenas .vt-nb-para{list-style:none;border-top:1.5px solid var(--vt-ink)}
+.vt-nochebuenas .vt-nb-para__item{display:grid;grid-template-columns:32px minmax(0,1fr);gap:6px 12px;padding:20px 0;border-bottom:1px solid var(--vt-line)}
+.vt-nochebuenas .vt-nb-para__n{grid-row:1 / span 3;font-size:var(--vt-text-xs);font-weight:700;line-height:2;color:var(--vt-muted);font-variant-numeric:tabular-nums}
+.vt-nochebuenas main .vt-nb-para__texto p{margin:6px 0 0;color:var(--vt-ink-2)}
+.vt-nochebuenas .vt-nb-para__cond{display:grid;gap:2px;list-style:none;font-size:var(--vt-text-sm);color:var(--vt-muted)}
+.vt-nochebuenas main .vt-nb-para__wa{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--vt-field-deep);font-weight:700;text-decoration:none}
+.vt-nochebuenas main .vt-nb-para__wa:is(:hover,:active){color:var(--vt-ink);text-decoration:underline;text-underline-offset:4px}
+.vt-nochebuenas .vt-nb-para__wa:hover .vt-flecha{transform:translateX(3px)}
+.vt-nochebuenas main .vt-nb-para__item:first-child h3{font-size:clamp(1.75rem,1.3rem + 2vw,2.75rem)}
+@media (min-width:1024px){
+  .vt-nochebuenas .vt-nb-para__item{grid-template-columns:48px minmax(0,1.4fr) minmax(0,1fr) 250px;gap:0 32px;align-items:center;padding:24px 0}
+  .vt-nochebuenas .vt-nb-para__n{grid-row:auto}
+  .vt-nochebuenas .vt-nb-para__wa{justify-self:end}
+}
+
+/* ---------- galería: tres encuadres distintos, sin recortar la foto ancha ---------- */
+.vt-nochebuenas .vt-nb-galeria{display:grid;gap:20px}
+@media (min-width:768px){
+  .vt-nochebuenas .vt-nb-galeria{grid-template-columns:repeat(12,minmax(0,1fr));gap:24px;align-items:start}
+  .vt-nochebuenas .vt-nb-galeria>:nth-child(odd){grid-column:1 / span 7}
+  .vt-nochebuenas .vt-nb-galeria>:nth-child(even){grid-column:8 / span 5;margin-top:56px}
+}
+
+/* ---------- confianza, fechas, preguntas, datos ---------- */
+.vt-nochebuenas .vt-nb-sellos{display:grid;gap:16px;list-style:none}
+.vt-nochebuenas .vt-nb-sellos b{display:block;font-size:var(--vt-text-h3);font-weight:800;line-height:1.1;font-variation-settings:"wdth" 85}
+.vt-nochebuenas .vt-nb-sellos span{font-size:var(--vt-text-sm);color:var(--vt-muted)}
+@media (min-width:768px){.vt-nochebuenas .vt-nb-sellos{grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}}
+.vt-nochebuenas .vt-nb-fechas{display:grid;gap:8px;margin-top:28px;list-style:none}
+.vt-nochebuenas .vt-nb-fechas:not(:has(li:not([hidden]))){display:none}
+.vt-nochebuenas .vt-nb-fechas li{padding:12px 14px;background:var(--vt-tag);color:var(--vt-tag-ink);font-weight:700;line-height:1.35}
+.vt-nochebuenas .vt-nb-faq{border-top:1.5px solid var(--vt-ink)}
+.vt-nochebuenas .vt-nb-faq>div{padding:18px 0;border-bottom:1px solid var(--vt-line-strong)}
+.vt-nochebuenas main .vt-nb-faq h3{font-size:1.1875rem;line-height:1.2;font-variation-settings:"wdth" 90}
+.vt-nochebuenas main .vt-nb-faq p{max-width:62ch;margin:6px 0 0;color:var(--vt-ink-2)}
+.vt-nochebuenas .vt-nb-datos{display:grid;gap:24px;margin:0}
+.vt-nochebuenas .vt-nb-datos dt{font-size:var(--vt-text-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--vt-soil)}
+.vt-nochebuenas .vt-nb-datos dd{margin:6px 0 0;font-family:var(--vt-font-serif);font-style:italic;font-size:var(--vt-text-h3);line-height:1.2}
+@media (min-width:768px){.vt-nochebuenas .vt-nb-datos{grid-template-columns:1.1fr 1fr 1.2fr;gap:40px}}
+
+/* ---------- CTA final ---------- */
+.vt-nochebuenas .vt-nb-visita{font-size:var(--vt-text-base);color:var(--vt-on-dark-2)}
+.vt-nochebuenas main .vt-nb-visita p{margin:0 0 14px}
+.vt-nochebuenas .vt-nb-visita b{display:block;font-size:var(--vt-text-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--vt-on-dark)}
+.vt-nochebuenas main .vt-nb-visita a{display:inline-flex;align-items:center;min-height:44px;color:var(--vt-on-dark);font-weight:700}
+.vt-nochebuenas .vt-nb-visita a:focus-visible{outline:2px solid var(--vt-tag)}
+.vt-nochebuenas main .vt-nb-visita__fecha{margin:24px 0 0;padding-top:12px;border-top:1px solid var(--vt-on-dark-line);font-size:var(--vt-text-xs)}
+
+/* ---------- barra fija móvil: fuera de <main>; se apoya en .vt-bar de terra.css. El pie ya deja su altura libre. ---------- */
+.vt-nochebuenas .vt-nb-bar .vt-bar__go{font-size:1.0625rem;font-weight:800}
+
+@media (min-width:1024px){
+  .vt-nochebuenas .vt-nb-nota{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;align-items:start}
+  .vt-nochebuenas .vt-nb-hoja{padding:0 24px 28px}
+  .vt-nochebuenas main .vt-nb-hoja__cab{margin-inline:-24px;padding-inline:24px}
+  .vt-nochebuenas .vt-nb-linea{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) 132px minmax(104px,auto) 48px;gap:12px}
+  .vt-nochebuenas .vt-nb-quitar{grid-column:auto;align-self:end;justify-self:end;min-height:48px}
+  .vt-nochebuenas .vt-nb-extras__rejilla{grid-template-columns:repeat(2,minmax(0,1fr));align-items:end}
+  .vt-nochebuenas .vt-nb-agregar{width:auto}
+  .vt-nochebuenas .vt-nb-ticket{position:sticky;top:calc(var(--vt-head-h) + 20px);margin-top:18px;padding-inline:0}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .vt-nochebuenas *{transition:none}
+  .vt-nochebuenas .vt-nb-paso:active{transform:none}
+}
+
+/* Al final: lo que está oculto por JS (avisos vacíos, barra, fechas vencidas) gana sobre los display de arriba. */
+.vt-nochebuenas [hidden]{display:none}

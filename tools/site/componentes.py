@@ -70,10 +70,40 @@ def etiquetas_no_permitidas(fragmento):
 
 
 # ---------- CTA (dos textos y nada más: "Cotizar por WhatsApp" y "Llamar 833 326 8008") ----------
-def boton_wa(mensaje, cta):
+CTA_WA = "Cotizar por WhatsApp"
+# Única variante, solo en el botón del Medidor cuando ya hay una medida válida (spec del hero, 2026-11-09, §4). El mismo
+# texto vive en public/js/vt-medidor.js (paridad en tests/test_medidor_paridad.py).
+CTA_MEDIDA = "Enviar mi medida por WhatsApp"
+# En la home, con medida válida la barra fija de celular manda la misma medida (vt-medidor.js lee el texto de data-vt-barra).
+CTA_MEDIDA_BARRA = "Enviar mi medida"
+# Condiciones de la garantía de arraigo del pasto: el protocolo de cuidados (la página no tiene un id en esa sección).
+CONDICIONES_PASTO = "/protocolo-cuidados-pasto-san-agustin"
+
+
+def boton_wa(mensaje, cta, texto=CTA_WA):
+    """Botón de WhatsApp. `texto` solo cambia en las filas de sección de la home (revisión de diseño, 2026-11-09)."""
     href = esc(datos.wa_url(datos.con_firma(mensaje)))
     return (f'<a class="vt-btn vt-btn--wa" data-cta="{esc(cta)}" href="{href}" target="_blank" rel="noopener">'
-            f'{WA_GLIFO}Cotizar por WhatsApp<span class="vt-flecha" aria-hidden="true">→</span></a>')
+            f'{WA_GLIFO}{texto}<span class="vt-flecha" aria-hidden="true">→</span></a>')
+
+
+def promesa_horario():
+    """La promesa única dentro de un <span> con el horario y los festivos de datos.py: en horario, terra.js le antepone
+    "Abierto ahora · ". Sin JS o fuera de horario se lee tal cual. data-vt-build es la fecha de datos.ACTUALIZADO: un
+    cliente con el reloj antes de esa fecha no ve "Abierto ahora"."""
+    return (f'<span data-vt-horario="{esc(datos.horario_marca())}" data-vt-festivos="{esc(datos.festivos_marca())}" '
+            f'data-vt-build="{esc(datos.ACTUALIZADO)}">{esc(datos.PROMESA_COMPLETA)}</span>')
+
+
+def garantia_pasto(prefijo=""):
+    """datos.GARANTIA_PASTO con "ver condiciones" enlazado al protocolo de cuidados del pasto. Con prefijo ("Pasto
+    instalado: "), la frase sigue en minúscula."""
+    texto, condiciones = esc(datos.GARANTIA_PASTO), "ver condiciones"
+    if texto.count(condiciones) != 1:
+        raise ValueError("datos.GARANTIA_PASTO debe decir “ver condiciones” una sola vez")
+    if prefijo:
+        texto = esc(prefijo) + texto[0].lower() + texto[1:]
+    return texto.replace(condiciones, f'<a href="{CONDICIONES_PASTO}">{condiciones}</a>')
 
 
 def boton_tel(cta):
@@ -169,6 +199,24 @@ def obras(figuras, nota_html=""):
     return f'<div class="vt-obras">{"".join(figura(f) for f in figuras)}{nota_html}</div>'
 
 
+def mosaico(figuras, desde):
+    """Mosaico de fotos reales, numeradas desde `desde`. La primera va ancha salvo que el total sea múltiplo de 3 (la
+    retícula de 3 columnas quedaría con un hueco); todas cargan diferido porque van debajo de la primera pantalla."""
+    plano = " vt-mosaico--plano" if len(figuras) % 3 == 0 else ""
+    primera = "(min-width: 900px) 66vw, 100vw"
+    resto = "(min-width: 900px) 33vw, 50vw"
+    items = "".join(figura(dict(f, numero=desde + i, sizes=primera if i == 0 and not plano else resto))
+                    for i, f in enumerate(figuras))
+    return f'<div class="vt-mosaico{plano}">{items}</div>'
+
+
+def bloque_obras(numero, datos_obras, html_previo):
+    """Sección de fotos de obra. La numeración sigue después de las figuras que ya trae la página."""
+    desde = html_previo.count("<b>Fig. ") + 1
+    return bloque(numero, "Fotos reales", "vt-h-obras", datos_obras["titulo"], mosaico(datos_obras["figuras"], desde),
+                  lede=datos_obras["lede"])
+
+
 def nota(texto, firma):
     return (f'<aside class="vt-nota" aria-label="Nota de campo"><span class="vt-nota__t">Nota de campo</span>'
             f'<p>{texto}</p><span class="vt-nota__firma">{firma}</span></aside>')
@@ -217,14 +265,25 @@ def testimonios(items):
 
 
 # ---------- índice de servicios, tablas y relacionados ----------
-def indice(items):
+def _cotizar_servicio(item, tipo):
+    """Enlace "Cotizar <servicio>" de una fila del índice, con el glifo de WhatsApp (la flecha es la de la fila) y el
+    mensaje de datos.MENSAJES de ese servicio."""
+    servicio = item["servicio"]
+    return (f'<a class="vt-indice__wa" data-cta="{esc(tipo)}:indice-{esc(servicio)}" '
+            f'href="{esc(datos.wa_url(datos.mensaje(servicio)))}" target="_blank" rel="noopener">{WA_GLIFO}'
+            f'Cotizar {item["cotizar"]}</a>')
+
+
+def indice(items, tipo=None):
     """Filas tipo índice: foto, número, título con enlace (toda la fila lo abre), qué incluye, "desde" con la marca
-    amarilla y flecha."""
+    amarilla y flecha. Las filas con servicio y cotizar (la home, con su tipo) llevan además su enlace de WhatsApp bajo
+    el precio."""
     filas = "".join(
         f'<li><img src="{esc(i["img"])}" width="{i["ancho"]}" height="{i["alto"]}" alt="" loading="lazy" decoding="async">'
         f'<span class="vt-indice__n" aria-hidden="true">{n:02d}</span>'
         f'<h3><a href="{esc(i["href"])}">{i["titulo"]}</a></h3><p>{i["texto"]}</p>'
-        f'<p class="vt-indice__desde">desde <span class="vt-precio-marca">{i["desde"]}</span> {i["unidad"]}</p>'
+        f'<p class="vt-indice__desde">desde <span class="vt-precio-marca">{i["desde"]}</span> {i["unidad"]}'
+        f'{_cotizar_servicio(i, tipo) if tipo and i.get("servicio") else ""}</p>'
         f'<span class="vt-indice__ir" aria-hidden="true">→</span></li>'
         for n, i in enumerate(items, 1))
     return f'<ol class="vt-indice">{filas}</ol>'
@@ -433,6 +492,8 @@ def simulador(servicio, monto, tipo):
 
 # ---------- Medidor de m² (mismo cálculo que public/js/vt-medidor.js; paridad en casos-medidor.json) ----------
 MINIMO_MAYOREO = P["pasto_mayoreo_minimo_m2"]
+IVA_INSTALADO = "con IVA"        # solo junto al pasto instalado (el precio ya lo incluye)
+SIN_IVA = "(no lleva IVA)"       # solo pasto y mayoreo: el pasto natural sin instalar no lleva IVA
 MODOS_MEDIDOR = {
     "instalado": {"precio": P["pasto_instalado_m2"], "desde": True, "texto": "pasto San Agustín instalado",
                   "rotulo": "Instalado · desde", "opcion": "Pasto instalado"},
@@ -458,8 +519,9 @@ def calculo_medidor(largo, ancho, modo):
         rotulo = f"Solo pasto (mayoreo desde {minimo} m²)"
         aviso = (f"El mayoreo aplica desde {minimo} m². Te faltan {math.ceil(minimo - m2)} m²; mientras, calculamos "
                  f"a ${precio}/m² (solo pasto).")
+    # iva: solo el pasto instalado lleva IVA; el renglón vivo de la home no dice "con IVA" en solo pasto ni en mayoreo.
     return {"m2": m2, "precio": precio, "desde": desde, "texto": texto, "rotulo": rotulo, "aviso": aviso,
-            "total": redondear(m2 * precio)}
+            "total": redondear(m2 * precio), "iva": modo == "instalado"}
 
 
 def textos_medidor(largo, ancho, r, colonia="", plazo=1):
@@ -484,12 +546,16 @@ def textos_medidor(largo, ancho, r, colonia="", plazo=1):
         plan = f"Mensualidades con tarjeta de crédito en cotizaciones desde {dinero(mensualidades.minimo_de(3))}."
         interes = "contado"
     cierre_calc = "Al medir te damos el precio cerrado." if r["desde"] else "La entrega se cotiza según tu colonia."
+    # Decisión del dueño (2026-11-10): el pasto sin instalar (solo pasto y mayoreo) no lleva IVA; "con IVA" solo
+    # acompaña al instalado, en la etiqueta, el cálculo, el renglón vivo y el mensaje.
+    iva = IVA_INSTALADO if r["iva"] else ""
     mensaje = "\n".join((f"Hola, quiero cotizar {r['texto']}.", f"Medidas: {medida}",
-                         f"Estimado de la web: {desde}{dinero(r['total'])}", f"Me interesa: {interes}",
+                         f"Estimado de la web: {desde}{dinero(r['total'])} {iva or SIN_IVA}", f"Me interesa: {interes}",
                          f"Colonia: {colonia or '___'}", "Te mando foto del área."))
     return {"medida": medida, "monto": dinero(r["total"]),
-            "calc": f"{formato_m2(r['m2'])} m² × {desde}${r['precio']}/m². {cierre_calc}",
-            "plan": plan, "plazo": plazo, "mensaje": mensaje}
+            "calc": f"{formato_m2(r['m2'])} m² × {desde}${r['precio']}/m²{', ' + iva if iva else ' ' + SIN_IVA}. {cierre_calc}",
+            "plan": plan, "plazo": plazo, "mensaje": mensaje, "cta": CTA_MEDIDA, "iva": iva,
+            "vivo": f"{formato_m2(r['m2'])} m² · {desde}{dinero(r['total'])}{' ' + iva if iva else ''}"}
 
 
 def plano_medidor(largo, ancho):
@@ -546,12 +612,22 @@ def _opcion_plazo(prefijo, plazo):
 VACIO_MEDIDOR = {"medida": "Escribe tus medidas", "monto": "—", "calc": "Escribe el largo y el ancho de tu patio."}
 
 
-def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
+def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None, boton_medida=False, garantia=False,
+            resultado_vivo=False):
     """Medidor: largo × ancho → plano a escala → etiqueta con el estimado y la forma de pago → WhatsApp con la medida.
     Los campos empiezan vacíos (8 y 6 son solo el ejemplo del placeholder y del plano): mientras el visitante no
     escriba, la etiqueta no muestra un estimado ajeno y el botón manda el mensaje genérico de la página (data-mensaje,
     con firma). vt-medidor.js calcula con los data-* de cada opción: los precios no viven en el JS. data-hero-cta: la
-    barra móvil se esconde mientras el Medidor está a la vista, para que su CTA no compita."""
+    barra móvil se esconde mientras el Medidor está a la vista, para que su CTA no compita. Con boton_medida=True (la
+    home) solo el botón esconde la barra y su texto va en un <span> que vt-medidor.js cambia a CTA_MEDIDA cuando hay una
+    medida válida, y la barra móvil toma ese enlace con el texto de data-vt-barra. Con garantia=True, la garantía de
+    arraigo va bajo el botón, con su enlace a condiciones (vt-medidor.js la esconde fuera del modo instalado). Con
+    resultado_vivo=True, un renglón bajo Largo × Ancho repite el resultado (textos_medidor["vivo"])."""
+    marca_caja, marca_boton = ("", " data-hero-cta") if boton_medida else (" data-hero-cta", "")
+    marca_caja += f' data-vt-barra="{esc(CTA_MEDIDA_BARRA)}"' if boton_medida else ""
+    texto_boton = f'<span data-vt-o="cta-texto">{CTA_WA}</span>' if boton_medida else CTA_WA
+    pie = f'<p class="vt-medidor__garantia" data-vt-o="garantia">{garantia_pasto()}</p>' if garantia else ""
+    vivo = '<p class="vt-medidor__vivo" data-vt-o="vivo"></p>' if resultado_vivo else ""
     generico = datos.con_firma(mensaje or datos.MENSAJES["general"])
     mayoreo = datos.con_firma(datos.MENSAJES["empresas"])
     opciones = "".join(_opcion_medidor(prefijo, k, m, modo) for k, m in MODOS_MEDIDOR.items())
@@ -559,12 +635,12 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
     campo = ('<div class="vt-campo"><label for="{p}-{n}">{t}</label><div class="vt-control"><input id="{p}-{n}" '
              'data-vt-campo="{n}" inputmode="decimal" placeholder="{v}" autocomplete="off"><span>m</span></div></div>')
     return (
-        f'<div class="vt-medidor" data-vt-medidor data-hero-cta data-wa="{esc(datos.TELEFONO_WA)}" '
+        f'<div class="vt-medidor" data-vt-medidor{marca_caja} data-wa="{esc(datos.TELEFONO_WA)}" '
         f'data-mensaje="{esc(generico)}" data-mensaje-mayoreo="{esc(mayoreo)}">'
         f'<div class="vt-medidor__form" role="group" aria-label="Medidor de pasto">'
         f'<div class="vt-medidor__medidas">{campo.format(p=prefijo, n="largo", t="Largo", v=largo)}'
         f'<span class="vt-medidor__x" aria-hidden="true">×</span>{campo.format(p=prefijo, n="ancho", t="Ancho", v=ancho)}'
-        f'</div><fieldset class="vt-opciones"><legend>¿Qué necesitas?</legend>{opciones}</fieldset>'
+        f'</div>{vivo}<fieldset class="vt-opciones"><legend>¿Qué necesitas?</legend>{opciones}</fieldset>'
         f'<div class="vt-campo"><label for="{prefijo}-colonia">Colonia (opcional)</label><div class="vt-control">'
         f'<input type="text" id="{prefijo}-colonia" data-vt-campo="colonia" placeholder="Ej. Lomas de Rosales" '
         f'autocomplete="off"></div></div></div>'
@@ -575,15 +651,16 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None):
         f'<span>Tu etiqueta</span><span>Estimado</span></p><p class="vt-etiqueta__nombre" data-vt-o="m2">'
         f'{VACIO_MEDIDOR["medida"]}</p><p class="vt-etiqueta__sci">Stenotaphrum secundatum</p>'
         f'<p class="vt-etiqueta__precio is-vacio"><small data-vt-o="rotulo">{MODOS_MEDIDOR[modo]["rotulo"]}</small>'
-        f'<b data-vt-o="monto">{VACIO_MEDIDOR["monto"]}</b></p>'
+        f'<b data-vt-o="monto">{VACIO_MEDIDOR["monto"]}</b>'
+        f'<span data-vt-o="iva">{IVA_INSTALADO if modo == "instalado" else ""}</span></p>'
         f'<p class="vt-medidor__calc" data-vt-o="calc">{VACIO_MEDIDOR["calc"]}</p>'
         f'<p class="vt-medidor__aviso" data-vt-o="aviso" hidden></p>'
         f'<fieldset class="vt-opciones vt-opciones--plazo"><legend>Forma de pago: contado o mensualidades con tarjeta de '
         f'crédito</legend>{plazos}</fieldset>'
         f'<p class="vt-medidor__plan" data-vt-o="plan"></p>'
-        f'<a class="vt-btn vt-btn--wa" data-cta="{tipo}:medidor" data-vt-o="cta" href="{esc(datos.wa_url(generico))}" '
-        f'target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp<span class="vt-flecha" aria-hidden="true">→'
-        f'</span></a></div></div></div>')
+        f'<a class="vt-btn vt-btn--wa" data-cta="{tipo}:medidor" data-vt-o="cta"{marca_boton} '
+        f'href="{esc(datos.wa_url(generico))}" target="_blank" rel="noopener">{WA_GLIFO}{texto_boton}'
+        f'<span class="vt-flecha" aria-hidden="true">→</span></a>{pie}</div></div></div>')
 
 
 # ---------- empresas: cotizador por volumen y armador de palmas (public/js/vt-b2b.js; casos en casos-b2b.json) ----------
@@ -597,7 +674,7 @@ ALTURA_RE = re.compile(r"^\s*(\d+(?:[.,]\d+)?)")
 CANTIDAD_RE = re.compile(r"^\s*(\d+)")
 VACIO_VOLUMEN = {"medida": "Escribe los m² de tu obra", "monto": "—",
                  "calc": (f"Desde {MINIMO_MAYOREO} m², mayoreo desde ${P['pasto_mayoreo_m2']}/m²; con menos, "
-                          f"${P['pasto_solo_m2']}/m² (solo pasto).")}
+                          f"${P['pasto_solo_m2']}/m² (solo pasto). No lleva IVA.")}
 VACIO_PALMAS = "Elige especie y cantidad"
 OTRA_ESPECIE = "Otra especie (la escribo en el chat)"
 
@@ -627,11 +704,11 @@ def textos_volumen(r, empresa="", obra="", fecha=""):
     desde = "desde " if r["desde"] else ""
     m2 = formato_m2(r["m2"])
     mensaje = "\n".join((f"Hola, quiero cotizar {r['texto']} para un proyecto.", f"m² totales: {m2} m²",
-                         f"Estimado de la web: {desde}{dinero(r['total'])} ({desde}${r['precio']}/m²)",
+                         f"Estimado de la web: {desde}{dinero(r['total'])} ({desde}${r['precio']}/m²; no lleva IVA)",
                          f"Empresa: {_hueco(empresa)}", f"Obra y ubicación: {_hueco(obra)}",
                          f"Fecha de la primera entrega: {_hueco(fecha)}"))
     return {"medida": f"{m2} m²", "monto": dinero(r["total"]),
-            "calc": (f"{m2} m² × {desde}${r['precio']}/m². Solo pasto: la entrega por etapas y la instalación "
+            "calc": (f"{m2} m² × {desde}${r['precio']}/m² {SIN_IVA}. Solo pasto: la entrega por etapas y la instalación "
                      "se cotizan con tu obra."),
             "mensaje": mensaje}
 

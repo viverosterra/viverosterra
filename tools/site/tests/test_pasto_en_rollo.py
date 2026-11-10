@@ -93,9 +93,8 @@ class PastoEnRolloTest(unittest.TestCase):
             self.assertIn(f'<meta name="{nombre}" content=', HTML)
         self.assertIn('<meta name="twitter:card" content="summary_large_image">', HTML)
 
-    def test_render_rotulado_como_referencia(self):
-        self.assertIn("<span>Proyecto · referencia</span>", MAIN)
-        self.assertNotIn("<span>Terminado</span>", MAIN)
+    def test_sin_render_de_referencia(self):
+        self.assertNotIn("Proyecto · referencia", MAIN)
 
     def test_sin_css_viejo_ni_scripts_de_servicios(self):
         self.assertNotRegex(HTML, r"fonts\.googleapis|/css/(?:tailwind|design-system|servicios|legacy-fixes)")
@@ -129,6 +128,10 @@ class PastoEnRolloTest(unittest.TestCase):
         self.assertEqual(MAIN.count('class="vt-pasos"'), 1)
         self.assertEqual(MAIN.count('class="vt-compra"'), 0)
         self.assertEqual(nodo("Product")["offers"]["price"], str(datos.PRECIOS["pasto_solo_m2"]))
+        # SEO fase 0 (2026-11-10): la vigencia del precio es un dato (datos.PRECIOS_VIGENTES_HASTA), no el año en curso.
+        self.assertEqual(nodo("Product")["offers"]["priceValidUntil"], datos.PRECIOS_VIGENTES_HASTA)
+        self.assertEqual(datos.PRECIOS_VIGENTES_HASTA, "2027-12-31")
+        self.assertGreater(datos.PRECIOS_VIGENTES_HASTA, datos.ACTUALIZADO)
 
 
 if __name__ == "__main__":

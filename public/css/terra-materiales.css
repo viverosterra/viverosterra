@@ -28,8 +28,13 @@
   .vt-materiales .vt-tabla--comparar caption{display:table-caption;padding:10px 0 0}
 }
 
-/* Tres fotos en el mosaico (galería de tierra negra y "qué es"): tres columnas iguales, sin una foto sola abajo. */
+/* Tres fotos en el mosaico (galería de tierra negra y "qué es"): tres columnas iguales, sin una foto sola abajo.
+   Cuatro (mármol): las dos de abajo a media fila; entre 560 y 899 px la última ocupa la fila completa. */
+@media (min-width:560px) and (max-width:899px){
+  .vt-materiales .vt-obras:has(>:nth-child(4):last-child)>:last-child{grid-column:1 / -1}
+}
 @media (min-width:900px){
   .vt-materiales .vt-obras:has(>:nth-child(3):last-child)>*{grid-column:span 2}
   .vt-materiales .vt-obras:has(>:nth-child(3):last-child)>* .vt-fig__marco{height:auto;aspect-ratio:4/3}
+  .vt-materiales .vt-obras:has(>:nth-child(4):last-child)>:nth-child(n+3){grid-column:span 3}
 }

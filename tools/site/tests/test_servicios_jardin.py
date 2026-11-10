@@ -164,8 +164,8 @@ class DisenoTest(unittest.TestCase):
         """Respuesta del dueño (2026-11-07): las fotos de diseño son proyectos de Terra terminados, no referencias."""
         _h, main, _t, _g = pagina("diseno")
         pies = re.findall(r"<figcaption><span><b>Fig\. (\d+)</b> · ([^<]+)</span><span>([^<]+)</span></figcaption>", main)
-        self.assertEqual([n for n, _l, _e in pies], ["01", "02", "03", "04"])
-        for _n, _lugar, etapa in pies:
+        self.assertEqual([n for n, _l, _e in pies], [f"{i:02d}" for i in range(1, 13)])
+        for _n, _lugar, etapa in pies[:4]:  # las siguientes 8 son del mosaico, cada una con la etapa que capturó el dueño
             self.assertEqual(etapa, "Terminado")
         self.assertNotIn("Proyecto · referencia", main)
 

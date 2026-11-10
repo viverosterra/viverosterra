@@ -61,7 +61,9 @@ def enlaces(items):
 
 
 def etiqueta_de(tema):
-    """"Servicio" en riego, diseño y mantenimiento; "Con IVA" solo si hay un precio al que aplique."""
+    """"Servicio" en riego, diseño y mantenimiento; "Con IVA" solo si hay un precio al que aplique. El aviso del
+    encabezado cubre todos los renglones: el tema que mezcla precios con y sin IVA (pasto) o que no lo lleva (palmas y
+    árboles) trae su propio "aviso" en blog_clusters.py."""
     return {"codigo": "Servicio relacionado" if tema["tema"] in SERVICIOS else "Producto relacionado",
             "aviso": "" if tema["etiqueta"]["monto"] == datos.SEGUN_COTIZACION or tema["tema"] in SIN_IVA else "Con IVA",
             **tema["etiqueta"]}

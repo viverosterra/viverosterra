@@ -14,6 +14,7 @@ import mensajes_paginas
 from componentes import dinero
 from componentes_materiales import ejemplo
 from contenido import materiales_comun as mc
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -24,28 +25,28 @@ SEGUN = datos.SEGUN_COTIZACION
 MENSAJE = mensajes_paginas.MATERIALES[RUTA]
 MIGAS, MIGAS_LD = mc.migas(RUTA, "Tezontle rojo")
 
-DESCRIPCION_OG = "Tezontle rojo volcánico en Tampico. Costal, m³ y camión volteo 14 m³ con entrega a domicilio."
+TITULO = f"Tezontle Rojo en Tampico: Costal desde {COSTAL} | Viveros Terra"
+DESCRIPCION = (f"Tezontle rojo en Tampico para decorar y controlar la maleza: costal desde {COSTAL}; m³ y camión "
+               f"{SEGUN.lower()}. Entrega en Madero y Altamira. Pide el tuyo.")
 META = {
-    "title": "Tezontle Rojo Tampico · Control de Maleza y Decoración",
-    "description": ("Tezontle rojo en Tampico. Costal desde $200 · Por m³ · Camión volteo 14 m³. Control de maleza y "
-                    "decoración duradera. Entrega a domicilio. Cotiza hoy."),
+    "title": TITULO,
+    "description": DESCRIPCION,
     "robots": "index, follow",
     "canonical": URL,
     "og": (
         ("og:type", "website"),
         ("og:url", URL),
-        ("og:title", "Tezontle Rojo Tampico · Control de Maleza y Decoración"),
-        ("og:description", DESCRIPCION_OG),
+        ("og:title", TITULO),
+        ("og:description", DESCRIPCION),
         ("og:image", f"{SITE}/img/tezontle-rojo-jardin-tampico-sendero.webp"),
         ("og:locale", "es_MX"),
         ("og:site_name", datos.NOMBRE),
     ),
-    # Twitter Card como estaba publicada en main.
+    # Twitter Card con el mismo título y la misma descripción (SEO fase 0, 2026-11-10).
     "twitter": (
         ("twitter:card", "summary_large_image"),
-        ("twitter:title", "Tezontle Rojo Tampico · Viveros Terra"),
-        ("twitter:description", "Tezontle rojo en Tampico. Costal, m³ y camión volteo. Control de maleza y decoración "
-                                "duradera."),
+        ("twitter:title", TITULO),
+        ("twitter:description", DESCRIPCION),
         ("twitter:image", f"{SITE}/img/tezontle-rojo-jardin-tampico-sendero.webp"),
     ),
 }
@@ -79,17 +80,17 @@ USOS = (
 )
 COMBINACIONES = (
     {"titulo": "Tezontle + Pasto verde", "texto": ("El contraste clásico en Tampico: el rojo del tezontle y el verde del "
-     'San Agustín. <a href="/pasto-en-rollo-tampico">Ver pasto en rollo</a>.')},
+     'San Agustín. <a href="/pasto-en-rollo-tampico">Pasto en rollo en Tampico</a>.')},
     {"titulo": "Tezontle + Mármol blanco", "texto": ("Mármol blanco en arriates y tezontle en senderos: un jardín "
-     'contemporáneo para residencias y corporativos. <a href="/marmol-blanco-tampico">Ver mármol blanco</a>.')},
+     'contemporáneo para residencias y corporativos. <a href="/marmol-blanco-tampico">Mármol blanco para jardín</a>.')},
     {"titulo": "Tezontle + Palmas tropicales", "texto": ("Alrededor de palmas y árboles protege las raíces y conserva la "
-     'humedad. <a href="/palmas-tropicales-tampico">Ver palmas tropicales</a>.')},
+     'humedad. <a href="/palmas-tropicales-tampico">Palmas en Tampico</a>.')},
     {"titulo": "Tezontle + Tierra negra", "texto": ("Primero se prepara el terreno con tierra negra y después va el "
-     'tezontle encima, para jardines nuevos. <a href="/tierra-negra-vegetal-tampico">Ver tierra negra</a>.')},
+     'tezontle encima, para jardines nuevos. <a href="/tierra-negra-vegetal-tampico">Tierra negra en Tampico</a>.')},
     {"titulo": "Tezontle + Piedra bola de río", "texto": ("Para jardines zen o de estilo japonés: el tezontle de relleno y "
-     'la piedra bola de borde. <a href="/piedra-bola-rio-tampico">Ver piedra bola</a>.')},
+     'la piedra bola de borde. <a href="/piedra-bola-rio-tampico">Piedra bola de río</a>.')},
     {"titulo": "Tezontle + Riego automático", "texto": ("El goteo bajo el tezontle queda oculto y el tezontle retiene la "
-     'humedad en la temporada seca. <a href="/sistema-riego-tampico">Ver sistema de riego</a>.')},
+     'humedad en la temporada seca. <a href="/sistema-riego-tampico">Sistema de riego en Tampico</a>.')},
 )
 PASOS = (
     {"titulo": "Limpia el área", "quien": "tu", "cuando": "Paso 1",
@@ -141,7 +142,7 @@ CONTENIDO = {
     "migas": MIGAS,
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
-        "h1": "Tezontle rojo <em>por costal, m³ o camión</em>",
+        "h1": "Tezontle rojo en Tampico <em>por costal, m³ o camión</em>",
         "lede": (f"En Viveros Terra el tezontle rojo cuesta desde {COSTAL} el costal; el m³ y el camión de 14 m³ se "
                  "cotizan según el volumen y tu colonia. Para drenaje, senderos y control de maleza, con factura."),
         "etiqueta": {"codigo": "Tezontle rojo", "aviso": f"Precios {datos.ANIO}", "nombre": "Costal", "antes": "desde",
@@ -203,7 +204,7 @@ CONTENIDO = {
     "otros": {"titulo": "Otros materiales para tu jardín",
               "items": mc.otros(RUTA, ("/tierra-negra-vegetal-tampico", "/marmol-blanco-tampico",
                                        "/piedra-bola-rio-tampico")),
-              "enlaces": (("Pasto en rollo", "/pasto-en-rollo-tampico"), ("Plantas y palmas", "/plantas-palmas-arboles-tampico"),
+              "enlaces": (("Pasto en rollo en Tampico", "/pasto-en-rollo-tampico"), ("Plantas y palmas", "/plantas-palmas-arboles-tampico"),
                           ("Arma tu lista de plantas", "/catalogo"), ("Guía del tezontle", "/blog/tezontle-usos-jardin-tampico"))},
     "cierre": {"titulo": "Cotiza tu tezontle rojo",
                "lede": "Dinos la cantidad y tu colonia y te mandamos el precio con la entrega.",
@@ -223,11 +224,13 @@ CONTENIDO = {
 }
 
 PARIDAD = {
-    "meta": {
-        "og:description": (DESCRIPCION_OG, "Sin “El rojo perfecto para tu jardín”: superlativo sin respaldo (revisión "
+    "meta": seo.paridad(TITULO, DESCRIPCION, {
+        "og:description": (DESCRIPCION, "Sin “El rojo perfecto para tu jardín”: superlativo sin respaldo (revisión "
                                            "2f); el resto queda igual."),
-    },
+    }),
     "reemplazos": {
+        # H1 con «en Tampico» (SEO fase 0, 2026-11-10): la consulta es «tezontle rojo Tampico».
+        "Tezontle rojo por costal, m³ o camión": "Tezontle rojo en Tampico por costal, m³ o camión",
         "Elige el formato para tu proyecto": "¿Cuánto cuesta el tezontle rojo en Tampico?",
         "Por costal": "¿Cuánto cuesta el tezontle rojo en Tampico?",
         "Por m³ suelto": "¿Cuánto cuesta el tezontle rojo en Tampico?",

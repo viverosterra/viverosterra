@@ -91,7 +91,8 @@ class ZonaTest(unittest.TestCase):
             with self.subTest(ruta=ruta):
                 self.assertEqual(len(filas), 4)
                 self.assertIn(nombre, filas[0])
-                self.assertIn('href="/precios">Ver la lista completa</a>', seccion)
+                # SEO fase 0 (2026-11-10): ancla que dice a dónde lleva, no "Ver la lista completa".
+                self.assertIn('href="/precios">Lista de precios de jardinería en Tampico</a>', seccion)
 
     def test_cotizar_en_la_zona_y_poda_con_su_mensaje(self):
         for ruta in ZONAS:

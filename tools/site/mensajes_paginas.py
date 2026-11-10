@@ -43,6 +43,14 @@ PLANTAS = {
                                      "Luz del lugar (mucha o poca): ___\nColonia: ___\nLes mando foto del espacio."),
 }
 
+# Nochebuenas, por modo (datos.NOCHEBUENAS["modo"]): mensaje de la página y del shell; el cotizador lo reemplaza por el pedido
+# completo. paginas.contexto elige el del modo vigente.
+NOCHEBUENAS = {
+    "temporada": "Hola, quiero cotizar Nochebuenas.\nTamaño y cantidad: ___\nColonia de entrega: ___",
+    "preventa": "Hola, quiero apartar Nochebuenas.\nTamaño y cantidad: ___\nColonia de entrega: ___",
+    "postemporada": "Hola, avísenme cuando abra la próxima temporada de Nochebuenas.",
+}
+
 # Materiales (Etapa 2f): la plantilla de main de cada portada (tools/servicios/pages.py, guided()), con los huecos ___:
 # el formato de datos.MENSAJES["materiales"] (material, cantidad y colonia de entrega) con el material ya escrito. La usan
 # la portada, el cierre y la calculadora mientras no tiene área y, por RUTAS, el menú, la barra móvil y el pie.
@@ -139,6 +147,7 @@ BLOG = {
     "jardines-temporada-lluvias-tampico": 'Hola, leí su artículo "Jardines en temporada de lluvias en Tampico: guía completa de cuidados" y quiero cotizar.',
     "nortes-tampico-proteger-plantas-jardin": 'Hola, leí su artículo "Nortes en Tampico: cómo proteger tus plantas del viento y el frío" y quiero cotizar.',
     "palma-areca-tampico": "Hola, vi el artículo de Palma Areca y quiero cotizar",
+    "palma-bambu-chamaedorea-tampico": "Hola, vi el artículo de Palma Bambú y quiero cotizar",
     "palma-bismarckia-bismarckia-nobilis-tampico": "Hola, vi el artículo de Palma Bismarckia y quiero cotizar",
     "palma-coco-plumoso-tampico": "Hola, vi el artículo de Palma Coco Plumoso y quiero cotizar",
     "palma-cola-de-zorro-wodyetia-bifurcata-tampico": "Hola, vi el artículo de Palma Cola de Zorro y quiero cotizar",
@@ -155,6 +164,7 @@ BLOG = {
     "pasto-sintetico-vs-natural-tampico": 'Hola, leí su artículo "Pasto sintético vs natural en Tampico: cuál conviene" y quiero cotizar.',
     "plagas-comunes-jardin-tampico": 'Hola, leí su artículo "Plagas comunes del jardín en Tampico: cómo identificarlas y controlarlas" y quiero cotizar.',
     "plantas-interior-tampico": 'Hola, leí su artículo "Plantas de interior para casas en Tampico: las más recomendadas" y quiero cotizar.',
+    "plantas-seguras-mascotas-jardin-tampico": "Hola, vi el artículo de plantas seguras para mascotas y quiero cotizar plantas",
     "plantas-resistentes-sal-golfo-tampico": 'Hola, leí su artículo "12 plantas resistentes a la sal del Golfo para jardines costeros en Tampico" y quiero cotizar.',
     "poda-arboles-palmas-tampico-guia": "Hola, vi el artículo de poda y necesito ayuda con mi jardín",
     "que-altura-de-pasto-sintetico-elegir": 'Hola, leí su artículo "¿Qué altura de pasto sintético elegir? 10, 18, 28 o 35 mm" y quiero cotizar.',

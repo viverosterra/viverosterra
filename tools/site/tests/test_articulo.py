@@ -126,9 +126,16 @@ class ArticuloTest(unittest.TestCase):
             codigo = "Servicio relacionado" if tema["tema"] in ("riego", "diseno", "mantenimiento") else "Producto relacionado"
             with self.subTest(slug=slug):
                 self.assertIn(f"<span>{codigo}</span>", html)
-                self.assertEqual("<span>Con IVA</span>" in html, tema["etiqueta"]["monto"] != datos.SEGUN_COTIZACION
-                                 and tema["tema"] not in ("pasto-natural", "palmas", "palmas-cotizacion", "arboles", "banqueta",
-                                                          "plantas", "interior"))
+                # SEO fase 0 (2026-11-10): "Con IVA" en el encabezado de la etiqueta cubre todos sus renglones; no va
+                # si alguno es de pasto sin instalar, de palmas o de árboles (no llevan IVA) ni si se cotiza. Etapa 2i
+                # (2026-11-08): tampoco en las etiquetas de plantas (palmas por cotización, banqueta, plantas, interior).
+                con_iva = (tema["etiqueta"]["monto"] != datos.SEGUN_COTIZACION
+                           and tema["tema"] not in ("pasto-natural", "palmas", "palmas-cotizacion", "arboles", "banqueta",
+                                                    "plantas", "interior"))
+                self.assertEqual("<span>Con IVA</span>" in html, con_iva)
+                if tema["tema"] == "pasto-natural":
+                    self.assertIn("<small>Instalado · desde</small><b>$120</b><span>/m² con IVA</span>", html)
+                    self.assertIn("<span>Solo el pasto</span><b>$85 /m²</b>", html)
 
     def test_cierre_segun_el_tema_del_articulo(self):
         esperado = {"cesped-amarillo-tampico-causas-soluciones": "mantenimiento", "errores-pasto-san-agustin-tampico": "mantenimiento",
@@ -153,10 +160,10 @@ class ArticuloTest(unittest.TestCase):
         html = paridad.archivo("/blog").read_text(encoding="utf-8")
         tarjetas = re.findall(r'<h3><a href="(/blog/[^"]+)"', html)
         self.assertEqual(len(tarjetas), len(set(tarjetas)))
-        self.assertEqual(len(tarjetas), 52)
+        self.assertEqual(len(tarjetas), 54)
         lista = next(d for d in (json.loads(b) for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S))
                      if d.get("@type") == "ItemList")
-        self.assertEqual([i["position"] for i in lista["itemListElement"]], list(range(1, 53)))
+        self.assertEqual([i["position"] for i in lista["itemListElement"]], list(range(1, 55)))
         self.assertEqual({i["url"] for i in lista["itemListElement"]}, {f"{datos.SITIO}{t}" for t in tarjetas})
 
     def test_todo_articulo_tiene_tema(self):

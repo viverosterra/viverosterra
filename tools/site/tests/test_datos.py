@@ -73,7 +73,9 @@ class DatosTest(unittest.TestCase):
         self.assertTrue(datos.ANTICIPO.startswith("No pedimos el 100% por adelantado: para confirmar tu pedido o "
                                                   "agendar el servicio solicitamos un anticipo"))
         self.assertEqual(datos.ARRAIGO, "15 a 20 días")
-        for cifra in ("$85 por m²", "desde $120 por m²", "500 m²", "$60/m²", f"Precios {datos.ANIO}, IVA incluido cuando aplica"):
+        for cifra in ("$85 por m²", "desde $120 por m²", "500 m²", "$60/m²", f"Precios {datos.ANIO} para Tampico",
+                      # Dueño (2026-11-10): el pasto sin instalar no lleva IVA; "con IVA" solo con el instalado.
+                      "solo el pasto (no lleva IVA)", "instalado, con IVA incluido", "(solo pasto; no lleva IVA)"):
             self.assertIn(cifra, datos.RESPUESTA_PRECIO_PASTO)
         # Sin mes de vigencia: un mes escrito envejece solo (como el aviso de lluvias de antes).
         self.assertNotRegex(datos.RESPUESTA_PRECIO_PASTO, r"(?i)\b(?:enero|febrero|marzo|abril|mayo|junio|julio|agosto|"
@@ -148,6 +150,30 @@ class DatosTest(unittest.TestCase):
             with self.subTest(red=nombre):
                 self.assertTrue(url.startswith("https://www."))
                 self.assertNotIn("il.linkedin", url)
+
+    def test_nochebuenas_cortes_y_productos(self):
+        nb = datos.NOCHEBUENAS
+        self.assertEqual(nb["cortes"], (1, 12, 50, 200))
+        self.assertEqual(len(nb["nombres_escalon"]), len(nb["cortes"]))
+        self.assertEqual([p["clave"] for p in nb["productos"]], ["5", "6", "7", "colgante", "12"])
+        for producto in nb["productos"]:
+            with self.subTest(producto=producto["clave"]):
+                self.assertEqual(len(producto["precios"]), len(nb["cortes"]))
+                self.assertEqual(list(producto["precios"]), sorted(producto["precios"], reverse=True))
+        self.assertEqual([p["clave"] for p in nb["productos"] if p.get("sobre_pedido")], ["12"])
+
+    def test_festivos_y_horario_para_abierto_ahora(self):
+        """terra.js lee el horario y los festivos de los data-* del HTML: salen de aquí, con lunes = 1."""
+        self.assertEqual(datos.FESTIVOS, ("12-25", "01-01"))
+        self.assertEqual(datos.horario_marca(), "1,2,3,4,5@09:00-18:00;6@09:00-14:00")
+        self.assertEqual(datos.festivos_marca(), "12-25,01-01")
+
+    def test_fecha_de_la_version_es_un_dato_fijo_y_no_la_del_dia(self):
+        """data-vt-build sale de aquí: si fuera date.today(), el build dejaría de ser idempotente."""
+        self.assertRegex(datos.ACTUALIZADO, r"^20\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$")
+        self.assertLessEqual(datos.ACTUALIZADO, datos.NOCHEBUENAS["preventa"]["hasta"])
+        fuente = (Path(__file__).resolve().parents[1] / "datos.py").read_text(encoding="utf-8")
+        self.assertNotRegex(fuente, r"^\s*(?:import datetime|from datetime)|\.today\(\)(?!:)")
 
 
 if __name__ == "__main__":

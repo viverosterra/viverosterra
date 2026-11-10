@@ -55,6 +55,8 @@ PAGINAS = (
     ("/marmol-blanco-tampico", "marmol-blanco-tampico/index.html", "material", "marmol_blanco"),
     ("/piedra-bola-rio-tampico", "piedra-bola-rio-tampico/index.html", "material", "piedra_bola"),
     ("/precios", "precios/index.html", "precios", "precios"),
+    ("/post/nochebuenas-tampico-madero-mayoreo", "post/nochebuenas-tampico-madero-mayoreo/index.html", "nochebuenas",
+     "nochebuenas"),
     ("/blog", "blog/index.html", "blog_indice", "blog_indice"),
     ("/pasto-sintetico", "pasto-sintetico/index.html", "tienda_hub", "tienda"),
     ("/pasto-sintetico/perros", "pasto-sintetico/perros/index.html", "tienda_guia", "perros"),

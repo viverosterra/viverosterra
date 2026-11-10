@@ -91,7 +91,20 @@ class TerraCssTest(unittest.TestCase):
         # Se mide la copia publicada (activos.minificar_css: sin comentarios ni sangría), que es la que se transfiere.
         datos = activos.minificar_css(self.css).encode("utf-8")
         self.assertLess(len(gzip.compress(datos, mtime=0)), 10 * 1024)
-        self.assertLess(len(datos), 48 * 1024)
+        # Decisión del 2026-11-09 (revisión del hero): el tope bruto sube de 48 a 50 KB para el WhatsApp del menú
+        # móvil a todo lo ancho, esconder la barra fija con el menú abierto y apagar su transición con movimiento
+        # reducido. El de gzip (lo que se transfiere) sigue en 10 KB.
+        self.assertLess(len(datos), 50 * 1024)
+
+    def test_menu_movil_con_whatsapp_ancho_y_sin_barra_debajo(self):
+        css = sin_comentarios(self.css)
+        self.assertIn(".vt-mmenu .vt-btn{width:100%;margin-top:16px}", css)
+        self.assertIn('.vt-head:has(.vt-burger[aria-expanded="true"])~.vt-bar{transform:translateY(110%);visibility:hidden}', css)
+
+    def test_barra_sin_transicion_con_movimiento_reducido(self):
+        """La regla de .vt-bar.is-oculta trae su propia transición (de visibility): también se apaga."""
+        reducido = sin_comentarios(self.css).split("@media (prefers-reduced-motion:reduce){", 1)[1]
+        self.assertRegex(reducido, r"\.vt-bar,\.vt-bar\.is-oculta,[^{]*\{transition:none\}")
 
     def test_cotizadores_de_empresas(self):
         """Etapa 2d: [hidden] gana a .vt-btn (el botón "Agregar otra especie" sale oculto sin JS) y el select del armador

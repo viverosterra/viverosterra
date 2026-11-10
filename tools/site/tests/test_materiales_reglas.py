@@ -31,6 +31,8 @@ MATERIALES = {
 }
 PENDIENTES = frozenset()
 CAPTURA = json.loads(paridad_materiales.CAPTURA.read_text(encoding="utf-8"))
+# Fotos reales que el dueño aprobó agregar después de la captura de main (las de main siguen iguales y en su orden).
+FOTOS_AGREGADAS = {"/marmol-blanco-tampico": ("/img/marmol-blanco-costales-vivero-tampico-1200.webp",)}  # 2026-11-09
 # Precios de datos.PRECIOS y, del mármol, el precio por m² que sale del saco (3 a 5 sacos por m²: $750 a $1,250).
 PERMITIDOS = ({dinero(n) for v in datos.PRECIOS.values() for n in (v if isinstance(v, tuple) else (v,))
                if isinstance(n, int)} | {dinero(n * datos.PRECIOS["marmol_saco"]) for n in (3, 4, 5)})
@@ -119,6 +121,7 @@ def fallas(ruta):
     if "window.open(" in html or medicion_js.medir_whatsapp_js(html)[1] != {"eventos": 0, "aperturas": 0, "omitidas": 0}:
         salida.append("abre WhatsApp con window.open (debe ser un enlace con data-cta)")
     nuevas = paridad_materiales.extraer(ruta)
+    nuevas = dict(nuevas, fotos=[f for f in nuevas["fotos"] if f["src"] not in FOTOS_AGREGADAS.get(ruta, ())])
     if [f["src"] for f in nuevas["fotos"]] != [f["src"] for f in CAPTURA[ruta]["fotos"]]:
         salida.append(f"fotos distintas a las de main o en otro orden: {[f['src'] for f in nuevas['fotos']]}")
     for vieja, nueva in zip(CAPTURA[ruta]["fotos"], nuevas["fotos"]):
@@ -195,8 +198,9 @@ class MaterialesReglasTest(unittest.TestCase):
         """$250 el saco, IVA incluido y "sujeto a disponibilidad" junto al precio; Offer de 250 MXN con seller #negocio
         y sin InStock; el título, la descripción y las tarjetas sociales con el $250 como main."""
         html = html_de("/marmol-blanco-tampico")
-        self.assertIn("<title>Mármol Blanco para Jardín Tampico · $250 por Saco</title>", html)
-        for clave in ("description", "og:description", "twitter:title"):
+        # SEO fase 0 (2026-11-10): título de 60 o menos con la marca; el $250 sigue en título, descripción y tarjetas.
+        self.assertIn("<title>Mármol Blanco para Jardín Tampico: Saco $250 | Viveros Terra</title>", html)
+        for clave in ("description", "og:title", "og:description", "twitter:title", "twitter:description"):
             with self.subTest(clave=clave):
                 self.assertRegex(html, rf'(?:name|property)="{clave}" content="[^"]*\$250')
         texto = paridad.texto(paridad.principal(html))

@@ -17,6 +17,7 @@ import datos
 import mensajes_paginas
 from componentes import dinero
 from contenido import b2b_comun
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -31,21 +32,20 @@ MENSAJE = mensajes_paginas.EMPRESAS[RUTA]
 # Recorte 1200×630 de la foto de palmas del vivero (la de la portada), para Open Graph y Twitter.
 OG_IMAGEN = f"{SITE}/img/portadas/palmas-reales-mayoreo-vivero-tampico-og.webp"
 ESPECIES = "12 especies (palmas, cycas, bambú y yucca)"
-DESCRIPCION = (f"Palmas al mayoreo para proyectos B2B: {ESPECIES}; areca y coco plumoso desde {DESDE}. Cobertura "
-               f"Tamaulipas, Veracruz y SLP. {datos.FACTURA} y garantía de arraigo de 30 días en siembra propia.")
-DESCRIPCION_OG = (f"{ESPECIES} para proyectos en Tamaulipas, Veracruz y SLP. CFDI 4.0 y garantía de arraigo de 30 días "
-                  "en siembra propia.")
+TITULO = "Palmas al Mayoreo para Proyectos y Obras | Viveros Terra"
+DESCRIPCION = (f"Palmas al mayoreo para proyectos en Tamaulipas, Veracruz y SLP: {ESPECIES}, areca desde {DESDE} y "
+               f"{datos.FACTURA}. Cotiza hoy.")
 
 META = {
-    "title": "Palmas Mayoreo para Proyectos B2B en Tamaulipas, Veracruz y SLP · Viveros Terra",
+    "title": TITULO,
     "description": DESCRIPCION,
     "robots": "index, follow, max-snippet:-1, max-image-preview:large",
     "canonical": URL,
     "og": (
         ("og:type", "website"),
         ("og:url", URL),
-        ("og:title", "Palmas Mayoreo para Proyectos B2B · Viveros Terra"),
-        ("og:description", DESCRIPCION_OG),
+        ("og:title", TITULO),
+        ("og:description", DESCRIPCION),
         ("og:image", OG_IMAGEN),
         ("og:image:width", "1200"),
         ("og:image:height", "630"),
@@ -54,9 +54,8 @@ META = {
     ),
     "twitter": (
         ("twitter:card", "summary_large_image"),
-        ("twitter:title", "Palmas Mayoreo Proyectos B2B · Viveros Terra"),
-        ("twitter:description", (f"{ESPECIES}. CFDI y garantía de arraigo de 30 días en siembra propia. Cobertura "
-                                 "Tamaulipas, Veracruz y SLP.")),
+        ("twitter:title", TITULO),
+        ("twitter:description", DESCRIPCION),
         ("twitter:image", OG_IMAGEN),
     ),
 }
@@ -189,7 +188,7 @@ CONTENIDO = {
                  "en tamaño chico; el precio sube con la altura. Entregamos en obra en Tampico, Madero y Altamira y, por "
                  f"proyecto, en Tamaulipas, Veracruz y San Luis Potosí, con factura {datos.FACTURA}."),
         "etiqueta": {
-            "codigo": "Palmas · 01", "aviso": "", "nombre": "Palma areca y coco plumoso",
+            "codigo": "Palmas · 01", "aviso": "Precios 2026", "nombre": "Palma areca y coco plumoso",
             "cientifico": "Dypsis lutescens · Syagrus romanzoffiana", "antes": "Tamaño chico · desde", "monto": DESDE,
             "unidad": "c/u",
             "filas": (("Palma real, tamaño chico", f"desde {REAL}"), ("Otras especies y alturas", "Según cotización")),
@@ -213,7 +212,7 @@ CONTENIDO = {
     },
     "escalas": {
         "titulo": "¿Cuánto cuestan las palmas para proyecto?",
-        "lede": (f"Areca y coco plumoso desde {DESDE} y palma real desde {REAL} en tamaño chico. El precio sube "
+        "lede": (f"Areca y coco plumoso desde {DESDE} y palma real desde {REAL} en tamaño chico; las palmas no llevan IVA. El precio sube "
                  f"con la altura; las demás especies, {SEGUN_ALTURA.lower()}. Precios {datos.ANIO}; lista completa en "
                  '<a href="/precios">viverosterra.com/precios</a>.'),
         "especies": tuple((n, sci, f"desde {dinero(p)} · tamaño chico" if p else SEGUN_ALTURA, p is None)
@@ -286,15 +285,15 @@ PROYECTO_ANONIMO = ("Proyecto anónimo sin nombre, foto ni permiso verificables:
                     "inventados”. Si es real, el dueño lo da con permiso (pregunta del plan 2d).")
 
 PARIDAD = {
-    "meta": {
+    "meta": seo.paridad(TITULO, DESCRIPCION, {
         "description": (DESCRIPCION, "Decía “Productor directo… 12 especies desde $850”: precio sin confirmar (el dueño "
                                      "fijó areca y coco plumoso desde $250, 2026-11-07) y “productor directo” sin "
                                      "verificar (revisión 2d); las 12 especies incluyen cycas, bambú y yucca."),
-        "og:description": (DESCRIPCION_OG, "“12 especies de palmas” no era exacto: tres no son palmas (cycas, bambú y "
+        "og:description": (DESCRIPCION, "“12 especies de palmas” no era exacto: tres no son palmas (cycas, bambú y "
                                            "yucca). Revisión 2d."),
         "og:image": (OG_IMAGEN, "Era la foto de un jardín con pasto de la home; ahora, palmas del vivero en 1200×630 "
                                 "(recorte de la foto de la portada). Revisión 2d."),
-    },
+    }),
     # Tipos del JSON-LD que ya no salen, con su motivo (paridad.comparar).
     "jsonld": {
         "LocalBusiness": ("El Service apunta por @id a la entidad única #negocio de las demás páginas (el nodo completo "

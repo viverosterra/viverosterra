@@ -27,7 +27,23 @@ PROHIBIDAS = (
     ("muestras gratis o físicas", r"(?<!no ofrecemos )(?<!no enviamos )(?<!sin )\bmuestras?\s+(?:gratis|f[ií]sicas?)\b"
                                   r"|\b(?:pide|solicita|te enviamos|te mandamos|enviamos)\s+(?:tus?\s+|unas?\s+)?muestras?\b"),
     ("envío gratis", r"(?:env[ií]os?|flete)\W+(?:\w+\W+){0,3}gratis\b|\bgratis\W+(?:\w+\W+){0,3}(?:env[ií]os?|flete)"),
+    # SEO fase 0 (2026-11-10): sin dato de ventas que lo respalde, ningún producto es "el más vendido". La URL heredada
+    # /blog/palmas-mas-vendidas-… no cuenta (lleva guiones, no es texto).
+    ("más vendido", r"\bm[aá]s\s+vendid[oa]s?\b"),
 )
+# SEO fase 0 (2026-11-10): lo que Google, WhatsApp o Facebook muestran de una página (título, descripción, Open Graph
+# y Twitter Card) nunca promete nada gratis ni sin costo, ni dice "más vendido". En el cuerpo, "sin costo" solo vive en
+# las garantías aprobadas (datos.GARANTIA_PASTO); las metas no las citan.
+META_RE = re.compile(r'<meta (?:name|property)="((?:og|twitter):[^"]+|description)" content="([^"]*)"')
+META_PROHIBIDO_RE = re.compile(r"\bgratis\b|\bgratuit[oa]s?\b|\bgratuitamente\b|\bsin\s+(?:costo|cargo)\b|\bm[aá]s\s+vendid[oa]s?\b",
+                               re.I)
+
+
+def metas(html):
+    """[(nombre, texto)] del título, la descripción, el Open Graph y la Twitter Card de una página."""
+    titulo = re.search(r"<title>(.*?)</title>", html, re.S)
+    pares = [("title", titulo.group(1))] if titulo else []
+    return [(n, html_mod.unescape(v)) for n, v in pares + META_RE.findall(html)]
 DEPORTES_RE = re.compile(r"p[aá]del|canchas?", re.I)
 PAGO_AL_TERMINAR_RE = re.compile(r"\bpagas\s+(?:cuando|al\s+ver)\b", re.I)
 # Decisión del dueño (2026-11-07): no le gusta "liquidas el saldo según lo acordado"; no se escribe ninguna frase sobre
@@ -129,12 +145,28 @@ def _plano(fragmento):
     return re.sub(r"\s+", " ", html_mod.unescape(re.sub(r"<[^>]+>", " ", fragmento))).strip()
 
 
+def _iva_amarrado_al_instalado(texto):
+    """Cada "con IVA" del texto acompaña al pasto instalado: dentro de su frase, lo último que se nombró antes es el
+    instalado y no el pasto solo, una planta, un árbol o una palma. Es la regla vigente del dueño (2026-11-09/10,
+    tests/test_iva_pasto.py): el pasto sin instalar no lleva IVA y "con IVA" solo va junto al instalado de $120."""
+    for frase in FRASE_RE.split(texto):
+        for m in IVA_INCLUIDO_RE.finditer(frase):
+            antes = frase[:m.start()]
+            marcas = [(x.start(), False) for x in SIN_IVA_RE.finditer(antes)]
+            marcas += [(x.start(), True) for x in INSTALADO_PENDIENTE_RE.finditer(antes)]
+            if not marcas or not max(marcas)[1]:
+                return False
+    return True
+
+
 def _anuncia_iva_sin_iva(texto):
-    """Dice "con IVA" junto a un precio de pasto natural, planta, árbol o palma (lo solo instalado sigue pendiente)."""
+    """Dice "con IVA" junto a un precio de pasto natural, planta, árbol o palma. No es falta si el texto solo habla del
+    instalado ni si cada "con IVA" va amarrado al instalado (regla de main, más reciente que la de la etapa 2i, que
+    pedía quitarlo también ahí)."""
     if not (IVA_INCLUIDO_RE.search(texto) and SIN_IVA_RE.search(texto) and PRECIO_RE.search(texto)):
         return False
-    pendiente = INSTALADO_PENDIENTE_RE.search(texto) and not SOLO_PASTO_RE.search(texto)
-    return not (SALVEDAD_RE.search(texto) or pendiente)
+    solo_instalado = INSTALADO_PENDIENTE_RE.search(texto) and not SOLO_PASTO_RE.search(texto)
+    return not (SALVEDAD_RE.search(texto) or solo_instalado or _iva_amarrado_al_instalado(texto))
 
 
 def iva_en_precios_sin_iva(html):
@@ -143,7 +175,8 @@ def iva_en_precios_sin_iva(html):
     for tabla in TABLA_RE.findall(html):
         caption = " ".join(CAPTION_RE.findall(tabla))
         filas = [f for f in map(_plano, FILA_RE.findall(tabla)) if FILA_SIN_IVA_RE.match(f) and PRECIO_RE.search(f)]
-        if filas and IVA_INCLUIDO_RE.search(caption) and not SALVEDAD_RE.search(caption):
+        if (filas and IVA_INCLUIDO_RE.search(caption) and not SALVEDAD_RE.search(caption)
+                and not _iva_amarrado_al_instalado(_plano(caption))):
             salida.append(f"tabla: {_plano(caption)} · {filas[0]}")
     principal = re.search(r"<main\b.*?</main>", html, re.S | re.I)
     cuerpo = re.sub(r"<(script|style|svg)\b.*?</\1>", " ", principal.group() if principal else html, flags=re.S | re.I)
@@ -185,12 +218,30 @@ class ReglasDelDuenoTest(unittest.TestCase):
                     hallazgos.append(f"{path.relative_to(PUBLIC)} · {regla} · …{texto[max(0, m.start() - 40):m.end() + 40]}…")
         self.assertEqual(hallazgos, [])
 
+    def test_metas_sin_gratis_sin_costo_ni_mas_vendido(self):
+        hallazgos = []
+        for path in sorted(PUBLIC.rglob("*.html")):
+            for nombre, texto in metas(path.read_text(encoding="utf-8")):
+                if META_PROHIBIDO_RE.search(texto):
+                    hallazgos.append(f"{path.relative_to(PUBLIC)} · {nombre} · {texto}")
+        self.assertEqual(hallazgos, [])
+
+    def test_la_regla_de_las_metas_detecta_lo_que_debe(self):
+        sucio = ('<title>El pasto más vendido</title><meta name="description" content="Cotiza gratis hoy.">'
+                 '<meta property="og:description" content="Visita sin costo."><meta name="twitter:title" content="Gu&iacute;a gratuita">'
+                 '<meta property="og:title" content="Pasto en rollo">')
+        self.assertEqual([n for n, t in metas(sucio) if META_PROHIBIDO_RE.search(t)],
+                         ["title", "description", "og:description", "twitter:title"])
+        self.assertIsNone(META_PROHIBIDO_RE.search("Cotiza por WhatsApp. Costos claros y congratulaciones."))
+
     def test_todo_whatsapp_va_al_numero_real(self):
         hallazgos = []
         for path, fuente in archivos_fuente():
             for m in WA_RE.finditer(fuente):
                 destino = m.group(1)
                 if destino and set(destino) == {"."}:  # "wa.me/..." en un comentario
+                    continue
+                if path.name == "vt-nochebuenas.js" and destino == "${wa}":  # #nb-config lo escribe datos.py: test_nochebuenas.py
                     continue
                 if destino.isdigit():
                     ok = destino == NUMERO
@@ -379,8 +430,13 @@ class ReglasDelDuenoTest(unittest.TestCase):
         self.assertEqual(hallazgos, [])
 
     def test_calculadoras_de_pasto_natural_sin_iva(self):
-        for nombre in ("vt-medidor.js", "vt-b2b.js"):
-            self.assertNotRegex((PUBLIC / "js" / nombre).read_text(encoding="utf-8"), r"(?i)\bcon IVA\b")
+        """El cotizador por volumen (solo pasto y mayoreo) nunca dice "con IVA". El Medidor sí, pero solo en modo
+        instalado (regla de main, 2026-11-10; la de la etapa 2i lo prohibía en los dos): su única aparición es la
+        constante IVA_INSTALADO y tests/test_iva_pasto.py revisa cada caso de paridad."""
+        self.assertNotRegex((PUBLIC / "js" / "vt-b2b.js").read_text(encoding="utf-8"), r"(?i)\bcon IVA\b")
+        medidor = re.sub(r"//[^\n]*", "", (PUBLIC / "js" / "vt-medidor.js").read_text(encoding="utf-8"))
+        self.assertEqual(re.findall(r"(?i)[^\n]*\bcon IVA\b[^\n]*", medidor), ["  const IVA_INSTALADO = 'con IVA';"])
+        self.assertIn("modo === 'instalado' ? IVA_INSTALADO : ''", medidor)
 
     def test_precio_sin_iva_con_iva_se_detecta(self):
         tarjeta = ('<div class="vt-etiqueta"><p class="vt-etiqueta__cod"><span>Vivero</span><span>{}</span></p>'
@@ -391,7 +447,8 @@ class ReglasDelDuenoTest(unittest.TestCase):
                       tabla.format("Precios 2026 con IVA.", "Palmas"), tabla.format("Precios 2026 con IVA.", "Árboles"),
                       tabla.format("Con IVA.", "Pasto San Agustín, solo el pasto"),
                       "<main><p>Areca y coco plumoso desde $250 y palma real desde $500 en tamaño chico, con IVA.</p></main>",
-                      "<main><p>El pasto cuesta $85 por m² solo el pasto y desde $120 por m² instalado, con IVA incluido.</p></main>",
+                      "<main><p>El pasto cuesta desde $120 por m² instalado y $85 por m² solo el pasto, con IVA incluido.</p></main>",
+                      tabla.format("El instalado incluye IVA. Precios con IVA.", "Pasto San Agustín, solo el pasto"),
                       '<meta name="description" content="Palma areca desde $250, IVA incluido.">'):
             self.assertTrue(iva_en_precios_sin_iva(sucio), sucio)
         for limpio in (tarjeta.format("", "Palmas"), tarjeta.format("Con IVA", "Pasto instalado"),
@@ -400,7 +457,11 @@ class ReglasDelDuenoTest(unittest.TestCase):
                        tabla.format("Precios 2026 con IVA.", "Poda de palmas y árboles"),
                        tabla.format("Precios 2026 con IVA.", "Pasto San Agustín instalado"),
                        "<main><p>Areca y coco plumoso desde $250. El pasto sintético cuesta $139/m², con IVA.</p></main>",
-                       "<main><p>Precios 2026, IVA incluido cuando aplica; palma areca desde $250.</p></main>"):
+                       "<main><p>Precios 2026, IVA incluido cuando aplica; palma areca desde $250.</p></main>",
+                       # Regla de main (2026-11-10): "con IVA" amarrado al instalado convive con el precio de solo pasto.
+                       "<main><p>El pasto cuesta $85 por m² solo el pasto (no lleva IVA) y desde $120 por m² instalado, con IVA incluido.</p></main>",
+                       tabla.format("El instalado incluye IVA. El pasto solo y el mayoreo no llevan IVA.",
+                                    "Pasto San Agustín, solo el pasto")):
             self.assertFalse(iva_en_precios_sin_iva(limpio), limpio)
 
     def test_visita_gratis_se_detecta(self):
@@ -432,7 +493,7 @@ class ReglasDelDuenoTest(unittest.TestCase):
     def test_las_reglas_detectan_lo_que_deben(self):
         texto = textos_publicos(
             '<p>Pasto Oasis</p><p>Paga con Clip</p><p>12 MSI</p><p>meses sin intereses</p><p>0% de interés</p>'
-            '<p>Envío gratis a todo México</p><p>Pide tus muestras gratis</p>'
+            '<p>Envío gratis a todo México</p><p>Pide tus muestras gratis</p><p>El más vendido</p>'
             '<p>Ahorra 40% de agua; total 100%; aumento de +10.5%</p><p>clip-path</p>'
         )
         detectadas = {regla for regla, patron in PROHIBIDAS if re.search(patron, texto, re.I)}
@@ -443,8 +504,11 @@ class ReglasDelDuenoTest(unittest.TestCase):
             self.assertIsNone(re.search(regla["0 % en pagos"], textos_publicos(limpio), re.I), limpio)
         for sucio in ("<p>6 meses al 0%</p>", "<p>Mensualidades con 0 % de comisión</p>"):
             self.assertIsNotNone(re.search(regla["0 % en pagos"], textos_publicos(sucio), re.I), sucio)
+        for sucio in ("<p>La opción más vendida</p>", "<p>Las palmas mas vendidas</p>"):
+            self.assertIsNotNone(re.search(regla["más vendido"], textos_publicos(sucio), re.I), sucio)
         for limpio in ("<style>.a{clip-path:inset(0);clip:rect(0,0,0,0)}</style><p>casa muestra</p>",
-                       "<p>No ofrecemos muestras físicas</p>"):
+                       "<p>No ofrecemos muestras físicas</p>",
+                       '<a href="/blog/palmas-mas-vendidas-tampico-precios">8 palmas para jardines</a>'):
             texto = textos_publicos(limpio)
             self.assertEqual([r for r, pat in PROHIBIDAS if re.search(pat, texto, re.I)], [], limpio)
         self.assertEqual([r for r, pat in PROHIBIDAS if re.search(pat, textos_publicos(

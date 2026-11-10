@@ -1,0 +1,146 @@
+/* =========================================================
+   Viveros Terra · terra-inicio.css · hoja propia de la home
+   Hero nuevo y mejoras de conversión (docs/superpowers/specs/2026-11-09-home-hero-y-conversion-design.md, Entregas 1 y 2).
+   El shell la agrega con la clase vt-inicio del <body>. Todo bajo .vt-inicio y solo con tokens de terra.css.
+   ========================================================= */
+
+/* ---------- hero: titular, lema en serif, etiqueta de precio, un botón, dos enlaces y confianza ---------- */
+.vt-inicio .vt-portada__grid{display:flex;flex-direction:column;gap:0}
+.vt-inicio .vt-kicker{margin-bottom:12px}
+.vt-inicio main .vt-portada h1{font-size:clamp(2.5rem,1.4rem + 6vw,5.75rem);line-height:.93;letter-spacing:-.022em}
+.vt-inicio main .vt-inicio__lema{margin:.5em 0 0;font-size:clamp(1.2rem,.62rem + 2.64vw,2.53rem);line-height:1.15;color:var(--vt-field)}
+.vt-inicio .vt-portada .vt-lede{max-width:38ch}
+.vt-inicio .vt-portada .vt-etiqueta-x,.vt-inicio .vt-inicio__trato{margin-top:18px}
+.vt-inicio .vt-inicio__cta .vt-btn--wa{width:100%;min-height:62px;font-size:1.1875rem;box-shadow:5px 5px 0 var(--vt-tag);transition:transform var(--vt-duration-fast) var(--vt-ease-out),box-shadow var(--vt-duration-fast) var(--vt-ease-out)}
+@media (hover:hover){.vt-inicio .vt-inicio__cta .vt-btn--wa:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--vt-tag)}}
+.vt-inicio .vt-inicio__cta .vt-btn--wa:active{transform:translate(5px,5px);box-shadow:0 0 0 var(--vt-tag)}
+/* el anillo de foco va por fuera de la sombra amarilla */
+.vt-inicio .vt-inicio__cta .vt-btn--wa:focus-visible{outline:2px solid var(--vt-field);outline-offset:8px}
+.vt-inicio main .vt-inicio__enlaces{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 18px;margin:12px 0 0;font-size:var(--vt-text-sm);font-weight:600}
+.vt-inicio main .vt-inicio__enlaces a{display:inline-flex;align-items:center;gap:.3em;min-height:44px;color:var(--vt-ink)}
+.vt-inicio main .vt-inicio__enlaces a:hover{color:var(--vt-field);text-decoration-thickness:2px}
+.vt-inicio main .vt-inicio__confianza{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0 0;padding-top:12px;border-top:1px solid var(--vt-line);font-size:var(--vt-text-xs);color:var(--vt-muted)}
+.vt-inicio .vt-inicio__confianza b{color:var(--vt-ink);font-weight:700}
+/* los separadores " · " van en el DOM para leerse sin CSS; con CSS separa el espacio de la fila */
+.vt-inicio .vt-inicio__sep{display:none}
+/* "Abierto ahora" (terra.js, solo en horario): el punto acompaña al texto, nunca va solo */
+.vt-inicio .is-abierto::before{content:"";display:inline-block;width:8px;height:8px;margin-right:6px;border-radius:50%;background:var(--vt-wa)}
+.vt-inicio .vt-inicio__confianza [data-vt-abierto]{color:var(--vt-field)}
+.vt-inicio .vt-portada .vt-datos{margin-top:40px}
+@media (min-width:560px){.vt-inicio main .vt-inicio__enlaces{justify-content:flex-start;gap:0 28px}}
+/* celular y tableta: foto a sangre */
+@media (max-width:1023px){
+  .vt-inicio .vt-portada__foto{margin:30px calc(var(--vt-gutter) * -1) 0}
+  .vt-inicio .vt-portada__foto .vt-fig__marco{border-inline:0}
+  .vt-inicio .vt-portada__foto figcaption{padding-inline:var(--vt-gutter)}
+}
+/* de 560 a 1023 px el botón no se estira a todo lo ancho; desde 768 la etiqueta y el botón van lado a lado y la foto
+   baja a 16:9 para no ocupar una pantalla entera */
+@media (min-width:560px) and (max-width:1023px){.vt-inicio .vt-inicio__cta .vt-btn--wa{max-width:420px}}
+@media (min-width:768px) and (max-width:1023px){
+  .vt-inicio .vt-portada__grid{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);column-gap:32px;align-items:start}
+  .vt-inicio .vt-inicio__titulo,.vt-inicio .vt-portada__foto{grid-column:1 / -1}
+  .vt-inicio .vt-portada__foto .vt-fig__marco{aspect-ratio:16/9}
+}
+/* celulares angostos (320 px) o bajos (360×640): titular en dos renglones y menos aire, para que el botón quepa en la
+   primera pantalla */
+@media (max-width:359px),(max-width:559px) and (max-height:660px){
+  .vt-inicio .vt-portada{padding-top:16px}
+  .vt-inicio .vt-kicker{margin-bottom:8px;font-size:.75rem;letter-spacing:.02em}
+  .vt-inicio main .vt-portada h1{font-size:2.3rem}
+  .vt-inicio .vt-portada .vt-lede{margin-top:10px;font-size:var(--vt-text-base)}
+  .vt-inicio .vt-portada .vt-etiqueta-x,.vt-inicio .vt-inicio__trato{margin-top:14px}
+}
+/* escritorio: dos columnas y la etiqueta colgada, siempre derecha, sobre la esquina inferior izquierda de la foto. La
+   foto mide 125% del ancho de su columna (4:5) y los márgenes en % de un elemento de rejilla se miden contra ese ancho:
+   la etiqueta (fuera del flujo, en la celda de la foto) queda 48 px arriba del borde inferior de la foto aunque la
+   columna de texto sea más alta. */
+@media (min-width:1024px){
+  .vt-inicio .vt-portada{padding-top:72px}
+  .vt-inicio .vt-portada__grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.74fr);grid-template-rows:auto auto;column-gap:88px}
+  .vt-inicio .vt-inicio__titulo{grid-column:1;grid-row:1;align-self:end}
+  .vt-inicio .vt-inicio__trato{grid-column:1;grid-row:2;align-self:start;margin-top:36px}
+  .vt-inicio .vt-portada__foto{grid-column:2;grid-row:1 / 3}
+  .vt-inicio .vt-portada .vt-etiqueta-x{position:absolute;top:0;left:0;grid-column:2;grid-row:1 / 3;z-index:2;width:272px;margin:calc(125% - 48px) 0 0 -76px;transform:translateY(-100%)}
+  .vt-inicio .vt-portada .vt-lede{margin-top:24px;font-size:1.3125rem;line-height:1.5}
+  .vt-inicio .vt-inicio__cta .vt-btn--wa{width:auto;min-height:66px;padding:0 34px;font-size:1.25rem}
+  .vt-inicio main .vt-inicio__enlaces{margin-top:16px}
+  .vt-inicio .vt-portada .vt-datos{margin-top:80px}
+}
+/* de 1024 a 1279 px, o en pantallas bajas (laptops): la etiqueta colgada va en su versión compacta (la de celular, con
+   el ojal y el cordel a la izquierda) para no tapar el logo de la camisa */
+@media (min-width:1024px) and (max-width:1279px),(min-width:1024px) and (max-height:820px){
+  .vt-inicio .vt-portada .vt-etiqueta-x{width:296px;margin-left:-108px;transform-origin:22px -34px}
+  .vt-inicio .vt-portada .vt-etiqueta-x--cordel::before{left:21px;bottom:calc(100% - 26px)}
+  .vt-inicio main .vt-portada .vt-etiqueta{padding:14px 16px 12px 46px;-webkit-mask:radial-gradient(circle 6px at 22px 26px,transparent 98%,var(--vt-opaco) 100%);mask:radial-gradient(circle 6px at 22px 26px,transparent 98%,var(--vt-opaco) 100%)}
+  .vt-inicio main .vt-portada .vt-etiqueta::before{left:22px;top:26px;width:18px;height:18px}
+  .vt-inicio main .vt-portada .vt-etiqueta__cod{margin:0}
+  .vt-inicio main .vt-portada .vt-etiqueta__precio{margin:8px -16px 0 -46px;padding:8px 16px 9px 46px}
+  .vt-inicio main .vt-portada .vt-etiqueta__precio b{font-size:34px}
+  .vt-inicio main .vt-portada .vt-etiqueta__fila{border-bottom:0}
+  .vt-inicio main .vt-portada .vt-etiqueta__nombre,.vt-inicio main .vt-portada .vt-etiqueta__sci,.vt-inicio main .vt-portada .vt-etiqueta__nota{display:none}
+}
+/* laptops bajas (1280×620, 1366×650, 1536×730, 1440×780, 1024×650): hero compacto y foto recortada a la altura que
+   queda, para que el precio y el botón estén completos en la primera pantalla. 215 px = menú + banner + aires. */
+@media (min-width:1024px) and (max-height:820px){
+  .vt-inicio .vt-portada{padding-top:28px}
+  .vt-inicio main .vt-portada h1{font-size:min(4.25rem,1.4rem + 6vw)}
+  .vt-inicio main .vt-inicio__lema{margin-top:.35em;font-size:1.75rem}
+  .vt-inicio .vt-portada .vt-lede{margin-top:14px;font-size:1.125rem}
+  .vt-inicio .vt-inicio__trato{margin-top:20px}
+  .vt-inicio .vt-inicio__cta .vt-btn--wa{min-height:62px}
+  .vt-inicio .vt-portada__foto .vt-fig__marco{aspect-ratio:auto;height:calc(100vh - 215px);min-height:280px}
+  .vt-inicio .vt-portada .vt-etiqueta-x{margin-top:calc(max(280px,100vh - 215px) - 48px)}
+}
+
+/* ---------- Medidor: en celular el resultado sube bajo los campos; botón de dos renglones si hace falta ---------- */
+@media (max-width:639px){.vt-inicio .vt-medidor__plano{order:1}}
+/* (igual en las filas de WhatsApp de sección: sus textos largos no deben ensanchar la columna a 320 px) */
+.vt-inicio .vt-medidor .vt-btn,.vt-inicio .vt-inicio__fila .vt-btn{padding-block:8px;line-height:1.2;white-space:normal;text-align:center}
+/* renglón de resultado junto a los campos (vt-medidor.js lo llena); en tres columnas ya se ve la etiqueta al lado */
+.vt-inicio main .vt-medidor__vivo{margin:0;font-weight:700;font-variant-numeric:tabular-nums;color:var(--vt-soil)}
+.vt-inicio main .vt-medidor__vivo:empty{display:none}
+@media (min-width:1024px){.vt-inicio main .vt-medidor__vivo{display:none}}
+.vt-inicio main .vt-medidor__garantia{margin-top:12px;font-size:var(--vt-text-xs);line-height:1.45;color:var(--vt-muted)}
+
+/* ---------- Qué hacemos: WhatsApp de cada servicio, bajo su precio ---------- */
+.vt-inicio main .vt-indice__wa{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600}
+
+/* ---------- WhatsApp al final de opiniones, proceso, precios y preguntas ---------- */
+.vt-inicio .vt-inicio__fila{margin-top:32px}
+.vt-inicio .vt-inicio__fila .vt-btn{width:100%;min-height:52px}
+@media (min-width:560px){.vt-inicio .vt-inicio__fila .vt-btn{width:auto}}
+
+/* ---------- cierre: la promesa va justo antes de los botones ---------- */
+.vt-inicio .vt-cierre .vt-cta{margin-top:14px}
+
+/* ---------- opiniones: enlace a las reseñas ---------- */
+.vt-inicio main .vt-inicio__resenas{margin:20px 0 0;font-size:var(--vt-text-sm);font-weight:600}
+.vt-inicio main .vt-inicio__resenas a{display:inline-block;min-height:44px;padding-block:11px}
+
+/* ---------- movimiento (Entrega 2): solo transform, opacity y clip-path; una vez; nada si se pide menos movimiento.
+   Nunca opacity sobre el titular, el lede, el precio o el botón al cargar (retrasa el LCP en celular). ---------- */
+@media (prefers-reduced-motion:no-preference){
+  @media (min-width:1024px){
+    /* la etiqueta se asienta colgada de su cordel (el origen es donde nace el cordel) y la foto se descubre */
+    .vt-inicio .vt-portada .vt-etiqueta-x{transform-origin:50% -40px;animation:vt-inicio-balanceo .9s var(--vt-ease-out) both}
+    .vt-inicio .vt-portada__foto .vt-fig__marco{animation:vt-inicio-foto .7s var(--vt-ease-out) both}
+  }
+  /* encabezados de sección y fotos de obra suben al entrar en pantalla; sin soporte se ven fijos. El encabezado parte
+     de opacity .6 (no .25): más abajo en la página sigue cumpliendo contraste AA de texto grande. En las fotos se
+     anima el marco, no el pie, para que su texto nunca pierda contraste. */
+  @supports (animation-timeline:view()){
+    .vt-inicio main .vt-bloque h2{animation:vt-inicio-titulo linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+    .vt-inicio .vt-obras .vt-fig__marco{animation:vt-inicio-sube linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+  }
+}
+@keyframes vt-inicio-balanceo{
+  0%{transform:translateY(-100%) rotate(4deg)}
+  45%{transform:translateY(-100%) rotate(-2deg)}
+  75%{transform:translateY(-100%) rotate(.8deg)}
+  100%{transform:translateY(-100%)}
+}
+@keyframes vt-inicio-foto{from{clip-path:inset(0 0 40% 0)}to{clip-path:inset(0)}}
+@keyframes vt-inicio-titulo{from{opacity:.6;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes vt-inicio-sube{from{opacity:.25;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.vt-inicio .vt-inicio__cta .vt-btn--wa{transition:none}}

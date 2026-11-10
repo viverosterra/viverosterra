@@ -1,8 +1,8 @@
 {
  "slug": "/blog",
  "meta": {
-  "title": "Blog de Jardinería Tampico · Viveros Terra",
-  "description": "Blog de jardinería para el clima de Tampico. Guías de pasto San Agustín, palmas tropicales, árboles para banqueta, riego y diseño de jardines en Tamaulipas.",
+  "title": "Blog de Jardinería para Tampico | Viveros Terra",
+  "description": "Guías de jardinería para el clima de Tampico: pasto San Agustín, palmas, árboles, riego, plagas y temporada de lluvias. Aprende y cotiza con nosotros.",
   "robots": "index, follow",
   "canonical": "https://www.viverosterra.com/blog",
   "og": [
@@ -20,11 +20,11 @@
    ],
    [
     "og:title",
-    "Blog de Jardinería Tampico | Viveros Terra"
+    "Blog de Jardinería para Tampico | Viveros Terra"
    ],
    [
     "og:description",
-    "Guías prácticas de jardinería adaptadas al clima cálido-húmedo de Tampico y la zona Huasteca."
+    "Guías de jardinería para el clima de Tampico: pasto San Agustín, palmas, árboles, riego, plagas y temporada de lluvias. Aprende y cotiza con nosotros."
    ],
    [
     "og:image",
@@ -42,11 +42,11 @@
    ],
    [
     "twitter:title",
-    "Blog de Jardinería Tampico · Viveros Terra"
+    "Blog de Jardinería para Tampico | Viveros Terra"
    ],
    [
     "twitter:description",
-    "Guías prácticas de jardinería adaptadas al clima cálido-húmedo de Tampico y la zona Huasteca."
+    "Guías de jardinería para el clima de Tampico: pasto San Agustín, palmas, árboles, riego, plagas y temporada de lluvias. Aprende y cotiza con nosotros."
    ],
    [
     "twitter:image",
@@ -127,6 +127,34 @@
   {
    "titulo": "Nuevos artículos",
    "tarjetas": [
+    {
+     "href": "/blog/palma-bambu-chamaedorea-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/especie-palma-bambu-chamaedorea-tampico.webp",
+      "alt": "Palma bambú Chamaedorea en Tampico",
+      "ancho": 575,
+      "alto": 700
+     },
+     "categoria": "Palmas",
+     "titulo": "Palma bambú (Chamaedorea) en Tampico: cuidados y guía completa",
+     "texto": "Tallos delgados, sombra y buen drenaje: cómo cuidarla en interior y patios. Cotiza por WhatsApp.",
+     "minutos": 6
+    },
+    {
+     "href": "/blog/plantas-seguras-mascotas-jardin-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/jardineria-profesional-tampico-empresa.webp",
+      "alt": "Jardín en Tampico pensado para perros y gatos",
+      "ancho": 1536,
+      "alto": 1024
+     },
+     "categoria": "Jardines · Guías",
+     "titulo": "Plantas seguras para perros y gatos en Tampico: guía para un jardín con mascotas",
+     "texto": "Qué palmas y plantas puedes tener, cuáles ubicar con cuidado y cómo diseñar el jardín.",
+     "minutos": 7
+    },
     {
      "href": "/blog/jardin-en-macetas-terraza-tampico-guia",
      "foto": {

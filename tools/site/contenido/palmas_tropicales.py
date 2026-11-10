@@ -11,6 +11,7 @@ import mensajes_paginas
 from componentes import dinero
 from contenido import catalogo_datos as cd
 from contenido import plantas_comun as pc
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -18,9 +19,9 @@ RUTA = "/palmas-tropicales-tampico"
 URL = f"{SITE}{RUTA}"
 NOMBRE = "Palmas tropicales"
 MENSAJE = mensajes_paginas.PLANTAS[RUTA]
-TITULO = "Palmas en Tampico: areca y coco plumoso desde $250 · Viveros Terra"
-DESCRIPCION = ("Palmas para jardín, tropicales y exóticas en Tampico, Madero y Altamira. Areca y coco plumoso desde $250 y "
-               "palma real desde $500 en tamaño chico. Entrega y siembra con 30 días de garantía de arraigo, con condiciones.")
+TITULO = f"Venta de Palmas en Tampico desde {dinero(P['palma_desde'])} | Viveros Terra"
+DESCRIPCION = (f"Venta de palmas para jardín en Tampico: areca y coco plumoso desde {dinero(P['palma_desde'])}, palma real "
+               f"desde {dinero(P['palma_real'])}. Entrega, siembra y garantía de 30 días con condiciones.")
 META = {"title": TITULO, "description": DESCRIPCION, "robots": "index, follow", "canonical": URL,
         "og": (("og:title", TITULO), ("og:description", DESCRIPCION), ("og:url", URL), ("og:type", "website"))}
 ESPECIES = (
@@ -146,8 +147,8 @@ CONTENIDO = {
 }
 
 PARIDAD = {
-    "meta": {clave: (DESCRIPCION, "La garantía de 30 días se publica siempre «con condiciones» (regla del dueño); el "
-                                  "resto de la descripción no cambia.") for clave in ("description", "og:description")},
+    "meta": seo.paridad(TITULO, DESCRIPCION, {clave: (DESCRIPCION, "La garantía de 30 días se publica siempre «con condiciones» (regla del dueño); el "
+                                  "resto de la descripción no cambia.") for clave in ("description", "og:description")}),
     "jsonld": {
         "LocalBusiness": pc.MOTIVO_LOCAL_BUSINESS + " La oferta de palmas lo nombra como seller.",
         "AggregateOffer": ("Pasa a Offer con PriceSpecification (minPrice del tamaño chico): «desde $250» es un mínimo, "

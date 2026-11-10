@@ -6,6 +6,7 @@ sección después de la portada es opcional según el contenido (el orden no cam
 import componentes as c
 import componentes_plantas as cp
 from contenido import plantas_comun as pc
+from contenido import fotos_obra
 from plantillas import base
 
 CONTEXTO = "https://schema.org"
@@ -78,9 +79,12 @@ SECCIONES = (("necesidad", _necesidad), ("subcategorias", _subcategorias), ("esp
 def render(k):
     tipo = k["tipo"]
     secciones = [c.portada(k["portada"], tipo, k["migas"])]
+    obras = fotos_obra.seccion(k["meta"]["canonical"])
     for clave, armar in SECCIONES:
         if k.get(clave):
             secciones.append(armar(k, len(secciones)))
+        if clave == "destacadas" and obras:  # las fotos reales van justo después de las especies
+            secciones.append(c.bloque_obras(len(secciones), obras, "\n".join(secciones)))
     ci = k["cierre"]
     secciones.append(c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo))
     j = k["jsonld"]

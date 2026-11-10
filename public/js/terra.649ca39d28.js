@@ -4,6 +4,8 @@
      los que las páginas abren con window.open (calculadoras, catálogo, formulario de la home).
    - Mide los enlaces al catálogo (select_content), que antes medían los clic_catalogo_* sueltos.
    - Abre y cierra el menú (paneles de escritorio y menú móvil) y oculta la barra móvil mientras el CTA del hero se ve.
+   - En horario antepone "Abierto ahora · " a las promesas marcadas con data-vt-horario; el horario y los festivos
+     llegan de ese atributo y de data-vt-festivos (los escribe el build desde datos.py), nunca de este archivo.
    - Expone window.VTMedicion.whatsapp(ctaId, extra) para los WhatsApp que las páginas abren con window.open: manda el
      mismo generate_lead que un clic en enlace (seguro aunque gtag no exista).
    Las funciones puras se exportan para node --test. */
@@ -44,6 +46,17 @@
 
   const CATALOGO_RE = /^\/catalogo(\.html)?(?:[?#].*)?$/;
 
+  // Dos CTAs de la home que no abren WhatsApp ni teléfono pero sí se miden (select_content): el banner de temporada
+  // (por su data-cta) y "Calcula tu patio" (por su id). Ninguna otra ancla del sitio manda este evento.
+  const BANNER_CTA = 'home:banner-nochebuenas';
+  const ANCLA_MEDIDOR = 'vt-calcula-patio';
+  function seleccion(a) {
+    const cta = a.getAttribute('data-cta');
+    const id = a.getAttribute('id');
+    if (cta !== BANNER_CTA && id !== ANCLA_MEDIDOR) return null;
+    return { nombre: 'select_content', params: { content_type: 'cta', item_id: id || cta, cta_id: cta } };
+  }
+
   function evento(a, contexto) {
     const href = a.getAttribute('href');
     if (href && CATALOGO_RE.test(href)) {
@@ -51,7 +64,7 @@
       return { nombre: 'select_content', params: { content_type: 'catalogo', item_id: 'catalogo', cta_id: cta, service: contexto.servicio } };
     }
     const tipo = tipoEnlace(href);
-    if (!tipo) return null;
+    if (!tipo) return seleccion(a);
     const cta = a.getAttribute('data-cta') || contexto.tipo + ':sin-etiqueta';
     if (tipo === 'tel') return { nombre: 'click_to_call', params: { link_type: 'tel', cta_id: cta, service: contexto.servicio } };
     return { nombre: 'generate_lead', params: { method: 'whatsapp', cta_id: cta, service: contexto.servicio } };
@@ -204,16 +217,131 @@
     heroes.forEach((h) => observador.observe(h));
   }
 
-  const api = { FIRMA, HERO_CTA, tipoEnlace, conFirma, evento, eventoWhatsapp };
+  // "Abierto ahora": el horario llega como "<días>@HH:MM-HH:MM;<días>@HH:MM-HH:MM" (días separados por coma, lunes = 1,
+  // hora de México) y los festivos como "MM-DD,MM-DD", cada año. Se abre a la hora de apertura y a la de cierre ya está cerrado.
+  const ABIERTO = 'Abierto ahora';
+  const ZONA = 'America/Mexico_City';
+  const DIAS = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 };
+  const TRAMO_RE = /^([1-7](?:,[1-7])*)@(\d{2}):(\d{2})-(\d{2}):(\d{2})$/;
+  const FECHA_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
+
+  // Día de la semana, fecha y minuto del día en México. Devuelve null (no se afirma nada) con una fecha inválida, sin
+  // zonas horarias, o si el navegador ignora el reloj de 24 horas: llega un dayPeriod (AM/PM) o una hora fuera de 0–23.
+  // Algunos motores escriben la medianoche como "24": cuenta como 0. `intl` solo se pasa en las pruebas.
+  function enMexico(fecha, intl) {
+    try {
+      const partes = {};
+      new (intl || Intl).DateTimeFormat('en-US', { timeZone: ZONA, weekday: 'short', year: 'numeric', month: '2-digit',
+        day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false, hourCycle: 'h23' }).formatToParts(fecha)
+        .forEach((p) => { partes[p.type] = p.value; });
+      const hora = partes.hour === '24' ? 0 : Number(partes.hour);
+      const minuto = Number(partes.minute);
+      if (partes.dayPeriod || !Number.isInteger(hora) || hora < 0 || hora > 23 || !Number.isInteger(minuto)) return null;
+      return { dia: DIAS[partes.weekday], fecha: partes.month + '-' + partes.day, anio: Number(partes.year),
+        iso: partes.year + '-' + partes.month + '-' + partes.day, minuto: hora * 60 + minuto };
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function abierto(fecha, horario, festivos, intl) {
+    const ahora = enMexico(fecha, intl);
+    if (!ahora || !ahora.dia) return false;
+    if (String(festivos || '').split(',').includes(ahora.fecha)) return false;
+    return String(horario || '').split(';').some((tramo) => {
+      const m = tramo.match(TRAMO_RE);
+      if (!m || !m[1].split(',').includes(String(ahora.dia))) return false;
+      return ahora.minuto >= Number(m[2]) * 60 + Number(m[3]) && ahora.minuto < Number(m[4]) * 60 + Number(m[5]);
+    });
+  }
+
+  // El build escribe su fecha (AAAA-MM-DD, de datos.py) en data-vt-build. Un cliente con la fecha anterior a esa tiene
+  // el reloj mal: no se le muestra "Abierto ahora" ni los días de preventa. Sin fecha de build legible no se bloquea.
+  function relojAtrasado(fecha, build) {
+    if (!FECHA_RE.test(String(build || ''))) return false;
+    const hoy = enMexico(fecha);
+    return !hoy || hoy.iso < build;
+  }
+
+  // El prefijo es texto dentro del elemento marcado (la promesa del HTML no se toca) y la clase is-abierto pinta el
+  // punto verde: el punto nunca va sin el texto. Fuera de horario se retira y el elemento queda como en el HTML.
+  function horario(doc, ahora) {
+    doc.querySelectorAll('[data-vt-horario]').forEach((el) => {
+      const si = !relojAtrasado(ahora, el.getAttribute('data-vt-build'))
+        && abierto(ahora, el.getAttribute('data-vt-horario'), el.getAttribute('data-vt-festivos'));
+      const primero = el.firstChild;
+      const puesto = Boolean(primero && primero.hasAttribute && primero.hasAttribute('data-vt-abierto'));
+      el.classList.toggle('is-abierto', si);
+      if (si && !puesto) {
+        const marca = doc.createElement('b');
+        marca.setAttribute('data-vt-abierto', '');
+        marca.textContent = ABIERTO;
+        el.insertBefore(doc.createTextNode(' · '), primero);
+        el.insertBefore(marca, el.firstChild);
+      } else if (!si && puesto) {
+        el.removeChild(primero.nextSibling);
+        el.removeChild(primero);
+      }
+    });
+  }
+
+  // Días que faltan para una fecha "AAAA-MM-DD" (la escribe el build en data-vt-hasta), contados con la fecha de México:
+  // 0 el mismo día, negativo después y null si la fecha no se puede leer o el reloj del cliente va antes del build. Con
+  // fecha de build, nunca son más que los que había ese día.
+  const DIA_MS = 86400000;
+  const utc = (iso) => { const m = iso.match(FECHA_RE); return Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])); };
+  function diasHasta(fecha, hasta, build) {
+    const hoy = enMexico(fecha);
+    if (!FECHA_RE.test(String(hasta || '')) || !hoy || !FECHA_RE.test(hoy.iso)) return null;
+    const dias = Math.round((utc(hasta) - utc(hoy.iso)) / DIA_MS);
+    if (!FECHA_RE.test(String(build || ''))) return dias;
+    if (hoy.iso < build) return null;
+    return Math.min(dias, Math.round((utc(hasta) - utc(build)) / DIA_MS));
+  }
+
+  // Sin separador inicial: en escritorio lo pone el CSS del banner y en celular la frase sustituye al renglón de precios.
+  function textoPreventa(dias) {
+    if (!Number.isInteger(dias) || dias < 0) return '';
+    if (dias === 0) return 'Último día de preventa';
+    return dias === 1 ? 'Preventa: falta 1 día' : 'Preventa: faltan ' + dias + ' días';
+  }
+
+  // Banner de temporada: solo días, sin horas ni cuenta regresiva; pasada la fecha el <span> queda vacío.
+  function preventa(doc, ahora) {
+    doc.querySelectorAll('[data-vt-hasta]').forEach((el) => {
+      el.textContent = textoPreventa(diasHasta(ahora, el.getAttribute('data-vt-hasta'), el.getAttribute('data-vt-build')));
+    });
+  }
+
+  // Recalcula cada minuto mientras la página está visible y al volver a la pestaña: una página abierta desde la tarde
+  // no sigue diciendo "Abierto ahora" después del cierre.
+  const CADA_MS = 60000;
+  function reloj(doc, win, tarea) {
+    const siVisible = () => { if (!doc.hidden) tarea(); };
+    win.setInterval(siVisible, CADA_MS);
+    doc.addEventListener('visibilitychange', siVisible);
+  }
+
+  // Tablas plegables (<details data-vt-plegable>): salen cerradas para acortar la página en celular; desde 768 px se
+  // abren. Quien la cierre a mano en escritorio la deja cerrada (solo se abre una vez, al cargar).
+  const PLEGABLE_DESDE = '(min-width: 768px)';
+  function plegables(doc, win) {
+    if (!win.matchMedia || !win.matchMedia(PLEGABLE_DESDE).matches) return;
+    doc.querySelectorAll('details[data-vt-plegable]').forEach((d) => { d.open = true; });
+  }
+
+  const api = { FIRMA, HERO_CTA, ABIERTO, tipoEnlace, conFirma, evento, eventoWhatsapp, abierto };
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas };
+    module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas, plegables, horario, diasHasta, textoPreventa, preventa, reloj };
     return;
   }
   root.VTTerra = Object.freeze(api);
   root.VTMedicion = medicion(document, root);
   firmarAperturas(root);
   medir(document, root);
-  const iniciar = () => { menu(document, root); barra(document, root); };
+  const alDia = () => { horario(document, new Date()); preventa(document, new Date()); };
+  const iniciar = () => { menu(document, root); barra(document, root); plegables(document, root); alDia(); };
+  reloj(document, root, alDia);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
   else iniciar();
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -13,6 +13,7 @@ import datos
 import mensajes_paginas
 from componentes import dinero
 from contenido import b2b_comun
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -22,22 +23,20 @@ OBRA = "/img/obra"
 MAYOREO, MINIMO, SOLO, INSTALADO = (P["pasto_mayoreo_m2"], P["pasto_mayoreo_minimo_m2"], P["pasto_solo_m2"],
                                     P["pasto_instalado_m2"])
 MENSAJE = mensajes_paginas.EMPRESAS[RUTA]
-DESCRIPCION = (f"Pasto San Agustín en rollo al mayoreo desde ${MAYOREO}/m² en pedidos de {MINIMO} m² o más, para "
-               f"constructoras y proyectos en Tampico. Factura {datos.FACTURA} y entrega por etapas. Viveros Terra, desde "
-               f"{datos.DESDE}.")
-DESCRIPCION_OG = (f"Pasto San Agustín en rollo al mayoreo desde ${MAYOREO}/m² en pedidos de {MINIMO} m² o más, para "
-                  f"constructoras y proyectos en Tampico. Factura {datos.FACTURA} y entrega por etapas.")
+TITULO = f"Pasto en Rollo al Mayoreo desde ${MAYOREO}/m² | Viveros Terra"
+DESCRIPCION = (f"Pasto San Agustín al mayoreo desde ${MAYOREO}/m² en pedidos de {MINIMO} m² o más. Para constructoras y "
+               f"fraccionamientos en Tampico: {datos.FACTURA} y entrega por etapas.")
 
 META = {
-    "title": f"Pasto al mayoreo en Tampico desde ${MAYOREO}/m² para constructoras · Viveros Terra",
+    "title": TITULO,
     "description": DESCRIPCION,
     "robots": "index, follow",
     "canonical": URL,
     "og": (
         ("og:type", "website"),
         ("og:url", URL),
-        ("og:title", "Pasto al Mayoreo en Tampico para Constructoras · Viveros Terra"),
-        ("og:description", DESCRIPCION_OG),
+        ("og:title", TITULO),
+        ("og:description", DESCRIPCION),
         ("og:image", f"{SITE}/img/pasto-en-rollo-san-agustin-tampico.webp"),
         ("og:locale", "es_MX"),
     ),
@@ -61,7 +60,7 @@ MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
 
 PREGUNTAS = (
     ("¿Cuál es el pedido mínimo para mayoreo de pasto en Tampico?",
-     f"Para precios de mayoreo manejamos pedidos a partir de {MINIMO} m²: desde {dinero(MAYOREO)}/m² solo pasto. "
+     f"Para precios de mayoreo manejamos pedidos a partir de {MINIMO} m²: desde {dinero(MAYOREO)}/m² solo pasto (no lleva IVA). "
      f"Con menos de {MINIMO} m² también te atendemos, a {dinero(SOLO)}/m² solo pasto o desde {dinero(INSTALADO)}/m² "
      'instalado (<a href="/pasto-en-rollo-tampico">pasto en rollo</a>).'),
     ("¿Facturan CFDI para constructoras?",
@@ -145,10 +144,10 @@ CONTENIDO = {
         "kicker": "Constructoras · Fraccionamientos · Industria",
         "h1": 'Pasto al mayoreo <span class="vt-serif">para obras y fraccionamientos</span>',
         "lede": (f"En Viveros Terra el pasto San Agustín al mayoreo cuesta desde {dinero(MAYOREO)}/m² (solo pasto) en "
-                 f"pedidos de {MINIMO} m² o más, con factura {datos.FACTURA}. Entregamos por etapas según el "
+                 f"pedidos de {MINIMO} m² o más, con factura {datos.FACTURA}; el pasto sin instalar no lleva IVA. Entregamos por etapas según el "
                  "avance de tu obra en Tampico, Madero y Altamira; fuera de la zona, por proyecto."),
         "etiqueta": {
-            "codigo": "Mayoreo · 01", "aviso": "", "nombre": "Pasto San Agustín para obra",
+            "codigo": "Mayoreo · 01", "aviso": "Solo pasto", "nombre": "Pasto San Agustín para obra",
             "cientifico": "Stenotaphrum secundatum", "antes": "Mayoreo · desde", "monto": dinero(MAYOREO),
             "unidad": "/m²",
             "filas": (("Pedido mínimo", f"{MINIMO} m²"), (f"Con menos de {MINIMO} m²", f"{dinero(SOLO)}/m² solo pasto")),
@@ -176,18 +175,19 @@ CONTENIDO = {
     "escalas": {
         "titulo": "¿Cuánto cuesta el pasto en rollo al mayoreo?",
         "lede": (f"Desde {dinero(MAYOREO)}/m² solo pasto en pedidos de {MINIMO} m² o más; con menos, {dinero(SOLO)}/m². "
-                 f"La instalación en obra, {datos.SEGUN_COTIZACION.lower()}. Precios {datos.ANIO}; lista "
+                 f"La instalación en obra, {datos.SEGUN_COTIZACION.lower()}. Precios {datos.ANIO}: el pasto sin instalar no lleva IVA; lista "
                  'completa en <a href="/precios">viverosterra.com/precios</a>.'),
         # La unidad va con el precio ("$85/m²"): sin columna Unidad, la tarjeta de celular tiene una línea menos.
         "columnas": ("Volumen", "Precio", "Entrega"),
         "filas": (
             (f"Menos de {MINIMO} m²", f"{dinero(SOLO)}/m² solo pasto", "Se cotiza según tu obra"),
             (f"{MINIMO} m² o más", f"desde {dinero(MAYOREO)}/m² solo pasto", "Por etapas, según el avance de obra"),
-            ("Pasto instalado en obra", f"desde {dinero(INSTALADO)}/m² instalado", "Con nuestra cuadrilla"),
+            ("Pasto instalado en obra", f"desde {dinero(INSTALADO)}/m² instalado, con IVA", "Con nuestra cuadrilla"),
             ("Capacidad y calendario", "Por escrito en tu cotización, por entrega",
              f"El pasto llega del campo {datos.LLEGADA_PASTO}"),
         ),
-        "caption": "El cotizador estima solo el pasto; la entrega y la instalación se cotizan con tu obra.",
+        "caption": (f"{datos.PASTO_SIN_IVA}. El cotizador estima solo el pasto; la entrega y la instalación se cotizan "
+                    "con tu obra."),
         "titulo_cotizador": "Calcula tu obra por m²",
         "cotizador": "volumen",
     },
@@ -240,10 +240,10 @@ CONTENIDO = {
 }
 
 PARIDAD = {
-    "meta": {
+    "meta": seo.paridad(TITULO, DESCRIPCION, {
         "description": (DESCRIPCION, "Corrige el “Factura CFDI, factura CFDI” repetido de main; el resto queda igual."),
-        "og:description": (DESCRIPCION_OG, "Corrige el “Factura CFDI, factura CFDI” repetido de main; el resto queda igual."),
-    },
+        "og:description": (DESCRIPCION, "Corrige el “Factura CFDI, factura CFDI” repetido de main; el resto queda igual."),
+    }),
     "reemplazos": {
         "Ventajas para tu empresa u obra": "Documentación para compras",
         "Precio preferencial por volumen": "¿Cuánto cuesta el pasto en rollo al mayoreo?",

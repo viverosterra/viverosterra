@@ -8,6 +8,7 @@ import componentes_tienda as t
 import data
 import datos
 from componentes import dinero
+from contenido import seo
 from esquema import breadcrumb_schema
 
 SITE = data.SITE
@@ -41,9 +42,9 @@ PREGUNTAS = (
     ("¿Qué tratamientos tiene el pasto?", f"Todos nuestros modelos tienen de fábrica estos tratamientos: "
      f"{data.COMMON_TREATMENTS}."),
 )
-TITULO = "Pasto sintético para perros: qué modelo elegir y cómo limpiarlo | Viveros Terra"
-DESCRIPCION = ("Pasto sintético para perros con envío a todo México: qué modelo elegir, cómo drena la orina, cómo quitar "
-               f"el olor y cómo limpiarlo. Desde {DESDE}/m².")
+TITULO = f"Pasto Sintético para Perros desde {DESDE}/m² | Viveros Terra"
+DESCRIPCION = ("Pasto sintético para perros con buen drenaje: qué modelo elegir, cómo quitar el olor a orina y cómo limpiarlo. "
+               f"Desde {DESDE}/m² con envío a todo México.")
 MENSAJE = "Hola, quiero pasto sintético para mis perros.\nMetros aprox.: ___\nMi estado: ___"
 
 CONTENIDO = {
@@ -84,4 +85,5 @@ CONTENIDO = {
                "mensaje": MENSAJE},
 }
 
-PARIDAD = {"reemplazos": {}, "retirados": {}}
+PARIDAD = {
+    "meta": seo.paridad(TITULO, DESCRIPCION),"reemplazos": {}, "retirados": {}}

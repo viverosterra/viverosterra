@@ -35,6 +35,26 @@ HORARIO_LD = (
     (("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"), "09:00", "18:00"),
     (("Saturday",), "09:00", "14:00"),
 )
+# Días cerrados cada año (mes-día), además del domingo: "Abierto ahora" no se muestra (spec del hero, 2026-11-09).
+FESTIVOS = ("12-25", "01-01")
+_DIA_ISO = {"Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6, "Sunday": 7}
+
+
+def horario_marca():
+    """HORARIO_LD para el atributo data-vt-horario que lee terra.js: "1,2,3,4,5@09:00-18:00;6@09:00-14:00" (lunes = 1)."""
+    return ";".join(f"{','.join(str(_DIA_ISO[d]) for d in dias)}@{abre}-{cierra}" for dias, abre, cierra in HORARIO_LD)
+
+
+def festivos_marca():
+    """FESTIVOS para el atributo data-vt-festivos: "12-25,01-01"."""
+    return ",".join(FESTIVOS)
+
+
+# Fecha de esta versión del sitio (AAAA-MM-DD), para los data-vt-build del HTML: un visitante con el reloj antes de esta
+# fecha lo trae mal, y terra.js no le muestra "Abierto ahora" ni los días de preventa. Es un dato versionado (nunca
+# date.today(): el build debe ser idempotente); se sube a mano al publicar cambios.
+ACTUALIZADO = "2026-11-09"
+
 PROMESA = "Respondemos en menos de 1 hora en horario"
 PROMESA_COMPLETA = f"{PROMESA} · {HORARIO}"
 
@@ -75,6 +95,9 @@ PRECIOS = {
     "tezontle_costal": 200,
     "marmol_saco": 250,
 }
+# Hasta cuándo valen los precios publicados (priceValidUntil del JSON-LD de Product). Es un dato versionado: se renueva a
+# mano cada año, antes de que venza (Google deja de mostrar el precio de una oferta vencida).
+PRECIOS_VIGENTES_HASTA = "2027-12-31"
 # Materiales: respuestas del dueño (2026-11-08). Tierra preparada a $100 el costal y camiones de tierra negra de 5, 8 y
 # 14 m³ a $3,500, $5,200 y $8,000 (nunca "camión desde $5,000": no lo confirmó). Mármol a $250 el saco, IVA incluido,
 # con sus palabras: "sujeto a disponibilidad" (solo junto al precio del mármol: test_materiales_reglas.py). El m³ y el
@@ -124,12 +147,16 @@ LLEGADA_PASTO = "una vez por semana, generalmente los viernes"
 ANTICIPO = ("No pedimos el 100% por adelantado: para confirmar tu pedido o agendar el servicio solicitamos "
             "un anticipo.")
 # Una sola respuesta a "¿cuánto cuesta el pasto en rollo en Tampico?" en home, servicio y precios (spec §7.3).
+# Decisión del dueño (2026-11-10): el pasto natural sin instalar (solo pasto y mayoreo) no lleva IVA; "con IVA" solo
+# acompaña al instalado, que ya lo incluye (regla permanente: tests/test_iva_pasto.py).
+PASTO_SIN_IVA = "El pasto solo y el mayoreo no llevan IVA"
 RESPUESTA_PRECIO_PASTO = (
-    f"En Viveros Terra el pasto San Agustín en rollo cuesta ${PRECIOS['pasto_solo_m2']} por m² solo el pasto y desde "
-    f"${PRECIOS['pasto_instalado_m2']} por m² instalado. El instalado incluye la preparación básica "
+    f"En Viveros Terra el pasto San Agustín en rollo cuesta ${PRECIOS['pasto_solo_m2']} por m² solo el pasto (no lleva "
+    f"IVA) y desde "
+    f"${PRECIOS['pasto_instalado_m2']} por m² instalado, con IVA incluido. El instalado incluye la preparación básica "
     f"del terreno, la colocación y una garantía de arraigo de {ARRAIGO}. En pedidos de "
-    f"{PRECIOS['pasto_mayoreo_minimo_m2']} m² o más, el mayoreo cuesta desde ${PRECIOS['pasto_mayoreo_m2']}/m². "
-    f"Precios {ANIO}, IVA incluido cuando aplica, para Tampico, Ciudad Madero y Altamira."
+    f"{PRECIOS['pasto_mayoreo_minimo_m2']} m² o más, el mayoreo cuesta desde ${PRECIOS['pasto_mayoreo_m2']}/m² (solo "
+    f"pasto; no lleva IVA). Precios {ANIO} para Tampico, Ciudad Madero y Altamira."
 )
 
 # Palmas y especies para proyectos (nombre, nombre científico, precio "desde" o None). Decisión del dueño (2026-11-07):
@@ -300,3 +327,31 @@ def mensaje(servicio):
 def wa_url(texto):
     """Enlace wa.me con el texto codificado por completo (espacios como %20, saltos como %0A)."""
     return f"https://wa.me/{TELEFONO_WA}?text={quote(texto, safe='')}"
+
+
+# Temporada de Nochebuenas: fuente única de la página, su JSON-LD y el cotizador (public/js/vt-nochebuenas.js).
+NOCHEBUENAS = {
+    "ruta": "/post/nochebuenas-tampico-madero-mayoreo",
+    "temporada": 2026,
+    "modo": "temporada",  # "preventa" | "temporada" | "postemporada"
+    "sheets_endpoint": "",  # URL del Web App de apps-script/nochebuenas-pedidos.gs
+    "cortes": (1, 12, 50, 200),
+    "nombres_escalon": ("Menudeo", "Mayoreo", "Mayoreo Plus", "Proyecto"),
+    "productos": (
+        {"clave": "5", "nombre": 'Maceta 5"', "precios": (89, 75, 69, 65)},
+        {"clave": "6", "nombre": 'Maceta 6"', "precios": (139, 119, 109, 105)},
+        {"clave": "7", "nombre": 'Maceta 7"', "precios": (199, 169, 155, 149)},
+        {"clave": "colgante", "nombre": "Colgante", "precios": (339, 279, 259, 249)},
+        {"clave": "12", "nombre": 'Macetón 12"', "precios": (1195, 995, 899, 865), "sobre_pedido": True},
+    ),
+    "variedades": ("Roja", "Rosa", "Jaspeada"),
+    "variedades_sobre_pedido": ("Rosa", "Jaspeada"),  # decisión del dueño, 2026-11-09
+    "zonas": ("Tampico", "Madero", "Altamira", "Recojo en vivero"),
+    "tipos_cliente": ("Hogar", "Empresa/regalo", "Restaurante/hotel", "Comercio/plaza", "Gobierno", "Evento/posada", "Iglesia/escuela"),
+    "entrega_incluida_desde": 3500,
+    "preventa": {"descuento": 0.05, "hasta": "2026-11-30", "aplica_hasta_escalon": 2},
+    "fecha_limite_mayoreo": "2026-11-30",
+    "entrega_mayoreo_antes": "2026-12-12",
+    "anticipo_pct": 50,  # solo en esta página, por indicación del dueño
+    "ultima_actualizacion": "2026-11-08",
+}

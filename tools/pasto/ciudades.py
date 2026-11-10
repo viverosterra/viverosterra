@@ -9,7 +9,7 @@ CIUDADES = [
     dict(slug="cdmx", nombre="CDMX", nombre_largo="Ciudad de México", estado="CDMX",
          intro="En la Ciudad de México el pasto sintético se usa mucho en azoteas, terrazas y patios de casas y departamentos, donde el espacio es chico y regar o podar es poco práctico. También se pone en áreas comunes de edificios y en jardines pequeños.",
          clima="En la Ciudad de México llueve fuerte de junio a septiembre y en invierno hay mañanas frías. Conviene un pasto con base perforada que drene rápido y fibra que recupere su forma en azoteas y patios.",
-         modelos=[("toscana-28", "El más vendido: aguanta el uso diario de un patio familiar."),
+         modelos=[("toscana-28", "Aguanta el uso diario de un patio familiar."),
                   ("toscana-18", "Ligero para subir a azoteas y balcones, donde importa el peso."),
                   ("irlanda-25", "Fibra resistente para perros y paso constante en el patio.")],
          faqs=[("¿Pueden enviarlo a una azotea en la Ciudad de México?", "Enviamos el rollo a tu dirección por paquetería. Subirlo a la azotea corre por tu cuenta; un rollo completo pesa varias decenas de kilos, así que conviene que estén dos personas al recibirlo."),

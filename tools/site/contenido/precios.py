@@ -14,6 +14,7 @@ import datos
 import mensajes_paginas
 import mensualidades
 from contenido import lista_precios as lp
+from contenido import seo
 
 dinero = c.dinero
 
@@ -28,10 +29,9 @@ SINTETICO = dinero(lp.SINTETICO_MIN)
 SINT_MIN, SINT_MAX = (c.dinero_exacto(x) for x in P["sintetico_instalado_m2"])
 MENSAJE = mensajes_paginas.PRECIOS
 COTIZAR = mensajes_paginas.PRECIOS_SECCIONES
-TITULO = "Precios de jardinería en Tampico 2026: pasto, diseño y mantenimiento | Viveros Terra"
-DESCRIPCION = (f"Pasto San Agustín {SOLO}/m² o instalado desde {INSTALADO}/m², mantenimiento desde {MANTENIMIENTO}/mes, "
-               f"diseño desde {DISENO} y pasto sintético desde {SINTETICO}/m². Precios en Tampico, Madero y "
-               "Altamira.")
+TITULO = f"Precios de Jardinería en Tampico {datos.ANIO} | Viveros Terra"
+DESCRIPCION = (f"Lista de precios {datos.ANIO}: pasto San Agustín {SOLO}/m², instalado desde {INSTALADO}/m², mantenimiento desde "
+               f"{MANTENIMIENTO}/mes, diseño desde {DISENO} y riego desde ${P['riego_m2'][0]}/m².")
 ENLACES_FAQ = {
     "sintetico": ' Ve los <a href="/pasto-sintetico">9 modelos con precio</a>.',
     "garantia": ' Lee las <a href="/politicas#garantia-plantas">condiciones de la garantía</a>.',
@@ -40,7 +40,8 @@ ENLACES_FAQ = {
 PREGUNTAS = (
     ("¿Cuánto cuesta el pasto en rollo en Tampico?", datos.RESPUESTA_PRECIO_PASTO),
     ("¿Los precios incluyen IVA?",
-     f"Los precios de esta página incluyen IVA cuando aplica. El pasto natural, las plantas, los árboles y las palmas no llevan IVA. Damos factura {datos.FACTURA} a persona física o moral y "
+     "Sí, salvo el pasto San Agustín sin instalar: el pasto solo y el mayoreo no llevan IVA; el instalado y los demás "
+     f"precios de esta página sí lo incluyen. Damos factura {datos.FACTURA} a persona física o moral y "
      f"tenemos registro REPSE {datos.REPSE} para contratos con empresas."),
     ("¿Por qué algunos precios dicen «desde»?",
      "Porque el total depende de los metros, del estado del terreno y del acceso a la obra. En la visita medimos y te "
@@ -108,13 +109,13 @@ CONTENIDO = {
     "portada": {
         "compacta": True,
         "kicker": f"Lista de precios {datos.ANIO} · Tampico, Madero y Altamira",
-        "h1": 'Precios de jardinería en Tampico <span class="vt-serif">2026</span>',
+        "h1": f'Precios de jardinería en Tampico <span class="vt-serif">{datos.ANIO}</span>',
         "lede": (f"En Tampico, Madero y Altamira, el pasto San Agustín cuesta {SOLO}/m² solo el pasto y desde "
                  f"{INSTALADO}/m² instalado. El mantenimiento de jardín cuesta desde {MANTENIMIENTO}/mes, el diseño desde "
                  f"{DISENO} y el pasto sintético desde {SINTETICO}/m²."),
-        "etiqueta": {"codigo": f"Lista · {datos.ANIO}", "aviso": "", "nombre": "Pasto San Agustín",
+        "etiqueta": {"codigo": f"Lista · {datos.ANIO}", "aviso": "MXN", "nombre": "Pasto San Agustín",
                      "antes": "solo el pasto", "monto": SOLO, "unidad": "/m²",
-                     "filas": (("Instalado", f"desde {INSTALADO}/m²"), ("Mantenimiento", f"desde {MANTENIMIENTO}/mes"),
+                     "filas": (("Instalado, con IVA", f"desde {INSTALADO}/m²"), ("Mantenimiento", f"desde {MANTENIMIENTO}/mes"),
                                ("Pasto sintético", f"desde {SINTETICO}/m²"))},
         "mensaje": MENSAJE,
         "tambien": (f'<a href="#pasto">Ver la lista</a> · <a href="#mensualidades">Hasta {max(mensualidades.PLAZOS)} '
@@ -128,14 +129,17 @@ CONTENIDO = {
                ("Plantas", "plantas"), ("Mensualidades", "mensualidades"), ("Garantías", "garantias")),
     "secciones": (
         {"id": "pasto", "rotulo": "Pasto natural", "titulo": 'Pasto San Agustín <span class="vt-serif">en rollo</span>',
-         "filas": lp.PASTO, "concepto": "Producto", "caption": f"Precios {datos.ANIO}.",
+         "filas": lp.PASTO, "concepto": "Producto",
+         "caption": f"Precios {datos.ANIO}. El instalado incluye IVA. {datos.PASTO_SIN_IVA}.",
          "cotizar": ("Cotizar pasto por WhatsApp", COTIZAR["pasto"]),
-         "nota": ("Solo el pasto: recoges en el vivero o se cobra la entrega según tu colonia. "
+         "nota": ('<a href="/pasto-en-rollo-tampico">Pasto en rollo en Tampico</a>: solo el pasto, recoges en el vivero o '
+                  "se cobra la entrega según tu colonia. "
                   '<a href="/protocolo-cuidados-pasto-san-agustin">Protocolo de riego y garantía</a>.')},
         {"id": "servicios", "rotulo": "Servicios", "titulo": 'Mantenimiento, diseño <span class="vt-serif">y riego</span>',
          "filas": lp.SERVICIOS, "concepto": "Servicio", "caption": f"Precios {datos.ANIO} con IVA.",
          "cotizar": ("Cotizar un servicio por WhatsApp", COTIZAR["servicios"]),
-         "nota": f"Contratos con empresas con factura y REPSE {datos.REPSE}."},
+         "nota": (f"Contratos con empresas con factura y REPSE {datos.REPSE}. Guía: "
+                  '<a href="/blog/cuanto-cuesta-jardin-tampico-precios">cuánto cuesta hacer un jardín en Tampico</a>.')},
         {"id": "sintetico", "rotulo": "Pasto sintético",
          "titulo": 'Pasto sintético <span class="vt-serif">por modelo</span>', "modelos": True,
          "lede": (f"Material por m² según cuánto compres. Instalado en Tampico, Madero y Altamira de {SINT_MIN} a "
@@ -148,11 +152,11 @@ CONTENIDO = {
         {"id": "materiales", "rotulo": "Materiales", "titulo": 'Tierra, tezontle <span class="vt-serif">y piedra</span>',
          "filas": lp.MATERIALES, "concepto": "Material", "caption": f"Precios {datos.ANIO} con IVA.",
          "cotizar": ("Cotizar materiales por WhatsApp", COTIZAR["materiales"]),
-         "nota": ("Recoges en el vivero de Cd. Madero o te lo llevamos en Tampico, Madero y Altamira. "
+         "nota": ('Recoges en el <a href="/vivero-tampico">vivero de Cd. Madero</a> o te lo llevamos en Tampico, Madero y '
+                  "Altamira. "
                   f"{datos.CONDICIONES_MATERIALES}")},
         {"id": "plantas", "rotulo": "Vivero", "titulo": 'Plantas, palmas <span class="vt-serif">y árboles</span>',
-         "filas": lp.PLANTAS, "concepto": "Planta",
-         "caption": f"Precios {datos.ANIO}.",
+         "filas": lp.PLANTAS, "concepto": "Planta", "caption": f"Precios {datos.ANIO}. Las plantas no llevan IVA.",
          "cotizar": ("Cotizar plantas por WhatsApp", COTIZAR["plantas"]),
          "nota": ('Arma tu lista en el <a href="/catalogo">catálogo</a> y mándala por WhatsApp. '
                   f"{datos.GARANTIA_PLANTAS.replace(' (ver condiciones)', '')} "
@@ -199,10 +203,15 @@ CONTENIDO = {
     },
 }
 
+SIN_IVA_EN_PASTO = ("Decía «Precios con IVA» junto al precio del pasto solo: decisión del dueño (2026-11-09/10), el pasto sin "
+                    "instalar no lleva IVA; «con IVA» solo acompaña al instalado.")
 PARIDAD = {
-    "meta": {"description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto natural, las plantas, los árboles y las palmas no se anuncian con IVA."),
-             "og:description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto natural, las plantas, los árboles y las palmas no se anuncian con IVA.")},
-    "reemplazos": {"Precios de jardinería en Tampico 2026, con IVA": "Precios de jardinería en Tampico 2026", "$385": SINT_MIN.split(".")[0], "$650": SINT_MAX},
+    "meta": seo.paridad(TITULO, DESCRIPCION, {"description": (DESCRIPCION, SIN_IVA_EN_PASTO), "og:description": (DESCRIPCION, SIN_IVA_EN_PASTO)}),
+    # SEO fase 0 (2026-11-10): el H1 decía «2026, con IVA» y cubría toda la lista; el pasto sin instalar, las plantas,
+    # los árboles y las palmas no llevan IVA (regla del dueño). El IVA se explica en cada tabla.
+    # Etapa 2i (2026-11-08): el sintético instalado se publica a precio final con IVA; la captura guarda la parte entera.
+    "reemplazos": {"Precios de jardinería en Tampico 2026, con IVA": f"Precios de jardinería en Tampico {datos.ANIO}",
+                   "$385": SINT_MIN.split(".")[0], "$650": SINT_MAX},
     "retirados": {},
     "jsonld": {},
 }

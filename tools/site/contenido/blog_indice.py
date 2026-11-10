@@ -1,9 +1,10 @@
 """/blog: las secciones y tarjetas salen de contenido/blog/_indice.json, extraído de la página publicada (mismas fotos, en
-el mismo orden). El conteo lo pone shell.aplicar en cada <span data-vt-conteo="blog">."""
+el mismo orden); su título y su descripción (también en Open Graph y Twitter), los de la fase 0 de SEO. El conteo lo pone shell.aplicar en cada <span data-vt-conteo="blog">."""
 import json
 from pathlib import Path
 
 import datos
+from contenido import seo
 
 _DOC = json.loads((Path(__file__).resolve().parent / "blog" / "_indice.json").read_text(encoding="utf-8"))
 
@@ -30,7 +31,8 @@ CONTENIDO = {
                   ("/diseno-jardines-tampico", "Diseño de Jardines", "Plan Terra · Desde $3,000")),
 }
 M_REPETIDA = "Era la segunda tarjeta del mismo artículo: \"Todos\" ya no repite lo de \"Nuevos\", donde sigue con su otro título."
-PARIDAD = {"reemplazos": {"Las 8 palmas más vendidas en Tampico (con precios)": "8 palmas para jardines en Tampico (con precios)",
+PARIDAD = {"meta": seo.paridad(_DOC["meta"]["title"], _DOC["meta"]["description"]),
+           "reemplazos": {"Las 8 palmas más vendidas en Tampico (con precios)": "8 palmas para jardines en Tampico (con precios)",
                           "Cómo Ahorrar Hasta 50% de Agua en Tu Jardín en Tampico": "Cómo Ahorrar Hasta 40% de Agua en Tu Jardín en Tampico"},
            "retirados": {"Cómo Instalar Pasto Sintético Tú Mismo: Paso a Paso": M_REPETIDA,
                          "Pasto Sintético para Perros y Mascotas: Guía Completa": M_REPETIDA,

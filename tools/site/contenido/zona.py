@@ -5,7 +5,7 @@ Colonias, municipios y códigos postales verificados con directorios SEPOMEX (se
 datos.py. Reglas del dueño: solo hechos locales reales; sin casos, opiniones, distancias ni tiempos de llegada inventados
 (main decía "A minutos del vivero" en Madero: queda la dirección). Un caso real por zona entra solo con permiso del
 dueño (ninguno confirmado). Las frecuencias de visita son las del dueño (datos.FRECUENCIAS_MANTENIMIENTO). Las fotos son las de main, una por zona, sin cambiar; el pie ya no dice que la foto es de la
-zona. El contenido único por zona y la consolidación de títulos son de la Etapa 3. PARIDAD: tests/test_paridad.py.
+zona. Título y descripción por zona: SEO fase 0 (2026-11-10). El contenido único por zona es de la fase 2 del plan SEO. PARIDAD: tests/test_paridad.py.
 """
 from types import SimpleNamespace
 
@@ -14,6 +14,7 @@ import mensajes_paginas
 from componentes import dinero
 from contenido import lista_precios
 from contenido import materiales_comun as mc
+from contenido import seo
 
 P = datos.PRECIOS
 SITE = datos.SITIO
@@ -51,7 +52,6 @@ FOTOS = {
 ZONAS = {
     "jardineria-lomas-de-rosales-tampico": dict(
         nombre="Lomas de Rosales", municipio="Tampico", corto="Lomas de Rosales",
-        title="Jardinería en Lomas de Rosales, Tampico: pasto, diseño y mantenimiento",
         h1="Jardinería en Lomas de Rosales", accent="y Vista Hermosa, Tampico",
         colonias=(("Lomas de Rosales", "89100"), ("Lomas de la Aurora", "89100"), ("Vista Hermosa", "89119")),
         lede=("Pasto en rollo, diseño, riego y mantenimiento para las casas de Lomas de Rosales, Lomas de la Aurora y "
@@ -79,7 +79,6 @@ ZONAS = {
     ),
     "jardineria-country-club-tampico": dict(
         nombre="Club Campestre y Country Club", municipio="Tampico", corto="Club Campestre",
-        title="Jardinería en Club Campestre y Country Club, Tampico",
         h1="Jardinería en Club Campestre", accent="y Country Club, Tampico",
         colonias=(("Club Campestre", "89217"), ("Country Club", "89218"), ("Sierra Morena", "89210")),
         lede=("Instalación de pasto, diseño de jardín, riego automático y mantenimiento para las casas de Club "
@@ -106,7 +105,6 @@ ZONAS = {
     ),
     "jardineria-aguila-tampico": dict(
         nombre="Águila, Altavista y Petrolera", municipio="Tampico", corto="Águila y Altavista",
-        title="Jardinería en Águila, Altavista y Petrolera, Tampico",
         h1="Jardinería en Águila,", accent="Altavista y Petrolera, Tampico",
         colonias=(("Águila", "89230"), ("Altavista", "89240"), ("Petrolera", "89110"), ("Campbell", "89260")),
         lede=("Pasto, poda de árboles, diseño y mantenimiento para las casas de Águila, Altavista, Petrolera y "
@@ -134,7 +132,6 @@ ZONAS = {
     ),
     "jardineria-lomas-del-chairel-tampico": dict(
         nombre="Lomas del Chairel", municipio="Tampico", corto="Lomas del Chairel",
-        title="Jardinería en Lomas del Chairel y Colinas de San Gerardo, Tampico",
         h1="Jardinería en Lomas del Chairel", accent="y Colinas de San Gerardo",
         colonias=(("Lomas del Chairel", "89360"), ("Colinas de San Gerardo", "89367"), ("Flamboyanes", "89330")),
         lede=("Pasto en rollo, riego, diseño y mantenimiento para las casas cerca de la laguna del Chairel: Lomas del "
@@ -162,7 +159,6 @@ ZONAS = {
     ),
     "jardineria-ciudad-madero": dict(
         nombre="Ciudad Madero", municipio="Ciudad Madero", corto="Cd. Madero",
-        title="Jardinería en Ciudad Madero y Playa Miramar: pasto, diseño y mantenimiento",
         h1="Jardinería en Ciudad Madero", accent="y Playa Miramar",
         colonias=(("Playa Miramar", "89506"), ("Jardín 20 de Noviembre", "89440"), ("Residencial del Parque", "89514"),
                   ("Ampliación Unidad Nacional", "89510")),
@@ -192,7 +188,6 @@ ZONAS = {
     ),
     "jardineria-altamira": dict(
         nombre="Altamira", municipio="Altamira", corto="Altamira",
-        title="Jardinería en Altamira y Lagunas de Miralta: pasto, diseño y mantenimiento",
         h1="Jardinería en Altamira", accent="y Lagunas de Miralta",
         colonias=(("Residencial Lagunas de Miralta", "89605"), ("Altamira Centro", "89600")),
         lede="Pasto en rollo, diseño, riego y mantenimiento para Residencial Lagunas de Miralta y el resto de Altamira.",
@@ -228,6 +223,38 @@ def _foto(slug):
             "lugar": lugar, "etapa": etapa}
 
 
+# Título y descripción de cada zona (SEO fase 0, 2026-11-10; mapa de palabras clave): cada una con sus colonias y el
+# precio de su servicio principal (datos.PRECIOS), en vez de la misma frase de precios en las seis. En Altamira,
+# «casas y empresas»: la página atiende contratos de empresas del puerto industrial (su pregunta frecuente).
+_SEO = {
+    "jardineria-lomas-de-rosales-tampico": (
+        "Jardinería en Lomas de Rosales, Tampico",
+        "Pasto en rollo, diseño y mantenimiento para casas de Lomas de Rosales, Lomas de la Aurora y Vista Hermosa. "
+        f"Pasto instalado desde {INSTALADO}/m². Cotiza hoy."),
+    "jardineria-country-club-tampico": (
+        "Jardinería en Country Club y Club Campestre",
+        "Pasto, diseño, riego automático y mantenimiento para casas de Club Campestre, Country Club y Sierra Morena, "
+        f"Tampico. Diseño desde {dinero(P['diseno'])}. Cotiza hoy."),
+    "jardineria-aguila-tampico": (
+        "Jardinería en Águila, Altavista y Petrolera",
+        "Pasto, poda de árboles, diseño y mantenimiento para casas de Águila, Altavista, Petrolera y Campbell, Tampico. "
+        f"Poda desde {dinero(P['poda'])}. Cotiza por WhatsApp."),
+    "jardineria-lomas-del-chairel-tampico": (
+        "Jardinería en Lomas del Chairel, Tampico",
+        "Pasto, riego y mantenimiento para casas cerca de la laguna: Lomas del Chairel, Colinas de San Gerardo y "
+        f"Flamboyanes. Riego desde {dinero(P['riego_m2'][0])}/m². Cotiza hoy."),
+    "jardineria-ciudad-madero": (
+        "Jardinería en Ciudad Madero y Playa Miramar",
+        "Nuestro vivero está en Cd. Madero: instalamos pasto y damos mantenimiento en Playa Miramar y toda la ciudad. "
+        f"Mantenimiento desde {MANTENIMIENTO}/mes. Escríbenos."),
+    "jardineria-altamira": (
+        "Jardinería en Altamira: Casas y Empresas",
+        "Pasto en rollo, riego y mantenimiento en Altamira y Lagunas de Miralta, para casas y empresas. Pasto instalado "
+        f"desde {INSTALADO}/m². Cotiza hoy."),
+}
+SEO = {slug: (f"{titulo} | {datos.NOMBRE}", descripcion) for slug, (titulo, descripcion) in _SEO.items()}
+
+
 def _otras(slug):
     return tuple((nombre, ruta) for nombre, ruta in datos.ZONAS if ruta != f"/{slug}")
 
@@ -237,9 +264,7 @@ def contenido(slug):
     url = f"{SITE}/{slug}"
     corto = z["corto"]
     mensaje = mensajes_paginas.ZONAS[f"/{slug}"]
-    descripcion = (f"{z['lede']} Pasto instalado desde {INSTALADO}/m², mantenimiento desde {MANTENIMIENTO}/mes. "
-                   "Cotiza por WhatsApp.")
-    titulo = f"{z['title']} · Viveros Terra"
+    titulo, descripcion = SEO[slug]
     imagen = f"{SITE}{PORTADAS}/{FOTOS[slug][0]}.webp"
     cps = " · ".join(sorted({cp for _c, cp in z["colonias"]}))
     preguntas = z["faqs"]
@@ -319,7 +344,7 @@ def paridad(slug):
     fuera = [385]  # el precio anterior del sintético instalado, en la captura; no es de los 4 de ninguna zona
     fuera += [] if "palmas" in servicios else [P["palma_desde"]]
     fuera += [] if "riego" in servicios else list(P["riego_m2"])
-    return {"reemplazos": reemplazos, "retirados": {dinero(n): motivo for n in fuera},
+    return {"meta": seo.paridad(*SEO[slug]), "reemplazos": reemplazos, "retirados": {dinero(n): motivo for n in fuera},
             "jsonld": {"AggregateOffer": MOTIVO_AGGREGATE}}
 
 

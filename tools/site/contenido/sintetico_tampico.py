@@ -11,6 +11,7 @@ import componentes_tienda as t
 import data
 import datos
 from componentes import dinero, dinero_exacto
+from contenido import seo
 
 SITE = data.SITE
 URL = f"{SITE}/pasto-sintetico-tampico"
@@ -24,9 +25,11 @@ HOY = " y ".join(m["nombre"] for m in STOCK)
 T18, T28 = data.BY_SLUG["toscana-18"], data.BY_SLUG["toscana-28"]
 APPLE_MAPS = f"https://maps.apple.com/?daddr={datos.GEO[0]},{datos.GEO[1]}&q=Viveros%20Terra"
 DOMICILIO = f"{datos.CALLE}, {datos.COLONIA}, {datos.CP} Cd. Madero, frente a Walmart"
-TITULO = "Pasto Sintético en Tampico: Venta e Instalación | Viveros Terra"
-DESCRIPCION = (f"Venta e instalación de pasto sintético en Tampico, Madero y Altamira. Showroom en Cd. Madero, material "
-               f"desde ${MIN_RETAIL}/m² e instalado desde {INST_MIN_TXT}/m².")
+# Mapa de palabras clave (SEO fase 0): «Pasto Sintético Tampico Instalado desde $385 | Viveros Terra» (60). Con el precio
+# final con IVA (etapa 2i) esa forma mide 63; para caber en 60 sin quitar «desde» ni los centavos, va sin la marca.
+TITULO = f"Pasto Sintético Tampico Instalado desde {INST_MIN_TXT}/m²"
+DESCRIPCION = (f"Pasto sintético en Tampico, Madero y Altamira: instalado de {INST_MIN_TXT} a {INST_MAX_TXT}/m² o solo material desde "
+               f"${MIN_RETAIL}/m². Visítanos en el showroom de Cd. Madero.")
 OG_IMG = f"{SITE}{GAL}/obra-residencial-tampico.webp"
 MENSAJE = datos.MENSAJES["pasto-sintetico"]
 
@@ -238,8 +241,9 @@ CONTENIDO = {
 
 PARIDAD = {
     "reemplazos": {"$385": f"${int(INST_MIN)}", "$650": INST_MAX_TXT},  # la captura guarda la parte entera
-    "meta": {"description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto sintético instalado era más IVA; se publica el precio final con IVA, $446.60 a $754/m²."),
-             "og:description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto sintético instalado era más IVA; se publica el precio final con IVA, $446.60 a $754/m².")},
+    "meta": seo.paridad(TITULO, DESCRIPCION, {
+        "description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto sintético instalado era más IVA; se publica el precio final con IVA, $446.60 a $754/m²."),
+        "og:description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto sintético instalado era más IVA; se publica el precio final con IVA, $446.60 a $754/m².")}),
     "retirados": {
         "$250": ("Decisión del dueño (2026-11-07): el envío local en Tampico, Madero y Altamira no tiene precio fijo; "
                  "ahora dice “Envío local según tu colonia; te lo cotizamos.”"),

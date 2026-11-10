@@ -1,0 +1,3 @@
+# Archivos que viven en public/ pero no son parte del sitio: no se suben ni se sirven (vercel.com/docs/deployments/vercel-ignore).
+# Pruebas de los scripts del sitio y sus casos de paridad: las corre CI (node --test), no el navegador.
+public/js/tests

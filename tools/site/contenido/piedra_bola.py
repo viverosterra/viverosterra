@@ -13,6 +13,7 @@ import datos
 import mensajes_paginas
 from componentes_materiales import ejemplo
 from contenido import materiales_comun as mc
+from contenido import seo
 
 SITE = datos.SITIO
 RUTA = "/piedra-bola-rio-tampico"
@@ -20,20 +21,19 @@ URL = f"{SITE}{RUTA}"
 SEGUN = datos.SEGUN_COTIZACION
 MENSAJE = mensajes_paginas.MATERIALES[RUTA]
 MIGAS, MIGAS_LD = mc.migas(RUTA, "Piedra bola de río")
-DESCRIPCION = ("Piedra bola de río natural en Tampico para jardines y senderos. A granel, en camión volteo. Entrega a "
-               "domicilio en Tampico y zona.")
-DESCRIPCION_OG = ("Piedra bola de río natural en Tampico para jardines, senderos y decoración. A granel. Entrega a "
-                  "domicilio en Madero y Altamira. Cotiza por WhatsApp.")
+TITULO = "Piedra Bola de Río en Tampico a Granel | Viveros Terra"
+DESCRIPCION = ("Piedra bola de río natural en Tampico para jardines, senderos y jardines secos. Venta "
+               f"{datos.PIEDRA_BOLA_VENTA} con entrega a domicilio; precio {datos.SEGUN_COTIZACION.lower()}. Cotiza.")
 META = {
-    "title": "Piedra Bola de Río Tampico · Jardines y Senderos",
+    "title": TITULO,
     "description": DESCRIPCION,
     "robots": "index, follow",
     "canonical": URL,
     "og": (
         ("og:type", "website"),
         ("og:url", URL),
-        ("og:title", "Piedra Bola de Río Tampico | Venta para Jardines y Senderos — Viveros Terra"),
-        ("og:description", DESCRIPCION_OG),
+        ("og:title", TITULO),
+        ("og:description", DESCRIPCION),
         ("og:image", f"{SITE}/img/jardin-residencial-plantas-pasto-tampico.webp"),
         ("og:locale", "es_MX"),
         ("og:site_name", datos.NOMBRE),
@@ -42,16 +42,16 @@ META = {
 }
 USOS = (
     {"titulo": "Senderos y caminos", "texto": ("Caminos decorativos de piedra de río: deja pasar el agua, resiste y pide "
-     'poco mantenimiento. <a href="/diseno-jardines-tampico">Ver diseño de jardines</a>.'),
+     'poco mantenimiento. <a href="/diseno-jardines-tampico">Diseño de jardines en Tampico</a>.'),
      "puntos": ("Capa de 8 a 10 cm: 120 a 150 kg por m²",)},
     {"titulo": "Jardines zen y japoneses", "texto": ("Piedra bola con arena o gravilla y vegetación minimalista. "
-     '<a href="/plantas-palmas-arboles-tampico">Ver plantas y palmas</a>.')},
+     '<a href="/plantas-palmas-arboles-tampico">Plantas, palmas y árboles en Tampico</a>.')},
     {"titulo": "Cubierta decorativa de suelo", "texto": "Sobre camas de plantas y arriates: ayuda contra la maleza, "
      "mejora el drenaje y da un aspecto limpio."},
     {"titulo": "Fuentes y estanques", "texto": "En la base de fuentes, bordes de estanques y elementos de agua."},
     {"titulo": "Borduras y delimitadores", "texto": "Colocada de canto para delimitar zonas, arriates y senderos."},
     {"titulo": "Contraste con tezontle", "texto": ("Piedra bola gris con tezontle rojo, un contraste bicolor para "
-     'paisajismo moderno. <a href="/tezontle-rojo-tampico">Ver tezontle rojo</a>.')},
+     'paisajismo moderno. <a href="/tezontle-rojo-tampico">Tezontle rojo en Tampico</a>.')},
 )
 PREGUNTAS = (
     ("¿Para qué se usa la piedra bola de río en jardinería?",
@@ -82,7 +82,7 @@ CONTENIDO = {
     "migas": MIGAS,
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
-        "h1": "Piedra bola de río <em>para jardines y senderos</em>",
+        "h1": "Piedra bola de río en Tampico <em>para jardines y senderos</em>",
         "lede": ("Piedra de río natural, a granel, para senderos, jardines secos y fuentes. El precio se cotiza según "
                  "la cantidad, con entrega en Tampico, Madero y Altamira."),
         "etiqueta": {"codigo": "Piedra bola", "aviso": "A granel", "nombre": "Por m²", "antes": "",
@@ -133,11 +133,13 @@ CONTENIDO = {
 }
 
 PARIDAD = {
-    "meta": {
+    "meta": seo.paridad(TITULO, DESCRIPCION, {
         "description": (DESCRIPCION, f"Sin “Pequeña, mediana y grande” ni “Costal”: {mc.MOTIVO_SIN_MEDIDAS}"),
-        "og:description": (DESCRIPCION_OG, f"Sin “Pequeña, mediana y grande” ni “gratis”: {mc.MOTIVO_SIN_MEDIDAS}"),
-    },
+        "og:description": (DESCRIPCION, f"Sin “Pequeña, mediana y grande” ni “gratis”: {mc.MOTIVO_SIN_MEDIDAS}"),
+    }),
     "reemplazos": {
+        # H1 con «en Tampico» (SEO fase 0, 2026-11-10): la consulta es «piedra bola de río Tampico».
+        "Piedra bola de río para jardines y senderos": "Piedra bola de río en Tampico para jardines y senderos",
         "¿En qué tamaños se vende la piedra bola de río en Tampico?": "¿Cómo se vende la piedra bola de río en Tampico?",
     },
     "retirados": {
