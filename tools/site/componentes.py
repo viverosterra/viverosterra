@@ -480,6 +480,8 @@ def simulador(servicio, monto, tipo):
 
 # ---------- Medidor de m² (mismo cálculo que public/js/vt-medidor.js; paridad en casos-medidor.json) ----------
 MINIMO_MAYOREO = P["pasto_mayoreo_minimo_m2"]
+IVA_INSTALADO = "con IVA"        # solo junto al pasto instalado (el precio ya lo incluye)
+SIN_IVA = "(no lleva IVA)"       # solo pasto y mayoreo: el pasto natural sin instalar no lleva IVA
 MODOS_MEDIDOR = {
     "instalado": {"precio": P["pasto_instalado_m2"], "desde": True, "texto": "pasto San Agustín instalado",
                   "rotulo": "Instalado · desde", "opcion": "Pasto instalado"},
@@ -532,13 +534,16 @@ def textos_medidor(largo, ancho, r, colonia="", plazo=1):
         plan = f"Mensualidades con tarjeta de crédito en cotizaciones desde {dinero(mensualidades.minimo_de(3))}."
         interes = "contado"
     cierre_calc = "Al medir te damos el precio cerrado." if r["desde"] else "La entrega se cotiza según tu colonia."
+    # Decisión del dueño (2026-11-10): el pasto sin instalar (solo pasto y mayoreo) no lleva IVA; "con IVA" solo
+    # acompaña al instalado, en la etiqueta, el cálculo, el renglón vivo y el mensaje.
+    iva = IVA_INSTALADO if r["iva"] else ""
     mensaje = "\n".join((f"Hola, quiero cotizar {r['texto']}.", f"Medidas: {medida}",
-                         f"Estimado de la web: {desde}{dinero(r['total'])} con IVA", f"Me interesa: {interes}",
+                         f"Estimado de la web: {desde}{dinero(r['total'])} {iva or SIN_IVA}", f"Me interesa: {interes}",
                          f"Colonia: {colonia or '___'}", "Te mando foto del área."))
     return {"medida": medida, "monto": dinero(r["total"]),
-            "calc": f"{formato_m2(r['m2'])} m² × {desde}${r['precio']}/m², con IVA. {cierre_calc}",
-            "plan": plan, "plazo": plazo, "mensaje": mensaje, "cta": CTA_MEDIDA,
-            "vivo": f"{formato_m2(r['m2'])} m² · {desde}{dinero(r['total'])}{' con IVA' if r['iva'] else ''}"}
+            "calc": f"{formato_m2(r['m2'])} m² × {desde}${r['precio']}/m²{', ' + iva if iva else ' ' + SIN_IVA}. {cierre_calc}",
+            "plan": plan, "plazo": plazo, "mensaje": mensaje, "cta": CTA_MEDIDA, "iva": iva,
+            "vivo": f"{formato_m2(r['m2'])} m² · {desde}{dinero(r['total'])}{' ' + iva if iva else ''}"}
 
 
 def plano_medidor(largo, ancho):
@@ -634,7 +639,8 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None, bot
         f'<span>Tu etiqueta</span><span>Estimado</span></p><p class="vt-etiqueta__nombre" data-vt-o="m2">'
         f'{VACIO_MEDIDOR["medida"]}</p><p class="vt-etiqueta__sci">Stenotaphrum secundatum</p>'
         f'<p class="vt-etiqueta__precio is-vacio"><small data-vt-o="rotulo">{MODOS_MEDIDOR[modo]["rotulo"]}</small>'
-        f'<b data-vt-o="monto">{VACIO_MEDIDOR["monto"]}</b><span>con IVA</span></p>'
+        f'<b data-vt-o="monto">{VACIO_MEDIDOR["monto"]}</b>'
+        f'<span data-vt-o="iva">{IVA_INSTALADO if modo == "instalado" else ""}</span></p>'
         f'<p class="vt-medidor__calc" data-vt-o="calc">{VACIO_MEDIDOR["calc"]}</p>'
         f'<p class="vt-medidor__aviso" data-vt-o="aviso" hidden></p>'
         f'<fieldset class="vt-opciones vt-opciones--plazo"><legend>Forma de pago: contado o mensualidades con tarjeta de '
@@ -656,7 +662,7 @@ ALTURA_RE = re.compile(r"^\s*(\d+(?:[.,]\d+)?)")
 CANTIDAD_RE = re.compile(r"^\s*(\d+)")
 VACIO_VOLUMEN = {"medida": "Escribe los m² de tu obra", "monto": "—",
                  "calc": (f"Desde {MINIMO_MAYOREO} m², mayoreo desde ${P['pasto_mayoreo_m2']}/m²; con menos, "
-                          f"${P['pasto_solo_m2']}/m² (solo pasto). Con IVA.")}
+                          f"${P['pasto_solo_m2']}/m² (solo pasto). No lleva IVA.")}
 VACIO_PALMAS = "Elige especie y cantidad"
 OTRA_ESPECIE = "Otra especie (la escribo en el chat)"
 
@@ -686,11 +692,11 @@ def textos_volumen(r, empresa="", obra="", fecha=""):
     desde = "desde " if r["desde"] else ""
     m2 = formato_m2(r["m2"])
     mensaje = "\n".join((f"Hola, quiero cotizar {r['texto']} para un proyecto.", f"m² totales: {m2} m²",
-                         f"Estimado de la web: {desde}{dinero(r['total'])} con IVA ({desde}${r['precio']}/m²)",
+                         f"Estimado de la web: {desde}{dinero(r['total'])} ({desde}${r['precio']}/m²; no lleva IVA)",
                          f"Empresa: {_hueco(empresa)}", f"Obra y ubicación: {_hueco(obra)}",
                          f"Fecha de la primera entrega: {_hueco(fecha)}"))
     return {"medida": f"{m2} m²", "monto": dinero(r["total"]),
-            "calc": (f"{m2} m² × {desde}${r['precio']}/m², con IVA. Solo pasto: la entrega por etapas y la instalación "
+            "calc": (f"{m2} m² × {desde}${r['precio']}/m² {SIN_IVA}. Solo pasto: la entrega por etapas y la instalación "
                      "se cotizan con tu obra."),
             "mensaje": mensaje}
 
@@ -774,7 +780,7 @@ def cotizador_volumen(prefijo, tipo, mensaje):
         f'<p class="vt-etiqueta__nombre" data-vt-o="m2">{VACIO_VOLUMEN["medida"]}</p>'
         '<p class="vt-etiqueta__sci">Stenotaphrum secundatum</p>'
         f'<p class="vt-etiqueta__precio is-vacio"><small data-vt-o="rotulo">{MODOS_MEDIDOR["mayoreo"]["rotulo"]}</small>'
-        f'<b data-vt-o="monto">{VACIO_VOLUMEN["monto"]}</b><span>con IVA</span></p>'
+        f'<b data-vt-o="monto">{VACIO_VOLUMEN["monto"]}</b></p>'
         f'<p class="vt-medidor__calc" data-vt-o="calc">{VACIO_VOLUMEN["calc"]}</p>'
         '<p class="vt-medidor__aviso" data-vt-o="aviso" hidden></p>'
         f'{_boton_cta(tipo, "cotizador", generico)}</div></div></div>')

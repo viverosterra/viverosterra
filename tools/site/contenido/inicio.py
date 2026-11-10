@@ -124,9 +124,10 @@ CONTENIDO = {
         "lede": (f"Pasto San Agustín en rollo, diseño de jardines y {datos.VARIEDADES} variedades de plantas, en Tampico, "
                  "Madero y Altamira."),
         "etiqueta": {
-            "codigo": "Pasto · 01", "aviso": "Con IVA", "nombre": "Pasto San Agustín",
+            "codigo": "Pasto · 01", "aviso": f"Precios {datos.ANIO}", "nombre": "Pasto San Agustín",
             "cientifico": "Stenotaphrum secundatum", "antes": "San Agustín instalado · desde",
-            "monto": dinero(P["pasto_instalado_m2"]), "unidad": "/m²",
+            # "con IVA" va en la banda del instalado; la fila de solo pasto no lo lleva (dueño, 2026-11-10).
+            "monto": dinero(P["pasto_instalado_m2"]), "unidad": "/m² con IVA",
             "filas": (("Solo pasto, tú lo instalas", f"{dinero(P['pasto_solo_m2'])} /m²"),),
             "nota": (f"Ejemplo: 8 × 6 m = 48 m² instalado × {dinero(P['pasto_instalado_m2'])} = "
                      f"{dinero(48 * P['pasto_instalado_m2'])}."),
@@ -228,8 +229,8 @@ CONTENIDO = {
     },
     "precios": {
         "titulo": "Lista de precios, sin letra chica.",
-        "lede": ("Con IVA. Donde dice “desde”, el total depende de tus metros y del terreno: al medir te damos el precio "
-                 "cerrado."),
+        "lede": (f"Precios con IVA, salvo el pasto sin instalar: {datos.PASTO_SIN_IVA[0].lower()}{datos.PASTO_SIN_IVA[1:]}. "
+                 "Donde dice “desde”, el total depende de tus metros y del terreno: al medir te damos el precio cerrado."),
         "nota": ("En sombra profunda el San Agustín no prende. Si es tu caso, te lo decimos al medir, antes de cobrarte "
                  "nada.", f"Desde el vivero, {datos.CALLE_CORTA}"),
         "filas": (
@@ -237,9 +238,9 @@ CONTENIDO = {
              "rec": True, "detalle": (f"Preparación básica del suelo, tendido en un día y garantía de arraigo de "
                                       f"{datos.ARRAIGO}.")},
             {"nombre": "Pasto San Agustín, solo el pasto", "unidad": "/m²", "precio": P["pasto_solo_m2"],
-             "detalle": "Se corta para tu pedido. Recoges en el vivero o te lo llevamos."},
+             "detalle": "Se corta para tu pedido. Recoges en el vivero o te lo llevamos. No lleva IVA."},
             {"nombre": "Mayoreo de pasto, solo pasto", "unidad": "/m²", "precio": P["pasto_mayoreo_m2"], "desde": True,
-             "detalle": f"Pedidos de {MINIMO} m² o más, con entregas por etapas y factura {datos.FACTURA}."},
+             "detalle": f"Pedidos de {MINIMO} m² o más, con entregas por etapas y factura {datos.FACTURA}. No lleva IVA."},
             {"nombre": "Pasto sintético, material", "unidad": "/m²", "precio": P["sintetico_tienda_m2"], "desde": True,
              "detalle": "9 modelos en rollos de 50 m². Envío a todo México, cobrado por rollo según tu estado."},
             {"nombre": "Mantenimiento de jardín", "unidad": "/mes", "precio": P["mantenimiento_mes"], "desde": True,
@@ -251,7 +252,7 @@ CONTENIDO = {
             {"nombre": "Tezontle rojo", "unidad": "/costal", "precio": P["tezontle_costal"], "desde": True,
              "detalle": "También por m³ y en camión volteo de 14 m³."},
         ),
-        "caption": (f'Precios {datos.ANIO} con IVA incluido. Lista completa en '
+        "caption": (f'Precios {datos.ANIO}. {datos.PASTO_SIN_IVA}; los demás lo incluyen. Lista completa en '
                     '<a href="/precios">viverosterra.com/precios</a>.'),
     },
     "faq": {

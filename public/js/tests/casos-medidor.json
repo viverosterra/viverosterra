@@ -43,7 +43,8 @@
         "plazo": 1,
         "mensaje": "Hola, quiero cotizar pasto San Agustín instalado.\nMedidas: 8.00 × 6.00 m = 48 m²\nEstimado de la web: desde $5,760 con IVA\nMe interesa: contado\nColonia: ___\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "48 m² · desde $5,760 con IVA"
+        "vivo": "48 m² · desde $5,760 con IVA",
+        "iva": "con IVA"
       }
     },
     {
@@ -63,12 +64,13 @@
         "aviso": "El mayoreo aplica desde 500 m². Te faltan 400 m²; mientras, calculamos a $85/m² (solo pasto).",
         "medida": "10.00 × 10.00 m = 100 m²",
         "monto": "$8,500",
-        "calc": "100 m² × $85/m², con IVA. La entrega se cotiza según tu colonia.",
+        "calc": "100 m² × $85/m² (no lleva IVA). La entrega se cotiza según tu colonia.",
         "plan": "O 6 mensualidades de $1,628 con tarjeta de crédito (total $9,766).",
         "plazo": 1,
-        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 10.00 × 10.00 m = 100 m²\nEstimado de la web: $8,500 con IVA\nMe interesa: contado\nColonia: Lomas de Rosales\nTe mando foto del área.",
+        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 10.00 × 10.00 m = 100 m²\nEstimado de la web: $8,500 (no lleva IVA)\nMe interesa: contado\nColonia: Lomas de Rosales\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "100 m² · $8,500"
+        "vivo": "100 m² · $8,500",
+        "iva": ""
       }
     },
     {
@@ -88,12 +90,13 @@
         "aviso": "",
         "medida": "5.00 × 4.00 m = 20 m²",
         "monto": "$1,700",
-        "calc": "20 m² × $85/m², con IVA. La entrega se cotiza según tu colonia.",
+        "calc": "20 m² × $85/m² (no lleva IVA). La entrega se cotiza según tu colonia.",
         "plan": "Mensualidades con tarjeta de crédito en cotizaciones desde $2,000.",
         "plazo": 1,
-        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 5.00 × 4.00 m = 20 m²\nEstimado de la web: $1,700 con IVA\nMe interesa: contado\nColonia: ___\nTe mando foto del área.",
+        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 5.00 × 4.00 m = 20 m²\nEstimado de la web: $1,700 (no lleva IVA)\nMe interesa: contado\nColonia: ___\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "20 m² · $1,700"
+        "vivo": "20 m² · $1,700",
+        "iva": ""
       }
     },
     {
@@ -113,12 +116,13 @@
         "aviso": "",
         "medida": "25.00 × 24.00 m = 600 m²",
         "monto": "$36,000",
-        "calc": "600 m² × desde $60/m², con IVA. Al medir te damos el precio cerrado.",
+        "calc": "600 m² × desde $60/m² (no lleva IVA). Al medir te damos el precio cerrado.",
         "plan": "O 12 mensualidades de $3,703 con tarjeta de crédito (total $44,439).",
         "plazo": 1,
-        "mensaje": "Hola, quiero cotizar pasto San Agustín de mayoreo (solo pasto).\nMedidas: 25.00 × 24.00 m = 600 m²\nEstimado de la web: desde $36,000 con IVA\nMe interesa: contado\nColonia: ___\nTe mando foto del área.",
+        "mensaje": "Hola, quiero cotizar pasto San Agustín de mayoreo (solo pasto).\nMedidas: 25.00 × 24.00 m = 600 m²\nEstimado de la web: desde $36,000 (no lleva IVA)\nMe interesa: contado\nColonia: ___\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "600 m² · desde $36,000"
+        "vivo": "600 m² · desde $36,000",
+        "iva": ""
       }
     },
     {
@@ -143,7 +147,8 @@
         "plazo": 1,
         "mensaje": "Hola, quiero cotizar pasto San Agustín instalado.\nMedidas: 12.50 × 8.30 m = 103.8 m²\nEstimado de la web: desde $12,456 con IVA\nMe interesa: contado\nColonia: Altavista\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "103.8 m² · desde $12,456 con IVA"
+        "vivo": "103.8 m² · desde $12,456 con IVA",
+        "iva": "con IVA"
       }
     },
     {
@@ -163,12 +168,13 @@
         "aviso": "",
         "medida": "30.00 × 20.00 m = 600 m²",
         "monto": "$51,000",
-        "calc": "600 m² × $85/m², con IVA. La entrega se cotiza según tu colonia.",
+        "calc": "600 m² × $85/m² (no lleva IVA). La entrega se cotiza según tu colonia.",
         "plan": "O 12 mensualidades de $5,246 con tarjeta de crédito (total $62,955).",
         "plazo": 1,
-        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 30.00 × 20.00 m = 600 m²\nEstimado de la web: $51,000 con IVA\nMe interesa: contado\nColonia: ___\nTe mando foto del área.",
+        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 30.00 × 20.00 m = 600 m²\nEstimado de la web: $51,000 (no lleva IVA)\nMe interesa: contado\nColonia: ___\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "600 m² · $51,000"
+        "vivo": "600 m² · $51,000",
+        "iva": ""
       }
     },
     {
@@ -193,7 +199,8 @@
         "plazo": 1,
         "mensaje": "Hola, quiero cotizar pasto San Agustín instalado.\nMedidas: 3.00 × 15.50 m = 46.5 m²\nEstimado de la web: desde $5,580 con IVA\nMe interesa: contado\nColonia: ___\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "46.5 m² · desde $5,580 con IVA"
+        "vivo": "46.5 m² · desde $5,580 con IVA",
+        "iva": "con IVA"
       }
     },
     {
@@ -213,12 +220,13 @@
         "aviso": "",
         "medida": "21.00 × 3.00 m = 63 m²",
         "monto": "$5,355",
-        "calc": "63 m² × $85/m², con IVA. La entrega se cotiza según tu colonia.",
+        "calc": "63 m² × $85/m² (no lleva IVA). La entrega se cotiza según tu colonia.",
         "plan": "O 6 mensualidades de $1,026 con tarjeta de crédito (total $6,153).",
         "plazo": 1,
-        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 21.00 × 3.00 m = 63 m²\nEstimado de la web: $5,355 con IVA\nMe interesa: contado\nColonia: ___\nTe mando foto del área.",
+        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 21.00 × 3.00 m = 63 m²\nEstimado de la web: $5,355 (no lleva IVA)\nMe interesa: contado\nColonia: ___\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "63 m² · $5,355"
+        "vivo": "63 m² · $5,355",
+        "iva": ""
       }
     },
     {
@@ -243,7 +251,8 @@
         "plazo": 6,
         "mensaje": "Hola, quiero cotizar pasto San Agustín instalado.\nMedidas: 8.00 × 6.00 m = 48 m²\nEstimado de la web: desde $5,760 con IVA\nMe interesa: 6 mensualidades de $1,103 con tarjeta de crédito (total $6,618)\nColonia: ___\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "48 m² · desde $5,760 con IVA"
+        "vivo": "48 m² · desde $5,760 con IVA",
+        "iva": "con IVA"
       }
     },
     {
@@ -268,7 +277,8 @@
         "plazo": 1,
         "mensaje": "Hola, quiero cotizar pasto San Agustín instalado.\nMedidas: 8.00 × 6.00 m = 48 m²\nEstimado de la web: desde $5,760 con IVA\nMe interesa: contado\nColonia: ___\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "48 m² · desde $5,760 con IVA"
+        "vivo": "48 m² · desde $5,760 con IVA",
+        "iva": "con IVA"
       }
     },
     {
@@ -288,12 +298,13 @@
         "aviso": "",
         "medida": "30.00 × 20.00 m = 600 m²",
         "monto": "$51,000",
-        "calc": "600 m² × $85/m², con IVA. La entrega se cotiza según tu colonia.",
+        "calc": "600 m² × $85/m² (no lleva IVA). La entrega se cotiza según tu colonia.",
         "plan": "12 mensualidades de $5,246 con tarjeta de crédito (total $62,955). Tu banco debe aceptar el plan.",
         "plazo": 12,
-        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 30.00 × 20.00 m = 600 m²\nEstimado de la web: $51,000 con IVA\nMe interesa: 12 mensualidades de $5,246 con tarjeta de crédito (total $62,955)\nColonia: Altavista\nTe mando foto del área.",
+        "mensaje": "Hola, quiero cotizar solo el pasto San Agustín (yo lo instalo).\nMedidas: 30.00 × 20.00 m = 600 m²\nEstimado de la web: $51,000 (no lleva IVA)\nMe interesa: 12 mensualidades de $5,246 con tarjeta de crédito (total $62,955)\nColonia: Altavista\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "600 m² · $51,000"
+        "vivo": "600 m² · $51,000",
+        "iva": ""
       }
     },
     {
@@ -313,12 +324,13 @@
         "aviso": "",
         "medida": "25.00 × 24.00 m = 600 m²",
         "monto": "$36,000",
-        "calc": "600 m² × desde $60/m², con IVA. Al medir te damos el precio cerrado.",
+        "calc": "600 m² × desde $60/m² (no lleva IVA). Al medir te damos el precio cerrado.",
         "plan": "3 mensualidades de $13,256 con tarjeta de crédito (total $39,769). Tu banco debe aceptar el plan.",
         "plazo": 3,
-        "mensaje": "Hola, quiero cotizar pasto San Agustín de mayoreo (solo pasto).\nMedidas: 25.00 × 24.00 m = 600 m²\nEstimado de la web: desde $36,000 con IVA\nMe interesa: 3 mensualidades de $13,256 con tarjeta de crédito (total $39,769)\nColonia: ___\nTe mando foto del área.",
+        "mensaje": "Hola, quiero cotizar pasto San Agustín de mayoreo (solo pasto).\nMedidas: 25.00 × 24.00 m = 600 m²\nEstimado de la web: desde $36,000 (no lleva IVA)\nMe interesa: 3 mensualidades de $13,256 con tarjeta de crédito (total $39,769)\nColonia: ___\nTe mando foto del área.",
         "cta": "Enviar mi medida por WhatsApp",
-        "vivo": "600 m² · desde $36,000"
+        "vivo": "600 m² · desde $36,000",
+        "iva": ""
       }
     }
   ]

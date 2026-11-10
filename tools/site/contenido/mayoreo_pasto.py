@@ -61,7 +61,7 @@ MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
 
 PREGUNTAS = (
     ("¿Cuál es el pedido mínimo para mayoreo de pasto en Tampico?",
-     f"Para precios de mayoreo manejamos pedidos a partir de {MINIMO} m²: desde {dinero(MAYOREO)}/m² solo pasto, con IVA. "
+     f"Para precios de mayoreo manejamos pedidos a partir de {MINIMO} m²: desde {dinero(MAYOREO)}/m² solo pasto (no lleva IVA). "
      f"Con menos de {MINIMO} m² también te atendemos, a {dinero(SOLO)}/m² solo pasto o desde {dinero(INSTALADO)}/m² "
      'instalado (<a href="/pasto-en-rollo-tampico">pasto en rollo</a>).'),
     ("¿Facturan CFDI para constructoras?",
@@ -145,10 +145,10 @@ CONTENIDO = {
         "kicker": "Constructoras · Fraccionamientos · Industria",
         "h1": 'Pasto al mayoreo <span class="vt-serif">para obras y fraccionamientos</span>',
         "lede": (f"En Viveros Terra el pasto San Agustín al mayoreo cuesta desde {dinero(MAYOREO)}/m² (solo pasto) en "
-                 f"pedidos de {MINIMO} m² o más, con IVA y factura {datos.FACTURA}. Entregamos por etapas según el "
+                 f"pedidos de {MINIMO} m² o más, con factura {datos.FACTURA}; el pasto sin instalar no lleva IVA. Entregamos por etapas según el "
                  "avance de tu obra en Tampico, Madero y Altamira; fuera de la zona, por proyecto."),
         "etiqueta": {
-            "codigo": "Mayoreo · 01", "aviso": "Con IVA", "nombre": "Pasto San Agustín para obra",
+            "codigo": "Mayoreo · 01", "aviso": "Solo pasto", "nombre": "Pasto San Agustín para obra",
             "cientifico": "Stenotaphrum secundatum", "antes": "Mayoreo · desde", "monto": dinero(MAYOREO),
             "unidad": "/m²",
             "filas": (("Pedido mínimo", f"{MINIMO} m²"), (f"Con menos de {MINIMO} m²", f"{dinero(SOLO)}/m² solo pasto")),
@@ -176,18 +176,19 @@ CONTENIDO = {
     "escalas": {
         "titulo": "¿Cuánto cuesta el pasto en rollo al mayoreo?",
         "lede": (f"Desde {dinero(MAYOREO)}/m² solo pasto en pedidos de {MINIMO} m² o más; con menos, {dinero(SOLO)}/m². "
-                 f"La instalación en obra, {datos.SEGUN_COTIZACION.lower()}. Precios {datos.ANIO} con IVA; lista "
+                 f"La instalación en obra, {datos.SEGUN_COTIZACION.lower()}. Precios {datos.ANIO}: el pasto sin instalar no lleva IVA; lista "
                  'completa en <a href="/precios">viverosterra.com/precios</a>.'),
         # La unidad va con el precio ("$85/m²"): sin columna Unidad, la tarjeta de celular tiene una línea menos.
         "columnas": ("Volumen", "Precio", "Entrega"),
         "filas": (
             (f"Menos de {MINIMO} m²", f"{dinero(SOLO)}/m² solo pasto", "Se cotiza según tu obra"),
             (f"{MINIMO} m² o más", f"desde {dinero(MAYOREO)}/m² solo pasto", "Por etapas, según el avance de obra"),
-            ("Pasto instalado en obra", f"desde {dinero(INSTALADO)}/m² instalado", "Con nuestra cuadrilla"),
+            ("Pasto instalado en obra", f"desde {dinero(INSTALADO)}/m² instalado, con IVA", "Con nuestra cuadrilla"),
             ("Capacidad y calendario", "Por escrito en tu cotización, por entrega",
              f"El pasto llega del campo {datos.LLEGADA_PASTO}"),
         ),
-        "caption": "Con IVA. El cotizador estima solo el pasto; la entrega y la instalación se cotizan con tu obra.",
+        "caption": (f"{datos.PASTO_SIN_IVA}. El cotizador estima solo el pasto; la entrega y la instalación se cotizan "
+                    "con tu obra."),
         "titulo_cotizador": "Calcula tu obra por m²",
         "cotizador": "volumen",
     },

@@ -53,7 +53,11 @@ class InicioTest(unittest.TestCase):
 
     def test_portada_con_precio_cta_y_foto_principal(self):
         portada = MAIN[:MAIN.index('id="vt-h-que"')]
-        self.assertIn("<b>$120</b><span>/m²</span>", portada)
+        # Dueño (2026-11-10): "con IVA" va ligado al instalado (en su banda), no en la cabecera que cubría también la
+        # fila de solo pasto.
+        self.assertIn("<b>$120</b><span>/m² con IVA</span>", portada)
+        self.assertNotIn("Con IVA", portada)
+        self.assertIn(f"<span>Pasto · 01</span><span>Precios {datos.ANIO}</span>", portada)
         self.assertIn("<b>$85 /m²</b>", portada)
         self.assertIn("data-hero-cta", portada)
         self.assertIn('data-cta="home:hero"', portada)

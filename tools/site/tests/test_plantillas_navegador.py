@@ -216,6 +216,31 @@ class PlantillasNavegadorTest(unittest.TestCase):
             f"https://wa.me/{datos.TELEFONO_WA}?text="))
         self.assertEqual(caja.locator(".vt-medidor__res").get_attribute("role"), "status")
 
+    def test_medidor_con_iva_solo_en_modo_instalado(self):
+        """Dueño (2026-11-10): el pasto sin instalar no lleva IVA. En la etiqueta, el cálculo y el mensaje del Medidor,
+        "con IVA" solo aparece en modo instalado; en solo pasto y mayoreo (también cuando cae a solo pasto), nunca."""
+        for ruta in PAGINAS:
+            page = self.pagina(375, 812)
+            page.goto(self.base + ruta, wait_until="load")
+            caja = page.locator("[data-vt-medidor]")
+            etiqueta = caja.locator(".vt-medidor__res")
+            self.assertIn("con IVA", etiqueta.locator(".vt-etiqueta__precio").inner_text())  # arranca en instalado
+            caja.locator('input[value="solo"]').check(force=True)
+            self.assertNotIn("IVA", etiqueta.inner_text())  # sin medida todavía
+            for largo, ancho, modo, con_iva in ((8, 6, "instalado", True), (8, 6, "solo", False), (10, 10, "mayoreo", False),
+                                               (25, 24, "mayoreo", False)):
+                caja.locator('[data-vt-campo="largo"]').fill(str(largo))
+                caja.locator('[data-vt-campo="ancho"]').fill(str(ancho))
+                caja.locator(f'input[value="{modo}"]').check(force=True)
+                mensaje = unquote(caja.locator('[data-vt-o="cta"]').get_attribute("href").split("text=", 1)[1])
+                visible = etiqueta.inner_text() + " " + caja.locator(".vt-medidor__form").inner_text()
+                with self.subTest(ruta=ruta, modo=modo, largo=largo):
+                    self.assertEqual("con IVA" in visible, con_iva)
+                    self.assertEqual("con IVA" in mensaje, con_iva)
+                    if not con_iva:
+                        self.assertIn("(no lleva IVA)", caja.locator('[data-vt-o="calc"]').inner_text())
+                        self.assertRegex(mensaje, r"Estimado de la web: (?:desde )?\$[\d,]+ \(no lleva IVA\)")
+
     def test_medidor_empieza_vacio_y_manda_el_mensaje_generico(self):
         for ruta, mensaje in (("/", datos.MENSAJES["general"]), ("/pasto-en-rollo-tampico/", datos.MENSAJES["pasto-natural"])):
             page = self.pagina()
@@ -721,7 +746,8 @@ class PlantillasNavegadorTest(unittest.TestCase):
         self.assertFalse(caja.locator('[data-vt-o="aviso"]').is_visible())
         mensaje = self.mensaje(caja)
         self.assertIn("m² totales: 1,200 m²", mensaje)
-        self.assertIn("Estimado de la web: desde $72,000 con IVA (desde $60/m²)", mensaje)
+        # Dueño (2026-11-10): el mayoreo (pasto sin instalar) no lleva IVA; antes decía "con IVA".
+        self.assertIn("Estimado de la web: desde $72,000 (desde $60/m²; no lleva IVA)", mensaje)
         self.assertIn("Empresa: Mi empresa", mensaje)
         caja.locator('[data-vt-campo="m2"]').fill("")
         self.assertEqual(caja.locator('[data-vt-o="monto"]').inner_text(), "—")

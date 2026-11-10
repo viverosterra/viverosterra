@@ -73,7 +73,9 @@ class DatosTest(unittest.TestCase):
         self.assertTrue(datos.ANTICIPO.startswith("No pedimos el 100% por adelantado: para confirmar tu pedido o "
                                                   "agendar el servicio solicitamos un anticipo"))
         self.assertEqual(datos.ARRAIGO, "15 a 20 días")
-        for cifra in ("$85 por m²", "desde $120 por m²", "500 m²", "$60/m²", f"Precios {datos.ANIO}, con IVA"):
+        for cifra in ("$85 por m²", "desde $120 por m²", "500 m²", "$60/m²", f"Precios {datos.ANIO} para Tampico",
+                      # Dueño (2026-11-10): el pasto sin instalar no lleva IVA; "con IVA" solo con el instalado.
+                      "solo el pasto (no lleva IVA)", "instalado, con IVA incluido", "(solo pasto; no lleva IVA)"):
             self.assertIn(cifra, datos.RESPUESTA_PRECIO_PASTO)
         # Sin mes de vigencia: un mes escrito envejece solo (como el aviso de lluvias de antes).
         self.assertNotRegex(datos.RESPUESTA_PRECIO_PASTO, r"(?i)\b(?:enero|febrero|marzo|abril|mayo|junio|julio|agosto|"

@@ -35,11 +35,12 @@
     const desde = r.desde ? 'desde ' : '';
     const m2 = formatoM2(r.m2);
     const mensaje = [`Hola, quiero cotizar ${r.texto} para un proyecto.`, `m² totales: ${m2} m²`,
-      `Estimado de la web: ${desde}${dinero(r.total)} con IVA (${desde}$${r.precio}/m²)`,
+      // El pasto sin instalar (mayoreo o, con menos del mínimo, solo pasto) no lleva IVA: componentes.SIN_IVA.
+      `Estimado de la web: ${desde}${dinero(r.total)} (${desde}$${r.precio}/m²; no lleva IVA)`,
       `Empresa: ${hueco(campos.empresa)}`, `Obra y ubicación: ${hueco(campos.obra)}`,
       `Fecha de la primera entrega: ${hueco(campos.fecha)}`].join('\n');
     return { medida: `${m2} m²`, monto: dinero(r.total),
-      calc: `${m2} m² × ${desde}$${r.precio}/m², con IVA. Solo pasto: la entrega por etapas y la instalación se cotizan con tu obra.`,
+      calc: `${m2} m² × ${desde}$${r.precio}/m² (no lleva IVA). Solo pasto: la entrega por etapas y la instalación se cotizan con tu obra.`,
       mensaje };
   }
 
