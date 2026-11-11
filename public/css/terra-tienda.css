@@ -254,3 +254,13 @@
 @media (max-width:767px){
   .vt-tienda .vt-tabla-scroll::before{content:"Desliza para ver toda la tabla →";position:sticky;left:0;display:block;width:max-content;margin-bottom:6px;font-size:var(--vt-text-xs);font-weight:600;color:var(--vt-muted)}
 }
+/* Plan visual V3 (2026-11-11): gráfica de altura de fibra de los 9 modelos (café: medidas). */
+.vt-tienda .vt-alturas{margin:0 0 28px}
+.vt-tienda .vt-alturas figcaption{margin-bottom:10px;font-size:var(--vt-text-xs);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--vt-muted)}
+.vt-tienda .vt-alturas ol{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.vt-tienda .vt-alturas li{display:grid;grid-template-columns:7.5em minmax(0,1fr);align-items:center;gap:2px 12px}
+.vt-tienda .vt-alturas a{font-weight:700;color:var(--vt-ink)}
+.vt-tienda .vt-alturas__barra{display:block;width:var(--w);height:14px;background:var(--vt-soil)}
+.vt-tienda .vt-alturas__v{grid-column:2;font-size:var(--vt-text-xs);color:var(--vt-muted)}
+.vt-tienda .vt-alturas__v b{font-family:var(--vt-font-serif);font-style:italic;font-weight:400;font-size:18px;color:var(--vt-soil)}
+@media (min-width:768px){.vt-tienda .vt-alturas li{grid-template-columns:9em minmax(0,1fr) 11em}.vt-tienda .vt-alturas__v{grid-column:auto}}

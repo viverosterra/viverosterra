@@ -146,3 +146,23 @@ Orden recomendado: V1 → V2 → V3 → V4. V1 se nota de inmediato y no cambia 
   - Lighthouse sin cambios: Inicio 99, Mantenimiento 93, tienda 89; accesibilidad y SEO en 100.
   - terra.css: 12 KB comprimido (sin cambio de tope); el tope del archivo sin comprimir sube de 60 a 62 KB.
 - **Prueba:** tests/test_visual_v2.py.
+
+## Estado de V3 (2026-11-11, rama feat/visual-v3, sin publicar)
+
+- **Íconos de cultivo:** luz, riego y altura salen como chips con sol, gota y regla en las fichas de plantas y el
+  catálogo. Los íconos están en el sprite del shell y la etiqueta sigue para lectores de pantalla.
+- **Pasto sintético:** en la tienda hay una gráfica con la altura de fibra y el peso de los 9 modelos, en texto real
+  y con enlace a cada ficha.
+  - No se agregó el punto de color de cada tono: un color aproximado podría no coincidir con el real.
+- **Cifras en Fraunces cursiva:** la cifra de las garantías (30 días, 15–20 días) y los valores de la tira de datos.
+- **Atmósfera:**
+  - grano de papel muy suave en el fondo hueso;
+  - un dibujo de línea en las bandas oscuras y el cierre: hoja de San Agustín (pasto y páginas generales), fronda de
+    palma (plantas) y raíz (tierra y materiales). Son SVG dentro de la hoja de estilos, sin imágenes nuevas.
+- **Color por línea de negocio:** las secciones con tinte van en verde claro en pasto y plantas, y en café claro en
+  tierra y materiales. La línea se toma de la ruta (`data-linea` en `<html>`).
+- **Revisión:**
+  - Sin desbordes y con contraste AA, también en los tintes nuevos.
+  - Lighthouse sin cambios: Inicio 99, Plantas para jardín 95, tienda 89; accesibilidad y SEO en 100.
+  - Topes de terra.css: 66 KB sin comprimir y 13 KB comprimido, unos 0.6 KB más por página.
+- **Prueba:** tests/test_visual_v3.py.

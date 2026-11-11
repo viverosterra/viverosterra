@@ -61,9 +61,15 @@ def foto_especie(e, numero, carga="lazy"):
             f'{pie_especie(e, numero)}</figure>')
 
 
+# Plan visual V3 (2026-11-11): luz, riego y altura como chips con ícono (sol, gota y regla del sprite del shell); la
+# etiqueta sigue en el <dt> para lectores de pantalla.
+ICONOS_DATO = {"Luz": "sol", "Riego": "gota", "Altura": "regla"}
+
+
 def datos_especie(e, altura=None):
     filas = (("Luz", e["luz"]), ("Riego", e["agua"]), ("Altura", altura or e["altura"]))
-    celdas = "".join(f"<div><dt>{t}</dt><dd>{esc(v)}</dd></div>" for t, v in filas)
+    celdas = "".join(f'<div><dt><svg class="vt-ico" aria-hidden="true"><use href="#vt-i-{ICONOS_DATO[t]}"/></svg>'
+                     f'<span class="vt-sr">{t}</span></dt><dd>{esc(v)}</dd></div>' for t, v in filas)
     return f'<dl class="vt-esp__datos">{celdas}</dl>'
 
 
