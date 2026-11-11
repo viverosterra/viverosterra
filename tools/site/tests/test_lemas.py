@@ -1,0 +1,72 @@
+"""Regla permanente (lemas, 2026-11-10): el lema en serif que va debajo del título (.vt-portada__lema) es corto, no
+repite el título y no usa palabras que el dueño prohibió. Los lemas vigentes los eligió el dueño de
+docs/ux/2026-11/lemas-opciones.md (versión 2): 1A, 2A, 3C, 4C, 5B, 6C, 7C, 8A, 9A, 10B."""
+import re
+import unicodedata
+import unittest
+from pathlib import Path
+
+PUBLIC = Path(__file__).resolve().parents[3] / "public"
+LEMA_MAX = 48
+PROHIBIDAS = ("gratis", "más vendido", "oasis", "paraíso", "mágico", "increíble", "espectacular", "sueño", "visión")
+ELEGIDOS = {
+    "index.html": "Todo para tu jardín, en un solo lugar.",
+    "plantas-palmas-arboles-tampico/index.html": "Más de 200 plantas que sí se dan en Tampico.",
+    "palmas-tropicales-tampico/index.html": "Para darle a tu casa un aire de playa.",
+    "plantas-para-jardin-tampico/index.html": "Las que se dan bien cerca del mar.",
+    "plantas-de-interior-tampico/index.html": "Para alegrar tu sala, tu cocina o tu oficina.",
+    "arboles-ornamentales-tampico/index.html": "Árboles de sombra y de flor para tu casa.",
+    "arboles-para-banqueta-tampico/index.html": "Te decimos cuál plantar frente a tu casa.",
+    "catalogo.html": "Escoge, agrega y cotiza por WhatsApp.",
+    "post/nochebuenas-tampico-madero-mayoreo/index.html": "Para tu casa, tu negocio o tu posada.",
+}
+LEMA_BLOG = "Lo que nos preguntan en el vivero, contestado."
+_LEMA = re.compile(r'<p class="vt-portada__lema[^"]*">(.*?)</p>', re.S)
+_H1 = re.compile(r"<h1[^>]*>(.*?)</h1>", re.S)
+
+
+def _texto(fragmento):
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", fragmento)).strip()
+
+
+def _normal(texto):
+    sin_acentos = unicodedata.normalize("NFD", texto.lower())
+    return "".join(c for c in sin_acentos if unicodedata.category(c) != "Mn").strip(" .")
+
+
+def _lemas():
+    for ruta in sorted(PUBLIC.rglob("*.html")):
+        html = ruta.read_text(encoding="utf-8")
+        lema = _LEMA.search(html)
+        if lema:
+            h1 = _H1.search(html)
+            yield ruta.relative_to(PUBLIC).as_posix(), _texto(lema.group(1)), _texto(h1.group(1)) if h1 else ""
+
+
+class LemasTest(unittest.TestCase):
+    def test_hay_lemas(self):
+        self.assertGreater(len(list(_lemas())), 20)
+
+    def test_lema_corto_sin_repetir_titulo_ni_palabras_prohibidas(self):
+        for ruta, lema, h1 in _lemas():
+            with self.subTest(ruta=ruta):
+                self.assertLessEqual(len(lema), LEMA_MAX, lema)
+                self.assertNotIn(_normal(lema), _normal(h1))
+                for palabra in PROHIBIDAS:
+                    self.assertNotIn(palabra, lema.lower())
+
+    def test_lemas_elegidos_por_el_dueno(self):
+        vistos = {ruta: lema for ruta, lema, _ in _lemas()}
+        for ruta, esperado in ELEGIDOS.items():
+            with self.subTest(ruta=ruta):
+                self.assertEqual(vistos.get(ruta), esperado)
+
+    def test_blog_usa_el_lema_elegido(self):
+        articulos = [lema for ruta, lema, _ in _lemas() if ruta.startswith("blog/") and ruta != "blog/index.html"]
+        self.assertGreater(len(articulos), 40)
+        for lema in articulos:
+            self.assertEqual(lema, LEMA_BLOG)
+
+
+if __name__ == "__main__":
+    unittest.main()

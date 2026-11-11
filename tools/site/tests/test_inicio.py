@@ -50,7 +50,7 @@ class InicioTest(unittest.TestCase):
     def test_h1_y_un_solo_h1(self):
         self.assertEqual(re.findall(r"<h1\b[^>]*>(.*?)</h1>", HTML, re.S),
                          ["Pasto, jardines y plantas en Tampico."])
-        self.assertIn('</h1><p class="vt-portada__lema vt-serif">Con el precio por delante.</p>', MAIN)
+        self.assertIn('</h1><p class="vt-portada__lema vt-serif">Todo para tu jardín, en un solo lugar.</p>', MAIN)
 
     def test_portada_con_precio_cta_y_foto_principal(self):
         portada = MAIN[:MAIN.index('id="vt-h-que"')]

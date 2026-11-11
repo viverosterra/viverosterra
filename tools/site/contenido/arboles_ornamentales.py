@@ -64,7 +64,7 @@ CONTENIDO = {
         "pos": "50% 66%",
         "dato": 'Garantía de 30 días en lo que sembramos, <a href="/politicas#garantia-plantas">con condiciones</a>',
         "enlaces": (("Ver los 25 árboles del catálogo", "/catalogo?cat=arboles", "plantas:catalogo"),),
-        "lema": "De sombra y de flor, para el clima de Tamaulipas.",
+        "lema": "Árboles de sombra y de flor para tu casa.",
         "h1": "Árboles ornamentales para jardines en Tampico",
         "lede": f"{FLAMBOYAN}. Te los llevamos y los sembramos.",
         "etiqueta": {"codigo": "Árboles", "aviso": f"Precios {datos.ANIO}", "nombre": "Flamboyán",
@@ -116,6 +116,6 @@ PARIDAD = {
     },
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
-PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «De sombra y de flor, para el clima de Tamaulipas.» (de la entrada); la garantía de 30 días va en la línea de confianza, con sus condiciones.')
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «Árboles de sombra y de flor para tu casa.» (elegido por el dueño el 2026-11-10, en palabras del cliente); la garantía de 30 días va en la línea de confianza, con sus condiciones.')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: filas de WhatsApp («Cotizar mis árboles») tras el filtro por necesidad, las subcategorías, las especies (la rejilla larga se parte con una en medio), los precios y las preguntas, con la prueba social (cifras de datos.py y la calificación de Google con su enlace) y la garantía de las plantas que sembramos junto a la primera. Encabezados, precios y enlaces sin cambios.'

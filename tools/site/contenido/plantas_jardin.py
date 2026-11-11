@@ -64,7 +64,7 @@ CONTENIDO = {
         "pos": "40% 50%",
         "dato": 'Garantía de 30 días en lo que sembramos, <a href="/politicas#garantia-plantas">con condiciones</a>',
         "enlaces": ((f'Ver las {cd.cuenta({"cat": ["plantas"]})} plantas del catálogo', "/catalogo?cat=plantas", "plantas:catalogo"),),
-        "lema": "Elegidas para sol, humedad y salitre.",
+        "lema": "Las que se dan bien cerca del mar.",
         "h1": "Plantas para jardín que aguantan el calor de Tampico",
         "lede": ("Ornamentales, tropicales y de cobertura. Te decimos cuáles van en sol o en sombra, te las llevamos y, si "
                  "quieres, las sembramos."),
@@ -117,6 +117,6 @@ PARIDAD = {
     },
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
-PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «Elegidas para sol, humedad y salitre.» (de la entrada).')
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «Las que se dan bien cerca del mar.» (elegido por el dueño el 2026-11-10, en palabras del cliente).')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: filas de WhatsApp («Cotizar mis plantas») tras el filtro por necesidad, las subcategorías, las especies (la rejilla larga se parte con una en medio), los precios y las preguntas, con la prueba social (cifras de datos.py y la calificación de Google con su enlace) y la garantía de las plantas que sembramos junto a la primera. Encabezados, precios y enlaces sin cambios.'

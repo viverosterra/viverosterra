@@ -42,7 +42,7 @@ CONTENIDO = {
     "migas": (("Inicio", "/"), ("Plantas y palmas", pc.HUB), ("Arma tu lista", None)),
     "cabeza": {
         "h1": "Catálogo de Plantas, Palmas y Árboles en Tampico",
-        "lema": "Arma tu lista y mándala en un solo mensaje.",
+        "lema": "Escoge, agrega y cotiza por WhatsApp.",
         "lede": "Especies del vivero con luz, riego y altura. Busca o filtra y añade a tu lista con tamaño y piezas.",
         "precios": (f"{datos.PALMAS_PRECIO}. Flamboyán desde {dinero(P['flamboyan'])}. Las demás especies, según "
                     "cotización por tamaño."),
@@ -81,6 +81,6 @@ PARIDAD = {
     "especies": {"reemplazos": {}, "retirados": {}},
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
-PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: lema nuevo: «Arma tu lista y mándala en un solo mensaje.» (de la entrada); un solo botón de WhatsApp y el teléfono de enlace.')
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: lema nuevo: «Escoge, agrega y cotiza por WhatsApp.» (elegido por el dueño el 2026-11-10, en palabras del cliente); un solo botón de WhatsApp y el teléfono de enlace.')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: mensaje del hero con planta, tamaño, piezas y colonia (reescritura 6); barra fija siempre con WhatsApp («Cotizar plantas»; con lista, «Cotizar mi lista» directo y «Mi lista · n variedades · n piezas»); colonia en el mensaje de la lista (reescritura 7); una fila de WhatsApp cada 12 tarjetas.'

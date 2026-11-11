@@ -53,7 +53,7 @@ def fechas(jsonld):
 
 
 # Lo que cambia en la cabecera de cada artículo (Entrega A de experiencia, 2026-11-10).
-HERO = ("Hero de lectura: titular en la escala común del sitio, lema en serif («Jardinería para el clima de Tampico.», "
+HERO = ("Hero de lectura: titular en la escala común del sitio, lema en serif («Lo que nos preguntan en el vivero, contestado.», "
         "el mismo en todos) y WhatsApp y teléfono como enlaces de texto bajo la fecha (antes, sin CTA en la cabecera); "
         "sin botón grande ni imagen nueva.")
 
