@@ -155,7 +155,7 @@ class DatosTest(unittest.TestCase):
         nb = datos.NOCHEBUENAS
         self.assertEqual(nb["cortes"], (1, 12, 50, 200))
         self.assertEqual(len(nb["nombres_escalon"]), len(nb["cortes"]))
-        self.assertEqual([p["clave"] for p in nb["productos"]], ["5", "6", "7", "colgante", "12"])
+        self.assertEqual([p["clave"] for p in nb["productos"]], ["5", "6", "7", "8", "colgante", "12"])
         for producto in nb["productos"]:
             with self.subTest(producto=producto["clave"]):
                 self.assertEqual(len(producto["precios"]), len(nb["cortes"]))

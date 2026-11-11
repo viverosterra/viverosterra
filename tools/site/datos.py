@@ -373,6 +373,9 @@ NOCHEBUENAS = {
         {"clave": "5", "nombre": 'Maceta 5"', "precios": (89, 75, 69, 65)},
         {"clave": "6", "nombre": 'Maceta 6"', "precios": (139, 119, 109, 105)},
         {"clave": "7", "nombre": 'Maceta 7"', "precios": (199, 169, 155, 149)},
+        # Decisión del dueño 2026-11-11: costo $400; por proporción de tamaño saldría ~$310 (abajo del costo), así que va
+        # por costo con los descuentos por escalón de la lista. En existencia.
+        {"clave": "8", "nombre": 'Maceta 8"', "precios": (699, 589, 539, 519)},
         {"clave": "colgante", "nombre": "Colgante", "precios": (339, 279, 259, 249)},
         {"clave": "12", "nombre": 'Macetón 12"', "precios": (1195, 995, 899, 865), "sobre_pedido": True},
     ),

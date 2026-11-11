@@ -14,6 +14,27 @@ FOTOS = (
         "rotulo": "Nochebuena roja",
         "uso": "hero",
     },
+    # Maceta 8" (fotos del dueño, 2026-11-11): recorte, contraste y nitidez suaves; sin cambiar la planta.
+    {
+        "id": "maceta-8",
+        "src": "/img/nochebuenas/nochebuena-roja-maceta-8-tampico-800.webp",
+        "srcset": "/img/nochebuenas/nochebuena-roja-maceta-8-tampico-800.webp 800w, /img/nochebuenas/nochebuena-roja-maceta-8-tampico-1200.webp 1200w",
+        "ancho": 800,
+        "alto": 800,
+        "alt": "Nochebuena roja de maceta de 8 pulgadas, frondosa, sobre tezontle en el invernadero",
+        "rotulo": 'Maceta 8", nochebuena roja',
+        "uso": "galeria",
+    },
+    {
+        "id": "maceta-8-hilera",
+        "src": "/img/nochebuenas/nochebuena-roja-maceta-8-hilera-tampico-800.webp",
+        "srcset": "/img/nochebuenas/nochebuena-roja-maceta-8-hilera-tampico-800.webp 800w, /img/nochebuenas/nochebuena-roja-maceta-8-hilera-tampico-1200.webp 1200w",
+        "ancho": 800,
+        "alto": 600,
+        "alt": "Hilera de nochebuenas rojas de maceta de 8 pulgadas en el invernadero",
+        "rotulo": 'Macetas 8" en hilera',
+        "uso": "galeria",
+    },
     {
         "id": "detalle",
         "src": "/img/nochebuenas/nochebuena-roja-detalle-tampico-800.webp",
