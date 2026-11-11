@@ -72,7 +72,9 @@ def render(k):
         c.bloque(4, "Compáralo", "vt-h-compara", k["compara"]["titulo"], t.comparativa(m) + _fila(k, "compara"),
                  lede=k["compara"]["lede"], tinte=True),
         _pedido(k, 5),
-        c.garantia(dict(k["garantia"], numero=6, id_titulo="vt-h-garantia", rotulo="Garantía")),
+        # Plan visual V2: la garantía de fábrica es el momento oscuro, con su CTA.
+        c.garantia(dict(k["garantia"], numero=6, id_titulo="vt-h-garantia", rotulo="Garantía", banda=True,
+                        cta_html=_fila(k, "garantia"))),
         c.bloque_dos(7, "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"])),
         c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], k["tipo"]),
     )

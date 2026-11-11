@@ -78,7 +78,7 @@ class ComponentePortadaTest(unittest.TestCase):
     def test_orden_y_variantes(self):
         orden = [self.html.index(m) for m in ('class="vt-crumbs"', 'class="vt-kicker"', "<h1", 'class="vt-lede"',
                                               'class="vt-portada__foto"', 'class="vt-etiqueta"', "data-hero-cta",
-                                              "vt-portada__confianza", 'class="vt-datos"')]
+                                              "vt-portada__confianza", 'class="vt-datos vt-datos--tira"')]
         self.assertEqual(orden, sorted(orden))
         self.assertIn('<section class="vt-portada vt-portada--pliegue"', self.html)
         self.assertIn('<div class="vt-portada__foto" style="--vt-fp:50% 20%;--vt-fpd:30% 50%">', self.html)

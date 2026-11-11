@@ -332,6 +332,18 @@ def tabla_envio():
                                "Costo de envío de pasto sintético por estado, con IVA.")
 
 
+def zonas_acordeon():
+    """Plan visual V2 (2026-11-11): el flete por zona como acordeón (antes, tabla con los estados en párrafos largos).
+    Cada zona muestra en el renglón su costo por 1 y 2 rollos; los estados van dentro. tienda-hub.js abre la zona del
+    estado elegido (data-zona)."""
+    zonas = "".join(f'<details data-zona="{z}"><summary>Zona {z} <small>{esc(nombre)}</small>'
+                    f'<span><b>{c.dinero(data.ZONAS[z])}</b> 1 rollo · {c.dinero(data.ZONAS[z] * 2)} 2 rollos</span></summary>'
+                    f'<p>{esc(", ".join(estados))}.</p></details>'
+                    for z, (nombre, estados) in data.ZONA_ESTADOS.items())
+    return (f'<div class="vt-zonas-acc" role="group" aria-label="Costo de envío de pasto sintético por estado, con IVA">'
+            f'{zonas}</div>')
+
+
 def zonas_envio():
     """Las tres tarifas por rollo, cada una con sus estados principales (bloque de envío de la ficha)."""
     celdas = "".join(f'<div><dt>{c.dinero(data.ZONAS[z])}<small> /rollo</small></dt><dd><b>{esc(nombre)}.</b> '

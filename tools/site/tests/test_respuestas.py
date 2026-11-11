@@ -93,7 +93,7 @@ class RespuestasTest(unittest.TestCase):
                 hero = html[portada:respuesta]
                 self.assertNotIn("data-vt-respuesta", hero)
                 self.assertIn("wa.me", hero)
-                self.assertIn('<p class="vt-bloque__no"><b>En corto</b></p>', html)
+                self.assertIn('<p class="vt-corto__t">En corto</p>', html)  # Plan visual V2: nota de campo
 
     def test_home_con_el_hero_intacto(self):
         html = html_de("/")

@@ -124,3 +124,25 @@ Orden recomendado: V1 → V2 → V3 → V4. V1 se nota de inmediato y no cambia 
 1. ¿Puedo poner en cada artículo la foto que ya tiene en el índice del blog?
 2. Las fotos de playa y alberca en Plantas (Palma Kerpis, Coco plumoso, Palma Areca): ¿son tuyas o de banco de imágenes?
 3. ¿Te parecen bien los dibujos de línea botánicos (hoja, palma, raíz)? Los hago yo en SVG, no son fotos.
+
+## Estado de V2 (2026-11-11, rama feat/visual-v2, sin publicar)
+
+- **«En corto»** es ahora una tarjeta tipo Nota de campo, con el rótulo en serif a la izquierda en computadora.
+- **Tira de datos:** pasa de 6 cuadros a 4 datos (desde 2007, +500,000 m², showroom y factura con el REPSE). En
+  celular baja de unos 270 a unos 120 px.
+- **Momento oscuro a media página** en 26 páginas, siempre con contenido real:
+  - opiniones en Inicio, tierra negra y piedra bola;
+  - la garantía de plantas (datos.py) en las 6 páginas de plantas;
+  - la garantía de fábrica en las 9 fichas de sintético;
+  - el proceso en Mantenimiento, Riego, Mayoreo y Palmas para proyectos (su garantía no está en datos.py);
+  - «Tu pedido» en la tienda.
+  - Quedan sin momento las colonias, mármol, tezontle, vivero, precios y la guía de perros, porque no tienen una
+    sección que funcione en oscuro. Se cubren en V4 con fotos.
+- **Tienda:** el envío por zona pasa a acordeón; al elegir un estado se abre su zona.
+- **Computadora:** el título de las secciones a dos columnas se queda fijo al bajar, desde 1200 px.
+- **Revisión:**
+  - Sin desbordes a 320, 768, 1024 y 1440 px.
+  - Contraste AA en las bandas.
+  - Lighthouse sin cambios: Inicio 99, Mantenimiento 93, tienda 89; accesibilidad y SEO en 100.
+  - terra.css: 12 KB comprimido (sin cambio de tope); el tope del archivo sin comprimir sube de 60 a 62 KB.
+- **Prueba:** tests/test_visual_v2.py.

@@ -188,11 +188,29 @@ def respuesta(r):
     portada para no empujar el precio ni el botón de WhatsApp de la primera pantalla."""
     if not r:
         return ""
-    texto = (f'<p class="vt-bloque__no"><b>En corto</b></p><p class="vt-lede" {entidad.ATRIBUTO_RESPUESTA}>{r["texto"]}</p>'
-             if r.get("texto") else "")
     fecha = (f'<p class="vt-promesa">Actualizado: <time datetime="{esc(r["fecha"])}">{entidad.mes_largo(r["fecha"])}</time></p>'
              if r.get("fecha") else "")
-    return f'<section class="vt-respuesta" aria-label="En corto"><div class="vt-wrap">{texto}{fecha}</div></section>'
+    if not r.get("texto"):
+        return f'<section class="vt-respuesta" aria-label="En corto"><div class="vt-wrap">{fecha}</div></section>'
+    # Plan visual V2 (2026-11-11): tarjeta tipo «Nota de campo» con el rótulo en serif a la izquierda en computadora.
+    return (f'<section class="vt-respuesta" aria-label="En corto"><div class="vt-wrap"><div class="vt-corto">'
+            f'<p class="vt-corto__t">En corto</p><div><p class="vt-lede" {entidad.ATRIBUTO_RESPUESTA}>{r["texto"]}</p>'
+            f'{fecha}</div></div></div></section>')
+
+
+def momento(seccion):
+    """Plan visual V2 (2026-11-11): un «momento» oscuro a media página. Pasa una sección ya armada (vt-bloque) a la
+    banda verde profundo del cierre, con más aire; quita el tinte y el ritmo de apoyo. Solo para secciones con contenido
+    real que se lee bien en oscuro: opiniones, pasos o una garantía de datos.py con su CTA."""
+    inicio = '<section class="'
+    if not seccion.startswith(inicio):
+        raise ValueError("momento() recibe una sección vt-bloque")
+    fin = seccion.index('"', len(inicio))
+    clases = [x for x in seccion[len(inicio):fin].split() if x not in ("vt-bloque--tinte", "vt-bloque--apoyo", "vt-bloque--clave")]
+    if "vt-bloque" not in clases:
+        raise ValueError("momento() recibe una sección vt-bloque")
+    clases += [x for x in ("vt-banda", "vt-bloque--clave") if x not in clases]
+    return inicio + " ".join(clases) + seccion[fin:]
 
 
 # Ritmo (Entrega C de experiencia): el relleno vertical de una sección según su papel. "apoyo" (fotos extra, pago,
@@ -255,10 +273,24 @@ DATOS_EMPRESA = (
 )
 
 
-def cuadro_datos(celdas=DATOS_EMPRESA):
+# Plan visual V2 (2026-11-11): bajo el hero va una tira delgada de 4 datos (un renglón en computadora, dos en
+# celular). El nombre ya está en el logo y en el título; el REPSE pasa a la letra chica de la factura.
+DATOS_TIRA = (
+    ("Desde", str(datos.DESDE), "En Cd. Madero y Tampico"),
+    ("Instalado", datos.M2_INSTALADOS, "En Tamaulipas y la Huasteca"),
+    ("Showroom", datos.CALLE_CORTA, datos.REFERENCIA),
+    ("Factura", datos.FACTURA, f"REPSE {datos.REPSE}"),
+)
+
+
+def cuadro_datos(celdas=DATOS_EMPRESA, tira=False):
     cuerpo = "".join(f"<div><dt>{unidades(esc(t))}</dt><dd>{esc(v)}<small>{esc(s)}</small></dd></div>"
                      for t, v, s in celdas)
-    return f'<dl class="vt-datos">{cuerpo}</dl>'
+    return f'<dl class="vt-datos{" vt-datos--tira" if tira else ""}">{cuerpo}</dl>'
+
+
+def tira_datos():
+    return cuadro_datos(DATOS_TIRA, tira=True)
 
 
 # ---------- fotos documentales, prueba y clientes ----------
@@ -1104,7 +1136,7 @@ def portada(p, tipo, migas_items=None, pliegue=True, datos_html=None, clase=""):
     foto = f'<div class="vt-portada__foto"{estilo_foto(p)}>{figura(p["foto"], principal=True)}</div>' if p.get("foto") else ""
     precio = p.get("etiqueta_html") or (etiqueta(p["etiqueta"]) if p.get("etiqueta") else "")
     boton = p.get("cta") or boton_wa(p["mensaje"], f"{tipo}:hero")
-    cuadro = cuadro_datos() if datos_html is None else datos_html
+    cuadro = tira_datos() if datos_html is None else datos_html
     return (
         f'<section class="{clase_portada(p, pliegue, clase)}" aria-labelledby="vt-h1"><div class="vt-wrap">'
         f'<div class="vt-portada__grid"><div class="vt-portada__pliegue">{ruta}'

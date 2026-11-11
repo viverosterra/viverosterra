@@ -93,8 +93,9 @@ def render(k):
         c.bloque(3, "Jardines entregados", "vt-h-obras", o["titulo"],
                  c.obras(o["figuras"]) + c.linea_prueba() + f'<h3 class="vt-mt">{o["titulo_clientes"]}</h3>' + c.logos(),
                  lede=o["lede"]),
-        c.bloque(4, "Opiniones", "vt-h-opiniones", op["titulo"], c.testimonios(op["items"]) + _resenas() + _fila_wa(mensaje, "opiniones"),
-                 lede=op["lede"]),
+        # Plan visual V2: las opiniones son el momento oscuro a media página.
+        c.momento(c.bloque(4, "Opiniones", "vt-h-opiniones", op["titulo"],
+                           c.testimonios(op["items"]) + _resenas() + _fila_wa(mensaje, "opiniones"), lede=op["lede"])),
         c.bloque(5, "Cómo trabajamos", "vt-h-como", pr["titulo"], c.pasos(pr["pasos"]) + _fila_wa(mensaje, "proceso"),
                  lede=pr["lede"], tinte=True),
         c.bloque_dos(6, "Precios", "vt-h-precios", pc["titulo"], f'<p class="vt-lede">{pc["lede"]}</p>' + c.nota(*pc["nota"]),

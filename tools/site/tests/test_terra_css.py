@@ -106,8 +106,11 @@ class TerraCssTest(unittest.TestCase):
         # ritmo de secciones, las filas con desplazamiento del celular, los estados :active/:hover y la condición de
         # terreno listo del precio (decisión del dueño). Topes: 60 KB brutos y 12 KB con gzip (+0.8 KB gzip en cada
         # página; la home baja ~0.2 KB en terra-inicio.css).
+        # Decisión del 2026-11-11 (plan visual V2, ritmo): «En corto» como nota de campo, tira de datos de un renglón,
+        # pasos y opiniones en el momento oscuro, estados de envío en acordeón y el título fijo de la sección en
+        # computadora. Tope bruto: 62 KB (+2 KB); el de gzip, que es lo que se transfiere, sigue en 12 KB.
         self.assertLess(len(gzip.compress(datos, mtime=0)), 12 * 1024)
-        self.assertLess(len(datos), 60 * 1024)
+        self.assertLess(len(datos), 62 * 1024)
 
     def test_menu_movil_con_whatsapp_ancho_y_sin_barra_debajo(self):
         css = sin_comentarios(self.css)

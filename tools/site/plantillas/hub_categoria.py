@@ -81,7 +81,9 @@ def _lista(k, n):
 
 
 def _garantia(k, n):
-    return c.garantia(dict(k["garantia"], numero=n, id_titulo="vt-h-garantia", rotulo="Garantía"))
+    # Plan visual V2: la garantía de plantas (datos.GARANTIA_PLANTAS) es el momento oscuro, con su CTA.
+    return c.garantia(dict(k["garantia"], numero=n, id_titulo="vt-h-garantia", rotulo="Garantía", banda=True,
+                           cta_html=_fila(k, "garantia")))
 
 
 def _faq(k, n):

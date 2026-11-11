@@ -159,8 +159,10 @@ def _relacionados(k, numero, tinte):
 
 def _proceso(k, numero, tinte):
     p = k["proceso"]
-    return c.bloque(numero, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]) + _cta(k, "proceso"),
-                    lede=p["lede"], tinte=tinte)
+    seccion = c.bloque(numero, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]) + _cta(k, "proceso"),
+                       lede=p["lede"], tinte=tinte)
+    # Plan visual V2: si la garantía no es banda (no está en datos.py), el proceso es el momento oscuro de la página.
+    return seccion if k.get("garantia", {}).get("banda") else c.momento(seccion)
 
 
 def _garantia(k, numero, tinte):

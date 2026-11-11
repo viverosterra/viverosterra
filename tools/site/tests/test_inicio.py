@@ -42,7 +42,7 @@ class InicioTest(unittest.TestCase):
         self.assertIn("/css/terra-inicio.", HTML[:HTML.index("</head>")])
 
     def test_secuencia_de_la_plantilla(self):
-        marcas = ('class="vt-portada"', 'class="vt-datos"', 'id="vt-h-que"', 'data-vt-medidor', 'id="vt-h-obras"',
+        marcas = ('class="vt-portada"', 'class="vt-datos vt-datos--tira"', 'id="vt-h-que"', 'data-vt-medidor', 'id="vt-h-obras"',
                   'class="vt-logos"', 'id="vt-h-opiniones"', 'id="vt-h-como"', 'id="vt-h-precios"', 'id="vt-h-faq"', 'id="vt-h-cobertura"', 'class="vt-cierre"')
         posiciones = [MAIN.index(m) for m in marcas]
         self.assertEqual(posiciones, sorted(posiciones))
@@ -89,7 +89,7 @@ class InicioTest(unittest.TestCase):
         # entre el lede y el botón. El cuadro de datos sigue igual.
         self.assertNotIn("vt-portada--pliegue", portada)
         orden = [portada.index(m) for m in ('class="vt-lede"', 'class="vt-portada__foto"', 'class="vt-etiqueta"', "data-hero-cta",
-                                            'class="vt-datos"')]
+                                            'class="vt-datos vt-datos--tira"')]
         self.assertEqual(orden, sorted(orden))
 
     def test_metas_y_toda_la_home_sin_gratis(self):

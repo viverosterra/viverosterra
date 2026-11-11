@@ -63,7 +63,9 @@ class BandaTest(unittest.TestCase):
     def test_banda_donde_la_garantia_es_de_datos(self):
         for ruta in SERVICIOS:
             with self.subTest(ruta=ruta):
-                self.assertEqual(main(html(ruta)).count("vt-banda"), 1 if ruta in CON_BANDA else 0)
+                # Plan visual V2: las demás llevan su momento oscuro en el proceso, nunca en la garantía.
+                garantia = main(html(ruta)).split('aria-labelledby="vt-h-garantia"', 1)[0].rsplit("<section", 1)[1]
+                self.assertEqual("vt-banda" in garantia, ruta in CON_BANDA)
         self.assertIn(c.garantia_pasto(), main(html("/pasto-en-rollo-tampico")))
         self.assertIn(c.garantia_plantas(), main(html("/diseno-jardines-tampico")))
 
