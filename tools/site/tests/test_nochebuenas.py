@@ -303,7 +303,7 @@ class CotizadorMarcadoTest(unittest.TestCase):
         cfg = json.loads(crudo)
         self.assertEqual(cfg["wa"], datos.TELEFONO_WA)
         self.assertEqual(cfg["cortes"], list(NB["cortes"]))
-        self.assertEqual([p["clave"] for p in cfg["productos"]], ["5", "6", "7", "colgante", "12"])
+        self.assertEqual([p["clave"] for p in cfg["productos"]], ["5", "6", "7", "8", "colgante", "12"])
         self.assertEqual(cfg["preventa"]["hasta"], NB["preventa"]["hasta"])
         self.assertEqual(cfg["anticipo_pct"], 50)
         self.assertEqual(NB["entrega_mayoreo_antes"], "2026-12-12")
@@ -374,7 +374,7 @@ class JsonLdTest(unittest.TestCase):
 
     def test_grafo_completo(self):
         tipos = [n["@type"] for n in self.nodos]
-        self.assertEqual(tipos.count("Product"), 5)
+        self.assertEqual(tipos.count("Product"), 6)
         # SEO fase 1: el negocio es la entidad única, de tipo GardenStore + LocalBusiness.
         for tipo in ("WebPage", "FAQPage", "BreadcrumbList", ["GardenStore", "LocalBusiness"]):
             self.assertEqual(tipos.count(tipo), 1)
@@ -440,7 +440,7 @@ class ModosTest(unittest.TestCase):
         return [p["offers"]["availability"].rsplit("/", 1)[1] for p in productos(modo(nombre))]
 
     def test_temporada_en_stock_y_macetón_sobre_pedido(self):
-        self.assertEqual(self.disponibilidad("temporada"), ["InStock", "InStock", "InStock", "InStock", "PreOrder"])
+        self.assertEqual(self.disponibilidad("temporada"), ["InStock", "InStock", "InStock", "InStock", "InStock", "PreOrder"])
 
     def test_preventa(self):
         pagina = modo("preventa")
@@ -555,3 +555,21 @@ class ConfiguracionTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Maceta8Test(unittest.TestCase):
+    """Decisión del dueño 2026-11-11: Maceta 8" a $699/$589/$539/$519 (costo $400), en existencia, con sus dos fotos."""
+
+    def test_precio_y_existencia(self):
+        p = next(p for p in datos.NOCHEBUENAS["productos"] if p["clave"] == "8")
+        self.assertEqual(p["precios"], (699, 589, 539, 519))
+        self.assertFalse(p.get("sobre_pedido"))
+        self.assertGreater(p["precios"][-1], 400, "el precio de proyecto queda arriba del costo")
+
+    def test_fotos_en_la_galeria(self):
+        from contenido.nochebuenas_fotos import FOTOS
+        ids = [f["id"] for f in FOTOS if f["uso"] == "galeria"]
+        self.assertEqual(ids[:2], ["maceta-8", "maceta-8-hilera"])
+        html = (Path(__file__).resolve().parents[3] / "public/post/nochebuenas-tampico-madero-mayoreo/index.html").read_text(encoding="utf-8")
+        self.assertIn("<td>$699</td><td>$589</td><td>$539</td><td>$519</td>", html)
+        self.assertIn("nochebuena-roja-maceta-8-tampico-800.webp", html)
