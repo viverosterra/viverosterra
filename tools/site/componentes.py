@@ -112,6 +112,13 @@ def garantia_pasto(prefijo=""):
     return texto.replace(condiciones, f'<a href="{CONDICIONES_PASTO}">{condiciones}</a>')
 
 
+def garantia_pasto_corta():
+    """Plan visual V1 (2026-11-11): la garantía completa va una vez por página; donde ya se dijo, esta versión corta
+    con el mismo enlace a condiciones. Solo usa datos.ARRAIGO: no agrega promesas."""
+    return (f'Garantía de arraigo de {esc(datos.ARRAIGO)} en el pasto instalado '
+            f'(<a href="{CONDICIONES_PASTO}">ver condiciones</a>).')
+
+
 def garantia_plantas():
     """datos.GARANTIA_PLANTAS con "ver condiciones" enlazado a la garantía de plantas de Políticas."""
     texto, condiciones = esc(datos.GARANTIA_PLANTAS), "ver condiciones"
@@ -146,12 +153,13 @@ def fila_cta(mensaje, tipo, seccion, hero=False, extra="", texto=CTA_WA):
 
 def fila_seccion(mensaje, tipo, seccion, texto, contexto=False):
     """CTA de WhatsApp al final de una sección larga (Entrega B de experiencia: ningún tramo de más de 6 pantallas del
-    celular sin un CTA en línea), como las filas de la home: un solo botón con texto propio y la promesa. data-hero-cta:
+    celular sin un CTA en línea), como las filas de la home: un solo botón con texto propio (sin la promesa: V1). data-hero-cta:
     la barra fija se esconde mientras se ve, para no mostrar dos botones iguales. contexto=True (tienda): tienda-pasto.js
     le pone el mensaje con lo que el cliente ya eligió (data-vt-ctx)."""
     marca = " data-vt-ctx" if contexto else ""
-    return (f'<div class="vt-cta vt-mt" data-hero-cta{marca}>{boton_wa(mensaje, f"{tipo}:{seccion}", texto)}</div>'
-            f'<p class="vt-promesa">{promesa_horario()}</p>')
+    # Plan visual V1 (2026-11-11): la promesa de respuesta va una sola vez arriba (línea de confianza del hero) y en el
+    # cierre; repetida bajo cada botón de sección eran hasta 8 párrafos iguales por página.
+    return f'<div class="vt-cta vt-mt" data-hero-cta{marca}>{boton_wa(mensaje, f"{tipo}:{seccion}", texto)}</div>'
 
 
 def prueba_cta(opiniones=(), dato=""):
@@ -728,7 +736,7 @@ def medidor(prefijo, tipo, largo=8, ancho=6, modo="instalado", mensaje=None, bot
     marca_caja, marca_boton = ("", " data-hero-cta") if boton_medida else (" data-hero-cta", "")
     marca_caja += f' data-vt-barra="{esc(CTA_MEDIDA_BARRA)}"'
     texto_boton = f'<span data-vt-o="cta-texto">{CTA_WA}</span>'
-    pie = f'<p class="vt-medidor__garantia" data-vt-o="garantia">{garantia_pasto()}</p>' if garantia else ""
+    pie = f'<p class="vt-medidor__garantia" data-vt-o="garantia">{garantia_pasto_corta()}</p>' if garantia else ""
     vivo = '<p class="vt-medidor__vivo" data-vt-o="vivo"></p>' if resultado_vivo else ""
     generico = datos.con_firma(mensaje or datos.MENSAJES["general"])
     mayoreo = datos.con_firma(datos.MENSAJES["empresas"])

@@ -101,3 +101,7 @@
   .vt-blog .vt-art__rel ul,.vt-blog .vt-blog-l,.vt-blog .vt-blog-s{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
   .vt-blog .vt-blog-p__g{grid-template-columns:7fr 5fr}
 }
+/* Plan visual V1: en celular las tablas anchas se deslizan; el aviso queda fijo a la izquierda */
+@media (max-width:767px){
+  .vt-blog .vt-art__tabla::before{content:"Desliza para ver toda la tabla →";position:sticky;left:0;display:block;width:max-content;margin-bottom:6px;font-size:var(--vt-text-xs);font-weight:600;color:var(--vt-muted)}
+}

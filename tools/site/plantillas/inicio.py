@@ -36,9 +36,10 @@ def _banner_temporada(t):
             '</span></a></aside>')
 
 
-# Filas de WhatsApp de sección: texto del botón y si llevan la promesa debajo (solo la primera y la última).
-_FILAS = {"opiniones": ("Cotizar mi jardín por WhatsApp", True), "proceso": ("Empezar por WhatsApp", False),
-          "precios": ("Pedir mi precio por WhatsApp", False), "faq": ("Preguntar por WhatsApp", True)}
+# Filas de WhatsApp de sección: texto del botón y si llevan la promesa debajo. Plan visual V1 (2026-11-11): ninguna;
+# la promesa va en la línea de confianza del hero y en el cierre.
+_FILAS = {"opiniones": ("Cotizar mi jardín por WhatsApp", False), "proceso": ("Empezar por WhatsApp", False),
+          "precios": ("Pedir mi precio por WhatsApp", False), "faq": ("Preguntar por WhatsApp", False)}
 
 
 def _portada(p):

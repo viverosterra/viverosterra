@@ -249,7 +249,8 @@ def tarjeta(m):
     """Tarjeta del catálogo: foto con la altura, "para llevar hoy" (chip verde: el amarillo es solo para precios),
     regla de altura, precio puesto y Agregar. En celular es horizontal (terra-tienda.css)."""
     url = f"/pasto-sintetico/{m['slug']}"
-    hoy = (f'<p class="vt-tarjeta-p__hoy">{esc(m["nombre"])} para llevar hoy · {datos.CALLE_CORTA}</p>'
+    # Plan visual V1: el nombre ya va en el h3 de arriba; la insignia no lo repite.
+    hoy = (f'<p class="vt-tarjeta-p__hoy">Listo para llevar hoy · {datos.CALLE_CORTA}</p>'
            if m["stock"] else "")
     return (
         f'<article class="spec-card vt-tarjeta-p" data-usos="{" ".join(m["usos"])}" id="m-{m["slug"]}">'
@@ -263,7 +264,8 @@ def tarjeta(m):
         f'data-landed-slug="{m["slug"]}"></span></p>'
         '<p class="vt-tarjeta-p__pago">Paga en mensualidades con tarjeta de crédito</p>'
         f'<button class="spec-card__add vt-btn vt-btn--linea" type="button" data-add="{m["slug"]}" '
-        f'aria-label="Agregar a mi lista: {esc(m["nombre"])}">Agregar a mi lista</button></div></article>')
+        f'aria-label="Agregar a mi lista: {esc(m["nombre"])}">Agregar<span class="vt-tarjeta-p__mas"> a mi lista</span>'
+        '</button></div></article>')
 
 
 def filtros(opciones=data.USO_FILTERS):

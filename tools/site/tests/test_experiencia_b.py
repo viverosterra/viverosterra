@@ -61,12 +61,12 @@ class TextosDeBotonTest(unittest.TestCase):
 
 
 class FilasYPruebaTest(unittest.TestCase):
-    def test_fila_de_seccion_esconde_la_barra_y_lleva_la_promesa_con_horario(self):
+    def test_fila_de_seccion_esconde_la_barra_sin_repetir_la_promesa(self):
         fila = c.fila_seccion("Hola", "plantas", "especies", "Cotizar mis plantas")
         self.assertIn('data-hero-cta', fila)
         self.assertIn('data-cta="plantas:especies"', fila)
         self.assertIn("Cotizar mis plantas", fila)
-        self.assertIn(datos.PROMESA_COMPLETA, fila)
+        self.assertNotIn(datos.PROMESA_COMPLETA, fila)  # plan visual V1: va en el hero y en el cierre
 
     def test_prueba_social_solo_con_datos_publicados_y_enlace_a_las_resenas(self):
         prueba = c.prueba_cta(datos.OPINION_SINTETICO_TAMPICO)
