@@ -113,7 +113,13 @@ Cada etapa va en una rama aparte. Antes de pedirte el visto bueno para publicar,
 
 Orden recomendado: V1 → V2 → V3 → V4. V1 se nota de inmediato y no cambia el estilo.
 
-## Lo que necesito de ti
+## Respuestas del dueño (2026-11-11)
+
+1. Sí: cada artículo lleva la foto que ya tiene en el índice del blog.
+2. Las fotos de playa y alberca de Plantas son suyas (no son de banco).
+3. Sí a los dibujos de línea botánicos en SVG.
+
+## Preguntas que se hicieron
 
 1. ¿Puedo poner en cada artículo la foto que ya tiene en el índice del blog?
 2. Las fotos de playa y alberca en Plantas (Palma Kerpis, Coco plumoso, Palma Areca): ¿son tuyas o de banco de imágenes?
