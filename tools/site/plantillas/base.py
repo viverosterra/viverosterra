@@ -37,6 +37,26 @@ def precarga_imagen(f):
     return f'<link rel="preload" as="image" href="{escape(f["src"])}"{extra} fetchpriority="high">'
 
 
+# Plan visual V3 (2026-11-11): la línea de negocio de la página (por su ruta) da el tinte de las secciones y el dibujo
+# de línea de las bandas oscuras: pasto (hoja de San Agustín), plantas (fronda de palma) y tierra (raíz). Las demás
+# páginas (inicio, servicios, colonias, blog) quedan con el tinte hueso y la hoja.
+LINEAS = (
+    ("tierra", ("/tierra-negra", "/piedra-bola", "/marmol-blanco", "/tezontle-rojo")),
+    ("plantas", ("/plantas-", "/palmas-", "/arboles-", "/vivero-tampico", "/catalogo", "/post/nochebuenas")),
+    ("pasto", ("/pasto-", "/mayoreo-pasto", "/protocolo-cuidados-pasto")),
+)
+
+
+def linea_de(canonical):
+    ruta = "/" + canonical.split("://", 1)[-1].split("/", 1)[-1] if "://" in canonical else canonical
+    return next((nombre for nombre, prefijos in LINEAS if ruta.startswith(prefijos)), None)
+
+
+def atributo_linea(canonical):
+    linea = linea_de(canonical)
+    return f' data-linea="{linea}"' if linea else ""
+
+
 def documento(meta, cuerpo, *, jsonld_bloques=(), precargas=(), scripts=(), head_extra=(), tras_main="",
               clase_body="vt-pagina", imagen=None):
     """meta: title, description, robots, canonical, og (pares en el orden publicado) y, opcionales, alternos
@@ -50,7 +70,7 @@ def documento(meta, cuerpo, *, jsonld_bloques=(), precargas=(), scripts=(), head
     meta = entidad.meta_social(meta, imagen)
     lineas = [
         "<!DOCTYPE html>",
-        '<html lang="es-MX">',
+        f'<html lang="es-MX"{atributo_linea(meta["canonical"])}>',
         "<head>",
         '<meta charset="utf-8">',
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">',

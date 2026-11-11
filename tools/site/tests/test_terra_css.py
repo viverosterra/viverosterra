@@ -109,8 +109,11 @@ class TerraCssTest(unittest.TestCase):
         # Decisión del 2026-11-11 (plan visual V2, ritmo): «En corto» como nota de campo, tira de datos de un renglón,
         # pasos y opiniones en el momento oscuro, estados de envío en acordeón y el título fijo de la sección en
         # computadora. Tope bruto: 62 KB (+2 KB); el de gzip, que es lo que se transfiere, sigue en 12 KB.
-        self.assertLess(len(gzip.compress(datos, mtime=0)), 12 * 1024)
-        self.assertLess(len(datos), 62 * 1024)
+        # Decisión del 2026-11-11 (plan visual V3, gráficos propios): grano de papel y tres dibujos de línea en SVG
+        # dentro de la hoja (sin imágenes nuevas que descargar), cifras en Fraunces y tinte por línea de negocio.
+        # Topes: 66 KB brutos y 13 KB con gzip (+0.6 KB gzip por página).
+        self.assertLess(len(gzip.compress(datos, mtime=0)), 13 * 1024)
+        self.assertLess(len(datos), 66 * 1024)
 
     def test_menu_movil_con_whatsapp_ancho_y_sin_barra_debajo(self):
         css = sin_comentarios(self.css)

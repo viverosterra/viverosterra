@@ -245,6 +245,18 @@ def barra_compra(nombre, precio, mensaje, *, rollo=None):
 
 
 # ---------- catálogo del hub ----------
+def grafica_alturas(modelos=None):
+    """Plan visual V3 (2026-11-11): los modelos uno junto al otro por altura de fibra (la regla de la tarjeta, en
+    grande), con su peso. Texto real en el HTML: nombre con enlace a su ficha, milímetros y g/m²."""
+    filas = "".join(
+        f'<li><a href="/pasto-sintetico/{m["slug"]}">{esc(m["nombre"])}</a>'
+        f'<span class="vt-alturas__barra" style="--w:{c.redondear(m["mm"] / MAX_MM * 100)}%"></span>'
+        f'<span class="vt-alturas__v"><b>{m["mm"]}</b> mm · {m["peso"]} g/m²</span></li>'
+        for m in sorted(modelos or data.MODELOS, key=lambda x: (x["mm"], x["peso_num"])))
+    return (f'<figure class="vt-alturas"><figcaption>Altura de fibra y peso de los {len(modelos or data.MODELOS)} '
+            f'modelos</figcaption><ol>{filas}</ol></figure>')
+
+
 def tarjeta(m):
     """Tarjeta del catálogo: foto con la altura, "para llevar hoy" (chip verde: el amarillo es solo para precios),
     regla de altura, precio puesto y Agregar. En celular es horizontal (terra-tienda.css)."""

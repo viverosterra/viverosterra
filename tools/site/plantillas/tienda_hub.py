@@ -66,7 +66,7 @@ def render(k):
                  t.ciudades_destacadas(ci["items"]) + f'<p class="vt-promesa">{ci["perros"]}</p>'
                  + _fila(k, "ciudades", "Cotizar con envío a mi ciudad"), lede=ci["lede"], id_seccion="ciudades"),
         c.bloque(6, "Comparativa", "vt-h-comparativa", cp["titulo"],
-                 t.tabla_modelos() + f'<p class="vt-promesa">{cp["nota"]}</p>' + _fila(k, "comparativa", "Cotizar mi modelo"),
+                 t.grafica_alturas() + t.tabla_modelos() + f'<p class="vt-promesa">{cp["nota"]}</p>' + _fila(k, "comparativa", "Cotizar mi modelo"),
                  tinte=True, id_seccion="comparativa"),
         c.bloque(7, "Obras", "vt-h-obras", ob["titulo"], c.obras(ob["figuras"], c.nota(*ob["nota"])), id_seccion="obras"),
         c.momento(c.bloque(8, "Tu pedido", "vt-h-pedido", pe["titulo"], c.pasos(pe["pasos"]) + _fila(k, "pedido", "Empezar mi pedido"),
