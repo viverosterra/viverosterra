@@ -338,6 +338,7 @@
   .vt-portada .vt-kicker{margin-bottom:8px;font-size:.75rem;letter-spacing:.02em}
   .vt-pagina main :is(.vt-portada,.vt-titular) h1{font-size:2.3rem}
   .vt-pagina main :is(.vt-portada--larga,.vt-titular--larga) h1{font-size:2rem}
+  .vt-pagina main .vt-portada__lema{margin-top:.4em;font-size:1.1rem}
   .vt-portada .vt-lede{margin-top:10px;font-size:var(--vt-text-base)}
   .vt-portada .vt-etiqueta-x,.vt-portada__trato{margin-top:14px}
 }

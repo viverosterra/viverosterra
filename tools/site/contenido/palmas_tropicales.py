@@ -96,7 +96,7 @@ CONTENIDO = {
         "pos": "50% 24%",
         "dato": 'Garantía de 30 días en lo que sembramos, <a href="/politicas#garantia-plantas">con condiciones</a>',
         "enlaces": ((f'Ver las {cd.cuenta({"cat": ["palmas"]})} palmas del catálogo', "/catalogo?cat=palmas", "plantas:catalogo"),),
-        "lema": "Te las llevamos y las sembramos.",
+        "lema": "Para darle a tu casa un aire de playa.",
         "h1": "Palmas para jardín en Tampico, tropicales y exóticas",
         "lede": f"{datos.PALMAS_PRECIO}.",
         "etiqueta": {"codigo": "Palmas", "aviso": f"Precios {datos.ANIO}", "nombre": "Areca y coco plumoso", "antes": "desde",
@@ -168,6 +168,6 @@ PARIDAD = {
     },
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
-PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «Te las llevamos y las sembramos.» (de la entrada); la lista de especies y la garantía de 30 días salen de la entrada (la garantía va en la línea de confianza, con sus condiciones).')
+PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Lema nuevo: «Para darle a tu casa un aire de playa.» (elegido por el dueño el 2026-11-10, en palabras del cliente); la lista de especies y la garantía de 30 días salen de la entrada (la garantía va en la línea de confianza, con sus condiciones).')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: filas de WhatsApp («Cotizar mis palmas») tras el filtro por necesidad, las subcategorías, las especies (la rejilla larga se parte con una en medio), los precios y las preguntas, con la prueba social (cifras de datos.py y la calificación de Google con su enlace) y la garantía de las plantas que sembramos junto a la primera. Encabezados, precios y enlaces sin cambios.'

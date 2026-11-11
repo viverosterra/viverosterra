@@ -72,7 +72,7 @@ ETIQUETA = {"codigo": "Nochebuena", "aviso": f"Precios {ANIO}", "nombre": "Por v
                       (f"{PIEZAS_PROYECTO} piezas o más", dinero(DESDE_VOLUMEN)))}
 ETIQUETA_PREVENTA = dict(ETIQUETA, antes="Precio de referencia, desde")
 # Lema del hero (Entrega A de experiencia): sale de "mismo_precio", sin promesas nuevas.
-LEMA = "Roja. Rosa y jaspeada, sobre pedido."
+LEMA = "Para tu casa, tu negocio o tu posada."
 PORTADAS = {
     "temporada": {"kicker": f"Temporada {ANIO} · Pedidos abiertos", "h1": f"Nochebuenas {ANIO} en Tampico: menudeo y mayoreo",
                   "lema": LEMA, "lede": SUBTITULO, "cta": "Cotizar mi pedido", "wa": "Pedir por WhatsApp"},

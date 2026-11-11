@@ -90,7 +90,7 @@ CONTENIDO = {
     "portada": {
         "kicker": f"Vivero y cuadrilla propia · Desde {datos.DESDE}",
         "h1": "Pasto, jardines y plantas en Tampico.",
-        "lema": "Con el precio por delante.",
+        "lema": "Todo para tu jardín, en un solo lugar.",
         "lede": (f"Pasto San Agustín en rollo, diseño de jardines y {datos.VARIEDADES} variedades de plantas, en Tampico, "
                  "Madero y Altamira."),
         "etiqueta": {

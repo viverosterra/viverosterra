@@ -11,7 +11,7 @@ SIN_IVA = ("pasto-natural", "palmas", "palmas-cotizacion", "arboles", "banqueta"
 
 # Lema de los artículos (Entrega A de experiencia): el mismo para todos, tomado de la descripción del blog ("consejos
 # de jardinería adaptados al clima…").
-LEMA = "Jardinería para el clima de Tampico."
+LEMA = "Lo que nos preguntan en el vivero, contestado."
 
 
 def cabeza(k):
