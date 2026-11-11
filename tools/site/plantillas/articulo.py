@@ -22,7 +22,7 @@ def render(k):
     html = "\n".join((cb.cabeza(k), cuerpo, cb.producto(k["tema"], k["mensaje"], k["tipo"]),
                       cb.relacionados(k["relacionados_titulo"] or "También te puede interesar", k["relacionados"])))
     return base.documento(base.meta_de(k), html, jsonld_bloques=({"@context": "https://schema.org", "@graph": grafo},),
-                          precargas=_precarga(k["cuerpo"]), clase_body="vt-pagina vt-blog")
+                          precargas=_precarga(k), clase_body="vt-pagina vt-blog")
 
 
 # Entrega C de experiencia: además del CTA de media lectura, una línea discreta de WhatsApp al empezar una sección (antes
@@ -91,6 +91,9 @@ def _articulo_ld(k, nodo):
     return {**completo, "image": imagen} if imagen else completo
 
 
-def _precarga(cuerpo):
-    m = re.search(r'<img src="([^"]+)"', cuerpo)
+def _precarga(k):
+    f = k.get("portada")
+    if f:  # plan visual V4: la portada es la primera imagen y el LCP
+        return (base.precarga_imagen({"src": f["src"], "srcset": cb.portada_srcset(f), "sizes": cb.PORTADA_SIZES}),)
+    m = re.search(r'<img src="([^"]+)"', k["cuerpo"])
     return (base.precarga_imagen({"src": m.group(1)}),) if m else ()

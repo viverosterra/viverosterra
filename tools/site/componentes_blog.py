@@ -22,10 +22,35 @@ def cabeza(k):
     # Hero de lectura (Entrega A de experiencia): la escala de titular del sitio, el lema en serif y el WhatsApp como
     # enlace de texto (con su data-cta ":hero", la barra fija no tapa la respuesta directa al cargar); sin botón grande.
     enlaces = c.enlaces_portada((c.enlace_wa(k["mensaje"], f'{k["tipo"]}:hero'),), k["tipo"])
-    return (f'<header class="{c.clase_titular(k["h1"], "vt-art__cabeza")}"><div class="vt-wrap">{c.migas(k["migas"])}'
+    foto = k.get("portada")
+    clase = c.clase_titular(k["h1"], "vt-art__cabeza") + (" vt-art__cabeza--foto" if foto else "")
+    return (f'<header class="{clase}"><div class="vt-wrap">{c.migas(k["migas"])}'
             f'<p class="vt-kicker">{k["kicker"]}</p><h1 id="vt-h1">{k["h1"]}</h1>'
             f'<p class="vt-portada__lema vt-serif">{LEMA}</p>{dek}'
-            f'<p class="vt-art__meta"><span><b>Por</b> {esc(k["autor"])}</span>{fechas}{tiempo}</p>{enlaces}</div></header>')
+            f'<p class="vt-art__meta"><span><b>Por</b> {esc(k["autor"])}</span>{fechas}{tiempo}</p>{enlaces}'
+            f'{portada(foto)}</div></header>')
+
+
+# En celular la portada ocupa el ancho de la pantalla, pero se declara 56vw para que todos los celulares (también los de
+# pantalla densa) bajen la copia de 640 px y no el original de 1536 px: la portada ilustra, y la página sigue rápida.
+# En computadora mide un tercio del ancho: 640 px en pantallas normales, el original en las densas.
+PORTADA_SIZES = "(min-width:1024px) 34vw, 56vw"
+
+
+def portada_srcset(f):
+    """srcset de la portada; vacío si la foto no tiene copia para celular (ya mide 720 px o menos)."""
+    return f'{f["src_movil"]} 640w, {f["src"]} {f["ancho"]}w' if f.get("src_movil") else ""
+
+
+def portada(f):
+    """Plan visual V4: la foto de la tarjeta del índice como portada del artículo. Ilustra el tema, no muestra el caso
+    del artículo: alt vacío (el H1 ya lo dice) y sin pie FIG. inventado."""
+    if not f:
+        return ""
+    srcset = f' srcset="{esc(portada_srcset(f))}" sizes="{PORTADA_SIZES}"' if f.get("src_movil") else ""
+    return (f'<figure class="vt-art__portada"><img src="{esc(f["src"])}"{srcset} '
+            f'width="{f["ancho"]}" height="{f["alto"]}" alt="" loading="eager" '
+            f'fetchpriority="high" decoding="async"></figure>')
 
 
 def respuesta(r):
