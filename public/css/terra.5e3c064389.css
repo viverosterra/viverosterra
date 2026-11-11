@@ -666,7 +666,7 @@
 .vt-pagina .vt-portada:not(.vt-portada--sinfoto) .vt-etiqueta-x{transform-origin:50% -40px;animation:vt-balanceo .9s var(--vt-ease-out) both}
 }
 @supports (animation-timeline:view()){
-.vt-pagina main :is(.vt-bloque,.vt-art__cuerpo) h2{animation:vt-titulo linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+.vt-pagina main :is(.vt-bloque,.vt-art__cuerpo) h2:not(.vt-art__respuesta-t){animation:vt-titulo linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
 .vt-pagina main :is(.vt-obras,.vt-mosaico,.vt-nb-galeria) .vt-fig__marco{animation:vt-sube linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
 }
 }
@@ -702,3 +702,13 @@
 .vt-zonas-acc details[open] summary::after{content:"−"}
 .vt-pagina main .vt-zonas-acc p{margin:0 0 14px;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
 @media (min-width:1200px){.vt-bloque>.vt-dos>div:first-child{position:sticky;top:calc(var(--vt-head-h) + 32px)}}
+.vt-pagina{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .3 0 0 0 0 .18 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")}
+.vt-pagina main .vt-grande,.vt-datos--tira dd{font-family:var(--vt-font-serif);font-style:italic;font-weight:400;font-variation-settings:normal}
+.vt-pagina main .vt-grande{line-height:.95;letter-spacing:-.02em}
+.vt-datos--tira dd{font-size:20px}
+.vt-datos--tira dd small{font-family:var(--vt-font-sans);font-style:normal}
+.vt-banda,.vt-cierre:not(.vt-cierre--foto){background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' fill='none' stroke='%23fff' stroke-opacity='.16' stroke-width='1.4' stroke-linecap='round'%3E%3Cpath d='M60 118C58 90 50 60 30 30M60 118c2-33 6-68 4-106M60 118c4-26 16-52 38-74M48 118c-4-20-12-34-30-44M72 118c6-18 16-28 34-32M34 36c6 2 10 6 12 12M64 20c4 4 4 10 2 14M92 50c-2 6-6 8-12 8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right -24px bottom -12px;background-size:clamp(150px,22vw,300px)}
+[data-linea="plantas"] :is(.vt-banda,.vt-cierre:not(.vt-cierre--foto)){background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' fill='none' stroke='%23fff' stroke-opacity='.16' stroke-width='1.4' stroke-linecap='round'%3E%3Cpath d='M14 112C38 82 66 52 110 28M30 94 16 70m14 24 22 10M46 76 36 52m10 24 22 10M62 60 56 36m6 24 24 8M78 46 76 24m2 22 22 4M94 36l2-18m-2 18 18-2'/%3E%3C/svg%3E")}
+[data-linea="tierra"] :is(.vt-banda,.vt-cierre:not(.vt-cierre--foto)){background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' fill='none' stroke='%23fff' stroke-opacity='.16' stroke-width='1.4' stroke-linecap='round'%3E%3Cpath d='M60 8v42c0 20-20 30-30 60M60 50c4 24 24 34 32 62M60 60c-2 24 0 36-2 56M44 82c-8 4-20 6-30 14M78 80c10 4 22 2 32 8M36 98c-6 0-12 4-16 10M86 96c6 2 10 6 12 12'/%3E%3C/svg%3E")}
+[data-linea="tierra"] .vt-bloque--tinte{background-color:var(--vt-soil-100)}
+[data-linea="pasto"] .vt-bloque--tinte,[data-linea="plantas"] .vt-bloque--tinte{background-color:var(--vt-field-100)}

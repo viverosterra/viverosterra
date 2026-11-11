@@ -107,7 +107,7 @@ class MovimientoCssTest(unittest.TestCase):
     def test_revelado_por_scroll_solo_en_encabezados_y_figuras(self):
         revelados = [(sel, cuerpo) for _n, ctx, sel, cuerpo in self.todas if "animation-timeline" in cuerpo]
         self.assertEqual(sorted(sel for sel, _c in revelados),
-                         [".vt-pagina main :is(.vt-bloque,.vt-art__cuerpo) h2",
+                         [".vt-pagina main :is(.vt-bloque,.vt-art__cuerpo) h2:not(.vt-art__respuesta-t)",
                           ".vt-pagina main :is(.vt-obras,.vt-mosaico,.vt-nb-galeria) .vt-fig__marco"])
         for selector, _cuerpo in revelados:
             self.assertIsNone(INTOCABLES.search(selector))
@@ -119,7 +119,7 @@ class MovimientoCssTest(unittest.TestCase):
             with self.subTest(keyframes=nombre):
                 self.assertIn(f"opacity:{opacidad}", cuadros)
                 self.assertIn("translateY(16px)", cuadros)
-        self.assertIn("animation:vt-titulo ", next(c for s, c in revelados if s.endswith("h2")))
+        self.assertIn("animation:vt-titulo ", next(c for s, c in revelados if " h2" in s))
 
     def test_la_home_ya_no_repite_lo_que_es_de_todo_el_sitio(self):
         inicio = (CSS / "terra-inicio.css").read_text(encoding="utf-8")

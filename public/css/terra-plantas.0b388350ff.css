@@ -11,14 +11,14 @@
 .vt-plantas .vt-esp{display:flex;flex-direction:column;gap:6px;min-width:0}
 .vt-plantas .vt-esp[hidden]{display:none}
 .vt-plantas .vt-esp p{margin:0}
-.vt-plantas .vt-esp__foto{margin:0}
+.vt-plantas .vt-esp__foto{margin:0;padding:8px 8px 0;border:1px solid var(--vt-line);border-radius:var(--vt-radius);background:var(--vt-card)}
 .vt-plantas .vt-esp__foto img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:var(--vt-radius);background:var(--vt-bone-2)}
 .vt-plantas .vt-esp__sinfoto{display:block;width:100%;height:auto;aspect-ratio:4/5;border-radius:var(--vt-radius);background:var(--vt-field-100)}
 .vt-plantas .vt-esp__sinfoto .vt-sinfoto-reja{fill:none;stroke:var(--vt-line);stroke-width:1}
 .vt-plantas .vt-esp__sinfoto .vt-sinfoto-letra{fill:var(--vt-field-deep);font-family:var(--vt-font-serif);font-size:220px}
 .vt-plantas .vt-esp__sinfoto .vt-sinfoto-tag{fill:var(--vt-tag)}
 .vt-plantas .vt-esp__sinfoto .vt-sinfoto-tagtexto{fill:var(--vt-tag-ink);font-family:var(--vt-font-sans);font-size:22px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
-.vt-plantas .vt-esp__foto figcaption{margin-top:6px;font-size:var(--vt-text-xs);letter-spacing:.02em;color:var(--vt-muted)}
+.vt-plantas .vt-esp__foto figcaption{margin:8px -8px 0;padding:7px 8px;border-top:1px solid var(--vt-line);font-size:var(--vt-text-xs);letter-spacing:.02em;color:var(--vt-muted)}
 .vt-plantas .vt-esp__nombre{margin:4px 0 0;font-size:var(--vt-text-dato);line-height:1.15}
 .vt-plantas .vt-esp .vt-esp__sci{font-family:var(--vt-font-serif);font-size:var(--vt-text-sm);color:var(--vt-muted)}
 .vt-plantas .vt-esp__datos{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0;padding:0}

@@ -54,7 +54,11 @@ class BlogParidadTest(unittest.TestCase):
             if ruta.removeprefix("/blog/") in articulo.NUEVOS:
                 continue
             nuevas = paridad_materiales.fotos(paridad.archivo(ruta).read_text(encoding="utf-8"))
+            portada = articulo.PORTADAS.get(ruta.removeprefix("/blog/"))
             with self.subTest(ruta=ruta):
+                if portada:  # plan visual V4: la portada (la foto de su tarjeta del índice) va antes de las de la captura
+                    self.assertEqual(nuevas[0]["src"], portada["src"])
+                    nuevas = nuevas[1:]
                 self.assertEqual([re.sub(r"^(\.\./)+", "/", f["src"]) for f in viejas], [f["src"] for f in nuevas])
 
     def test_cada_correccion_tiene_motivo(self):

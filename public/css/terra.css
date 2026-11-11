@@ -801,7 +801,7 @@
   /* encabezados de sección y figuras suben al entrar en pantalla; sin soporte se ven fijos. El encabezado parte de
      opacity .6 (cumple contraste de texto grande aun a medio camino); en las figuras se anima el marco, no el pie. */
   @supports (animation-timeline:view()){
-    .vt-pagina main :is(.vt-bloque,.vt-art__cuerpo) h2{animation:vt-titulo linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+    .vt-pagina main :is(.vt-bloque,.vt-art__cuerpo) h2:not(.vt-art__respuesta-t){animation:vt-titulo linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
     .vt-pagina main :is(.vt-obras,.vt-mosaico,.vt-nb-galeria) .vt-fig__marco{animation:vt-sube linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
   }
 }

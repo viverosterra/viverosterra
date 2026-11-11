@@ -105,3 +105,14 @@
 @media (max-width:767px){
   .vt-blog .vt-art__tabla::before{content:"Desliza para ver toda la tabla →";position:sticky;left:0;display:block;width:max-content;margin-bottom:6px;font-size:var(--vt-text-xs);font-weight:600;color:var(--vt-muted)}
 }
+/* Plan visual V4: portada del artículo con la foto de su tarjeta del índice. En celular, a todo el ancho bajo los
+   enlaces; en computadora, en la columna derecha que quedaba vacía junto al título. */
+.vt-blog .vt-art__portada{margin:24px calc(var(--vt-gutter) * -1) 0;border-block:1px solid var(--vt-line);background:var(--vt-bone-2)}
+.vt-blog .vt-art__portada img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+@media (min-width:1024px){
+  .vt-blog .vt-art__cabeza--foto .vt-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.62fr);column-gap:64px;align-content:start}
+  .vt-blog .vt-art__cabeza--foto .vt-wrap>*{grid-column:1}
+  .vt-blog .vt-art__cabeza--foto .vt-wrap>.vt-crumbs{grid-column:1 / -1}
+  .vt-blog .vt-art__cabeza--foto .vt-art__portada{grid-column:2;grid-row:2 / span 12;align-self:start;margin:8px 0 0;padding:8px;border:1px solid var(--vt-line)}
+  .vt-blog .vt-art__cabeza--foto .vt-art__portada img{aspect-ratio:1/1;border-radius:var(--vt-radius)}
+}

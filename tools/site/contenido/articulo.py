@@ -74,10 +74,42 @@ class _Pagina:
             "faq": tuple(tuple(p) for p in doc["faq"]), "indice": indice(cuerpo, doc["faq"], doc["faq_titulo"], doc["respuesta"]),
             "tema": tema, "mensaje": paginas.contexto(ruta)["mensaje"].rsplit("\n\n", 1)[0],
             "relacionados_titulo": doc["relacionados_titulo"], "relacionados": tuple(doc["relacionados"]),
+            "portada": PORTADAS.get(slug),
         }
         self.PARIDAD = {**(doc.get("paridad") or {"reemplazos": {}, "retirados": {}}), "jsonld": {"Organization": M_AUTOR, **({"ImageObject": M_LOGO} if "ImageObject" in json.dumps(doc["jsonld"]) else {})},
-                        "hero": HERO, "terreno": TERRENO, "ritmo": RITMO}
+                        "hero": HERO, "terreno": TERRENO, "ritmo": RITMO, **({"portada": PORTADA} if slug in PORTADAS else {})}
 
+
+ANCHO_MOVIL = 640  # ancho de la copia
+UMBRAL_COPIA = 720  # solo las fotos más anchas llevan copia: las de 720 px o menos ya son ligeras (40–50 KB) y nunca se agrandan
+
+
+def ruta_movil(src):
+    """Copia de 640 px de la foto (tools/site/portadas_blog.py): mismo nombre con -640.webp."""
+    return src.rsplit(".", 1)[0] + "-640.webp"
+
+
+def _con_copia(foto):
+    return {**foto, "src_movil": ruta_movil(foto["src"])} if int(foto["ancho"]) > UMBRAL_COPIA else dict(foto)
+
+
+def _portadas():
+    """Plan visual V4 (decisión del dueño del 2026-11-11): cada artículo lleva de portada la foto que ya tiene su tarjeta
+    en el índice del blog. No la llevan los que no tienen foto en el índice (nunca una inventada) ni los que ya muestran
+    esa misma foto en su cuerpo (no se repite)."""
+    from contenido import blog_indice
+    fotos = {}
+    for s in blog_indice.CONTENIDO["secciones"]:
+        for t in s["tarjetas"]:
+            if t.get("foto"):
+                fotos.setdefault(t["href"].rstrip("/").removeprefix("/blog/"), t["foto"])
+    return {slug: _con_copia(fotos[slug]) for slug in CLAVES
+            if slug in fotos and fotos[slug]["src"] not in leer(slug)[1]}
+
+
+PORTADAS = _portadas()
+PORTADA = ("Plan visual V4 (decisión del dueño del 2026-11-11): portada con la misma foto de la tarjeta del artículo en el "
+           "índice del blog (a la derecha del título en computadora, bajo los enlaces en celular).")
 
 RITMO = ("Entrega C de experiencia (2026-11-10), ritmo y movimiento: WhatsApp de texto junto al CTA de media lectura y una "
          "línea «Preguntar por WhatsApp» cada 3 secciones después (antes, 7.6 pantallas sin WhatsApp en línea); revelado por "

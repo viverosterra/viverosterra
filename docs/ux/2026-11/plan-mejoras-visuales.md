@@ -166,3 +166,26 @@ Orden recomendado: V1 → V2 → V3 → V4. V1 se nota de inmediato y no cambia 
   - Lighthouse sin cambios: Inicio 99, Plantas para jardín 95, tienda 89; accesibilidad y SEO en 100.
   - Topes de terra.css: 66 KB sin comprimir y 13 KB comprimido, unos 0.6 KB más por página.
 - **Prueba:** tests/test_visual_v3.py.
+
+## Estado de V4 (2026-11-11, rama feat/visual-v4, sin publicar)
+
+- **Portada en los artículos:** 20 artículos llevan de portada la misma foto que ya tiene su tarjeta en el índice del
+  blog. En computadora va en la columna derecha que quedaba vacía junto al título; en celular, a todo el ancho bajo los
+  enlaces.
+  - No la llevan los 17 que ya muestran esa misma foto en su texto (no se repite) ni los 16 que no tienen foto en el
+    índice (no se inventa ninguna).
+  - Para celular hay una copia de 640 px de las fotos de más de 720 px (tools/site/portadas_blog.py). Es la misma foto
+    reducida, sin recorte ni retoque; las de 720 px o menos van tal cual.
+  - La foto ilustra el tema, no el caso del artículo: va con alt vacío y sin pie FIG.
+- **Marco único en las fotos de especie** (páginas de plantas y catálogo): paspartú blanco con filete, proporción 4:5 y
+  el pie FIG. dentro del marco. Las recortadas sobre blanco y las escenas de playa y alberca se ven como una sola serie.
+  Los archivos de foto no se tocaron.
+- **Foto más grande en computadora:** la del hero ya ocupa cerca del 40 % del ancho desde la Entrega A, así que no se
+  cambió. En los artículos, la portada ocupa la columna derecha que estaba vacía.
+- **Ajuste:** el rótulo «Respuesta directa» ya no entra con la animación de los títulos.
+- **Revisión:**
+  - Sin desbordes a 320, 375, 768, 1024 y 1440 px.
+  - Lighthouse móvil: los artículos con portada bajan de 99–100 a 95–97 en velocidad, porque la foto pasa a ser lo
+    primero grande que carga. Accesibilidad y SEO siguen en 100. Plantas sin cambio (87).
+- **Prueba:** tests/test_visual_v4.py.
+- Las 15 fotos nuevas (entrega D) siguen pendientes y las tiene que tomar el dueño.
