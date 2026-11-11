@@ -128,7 +128,8 @@ class InicioTest(unittest.TestCase):
         self.assertIn('<span data-vt-o="cta-texto">Cotizar por WhatsApp</span>', medidor)
         self.assertNotIn("Enviar mi medida por WhatsApp", HTML)  # lo escribe vt-medidor.js cuando hay medida
         garantia = re.search(r'<p class="vt-medidor__garantia" data-vt-o="garantia">(.*?)</p>', medidor).group(1)
-        self.assertEqual(re.sub(r"<[^>]+>", "", garantia), datos.GARANTIA_PASTO)
+        # Plan visual V1: bajo el Medidor va la versión corta; la completa queda en el cierre.
+        self.assertEqual(re.sub(r"<[^>]+>", "", garantia), f"Garantía de arraigo de {datos.ARRAIGO} en el pasto instalado (ver condiciones).")
         self.assertIn('<a href="/protocolo-cuidados-pasto-san-agustin#garantia">ver condiciones</a>', garantia)
         self.assertIn('<p class="vt-medidor__vivo" data-vt-o="vivo"></p>', medidor)
         self.assertLess(medidor.index("vt-medidor__medidas"), medidor.index("vt-medidor__vivo"))
@@ -154,11 +155,11 @@ class InicioTest(unittest.TestCase):
     def test_cta_de_whatsapp_al_final_de_opiniones_proceso_precios_y_preguntas(self):
         """Spec del hero §6: el tramo largo sin CTA ahora tiene uno al final de cada sección."""
         """Revisión de diseño (2026-11-09): cada fila esconde la barra fija mientras se ve (data-hero-cta), su botón
-        dice a qué invita y la promesa va solo bajo la primera y la última."""
-        limites = (("opiniones", 'id="vt-h-opiniones"', 'id="vt-h-como"', "Cotizar mi jardín por WhatsApp", True),
+        dice a qué invita. Plan visual V1 (2026-11-11): ninguna lleva la promesa debajo (va en el hero y en el cierre)."""
+        limites = (("opiniones", 'id="vt-h-opiniones"', 'id="vt-h-como"', "Cotizar mi jardín por WhatsApp", False),
                    ("proceso", 'id="vt-h-como"', 'id="vt-h-precios"', "Empezar por WhatsApp", False),
                    ("precios", 'id="vt-h-precios"', 'id="vt-h-faq"', "Pedir mi precio por WhatsApp", False),
-                   ("faq", 'id="vt-h-faq"', 'id="vt-h-cobertura"', "Preguntar por WhatsApp", True))
+                   ("faq", 'id="vt-h-faq"', 'id="vt-h-cobertura"', "Preguntar por WhatsApp", False))
         for seccion, inicio, fin, texto, con_promesa in limites:
             tramo = MAIN[MAIN.index(inicio):MAIN.index(fin)]
             with self.subTest(seccion=seccion):

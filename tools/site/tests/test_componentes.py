@@ -240,7 +240,7 @@ class MedidorTest(unittest.TestCase):
 
     def test_medidor_con_garantia_bajo_el_resultado(self):
         html = c.medidor("prueba", "home", garantia=True)
-        self.assertIn(f'<p class="vt-medidor__garantia" data-vt-o="garantia">{c.garantia_pasto()}</p></div></div></div>', html)
+        self.assertIn(f'<p class="vt-medidor__garantia" data-vt-o="garantia">{c.garantia_pasto_corta()}</p></div></div></div>', html)
         self.assertNotIn("vt-medidor__garantia", c.medidor("prueba", "home"))
 
     def test_garantia_de_pasto_con_enlace_a_condiciones(self):

@@ -160,6 +160,7 @@
 .vt-tienda .vt-quiz .vt-opciones legend{grid-column:1 / -1}
 .vt-tienda main .vt-tarjeta-p__precio{grid-column:1;min-width:0;margin-top:4px;font-size:var(--vt-text-sm)}
 .vt-tienda .vt-tarjeta-p__cuerpo>.vt-btn{grid-column:2;width:auto;min-height:44px;margin-top:0;padding-inline:10px}
+.vt-tienda .vt-tarjeta-p__mas{display:none}
 }
 .vt-tienda .vt-filtros__n{margin:10px 0 0;font-size:var(--vt-text-sm);color:var(--vt-muted)}
 .vt-tienda .vt-regla{display:flex;align-items:center;gap:10px}
@@ -226,4 +227,7 @@
 @media (max-width:767px){
 .vt-tienda .vt-tabla--fija{min-width:720px}
 .vt-tienda .vt-tabla--fija th,.vt-tienda .vt-tabla--fija td{padding:10px 12px;font-size:var(--vt-text-sm)}
+}
+@media (max-width:767px){
+.vt-tienda .vt-tabla-scroll::before{content:"Desliza para ver toda la tabla →";position:sticky;left:0;display:block;width:max-content;margin-bottom:6px;font-size:var(--vt-text-xs);font-weight:600;color:var(--vt-muted)}
 }
