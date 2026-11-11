@@ -44,3 +44,6 @@ PARIDAD = {"jsonld": {"Organization": M_PUBLISHER, "ImageObject": M_PUBLISHER}, 
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: cabecera de lectura: el complemento del <h1> va en serif verde; el WhatsApp y el teléfono pasan de botones a enlaces de texto; «Por el equipo técnico de Viveros Terra» sale de la entrada (el autor ya va en el kicker).')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: mensaje con qué, colonia y metros (reescritura 9).'
+
+# Lo que cambia por la Entrega C de experiencia (ritmo y movimiento).
+PARIDAD["ritmo"] = 'Entrega C de experiencia (2026-11-10), ritmo y movimiento: una fila discreta de WhatsApp («Preguntar por WhatsApp») cada 12 tarjetas (antes, 25.4 pantallas sin CTA); en celular la tarjeta con foto va a dos columnas con la miniatura en su misma proporción; revelado por scroll de encabezados y figuras y balanceo de la etiqueta en escritorio.'

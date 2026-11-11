@@ -119,6 +119,8 @@ CONTENIDO = {
                  "Altamira."),
         "etiqueta": {"codigo": f"Lista · {datos.ANIO}", "aviso": "MXN", "nombre": "Pasto San Agustín",
                      "antes": "solo el pasto", "monto": SOLO, "unidad": "/m²",
+                     # Decisión del dueño (2026-11-10): la condición de terreno listo va bajo el renglón del instalado.
+                     "cond": datos.TERRENO_LISTO_CORTO, "cond_fila": 1,
                      "filas": (("Instalado, con IVA", f"desde {INSTALADO}/m²"), ("Mantenimiento", f"desde {MANTENIMIENTO}/mes"),
                                ("Pasto sintético", f"desde {SINTETICO}/m²"))},
         "mensaje": MENSAJE,
@@ -132,7 +134,7 @@ CONTENIDO = {
     "secciones": (
         {"id": "pasto", "rotulo": "Pasto natural", "titulo": 'Pasto San Agustín <span class="vt-serif">en rollo</span>',
          "filas": lp.PASTO, "concepto": "Producto",
-         "caption": f"Precios {datos.ANIO}. El instalado incluye IVA. {datos.PASTO_SIN_IVA}.",
+         "caption": f"Precios {datos.ANIO}. El instalado incluye IVA. {datos.PASTO_SIN_IVA}. {datos.TERRENO_LISTO}",
          "cotizar": ("Cotizar pasto por WhatsApp", COTIZAR["pasto"]),
          "nota": ('<a href="/pasto-en-rollo-tampico">Pasto en rollo en Tampico</a>: solo el pasto, recoges en el vivero o '
                   "se cobra la entrega según tu colonia. "
@@ -219,3 +221,6 @@ PARIDAD = {
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). La respuesta directa pasa, sin cambios, de la entrada del hero al bloque «En corto»; la entrada nueva deja los dos precios del pasto (mantenimiento, diseño y sintético van en la etiqueta y en la lista); kicker: «Precios 2026 · …» (un renglón).')
+
+# Lo que cambia por la decisión del dueño del 2026-11-10 (terreno listo y garantía de arraigo).
+PARIDAD["terreno"] = 'decisión del dueño 2026-11-10: el instalado considera terreno listo; trabajos previos se cotizan aparte: etiqueta (bajo el renglón del instalado) con datos.TERRENO_LISTO_CORTO; leyenda de la tabla de pasto y FAQ de precio con datos.TERRENO_LISTO; fila del instalado con datos.INSTALADO_INCLUYE; «En corto» con la condición corta. decisión del dueño 2026-11-10: la garantía de arraigo aplica con terreno listo.'

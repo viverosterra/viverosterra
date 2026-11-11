@@ -18,6 +18,7 @@ import data  # noqa: E402  (tools/pasto)
 
 P = datos.PRECIOS
 ZONA = "Tampico, Ciudad Madero y Altamira"
+ZONA_CORTA = "Tampico, Madero y Altamira"
 FECHA = datos.PRECIOS_ACTUALIZADOS
 RIEGO_MIN, RIEGO_MAX = P["riego_m2"]
 SINT_MIN, SINT_MAX = P["sintetico_instalado_m2"]
@@ -29,17 +30,15 @@ HORARIO = (f"de lunes a viernes de {int(_ABRE[:2])} a {int(_CIERRA[:2])} h y sá
            f"{int(_CIERRA_SAB[:2])} h")
 
 TEXTOS = {
+    # Decisión del dueño (2026-11-10): la condición de terreno listo (datos.TERRENO_LISTO, completa, con el precio del
+    # instalado) va en "En corto" de la home y de pasto en rollo. Para caber en 60 palabras, la frase de entrada se
+    # reduce a la zona, el año y el precio de solo pasto; mantenimiento, mayoreo y garantía siguen en sus secciones.
     "/": (
-        f"{datos.NOMBRE} es un vivero y empresa de jardinería en {datos.CIUDAD}, Tamaulipas, que atiende Tampico, Madero y "
-        f"Altamira desde {datos.DESDE}. Vende pasto San Agustín en rollo a {dinero(P['pasto_solo_m2'])} por m² solo el "
-        f"pasto (no lleva IVA) e instalado desde {dinero(P['pasto_instalado_m2'])} por m², con IVA; también diseña "
-        f"jardines, da mantenimiento desde {dinero(P['mantenimiento_mes'])} al mes y vende plantas y pasto sintético."),
+        f"{datos.NOMBRE} (Tampico, Madero y Altamira, desde {datos.DESDE}): pasto solo a {dinero(P['pasto_solo_m2'])}/m², "
+        f"sin IVA. {datos.TERRENO_LISTO}"),
     "/pasto-en-rollo-tampico": (
-        f"En {ZONA}, el pasto San Agustín en rollo cuesta {dinero(P['pasto_solo_m2'])} por m² solo el pasto (no lleva "
-        f"IVA) y desde {dinero(P['pasto_instalado_m2'])} por m² instalado, con IVA (precios {datos.ANIO}): "
-        f"incluye preparación básica del terreno, colocación y garantía de arraigo de {datos.ARRAIGO}, con "
-        f"condiciones. Mayoreo, desde {P['pasto_mayoreo_minimo_m2']} m²: desde {dinero(P['pasto_mayoreo_m2'])} por m² "
-        "(no lleva IVA)."),
+        f"Pasto San Agustín en {ZONA_CORTA}: {dinero(P['pasto_solo_m2'])}/m² solo el pasto, sin IVA. "
+        f"{datos.TERRENO_LISTO}"),
     "/pasto-sintetico-tampico": (
         f"En {ZONA}, el pasto sintético instalado cuesta de {dinero_exacto(SINT_MIN)} a {dinero_exacto(SINT_MAX)} por "
         f"m², con material, colocación e IVA (precios {datos.ANIO}); la preparación del terreno se cotiza aparte. "
@@ -74,7 +73,8 @@ TEXTOS = {
     # la entrada se acorta (2 a 3 renglones en celular) y el mismo texto, sin tocar, pasa al bloque "En corto".
     "/precios": (
         f"En Tampico, Madero y Altamira, el pasto San Agustín cuesta {dinero(P['pasto_solo_m2'])}/m² solo el pasto y desde "
-        f"{dinero(P['pasto_instalado_m2'])}/m² instalado. El mantenimiento de jardín cuesta desde "
+        f"{dinero(P['pasto_instalado_m2'])}/m² instalado ({datos.TERRENO_LISTO_CORTO[0].lower()}{datos.TERRENO_LISTO_CORTO[1:-1]}). "
+        "El mantenimiento de jardín cuesta desde "
         f"{dinero(P['mantenimiento_mes'])}/mes, el diseño desde {dinero(P['diseno'])} y el pasto sintético desde "
         f"{dinero(ROLLO_MIN)}/m²."),
     "/mayoreo-pasto-tampico": (

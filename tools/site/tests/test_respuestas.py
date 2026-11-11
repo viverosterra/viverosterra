@@ -23,14 +23,12 @@ MARCA_RE = re.compile(r"<p class=\"vt-lede\" data-vt-respuesta>(.*?)</p>", re.S)
 FECHA = (f'<p class="vt-promesa">Actualizado: <time datetime="{datos.PRECIOS_ACTUALIZADOS}">'
          f"{entidad.mes_largo(datos.PRECIOS_ACTUALIZADOS)}</time></p>")
 # El dato que cada respuesta debe traer en el texto (precio con su unidad) y la zona.
+# Decisión del dueño (2026-11-10): "En corto" de la home y de pasto en rollo lleva completa la condición de terreno listo
+# (datos.TERRENO_LISTO, con el precio del instalado); en 60 palabras la entrada queda en zona, año y precio de solo pasto.
 DATOS = {
-    "/": (f"${P['pasto_solo_m2']} por m² solo el pasto (no lleva IVA)", f"desde ${P['pasto_instalado_m2']} por m², con IVA",
-          f"desde ${P['mantenimiento_mes']} al mes", "Tampico, Madero y Altamira desde 2007"),
-    "/pasto-en-rollo-tampico": (f"${P['pasto_solo_m2']} por m² solo el pasto (no lleva IVA)",
-                                f"desde ${P['pasto_instalado_m2']} por m² instalado, con IVA",
-                                f"garantía de arraigo de {datos.ARRAIGO}, con condiciones",
-                                f"desde ${P['pasto_mayoreo_m2']} por m² (no lleva IVA)", "Tampico, Ciudad Madero y Altamira",
-                                "precios 2026"),
+    "/": (f"pasto solo a ${P['pasto_solo_m2']}/m², sin IVA", datos.TERRENO_LISTO, "Tampico, Madero y Altamira, desde 2007"),
+    "/pasto-en-rollo-tampico": (f"${P['pasto_solo_m2']}/m² solo el pasto, sin IVA", datos.TERRENO_LISTO,
+                                "Tampico, Madero y Altamira"),
     "/pasto-sintetico-tampico": ("de $446.60 a $754 por m², con material, colocación e IVA", "desde 2 m²",
                                  "desde $139 por m²", "Tampico, Ciudad Madero y Altamira", "precios 2026"),
     "/pasto-sintetico": ("9 modelos de 10 a 35 mm", "desde $139 por m² en rollo de 50 m², con IVA incluido",

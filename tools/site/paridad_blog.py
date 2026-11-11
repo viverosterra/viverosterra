@@ -49,11 +49,12 @@ def viejo_corregido(slug, correcciones):
 
 
 def cuerpo_nuevo(html):
-    """Texto del <article> (respuesta, cuerpo y preguntas), sin lo que agrega la plantilla (índice móvil, CTA a media lectura y "Para seguir")."""
+    """Texto del <article> (respuesta, cuerpo y preguntas), sin lo que agrega la plantilla (índice móvil, CTA a media lectura,
+    líneas de WhatsApp entre secciones —Entrega C de experiencia— y "Para seguir")."""
     m = re.search(r'<article class="vt-art__cuerpo".*?</article>', html, re.S)
     sin_plantilla = m.group(0)
     for agregado in (r'<nav class="vt-art__sigue".*?</nav>', r'<details class="vt-art__toc".*?</details>',
-                     r'<aside class="vt-art__medio".*?</aside>'):
+                     r'<aside class="vt-art__medio".*?</aside>', r'<p class="vt-art__wa">.*?</p>'):
         sin_plantilla = re.sub(agregado, " ", sin_plantilla, flags=re.S)
     return paridad.texto(sin_plantilla)
 

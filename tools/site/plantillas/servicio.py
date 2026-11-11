@@ -39,13 +39,14 @@ def _prueba(k, numero):
     pr = k["prueba"]
     cuerpo = c.obras(pr["figuras"], c.nota(*pr["nota"]))
     if pr.get("opiniones"):
-        cuerpo += f'<h3 class="vt-mt">{pr["titulo_opinion"]}</h3>' + c.testimonios(pr["opiniones"])
+        # Entrega C: en celular las opiniones van en fila con desplazamiento horizontal (antes, apiladas: ~1.2 pantallas).
+        cuerpo += f'<h3 class="vt-mt">{pr["titulo_opinion"]}</h3>' + c.testimonios(pr["opiniones"], fila=True)
     if pr.get("titulo_clientes"):
         cuerpo += f'<h3 class="vt-mt">{pr["titulo_clientes"]}</h3>' + c.logos()
     return c.bloque(numero, "Prueba", "vt-h-prueba", pr["titulo"], cuerpo + _cta(k, "prueba"), lede=pr["lede"])
 
 
-def _precio(k, numero):
+def _precio(k, numero, tinte):
     p = k["precio"]
     if "tabla" in p:
         cuerpo = c.tabla_comparativa(p["tabla"]["columnas"], p["tabla"]["filas"], p["caption"])
@@ -53,33 +54,33 @@ def _precio(k, numero):
         cuerpo = c.tabla_precios(p["filas"], p["caption"], concepto="Forma de compra")
     if p.get("titulo_medidor"):
         cuerpo += f'<h3 class="vt-mt">{p["titulo_medidor"]}</h3>' + c.medidor(k["prefijo"], k["tipo"], mensaje=k["portada"]["mensaje"])
-    return c.bloque(numero, "Precio", "vt-h-precio", p["titulo"], cuerpo, lede=p["lede"], tinte=True, id_seccion="precio")
+    return c.bloque(numero, "Precio", "vt-h-precio", p["titulo"], cuerpo + _cta(k, "precio"), lede=p["lede"], tinte=tinte,
+                    id_seccion="precio", ritmo="clave")
 
 
-def _opciones(k, numero):
+def _opciones(k, numero, tinte):
     """Formas de contratar o planes (máx. 3), cada uno con su mensaje; opcionales: tabla comparativa y nota debajo."""
     o = k["opciones"]
-    cuerpo = c.opciones(o["items"], k["tipo"])
+    cuerpo = c.opciones(o["items"], k["tipo"], fila=o.get("fila", False))
     if o.get("tabla"):
         tb = o["tabla"]
         tabla = c.tabla_comparativa(tb["columnas"], tb["filas"], tb["caption"])
         if tb.get("plegable"):
             # Cerrada en celular para acortar la página; terra.js la abre desde 768 px (data-vt-plegable).
-            cuerpo += (f'<details class="vt-plegable vt-mt" data-vt-plegable><summary class="vt-plegable__resumen">'
-                       f'<h3>{tb["titulo"]}</h3></summary>{tabla}</details>')
+            cuerpo += c.plegable(tb["titulo"], tabla)
         else:
             cuerpo += f'<h3 class="vt-mt">{tb["titulo"]}</h3>' + tabla
     if o.get("nota"):
         cuerpo += f'<p class="vt-promesa">{o["nota"]}</p>'
     return c.bloque(numero, o.get("rotulo", "Opciones"), "vt-h-opciones", o["titulo"], cuerpo, lede=o.get("lede"),
-                    id_seccion="opciones")
+                    id_seccion="opciones", tinte=tinte, ritmo="clave")
 
 
-def _incluye(k, numero):
+def _incluye(k, numero, tinte):
     """Qué incluye el servicio, en tarjetas sin precio (mantenimiento: lo que se hace en cada visita)."""
     i = k["incluye"]
     return c.bloque(numero, "Qué incluye", "vt-h-incluye", i["titulo"], c.fichas(i["items"]) + _cta(k, "incluye"),
-                    lede=i.get("lede"))
+                    lede=i.get("lede"), tinte=tinte)
 
 
 def _aparte(items):
@@ -93,35 +94,43 @@ def _aparte(items):
     return "".join(salida)
 
 
-def _cotizador(k, numero):
+def _cotizador(k, numero, tinte):
     q = k["cotizador"]
     modelo = t.modelo(q["modelo"])
     calculadora = t.cotizador(modelo, modelos=t.data.MODELOS, m2=q["m2"], showroom=True, local=q.get("local", False),
                               nivel=3, titulo=q["titulo_calc"], tipo=k["tipo"])
     cuerpo = f'<div class="vt-dos">{calculadora}<div>{_aparte(q["aparte"])}</div></div>'
-    return c.bloque(numero, "Calculadora", "vt-h-cotizador", q["titulo"], cuerpo, tinte=True, id_seccion="cotizador")
+    return c.bloque(numero, "Calculadora", "vt-h-cotizador", q["titulo"], cuerpo, tinte=tinte, id_seccion="cotizador",
+                    ritmo="clave")
 
 
-def _visita(k, numero):
+def _visita(k, numero, tinte):
     v = k["visita"]
     enlaces = "".join(f'<a class="vt-btn vt-btn--linea" href="{c.esc(h)}" target="_blank" rel="noopener">{x}</a>'
                       for x, h in v["mapas"])
     cuerpo = f'{c.cuadro_datos(v["datos"])}<div class="vt-cta vt-mt-s">{enlaces}{c.boton_tel(k["tipo"] + ":visita")}</div>'
-    return c.bloque(numero, "Showroom", "vt-h-visita", v["titulo"], cuerpo, lede=v.get("lede"), id_seccion="showroom")
+    return c.bloque(numero, "Showroom", "vt-h-visita", v["titulo"], cuerpo, lede=v.get("lede"), id_seccion="showroom",
+                    tinte=tinte, ritmo="apoyo")
 
 
-def _objecion(k, numero):
-    """La objeción principal en una tabla con su cierre; una segunda tabla es opcional (pasto en rollo trae dos)."""
+def _objecion(k, numero, tinte):
+    """La objeción principal en una tabla con su cierre; una segunda tabla es opcional (pasto en rollo trae dos). Entrega C
+    de experiencia: una tabla que repite lo que ya dicen otras secciones de la página va plegada en celular
+    (comparativa["plegable"]: título del <summary>; o["plegable_2"] para la segunda), con su cierre a la vista."""
     o = k["objecion"]
     a = o["comparativa"]
-    cuerpo = c.tabla_comparativa(a["columnas"], a["filas"], a["caption"]) + f'<p class="vt-promesa">{a["cierre"]}</p>'
+    tabla = c.tabla_comparativa(a["columnas"], a["filas"], a["caption"])
+    cuerpo = (c.plegable(a["plegable"], tabla) if a.get("plegable") else tabla) + f'<p class="vt-promesa">{a["cierre"]}</p>'
     if o.get("comparativa_2"):
         b = o["comparativa_2"]
-        cuerpo += f'<h3 class="vt-mt">{o["titulo_2"]}</h3>' + c.tabla_comparativa(b["columnas"], b["filas"], b["caption"])
-    return c.bloque(numero, o.get("rotulo", "Cuál te conviene"), "vt-h-conviene", o["titulo"], cuerpo, lede=o["lede"])
+        tabla_2 = c.tabla_comparativa(b["columnas"], b["filas"], b["caption"])
+        cuerpo += (c.plegable(o["titulo_2"], tabla_2) if o.get("plegable_2")
+                   else f'<h3 class="vt-mt">{o["titulo_2"]}</h3>' + tabla_2)
+    return c.bloque(numero, o.get("rotulo", "Cuál te conviene"), "vt-h-conviene", o["titulo"], cuerpo + _cta(k, "objecion"),
+                    lede=o["lede"], tinte=tinte)
 
 
-def _pago(k, numero):
+def _pago(k, numero, tinte):
     """Un solo bloque de pago: anticipo, contado y mensualidades en tres renglones, y el simulador (los plazos y montos
     mínimos los muestra el propio simulador, sin repetir la tabla de planes)."""
     p = k["pago"]
@@ -131,45 +140,69 @@ def _pago(k, numero):
         derecha = f'<h3>{p["titulo_sim"]}</h3>' + c.simulador(p["sim"]["servicio"], p["sim"]["monto"], k["tipo"])
     else:
         derecha = c.planes_mensualidades()
-    return c.bloque_dos(numero, "Pago", "vt-h-pago", p["titulo"], izquierda, derecha, id_seccion="mensualidades")
+    return c.bloque_dos(numero, "Pago", "vt-h-pago", p["titulo"], izquierda, derecha, id_seccion="mensualidades",
+                        tinte=tinte, ritmo="apoyo")
 
 
-def _cobertura(k, numero):
+def _cobertura(k, numero, tinte):
     co = k["cobertura"]
     return c.bloque(numero, "Cobertura", "vt-h-cobertura", co["titulo"],
-                    c.cobertura(co["zonas"], co["por_proyecto"], co.get("sectores", ())), lede=co["lede"])
+                    c.cobertura(co["zonas"], co["por_proyecto"], co.get("sectores", ())), lede=co["lede"], tinte=tinte,
+                    ritmo="apoyo")
 
 
-def _relacionados(k, numero):
+def _relacionados(k, numero, tinte):
     r = k["relacionados"]
-    return c.bloque(numero, "Relacionados", "vt-h-rel", r["titulo"], c.relacionados(r["items"]), tinte=True)
+    return c.bloque(numero, "Relacionados", "vt-h-rel", r["titulo"], c.relacionados(r["items"], fila=True), tinte=tinte,
+                    ritmo="apoyo")
+
+
+def _proceso(k, numero, tinte):
+    p = k["proceso"]
+    return c.bloque(numero, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]) + _cta(k, "proceso"),
+                    lede=p["lede"], tinte=tinte)
+
+
+def _garantia(k, numero, tinte):
+    """Garantía con sus condiciones. Con k["garantia"]["banda"] (la garantía real de datos.py: pasto en rollo, sintético
+    y diseño), banda oscura a media página con su CTA (Entrega C de experiencia); si no, sección con tinte o sin él."""
+    g = k["garantia"]
+    seccion = c.garantia(dict(g, numero=numero, id_titulo="vt-h-garantia", rotulo="Garantía", cta_html=_cta(k, "garantia")))
+    return seccion if g.get("banda") or tinte else seccion.replace("vt-bloque vt-bloque--tinte", "vt-bloque", 1)
+
+
+def _faq(k, numero, tinte):
+    f = k["faq"]
+    return c.bloque_dos(numero, "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"], abierta=False) + _cta(k, "faq"),
+                        tinte=tinte, ritmo="apoyo")
+
+
+def _secciones_cuerpo(k):
+    """(clave, armar) en el orden de la página, después de la prueba y las fotos de obra; solo las que el contenido trae."""
+    orden = (("opciones", _opciones), ("incluye", _incluye), ("precio", _precio), ("cotizador", _cotizador),
+             ("objecion", _objecion), ("proceso", _proceso), ("garantia", _garantia), ("pago", _pago), ("faq", _faq),
+             ("visita", _visita), ("cobertura", _cobertura), ("relacionados", _relacionados))
+    return [(clave, armar) for clave, armar in orden if clave in k]
 
 
 def render(k):
     tipo = k["tipo"]
-    g, f, ci, p = k["garantia"], k["faq"], k["cierre"], k["proceso"]
+    f, ci, p = k["faq"], k["cierre"], k["proceso"]
     secciones = [c.portada(k["portada"], tipo, k["migas"]), c.respuesta(k.get("respuesta")), _prueba(k, 1)]
     numero = 2
     obras = fotos_obra.seccion(k["meta"]["canonical"])
     if obras:
-        secciones.append(c.bloque_obras(numero, obras, "\n".join(secciones)))
+        secciones.append(c.bloque_obras(numero, obras, "\n".join(secciones), ritmo="apoyo"))
         numero += 1
-    for clave, armar in (("opciones", _opciones), ("incluye", _incluye), ("precio", _precio), ("cotizador", _cotizador),
-                         ("objecion", _objecion)):
-        if clave in k:
-            secciones.append(armar(k, numero))
-            numero += 1
-    secciones.append(c.bloque(numero, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]), lede=p["lede"]))
-    secciones.append(c.garantia(dict(g, numero=numero + 1, id_titulo="vt-h-garantia", rotulo="Garantía",
-                                     cta_html=_cta(k, "garantia"))))
-    secciones.append(_pago(k, numero + 2))
-    secciones.append(c.bloque_dos(numero + 3, "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]) + _cta(k, "faq"),
-                                  tinte=True))
-    numero += 4
-    for clave, armar in (("visita", _visita), ("cobertura", _cobertura), ("relacionados", _relacionados)):
-        if clave in k:
-            secciones.append(armar(k, numero))
-            numero += 1
+    # Ritmo (Entrega C de experiencia): después de las fotos, tinte y hueso se alternan sin repetirse; la banda oscura de
+    # garantía cuenta como fondo y la sección que la sigue va en hueso.
+    oscuro = False
+    for clave, armar in _secciones_cuerpo(k):
+        banda = clave == "garantia" and k["garantia"].get("banda")
+        tinte = not oscuro and not banda
+        secciones.append(armar(k, numero, tinte))
+        oscuro = bool(banda) or tinte
+        numero += 1
     secciones.append(c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo))
 
     j = k["jsonld"]

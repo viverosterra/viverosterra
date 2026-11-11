@@ -27,7 +27,7 @@ PASTO = (
      "detalle": "Rollo fresco, cortado para tu pedido. Recoges en el vivero o te lo llevamos. No lleva IVA."},
     {"nombre": "Pasto San Agustín instalado", "href": "/pasto-en-rollo-tampico", "unidad": "m²",
      "precio": P["pasto_instalado_m2"], "desde": True,
-     "detalle": f"Preparación básica del suelo, instalación y garantía de arraigo de {datos.ARRAIGO}."},
+     "detalle": f"{datos.INSTALADO_INCLUYE} Arraigo en {datos.ARRAIGO}."},
     {"nombre": "Mayoreo para constructoras y fraccionamientos", "href": "/mayoreo-pasto-tampico", "unidad": "m²",
      "precio": P["pasto_mayoreo_m2"], "desde": True,
      "detalle": (f"Pedidos de {P['pasto_mayoreo_minimo_m2']} m² o más, con entregas por etapas según el avance de la "
@@ -99,7 +99,7 @@ PLANTAS = (
 FILAS_ZONA = {
     "pasto": {"nombre": "Pasto San Agustín instalado", "href": "/pasto-en-rollo-tampico", "unidad": "m²",
               "precio": P["pasto_instalado_m2"], "desde": True,
-              "detalle": f"Preparación básica del suelo y garantía de arraigo de {datos.ARRAIGO}."},
+              "detalle": f"{datos.INSTALADO_INCLUYE} Arraigo en {datos.ARRAIGO}."},
     "mantenimiento": dict(MANTENIMIENTO, detalle="Poda, fertilización, control de plagas y revisión del riego."),
     "diseno": {"nombre": "Diseño de jardín", "href": "/diseno-jardines-tampico", "unidad": "proyecto",
                "precio": P["diseno"], "desde": True, "detalle": "Plan Esencial; se descuenta si contratas la obra."},

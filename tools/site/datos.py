@@ -121,11 +121,18 @@ FACTURACION = "Todas las compras se pueden facturar."
 CONDICIONES_MATERIALES = f"{SIN_MINIMO} {ENTREGA_COBRO} {FACTURACION}"
 PODA = ("Desde $500, según cotización: el precio depende del tamaño del árbol o la palma y de los residuos que se "
         "generan. Mándanos fotos y ubicación por WhatsApp.")
-GARANTIA_PASTO = ("Si una sección no arraiga en 15 a 20 días, la reponemos sin costo, siguiendo el protocolo de riego "
-                  "(ver condiciones).")
 GARANTIA_PLANTAS = "30 días en las plantas que sembramos nosotros, con el riego indicado (ver condiciones)."
 PRIMER_RIEGO = "El primer riego lo haces tú: te enseñamos cómo y te dejamos el protocolo de 20 días."
 ARRAIGO = "15 a 20 días"
+# Decisión del dueño (2026-11-10): la garantía de arraigo aplica solo con el terreno listo o preparado por Terra. Toda
+# frase que diga "la reponemos sin costo" lleva GARANTIA_TERRENO (regla permanente: tests/test_terreno_listo.py).
+GARANTIA_TERRENO = ("siempre que el terreno estuviera listo (limpio, nivelado y con tierra negra) o lo hayamos preparado "
+                    "nosotros")
+# La misma condición en la lista de condiciones de la garantía (protocolo de cuidados y Políticas).
+GARANTIA_TERRENO_CONDICION = ("El terreno estaba listo para instalar (limpio, nivelado y con tierra negra) o lo preparó "
+                              "Viveros Terra")
+GARANTIA_PASTO = (f"Si una sección no arraiga en {ARRAIGO}, la reponemos sin costo, {GARANTIA_TERRENO}, y se haya "
+                  "seguido el protocolo de riego (ver condiciones).")
 # Decisión del dueño (2026-11-07): la visita para medir y cotizar tiene un costo que depende de la ubicación del
 # servicio. Nunca "visita sin costo" ni "gratis" (test_reglas.py); toda mención de la visita lleva una de estas dos.
 VISITA_COSTO = ("El costo de la visita para cotizar depende de la ubicación del servicio; te lo confirmamos por "
@@ -158,11 +165,28 @@ ANTICIPO = ("No pedimos el 100% por adelantado: para confirmar tu pedido o agend
 # Decisión del dueño (2026-11-10): el pasto natural sin instalar (solo pasto y mayoreo) no lleva IVA; "con IVA" solo
 # acompaña al instalado, que ya lo incluye (regla permanente: tests/test_iva_pasto.py).
 PASTO_SIN_IVA = "El pasto solo y el mayoreo no llevan IVA"
+# Decisión del dueño (2026-11-10): el precio del pasto instalado considera el terreno listo para instalar (limpio,
+# nivelado y con tierra negra); la limpieza, el herbicida, la tierra negra o la nivelación que falten se cotizan aparte.
+# Sustituye a "el instalado incluye la preparación básica del terreno". Una sola redacción por uso (regla permanente:
+# tests/test_terreno_listo.py): la corta junto a cada precio instalado, la larga en la FAQ, "En corto", las tablas de
+# precios y llms.txt, la del Medidor bajo su estimado y la de lo que incluye en las filas de precio.
+TERRENO_LISTO_CORTO = "Precio con terreno listo: limpio, nivelado y con tierra negra."
+TERRENO_LISTO = (f"El precio de instalación desde ${PRECIOS['pasto_instalado_m2']}/m² considera tu terreno listo para "
+                 "instalar: limpio, nivelado y con tierra negra. Si no lo está, puede necesitar limpieza, herbicida, "
+                 "tierra negra o nivelación, que se cotizan por separado. Mándanos una foto por WhatsApp y te decimos "
+                 "antes qué necesita.")
+TERRENO_LISTO_MEDIDOR = "Estimado con terreno listo. Limpieza, herbicida, tierra negra o nivelación se cotizan aparte."
+INSTALADO_INCLUYE = "Incluye la colocación del pasto y la garantía de arraigo, con el terreno listo."
+# Renglón del mensaje de WhatsApp del Medidor en modo instalado (el mismo en public/js/vt-medidor.js).
+TERRENO_LISTO_PREGUNTA = "¿Mi terreno está limpio, nivelado y con tierra negra?: ___"
+# Venta cruzada junto a la condición (pasto en rollo y Medidor): solo el enlace; el precio vive en la página.
+TIERRA_NEGRA_CRUZADA = "¿Te falta tierra negra? La vendemos por costal, por m³ o por camión."
+TIERRA_NEGRA_RUTA = "/tierra-negra-vegetal-tampico"
 RESPUESTA_PRECIO_PASTO = (
     f"En Viveros Terra el pasto San Agustín en rollo cuesta ${PRECIOS['pasto_solo_m2']} por m² solo el pasto (no lleva "
     f"IVA) y desde "
-    f"${PRECIOS['pasto_instalado_m2']} por m² instalado, con IVA incluido. El instalado incluye la preparación básica "
-    f"del terreno, la colocación y una garantía de arraigo de {ARRAIGO}. En pedidos de "
+    f"${PRECIOS['pasto_instalado_m2']} por m² instalado, con IVA incluido, con la colocación y una garantía de arraigo "
+    f"de {ARRAIGO}. {TERRENO_LISTO} En pedidos de "
     f"{PRECIOS['pasto_mayoreo_minimo_m2']} m² o más, el mayoreo cuesta desde ${PRECIOS['pasto_mayoreo_m2']}/m² (solo "
     f"pasto; no lleva IVA). Precios {ANIO} para Tampico, Ciudad Madero y Altamira."
 )

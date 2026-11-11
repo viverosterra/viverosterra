@@ -84,6 +84,8 @@ PLANES = (
 
 COMPARA = {
     "titulo": "Planes de Mantenimiento — comparativa por tipo de jardín",
+    # Entrega C: plegada en celular; repite tamaño, frecuencia y precio de las tres tarjetas de plan (desde 768 px, abierta).
+    "plegable": True,
     "columnas": ("Plan", "Residencial básico", "Residencial premium", "Empresa e industria"),
     "filas": (
         ("Tamaño ideal", "Hasta 200 m²", "200 a 500 m²", "500 m² o más"),
@@ -308,7 +310,7 @@ CONTENIDO = {
             {"titulo": "Pasto en Rollo San Agustín", "href": "/pasto-en-rollo-tampico",
              "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111,
              "texto": (f"Pasto desde {dinero(P['pasto_solo_m2'])}/m² · Instalado desde "
-                       f"{dinero(P['pasto_instalado_m2'])}/m²")},
+                       f"{dinero(P['pasto_instalado_m2'])}/m². {datos.TERRENO_LISTO_CORTO}")},
             {"titulo": "Diseño de Jardines", "href": "/diseno-jardines-tampico",
              "img": f"{OBRA}/diseno-jardin-paisajismo-tampico.webp", "ancho": 640, "alto": 427,
              "texto": f"Plan Terra desde {dinero(P['diseno'])} · Propuesta visual"},
@@ -360,3 +362,9 @@ PARIDAD = {
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). «Sin permanencia forzada» sale del hero y sigue en los planes.')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).
 PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: botones de plan con texto propio (reescritura 5); filas de WhatsApp tras las opiniones, «qué incluye», la garantía y las preguntas.'
+
+# Lo que cambia por la decisión del dueño del 2026-11-10 (terreno listo y garantía de arraigo).
+PARIDAD["terreno"] = 'decisión del dueño 2026-11-10: el instalado considera terreno listo; trabajos previos se cotizan aparte: tarjeta de pasto en «Otros servicios» con datos.TERRENO_LISTO_CORTO.'
+
+# Lo que cambia por la Entrega C de experiencia (ritmo y movimiento).
+PARIDAD["ritmo"] = 'Entrega C de experiencia (2026-11-10), ritmo y movimiento: sin banda (su garantía no está en datos.py); plegada en celular la comparativa de planes (repite tamaño, frecuencia y precio de las tarjetas); relleno y fondos alternados; opiniones y relacionados en fila; primera pregunta cerrada; revelado por scroll de encabezados y figuras y balanceo de la etiqueta en escritorio.'

@@ -126,7 +126,7 @@ ZONAS = {
              "Aguanta media sombra, con unas 4 horas de sol directo. Bajo árboles muy cerrados te recomendamos plantas "
              "de sombra o cubresuelos."),
             ("¿Cuánto cuesta poner pasto en el frente de mi casa?",
-             f"El pasto San Agustín instalado cuesta desde {INSTALADO}/m² con preparación básica del suelo. Solo el "
+             f"El pasto San Agustín instalado cuesta desde {INSTALADO}/m². {datos.TERRENO_LISTO_CORTO} Solo el "
              f"pasto cuesta {dinero(P['pasto_solo_m2'])}/m²."),
         ),
     ),
@@ -183,7 +183,7 @@ ZONAS = {
              "según qué tan cerca estés del mar."),
             ("¿Cuánto cuesta el pasto en rollo en Madero?",
              f"El pasto San Agustín cuesta {dinero(P['pasto_solo_m2'])}/m² solo el pasto y desde {INSTALADO}/m² "
-             f"instalado, con garantía de arraigo de {datos.ARRAIGO}."),
+             f"instalado, con garantía de arraigo de {datos.ARRAIGO}. {datos.TERRENO_LISTO_CORTO}"),
         ),
     ),
     "jardineria-altamira": dict(
@@ -197,8 +197,8 @@ ZONAS = {
              "administración para instalar y dar mantenimiento."),
             ("Áreas verdes amplias", "Para jardines grandes, el riego automático por zonas y un plan de mantenimiento "
              "mensual mantienen el pasto parejo."),
-            ("Casas nuevas", "Si tu casa es nueva, preparamos el suelo con tierra negra antes de instalar el pasto para "
-             f"que arraigue en {datos.ARRAIGO}."),
+            # Decisión del dueño (2026-11-10): el instalado considera el terreno listo; lo que falte se cotiza aparte.
+            ("Casas nuevas", datos.TERRENO_LISTO),
         ),
         faqs=(
             ("¿Dan servicio de jardinería en Lagunas de Miralta?",
@@ -296,6 +296,7 @@ def contenido(slug):
             "lede": z["lede"],
             "etiqueta": {"codigo": f"Zona · {corto}", "aviso": "Con IVA", "nombre": "Pasto instalado",
                          "antes": "San Agustín instalado · desde", "monto": INSTALADO, "unidad": "/m²",
+                         "cond": datos.TERRENO_LISTO_CORTO,  # decisión del dueño (2026-11-10)
                          "filas": (("Mantenimiento", f"desde {MANTENIMIENTO}/mes"),
                                    ("Diseño", f"desde {dinero(P['diseno'])}"))},
             "mensaje": mensaje,
@@ -363,7 +364,10 @@ def paridad(slug):
             "del Chairel y Madero la entrada se acorta sin quitar colonias de la página (siguen en cobertura); en celular "
             "la foto sube a la primera pantalla y la etiqueta muestra una fila.")
     return {"meta": seo.paridad(*SEO[slug]), "reemplazos": reemplazos, "retirados": {dinero(n): motivo for n in fuera},
-            "jsonld": {"AggregateOffer": MOTIVO_AGGREGATE}, "hero": hero}
+            "jsonld": {"AggregateOffer": MOTIVO_AGGREGATE}, "hero": hero,
+            # Decisión del dueño del 2026-11-10: el instalado considera terreno listo.
+            "terreno": ("decisión del dueño 2026-11-10: el instalado considera terreno listo; trabajos previos se cotizan aparte: etiqueta con datos.TERRENO_LISTO_CORTO; filas y FAQ de precio con la condición; «Casas "
+                        "nuevas» (antes «preparamos el suelo con tierra negra») dice datos.TERRENO_LISTO.")}
 
 
 def pagina(slug):

@@ -152,13 +152,14 @@ class PlantillasNavegadorTest(unittest.TestCase):
         for ancho, abierta in ((375, False), (768, True), (1440, True)):
             page = self.pagina(ancho)
             page.goto(self.base + "/diseno-jardines-tampico/", wait_until="load")
-            plegable = page.locator("details[data-vt-plegable]")
+            # Entrega C de experiencia: la página trae otra tabla plegada (la del pago del diseño); esta es la de planes.
+            plegable = page.locator("#opciones details[data-vt-plegable]")
             with self.subTest(ancho=ancho):
                 self.assertEqual(plegable.evaluate("d => d.open"), abierta)
                 self.assertEqual(plegable.locator("table").is_visible(), abierta)
                 self.assertEqual(plegable.locator("summary h3").inner_text(), "Compara los 3 planes en detalle")
-        page.locator("details[data-vt-plegable] summary").click()
-        self.assertFalse(page.locator("details[data-vt-plegable]").evaluate("d => d.open"))
+        page.locator("#opciones details[data-vt-plegable] summary").click()
+        self.assertFalse(page.locator("#opciones details[data-vt-plegable]").evaluate("d => d.open"))
 
     def test_sin_desbordar_de_320_a_1920(self):
         for ancho in (320, 375, 768, 1024, 1440, 1920):
@@ -543,7 +544,8 @@ class PlantillasNavegadorTest(unittest.TestCase):
         entrada = page.evaluate("""() => document.getAnimations().filter((a) => a instanceof CSSAnimation && a.timeline instanceof DocumentTimeline)
           .map((a) => { const t = a.effect.getComputedTiming(); return [a.animationName, t.duration + t.delay, t.iterations,
             a.effect.getKeyframes().flatMap((k) => Object.keys(k)).filter((p) => !['offset', 'easing', 'composite', 'computedOffset'].includes(p))]; })""")
-        self.assertEqual(sorted(a[0] for a in entrada), ["vt-inicio-balanceo", "vt-inicio-foto"])
+        # Entrega C de experiencia: el balanceo es de todas las portadas (terra.css) y se llama vt-balanceo.
+        self.assertEqual(sorted(a[0] for a in entrada), ["vt-balanceo", "vt-inicio-foto"])
         for nombre, duracion, veces, propiedades in entrada:
             with self.subTest(animacion=nombre):
                 self.assertLessEqual(duracion, 900)

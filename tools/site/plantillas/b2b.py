@@ -16,12 +16,21 @@ COTIZADORES = {"volumen": c.cotizador_volumen, "palmas": c.armador_palmas}
 SCRIPTS = {"volumen": ("/js/vt-medidor.js", "/js/vt-b2b.js"), "palmas": ("/js/vt-b2b.js",)}
 
 
+def _cta(k, clave):
+    """Fila de WhatsApp al final de una sección larga (Entrega C de experiencia: ningún tramo de más de 6 pantallas del
+    celular sin CTA): k["ctas"][clave] = (mensaje, texto)."""
+    if clave not in k.get("ctas", {}):
+        return ""
+    mensaje, texto = k["ctas"][clave]
+    return c.fila_seccion(mensaje, k["tipo"], clave, texto)
+
+
 def _prueba(k, numero):
     pr = k["prueba"]
     cuerpo = c.logos() + c.repse() + c.obras(pr["figuras"], c.nota(*pr["nota"]))
     if pr.get("opiniones"):
         cuerpo += f'<h3 class="vt-mt">{pr["titulo_opinion"]}</h3>' + c.testimonios(pr["opiniones"])
-    return c.bloque(numero, "Clientes", "vt-h-prueba", pr["titulo"], cuerpo, lede=pr["lede"])
+    return c.bloque(numero, "Clientes", "vt-h-prueba", pr["titulo"], cuerpo + _cta(k, "prueba"), lede=pr["lede"])
 
 
 def _escalas(k, numero):
@@ -69,7 +78,8 @@ def render(k):
                  _documentacion(k, 4), _paquetes(k, 5),
                  c.bloque(6, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]), lede=p["lede"]),
                  c.garantia(dict(g, numero=7, id_titulo="vt-h-garantia", rotulo="Garantía")),
-                 c.bloque_dos(8, "Preguntas de compras", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]), tinte=True),
+                 c.bloque_dos(8, "Preguntas de compras", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]) + _cta(k, "faq"),
+                              tinte=True, ritmo="apoyo"),
                  _cobertura(k, 9),
                  c.bloque(10, "Para empresas", "vt-h-rel", r["titulo"], c.relacionados(r["items"]), tinte=True),
                  c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo)]

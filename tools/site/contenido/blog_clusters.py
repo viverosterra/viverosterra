@@ -33,7 +33,7 @@ _COTIZA = "El precio depende de la especie y el tamaño: te lo damos por WhatsAp
 LEDE = {
     "pasto-natural": (f"Pasto San Agustín a {dinero(P['pasto_solo_m2'])}/m² solo el pasto (no lleva IVA) y desde "
                       f"{dinero(P['pasto_instalado_m2'])}/m² instalado, con IVA, con garantía de arraigo de {datos.ARRAIGO} si "
-                      "lo instalamos nosotros."),
+                      f"lo instalamos nosotros. {datos.TERRENO_LISTO_CORTO}"),
     "pasto-sintetico": (f"Desde {dinero(P['sintetico_tienda_m2'])}/m² en rollo de 50 m²; el envío se cobra por rollo según "
                         "tu estado."),
     "riego": f"Riego automático instalado de {dinero(P['riego_m2'][0])} a {dinero(P['riego_m2'][1])}/m², según el sistema.",
@@ -63,6 +63,7 @@ CLUSTERS = {
         # Como en la home: "con IVA" solo en el renglón del instalado; el pasto solo no lleva IVA (test_iva_pasto.py).
         "etiqueta": {"nombre": "Pasto San Agustín en rollo", "cientifico": "Stenotaphrum secundatum", "antes": "Instalado · desde",
                      "aviso": PRECIOS_ANIO, "monto": dinero(P["pasto_instalado_m2"]), "unidad": "/m² con IVA",
+                     "cond": datos.TERRENO_LISTO_CORTO,  # decisión del dueño (2026-11-10)
                      "filas": (("Solo el pasto", f"{dinero(P['pasto_solo_m2'])} /m²"),)},
         "enlaces": (("pasto San Agustín en rollo", "/pasto-en-rollo-tampico"),
                     ("protocolo de riego de 20 días", "/protocolo-cuidados-pasto-san-agustin"),

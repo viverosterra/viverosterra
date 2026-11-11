@@ -182,7 +182,8 @@ class PreciosTest(unittest.TestCase):
 
     def test_garantias_con_su_condicion(self):
         self.assertIn("en las plantas que sembramos nosotros", HTML)
-        self.assertIn("siguiendo el protocolo de riego.<", HTML)
+        # Decisión del dueño (2026-11-10): la garantía de arraigo aplica con el terreno listo o preparado por Terra.
+        self.assertIn(f"{datos.GARANTIA_TERRENO}, y se haya seguido el protocolo de riego.<", HTML)
 
 
 if __name__ == "__main__":

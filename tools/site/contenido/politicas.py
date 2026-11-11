@@ -93,6 +93,7 @@ SECCIONES = (
         ("p", f"{datos.GARANTIA_PASTO.replace(' (ver condiciones)', '')} Aplica cuando:"),
         ("ul", (
             "La instalación fue realizada por el equipo de Viveros Terra.",
+            f"{datos.GARANTIA_TERRENO_CONDICION}.",  # decisión del dueño (2026-11-10)
             f"Se realizó riego abundante y diario los primeros {datos.ARRAIGO} según el protocolo.",
             "No hubo pisoteo durante los primeros 7 días.",
             "No se aplicaron productos químicos sin autorización previa.",
@@ -180,3 +181,6 @@ PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION, {"description": (DESCRIPCION, "Decía devoluciones (30 días); la política publicada y la tienda dicen 7 días naturales.")}),
     "jsonld": {},
 }
+
+# Lo que cambia por la decisión del dueño del 2026-11-10 (terreno listo y garantía de arraigo).
+PARIDAD["terreno"] = 'decisión del dueño 2026-11-10: la garantía de arraigo aplica con terreno listo: condición nueva en #garantia-pasto (datos.GARANTIA_TERRENO_CONDICION) y la garantía nueva.'

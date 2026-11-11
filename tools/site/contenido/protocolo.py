@@ -89,6 +89,7 @@ CONTENIDO = {
                  "lede": "Para que aplique la garantía de arraigo de Viveros Terra, se deben cumplir estas condiciones:",
                  "condiciones": (
                      "La instalación fue realizada por el equipo de Viveros Terra",
+                     datos.GARANTIA_TERRENO_CONDICION,  # decisión del dueño (2026-11-10)
                      f"Se realizó riego abundante y diario los primeros {datos.ARRAIGO} según este protocolo",
                      "No hubo pisoteo durante los primeros 7 días",
                      "No se aplicaron productos químicos sin autorización previa",
@@ -108,3 +109,6 @@ PARIDAD = {
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "meta_retirada": cu.META_AUTOR_RETIRADA,
 }
+
+# Lo que cambia por la decisión del dueño del 2026-11-10 (terreno listo y garantía de arraigo).
+PARIDAD["terreno"] = 'decisión del dueño 2026-11-10: la garantía de arraigo aplica con terreno listo: condición nueva en la lista (datos.GARANTIA_TERRENO_CONDICION) y el pie con la garantía nueva.'
