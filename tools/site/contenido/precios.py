@@ -114,7 +114,8 @@ CONTENIDO = {
         "dato": f"Factura {datos.FACTURA} · REPSE {datos.REPSE}",
         "enlaces": (("Ver la lista", "#pasto"),
                     (f"Hasta {max(mensualidades.PLAZOS)} mensualidades con tarjeta", "#mensualidades")),
-        "h1": f'Precios de jardinería en Tampico <span class="vt-serif">{datos.ANIO}</span>',
+        # Lema 21A, elegido por el dueño el 2026-11-11: suma Ciudad Madero; el año sigue en el título de Google.
+        "h1": 'Precios de jardinería en Tampico <span class="vt-serif">y Ciudad Madero</span>',
         "lede": (f"Pasto San Agustín a {SOLO}/m² solo el pasto y desde {INSTALADO}/m² instalado, en Tampico, Madero y "
                  "Altamira."),
         "etiqueta": {"codigo": f"Lista · {datos.ANIO}", "aviso": "MXN", "nombre": "Pasto San Agustín",
@@ -201,7 +202,7 @@ CONTENIDO = {
         "migas": {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Inicio", "item": SITE},
             {"@type": "ListItem", "position": 2, "name": "Precios", "item": URL}]},
-        "pagina": {"@type": "WebPage", "@id": URL, "url": URL, "name": "Precios de jardinería en Tampico 2026",
+        "pagina": {"@type": "WebPage", "@id": URL, "url": URL, "name": "Precios de jardinería en Tampico y Ciudad Madero",
                    "about": NEGOCIO, "mainEntity": {"@id": f"{URL}#lista"}},
         "catalogo": CATALOGO,
     },
@@ -214,7 +215,7 @@ PARIDAD = {
     # SEO fase 0 (2026-11-10): el H1 decía «2026, con IVA» y cubría toda la lista; el pasto sin instalar, las plantas,
     # los árboles y las palmas no llevan IVA (regla del dueño). El IVA se explica en cada tabla.
     # Etapa 2i (2026-11-08): el sintético instalado se publica a precio final con IVA; la captura guarda la parte entera.
-    "reemplazos": {"Precios de jardinería en Tampico 2026, con IVA": f"Precios de jardinería en Tampico {datos.ANIO}",
+    "reemplazos": {"Precios de jardinería en Tampico 2026, con IVA": "Precios de jardinería en Tampico y Ciudad Madero",
                    "$385": SINT_MIN.split(".")[0], "$650": SINT_MAX},
     "retirados": {},
     "jsonld": {},

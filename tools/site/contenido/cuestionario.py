@@ -105,7 +105,7 @@ CONTENIDO = {
     "tipo": "utilidad", "vista": "cuestionario", "scripts": ("/js/vt-cuestionario.js",),
     "meta": {"title": "Cuestionario de Proyecto — Viveros Terra", "description": DESCRIPCION, "robots": "noindex, follow",
              "canonical": URL, "og": ()},
-    "cabeza": {"kicker": "Diseño de jardines", "h1": 'Tu jardín empieza aquí. <span class="vt-serif">Cuéntanos tu visión.</span>',
+    "cabeza": {"kicker": "Diseño de jardines", "h1": 'Tu jardín empieza aquí. <span class="vt-serif">Cuéntanos qué te gustaría.</span>',  # 22A, dueño 2026-11-11
                # Reescritura 17 (Entrega B de experiencia): un solo tiempo estimado, coherente con los 5 pasos, y la visita con costo
                # con la frase oficial (datos.VISITA_COSTO).
                "lede": ("Son 5 pasos y toma de 4 a 5 minutos. Solo tu nombre y tu WhatsApp son obligatorios; lo demás nos ayuda "
@@ -127,8 +127,8 @@ CONTENIDO = {
     "sin_js": {"texto": "Este cuestionario necesita JavaScript. Si no puedes activarlo, cuéntanos de tu jardín por WhatsApp.",
                "mensaje": mensajes_paginas.UTILITARIAS["cuestionario"]},
 }
-PARIDAD = {"reemplazos": {"Tu jardín empieza aquí": "Tu jardín empieza aquí. Cuéntanos tu visión.",
-                          "Tu jardín empieza aquí. Cuéntanos tu visión.": "Tu jardín empieza aquí. Cuéntanos tu visión."},
+PARIDAD = {"reemplazos": {"Tu jardín empieza aquí": "Tu jardín empieza aquí. Cuéntanos qué te gustaría.",
+                          "Tu jardín empieza aquí. Cuéntanos tu visión.": "Tu jardín empieza aquí. Cuéntanos qué te gustaría."},
            "retirados": {"¡Gracias por tu información!": "El aviso en la misma página se sustituye por /gracias (_next), como en los otros 6 formularios; decisión del dueño."},
            "meta": {"description": (DESCRIPCION, "La página no tenía descripción y publicaba una meta vacía."),
                     "canonical": (URL, "Spec §3.5: el cuestionario lleva noindex, follow y canonical; no tenía canonical.")},
