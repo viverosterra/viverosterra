@@ -124,7 +124,7 @@ MODELOS = [
     {
         "slug": "aruba-10", "id": "aruba10", "nombre": "Aruba 10", "n": 1,
         "mm": 10, "peso": "1,050", "peso_num": 1050, "garantia": "3 a 5",
-        "color": "Verde olivo", "tag": "Decorativo", "stock": False,
+        "color": "Verde olivo", "tag": "Decorativo", "lema": "Para adornar terrazas y balcones.", "stock": False,
         "t1": 189, "t2": 159, "rollo": 139,
         "usos": ["terraza", "precio"],
         "scores": {"precio": 5, "realismo": 1, "resistencia": 2, "ligero": 2},
@@ -146,7 +146,7 @@ MODELOS = [
     {
         "slug": "toscana-18", "id": "toscana18", "nombre": "Toscana 18", "n": 2,
         "mm": 18, "peso": "950", "peso_num": 950, "garantia": 5,
-        "color": "Verde olivo y esmeralda", "tag": "El más económico", "stock": True,
+        "color": "Verde olivo y esmeralda", "tag": "El más económico", "lema": "Buen pasto sin gastar de más.", "stock": True,
         "t1": 199, "t2": 169, "rollo": 149,
         "usos": ["precio", "terraza"],
         "scores": {"precio": 5, "realismo": 2, "resistencia": 2, "ligero": 1},
@@ -170,7 +170,7 @@ MODELOS = [
     {
         "slug": "capri-20", "id": "capri20", "nombre": "Capri 20", "n": 3,
         "mm": 20, "peso": "1,580", "peso_num": 1580, "garantia": 8,
-        "color": "Verde lima y esmeralda", "tag": "Alta densidad", "stock": False,
+        "color": "Verde lima y esmeralda", "tag": "Alta densidad", "lema": "Alta densidad, se ve tupido.", "stock": False,
         "t1": 279, "t2": 239, "rollo": 209,
         "usos": ["mascotas", "intenso"],
         "scores": {"precio": 3, "realismo": 3, "resistencia": 4, "ligero": 0},
@@ -194,7 +194,7 @@ MODELOS = [
     {
         "slug": "irlanda-25", "id": "irlanda25", "nombre": "Irlanda 25", "n": 4,
         "mm": 25, "peso": "1,400", "peso_num": 1400, "garantia": 8,
-        "color": "Verde lima y esmeralda", "tag": "Fibra más resistente", "stock": False,
+        "color": "Verde lima y esmeralda", "tag": "Fibra más resistente", "lema": "Para patios que se usan mucho.", "stock": False,
         "t1": 279, "t2": 239, "rollo": 209,
         "usos": ["mascotas", "intenso"],
         "scores": {"precio": 3, "realismo": 3, "resistencia": 5, "ligero": 0},
@@ -218,7 +218,7 @@ MODELOS = [
     {
         "slug": "toscana-28", "id": "toscana28", "nombre": "Toscana 28", "n": 5, "badge": "Reforzado",
         "mm": 28, "peso": "1,380", "peso_num": 1380, "garantia": 5,
-        "color": "Verde olivo y esmeralda", "tag": "Uso familiar diario", "stock": True,
+        "color": "Verde olivo y esmeralda", "tag": "Uso familiar diario", "lema": "Para jugar en el patio todos los días.", "stock": True,
         "t1": 279, "t2": 229, "rollo": 199,
         "usos": ["mascotas", "terraza", "precio"],
         "scores": {"precio": 4, "realismo": 4, "resistencia": 3, "ligero": 0},
@@ -242,7 +242,7 @@ MODELOS = [
     {
         "slug": "viena-30", "id": "viena30", "nombre": "Viena 30", "n": 6,
         "mm": 30, "peso": "1,800", "peso_num": 1800, "garantia": 8,
-        "color": "Verde lima y esmeralda", "tag": "Natural premium", "stock": False,
+        "color": "Verde lima y esmeralda", "tag": "Natural premium", "lema": "Se ve natural, de calidad premium.", "stock": False,
         "t1": 339, "t2": 279, "rollo": 249,
         "usos": ["realismo", "mascotas"],
         "scores": {"precio": 2, "realismo": 4, "resistencia": 4, "ligero": 0},
@@ -266,7 +266,7 @@ MODELOS = [
     {
         "slug": "japones-35", "id": "japones35", "nombre": "Japonés 35", "n": 7,
         "mm": 35, "peso": "1,740", "peso_num": 1740, "garantia": 8,
-        "color": "Verde bosque y esmeralda", "tag": "Verde natural", "stock": False,
+        "color": "Verde bosque y esmeralda", "tag": "Verde natural", "lema": "El que más parece pasto de verdad.", "stock": False,
         "t1": 359, "t2": 299, "rollo": 269,
         "usos": ["realismo"],
         "scores": {"precio": 2, "realismo": 5, "resistencia": 4, "ligero": 0},
@@ -288,7 +288,7 @@ MODELOS = [
     {
         "slug": "monaco-35", "id": "monaco35", "nombre": "Mónaco 35", "n": 8,
         "mm": 35, "peso": "2,100", "peso_num": 2100, "garantia": 8,
-        "color": "Verde esmeralda y lima", "tag": "Verde brillante", "stock": False,
+        "color": "Verde esmeralda y lima", "tag": "Verde brillante", "lema": "Un verde vivo que se nota.", "stock": False,
         "t1": 399, "t2": 339, "rollo": 299,
         "usos": ["realismo", "intenso"],
         "scores": {"precio": 1, "realismo": 5, "resistencia": 5, "ligero": 0},
@@ -310,7 +310,7 @@ MODELOS = [
     {
         "slug": "bali-35", "id": "bali35", "nombre": "Bali 35", "n": 9,
         "mm": 35, "peso": "2,100", "peso_num": 2100, "garantia": 8,
-        "color": "Verde bosque y esmeralda", "tag": "El más completo", "stock": False,
+        "color": "Verde bosque y esmeralda", "tag": "El más completo", "lema": "El más completo de la tienda.", "stock": False,
         "t1": 399, "t2": 339, "rollo": 299,
         "usos": ["realismo", "intenso"],
         "scores": {"precio": 1, "realismo": 5, "resistencia": 5, "ligero": 0},

@@ -121,7 +121,8 @@ class IvaDelPastoTest(unittest.TestCase):
                 if POSITIVO_RE.search(plano(texto)):
                     hallazgos.append(f"{pagina} · {etiqueta} · {plano(texto)}")
         self.assertEqual(hallazgos, [])
-        self.assertIn(f"Precios de jardinería en Tampico {datos.ANIO}</h1>",
+        # Lema 21A (dueño, 2026-11-11): el H1 suma Ciudad Madero; el año sigue en el <title>.
+        self.assertIn("Precios de jardinería en Tampico y Ciudad Madero</h1>",
                       re.sub(r"</?span[^>]*>", "", (PUBLIC / "precios/index.html").read_text(encoding="utf-8")))
 
     def test_el_menu_y_el_pie_no_dicen_con_iva(self):

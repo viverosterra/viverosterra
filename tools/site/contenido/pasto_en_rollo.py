@@ -120,8 +120,9 @@ CONTENIDO = {
         "pos": "50% 4%",
         "dato": f"Garantía de arraigo de {datos.ARRAIGO} con instalación",
         "enlaces": (("Calcula tu patio", "#precio"), ("Mensualidades con tarjeta", "#mensualidades")),
-        "h1": ('Pasto San Agustín en rollo, instalado en un día. '
-               '<span class="vt-serif">Del campo a tu jardín, sin pasar por bodega.</span>'),
+        "h1": "Pasto San Agustín en rollo, instalado en un día.",
+        # Lema 20A, elegido por el dueño el 2026-11-11: la frase sale del título y va como lema aparte.
+        "lema": "Recién cortado, del campo a tu jardín.",
         "lede": f"Cortado para tu pedido: llega del campo {datos.LLEGADA_PASTO}.",
         "etiqueta": {
             "codigo": "Pasto · 01", "aviso": "Tepe 40 × 60 cm", "nombre": "Pasto San Agustín",
@@ -315,7 +316,7 @@ PARIDAD = {
         "Preparación del suelo": "Terreno listo para instalar",
         "$385": f"${int(P['sintetico_instalado_m2'][0])}",
         "Pasto San Agustín en rollo, instalado en un día": (
-            "Pasto San Agustín en rollo, instalado en un día. Del campo a tu jardín, sin pasar por bodega."),
+            "Pasto San Agustín en rollo, instalado en un día."),
         "¿Cuánto cuesta ponerle pasto a mi jardín?": "Calcula el tuyo",
         "Tres formas de tener tu jardín verde": "¿Cuánto cuesta el pasto San Agustín en Tampico?",
         "Cómo instalar pasto en rollo San Agustín en 5 pasos": (

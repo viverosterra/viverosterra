@@ -113,7 +113,7 @@ def contenido(m):
                                       (m["nombre"], url)]), product_schema(m)),
         "migas": (("Inicio", "/"), ("Pasto sintético", "/pasto-sintetico"), (m["nombre"], None)),
         "kicker": f"Pasto sintético · N.º {m['n']:02d} de 09",
-        "lema": f"{m['tag']}.",  # el rótulo del modelo (tools/pasto/data.py), antes al final del kicker
+        "lema": m["lema"],  # elegido por el dueño el 2026-11-11 (tools/pasto/data.py); el rótulo corto «tag» sigue en tarjetas
         "h1": f'<span class="vt-ficha__pre">Pasto sintético</span> {m["nombre"]}{insignia}',
         "lede": m["lede"],
         "etiqueta": {
