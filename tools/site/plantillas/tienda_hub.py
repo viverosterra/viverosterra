@@ -40,7 +40,7 @@ def _cotizador(k):
     cuerpo = (f'<div class="vt-dos">{t.cotizador(k["default"], modelos=t.data.MODELOS, titulo=q["titulo_cotizador"], nivel=3, tipo=k["tipo"])}'
               f'<div><h3>{q["titulo_calculo"]}</h3><ul class="vt-checks vt-mt-s">{calculo}</ul>{prueba}</div></div>'
               f'<h3 class="vt-mt" id="envio">{q["titulo_envio"]}</h3><p class="vt-lede">{q["lede_envio"]}</p>'
-              f'{t.tabla_envio()}<p class="vt-promesa">{q["nota_envio"]}</p>')
+              f'{t.zonas_acordeon()}<p class="vt-promesa">{q["nota_envio"]}</p>')
     return c.bloque(4, "Cotizador", "vt-h-cotizador", q["titulo"], cuerpo, tinte=True, id_seccion="cotizador")
 
 
@@ -69,8 +69,8 @@ def render(k):
                  t.tabla_modelos() + f'<p class="vt-promesa">{cp["nota"]}</p>' + _fila(k, "comparativa", "Cotizar mi modelo"),
                  tinte=True, id_seccion="comparativa"),
         c.bloque(7, "Obras", "vt-h-obras", ob["titulo"], c.obras(ob["figuras"], c.nota(*ob["nota"])), id_seccion="obras"),
-        c.bloque(8, "Tu pedido", "vt-h-pedido", pe["titulo"], c.pasos(pe["pasos"]) + _fila(k, "pedido", "Empezar mi pedido"),
-                 tinte=True, id_seccion="como-funciona"),
+        c.momento(c.bloque(8, "Tu pedido", "vt-h-pedido", pe["titulo"], c.pasos(pe["pasos"]) + _fila(k, "pedido", "Empezar mi pedido"),
+                           id_seccion="como-funciona")),
         c.bloque(9, "Instálalo tú", "vt-h-diy", ins["titulo"], c.pasos(ins["pasos"]) +
                  f'<p class="vt-promesa">{ins["guia"]}</p>', lede=ins["lede"], id_seccion="instalacion"),
         c.bloque_dos(10, "Preguntas", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]), tinte=True,

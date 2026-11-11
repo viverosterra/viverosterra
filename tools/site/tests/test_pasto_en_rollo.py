@@ -26,7 +26,7 @@ def nodo(tipo):
 class PastoEnRolloTest(unittest.TestCase):
     def test_secuencia_de_servicio_local(self):
         marcas = ('class="vt-crumbs"', "<h1", 'class="vt-etiqueta"', 'data-cta="servicio-pasto:hero"',
-                  'class="vt-datos"', 'id="vt-h-prueba"', 'id="vt-h-precio"', "data-vt-medidor", 'id="vt-h-conviene"',
+                  'class="vt-datos vt-datos--tira"', 'id="vt-h-prueba"', 'id="vt-h-precio"', "data-vt-medidor", 'id="vt-h-conviene"',
                   'id="vt-h-proceso"', 'id="vt-h-garantia"', 'id="vt-h-pago"', "data-simulador", 'id="vt-h-faq"',
                   'id="vt-h-cobertura"', 'id="vt-h-rel"', 'class="vt-cierre"')
         posiciones = [MAIN.index(m) for m in marcas]

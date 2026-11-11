@@ -145,6 +145,9 @@
       }
     }
     firstPaint = false;
+    // Plan visual V2: en el acordeón de envío queda abierta solo la zona del estado elegido.
+    const zona = estado && t.estadoZona ? String(t.estadoZona[estado] || '') : '';
+    document.querySelectorAll('.vt-zonas-acc details').forEach((d) => { d.open = d.dataset.zona === zona; });
     $$('[data-landed-slug]').forEach((el) => {
       const m = t.models.find((x) => x.slug === el.dataset.landedSlug);
       const v = m && estado ? landedFor(t, m.rollo, estado) : null;

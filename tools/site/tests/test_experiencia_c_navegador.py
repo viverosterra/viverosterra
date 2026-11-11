@@ -113,9 +113,13 @@ class ExperienciaCNavegadorTest(unittest.TestCase):
                 y = page.evaluate("() => document.querySelector('.vt-banda').getBoundingClientRect().top + scrollY")
                 total = page.evaluate("() => document.documentElement.scrollHeight")
                 self.assertTrue(0.3 < y / total < 0.75, y / total)
-        for ruta in ("/mantenimiento-jardines-tampico/", "/sistema-riego-tampico/", datos.NOCHEBUENAS["ruta"] + "/"):
+        # Plan visual V2: sin garantía en datos.py, la banda es el proceso (nunca la garantía); Nochebuenas no lleva.
+        for ruta in ("/mantenimiento-jardines-tampico/", "/sistema-riego-tampico/"):
             with self.subTest(ruta=ruta):
-                self.assertEqual(self.abrir(contexto, ruta).locator(".vt-banda").count(), 0)
+                page = self.abrir(contexto, ruta)
+                self.assertEqual(page.locator(".vt-banda").count(), 1)
+                self.assertEqual(page.locator(".vt-banda #vt-h-proceso").count(), 1)
+        self.assertEqual(self.abrir(contexto, datos.NOCHEBUENAS["ruta"] + "/").locator(".vt-banda").count(), 0)
 
     # ---------- 3. filas con desplazamiento en celular ----------
     def test_filas_de_celular_se_desplazan_sin_ensanchar_la_pagina(self):

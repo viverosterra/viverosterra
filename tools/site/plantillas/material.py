@@ -85,7 +85,8 @@ def _extra(k, n, clave):
     if clave == "galeria":
         return c.bloque(n(), "Fotos", "vt-h-galeria", x["titulo"], c.obras(x["figuras"]), lede=x.get("lede"))
     if clave == "opiniones":
-        return c.bloque(n(), "Opiniones", "vt-h-opiniones", x["titulo"], c.testimonios(x["items"]), lede=x.get("lede"))
+        # Plan visual V2: las opiniones son el momento oscuro a media página.
+        return c.momento(c.bloque(n(), "Opiniones", "vt-h-opiniones", x["titulo"], c.testimonios(x["items"]), lede=x.get("lede")))
     # Tras las preguntas (con tinte): combinaciones sin tinte e instalación con tinte, para que no se junten dos iguales.
     return c.bloque(n(), "Combinaciones", "vt-h-combina", x["titulo"], c.fichas(x["items"]), lede=x.get("lede"))
 

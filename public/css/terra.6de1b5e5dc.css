@@ -264,6 +264,7 @@
 .vt-portada .vt-kicker{margin-bottom:8px;font-size:.75rem;letter-spacing:.02em}
 .vt-pagina main :is(.vt-portada,.vt-titular) h1{font-size:2.3rem}
 .vt-pagina main :is(.vt-portada--larga,.vt-titular--larga) h1{font-size:2rem}
+.vt-pagina main .vt-portada__lema{margin-top:.4em;font-size:1.1rem}
 .vt-portada .vt-lede{margin-top:10px;font-size:var(--vt-text-base)}
 .vt-portada .vt-etiqueta-x,.vt-portada__trato{margin-top:14px}
 }
@@ -678,3 +679,26 @@
 }
 @keyframes vt-titulo{from{opacity:.6;transform:translateY(16px)}to{opacity:1;transform:none}}
 @keyframes vt-sube{from{opacity:.25;transform:translateY(16px)}to{opacity:1;transform:none}}
+.vt-respuesta{padding-block:20px 36px}
+.vt-corto{display:grid;gap:6px 40px;padding:18px 18px 16px 20px;border-left:3px solid var(--vt-soil);background:var(--vt-card)}
+.vt-pagina main .vt-corto__t{margin:0;font-family:var(--vt-font-serif);font-style:italic;font-size:22px;line-height:1.1;color:var(--vt-soil)}
+.vt-corto .vt-promesa{margin:10px 0 0}
+@media (min-width:900px){.vt-corto{grid-template-columns:minmax(140px,1fr) 4fr;padding:28px 36px 26px}.vt-pagina main .vt-corto__t{font-size:clamp(1.75rem,1rem + 1.3vw,2.5rem)}}
+.vt-portada .vt-datos--tira{margin-top:28px;border-width:1px 0;background:transparent}
+.vt-datos--tira>div{padding:10px 12px}
+.vt-datos--tira>div:nth-child(2n+1){padding-left:0}
+.vt-datos--tira dd{font-size:17px}
+@media (max-width:899px){.vt-datos--tira dd small{display:none}.vt-datos--tira>div:nth-child(n+3){border-bottom:0}}
+@media (min-width:900px){.vt-portada .vt-datos--tira{margin-top:48px}.vt-datos--tira>div{padding:12px 18px}.vt-datos--tira>div:first-child{padding-left:0}.vt-datos--tira>div:nth-child(3){padding-left:18px}}
+.vt-pagina main .vt-banda :is(.vt-bloque__cabeza .vt-lede,.vt-pasos p,.vt-pasos .vt-pasos__cuando){color:var(--vt-on-dark-2)}
+.vt-banda .vt-pasos,.vt-banda .vt-pasos li{border-color:var(--vt-on-dark-line)}
+.vt-zonas-acc{display:grid;border-top:1px solid var(--vt-ink)}
+.vt-zonas-acc details{border-bottom:1px solid var(--vt-line)}
+.vt-zonas-acc summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;padding:14px 0;cursor:pointer;font-weight:700}
+.vt-zonas-acc summary small{font-weight:400;color:var(--vt-muted)}
+.vt-zonas-acc summary span{margin-left:auto;font-variant-numeric:tabular-nums}
+.vt-zonas-acc summary::-webkit-details-marker{display:none}
+.vt-zonas-acc summary::after{content:"+";width:1.2em;font-size:20px;line-height:1;text-align:center;color:var(--vt-field)}
+.vt-zonas-acc details[open] summary::after{content:"−"}
+.vt-pagina main .vt-zonas-acc p{margin:0 0 14px;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
+@media (min-width:1200px){.vt-bloque>.vt-dos>div:first-child{position:sticky;top:calc(var(--vt-head-h) + 32px)}}

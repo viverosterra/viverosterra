@@ -76,7 +76,7 @@ def render(k):
     p, g, f, r, ci = k["proceso"], k["garantia"], k["faq"], k["relacionados"], k["cierre"]
     secciones = [c.portada(k["portada"], tipo, k["migas"]), c.respuesta(k.get("respuesta")), _prueba(k, 1), _escalas(k, 2), _correo(k, 3),
                  _documentacion(k, 4), _paquetes(k, 5),
-                 c.bloque(6, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]), lede=p["lede"]),
+                 c.momento(c.bloque(6, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]), lede=p["lede"])),
                  c.garantia(dict(g, numero=7, id_titulo="vt-h-garantia", rotulo="Garantía")),
                  c.bloque_dos(8, "Preguntas de compras", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]) + _cta(k, "faq"),
                               tinte=True, ritmo="apoyo"),
