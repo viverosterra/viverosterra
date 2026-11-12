@@ -10,7 +10,8 @@ mensualidades, tabla comparativa bajo los planes, "qué incluye" en tarjetas, ob
 sin cifra. Páginas: /pasto-en-rollo-tampico (contenido/pasto_en_rollo.py), /pasto-sintetico-tampico
 (contenido/sintetico_tampico.py), /diseno-jardines-tampico (contenido/diseno_jardines.py),
 /mantenimiento-jardines-tampico (contenido/mantenimiento_jardines.py) y /sistema-riego-tampico
-(contenido/sistema_riego.py)."""
+(contenido/sistema_riego.py). Desde la SEO fase 2a (2026-11-11), también /poda-arboles-tampico (contenido/poda_arboles.py),
+sin garantía ni pago (la poda no tiene garantía ni mensualidades en datos.py) y con rótulo propio en «qué incluye»."""
 import componentes as c
 import componentes_tienda as t
 from contenido import fotos_obra
@@ -24,7 +25,7 @@ def _scripts(k):
     con_medidor = bool(k.get("precio", {}).get("titulo_medidor"))
     return (("/js/vt-mensualidades.js",) + (("/js/vt-medidor.js",) if con_medidor else ())
             + (("/js/tienda-pasto.js",) if "cotizador" in k else ())
-            + (("/js/vt-simulador.js",) if k["pago"].get("sim") else ()))
+            + (("/js/vt-simulador.js",) if k.get("pago", {}).get("sim") else ()))
 
 
 def _cta(k, clave):
@@ -79,7 +80,7 @@ def _opciones(k, numero, tinte):
 def _incluye(k, numero, tinte):
     """Qué incluye el servicio, en tarjetas sin precio (mantenimiento: lo que se hace en cada visita)."""
     i = k["incluye"]
-    return c.bloque(numero, "Qué incluye", "vt-h-incluye", i["titulo"], c.fichas(i["items"]) + _cta(k, "incluye"),
+    return c.bloque(numero, i.get("rotulo", "Qué incluye"), "vt-h-incluye", i["titulo"], c.fichas(i["items"]) + _cta(k, "incluye"),
                     lede=i.get("lede"), tinte=tinte)
 
 

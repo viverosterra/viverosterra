@@ -1,7 +1,7 @@
 """Mayoreo de pasto y palmas para proyectos salen de la plantilla b2b (Etapa 2d): secuencia del spec §3.3, clientes con
 nombre y REPSE verificable, un mensaje de compras por paquete, precios de datos.py (mayoreo nunca a $60 con menos de
 500 m²; palmas con los precios del dueño y el resto según cotización), anticipo sin porcentaje ni crédito, cotizadores
-con su JS y JSON-LD de lo visible. /empresas es de la Etapa 3: mientras tanto nadie la enlaza."""
+con su JS y JSON-LD de lo visible. /empresas (SEO fase 2a) la enlazan las dos desde sus relacionados."""
 import json
 import re
 import sys
@@ -178,11 +178,15 @@ class ComunTest(unittest.TestCase):
                 with self.subTest(pagina=clave, frase=frase):
                     self.assertNotIn(frase.lower(), texto.lower())
 
-    def test_empresas_todavia_sin_enlace(self):
-        """/empresas es de la Etapa 3 (spec §3.5): hasta entonces ninguna página la enlaza."""
-        for path in paginas.PUBLIC.rglob("*.html"):
-            with self.subTest(pagina=str(path.relative_to(paginas.PUBLIC))):
-                self.assertNotRegex(path.read_text(encoding="utf-8"), r'href="/empresas(?:[/"#?])')
+    def test_empresas_enlazada_desde_sus_hijos(self):
+        """SEO fase 2a (2026-11-11): /empresas ya existe; mayoreo y palmas la enlazan desde sus relacionados con el ancla
+        del mapa (§4b, clúster 6)."""
+        self.assertTrue((paginas.PUBLIC / "empresas" / "index.html").is_file())
+        for clave in RUTAS:
+            _h, main, _t, _g = pagina(clave)
+            rel = main[main.index('id="vt-h-rel"'):main.index('class="vt-cierre"')]
+            with self.subTest(pagina=clave):
+                self.assertIn('<a href="/empresas">Proveedor de áreas verdes con REPSE</a>', rel)
 
     def test_las_paginas_para_empresas_se_enlazan_entre_si(self):
         for clave, ruta in RUTAS.items():

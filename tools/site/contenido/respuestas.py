@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 import datos
+import entidad
 from componentes import dinero, dinero_exacto
 
 sys.path.insert(1, str(Path(__file__).resolve().parents[2] / "pasto"))
@@ -82,8 +83,28 @@ TEXTOS = {
         f"pedidos de {P['pasto_mayoreo_minimo_m2']} m² o más, con factura {datos.FACTURA}; el pasto sin instalar no lleva "
         "IVA. Entregamos por etapas según el avance de tu obra en Tampico, Madero y Altamira; fuera de la zona, por "
         "proyecto."),
+    # SEO fase 2a (2026-11-11): las cuatro páginas nuevas. Poda con las respuestas del dueño (derribo, residuos aparte y
+    # permiso a cargo del dueño del predio); nosotros y zonas no hablan de precios y no llevan fecha.
+    "/poda-arboles-tampico": (
+        f"En {ZONA}, la poda de un árbol o una palma cuesta desde {dinero(P['poda'])}, según cotización (precios "
+        f"{datos.ANIO}); el derribo de un árbol completo también se cotiza. {datos.PODA_RESIDUOS} "
+        "Si el municipio pide permiso para ese árbol, lo tramita el dueño del predio."),
+    "/empresas": (
+        f"{datos.NOMBRE} atiende empresas en {ZONA} desde {datos.DESDE}, con REPSE {datos.REPSE} y factura "
+        f"{datos.FACTURA}: mantenimiento de áreas verdes con plan empresa {datos.SEGUN_COTIZACION.lower()}, pasto San "
+        f"Agustín al mayoreo desde {dinero(P['pasto_mayoreo_m2'])}/m² en pedidos de {P['pasto_mayoreo_minimo_m2']} m² o "
+        "más (no lleva IVA), palmas para proyectos y riego automático."),
+    "/nosotros": (
+        f"{datos.NOMBRE} es un vivero y empresa de jardinería fundada el {int(datos.FUNDACION[8:])} de "
+        f"{entidad.mes_largo(datos.FUNDACION)} en {datos.CIUDAD}, Tamaulipas. Su vivero está en {datos.CALLE}, "
+        f"{datos.REFERENCIA[0].lower()}{datos.REFERENCIA[1:]}; suma {datos.CLIENTES} clientes y {datos.INSTALACIONES} "
+        f"instalaciones de pasto en {ZONA_CORTA}, y tiene REPSE {datos.REPSE} para trabajar con empresas."),
+    "/zonas": (
+        f"{datos.NOMBRE} da servicio de jardinería en {ZONA}, con página propia para seis zonas: Lomas de Rosales, Club "
+        f"Campestre, Águila, Lomas del Chairel, Ciudad Madero y Altamira. Su vivero está en {datos.CIUDAD}; en "
+        f"{datos.ZONAS_POR_PROYECTO} trabaja por proyecto."),
 }
-SIN_FECHA = ("/vivero-tampico",)
+SIN_FECHA = ("/vivero-tampico", "/nosotros", "/zonas")
 RUTAS = tuple(TEXTOS)
 
 

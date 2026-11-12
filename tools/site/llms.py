@@ -42,6 +42,9 @@ SECCIONES = (
     ("Precios y empresa", (
         ("Lista de precios", "/precios", "todos los precios vigentes en tablas, con la regla de IVA"),
         ("Vivero en Tampico y Ciudad Madero", "/vivero-tampico", "dirección, horario y cómo llegar"),
+        ("Nosotros", "/nosotros", f"historia desde {datos.DESDE}, cifras, REPSE, clientes y perfiles oficiales"),
+        ("Áreas verdes para empresas", "/empresas",
+         f"mantenimiento, pasto al mayoreo, palmas y riego con REPSE {datos.REPSE} y factura {datos.FACTURA}"),
         ("Políticas y garantías", "/politicas", "garantía de pasto y de plantas, mensualidades, anticipos y devoluciones"),
         ("Inicio", "/", "resumen de servicios y cotizador por m²"),
     )),
@@ -61,6 +64,8 @@ SECCIONES = (
         ("Diseño de jardines", "/diseno-jardines-tampico", "Plan Terra en tres niveles y qué entrega cada uno"),
         ("Sistema de riego automático", "/sistema-riego-tampico", "tipos de sistema, precio por m² y pasos de instalación"),
         ("Mantenimiento de jardines", "/mantenimiento-jardines-tampico", "planes, frecuencias y qué incluyen"),
+        ("Poda y derribo de árboles y palmas", "/poda-arboles-tampico",
+         "precio desde, derribo, retiro de residuos aparte y quién tramita el permiso"),
         ("Cuánto cuesta un jardín en Tampico", "/blog/cuanto-cuesta-jardin-tampico-precios",
          "ejemplos de presupuesto con los precios oficiales"),
     )),
@@ -90,7 +95,8 @@ SECCIONES = (
         ("Mármol blanco", "/marmol-blanco-tampico", "saco y usos"),
         ("Piedra bola de río", "/piedra-bola-rio-tampico", f"venta {datos.PIEDRA_BOLA_VENTA}"),
     )),
-    ("Zonas", tuple((nombre, ruta, "jardinería en la zona") for nombre, ruta in datos.ZONAS)),
+    ("Zonas", (("Zonas de servicio", "/zonas", "índice de cobertura en Tampico, Ciudad Madero y Altamira"),
+               *((nombre, ruta, "jardinería en la zona") for nombre, ruta in datos.ZONAS))),
     # Lo que conviene que un asistente no prometa en nombre del negocio; cada punto enlaza la página que lo explica.
     ("Lo que no hacemos", (
         ("Pasto sintético sin muestras físicas", "/pasto-sintetico",
@@ -114,7 +120,8 @@ SECCIONES = (
 # Páginas de llms-full.txt, en orden: las que venden y las de condiciones.
 PAGINAS_FULL = ("/", "/precios", "/pasto-en-rollo-tampico", "/mayoreo-pasto-tampico", "/pasto-sintetico-tampico",
                 "/pasto-sintetico", "/diseno-jardines-tampico", "/sistema-riego-tampico",
-                "/mantenimiento-jardines-tampico", "/vivero-tampico", "/palmas-tropicales-tampico",
+                "/mantenimiento-jardines-tampico", "/poda-arboles-tampico", "/empresas", "/vivero-tampico",
+                "/nosotros", "/zonas", "/palmas-tropicales-tampico",
                 "/palmas-mayoreo-proyectos", "/tierra-negra-vegetal-tampico", "/tezontle-rojo-tampico",
                 "/marmol-blanco-tampico", "/piedra-bola-rio-tampico", NB["ruta"])
 
@@ -203,7 +210,9 @@ def precios():
         (f"Pasto sintético con envío a todo México: desde {_dinero(barato)} por m² en rollo de {data.ROLLO_M2} m², con "
          f"IVA; envío por rollo de {_dinero(data.ZONAS['A'])} (zona A), {_dinero(data.ZONAS['B'])} (zona B) o "
          f"{_dinero(data.ZONAS['C'])} (zona C); pedido mínimo de {data.MIN_NACIONAL_M2} m²"),
-        f"Poda de árboles y palmas: desde {_dinero(P['poda'])}, según el tamaño y los residuos",
+        (f"Poda de árboles y palmas: desde {_dinero(P['poda'])}, según cotización y el tamaño; el derribo de árboles "
+         f"completos, {datos.SEGUN_COTIZACION.lower()}. {datos.PODA_RESIDUOS} El permiso municipal, si se necesita, lo "
+         "tramita el dueño del predio con su ayuntamiento"),
         (f"Palmas: areca y coco plumoso desde {_dinero(P['palma_desde'])} y palma real desde {_dinero(P['palma_real'])}, "
          "en tamaño chico; el precio sube con la altura (no llevan IVA)"),
         (f"Flamboyán: desde {_dinero(P['flamboyan'])} (no lleva IVA). Las demás especies, "

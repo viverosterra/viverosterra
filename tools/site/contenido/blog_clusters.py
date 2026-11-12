@@ -193,7 +193,13 @@ TEMA = {slug: tema for tema, slugs in POR_SLUG for slug in slugs}
 # Los blogs de precios enlazan a /precios como fuente única (spec §3.5).
 A_PRECIOS = ("cuanto-cuesta-jardin-tampico-precios", "cuanto-cuesta-pasto-sintetico-mexico", "jardin-bajo-presupuesto-tampico")
 # La comparativa con pasto natural es de instalación en Tampico, no de compra en línea.
-LANDING = {"pasto-sintetico-vs-natural-tampico": ("/pasto-sintetico-tampico", "Pasto sintético en Tampico")}
+LANDING = {"pasto-sintetico-vs-natural-tampico": ("/pasto-sintetico-tampico", "Pasto sintético en Tampico"),
+           # SEO fase 2a (2026-11-11): la guía de poda y la de huracanes (poda preventiva) llevan a la página de poda.
+           "poda-arboles-palmas-tampico-guia": ("/poda-arboles-tampico", "Poda de árboles en Tampico"),
+           "temporada-huracanes-proteger-jardin-tampico": ("/poda-arboles-tampico", "Poda de árboles en Tampico")}
+# Los mismos dos artículos abren sus enlaces finales con la página de poda (mapa §4b, clúster de clima).
+A_PODA = ("poda-arboles-palmas-tampico-guia", "temporada-huracanes-proteger-jardin-tampico")
+PODA = ("poda de árboles en Tampico", "/poda-arboles-tampico")
 
 
 def de(slug):
@@ -206,6 +212,8 @@ def de(slug):
         enlaces += ((f"envío de pasto sintético a {NOMBRES_CIUDAD[c]}", f"/pasto-sintetico/envio/{c}"),)
     if slug in DE_PASTO:
         enlaces = enlaces[:2] + (PASTO_EN_ROLLO,)
+    if slug in A_PODA:
+        enlaces = (PODA,) + enlaces[:2]
     if slug in A_PRECIOS and not any(h == "/precios" for _t, h in enlaces):
         enlaces = (("lista de precios vigente", "/precios"),) + enlaces[:2]
     return {**base, "tema": tema, "enlaces": enlaces[:3], "landing": LANDING.get(slug, base["landing"]), "lede": LEDE[tema]}
