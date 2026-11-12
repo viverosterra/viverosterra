@@ -232,7 +232,8 @@ PIE = (
                ("Jardinería en Ciudad Madero", "/jardineria-ciudad-madero"),
                ("Jardinería en Altamira", "/jardineria-altamira"),
                ("Todas las zonas de servicio", "/zonas"))),
-    ("Viveros Terra", (("Vivero en Cd. Madero", "/vivero-tampico"),
+    # SEO fase 2b (mapa §4a): el ancla del vivero lleva el domicilio.
+    ("Viveros Terra", ((f"Vivero en Cd. Madero · {datos.CALLE_CORTA}", "/vivero-tampico"),
                        ("Nosotros", "/nosotros"),
                        ("Precios", "/precios"),
                        ("Blog", "/blog"),

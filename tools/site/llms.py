@@ -41,7 +41,8 @@ REGLA_IVA = ("Regla de IVA: el pasto San Agustín sin instalar (menudeo y mayore
 SECCIONES = (
     ("Precios y empresa", (
         ("Lista de precios", "/precios", "todos los precios vigentes en tablas, con la regla de IVA"),
-        ("Vivero en Tampico y Ciudad Madero", "/vivero-tampico", "dirección, horario y cómo llegar"),
+        ("Vivero en Tampico y Ciudad Madero", "/vivero-tampico",
+         "qué hay en el vivero, dirección, horario, cómo llegar desde Tampico y Altamira, entregas y mayoreo"),
         ("Nosotros", "/nosotros", f"historia desde {datos.DESDE}, cifras, REPSE, clientes y perfiles oficiales"),
         ("Áreas verdes para empresas", "/empresas",
          f"mantenimiento, pasto al mayoreo, palmas y riego con REPSE {datos.REPSE} y factura {datos.FACTURA}"),

@@ -140,7 +140,9 @@ CONTENIDO = {
             {"titulo": "Plantas y palmas", "servicio": "plantas", "cotizar": "plantas",
              "href": "/plantas-palmas-arboles-tampico",
              "img": f"{OBRA}/palmas-en-costal-vivero.webp", "ancho": 640, "alto": 961,
-             "texto": (f"{datos.VARIEDADES} variedades en el vivero. Las que sembramos nosotros llevan 30 días de "
+             # SEO fase 2b (mapa §4a): el inicio enlaza la página del vivero desde el contenido.
+             "texto": (f'{datos.VARIEDADES} variedades en el <a href="/vivero-tampico">vivero en Ciudad Madero</a>. '
+                       "Las que sembramos nosotros llevan 30 días de "
                        "garantía de arraigo, con el riego indicado."),
              "desde": dinero(P["palma_desde"]), "unidad": "palma chica"},
             {"titulo": "Empresas y constructoras", "servicio": "empresas", "cotizar": "proyecto",

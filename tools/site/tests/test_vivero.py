@@ -1,4 +1,5 @@
-"""/vivero-tampico: domicilio, horario y precios de datos.py, FAQ visible igual al JSON-LD."""
+"""/vivero-tampico: domicilio, horario y precios de datos.py, FAQ visible igual al JSON-LD. Desde la SEO fase 2b sale de la
+plantilla pilar (antes, plantillas/vivero.py)."""
 import json
 import re
 import sys
@@ -9,14 +10,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import datos  # noqa: E402
 import generar  # noqa: E402
-from plantillas import vivero  # noqa: E402
+from plantillas import pilar  # noqa: E402
 
 K = generar.cargar("vivero").CONTENIDO
 
 
 class ViveroTest(unittest.TestCase):
     def setUp(self):
-        self.html = vivero.render(K)
+        self.html = pilar.render(K)
 
     def test_domicilio_horario_y_mapa(self):
         for pieza in (datos.CALLE, datos.COLONIA, datos.HORARIO, datos.MAPS_URL):
