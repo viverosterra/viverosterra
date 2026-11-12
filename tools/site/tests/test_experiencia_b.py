@@ -101,7 +101,8 @@ class MensajesTest(unittest.TestCase):
                 for h in huecos:
                     self.assertIn(h, m)
                 self.assertEqual(paginas.contexto(f"/blog/{slug}")["mensaje"], datos.con_firma(m))
-        self.assertNotIn("Metros", mp.mensaje_blog("riego-automatico-tampico-roi"))  # ya pide "de ___ m²"
+        # SEO fase 2c: la guía de riego hereda el mensaje del artículo de ROI fusionado con 301 (ya pide "de ___ m²").
+        self.assertNotIn("Metros", mp.mensaje_blog("sistema-riego-automatizado-tampico"))
 
     def test_cierre_del_articulo_con_precio_y_garantia_de_datos(self):
         pasto = blog_clusters.de("pasto-san-agustin-vs-japones")["lede"]

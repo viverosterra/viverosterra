@@ -18,8 +18,9 @@ from contenido import blog_clusters  # noqa: E402
 
 ENLACE_RE = re.compile(r'<a\b[^>]*href="(/[^"#?]*)[^"]*"[^>]*>(.*?)</a>', re.S)
 # Con un solo enlace entrante antes de la fase 0: ahora, al menos 3 páginas (el índice del blog y dos de su tema).
+# (El cuarto, riego-automatico-tampico-roi, se fusionó con 301 en la guía de riego en la SEO fase 2c.)
 POCO_ENLAZADOS = ("cuanto-cuesta-jardin-tampico-precios", "errores-pasto-san-agustin-tampico",
-                  "jardin-en-macetas-terraza-tampico-guia", "riego-automatico-tampico-roi")
+                  "jardin-en-macetas-terraza-tampico-guia")
 
 
 def entrantes():

@@ -1,4 +1,4 @@
-"""Los 52 artículos del blog (Etapa 2h). El cuerpo vive en contenido/blog/<slug>.html (HTML con un comentario de metadatos
+"""Los artículos del blog (Etapa 2h: 52; desde la SEO fase 2c, 49 tras cinco fusiones con 301). El cuerpo vive en contenido/blog/<slug>.html (HTML con un comentario de metadatos
 en JSON: la excepción a "contenido en .py", justificada por el volumen de prosa). Aquí se arma lo que la plantilla
 tools/site/plantillas/articulo.py necesita: portada, autor y fecha, índice (de los <h2> del cuerpo, así nunca apunta a un
 id que no existe), preguntas, etiqueta de producto, CTA y relacionados. El autor es datos.AUTOR_BLOG."""
@@ -13,7 +13,9 @@ from contenido import blog_clusters
 DIR = Path(__file__).resolve().parent / "blog"
 CLAVES = tuple(sorted(p.stem for p in DIR.glob("*.html")))
 # Artículos escritos directamente en este formato (sin página anterior que comparar): quedan fuera de las pruebas de paridad.
-NUEVOS = ("palma-bambu-chamaedorea-tampico", "plantas-seguras-mascotas-jardin-tampico")
+NUEVOS = ("palma-bambu-chamaedorea-tampico", "plantas-seguras-mascotas-jardin-tampico",
+          # SEO fase 2c (2026-11-11): la lista única de palmas, fusión con 301 de dos artículos (contenido/blog_seo_f2c.py).
+          "palmas-para-jardin-tampico")
 MESES = ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre",
          "diciembre")
 M_LOGO = "Era el logo del publisher; ahora el publisher es una referencia por @id a la entidad única #negocio."

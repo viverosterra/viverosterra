@@ -212,8 +212,7 @@ POR_ARCHIVO = (
     ("public/palmas-mayoreo-proyectos/index.html", "<span>Garantía de arraigo 30 días</span></div>",
      "<span>Garantía de arraigo 30 días en siembra propia</span></div>"),
     # Materiales y servicios: respuesta con la promesa única.
-    ("public/blog/palmas-mas-vendidas-tampico-precios/index.html",
-     "te confirmamos disponibilidad hoy mismo", f"te confirmamos disponibilidad {EN_1_HORA}"),
+    # (La de /blog/palmas-mas-vendidas-tampico-precios salió en la SEO fase 2c: el artículo se fusionó con 301.)
     ("public/sistema-riego-tampico/index.html", "Cotización personalizada hoy mismo.",
      f"Te respondemos {EN_1_HORA} con tu cotización."),
     # Cuestionario de diseño: la promesa única en lugar de "24 horas".
@@ -231,12 +230,7 @@ POR_ARCHIVO = (
      "Proyecto completo de $50,000+"),
     ("public/blog/cuanto-cuesta-jardin-tampico-precios/index.html", "Plan Terra Completo ($50,000+)",
      "Proyecto completo ($50,000+)"),
-    ("public/blog/jardin-bajo-presupuesto-tampico/index.html", "Plan Terra Completo ($50,000+)",
-     "Proyecto completo ($50,000+)"),
-    ("public/blog/jardin-bajo-presupuesto-tampico/index.html", "El paquete de $50,000 (Plan Terra Completo)",
-     "El Proyecto completo de $50,000"),
-    ("public/blog/jardin-bajo-presupuesto-tampico/index.html", "El Plan Terra Completo incluye el primer mes de mantenimiento",
-     "El Proyecto completo incluye el primer mes de mantenimiento"),
+    # (Las tres de /blog/jardin-bajo-presupuesto-tampico salieron en la SEO fase 2c: fusionado con 301 en el de costos.)
     # Índice del blog: sin notas internas ni métricas; el conteo lo pone el build.
     ("public/blog/index.html", "</svg>22 artículos</span>", '</svg><span data-vt-conteo="blog">52</span> guías</span>'),
     ("public/blog/index.html", '<div class="vt-hero__metric-num">52</div>',

@@ -687,12 +687,12 @@
     },
     {
       "source": "/post/por-qu%C3%A9-es-conveniente-un-sistema-de-riego",
-      "destination": "/blog/sistema-riego-automatico-conviene-tampico",
+      "destination": "/blog/sistema-riego-automatizado-tampico",
       "permanent": true
     },
     {
       "source": "/post/por-quÃ©-es-conveniente-un-sistema-de-riego",
-      "destination": "/blog/sistema-riego-automatico-conviene-tampico",
+      "destination": "/blog/sistema-riego-automatizado-tampico",
       "permanent": true
     },
     {
@@ -838,6 +838,36 @@
     {
       "source": "/pdf/guia-12-palmas-arquitectos.pdf",
       "destination": "/palmas-tropicales-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/blog/palmas-tropicales-jardin-tampico",
+      "destination": "/blog/palmas-para-jardin-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/blog/palmas-mas-vendidas-tampico-precios",
+      "destination": "/blog/palmas-para-jardin-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/blog/riego-automatico-tampico-roi",
+      "destination": "/blog/sistema-riego-automatizado-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/blog/sistema-riego-automatico-conviene-tampico",
+      "destination": "/blog/sistema-riego-automatizado-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/blog/pasto-sintetico-para-perros",
+      "destination": "/pasto-sintetico/perros",
+      "permanent": true
+    },
+    {
+      "source": "/blog/jardin-bajo-presupuesto-tampico",
+      "destination": "/blog/cuanto-cuesta-jardin-tampico-precios",
       "permanent": true
     }
   ],

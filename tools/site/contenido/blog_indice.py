@@ -40,6 +40,34 @@ PARIDAD = {"jsonld": {"Organization": M_PUBLISHER, "ImageObject": M_PUBLISHER}, 
            "retirados": {"Cómo Instalar Pasto Sintético Tú Mismo: Paso a Paso": M_REPETIDA,
                          "Pasto Sintético para Perros y Mascotas: Guía Completa": M_REPETIDA,
                          "$300": "La tarjeta de la Palma Areca decía desde $300; el precio oficial es desde $250 (datos.py)."}}
+# SEO fase 2c (2026-11-11, mapa §2 y §3c): cinco fusiones con 301 y cinco artículos retitulados. Las tarjetas de los
+# artículos fusionados salen (sus fotos se van con ellos) o llevan al destino; las de los retitulados, su título nuevo.
+M_FUSIONADO = ("SEO fase 2c: el artículo se fusionó con 301 en otro que sigue en el índice (o en /pasto-sintetico/perros); "
+               "su tarjeta sale y la del destino se queda.")
+PARIDAD["reemplazos"] |= {
+    "Las 8 palmas más vendidas en Tampico (con precios)": "8 palmas para jardín en Tampico, con precios",
+    "Pasto sintético para perros: la guía completa": "Pasto sintético para perros: limpieza, olor y modelos",
+    "Tierra negra: ¿costal o camión?": "¿Cuánta tierra negra necesitas? Costal o camión",
+    "Riego Automático en Tampico: ¿Vale la Pena? Costos Reales": "Riego automático: tipos, costo y cuándo conviene",
+    "Cómo Diseñar Tu Jardín en Tampico: Guía Paso a Paso": "Cómo diseñar tu jardín paso a paso",
+    "Tezontle Rojo: 8 Usos que Transforman Tu Jardín": "¿Para qué sirve el tezontle? 8 usos en el jardín",
+    "Pasto San Agustín: Guía Completa de Instalación y Mantenimiento": "Cómo instalar pasto en rollo San Agustín paso a paso",
+    "Plantas de Interior para Casas en Tampico: Las Más Recomendadas":
+        "¿Qué plantas de interior resisten el calor y el aire acondicionado?",
+    "/blog/palmas-mas-vendidas-tampico-precios": "/blog/palmas-para-jardin-tampico",
+    "/blog/palmas-tropicales-jardin-tampico": "/blog/palmas-para-jardin-tampico",
+    "/blog/pasto-sintetico-para-perros": "/pasto-sintetico/perros",
+    "/blog/riego-automatico-tampico-roi": "/blog/sistema-riego-automatizado-tampico",
+    "/blog/sistema-riego-automatico-conviene-tampico": "/blog/sistema-riego-automatizado-tampico",
+    "/blog/jardin-bajo-presupuesto-tampico": "/blog/cuanto-cuesta-jardin-tampico-precios",
+}
+PARIDAD["retirados"] |= {
+    "Jardín bajo presupuesto: $5K, $20K o $50K": M_FUSIONADO,
+    "Sistema de riego automático: ¿vale la pena?": M_FUSIONADO,
+    "Las 8 Palmas Más Espectaculares para Jardines en Tampico": M_FUSIONADO,
+    "¿Conviene el Riego Automático en Tampico? Guía 2026": M_FUSIONADO,
+    "$5": M_FUSIONADO, "$20": M_FUSIONADO, "$50": M_FUSIONADO,
+}
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: cabecera de lectura: el complemento del <h1> va en serif verde; el WhatsApp y el teléfono pasan de botones a enlaces de texto; «Por el equipo técnico de Viveros Terra» sale de la entrada (el autor ya va en el kicker).')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).

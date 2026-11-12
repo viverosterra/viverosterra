@@ -124,7 +124,7 @@ CONTENIDO = {
     "garantia": pc.GARANTIA,
     "faq": {"titulo": "Todo sobre plantas y palmas en Tampico", "preguntas": PREGUNTAS},
     "guias": {"titulo": "Explora por tipo de planta", "items": (
-        ("Guía de precios de palmas en Tampico", "/blog/palmas-mas-vendidas-tampico-precios"),
+        ("8 palmas para jardín con precios", "/blog/palmas-para-jardin-tampico"),
         ("Cómo plantar una palma o un árbol", "/blog/como-plantar-palma-arbol-paso-a-paso-tampico"),
         ("Plantas que resisten la sal del Golfo", "/blog/plantas-resistentes-sal-golfo-tampico"))},
     "relacionados": {"titulo": "Complementa tu proyecto", "items": (

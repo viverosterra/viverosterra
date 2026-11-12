@@ -65,7 +65,8 @@ CLUSTERS = {
                      "aviso": PRECIOS_ANIO, "monto": dinero(P["pasto_instalado_m2"]), "unidad": "/m² con IVA",
                      "cond": datos.TERRENO_LISTO_CORTO,  # decisión del dueño (2026-11-10)
                      "filas": (("Solo el pasto", f"{dinero(P['pasto_solo_m2'])} /m²"),)},
-        "enlaces": (("pasto San Agustín en rollo", "/pasto-en-rollo-tampico"),
+        # SEO fase 2c (mapa §2 G10): los artículos de pasto natural enlazan el servicio con «pasto San Agustín instalado».
+        "enlaces": (("pasto San Agustín instalado", "/pasto-en-rollo-tampico"),
                     ("protocolo de riego de 20 días", "/protocolo-cuidados-pasto-san-agustin"),
                     ("lista de precios", "/precios")),
     },
@@ -159,16 +160,15 @@ CLUSTERS = {
     },
 }
 
+# SEO fase 2c: el artículo de perros se fusionó con /pasto-sintetico/perros (301); los demás conservan su ciudad de envío.
 _SINTETICOS = ("como-instalar-pasto-sintetico", "cuanto-cuesta-pasto-sintetico-mexico", "pasto-sintetico-calor-mexico",
-               "pasto-sintetico-para-perros", "pasto-sintetico-vs-natural-tampico", "que-altura-de-pasto-sintetico-elegir")
+               None, "pasto-sintetico-vs-natural-tampico", "que-altura-de-pasto-sintetico-elegir")
 POR_SLUG = (
-    ("pasto-sintetico", _SINTETICOS),
+    ("pasto-sintetico", tuple(s for s in _SINTETICOS if s)),
     ("pasto-natural", ("cuando-plantar-pasto-tampico-calendario", "pasto-san-agustin-instalacion-mantenimiento",
                        "pasto-san-agustin-vs-japones")),
-    ("riego", ("como-ahorrar-agua-jardin-tampico", "riego-automatico-tampico-roi", "sistema-riego-automatico-conviene-tampico",
-               "sistema-riego-automatizado-tampico")),
-    ("diseno", ("cuanto-cuesta-jardin-tampico-precios", "diseno-jardines-tampico-guia", "jardin-bajo-presupuesto-tampico",
-                "jardin-vertical-tampico-guia")),
+    ("riego", ("como-ahorrar-agua-jardin-tampico", "sistema-riego-automatizado-tampico")),
+    ("diseno", ("cuanto-cuesta-jardin-tampico-precios", "diseno-jardines-tampico-guia", "jardin-vertical-tampico-guia")),
     ("mantenimiento", ("acolchado-mulch-jardin-tampico", "cesped-amarillo-tampico-causas-soluciones", "como-evitar-encharcamientos-jardin-tampico",
                        "cuando-regar-pasto-san-agustin-tampico", "errores-pasto-san-agustin-tampico",
                        "fertilizacion-jardines-tampico-temporada-lluvias", "hongos-plantas-exceso-humedad-tampico",
@@ -176,7 +176,7 @@ POR_SLUG = (
                        "plagas-comunes-jardin-tampico", "poda-arboles-palmas-tampico-guia",
                        "temporada-huracanes-proteger-jardin-tampico")),
     ("palmas", ("como-plantar-palma-arbol-paso-a-paso-tampico", "palma-areca-tampico", "palma-coco-plumoso-tampico",
-                "palma-real-roystonea-regia-tampico", "palmas-mas-vendidas-tampico-precios", "palmas-tropicales-jardin-tampico")),
+                "palma-real-roystonea-regia-tampico", "palmas-para-jardin-tampico")),
     ("palmas-cotizacion", ("cuidados-palma-del-viajero-ravenala", "palma-bismarckia-bismarckia-nobilis-tampico",
                            "palma-cola-de-zorro-wodyetia-bifurcata-tampico", "palma-kerpis-howea-forsteriana-tampico", "palma-bambu-chamaedorea-tampico",
                            "palma-triangular-dypsis-decaryi-tampico", "palma-washingtona-tampico")),
@@ -191,7 +191,7 @@ POR_SLUG = (
 )
 TEMA = {slug: tema for tema, slugs in POR_SLUG for slug in slugs}
 # Los blogs de precios enlazan a /precios como fuente única (spec §3.5).
-A_PRECIOS = ("cuanto-cuesta-jardin-tampico-precios", "cuanto-cuesta-pasto-sintetico-mexico", "jardin-bajo-presupuesto-tampico")
+A_PRECIOS = ("cuanto-cuesta-jardin-tampico-precios", "cuanto-cuesta-pasto-sintetico-mexico")
 # La comparativa con pasto natural es de instalación en Tampico, no de compra en línea.
 LANDING = {"pasto-sintetico-vs-natural-tampico": ("/pasto-sintetico-tampico", "Pasto sintético en Tampico"),
            # SEO fase 2a (2026-11-11): la guía de poda y la de huracanes (poda preventiva) llevan a la página de poda.

@@ -21,16 +21,10 @@ import shell  # noqa: E402
 TITULO_MAX = 60
 DESCRIPCION_MIN, DESCRIPCION_MAX = 70, 155
 _APROBADO = "Título y descripción aprobados por el dueño (semana del 2026-11-09): no se tocan en la fase 0."
-_FUSION = ("Artículo marcado para fusionar con 301 en la fase 2 del plan SEO (mapa §3c): no se retitula una URL que va "
-           "a desaparecer.")
 EXCEPCIONES_LARGO = {
     "/": _APROBADO,
     datos.NOCHEBUENAS["ruta"]: _APROBADO,
-    "/blog/jardin-bajo-presupuesto-tampico": _FUSION,
-    "/blog/palmas-mas-vendidas-tampico-precios": _FUSION,
-    "/blog/pasto-sintetico-para-perros": _FUSION,
-    "/blog/riego-automatico-tampico-roi": _FUSION,
-    "/blog/sistema-riego-automatico-conviene-tampico": _FUSION,
+    # Los cinco artículos que esperaban su fusión ya no existen: SEO fase 2c (301 en vercel.json).
 }
 MATERIALES_H1 = {
     "/tierra-negra-vegetal-tampico": "Tierra negra en Tampico por costal, m³ o camión",

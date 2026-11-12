@@ -161,13 +161,14 @@ class ArticuloTest(unittest.TestCase):
 
     def test_indice_sin_repetidos_e_itemlist(self):
         html = paridad.archivo("/blog").read_text(encoding="utf-8")
-        tarjetas = re.findall(r'<h3><a href="(/blog/[^"]+)"', html)
+        # SEO fase 2c: 49 artículos y la tarjeta del de perros, fusionado con 301 en /pasto-sintetico/perros (con su foto).
+        tarjetas = re.findall(r'<h3><a href="(/blog/[^"]+|/pasto-sintetico/perros)"', html)
         self.assertEqual(len(tarjetas), len(set(tarjetas)))
-        self.assertEqual(len(tarjetas), 54)
+        self.assertEqual(len(tarjetas), len(articulo.CLAVES) + 1)
         # SEO fase 1: el Blog y la lista van en un solo @graph.
         lista = next(n for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)
                      for n in json.loads(b).get("@graph", ()) if n.get("@type") == "ItemList")
-        self.assertEqual([i["position"] for i in lista["itemListElement"]], list(range(1, 55)))
+        self.assertEqual([i["position"] for i in lista["itemListElement"]], list(range(1, len(tarjetas) + 1)))
         self.assertEqual({i["url"] for i in lista["itemListElement"]}, {f"{datos.SITIO}{t}" for t in tarjetas})
 
     def test_todo_articulo_tiene_tema(self):

@@ -287,7 +287,7 @@ class ProductosTest(unittest.TestCase):
 
 class ArticulosTest(unittest.TestCase):
     def test_los_articulos_llevan_su_article_completo(self):
-        self.assertEqual(len(articulo.CLAVES), 54)
+        self.assertEqual(len(articulo.CLAVES), 49)  # 54 hasta la SEO fase 2c (cinco fusiones con 301)
         for slug in articulo.CLAVES:
             html = PAGINAS[f"blog/{slug}/index.html"]
             doc, _cuerpo = articulo.leer(slug)

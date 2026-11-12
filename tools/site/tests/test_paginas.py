@@ -66,7 +66,8 @@ class ContextoTest(unittest.TestCase):
         self.assertTrue(ctx["mensaje"].endswith("\n\n" + datos.FIRMA))
         self.assertEqual(ctx["servicio"], "pasto-natural")
         self.assertEqual(ctx["mensaje_pie"], ctx["mensaje"])
-        temas = {"/blog/pasto-sintetico-para-perros": "pasto-sintetico", "/blog/palma-areca-tampico": "plantas",
+        # SEO fase 2c: el artículo de perros se fusionó con 301; otro de sintético toma su lugar.
+        temas = {"/blog/que-altura-de-pasto-sintetico-elegir": "pasto-sintetico", "/blog/palma-areca-tampico": "plantas",
                  "/blog/sistema-riego-automatizado-tampico": "jardin", "/blog/tezontle-usos-jardin-tampico": "materiales",
                  "/blog/plantas-interior-tampico": "plantas", "/blog/jardin-vertical-tampico-guia": "jardin"}
         for ruta, servicio in temas.items():

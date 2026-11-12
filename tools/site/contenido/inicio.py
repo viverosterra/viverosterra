@@ -239,7 +239,7 @@ CONTENIDO = {
             ("Pasto San Agustín o japonés: cuál conviene en Tampico", "/blog/pasto-san-agustin-vs-japones"),
             ("Cuándo plantar pasto en Tampico: calendario mes a mes", "/blog/cuando-plantar-pasto-tampico-calendario"),
             ("12 plantas resistentes a la sal del Golfo en Tampico", "/blog/plantas-resistentes-sal-golfo-tampico"),
-            ("¿Conviene el riego automático en Tampico?", "/blog/sistema-riego-automatico-conviene-tampico"),
+            ("Riego automático: tipos, costo y cuándo conviene", "/blog/sistema-riego-automatizado-tampico"),
         ),
     },
     "cobertura": {
@@ -269,6 +269,8 @@ PARIDAD = {
     "meta": {"description": (DESCRIPCION, SIN_GRATIS), "og:description": (DESCRIPCION, SIN_GRATIS)},
     "jsonld": {"BreadcrumbList": SIN_MIGAS, "ListItem": SIN_MIGAS},
     "reemplazos": {
+        # SEO fase 2c (2026-11-11, mapa §2 G9): el artículo de «¿conviene?» se fusionó con 301 en la guía de riego.
+        "/blog/sistema-riego-automatico-conviene-tampico": "/blog/sistema-riego-automatizado-tampico",
         "Jardinería en Tampico, pasto en rollo y vivero desde 2007.": "Pasto, jardines y plantas en Tampico.",
         "¿Cuánto cuesta tu jardín?": "Mide tu patio. Te decimos cuánto cuesta.",
         "Todo lo que tu jardín necesita, en un solo lugar": "Cinco formas de trabajar con nosotros, cada una con su precio.",
