@@ -530,6 +530,9 @@ M_SERVICIO_RIEGO = ("SEO fase 2c (2026-11-11, mapa §2 G9): enlace al servicio c
                     "Tampico».")
 M_FUSION_PRESUPUESTO = ("SEO fase 2c (2026-11-11, mapa §2 G11): se suman los tres niveles de presupuesto de «Jardín bajo "
                         "presupuesto», fusionado aquí con 301, con sus desgloses ya corregidos.")
+CAMION_5 = dinero(P["tierra_negra_camion_5m3"])
+CAMION_14 = dinero(P["tierra_negra_camion_14m3"])
+M_CAMIONES = ("Camiones de 5 y 14 m³ (datos.PRECIOS, confirmados por el dueño el 2026-11-08 y otra vez el 2026-11-12); el artículo solo daba el de 8 m³.")
 M_PILAR = ("SEO fase 2c (2026-11-11, mapa §2 G4): cada ficha de palma enlaza al pilar /palmas-tropicales-tampico con el ancla "
            "«venta de palmas en Tampico» en su primer párrafo.")
 
@@ -557,6 +560,14 @@ FUSION_2C = {
     "palma-triangular-dypsis-decaryi-tampico": _pilar("C314", "palma-triangular-dypsis-decaryi-tampico"),
     "palma-washingtona-tampico": _pilar("C315", "palma-washingtona-tampico"),
     "cuidados-palma-del-viajero-ravenala": _pilar("C316", "cuidados-palma-del-viajero-ravenala"),
+    "tierra-negra-costal-camion-tampico": (
+        ("C317", "y cubre aproximadamente 80 m² con una capa de 10 cm de tierra.</em></p>",
+         f"y cubre aproximadamente 80 m² con una capa de 10 cm de tierra. También hay camión de 5 m³ ({CAMION_5}), para "
+         f"unos 50 m², y de 14 m³ ({CAMION_14}), para unos 140 m², con la misma capa.</em></p>", M_CAMIONES),
+        ("C318", "<p>Para proyectos de mayoreo o fraccionamientos",
+         f"<p><strong>Tres tamaños de camión:</strong> 5 m³ en {CAMION_5}, 8 m³ en {CAMION_8} y 14 m³ en {CAMION_14}. "
+         f"{datos.ENTREGA_COBRO}</p>\n<p>Para proyectos de mayoreo o fraccionamientos", M_CAMIONES),
+    ),
 }
 FILAS = {slug: FILAS.get(slug, ()) + REVISION.get(slug, ()) + FUSION_2C.get(slug, ())
          for slug in dict.fromkeys((*FILAS, *REVISION, *FUSION_2C))}

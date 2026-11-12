@@ -58,9 +58,9 @@ test('mensaje con el formato del dueño', () => {
   const c = nb.cotizar(mixto,cfg,FUERA);
   assert.strictEqual(nb.mensaje(c,{zona:'Madero',fecha:'2026-11-28',tipo:'Restaurante/hotel',factura:true},cfg),
 `Hola Viveros Terra 🌺 Quiero cotizar Nochebuenas 2026:
-• 16 × Maceta 6" Roja
-• 4 × Maceta 7" Jaspeada
-• 6 × Colgante Rosa
+• 16 × Maceta 6" Roja: $139 c/u → $119 c/u por volumen = $1,904
+• 4 × Maceta 7" Jaspeada: $199 c/u → $169 c/u por volumen = $676
+• 6 × Colgante Rosa: $339 c/u → $279 c/u por volumen = $1,674
 Total: 26 piezas · Total estimado: $4,254
 Entrega: Madero · 28 nov · Requiero factura
 Tipo de cliente: Restaurante/hotel`);
@@ -98,8 +98,29 @@ test('mensaje en modo preventa y sin datos opcionales', () => {
   const c = nb.cotizar([L('6',1)],cfg,FUERA);
   assert.strictEqual(nb.mensaje(c,{},{...cfg,modo:'preventa'}),
 `Hola Viveros Terra 🌺 Quiero apartar Nochebuenas 2026:
-• 1 × Maceta 6" Roja
+• 1 × Maceta 6" Roja: $139 c/u = $139
 Total: 1 pieza · Total estimado: $139`);
+});
+test('mensaje en preventa: precio normal, por volumen, subtotal, descuento y total (ejemplo del dueño)', () => {
+  const c = nb.cotizar([L('7',15),L('6',35),L('5',18),L('6',1)],cfg,'2026-11-12');
+  assert.strictEqual(nb.mensaje(c,{},cfg),
+`Hola Viveros Terra 🌺 Quiero cotizar Nochebuenas 2026:
+• 15 × Maceta 7" Roja: $199 c/u → $155 c/u por volumen = $2,325
+• 35 × Maceta 6" Roja: $139 c/u → $109 c/u por volumen = $3,815
+• 18 × Maceta 5" Roja: $89 c/u → $69 c/u por volumen = $1,242
+• 1 × Maceta 6" Roja: $139 c/u → $109 c/u por volumen = $109
+Subtotal: $7,491
+Descuento preventa (5%): −$375
+Total: 69 piezas · Total estimado: $7,116
+Precio preventa: apartando con 50% de anticipo`);
+});
+test('los importes de las líneas suman el subtotal y, con el descuento, el total', () => {
+  for (const hoy of [FUERA,'2026-11-12']) {
+    const c = nb.cotizar([L('7',15),L('6',35),L('5',18),L('8',3)],cfg,hoy);
+    const importes = [...nb.mensaje(c,{},cfg).matchAll(/= \$([\d,]+)$/gm)].map(m=>Number(m[1].replace(/,/g,'')));
+    assert.strictEqual(importes.reduce((a,b)=>a+b,0), c.subtotal);
+    assert.strictEqual(c.subtotal - c.descuento, c.total);
+  }
 });
 test('registro para Sheets', () => {
   assert.deepStrictEqual(nb.registro(nb.cotizar(mixto,cfg,FUERA),{zona:'Madero',fecha:'2026-11-28',tipo:'Gobierno',factura:true},cfg,

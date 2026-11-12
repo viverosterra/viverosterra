@@ -111,13 +111,21 @@
   }
 
   const descripcion = (l) => `${l.cantidad} × ${l.nombre} ${l.variedad}`.trim();
+  // Precio de lista (Menudeo) y, si el pedido alcanzó volumen, el precio que se le aplica; luego el importe de la línea.
+  function lineaMensaje(l, cfg, escalon) {
+    const normal = productoDe(cfg, l.clave).precios[0];
+    const precio = escalon > 0 ? ` → ${dinero(l.precio)} c/u por volumen` : '';
+    return `• ${descripcion(l)}: ${dinero(normal)} c/u${precio} = ${dinero(l.subtotal)}`;
+  }
 
   function mensaje(cot, extras, cfg) {
     const verbo = cfg.modo === 'preventa' ? 'Quiero apartar' : 'Quiero cotizar';
     const entregaTexto = [extras.zona, fechaCorta(extras.fecha), extras.factura ? 'Requiero factura' : ''].filter(Boolean).join(' · ');
     return [
       `Hola Viveros Terra 🌺 ${verbo} Nochebuenas ${cfg.temporada}:`,
-      ...cot.lineas.map((l) => `• ${descripcion(l)}`),
+      ...cot.lineas.map((l) => lineaMensaje(l, cfg, cot.escalon)),
+      cot.descuento ? `Subtotal: ${dinero(cot.subtotal)}` : '',
+      cot.descuento ? `Descuento preventa (${Math.round(cfg.preventa.descuento * 100)}%): −${dinero(cot.descuento)}` : '',
       // El nombre del escalón es vocabulario interno: el mensaje del cliente dice piezas y total (Entrega B de experiencia).
       `Total: ${piezasTexto(cot.piezas)} · Total estimado: ${dinero(cot.total)}`,
       cot.preventa ? textoPreventa(cfg) : '',
