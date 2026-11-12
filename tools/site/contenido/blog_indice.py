@@ -41,7 +41,8 @@ PARIDAD = {"jsonld": {"Organization": M_PUBLISHER, "ImageObject": M_PUBLISHER}, 
                          "Pasto Sintético para Perros y Mascotas: Guía Completa": M_REPETIDA,
                          "$300": "La tarjeta de la Palma Areca decía desde $300; el precio oficial es desde $250 (datos.py)."}}
 # SEO fase 2c (2026-11-11, mapa §2 y §3c): cinco fusiones con 301 y cinco artículos retitulados. Las tarjetas de los
-# artículos fusionados salen (sus fotos se van con ellos) o llevan al destino; las de los retitulados, su título nuevo.
+# artículos fusionados con foto se quedan, con su misma foto, y llevan al destino (riego y bajo presupuesto, al apartado
+# donde quedó su contenido); las dos sin foto salen; las de los retitulados llevan su título nuevo.
 M_FUSIONADO = ("SEO fase 2c: el artículo se fusionó con 301 en otro que sigue en el índice (o en /pasto-sintetico/perros); "
                "su tarjeta sale y la del destino se queda.")
 PARIDAD["reemplazos"] |= {
@@ -62,11 +63,8 @@ PARIDAD["reemplazos"] |= {
     "/blog/jardin-bajo-presupuesto-tampico": "/blog/cuanto-cuesta-jardin-tampico-precios",
 }
 PARIDAD["retirados"] |= {
-    "Jardín bajo presupuesto: $5K, $20K o $50K": M_FUSIONADO,
-    "Sistema de riego automático: ¿vale la pena?": M_FUSIONADO,
     "Las 8 Palmas Más Espectaculares para Jardines en Tampico": M_FUSIONADO,
     "¿Conviene el Riego Automático en Tampico? Guía 2026": M_FUSIONADO,
-    "$5": M_FUSIONADO, "$20": M_FUSIONADO, "$50": M_FUSIONADO,
 }
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: cabecera de lectura: el complemento del <h1> va en serif verde; el WhatsApp y el teléfono pasan de botones a enlaces de texto; «Por el equipo técnico de Viveros Terra» sale de la entrada (el autor ya va en el kicker).')

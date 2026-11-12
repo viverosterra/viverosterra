@@ -10,6 +10,9 @@ Fusiones con 301 (vercel.json):
 - /blog/palmas-tropicales-jardin-tampico y /blog/palmas-mas-vendidas-tampico-precios → /blog/palmas-para-jardin-tampico
   (artículo nuevo, articulo.NUEVOS: la URL vieja decía «mas-vendidas», frase prohibida).
 - /blog/pasto-sintetico-para-perros → /pasto-sintetico/perros (contenido/perros.py: limpieza, olor, drenaje y errores).
+La foto de cada artículo fusionado sigue en su tema (regla del dueño: las fotos no se quitan ni se cambian): la de
+riego va en «¿Cuándo sí conviene…?», la de bajo presupuesto en «¿Qué jardín puedes hacer con…?», la de la lista de
+palmas sigue en la lista nueva y la de perros, en /pasto-sintetico/perros; sus tarjetas del índice del blog se quedan.
 De los artículos fusionados no se traen las cifras sin fuente (tarifa de agua, ahorro en pesos, «50% del agua se evapora»),
 el plazo de recuperación ni la fertilización «cada 3–4 meses» contra «2 veces al año» (se contradecían).
 """
@@ -18,6 +21,7 @@ RIEGO_ANTES = ("<p>El ahorro real depende del tamaño del jardín y de cómo rie
                "40% de agua frente a la manguera.</p>")
 RIEGO_NUEVO = RIEGO_ANTES + """
 <h2 id="cuando-conviene">¿Cuándo sí conviene el riego automático y cuándo no?</h2>
+<img src="/img/instalacion-riego-tuberias-jardines-tampico.webp" width="900" height="675" alt="Instalación de sistema de riego automático con tuberías en jardín de Tampico">
 <p><strong>El riego automático conviene en Tampico cuando el jardín tiene más de 80 m² de área verde y al menos 4 zonas de plantas distintas.</strong> Para jardines menores a 50 m² o con muchos árboles maduros, regar manual sigue siendo más rentable.</p>
 <h3>Cuándo sí conviene</h3>
 <ul>
@@ -72,6 +76,7 @@ COSTOS_ANTES = ("<p>Para proyectos de cualquier tamaño, el primer paso es siemp
                 "para cotizar depende de la ubicación del servicio; te lo confirmamos por WhatsApp antes de agendar.</p>")
 COSTOS_NUEVO = COSTOS_ANTES + """
 <h2 id="por-presupuesto">¿Qué jardín puedes hacer con $5,000, $20,000 o $50,000?</h2>
+<img src="/img/jardin-residencial-plantas-pasto-tampico.webp" width="933" height="1400" alt="Jardín residencial con plantas y pasto en Tampico — proyecto de bajo presupuesto">
 <p>Si ya tienes un número en mente, estos son tres niveles de inversión con los precios oficiales de Viveros Terra para Tampico, Madero y Altamira, con el desglose de lo que incluye cada uno.</p>
 <div class="vt-art__tabla" tabindex="0" role="region" aria-label="Tabla: los 3 niveles de presupuesto"><table><thead><tr><th scope="col">Característica</th><th scope="col">Paquete $5,000</th><th scope="col">Paquete $20,000</th><th scope="col">Paquete $50,000</th></tr></thead><tbody><tr><td>Área aproximada</td><td>25 m²</td><td>80–90 m²</td><td>150–200 m²</td></tr><tr><td>Pasto instalado ($120/m²). Precio con terreno listo: limpio, nivelado y con tierra negra.</td><td>Sí</td><td>Sí</td><td>Sí</td></tr><tr><td>Tierra negra</td><td>1 m³</td><td>3 m³</td><td>Camión de 8 m³</td></tr><tr><td>Plantas ornamentales</td><td>Según cotización, con lo que reste</td><td>Según cotización, con 2 palmas</td><td>Según cotización, con 3 palmas medianas</td></tr><tr><td>Diseño profesional</td><td>No (asesoría básica)</td><td>Plan Terra Esencial</td><td>Plan Terra Completo</td></tr><tr><td>Sistema de riego ($180–$320/m²)</td><td>Se cotiza aparte</td><td>Se cotiza aparte</td><td>Se cotiza aparte</td></tr><tr><td>Árbol ornamental</td><td>No</td><td>Opcional</td><td>1 incluido</td></tr><tr><td>Mantenimiento mes 1</td><td>No</td><td>No</td><td>Sí, incluido</td></tr><tr><td>Tiempo de instalación</td><td>1 día</td><td>2–4 días</td><td>1–3 semanas</td></tr></tbody></table></div>
 <h3>Paquete $5,000</h3>

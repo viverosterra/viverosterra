@@ -171,6 +171,11 @@
    "alt": "Palmas más vendidas Tampico precios"
   },
   {
+   "src": "/img/jardin-residencial-plantas-pasto-tampico.webp",
+   "srcset": null,
+   "alt": "Jardín bajo presupuesto Tampico"
+  },
+  {
    "src": "/img/pasto-en-rollo-san-agustin-tampico.webp",
    "srcset": null,
    "alt": "Errores pasto San Agustín Tampico"
@@ -179,6 +184,11 @@
    "src": "/img/tierra-negra-jardin-tampico.webp",
    "srcset": null,
    "alt": "Tierra negra costal o camión Tampico"
+  },
+  {
+   "src": "/img/instalacion-riego-tuberias-jardines-tampico.webp",
+   "srcset": null,
+   "alt": "Sistema riego automático Tampico ROI"
   },
   {
    "src": "/img/plantas-ornamentales-tampico-viveros-terra.webp",
@@ -226,6 +236,11 @@
    "src": "/img/diseno-jardines-tampico-proyecto.webp",
    "srcset": null,
    "alt": "Proyecto de diseño de jardín en Tampico — jardín residencial con pasto, plantas y palmas"
+  },
+  {
+   "src": "/img/jardin-residencial-plantas-pasto-tampico.webp",
+   "srcset": null,
+   "alt": "Jardín residencial con plantas y pasto en Tampico — proyecto de bajo presupuesto"
   }
  ],
  "/blog/cuanto-cuesta-pasto-sintetico-mexico": [],
@@ -324,7 +339,13 @@
  "/blog/plantas-resistentes-sal-golfo-tampico": [],
  "/blog/poda-arboles-palmas-tampico-guia": [],
  "/blog/que-altura-de-pasto-sintetico-elegir": [],
- "/blog/sistema-riego-automatizado-tampico": [],
+ "/blog/sistema-riego-automatizado-tampico": [
+  {
+   "src": "/img/instalacion-riego-tuberias-jardines-tampico.webp",
+   "srcset": null,
+   "alt": "Instalación de sistema de riego automático con tuberías en jardín de Tampico"
+  }
+ ],
  "/blog/temporada-huracanes-proteger-jardin-tampico": [],
  "/blog/tezontle-usos-jardin-tampico": [],
  "/blog/tierra-negra-costal-camion-tampico": [

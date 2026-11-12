@@ -42,6 +42,12 @@ LIMPIEZA = (
                        "grava fina o polvo de piedra compactada (3 a 5 cm), una ligera pendiente (1 a 2%) y pasto con "
                        "respaldo perforado. Sobre concreto sin pendiente ni salidas de agua, la orina se estanca debajo."),
 )
+# La foto del artículo fusionado (la de su tarjeta del índice del blog, mismo archivo, copia de 640 px y alt): las fotos
+# no se quitan (regla del dueño); el pie no dice dónde se tomó.
+FOTO_ARTICULO = {"src": "/img/pasto-sintetico-residencial-tampico.webp",
+                 "srcset": "/img/pasto-sintetico-residencial-tampico-640.webp 640w, /img/pasto-sintetico-residencial-tampico.webp 1024w",
+                 "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 1024, "alto": 1536, "numero": 2,
+                 "alt": "Pasto sintético para perros y mascotas", "lugar": "Pasto sintético residencial", "etapa": "Instalado"}
 ERRORES = (
     ("No clavar bien el perímetro", "Una orilla suelta es una invitación a jalar y escarbar. Clava cada 15 a 20 cm."),
     ("Elegir fibra muy alta", "La de 35 mm o más se ve más lujosa, pero con orina diaria tarda más en secar."),
@@ -92,7 +98,7 @@ CONTENIDO = {
         {"tipo": "preguntas", "id": "elegir", "rotulo": "Elegir", "titulo": "Qué pasto sintético conviene para perros",
          "items": CRITERIOS},
         {"tipo": "preguntas", "id": "limpieza", "rotulo": "Limpieza", "titulo": "Cómo se limpia: orina, heces y olor",
-         "items": LIMPIEZA},
+         "items": LIMPIEZA, "figura": FOTO_ARTICULO},
         {"tipo": "modelos", "id": "modelos", "rotulo": "Modelos", "titulo": "Tres modelos para mascotas",
          "items": RECOMENDADOS},
         {"tipo": "preguntas", "id": "errores", "rotulo": "Errores", "titulo": "4 errores a evitar con perros",

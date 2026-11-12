@@ -161,10 +161,13 @@ class ArticuloTest(unittest.TestCase):
 
     def test_indice_sin_repetidos_e_itemlist(self):
         html = paridad.archivo("/blog").read_text(encoding="utf-8")
-        # SEO fase 2c: 49 artículos y la tarjeta del de perros, fusionado con 301 en /pasto-sintetico/perros (con su foto).
+        # SEO fase 2c: 49 artículos y, con su foto (regla del dueño), las tarjetas de tres artículos fusionados con 301:
+        # la de perros lleva a /pasto-sintetico/perros y las de riego y bajo presupuesto, al apartado del destino (#…).
         tarjetas = re.findall(r'<h3><a href="(/blog/[^"]+|/pasto-sintetico/perros)"', html)
         self.assertEqual(len(tarjetas), len(set(tarjetas)))
-        self.assertEqual(len(tarjetas), len(articulo.CLAVES) + 1)
+        self.assertEqual(len(tarjetas), len(articulo.CLAVES) + 3)
+        self.assertEqual(len([t for t in tarjetas if "#" in t]), 2)
+        tarjetas = list(dict.fromkeys(t.split("#")[0] for t in tarjetas))  # la lista nombra cada página una vez
         # SEO fase 1: el Blog y la lista van en un solo @graph.
         lista = next(n for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)
                      for n in json.loads(b).get("@graph", ()) if n.get("@type") == "ItemList")

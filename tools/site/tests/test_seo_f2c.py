@@ -14,6 +14,7 @@ import html as html_mod
 import itertools
 import json
 import re
+import subprocess
 import sys
 import unittest
 from collections import Counter
@@ -324,6 +325,68 @@ class ZonasTest(unittest.TestCase):
         for ruta in ZONAS:
             with self.subTest(ruta=ruta):
                 self.assertNotRegex(self.textos[ruta], r"(?i)caso real|cliente de la colonia|proyecto en la colonia")
+
+
+def _de_main(ruta_public):
+    """El archivo de public/ como está en main (antes de esta entrega)."""
+    return subprocess.run(["git", "show", f"main:public/{ruta_public}"], cwd=RAIZ, capture_output=True, text=True,
+                          check=True).stdout
+
+
+def _fotos(html):
+    """(src, srcset, alt) de cada <img> del <main>, sin el logo del encabezado ni del pie."""
+    m = re.search(r"<main\b.*</main>", html, re.S)
+    salida = []
+    for img in re.findall(r"<img\b[^>]*>", m.group(0) if m else html):
+        attr = dict(re.findall(r'\b(src|srcset|alt)="([^"]*)"', img))
+        salida.append((attr.get("src"), attr.get("srcset"), attr.get("alt")))
+    return salida
+
+
+class FotosTest(unittest.TestCase):
+    """Regla del dueño: «No elimines o cambies las fotos, déjalas así como están». Las fusiones no quitan ninguna."""
+
+    def test_el_indice_del_blog_conserva_todas_las_fotos_de_main(self):
+        viejas = _fotos(_de_main("blog/index.html"))
+        nuevas = _fotos(html_de("/blog"))
+        self.assertGreater(len(viejas), 30)
+        self.assertEqual(sorted(set(viejas) - set(nuevas)), [])
+        self.assertEqual([f[0] for f in viejas], [f[0] for f in nuevas])  # mismas fotos, mismo orden
+
+    def test_cada_foto_de_las_paginas_retiradas_sigue_en_public(self):
+        todo = "\n".join(paginas_html().values())
+        for origen, destino in FUSIONES.items():
+            for src, _srcset, _alt in _fotos(_de_main(f"{origen.strip('/')}/index.html")):
+                with self.subTest(origen=origen, src=src):
+                    self.assertIn(f'src="{src}"', todo)
+                    self.assertIn(f'src="{src}"', main_de(destino), "la foto sigue en su tema: en el destino")
+
+    def test_las_fotos_traidas_conservan_archivo_y_alt(self):
+        for destino, (src, alt) in {
+            "/blog/sistema-riego-automatizado-tampico": ("/img/instalacion-riego-tuberias-jardines-tampico.webp",
+                                                         "Instalación de sistema de riego automático con tuberías en jardín de Tampico"),
+            "/blog/cuanto-cuesta-jardin-tampico-precios": ("/img/jardin-residencial-plantas-pasto-tampico.webp",
+                                                           "Jardín residencial con plantas y pasto en Tampico — proyecto de bajo presupuesto"),
+            "/blog/palmas-para-jardin-tampico": ("/img/plantas-tropicales-tampico-viveros.webp",
+                                                 "Palmas tropicales disponibles en Viveros Terra Tampico — Washingtona, Areca, Viajero y más"),
+        }.items():
+            with self.subTest(destino=destino):
+                self.assertIn((src, None, alt), _fotos(html_de(destino)))
+        perros = [f for f in _fotos(html_de("/pasto-sintetico/perros")) if f[0] == "/img/pasto-sintetico-residencial-tampico.webp"]
+        self.assertEqual(perros, [("/img/pasto-sintetico-residencial-tampico.webp",
+                                   "/img/pasto-sintetico-residencial-tampico-640.webp 640w, /img/pasto-sintetico-residencial-tampico.webp 1024w",
+                                   "Pasto sintético para perros y mascotas")])
+
+    def test_las_tarjetas_de_los_fusionados_llevan_al_apartado_del_destino(self):
+        indice = html_de("/blog")
+        for href in ("/blog/sistema-riego-automatizado-tampico#cuando-conviene",
+                     "/blog/cuanto-cuesta-jardin-tampico-precios#por-presupuesto", "/pasto-sintetico/perros",
+                     "/blog/palmas-para-jardin-tampico"):
+            with self.subTest(href=href):
+                self.assertIn(f'href="{href}"', indice)
+                ruta, _, ancla = href.partition("#")
+                if ancla:
+                    self.assertIn(f'id="{ancla}"', html_de(ruta))
 
 
 class ReglasTest(unittest.TestCase):
