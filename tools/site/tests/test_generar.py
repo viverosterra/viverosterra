@@ -30,7 +30,8 @@ class GenerarTest(unittest.TestCase):
                      + [f"/pasto-sintetico/envio/{c['slug']}" for c in CIUDADES]
                      + [ruta for _nombre, ruta in datos.ZONAS]
                      + [r for r, *_ in generar.UTILITARIAS]
-                     + [f"/blog/{slug}" for slug in articulo.CLAVES])
+                     + [f"/blog/{slug}" for slug in articulo.CLAVES]
+                     + ["/poda-arboles-tampico", "/empresas", "/nosotros", "/zonas"])
         self.assertEqual([r for r, *_ in generar.PAGINAS], esperadas)
         for ruta, salida, _p, _c in generar.PAGINAS:
             paginas.contexto(ruta)

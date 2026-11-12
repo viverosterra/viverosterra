@@ -33,6 +33,8 @@ FIJOS = {
     "/post/pasto-en-rollo-por-mayoreo-precio-por-m2": MAYOREO,
     "/post/rancho-productor-de-pasto-en-rollo-san-agustín-mayoreo-mejor-precio-y-envíos-a-todo-méxico": MAYOREO,
     "/venta-palmas-mayoreo-huasteca": "/palmas-mayoreo-proyectos",
+    # SEO fase 2a (2026-11-11, mapa §3a): el 301 viejo del puerto industrial cae en el pilar de empresas.
+    "/jardineria-puerto-industrial-altamira": "/empresas",
     # Encontrados al revisar el resto de /post/*: una guía cae en la guía del mismo tema, no en la página de servicio.
     "/post/sistemas-de-riego-automatizado-tampico": RIEGO_GUIA,
     "/post/guía-definitiva-del-sistema-de-riego-automático-en-méxico-ahorra-agua-y-optimiza-tu-jardín": RIEGO_GUIA,

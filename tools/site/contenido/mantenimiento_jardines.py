@@ -133,7 +133,7 @@ PREGUNTAS = (
     ("¿Trabajan con empresas, hoteles y parques industriales?",
      "Sí. Atendemos corporativos, hoteles, fraccionamientos, escuelas, parques industriales y gobierno. Emitimos factura "
      f"{datos.FACTURA}, contamos con REPSE {datos.REPSE}, trabajamos con contrato de servicios y adaptamos el calendario "
-     "a la operación del cliente."),
+     'a la operación del cliente. Ve todo lo que hacemos en <a href="/empresas">áreas verdes para empresas</a>.'),
     ("¿Hay permanencia forzada o puedo cancelar?",
      "No hay permanencia forzada. El contrato es mensual y renovable, y puedes cancelar con 30 días de aviso."),
     ("¿Qué pasa si detectan una plaga o problema?",
@@ -317,6 +317,10 @@ CONTENIDO = {
             {"titulo": "Sistema de Riego", "href": "/sistema-riego-tampico",
              "img": f"{OBRA}/instalacion-tuberia-riego-jardin.webp", "ancho": 900, "alto": 600,
              "texto": f"Automatizado · Ahorra {datos.RIEGO_AHORRO} de agua"},
+            # SEO fase 2a (2026-11-11): la poda de árboles y palmas y el derribo tienen su página.
+            {"titulo": "Poda de árboles en Tampico", "href": "/poda-arboles-tampico",
+             "img": f"{OBRA}/mantenimiento-jardin-poda-tampico.webp", "ancho": 640, "alto": 960,
+             "texto": f"Árboles y palmas desde {dinero(P['poda'])}, según cotización · También derribo"},
         ),
     },
 }

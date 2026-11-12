@@ -33,7 +33,7 @@ Precios de referencia:
 - Sistema de riego automático instalado: de $180 a $320 por m²; ahorra hasta 40% de agua
 - Pasto sintético instalado en Tampico, Madero y Altamira: de $446.60 a $754 por m², con IVA, material y colocación; la preparación del terreno se cotiza aparte
 - Pasto sintético con envío a todo México: desde $139 por m² en rollo de 50 m², con IVA; envío por rollo de $900 (zona A), $1,150 (zona B) o $1,400 (zona C); pedido mínimo de 25 m²
-- Poda de árboles y palmas: desde $500, según el tamaño y los residuos
+- Poda de árboles y palmas: desde $500, según cotización y el tamaño; el derribo de árboles completos, según cotización. El retiro de los residuos que se generan va como partida aparte en la cotización. El permiso municipal, si se necesita, lo tramita el dueño del predio con su ayuntamiento
 - Palmas: areca y coco plumoso desde $250 y palma real desde $500, en tamaño chico; el precio sube con la altura (no llevan IVA)
 - Flamboyán: desde $250 (no lleva IVA). Las demás especies, según cotización
 - Tierra negra vegetal: costal $90; tierra preparada, costal $100; a granel $1,500 por m³; camión de 5 m³ $3,500, camión de 8 m³ $5,200, camión de 14 m³ $8,000
@@ -66,6 +66,8 @@ Texto completo de las páginas principales: https://www.viverosterra.com/llms-fu
 
 - [Lista de precios](https://www.viverosterra.com/precios): todos los precios vigentes en tablas, con la regla de IVA
 - [Vivero en Tampico y Ciudad Madero](https://www.viverosterra.com/vivero-tampico): dirección, horario y cómo llegar
+- [Nosotros](https://www.viverosterra.com/nosotros): historia desde 2007, cifras, REPSE, clientes y perfiles oficiales
+- [Áreas verdes para empresas](https://www.viverosterra.com/empresas): mantenimiento, pasto al mayoreo, palmas y riego con REPSE 773725 y factura CFDI 4.0
 - [Políticas y garantías](https://www.viverosterra.com/politicas): garantía de pasto y de plantas, mensualidades, anticipos y devoluciones
 - [Inicio](https://www.viverosterra.com/): resumen de servicios y cotizador por m²
 
@@ -83,6 +85,7 @@ Texto completo de las páginas principales: https://www.viverosterra.com/llms-fu
 - [Diseño de jardines](https://www.viverosterra.com/diseno-jardines-tampico): Plan Terra en tres niveles y qué entrega cada uno
 - [Sistema de riego automático](https://www.viverosterra.com/sistema-riego-tampico): tipos de sistema, precio por m² y pasos de instalación
 - [Mantenimiento de jardines](https://www.viverosterra.com/mantenimiento-jardines-tampico): planes, frecuencias y qué incluyen
+- [Poda y derribo de árboles y palmas](https://www.viverosterra.com/poda-arboles-tampico): precio desde, derribo, retiro de residuos aparte y quién tramita el permiso
 - [Cuánto cuesta un jardín en Tampico](https://www.viverosterra.com/blog/cuanto-cuesta-jardin-tampico-precios): ejemplos de presupuesto con los precios oficiales
 
 ## Pasto sintético
@@ -114,6 +117,7 @@ Texto completo de las páginas principales: https://www.viverosterra.com/llms-fu
 
 ## Zonas
 
+- [Zonas de servicio](https://www.viverosterra.com/zonas): índice de cobertura en Tampico, Ciudad Madero y Altamira
 - [Lomas de Rosales y Vista Hermosa](https://www.viverosterra.com/jardineria-lomas-de-rosales-tampico): jardinería en la zona
 - [Club Campestre y Country Club](https://www.viverosterra.com/jardineria-country-club-tampico): jardinería en la zona
 - [Águila, Altavista y Petrolera](https://www.viverosterra.com/jardineria-aguila-tampico): jardinería en la zona

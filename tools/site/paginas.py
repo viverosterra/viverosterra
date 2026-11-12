@@ -30,6 +30,11 @@ EXACTAS = {
     "/diseno-jardines-tampico": ("servicio-diseno", "jardin", "jardin"),
     "/mantenimiento-jardines-tampico": ("servicio-mantenimiento", "jardin", "jardin"),
     "/sistema-riego-tampico": ("servicio-riego", "jardin", "jardin"),
+    # SEO fase 2a (2026-11-11): poda, empresas, nosotros y el índice de zonas.
+    "/poda-arboles-tampico": ("servicio-poda", "jardin", "jardin"),
+    "/empresas": ("b2b", "empresas", "empresas"),
+    "/nosotros": ("nosotros", None, "general"),
+    "/zonas": ("zonas", None, "jardin"),
     "/cuestionario": ("utilidad", "jardin", "jardin"),
     "/plantas-palmas-arboles-tampico": _PLANTAS,
     "/palmas-tropicales-tampico": _PLANTAS,

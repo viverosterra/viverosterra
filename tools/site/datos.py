@@ -119,8 +119,16 @@ SIN_MINIMO = "Sin mínimo de compra."
 ENTREGA_COBRO = "La entrega a domicilio se cobra por viaje, según tu colonia."
 FACTURACION = "Todas las compras se pueden facturar."
 CONDICIONES_MATERIALES = f"{SIN_MINIMO} {ENTREGA_COBRO} {FACTURACION}"
-PODA = ("Desde $500, según cotización: el precio depende del tamaño del árbol o la palma y de los residuos que se "
-        "generan. Mándanos fotos y ubicación por WhatsApp.")
+# Poda y derribo (respuestas del dueño, 2026-11-11): también se derriban árboles completos; poda y derribo van según
+# cotización (la poda desde PRECIOS["poda"]) y el retiro de los residuos que se generan va como partida aparte en la
+# cotización. El permiso municipal, cuando se necesita, lo tramita el dueño del predio: el sitio nunca dice que Viveros
+# Terra lo tramita, ni da costos, ligas o pasos del trámite (tests/test_seo_f2a.py).
+PODA = ("Desde $500, según cotización: el precio depende del tamaño del árbol o la palma, y el retiro de los residuos "
+        "que se generan va como partida aparte en la cotización. Mándanos fotos y ubicación por WhatsApp.")
+DERRIBO = "También derribamos árboles completos, según cotización."
+PODA_RESIDUOS = "El retiro de los residuos que se generan va como partida aparte en la cotización."
+PODA_PERMISO = ("En árboles de banqueta o de gran tamaño, el municipio puede pedir un permiso para podar o derribar: lo "
+                "tramita el dueño del predio con su ayuntamiento.")
 GARANTIA_PLANTAS = "30 días en las plantas que sembramos nosotros, con el riego indicado (ver condiciones)."
 PRIMER_RIEGO = "El primer riego lo haces tú: te enseñamos cómo y te dejamos el protocolo de 20 días."
 ARRAIGO = "15 a 20 días"

@@ -32,6 +32,15 @@ UTILITARIAS = (
     ("/404", "404.html", "no_encontrada", "no_encontrada"),
 )
 
+# SEO fase 2a (2026-11-11): páginas nuevas, sin captura anterior que comparar (tests/test_paridad.py las salta).
+SEO_F2A = (
+    ("/poda-arboles-tampico", "poda-arboles-tampico/index.html", "servicio", "poda_arboles"),
+    ("/empresas", "empresas/index.html", "pilar", "empresas"),
+    ("/nosotros", "nosotros/index.html", "pilar", "nosotros"),
+    ("/zonas", "zonas/index.html", "pilar", "zonas"),
+)
+NUEVAS = tuple(ruta for ruta, *_ in SEO_F2A)
+
 PAGINAS = (
     ("/", "index.html", "inicio", "inicio"),
     ("/pasto-en-rollo-tampico", "pasto-en-rollo-tampico/index.html", "servicio", "pasto_en_rollo"),
@@ -63,7 +72,7 @@ PAGINAS = (
 ) + _varias("ficha", lambda k: f"/pasto-sintetico/{k}", lambda k: f"pasto-sintetico/{k}/index.html", "ficha") + _varias(
     "ciudad", lambda k: f"/pasto-sintetico/envio/{k}", lambda k: f"pasto-sintetico/envio/{k}/index.html", "tienda_guia"
 ) + _varias("zona", lambda k: f"/{k}", lambda k: f"{k}/index.html", "zona") + UTILITARIAS + _varias(
-    "articulo", lambda k: f"/blog/{k}", lambda k: f"blog/{k}/index.html", "articulo")
+    "articulo", lambda k: f"/blog/{k}", lambda k: f"blog/{k}/index.html", "articulo") + SEO_F2A
 
 
 def cargar(contenido):

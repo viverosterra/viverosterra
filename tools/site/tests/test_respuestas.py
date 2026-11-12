@@ -46,6 +46,13 @@ DATOS = {
                  "Tampico, Madero y Altamira"),
     "/mayoreo-pasto-tampico": (f"desde ${P['pasto_mayoreo_m2']}/m² (solo pasto)", f"{P['pasto_mayoreo_minimo_m2']} m² o más",
                                "no lleva IVA", "Tampico, Madero y Altamira"),
+    # SEO fase 2a (2026-11-11): las cuatro páginas nuevas.
+    "/poda-arboles-tampico": (f"desde ${P['poda']}, según cotización", "derribo", "partida aparte",
+                              "lo tramita el dueño del predio", "Tampico, Ciudad Madero y Altamira"),
+    "/empresas": (f"REPSE {datos.REPSE}", datos.FACTURA, f"desde ${P['pasto_mayoreo_m2']}/m²", "no lleva IVA",
+                  "Tampico, Ciudad Madero y Altamira"),
+    "/nosotros": ("12 de diciembre de 2007", datos.CALLE, datos.CLIENTES, f"REPSE {datos.REPSE}"),
+    "/zonas": ("seis zonas", "Lomas de Rosales", "Ciudad Madero", "Altamira", datos.ZONAS_POR_PROYECTO),
 }
 PROHIBIDO_RE = re.compile(r"(?i)\bgratis\b|gratuit|sin costo|m[aá]s vendid|d[ií]as h[aá]biles|\bMSI\b|anticipo|"
                           r"pr[oó]ximo corte|menos de 1 hora(?! en horario)")
@@ -61,13 +68,13 @@ def plano(fragmento):
 
 def pagina_ld(ruta):
     bloque = re.search(r'<script type="application/ld\+json">(.*?)</script>', html_de(ruta), re.S).group(1)
-    return next(n for n in json.loads(bloque)["@graph"] if n["@type"] == "WebPage")
+    return next(n for n in json.loads(bloque)["@graph"] if n["@type"] in entidad.TIPOS_PAGINA)
 
 
 class RespuestasTest(unittest.TestCase):
-    def test_son_las_diez_paginas_del_informe(self):
+    def test_son_las_diez_paginas_del_informe_y_las_cuatro_de_la_fase_2a(self):
         self.assertEqual(set(respuestas.RUTAS), set(DATOS))
-        self.assertEqual(len(respuestas.RUTAS), 10)
+        self.assertEqual(len(respuestas.RUTAS), 14)
 
     def test_una_respuesta_visible_por_pagina_de_40_a_60_palabras_con_el_dato(self):
         for ruta, datos_esperados in DATOS.items():

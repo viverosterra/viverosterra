@@ -58,6 +58,11 @@ def de_tipo(html, tipo):
     return [n for n in nodos(html) if tipo in tipos(n)]
 
 
+def de_pagina(html):
+    """Nodos de página: WebPage o sus subtipos (AboutPage, CollectionPage…), como los reconoce entidad.completar."""
+    return [n for n in nodos(html) if set(tipos(n)) & set(entidad.TIPOS_PAGINA)]
+
+
 def plano(fragmento):
     return re.sub(r"\s+", " ", html_mod.unescape(re.sub(r"<[^>]+>", "", fragmento))).strip()
 
@@ -227,7 +232,7 @@ class EntidadEnElSitioTest(unittest.TestCase):
     def test_cada_pagina_con_un_webpage_ligado_al_sitio(self):
         for pagina, html in PAGINAS.items():
             with self.subTest(pagina=pagina):
-                (nodo,) = [n for n in de_tipo(html, "WebPage") if len(n) > 2]
+                (nodo,) = [n for n in de_pagina(html) if len(n) > 2]
                 self.assertEqual(nodo["isPartOf"], {"@id": entidad.SITIO_ID})
                 self.assertEqual(nodo["inLanguage"], "es-MX")
                 if "/blog/" not in f"/{pagina}" or pagina == "blog/index.html":
@@ -318,7 +323,7 @@ class SpeakableTest(unittest.TestCase):
                     for n in bloque.get("@graph", [bloque]):
                         self.assertNotIn("SpeakableSpecification", tipos(n))
                         if "speakable" in n:
-                            self.assertIn("WebPage", tipos(n))
+                            self.assertTrue(set(tipos(n)) & set(entidad.TIPOS_PAGINA), tipos(n))
                 for espec in de_tipo(html, "SpeakableSpecification"):
                     con_speakable += 1
                     for selector in espec["cssSelector"]:

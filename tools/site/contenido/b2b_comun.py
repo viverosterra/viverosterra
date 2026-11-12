@@ -1,7 +1,7 @@
 """Piezas comunes de las páginas para empresas (Etapa 2d): documentación para compras, dos preguntas de compras, los
 sectores, la cobertura y las páginas B2B que se enlazan entre sí. Las usan contenido/mayoreo_pasto.py y
-contenido/palmas_proyectos.py; la página /empresas de la Etapa 3 (spec §3.1 y §3.5) tomará de aquí su índice
-(PAGINAS) sin repetir textos. Mientras /empresas no exista, ninguna página la enlaza (test_b2b.py lo prueba).
+contenido/palmas_proyectos.py; la página /empresas (SEO fase 2a, 2026-11-11: contenido/empresas.py) toma de aquí su
+índice (PAGINAS) sin repetir textos, y mayoreo y palmas la enlazan desde sus relacionados.
 Solo datos de datos.py: ninguna escala, capacidad ni plazo que el dueño no haya dado."""
 import datos
 from componentes import dinero
@@ -62,6 +62,12 @@ PAGINAS = (
 )
 
 
+# El pilar de empresas (mapa §4b, clúster 6): sus hijos lo enlazan con el ancla «proveedor de áreas verdes con REPSE».
+EMPRESAS = {"titulo": "Proveedor de áreas verdes con REPSE", "href": "/empresas",
+            "img": "/img/portadas/jardineria-areas-verdes-tampico-sm.webp", "ancho": 560, "alto": 840,
+            "texto": f"Todo lo que hacemos para empresas · REPSE {datos.REPSE} y factura {datos.FACTURA}"}
+
+
 def relacionados(excepto):
-    """Las otras páginas para empresas (la propia no se enlaza)."""
-    return tuple(p for p in PAGINAS if p["href"] != excepto)
+    """Las otras páginas para empresas (la propia no se enlaza) y, al final, el pilar /empresas."""
+    return tuple(p for p in PAGINAS if p["href"] != excepto) + (EMPRESAS,)

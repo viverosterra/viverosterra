@@ -40,14 +40,19 @@ MANTENIMIENTO = {"nombre": "Mantenimiento de jardín", "href": "/mantenimiento-j
 RIEGO = {"nombre": "Sistema de riego automático", "href": "/sistema-riego-tampico", "unidad": "m²",
          "precio": P["riego_m2"],
          "detalle": "Aspersión o goteo con programador. Se cotiza después de medir y revisar la presión."}
-# Poda de palmas y árboles (decisión del dueño, 2026-11-07): "desde $500, según cotización". Su página es de la Etapa 3,
-# así que el renglón no enlaza.
+# Poda de palmas y árboles (decisión del dueño, 2026-11-07): "desde $500, según cotización". Desde la SEO fase 2a
+# (2026-11-11) el renglón enlaza a su página y dice lo que el dueño contestó: también derriban árboles completos y el
+# retiro de residuos va como partida aparte.
+PODA_RUTA = "/poda-arboles-tampico"
+
+
 def poda(mensaje, cta):
     """Renglón de la poda con el enlace "mándanos fotos": en cada zona lleva el mensaje de esa zona."""
     enlace = cz.enlace_wa("Mándanos fotos y ubicación por WhatsApp", mensaje, cta)
-    return {"nombre": "Poda de palmas y árboles", "unidad": "árbol o palma", "precio": P["poda"], "desde": True,
-            "cotiza": True,
-            "detalle": f"El precio depende del tamaño del árbol o la palma y de los residuos que se generan. {enlace}."}
+    return {"nombre": "Poda de palmas y árboles", "href": PODA_RUTA, "unidad": "árbol o palma", "precio": P["poda"],
+            "desde": True, "cotiza": True,
+            "detalle": ("Poda o derribo: el precio depende del tamaño del árbol o la palma; el retiro de residuos va "
+                        f"como partida aparte. {enlace}.")}
 
 
 SERVICIOS = (

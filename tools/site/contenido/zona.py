@@ -115,8 +115,10 @@ ZONAS = {
              "pero bajo copas cerradas conviene plantas de sombra o cubresuelos."),
             ("Jardines de frente y patios", "En espacios medianos, un diseño sencillo con pasto, jardineras y dos o "
              "tres palmas da más orden y menos mantenimiento."),
-            ("Poda y raíces", "Podamos árboles y palmas con técnica para no dañarlos. Si una raíz levanta la banqueta, "
-             "te recomendamos especies de raíz controlada."),
+            # SEO fase 2a (2026-11-11, mapa G5): Águila = poda de árboles viejos; enlaza a la página de poda.
+            ("Poda y raíces", "Podamos árboles y palmas con técnica para no dañarlos y, si hace falta, derribamos árboles "
+             'completos: ve la <a href="/poda-arboles-tampico">poda de árboles en Tampico</a>. Si una raíz levanta la '
+             "banqueta, te recomendamos especies de raíz controlada."),
         ),
         faqs=(
             ("¿Dan servicio de jardinería en la colonia Águila y Altavista?",
@@ -208,7 +210,8 @@ ZONAS = {
              f"Desde {MANTENIMIENTO} al mes. El precio depende de los metros y de la frecuencia de visitas."),
             ("¿Atienden empresas en el puerto industrial de Altamira?",
              f"Sí. Tenemos REPSE {datos.REPSE} y factura {datos.FACTURA} para contratos de mantenimiento de áreas "
-             'verdes. Ve el <a href="/mantenimiento-jardines-tampico">servicio de mantenimiento</a>.'),
+             'verdes. Ve el <a href="/mantenimiento-jardines-tampico">servicio de mantenimiento</a> y las '
+             '<a href="/empresas">áreas verdes para empresas</a>.'),
         ),
     ),
 }

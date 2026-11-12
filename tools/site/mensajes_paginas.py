@@ -101,8 +101,20 @@ PRECIOS_SECCIONES = {
                 "Colonia de entrega: ___"),
 }
 
+# SEO fase 2a (2026-11-11): las cuatro páginas nuevas, con los huecos ___ como el resto del sitio. La usan la portada y
+# el cierre y, por RUTAS, el menú, la barra móvil y el pie.
+SEO_F2A = {
+    "/poda-arboles-tampico": ("Hola, quiero cotizar poda o derribo de árboles o palmas.\nColonia: ___\n"
+                              "Cuántos árboles o palmas: ___\nPoda o derribo: ___\nLes mando fotos y la ubicación."),
+    "/empresas": ("Hola, quiero cotizar áreas verdes para mi empresa.\nEmpresa: ___\n"
+                  "Servicio (mantenimiento, pasto, palmas o riego): ___\nUbicación: ___\nm² aprox.: ___"),
+    "/nosotros": "Hola, quiero cotizar: ___\nColonia: ___\nMetros aprox.: ___",
+    "/zonas": "Hola, quiero cotizar jardinería.\nColonia: ___\nServicio que necesito: ___\nMetros aprox.: ___",
+}
+
 # Ruta exacta → (mensaje del menú y la barra, mensaje del pie o None para usar el mismo).
 RUTAS = {
+    **{ruta: (texto, None) for ruta, texto in SEO_F2A.items()},
     # Reescritura 9 (Entrega B de experiencia): el índice del blog pide qué, dónde y cuánto, como el mensaje general.
     "/blog": ("Hola, quiero cotizar: ___\nColonia: ___\nMetros aprox.: ___", None),
     # Reescritura 6 (Entrega B de experiencia): el mensaje del catálogo pide lo que el vendedor necesita para cotizar.

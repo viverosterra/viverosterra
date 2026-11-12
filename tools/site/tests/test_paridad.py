@@ -13,10 +13,11 @@ from contenido import articulo  # noqa: E402
 
 
 def paginas_migradas():
-    """Las páginas con captura anterior: los artículos nuevos (articulo.NUEVOS) y la página de Nochebuenas, cuya URL
-    solo redirigía, no tienen contra qué compararse."""
+    """Las páginas con captura anterior: los artículos nuevos (articulo.NUEVOS), la página de Nochebuenas, cuya URL
+    solo redirigía, y las páginas nuevas de la SEO fase 2a (generar.NUEVAS) no tienen contra qué compararse."""
     return [p for p in generar.PAGINAS
-            if p[0].removeprefix("/blog/") not in articulo.NUEVOS and p[0] != datos.NOCHEBUENAS["ruta"]]
+            if p[0].removeprefix("/blog/") not in articulo.NUEVOS and p[0] != datos.NOCHEBUENAS["ruta"]
+            and p[0] not in generar.NUEVAS]  # SEO fase 2a: páginas nuevas, sin captura anterior
 
 
 class ParidadTest(unittest.TestCase):
