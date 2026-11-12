@@ -31,7 +31,8 @@ CRITERIOS = (
                           "para mascotas."),
 )
 # SEO fase 2c (2026-11-11, mapa §2 G7): lo útil del artículo /blog/pasto-sintetico-para-perros, fusionado aquí con 301
-# (limpieza de orina y heces, olor y drenaje, errores). Sin la garantía de «5 a 8 años» ni la arena de sílice del artículo.
+# (limpieza de orina y heces, olor y drenaje, errores). Sin la arena de sílice del artículo. La garantía de «5 a 8 años»
+# la confirmó el dueño el 2026-11-12; los años salen de la ficha de cada modelo recomendado (data.BY_SLUG).
 LIMPIEZA = (
     ("Orina", "Drena sola por las perforaciones del respaldo hacia la base de grava. Enjuaga con manguera las zonas que tu "
               "perro usa más, 1 o 2 veces por semana; una vez al mes aplica agua con vinagre blanco (50/50) o un limpiador "
@@ -54,6 +55,10 @@ ERRORES = (
     ("Saltarse la base drenante", "Ahorrar en la base es la receta del mal olor."),
     ("Nunca enjuagar", "El pasto no se riega, pero con mascotas sí se enjuaga: 5 minutos a la semana bastan."),
 )
+GARANTIAS = tuple((data.BY_SLUG[s]["nombre"], data.BY_SLUG[s]["garantia"]) for s, _r in RECOMENDADOS)
+GARANTIA_MIN = min(a for _n, a in GARANTIAS)
+GARANTIA_MAX = max(a for _n, a in GARANTIAS)
+GARANTIA_TEXTO = "; ".join(f"{n}, {a} años" for n, a in GARANTIAS)
 PREGUNTAS = (
     ("¿El pasto sintético se calienta con el sol?", "Sí, como cualquier superficie exterior al sol. Enjuágalo con "
      "manguera en las horas de más calor y deja una zona de sombra para tu perro."),
@@ -63,6 +68,8 @@ PREGUNTAS = (
      "frecuente y un limpiador enzimático se controla el olor."),
     ("¿Cómo se lava el pasto sintético con perros?", "Levanta los desechos, enjuaga con manguera una o dos veces por "
      "semana y cepilla la fibra de vez en cuando para que quede de pie."),
+    ("¿Cuánta garantía tiene el pasto sintético para perros?", f"De {GARANTIA_MIN} a {GARANTIA_MAX} años según el "
+     f"modelo: {GARANTIA_TEXTO}."),
     ("¿Qué tratamientos tiene el pasto?", f"Todos nuestros modelos tienen de fábrica estos tratamientos: "
      f"{data.COMMON_TREATMENTS}."),
 )

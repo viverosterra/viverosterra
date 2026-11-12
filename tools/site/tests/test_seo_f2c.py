@@ -80,7 +80,6 @@ RETITULADOS = {
 DESCRIPCION_ADAPTADA = {
     "pasto-san-agustin-instalacion-mantenimiento": "el artículo no habla del «primer corte»; dice los primeros 20 días",
     "tezontle-usos-jardin-tampico": "el artículo no trata el tezontle en macetas",
-    "tierra-negra-costal-camion-tampico": "el artículo solo da el camión de 8 m³ (no los de 5 y 14)",
 }
 ZONAS = tuple(r for _n, r in datos.ZONAS)
 # Medido el 2026-11-11 sobre el <main> de las seis zonas: antes, el 41% de las frases de cada página (hasta 45%) se
@@ -327,9 +326,13 @@ class ZonasTest(unittest.TestCase):
                 self.assertNotRegex(self.textos[ruta], r"(?i)caso real|cliente de la colonia|proyecto en la colonia")
 
 
+# El sitio justo antes de la 2c (merge de la 2b, 37428f72): main ya no tiene las páginas retiradas desde que se publicó.
+ANTES_2C = "37428f72"
+
+
 def _de_main(ruta_public):
-    """El archivo de public/ como está en main (antes de esta entrega)."""
-    return subprocess.run(["git", "show", f"main:public/{ruta_public}"], cwd=RAIZ, capture_output=True, text=True,
+    """El archivo de public/ como estaba antes de la 2c."""
+    return subprocess.run(["git", "show", f"{ANTES_2C}:public/{ruta_public}"], cwd=RAIZ, capture_output=True, text=True,
                           check=True).stdout
 
 
