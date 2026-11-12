@@ -147,7 +147,8 @@ class TiendaPublicadaTest(unittest.TestCase):
         self.assertIn("<b>$149/m²</b> con Toscana 18", cuerpo)
         self.assertNotIn("$139", cuerpo)
         self.assertNotIn("muestra", cuerpo.lower())
-        self.assertIn('href="/blog/pasto-sintetico-para-perros"', cuerpo)
+        # SEO fase 2c: el artículo de perros se fusionó aquí (301); la página ya no lo enlaza.
+        self.assertNotIn('href="/blog/pasto-sintetico-para-perros"', cuerpo)
     def test_veinticinco_paginas_de_sintetico_con_plantilla(self):
         self.assertEqual(len(TIENDA), 1 + 1 + 1 + len(data.MODELOS) + 11)
 

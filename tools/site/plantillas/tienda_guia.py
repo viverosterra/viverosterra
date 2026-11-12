@@ -46,7 +46,7 @@ def _fila(k):
 def render(k):
     secciones = [_portada(k)]
     for n, s in enumerate(k["secciones"], 1):
-        cuerpo = _cuerpo(s) + (_fila(k) if s["tipo"] == "modelos" else "")
+        cuerpo = _cuerpo(s) + (c.figura(s["figura"]) if s.get("figura") else "") + (_fila(k) if s["tipo"] == "modelos" else "")
         secciones.append(c.bloque(n, s["rotulo"], f"vt-h-{s['id']}", s["titulo"], cuerpo, lede=s.get("lede"),
                                   tinte=n % 2 == 0, id_seccion=s["id"]))
     ci = k["cierre"]

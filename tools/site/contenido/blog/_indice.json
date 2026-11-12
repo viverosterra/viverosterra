@@ -450,7 +450,7 @@
      "minutos": 6
     },
     {
-     "href": "/blog/pasto-sintetico-para-perros",
+     "href": "/pasto-sintetico/perros",
      "foto": {
       "tipo": "foto",
       "src": "/img/pasto-sintetico-residencial-tampico.webp",
@@ -459,7 +459,7 @@
       "alto": 1536
      },
      "categoria": "Pasto Sintético",
-     "titulo": "Pasto sintético para perros: la guía completa",
+     "titulo": "Pasto sintético para perros: limpieza, olor y modelos",
      "texto": "¿Huele con la orina? ¿Lo pueden romper? Limpieza, drenaje correcto y qué modelos sí funcionan con mascotas.",
      "minutos": 6
     },
@@ -534,7 +534,7 @@
      "minutos": 7
     },
     {
-     "href": "/blog/palmas-mas-vendidas-tampico-precios",
+     "href": "/blog/palmas-para-jardin-tampico",
      "foto": {
       "tipo": "foto",
       "src": "/img/plantas-tropicales-tampico-viveros.webp",
@@ -543,12 +543,12 @@
       "alto": 1536
      },
      "categoria": "Palmas",
-     "titulo": "8 palmas para jardines en Tampico (con precios)",
+     "titulo": "8 palmas para jardín en Tampico, con precios",
      "texto": "Catálogo actualizado 2026: Phoenix, Bismarckia, Washingtonia, Coco enano y más. Precios de vivero, tamaños y cuál elegir para tu espacio.",
      "minutos": 10
     },
     {
-     "href": "/blog/jardin-bajo-presupuesto-tampico",
+     "href": "/blog/cuanto-cuesta-jardin-tampico-precios#por-presupuesto",
      "foto": {
       "tipo": "foto",
       "src": "/img/jardin-residencial-plantas-pasto-tampico.webp",
@@ -585,12 +585,12 @@
       "alto": 1400
      },
      "categoria": "Materiales",
-     "titulo": "Tierra negra: ¿costal o camión?",
+     "titulo": "¿Cuánta tierra negra necesitas? Costal o camión",
      "texto": "Comparativa de precios y rendimiento para Tampico. Cuándo conviene comprar por costal y cuándo pedir un camión volteo con entrega directa.",
      "minutos": 5
     },
     {
-     "href": "/blog/riego-automatico-tampico-roi",
+     "href": "/blog/sistema-riego-automatizado-tampico#cuando-conviene",
      "foto": {
       "tipo": "foto",
       "src": "/img/instalacion-riego-tuberias-jardines-tampico.webp",
@@ -791,18 +791,10 @@
      "minutos": 7
     },
     {
-     "href": "/blog/palmas-tropicales-jardin-tampico",
-     "foto": null,
-     "categoria": "Palmas Tropicales",
-     "titulo": "Las 8 Palmas Más Espectaculares para Jardines en Tampico",
-     "texto": "Guía visual: tamaños, cuidados, precios y cuál palma es la correcta para tu espacio.",
-     "minutos": 8
-    },
-    {
      "href": "/blog/sistema-riego-automatizado-tampico",
      "foto": null,
      "categoria": "Sistema de Riego",
-     "titulo": "Riego Automático en Tampico: ¿Vale la Pena? Costos Reales",
+     "titulo": "Riego automático: tipos, costo y cuándo conviene",
      "texto": "Tipos, costos de instalación y cuánto puedes ahorrar en agua con un sistema de riego en Tampico.",
      "minutos": 7
     },
@@ -810,7 +802,7 @@
      "href": "/blog/diseno-jardines-tampico-guia",
      "foto": null,
      "categoria": "Diseño de Jardines",
-     "titulo": "Cómo Diseñar Tu Jardín en Tampico: Guía Paso a Paso",
+     "titulo": "Cómo diseñar tu jardín paso a paso",
      "texto": "Distribución de zonas, selección de plantas y los 7 errores que arruinan jardines en el Golfo.",
      "minutos": 8
     },
@@ -818,7 +810,7 @@
      "href": "/blog/tezontle-usos-jardin-tampico",
      "foto": null,
      "categoria": "Piedras y Sustrato",
-     "titulo": "Tezontle Rojo: 8 Usos que Transforman Tu Jardín",
+     "titulo": "¿Para qué sirve el tezontle? 8 usos en el jardín",
      "texto": "Cómo usarlo para control de maleza, senderos, drenaje y decoración. Con calculadora de cantidad.",
      "minutos": 7
     },
@@ -826,7 +818,7 @@
      "href": "/blog/pasto-san-agustin-instalacion-mantenimiento",
      "foto": null,
      "categoria": "Pasto",
-     "titulo": "Pasto San Agustín: Guía Completa de Instalación y Mantenimiento",
+     "titulo": "Cómo instalar pasto en rollo San Agustín paso a paso",
      "texto": "Todo sobre el pasto más popular de Tampico: instalación, riego, poda y mantenimiento anual.",
      "minutos": 8
     },
@@ -842,7 +834,7 @@
      "href": "/blog/plantas-interior-tampico",
      "foto": null,
      "categoria": "Plantas de Interior",
-     "titulo": "Plantas de Interior para Casas en Tampico: Las Más Recomendadas",
+     "titulo": "¿Qué plantas de interior resisten el calor y el aire acondicionado?",
      "texto": "Las especies que mejor funcionan en el clima cálido-húmedo del Golfo dentro de casa.",
      "minutos": 7
     },
@@ -887,14 +879,6 @@
      "minutos": 7
     },
     {
-     "href": "/blog/pasto-sintetico-para-perros",
-     "foto": null,
-     "categoria": "Pasto Sintético",
-     "titulo": "Pasto Sintético para Perros y Mascotas: Guía Completa",
-     "texto": "Limpieza de orina y heces, el secreto del drenaje y los modelos aptos para hogares con mascotas.",
-     "minutos": 6
-    },
-    {
      "href": "/blog/que-altura-de-pasto-sintetico-elegir",
      "foto": null,
      "categoria": "Guías",
@@ -925,14 +909,6 @@
      "titulo": "12 Plantas Resistentes a la Sal del Golfo",
      "texto": "Especies que resisten la salinidad del aire marino: ideales para jardines costeros y terrazas frente al mar.",
      "minutos": 7
-    },
-    {
-     "href": "/blog/sistema-riego-automatico-conviene-tampico",
-     "foto": null,
-     "categoria": "Riego",
-     "titulo": "¿Conviene el Riego Automático en Tampico? Guía 2026",
-     "texto": "Análisis honesto: cuándo conviene instalarlo vs regar manual, con cálculo de ROI y ahorro de agua.",
-     "minutos": 8
     }
    ]
   }

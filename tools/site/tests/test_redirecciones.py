@@ -14,7 +14,6 @@ import paginas  # noqa: E402
 PUBLIC = paginas.PUBLIC
 REDIRECTS = json.loads((PUBLIC.parent / "vercel.json").read_text(encoding="utf-8"))["redirects"]
 DESTINO = {r["source"]: r["destination"] for r in REDIRECTS}
-RIEGO_CONVIENE = "/blog/sistema-riego-automatico-conviene-tampico"
 RIEGO_GUIA = "/blog/sistema-riego-automatizado-tampico"
 FERTILIZACION = "/blog/fertilizacion-jardines-tampico-temporada-lluvias"
 FICUS = "/blog/ficus-elastica-cuidados-tampico"
@@ -27,7 +26,8 @@ FIJOS = {
     "/post/como-instalar-pasto-sintetico": "/blog/como-instalar-pasto-sintetico",
     "/post/cuidados-de-los-ficus-elastica-guía-definitiva-para-un-árbol-del-caucho-saludable": FICUS,
     "/post/como-cuidar-de-tu-ficus-elastica-hule-en-tampico-tamaulipas": FICUS,
-    "/post/por-qué-es-conveniente-un-sistema-de-riego": RIEGO_CONVIENE,
+    # SEO fase 2c: el artículo de «¿conviene?» se fusionó con 301 en la guía de riego; el 301 viejo va directo ahí.
+    "/post/por-qué-es-conveniente-un-sistema-de-riego": RIEGO_GUIA,
     "/post/cada-cuánto-hay-que-fertilizar-las-plantas-guía-práctica-para-jardineros-modernos": FERTILIZACION,
     "/post/tienes-problemas-de-hormigas": "/blog/plagas-comunes-jardin-tampico",
     "/post/pasto-en-rollo-por-mayoreo-precio-por-m2": MAYOREO,
@@ -46,7 +46,7 @@ FIJOS = {
 MISMA_FAMILIA = {
     "/post/cuando-es-mejor-regar-mi-pasto": "/blog/cuando-regar-pasto-san-agustin-tampico",
     "/post/cuidados-de-los-ficus-elastica": FICUS,
-    "/post/por-qu": RIEGO_CONVIENE,
+    "/post/por-qu": RIEGO_GUIA,
     "/post/cada-cu": None,  # dos artículos distintos empiezan así (fertilizar y podar): se revisa abajo por palabra
     "/post/rancho-productor": MAYOREO,
 }

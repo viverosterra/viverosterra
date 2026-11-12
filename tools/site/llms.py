@@ -58,7 +58,7 @@ SECCIONES = (
          "riego de los primeros 20 días y condiciones de la garantía"),
         ("Cuándo plantar pasto en Tampico", "/blog/cuando-plantar-pasto-tampico-calendario", "calendario mes a mes"),
         ("San Agustín o japonés", "/blog/pasto-san-agustin-vs-japones", "comparativa con tabla"),
-        ("Guía de instalación y mantenimiento", "/blog/pasto-san-agustin-instalacion-mantenimiento",
+        ("Cómo instalar pasto en rollo San Agustín", "/blog/pasto-san-agustin-instalacion-mantenimiento",
          "del suelo al primer corte"),
     )),
     ("Servicios de jardín", (
@@ -68,7 +68,10 @@ SECCIONES = (
         ("Poda y derribo de árboles y palmas", "/poda-arboles-tampico",
          "precio desde, derribo, retiro de residuos aparte y quién tramita el permiso"),
         ("Cuánto cuesta un jardín en Tampico", "/blog/cuanto-cuesta-jardin-tampico-precios",
-         "ejemplos de presupuesto con los precios oficiales"),
+         "ejemplos de presupuesto con los precios oficiales y por nivel de inversión"),
+        # SEO fase 2c: la guía única de riego (fusión con 301 de los tres artículos que respondían «¿conviene?»).
+        ("Riego automático: tipos, costo y cuándo conviene", "/blog/sistema-riego-automatizado-tampico",
+         "aspersión, goteo o microaspersión, precio por m² y cuándo no conviene"),
     )),
     ("Pasto sintético", (
         ("Pasto sintético en Tampico", "/pasto-sintetico-tampico", "venta en showroom e instalación local"),
@@ -82,7 +85,9 @@ SECCIONES = (
     ("Plantas, palmas y árboles", (
         ("Plantas, palmas y árboles", "/plantas-palmas-arboles-tampico", "categorías del vivero"),
         ("Catálogo", "/catalogo", f"{datos.VARIEDADES} variedades con cotizador"),
-        ("Palmas tropicales", "/palmas-tropicales-tampico", "especies y precios «desde»"),
+        ("Venta de palmas en Tampico", "/palmas-tropicales-tampico", "especies y precios «desde»"),
+        # SEO fase 2c: la lista única de palmas (fusión con 301 de dos artículos).
+        ("8 palmas para jardín con precios", "/blog/palmas-para-jardin-tampico", "tamaño adulto, luz y precio por especie"),
         ("Palmas al mayoreo para proyectos", "/palmas-mayoreo-proyectos", "especies con nombre científico"),
         ("Árboles ornamentales", "/arboles-ornamentales-tampico", "especies para jardín"),
         ("Árboles para banqueta", "/arboles-para-banqueta-tampico", "especies para la banqueta"),

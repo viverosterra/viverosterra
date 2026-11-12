@@ -22,7 +22,7 @@ def render(k):
                  cz.lista(pr["filas"], pr["caption"])
                  + cz.cotizar(*pr["cotizar"], f"{tipo}:precios", despues=VER_LISTA) + f'<p class="vt-promesa">{pr["nota"]}</p>',
                  lede=pr["lede"], tinte=True, id_seccion="precios"),
-        c.bloque(2, "Tu jardín", "vt-h-zona", re_["titulo"], c.fichas(re_["items"]), id_seccion="zona"),
+        c.bloque(2, "Tu jardín", "vt-h-zona", re_["titulo"], c.fichas(re_["items"]), lede=re_.get("lede"), id_seccion="zona"),
         c.bloque(3, "Colonias", "vt-h-colonias", co["titulo"],
                  cz.colonias(co["items"], f"Colonias y códigos postales de {co['municipio']} (SEPOMEX)."),
                  lede=co["lede"], tinte=True, id_seccion="colonias"),

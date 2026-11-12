@@ -13,6 +13,7 @@ y la especie sale de ESPECIE_SIN_PRECIO_RE: test_blog_reglas lo exige.
 """
 import datos
 from componentes import dinero
+from contenido import blog_seo_f2c as F2C
 
 P = datos.PRECIOS
 SEGUN = datos.SEGUN_COTIZACION.lower()
@@ -522,7 +523,43 @@ REVISION = {
         ("C299", "<td><strong>Toscana 28</strong> ★</td>", "<td><strong>Toscana 28</strong></td>", M_ESTRELLA),
     ),
 }
-FILAS = {slug: FILAS.get(slug, ()) + REVISION.get(slug, ()) for slug in (*FILAS, *(s for s in REVISION if s not in FILAS))}
+
+M_FUSION_RIEGO = ("SEO fase 2c (2026-11-11, mapa §2 G9): se suman los apartados de los dos artículos de riego que se fusionaron aquí "
+                  "con 301 (cuándo conviene, presión, vida útil, errores y alternativa económica), sin sus cifras sin fuente.")
+M_SERVICIO_RIEGO = ("SEO fase 2c (2026-11-11, mapa §2 G9): enlace al servicio con el ancla «instalación de sistema de riego en "
+                    "Tampico».")
+M_FUSION_PRESUPUESTO = ("SEO fase 2c (2026-11-11, mapa §2 G11): se suman los tres niveles de presupuesto de «Jardín bajo "
+                        "presupuesto», fusionado aquí con 301, con sus desgloses ya corregidos.")
+M_PILAR = ("SEO fase 2c (2026-11-11, mapa §2 G4): cada ficha de palma enlaza al pilar /palmas-tropicales-tampico con el ancla "
+           "«venta de palmas en Tampico» en su primer párrafo.")
+
+
+def _pilar(clave, slug):
+    parrafo = F2C.PRIMER_PARRAFO[slug]
+    return ((clave, parrafo, F2C.con_pilar(parrafo), M_PILAR),)
+
+
+# Tercera pasada (SEO fase 2c): lo que las fusiones del blog suman y el enlace al pilar de palmas (contenido/blog_seo_f2c.py).
+FUSION_2C = {
+    "sistema-riego-automatizado-tampico": (
+        ("C305", F2C.RIEGO_ANTES, F2C.RIEGO_NUEVO, M_FUSION_RIEGO),
+        ("C306", F2C.RIEGO_SERVICIO_ANTES, F2C.RIEGO_SERVICIO_NUEVO, M_SERVICIO_RIEGO),
+    ),
+    "cuanto-cuesta-jardin-tampico-precios": (
+        ("C307", F2C.COSTOS_ANTES, F2C.COSTOS_NUEVO, M_FUSION_PRESUPUESTO),
+    ),
+    "palma-areca-tampico": _pilar("C308", "palma-areca-tampico"),
+    "palma-bismarckia-bismarckia-nobilis-tampico": _pilar("C309", "palma-bismarckia-bismarckia-nobilis-tampico"),
+    "palma-coco-plumoso-tampico": _pilar("C310", "palma-coco-plumoso-tampico"),
+    "palma-cola-de-zorro-wodyetia-bifurcata-tampico": _pilar("C311", "palma-cola-de-zorro-wodyetia-bifurcata-tampico"),
+    "palma-kerpis-howea-forsteriana-tampico": _pilar("C312", "palma-kerpis-howea-forsteriana-tampico"),
+    "palma-real-roystonea-regia-tampico": _pilar("C313", "palma-real-roystonea-regia-tampico"),
+    "palma-triangular-dypsis-decaryi-tampico": _pilar("C314", "palma-triangular-dypsis-decaryi-tampico"),
+    "palma-washingtona-tampico": _pilar("C315", "palma-washingtona-tampico"),
+    "cuidados-palma-del-viajero-ravenala": _pilar("C316", "cuidados-palma-del-viajero-ravenala"),
+}
+FILAS = {slug: FILAS.get(slug, ()) + REVISION.get(slug, ()) + FUSION_2C.get(slug, ())
+         for slug in dict.fromkeys((*FILAS, *REVISION, *FUSION_2C))}
 
 
 def claves():

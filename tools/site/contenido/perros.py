@@ -30,6 +30,30 @@ CRITERIOS = (
     ("Limpieza sencilla", "Levanta los desechos sólidos y enjuaga con manguera. Para el olor, usa un limpiador enzimático "
                           "para mascotas."),
 )
+# SEO fase 2c (2026-11-11, mapa §2 G7): lo útil del artículo /blog/pasto-sintetico-para-perros, fusionado aquí con 301
+# (limpieza de orina y heces, olor y drenaje, errores). Sin la garantía de «5 a 8 años» ni la arena de sílice del artículo.
+LIMPIEZA = (
+    ("Orina", "Drena sola por las perforaciones del respaldo hacia la base de grava. Enjuaga con manguera las zonas que tu "
+              "perro usa más, 1 o 2 veces por semana; una vez al mes aplica agua con vinagre blanco (50/50) o un limpiador "
+              "enzimático para mascotas. En temporada de calor intenso, enjuaga más seguido."),
+    ("Heces", "Se recogen igual que en pasto natural, con bolsa o pala: la superficie firme no las absorbe. Después pasa un "
+              "enjuague puntual y listo."),
+    ("Olor y drenaje", "La mayoría de los problemas de olor vienen de una instalación sin base drenante. Con perros, pide "
+                       "grava fina o polvo de piedra compactada (3 a 5 cm), una ligera pendiente (1 a 2%) y pasto con "
+                       "respaldo perforado. Sobre concreto sin pendiente ni salidas de agua, la orina se estanca debajo."),
+)
+# La foto del artículo fusionado (la de su tarjeta del índice del blog, mismo archivo, copia de 640 px y alt): las fotos
+# no se quitan (regla del dueño); el pie no dice dónde se tomó.
+FOTO_ARTICULO = {"src": "/img/pasto-sintetico-residencial-tampico.webp",
+                 "srcset": "/img/pasto-sintetico-residencial-tampico-640.webp 640w, /img/pasto-sintetico-residencial-tampico.webp 1024w",
+                 "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 1024, "alto": 1536, "numero": 2,
+                 "alt": "Pasto sintético para perros y mascotas", "lugar": "Pasto sintético residencial", "etapa": "Instalado"}
+ERRORES = (
+    ("No clavar bien el perímetro", "Una orilla suelta es una invitación a jalar y escarbar. Clava cada 15 a 20 cm."),
+    ("Elegir fibra muy alta", "La de 35 mm o más se ve más lujosa, pero con orina diaria tarda más en secar."),
+    ("Saltarse la base drenante", "Ahorrar en la base es la receta del mal olor."),
+    ("Nunca enjuagar", "El pasto no se riega, pero con mascotas sí se enjuaga: 5 minutos a la semana bastan."),
+)
 PREGUNTAS = (
     ("¿El pasto sintético se calienta con el sol?", "Sí, como cualquier superficie exterior al sol. Enjuágalo con "
      "manguera en las horas de más calor y deja una zona de sombra para tu perro."),
@@ -73,11 +97,14 @@ CONTENIDO = {
     "secciones": (
         {"tipo": "preguntas", "id": "elegir", "rotulo": "Elegir", "titulo": "Qué pasto sintético conviene para perros",
          "items": CRITERIOS},
+        {"tipo": "preguntas", "id": "limpieza", "rotulo": "Limpieza", "titulo": "Cómo se limpia: orina, heces y olor",
+         "items": LIMPIEZA, "figura": FOTO_ARTICULO},
         {"tipo": "modelos", "id": "modelos", "rotulo": "Modelos", "titulo": "Tres modelos para mascotas",
          "items": RECOMENDADOS},
+        {"tipo": "preguntas", "id": "errores", "rotulo": "Errores", "titulo": "4 errores a evitar con perros",
+         "items": ERRORES},
         {"tipo": "faq", "id": "preguntas", "rotulo": "Preguntas", "titulo": "Preguntas frecuentes con perros",
-         "preguntas": PREGUNTAS,
-         "notas": ('<a href="/blog/pasto-sintetico-para-perros">Lee la guía completa: pasto sintético para perros</a>',)},
+         "preguntas": PREGUNTAS},
     ),
     "cierre": {"titulo": "Cotiza el pasto para tus perros",
                "lede": ("Dinos tus metros y tu estado: te respondemos con el modelo que conviene y el precio puesto en tu "
@@ -86,7 +113,9 @@ CONTENIDO = {
 }
 
 PARIDAD = {
-    "meta": seo.paridad(TITULO, DESCRIPCION),"reemplazos": {}, "retirados": {}}
+    "meta": seo.paridad(TITULO, DESCRIPCION), "reemplazos": {},
+    "retirados": {"/blog/pasto-sintetico-para-perros": ("SEO fase 2c (2026-11-11, mapa §2 G7): el artículo se fusionó en esta "
+                                                        "página con 301; su limpieza, olor y errores ya están aquí.")}}
 # Lo que cambia en el hero frente a la captura (encabezados, precios y enlaces siguen en tests/test_paridad.py).
 PARIDAD["hero"] = ('Entrega A de experiencia (2026-11-10), hero de marca: un solo botón de WhatsApp (alto, con sombra amarilla); el teléfono pasa de botón a enlace de texto; la línea «también» se reparte entre la fila de enlaces y la línea de confianza (promesa con horario, calificación de Google y dato propio); en celular la foto sube a la primera pantalla y la etiqueta muestra una fila (las demás siguen en la sección de precios). Entrada recortada: «Se limpia con manguera y un limpiador enzimático» sale del hero (sigue en las preguntas).')
 # Lo que cambia en los CTA y el recorrido frente a la captura (encabezados, precios y enlaces: tests/test_paridad.py).

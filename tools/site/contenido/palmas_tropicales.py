@@ -97,7 +97,7 @@ CONTENIDO = {
         "dato": 'Garantía de 30 días en lo que sembramos, <a href="/politicas#garantia-plantas">con condiciones</a>',
         "enlaces": ((f'Ver las {cd.cuenta({"cat": ["palmas"]})} palmas del catálogo', "/catalogo?cat=palmas", "plantas:catalogo"),),
         "lema": "Para darle a tu casa un aire de playa.",
-        "h1": "Palmas para jardín en Tampico, tropicales y exóticas",
+        "h1": "Venta de palmas para jardín en Tampico",  # SEO fase 2c (mapa §2 G4): el pilar de palmas
         "lede": f"{datos.PALMAS_PRECIO}.",
         "etiqueta": {"codigo": "Palmas", "aviso": f"Precios {datos.ANIO}", "nombre": "Areca y coco plumoso", "antes": "desde",
                      "monto": dinero(P["palma_desde"]), "unidad": "tamaño chico",
@@ -129,7 +129,7 @@ CONTENIDO = {
     "guias": {"titulo": "Guías de palmas", "items": (
         ("Palma areca en Tampico: cuidados", "/blog/palma-areca-tampico"),
         ("Palma real: cuidados y crecimiento", "/blog/palma-real-roystonea-regia-tampico"),
-        ("Guía de precios de palmas en Tampico", "/blog/palmas-mas-vendidas-tampico-precios"))},
+        ("8 palmas para jardín con precios", "/blog/palmas-para-jardin-tampico"))},
     "relacionados": {"titulo": "Más servicios en Viveros Terra", "items": pc.otras_subcategorias(RUTA)},
     "cierre": {"titulo": "¿Listo para cotizar?",
                "lede": "Dinos qué palma buscas, la altura y la colonia; te respondemos con precio por tamaño.",
@@ -156,6 +156,7 @@ PARIDAD = {
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {
+        "Palmas para jardín en Tampico, tropicales y exóticas": "Venta de palmas para jardín en Tampico",
         "Las palmas tropicales más solicitadas para el clima de Tampico": "Palmas de jardín y exóticas en el vivero",
         "Las 6 palmas más solicitadas en Tampico": "Palmas de jardín y exóticas en el vivero",
     },

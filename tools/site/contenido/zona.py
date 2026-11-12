@@ -24,6 +24,8 @@ PORTADAS = "/img/portadas"
 INSTALADO = dinero(P["pasto_instalado_m2"])
 MANTENIMIENTO = dinero(P["mantenimiento_mes"])
 RIEGO = f"{dinero(P['riego_m2'][0])} a {dinero(P['riego_m2'][1])}"
+DISENO = (f"Esencial de {dinero(P['diseno'])}, Completo de {dinero(P['diseno_completo'])} y Premium desde "
+          f"{dinero(P['diseno_premium'])}")
 
 # Las fotos de main (una por zona) con un alt y un pie que no dicen en qué colonia se tomaron (no se sabe): los mismos de
 # la página de servicio que publica esa foto, o, si solo la usa la zona, el alt de main. (archivo, ancho, alto, alt,
@@ -217,6 +219,65 @@ ZONAS = {
 }
 CLAVES = tuple(ZONAS)
 
+# SEO fase 2c (2026-11-11, mapa §2 G5): el enfoque propio de cada zona, para que las seis no se lean igual. Una entrada
+# (lede de «Lo que pide un jardín en esta zona») y una ficha que va primero. Altamira = casas e industria; Madero =
+# vivero y costa; Chairel = suelo húmedo junto a la laguna; Águila = poda de árboles viejos; Country Club y Lomas de
+# Rosales = diseño y riego (lotes amplios / terreno en pendiente). Solo hechos de datos.py y de páginas que ya publica el
+# sitio; sin casos, fotos nuevas, distancias ni tiempos (el caso real de cada zona espera el permiso del dueño).
+ENFOQUE = {
+    "jardineria-altamira": (
+        ("En Altamira atendemos dos tipos de jardín: las casas de fraccionamientos como Lagunas de Miralta y las áreas "
+         "verdes de empresas del puerto industrial."),
+        ("Áreas verdes de empresas e industria",
+         f"Para naves y plantas del puerto industrial damos mantenimiento de áreas verdes por contrato, con REPSE "
+         f"{datos.REPSE} y factura {datos.FACTURA}; el plan empresa va {datos.SEGUN_COTIZACION.lower()}. Para obras y "
+         f"fraccionamientos, pasto San Agustín desde {dinero(P['pasto_mayoreo_m2'])}/m² en pedidos de "
+         f"{P['pasto_mayoreo_minimo_m2']} m² o más (solo el pasto; no lleva IVA). Ve las "
+         '<a href="/empresas">áreas verdes para empresas</a> y el <a href="/mayoreo-pasto-tampico">pasto al mayoreo</a>.'),
+    ),
+    "jardineria-ciudad-madero": (
+        ("Ciudad Madero es la zona del vivero y la de los jardines junto al mar: en Playa Miramar el salitre, el viento y "
+         "la arena deciden qué plantar y cómo regar."),
+        ("Plantas y palmas para la costa",
+         'Junto al mar conviene elegir especies que toleran la sal: ve las <a href="/blog/plantas-resistentes-sal-golfo-'
+         'tampico">plantas resistentes a la sal del Golfo</a> y, en palmas, la <a href="/palmas-tropicales-tampico">venta '
+         f"de palmas en Tampico</a>, con coco plumoso y washingtonia. {datos.ENTREGA_COBRO}"),
+    ),
+    "jardineria-lomas-del-chairel-tampico": (
+        ("Lomas del Chairel, Colinas de San Gerardo y Flamboyanes están junto a la laguna del Chairel: el suelo se "
+         "mantiene húmedo más tiempo y en lluvias el agua tarda en bajar. Aquí el jardín se planea primero por el drenaje."),
+        ("Primero el drenaje, después el pasto",
+         "Revisamos hacia dónde corre el agua antes de instalar; la nivelación y el dren, si hacen falta, se cotizan "
+         "aparte. Con el suelo húmedo, regar de más trae hongos: el riego automático por zonas se programa por temporada "
+         f"y puede llevar sensor de lluvia, {datos.SEGUN_COTIZACION.lower()}. Ve "
+         '<a href="/blog/como-evitar-encharcamientos-jardin-tampico">cómo evitar encharcamientos</a> y los '
+         '<a href="/blog/hongos-plantas-exceso-humedad-tampico">hongos por exceso de humedad</a>.'),
+    ),
+    "jardineria-aguila-tampico": (
+        ("Águila, Altavista, Petrolera y Campbell son colonias de árboles maduros: copas grandes que dan sombra al pasto "
+         "y raíces que llegan a la banqueta. Aquí el jardín empieza por la poda."),
+        # datos.PODA sin su última frase (el WhatsApp ya está en la página); el derribo va en «Poda y raíces».
+        ("Poda de árboles viejos", f"{datos.PODA.split(' Mándanos')[0]} {datos.PODA_PERMISO}"),
+    ),
+    "jardineria-country-club-tampico": (
+        ("En Club Campestre, Country Club y Sierra Morena los lotes son amplios: el jardín se resuelve con un diseño "
+         "completo y riego automático por zonas, para no regar a mano un jardín grande."),
+        ("Diseño y riego para lotes grandes",
+         f'El <a href="/diseno-jardines-tampico">diseño de jardines en Tampico</a> tiene tres planes: {DISENO}. El '
+         f'<a href="/sistema-riego-tampico">sistema de riego en Tampico</a> se instala de {RIEGO} por m² y ahorra '
+         f"{datos.RIEGO_AHORRO} de agua frente a la manguera."),
+    ),
+    "jardineria-lomas-de-rosales-tampico": (
+        ("Lomas de Rosales, Lomas de la Aurora y Vista Hermosa están en la loma: el agua escurre y la tierra se lava. "
+         "Aquí el diseño y el riego se piensan juntos, por niveles."),
+        ("Diseño y riego en la pendiente",
+         'Un <a href="/diseno-jardines-tampico">diseño de jardines en Tampico</a> con jardineras escalonadas detiene la '
+         f"tierra y ordena el frente (Plan {DISENO}). El riego va por zonas: goteo en las jardineras y aspersión de bajo "
+         'caudal en el pasto, con el <a href="/sistema-riego-tampico">sistema de riego automático</a> de '
+         f"{RIEGO} por m²."),
+    ),
+}
+
 
 # Encuadre de cada foto de portada (object-position; Entrega A de experiencia): pos en celular (recorte apaisado) y
 # pos_d en escritorio (recorte 4:5), para no cortar cabezas ni el logo de la camisa.
@@ -244,8 +305,9 @@ def _foto(slug):
 _SEO = {
     "jardineria-lomas-de-rosales-tampico": (
         "Jardinería en Lomas de Rosales, Tampico",
-        "Pasto en rollo, diseño y mantenimiento para casas de Lomas de Rosales, Lomas de la Aurora y Vista Hermosa. "
-        f"Pasto instalado desde {INSTALADO}/m². Cotiza hoy."),
+        # SEO fase 2c (mapa §2 G5): diseño y riego en la loma; sin la frase de precio que repetía Altamira.
+        "Diseño de jardín y riego por goteo para casas en pendiente de Lomas de Rosales, Lomas de la Aurora y Vista "
+        f"Hermosa. Plan Completo de diseño: {dinero(P['diseno_completo'])}."),
     "jardineria-country-club-tampico": (
         "Jardinería en Country Club y Club Campestre",
         "Pasto, diseño, riego automático y mantenimiento para casas de Club Campestre, Country Club y Sierra Morena, "
@@ -264,14 +326,16 @@ _SEO = {
         f"Mantenimiento desde {MANTENIMIENTO}/mes. Escríbenos."),
     "jardineria-altamira": (
         "Jardinería en Altamira: Casas y Empresas",
-        "Pasto en rollo, riego y mantenimiento en Altamira y Lagunas de Miralta, para casas y empresas. Pasto instalado "
-        f"desde {INSTALADO}/m². Cotiza hoy."),
+        # SEO fase 2c (mapa §2 G5): casas e industria, con REPSE y factura (el ángulo que ningún proveedor local cubre).
+        "Jardinería en Altamira y Lagunas de Miralta para casas y empresas del puerto industrial: pasto, riego y "
+        f"mantenimiento, con REPSE {datos.REPSE} y factura {datos.FACTURA}."),
 }
 SEO = {slug: (f"{titulo} | {datos.NOMBRE}", descripcion) for slug, (titulo, descripcion) in _SEO.items()}
 
 
 def _otras(slug):
-    return tuple((nombre, ruta) for nombre, ruta in datos.ZONAS if ruta != f"/{slug}")
+    """Las otras zonas con el ancla «Jardinería en …» (SEO fase 2c, mapa §4a: antes, solo el nombre de la colonia)."""
+    return tuple((f"Jardinería en {nombre}", ruta) for nombre, ruta in datos.ZONAS if ruta != f"/{slug}")
 
 
 def contenido(slug):
@@ -317,7 +381,8 @@ def contenido(slug):
             "nota": datos.ANTICIPO,
         },
         "retos": {"titulo": 'Lo que pide un jardín <span class="vt-serif">en esta zona</span>',
-                  "items": tuple({"titulo": t, "texto": x} for t, x in z["retos"])},
+                  "lede": ENFOQUE[slug][0],
+                  "items": tuple({"titulo": t, "texto": x} for t, x in (*ENFOQUE[slug][1:], *z["retos"]))},
         "colonias": {"titulo": f'Colonias que atendemos <span class="vt-serif">en {corto}</span>',
                      "lede": "Si tu colonia está cerca y no aparece, también te atendemos.",
                      "items": z["colonias"], "municipio": z["municipio"]},

@@ -103,7 +103,7 @@ class BlogNavegadorTest(unittest.TestCase):
     def test_foto_del_articulo_con_el_recorte_de_produccion(self):
         for ancho, alto in ((375, 256), (768, 320), (1440, 320)):
             pagina = self.nav.new_page(viewport={"width": ancho, "height": 900})
-            pagina.goto(f"{self.base}/blog/palmas-mas-vendidas-tampico-precios/", wait_until="load")
+            pagina.goto(f"{self.base}/blog/palmas-para-jardin-tampico/", wait_until="load")  # SEO fase 2c: la URL vieja redirige aquí
             caja = pagina.evaluate("""() => { const i = document.querySelector('.vt-art__cuerpo img');
               return [Math.round(i.getBoundingClientRect().height), getComputedStyle(i).objectFit]; }""")
             self.assertEqual(caja, [alto, "cover"], f"a {ancho}px")

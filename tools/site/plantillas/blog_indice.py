@@ -17,7 +17,9 @@ def lista_ld(secciones):
     articulos = {}
     for s in secciones:
         for t in s["tarjetas"]:
-            articulos.setdefault(t["href"], t["titulo"])
+            # SEO fase 2c: las tarjetas de dos artículos fusionados (con su foto) llevan a un apartado del destino
+            # («…#cuando-conviene»): el artículo entra una sola vez, sin el ancla.
+            articulos.setdefault(t["href"].split("#")[0], t["titulo"])
     return {"@type": "ItemList", "name": "Artículos del blog de Viveros Terra",
             "numberOfItems": len(articulos),
             "itemListElement": [{"@type": "ListItem", "position": n, "name": titulo, "url": f"{c.datos.SITIO}{href}"}
