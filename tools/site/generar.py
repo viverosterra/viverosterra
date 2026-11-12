@@ -28,7 +28,7 @@ UTILITARIAS = (
     ("/cuestionario", "cuestionario.html", "formulario", "cuestionario"),
     ("/datos-envio", "datos-envio/index.html", "formulario", "datos_envio"),
     ("/protocolo-cuidados-pasto-san-agustin", "protocolo-cuidados-pasto-san-agustin.html", "protocolo", "protocolo"),
-    ("/vivero-tampico", "vivero-tampico/index.html", "vivero", "vivero"),
+    ("/vivero-tampico", "vivero-tampico/index.html", "pilar", "vivero"),  # SEO fase 2b: plantilla pilar
     ("/404", "404.html", "no_encontrada", "no_encontrada"),
 )
 

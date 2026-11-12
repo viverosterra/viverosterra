@@ -10,6 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import datos  # noqa: E402
 import paginas  # noqa: E402
 import partials  # noqa: E402
 import shell  # noqa: E402
@@ -54,7 +55,8 @@ class EnlazadoInternoTest(unittest.TestCase):
         self.assertGreaterEqual(len(ENTRANTES["/pasto-en-rollo-tampico"]), 25)
         pie = partials.footer(paginas.contexto("/"))
         self.assertIn('<a href="/pasto-en-rollo-tampico">Pasto en rollo en Tampico</a>', pie)
-        self.assertIn('<a href="/vivero-tampico">Vivero en Cd. Madero</a>', pie)
+        # SEO fase 2b: el ancla del pie lleva el domicilio («Vivero en Cd. Madero · Obregón 209 Sur»).
+        self.assertIn(f'<a href="/vivero-tampico">Vivero en Cd. Madero · {datos.CALLE_CORTA}</a>', pie)
 
     def test_el_cta_de_cada_articulo_nombra_el_servicio(self):
         """Antes: "Ver palmas →", "Ver mantenimiento →"… en 150 enlaces hacia las páginas de servicio."""

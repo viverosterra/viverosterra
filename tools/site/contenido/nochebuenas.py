@@ -140,7 +140,9 @@ COMO = {
         {"titulo": "Confirmas y apartas por WhatsApp", "quien": "juntos", "cuando": "Al confirmar",
          "texto": f"Revisamos tu pedido contigo y lo apartas con {ANTICIPO} de anticipo en mayoreo y en precio preventa."},
         {"titulo": "Recibes en tu domicilio o recoges en el vivero", "quien": "nosotros", "cuando": "En la fecha acordada",
-         "texto": "Tú eliges. Entregamos en Tampico, Madero y Altamira."},
+         # SEO fase 2b (mapa §4a): la temporada enlaza el vivero, y el vivero, la temporada.
+         "texto": ('Tú eliges. Entregamos en Tampico, Madero y Altamira, o pasas al <a href="/vivero-tampico">vivero en '
+                   "Cd. Madero</a>.")},
     ),
     "fechas": ((NB["preventa"]["hasta"], f"Precio preventa hasta el {LIMITE_PREVENTA}"),
                (NB["fecha_limite_mayoreo"], f"Mayoreo con entrega antes del {ENTREGA_MAYOREO}: confirma antes del {LIMITE_MAYOREO}")),

@@ -175,7 +175,7 @@ ZONAS = {
              "ajustamos el riego y la fertilización."),
             # Main decía "A minutos del vivero": sin distancias ni tiempos (regla del dueño); queda la dirección.
             ("El vivero está en Ciudad Madero", f"Estamos en {datos.CALLE}, {datos.COLONIA}, frente a Walmart. Puedes "
-             "venir a escoger tus plantas."),
+             'venir a escoger tus plantas: <a href="/vivero-tampico">visita el vivero en Madero</a>.'),
         ),
         faqs=(
             ("¿Dónde está el vivero de Viveros Terra en Madero?",
