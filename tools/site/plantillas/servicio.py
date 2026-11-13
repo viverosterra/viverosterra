@@ -24,7 +24,7 @@ def _scripts(k):
     """vt-mensualidades.js primero (lo usan el Medidor, el simulador y el cotizador); cada uno solo si la página lo trae."""
     con_medidor = bool(k.get("precio", {}).get("titulo_medidor"))
     return (("/js/vt-mensualidades.js",) + (("/js/vt-medidor.js",) if con_medidor else ())
-            + (("/js/tienda-pasto.js",) if "cotizador" in k else ())
+            + (("/js/vt-folio.js", "/js/tienda-pasto.js") if "cotizador" in k else ())
             + (("/js/vt-simulador.js",) if k.get("pago", {}).get("sim") else ()))
 
 

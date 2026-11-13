@@ -108,8 +108,14 @@
 .vt-tienda .vt-plan__total:empty,.vt-tienda .pay-rule{display:none}
 .vt-tienda main .vt-planes-t__ahorro{margin:0;font-size:var(--vt-text-sm);font-weight:600;color:var(--vt-field)}
 .vt-tienda main .vt-planes-t__nota{margin:0;font-size:var(--vt-text-xs);line-height:1.45;color:var(--vt-muted)}
-.vt-tienda .vt-cotizador__acciones{display:grid;gap:10px}
-.vt-tienda .vt-cotizador__acciones .vt-btn{width:100%}
+.vt-tienda .vt-cotizador__acciones{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.vt-tienda .vt-cotizador__acciones .vt-btn{width:100%;white-space:normal;text-align:center}
+.vt-tienda .vt-folio{display:grid;gap:4px;padding:10px 12px;border-left:3px solid var(--vt-field);background:var(--vt-card)}
+.vt-tienda .vt-folio[hidden]{display:none}
+.vt-tienda main .vt-folio p{margin:0}
+.vt-tienda .vt-folio__listo{font-size:var(--vt-text-sm);font-weight:600}
+.vt-tienda .vt-folio__listo b{font-variant-numeric:tabular-nums;letter-spacing:.02em;white-space:nowrap}
+.vt-tienda .vt-folio__nota{font-size:var(--vt-text-xs);color:var(--vt-muted)}
 .vt-tienda .vt-campo--ancho{grid-column:1 / -1}
 /* lista de cotización, aviso y barra de compra */
 .vt-tienda .vt-lista{width:min(100% - 24px,460px);max-height:calc(100dvh - 24px);margin:auto 0 auto auto;padding:0;border:0;background:var(--vt-bone);color:var(--vt-ink);font-family:var(--vt-font-sans)}

@@ -9,7 +9,7 @@ import componentes_tienda as t
 from plantillas import base
 
 CONTEXTO = "https://schema.org"
-SCRIPTS = ("/js/vt-mensualidades.js", "/js/tienda-pasto.js", "/js/vt-landed.js", "/js/tienda-hub.js")
+SCRIPTS = ("/js/vt-mensualidades.js", "/js/vt-folio.js", "/js/tienda-pasto.js", "/js/vt-landed.js", "/js/tienda-hub.js")
 
 
 def _etiqueta_puesta(p):

@@ -166,6 +166,12 @@ def _entrega(showroom, local):
             'Cd. Madero</option></select></div></div>')
 
 
+# Puente web → cotizador (spec 2026-11-13): el cliente no escribe nada; el folio viaja al final del WhatsApp.
+FOLIO = ('<div class="vt-folio" id="q-folio" hidden><p class="vt-folio__listo">Ya tienes todo listo, solo falta '
+         'mandarlo · Tu folio: <b data-folio></b></p><p class="vt-folio__nota">Te respondemos con tu cotización formal '
+         'en PDF. Sin compromiso y sin llenar formularios.</p></div>')
+
+
 def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, local=False, titulo="Cotiza tu corte",
               id_titulo="vt-h-cotizar", nivel=2, mensaje=None, tipo="tienda"):
     """Cotizador de tienda-pasto.js. m: modelo inicial; con `modelos`, agrega el selector #modelo (hub y Tampico).
@@ -208,7 +214,7 @@ def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, local=False, titu
         f'{c.dinero(material)}</b></p><p class="vt-cuenta__puesto" id="q-landed"></p>'
         '<p class="vt-cuenta__pista" id="q-hint"></p><p class="vt-cuenta__error" id="q-error"></p></div>'
         f'{planes_cotizador("q")}'
-        f'<div class="vt-cotizador__acciones"><a class="vt-btn vt-btn--wa" data-cta-wa data-cta="{tipo}:cotizador" '
+        f'<div class="vt-cotizador__acciones">{FOLIO}<a class="vt-btn vt-btn--wa" data-cta-wa data-cta="{tipo}:cotizador" '
         f'href="{href}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp</a>'
         '<button class="vt-btn vt-btn--linea" type="button" id="cta-add">Agregar a mi lista</button>'
         f'<p class="vt-promesa">{nota} {esc(datos.PROMESA_COMPLETA)}.</p></div></section>')
