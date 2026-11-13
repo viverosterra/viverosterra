@@ -199,6 +199,13 @@
     return estado ? `Entrega en ${estado}` : '';
   }
 
+  /* Último renglón del WhatsApp: "Folio web: T28-40-NL" (vt-folio.js). El cotizador de Netlify lo lee al pegar el
+     mensaje y llena entrega, m² y modelos. Sin vt-folio.js o sin folio, no se agrega nada. */
+  function folioDe(items, estado) {
+    return window.VTFolio ? window.VTFolio.folio(items, estado) : '';
+  }
+  const folioLinea = (f) => (f ? `Folio web: ${f}` : '');
+
   const rollosTexto = (n) => `${n} rollo${n > 1 ? 's' : ''}`;
 
   /* Renglón de flete del mensaje: "Envío: 2 rollos · $2,300" (nunca gratis; se cobra por rollo según el estado). */
@@ -227,6 +234,8 @@
     if (complete && total > 0) lines.push(`Total estimado en la web: ${money(total)}.`);
     if (complete && total > 0) lines.push(planLine(total));
     lines.push('¿Me confirman el precio final con envío a mi dirección?');
+    const f = folioLinea(folioDe(state.items, state.estado));
+    if (f) lines.push(f);
     return lines.join('\n');
   }
 
@@ -485,6 +494,21 @@
         { item_id: current().slug, quantity: parseInt(inp.value, 10) || 0 });
     }));
 
+    /* Con folio y entrega elegida: "Ya tienes todo listo…", el folio a la vista y el botón "Enviar mi cotización por
+       WhatsApp". Sin folio, el botón vuelve a su texto del HTML. */
+    const ctaWa = $$('[data-cta-wa]').find((a) => !a.closest('#buybar'));
+    const ctaRotulo = ctaWa && ctaWa.lastChild && ctaWa.lastChild.nodeType === 3 ? ctaWa.lastChild : null;
+    const ctaTexto = ctaRotulo ? ctaRotulo.nodeValue : '';
+    function pintarFolio(f) {
+      const caja = $('#q-folio');
+      if (caja) {
+        caja.hidden = !f;
+        const cod = $('[data-folio]', caja);
+        if (cod) cod.textContent = f;
+      }
+      if (ctaRotulo) ctaRotulo.nodeValue = f ? 'Enviar mi cotización por WhatsApp' : ctaTexto;
+    }
+
     function renderModelPrices(model) {
       const price = $('#buy-price');
       if (price) price.textContent = money(model.rollo);
@@ -544,6 +568,8 @@
         : '';
 
       const otros = memoryState.items.filter((it) => it.slug !== model.slug);
+      const f = error ? '' : folioDe([{ slug: model.slug, m2 }, ...otros], estado);
+      pintarFolio(estado ? f : '');
       const msg = [
         `Hola, quiero cotizar el pasto sintético ${model.nombre}.`,
         Number.isFinite(m2) && m2 > 0 ? `Necesito ${m2} m².` : '',
@@ -553,6 +579,7 @@
         !error && estado ? `Total estimado en la web: ${money(conFlete ? q.total : q.material)}.` : '',
         contado ? planLine(contado) : '',
         '¿Me confirman el precio final?',
+        folioLinea(f),
       ].filter(Boolean).join('\n');
       $$('[data-cta-wa]').filter((a) => !a.closest('#buybar')).forEach((a) => { a.href = waLink(msg); });
       mensajeCotizador = msg;

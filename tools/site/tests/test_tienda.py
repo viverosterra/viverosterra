@@ -153,10 +153,10 @@ class TiendaPublicadaTest(unittest.TestCase):
         self.assertEqual(len(TIENDA), 1 + 1 + 1 + len(data.MODELOS) + 11)
 
     def test_scripts_en_orden(self):
-        esperado = {"/pasto-sintetico": ["vt-mensualidades", "tienda-pasto", "vt-landed", "tienda-hub"],
-                    "/pasto-sintetico/toscana-28": ["vt-mensualidades", "tienda-pasto", "vt-landed"],
-                    "/pasto-sintetico/envio/cdmx": ["vt-mensualidades", "tienda-pasto", "vt-landed"],
-                    "/pasto-sintetico-tampico": ["vt-mensualidades", "tienda-pasto"]}
+        esperado = {"/pasto-sintetico": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed", "tienda-hub"],
+                    "/pasto-sintetico/toscana-28": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed"],
+                    "/pasto-sintetico/envio/cdmx": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed"],
+                    "/pasto-sintetico-tampico": ["vt-mensualidades", "vt-folio", "tienda-pasto"]}
         for ruta, scripts in esperado.items():
             with self.subTest(ruta=ruta):
                 self.assertEqual(re.findall(r'<script src="/js/([\w-]+)\.js" defer>', html(ruta)), scripts)
