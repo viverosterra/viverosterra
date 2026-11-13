@@ -519,7 +519,7 @@
         envioEl.textContent = 'Según tu colonia';
       } else if (estado === PICKUP) {
         envioLabel.textContent = 'Recoger en showroom';
-        envioEl.textContent = 'Sin costo';
+        envioEl.textContent = '$0';
       } else if (!error) {
         envioLabel.textContent = `Envío · ${q.rollos} rollo${q.rollos > 1 ? 's' : ''} · ${ZONAS[q.zona].nombre}`;
         envioEl.textContent = money(q.envio);

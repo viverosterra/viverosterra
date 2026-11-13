@@ -320,11 +320,11 @@ def mosaico(figuras, desde):
     return f'<div class="vt-mosaico{plano}">{items}</div>'
 
 
-def bloque_obras(numero, datos_obras, html_previo, ritmo=None):
+def bloque_obras(numero, datos_obras, html_previo, ritmo=None, tinte=False):
     """Sección de fotos de obra. La numeración sigue después de las figuras que ya trae la página."""
     desde = html_previo.count("<b>Fig. ") + 1
     return bloque(numero, "Fotos reales", "vt-h-obras", datos_obras["titulo"], mosaico(datos_obras["figuras"], desde),
-                  lede=datos_obras["lede"], ritmo=ritmo)
+                  lede=datos_obras["lede"], ritmo=ritmo, tinte=tinte)
 
 
 def nota(texto, firma):

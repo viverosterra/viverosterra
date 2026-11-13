@@ -15,9 +15,10 @@ opción. Sin fotos nuevas, sin precios nuevos, sin plazos nuevos; todo sale de `
 1. **Título** (≤60): `Pasto Sintético Tampico desde $139/m² · Material o Instalado` (139 = rollo más barato de data.MODELOS).
 2. **Descripción** (≤155): `Compra pasto sintético en Tampico desde $139/m², cortado a tu medida; Toscana 18 y 28 para
    llevar hoy en Cd. Madero. Instalado desde $446.60/m².` (modelos en existencia y precio instalado calculados).
-3. **H1**: `Pasto sintético en Tampico <serif>para llevar o instalado</serif>`.
-4. **Lede**: `Llévate el material del showroom en Cd. Madero desde $139/m², cortado a tu medida, o déjanos la
-   instalación completa. En la región desde 2007.`
+3. **H1**: `Pasto sintético en Tampico <serif>material o instalado</serif>`. (Se propuso «para llevar o instalado», pero
+   la regla de consistencia exige que «para llevar» solo acompañe a Toscana 18 y 28: los otros modelos llegan en 3 a 5 días.)
+4. **Lede**: `Llévate el material del showroom en Cd. Madero desde $139/m² o déjanos la instalación completa.
+   En la región desde 2007.` (la entrada de portada mide ≤130 caracteres)
 5. **Etiqueta de precio**: monto principal «Solo el material · desde $139 /m²»; filas «Toscana 18 y 28 · para llevar
    hoy» e «Instalado con material y colocación · desde $446.60 /m²».
 6. **Respuesta «En corto»** (`respuestas.py`): empieza por el material (dónde, desde $139/m², desde 2 m², existencia
@@ -31,8 +32,10 @@ opción. Sin fotos nuevas, sin precios nuevos, sin plazos nuevos; todo sale de `
    `/blog/como-instalar-pasto-sintetico`.
 10. **JSON-LD**: además del Service de instalación, un Product «Pasto sintético en rollo (material)» con AggregateOffer de
     $139 a $399/m² (mín. rollo y máx. t1 de data.MODELOS), MXN, vendido por `#negocio`.
-11. **Barra de compra**: «Material desde $139/m²».
-12. **«Sin costo» en la calculadora** (componentes_tienda.py y tienda-pasto.js, «Recoger en showroom»): pasa a «$0»
+11. **CTA «Cotizar mi material»** después de la tabla de precios (al bajar la prueba quedaban 6.8 pantallas sin CTA;
+    el máximo es 6).
+12. **Barra de compra**: «Material desde $139/m²».
+13. **«Sin costo» en la calculadora** (componentes_tienda.py y tienda-pasto.js, «Recoger en showroom»): pasa a «$0»
     (frase prohibida; afecta también la tienda nacional, donde dice lo mismo).
 
 ## Pruebas

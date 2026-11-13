@@ -40,11 +40,12 @@ TEXTOS = {
     "/pasto-en-rollo-tampico": (
         f"Pasto San Agustín en {ZONA_CORTA}: {dinero(P['pasto_solo_m2'])}/m² solo el pasto, sin IVA. "
         f"{datos.TERRENO_LISTO}"),
-    "/pasto-sintetico-tampico": (
-        f"En {ZONA}, el pasto sintético instalado cuesta de {dinero_exacto(SINT_MIN)} a {dinero_exacto(SINT_MAX)} por "
-        f"m², con material, colocación e IVA (precios {datos.ANIO}); la preparación del terreno se cotiza aparte. "
-        f"{datos.NOMBRE} también vende solo el material, desde 2 m², en su showroom de {datos.CALLE_CORTA}, "
-        f"{datos.CIUDAD}, desde {dinero(ROLLO_MIN)} por m²."),
+    "/pasto-sintetico-tampico": (  # tienda, subproyecto 1 (2026-11-12): el material primero
+        f"En {ZONA}, {datos.NOMBRE} vende pasto sintético desde {dinero(ROLLO_MIN)} por m², desde 2 m², "
+        f"en su showroom de {datos.CALLE_CORTA}, {datos.CIUDAD}; "
+        f"{' y '.join(m['nombre'] for m in data.MODELOS if m['stock'])} se llevan el mismo día. Instalado cuesta de "
+        f"{dinero_exacto(SINT_MIN)} a {dinero_exacto(SINT_MAX)} por m², con material, colocación e IVA (precios "
+        f"{datos.ANIO}); la preparación del terreno se cotiza aparte."),
     "/pasto-sintetico": (
         f"{datos.NOMBRE} envía pasto sintético a todo México desde {datos.CIUDAD}, Tamaulipas: {len(data.MODELOS)} "
         f"modelos de {ALTURAS[0]} a {ALTURAS[-1]} mm, desde {dinero(ROLLO_MIN)} por m² en rollo de {data.ROLLO_M2} m², "

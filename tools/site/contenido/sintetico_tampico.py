@@ -26,23 +26,21 @@ HOY = " y ".join(m["nombre"] for m in STOCK)
 T18, T28 = data.BY_SLUG["toscana-18"], data.BY_SLUG["toscana-28"]
 APPLE_MAPS = f"https://maps.apple.com/?daddr={datos.GEO[0]},{datos.GEO[1]}&q=Viveros%20Terra"
 DOMICILIO = f"{datos.CALLE}, {datos.COLONIA}, {datos.CP} Cd. Madero, frente a Walmart"
-# Mapa de palabras clave (SEO fase 0): «Pasto Sintético Tampico Instalado desde $385 | Viveros Terra» (60). Con el precio
-# final con IVA (etapa 2i) esa forma mide 63; para caber en 60 sin quitar «desde» ni los centavos, va sin la marca.
-TITULO = f"Pasto Sintético Tampico Instalado desde {INST_MIN_TXT}/m²"
-DESCRIPCION = (f"Pasto sintético en Tampico, Madero y Altamira: instalado de {INST_MIN_TXT} a {INST_MAX_TXT}/m² o solo material desde "
-               f"${MIN_RETAIL}/m². Visítanos en el showroom de Cd. Madero.")
+MAX_RETAIL = max(m["t1"] for m in data.MODELOS)
+# Tienda, subproyecto 1 (2026-11-12, docs/superpowers/specs/2026-11-12-tampico-material-primero-design.md): el material
+# primero. Antes, «Pasto Sintético Tampico Instalado desde $446.60/m²»: quien busca el material veía el precio más alto.
+TITULO = f"Pasto Sintético Tampico desde ${MIN_RETAIL}/m² · Material o Instalado"
+DESCRIPCION = (f"Compra pasto sintético en Tampico desde ${MIN_RETAIL}/m², cortado a tu medida; {HOY} para llevar hoy en "
+               f"Cd. Madero. Instalado desde {INST_MIN_TXT}/m².")
 OG_IMG = f"{SITE}{GAL}/obra-residencial-tampico.webp"
 MENSAJE = datos.MENSAJES["pasto-sintetico"]
+MENSAJE_MATERIAL = "Hola, quiero comprar pasto sintético en el showroom. ¿Tienen existencia?\nModelo: ___\nMetros: ___"
 
 PREGUNTAS = (
     ("¿Dónde comprar pasto sintético en Tampico?",
      f"En Viveros Terra, en {datos.CALLE}, {datos.COLONIA}, Cd. Madero, frente a Walmart. Tenemos {HOY} en existencia "
      "para llevar hoy; los otros 7 modelos también están en existencia y llegan en 3 a 5 días. Atendemos de lunes a "
      "viernes de 9 a 18 h y sábado de 9 a 14 h."),
-    ("¿Cuánto cuesta instalar pasto sintético en Tampico?",
-     f"La instalación cuesta desde {INST_MIN_TXT}/m² y hasta {INST_MAX_TXT}/m² en modelos premium. Incluye el material, la "
-     "colocación, las uniones, las orillas y el cepillado. Si tu espacio necesita retiro de lo existente, nivelación o "
-     "base drenante, lo revisamos en la visita y te lo cotizamos aparte antes de empezar."),
     ("¿Cuánto cuesta el pasto sintético por m² en Tampico?",
      f"Solo el material cuesta desde ${MIN_RETAIL}/m² en rollo completo. Toscana 18 va de ${T18['rollo']}/m² en rollo a "
      f"${T18['t1']}/m² en cortes de 2 a 9 m². Toscana 28 va de ${T28['rollo']}/m² a ${T28['t1']}/m². Los precios "
@@ -58,6 +56,14 @@ PREGUNTAS = (
      "Uno con base perforada que drene rápido, porque de junio a septiembre llueve mucho. Para jardín familiar, Toscana "
      "28. Para perros o mucho uso, Irlanda 25 o Capri 20. Para terrazas y balcones, Aruba 10 o Toscana 18. Compara los "
      'modelos en la <a href="/pasto-sintetico#comparativa">tabla de la colección</a>.'),
+    ("¿Puedo instalarlo yo mismo?",
+     "Sí. Te vendemos el material cortado a tu medida y el kit para instalarlo: pegamento de contacto, cinta de unión, "
+     "clavos de fijación y una guía paso a paso. Lee también <a href=\"/blog/como-instalar-pasto-sintetico\">cómo "
+     "instalar pasto sintético</a>. Si prefieres que lo hagamos nosotros, cotizamos la instalación."),
+    ("¿Cuánto cuesta instalar pasto sintético en Tampico?",
+     f"La instalación cuesta desde {INST_MIN_TXT}/m² y hasta {INST_MAX_TXT}/m² en modelos premium. Incluye el material, la "
+     "colocación, las uniones, las orillas y el cepillado. Si tu espacio necesita retiro de lo existente, nivelación o "
+     "base drenante, lo revisamos en la visita y te lo cotizamos aparte antes de empezar."),
     ("¿Cuánto dura el pasto sintético?",
      "Bien instalado dura de 8 a 12 años en uso residencial. La garantía de fábrica va de 3 a 8 años según el modelo."),
     ("¿Cómo se paga y dan factura?",
@@ -97,6 +103,15 @@ SERVICIO = {
     "offers": {"@type": "AggregateOffer", "priceCurrency": "MXN", "lowPrice": f"{INST_MIN:.2f}", "highPrice": f"{INST_MAX:.2f}",
                "unitText": "m²"},
 }
+MATERIAL = {
+    "@type": "Product", "@id": f"{URL}#material", "name": "Pasto sintético en rollo (material) en Tampico",
+    "description": (f"{len(data.MODELOS)} modelos de pasto sintético de {data.MODELOS[0]['mm']} a {data.MODELOS[-1]['mm']} mm, "
+                    "cortados a tu medida desde 2 m², en el showroom de Cd. Madero."),
+    "image": OG_IMG,
+    "offers": {"@type": "AggregateOffer", "priceCurrency": "MXN", "lowPrice": f"{MIN_RETAIL:.2f}",
+               "highPrice": f"{MAX_RETAIL:.2f}", "offerCount": len(data.MODELOS), "availability": "https://schema.org/InStock",
+               "seller": {"@id": NEGOCIO}, "unitText": "m²"},
+}
 MIGAS_LD = {"@type": "BreadcrumbList", "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "Inicio", "item": SITE},
     {"@type": "ListItem", "position": 2, "name": "Pasto sintético en Tampico", "item": URL},
@@ -108,7 +123,9 @@ OBRAS = tuple({"src": f"{GAL}/{n}-sm.webp", "srcset": f"{GAL}/{n}-sm.webp 560w, 
 
 CONTENIDO = {
     # Entrega C de experiencia: CTA de la banda de garantía (antes, 7.4 pantallas del cotizador al cierre sin CTA).
-    "ctas": {"prueba": (MENSAJE, "Cotizar mi pasto sintético"), "garantia": (MENSAJE, "Cotizar pasto sintético instalado")},
+    # Tienda, subproyecto 1: CTA del material tras la tabla de precios (la prueba bajó y dejaba 6.8 pantallas sin CTA).
+    "ctas": {"precio": (MENSAJE_MATERIAL, "Cotizar mi material"), "prueba": (MENSAJE, "Cotizar mi pasto sintético"),
+             "garantia": (MENSAJE, "Cotizar pasto sintético instalado")},
     "respuesta": respuestas.de("/pasto-sintetico-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-sintetico",
     "prefijo": "sintetico",
@@ -118,20 +135,23 @@ CONTENIDO = {
                ("og:description", DESCRIPCION), ("og:image", OG_IMG), ("og:locale", "es_MX")),
         "twitter": (("twitter:card", "summary_large_image"),),
     },
-    "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD},
+    "jsonld": {"producto": SERVICIO, "nodos": (MATERIAL,), "migas": MIGAS_LD},
+    # Tienda, subproyecto 1: el material antes que la prueba (spec 2026-11-12-tampico-material-primero).
+    "orden": ("opciones", "cotizador", "precio", "prueba", "obras", "proceso", "garantia", "pago", "faq", "visita"),
     "migas": (("Inicio", "/"), ("Pasto sintético en Tampico", None)),
     "portada": {
         "kicker": "Pasto sintético · Tampico, Madero y Altamira",
         "pos": "50% 62%",
         "dato": "Los 9 modelos en existencia",
         "enlaces": (("Calcula tu material", "#cotizador"), ("Cómo llegar al showroom", "#showroom")),
-        "h1": 'Pasto sintético en Tampico <span class="vt-serif">venta e instalación</span>',
-        "lede": f"Llévate el material del showroom en Cd. Madero o déjanos la instalación completa. En la región desde {datos.DESDE}.",
+        "h1": 'Pasto sintético en Tampico <span class="vt-serif">material o instalado</span>',
+        "lede": (f"Llévate el material del showroom en Cd. Madero desde {dinero(MIN_RETAIL)}/m² o déjanos la instalación "
+                 f"completa. En la región desde {datos.DESDE}."),
         "etiqueta": {
-            "codigo": "Sintético · Tampico", "aviso": "Con IVA", "nombre": "Pasto sintético instalado",
-            "antes": "Material y colocación · desde", "monto": INST_MIN_TXT, "unidad": "/m²",
-            "filas": (("Solo el material, en showroom", f"desde {dinero(MIN_RETAIL)} /m²"),
-                      ("Toscana 18 y 28", "para llevar hoy")),
+            "codigo": "Sintético · Tampico", "aviso": "Con IVA", "nombre": "Pasto sintético en rollo",
+            "antes": "Solo el material · desde", "monto": dinero(MIN_RETAIL), "unidad": "/m²",
+            "filas": (("Toscana 18 y 28", "para llevar hoy"),
+                      ("Instalado con material y colocación", f"desde {INST_MIN_TXT} /m²")),
         },
         "mensaje": MENSAJE,
         "foto": {"src": f"{GAL}/obra-residencial-tampico-sm.webp", "srcset": f"{GAL}/obra-residencial-tampico-sm.webp "
@@ -153,12 +173,12 @@ CONTENIDO = {
         "titulo": "Compra el material o te lo instalamos",
         "items": (
             {"cta": "Cotizar el material", "rotulo": "Opción 1", "titulo": "Compras el material", "precio": MIN_RETAIL, "unidad": "/m²",
-             "detalle": "Material con IVA, cortado a tu medida",
+             "detalle": "Material con IVA, cortado a tu medida", "rec": True,
              "puntos": ("Desde 2 m², cortado a tu medida", f"{HOY} para llevar hoy",
                         "Kit de pegamento, cinta y clavos", "Envío local según tu colonia; te lo cotizamos."),
-             "mensaje": "Hola, quiero comprar pasto sintético en el showroom. ¿Tienen existencia?\nModelo: ___\nMetros: ___"},
+             "mensaje": MENSAJE_MATERIAL},
             {"cta": "Cotizar la instalación", "rotulo": "Opción 2", "titulo": "Nosotros lo instalamos", "precio": INST_MIN, "unidad": "/m²",
-             "detalle": "Material y colocación", "rec": True,
+             "detalle": "Material y colocación",
              "puntos": (datos.VISITA_COSTO_CORTO, "Colocación, uniones, orillas y cepillado",
                         "Material con garantía de fábrica"),
              "nota": ("Cada terreno es distinto. Si el tuyo necesita retiro, nivelación o base drenante, lo vemos en la "
@@ -228,7 +248,7 @@ CONTENIDO = {
                  "cotizamos la instalación."),
         "mensaje": MENSAJE,
     },
-    "barra": {"nombre": "Pasto sintético en Tampico", "precio": f"Instalado desde {INST_MIN_TXT}/m²"},
+    "barra": {"nombre": "Pasto sintético en Tampico", "precio": f"Material desde {dinero(MIN_RETAIL)}/m²"},
 }
 
 M_NEGOCIO = ("SEO fase 1: la página ya no redefine el negocio con otros campos (LocalBusiness + Store con dirección, "
@@ -236,7 +256,9 @@ M_NEGOCIO = ("SEO fase 1: la página ya no redefine el negocio con otros campos 
              "y el Service de instalación con su AggregateOffer; el nodo completo vive en la home y en /vivero-tampico.")
 PARIDAD = {
     "jsonld": {tipo: M_NEGOCIO for tipo in ("Store", "PostalAddress", "GeoCoordinates", "Offer")},
-    "reemplazos": {"$385": f"${int(INST_MIN)}", "$650": INST_MAX_TXT},  # la captura guarda la parte entera
+    "reemplazos": {"$385": f"${int(INST_MIN)}", "$650": INST_MAX_TXT,  # la captura guarda la parte entera
+                   # Tienda, subproyecto 1 (2026-11-12): el H1 nombra primero el material.
+                   "Pasto sintético en Tampico venta e instalación": "Pasto sintético en Tampico material o instalado"},  # la captura guarda la parte entera
     "meta": seo.paridad(TITULO, DESCRIPCION, {
         "description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto sintético instalado era más IVA; se publica el precio final con IVA, $446.60 a $754/m²."),
         "og:description": (DESCRIPCION, "Decisión del dueño (2026-11-08): el pasto sintético instalado era más IVA; se publica el precio final con IVA, $446.60 a $754/m².")}),
