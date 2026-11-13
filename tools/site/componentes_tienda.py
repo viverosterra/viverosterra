@@ -184,7 +184,7 @@ def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, local=False, titu
     if local:
         desde = (f'<p class="vt-cotizador__desde">Material desde <b>{c.dinero(barato(modelos)["rollo"])}</b>/m² en rollo, '
                  'IVA incluido · envío local según tu colonia</p>')
-        envio = ('<p class="vt-cuenta__fila"><span id="q-envio-label">Recoger en showroom</span><b id="q-envio">Sin costo'
+        envio = ('<p class="vt-cuenta__fila"><span id="q-envio-label">Recoger en showroom</span><b id="q-envio">$0'
                  '</b></p>')
         nota = "Te cotizamos el envío local según tu colonia antes de pagar."
     else:

@@ -36,7 +36,7 @@ def _cta(k, clave):
     return c.fila_seccion(mensaje, k["tipo"], clave, texto)
 
 
-def _prueba(k, numero):
+def _prueba(k, numero, tinte=False):
     pr = k["prueba"]
     cuerpo = c.obras(pr["figuras"], c.nota(*pr["nota"]))
     if pr.get("opiniones"):
@@ -44,7 +44,8 @@ def _prueba(k, numero):
         cuerpo += f'<h3 class="vt-mt">{pr["titulo_opinion"]}</h3>' + c.testimonios(pr["opiniones"], fila=True)
     if pr.get("titulo_clientes"):
         cuerpo += f'<h3 class="vt-mt">{pr["titulo_clientes"]}</h3>' + c.logos()
-    return c.bloque(numero, "Prueba", "vt-h-prueba", pr["titulo"], cuerpo + _cta(k, "prueba"), lede=pr["lede"])
+    return c.bloque(numero, "Prueba", "vt-h-prueba", pr["titulo"], cuerpo + _cta(k, "prueba"), lede=pr["lede"],
+                    tinte=tinte)
 
 
 def _precio(k, numero, tinte):
@@ -180,31 +181,44 @@ def _faq(k, numero, tinte):
                         tinte=tinte, ritmo="apoyo")
 
 
-def _secciones_cuerpo(k):
-    """(clave, armar) en el orden de la página, después de la prueba y las fotos de obra; solo las que el contenido trae."""
-    orden = (("opciones", _opciones), ("incluye", _incluye), ("precio", _precio), ("cotizador", _cotizador),
-             ("objecion", _objecion), ("proceso", _proceso), ("garantia", _garantia), ("pago", _pago), ("faq", _faq),
-             ("visita", _visita), ("cobertura", _cobertura), ("relacionados", _relacionados))
-    return [(clave, armar) for clave, armar in orden if clave in k]
+# Orden de la página después de la portada y la respuesta. "prueba" y "obras" van en hueso; las demás alternan tinte.
+# Una página puede traer su propio orden en k["orden"] (Tampico, 2026-11-12: el material antes que la prueba).
+ORDEN = ("prueba", "obras", "opciones", "incluye", "precio", "cotizador", "objecion", "proceso", "garantia", "pago", "faq",
+         "visita", "cobertura", "relacionados")
+ARMAR = {"opciones": _opciones, "incluye": _incluye, "precio": _precio, "cotizador": _cotizador, "objecion": _objecion,
+         "proceso": _proceso, "garantia": _garantia, "pago": _pago, "faq": _faq, "visita": _visita,
+         "cobertura": _cobertura, "relacionados": _relacionados}
 
 
 def render(k):
     tipo = k["tipo"]
     f, ci, p = k["faq"], k["cierre"], k["proceso"]
-    secciones = [c.portada(k["portada"], tipo, k["migas"]), c.respuesta(k.get("respuesta")), _prueba(k, 1)]
-    numero = 2
-    obras = fotos_obra.seccion(k["meta"]["canonical"])
-    if obras:
-        secciones.append(c.bloque_obras(numero, obras, "\n".join(secciones), ritmo="apoyo"))
-        numero += 1
-    # Ritmo (Entrega C de experiencia): después de las fotos, tinte y hueso se alternan sin repetirse; la banda oscura de
-    # garantía cuenta como fondo y la sección que la sigue va en hueso.
-    oscuro = False
-    for clave, armar in _secciones_cuerpo(k):
-        banda = clave == "garantia" and k["garantia"].get("banda")
-        tinte = not oscuro and not banda
-        secciones.append(armar(k, numero, tinte))
-        oscuro = bool(banda) or tinte
+    secciones = [c.portada(k["portada"], tipo, k["migas"]), c.respuesta(k.get("respuesta"))]
+    numero = 1
+    # Ritmo (Entrega C de experiencia): prueba y fotos de obra en hueso; las demás alternan tinte y hueso sin repetirse;
+    # la banda oscura de garantía cuenta como fondo y la sección que la sigue va en hueso.
+    # Si la prueba o las fotos van después de otras secciones (orden propio), entran en la alternancia.
+    oscuro, en_cuerpo = False, False
+    for clave in k.get("orden", ORDEN):
+        tinte_prueba = en_cuerpo and not oscuro
+        if clave == "prueba":
+            secciones.append(_prueba(k, numero, tinte_prueba))
+        elif clave == "obras":
+            obras = fotos_obra.seccion(k["meta"]["canonical"])
+            if not obras:
+                continue
+            secciones.append(c.bloque_obras(numero, obras, "\n".join(secciones), ritmo="apoyo", tinte=tinte_prueba))
+        elif clave in ARMAR and clave in k:
+            en_cuerpo = True
+            banda = clave == "garantia" and k["garantia"].get("banda")
+            tinte = not oscuro and not banda
+            secciones.append(ARMAR[clave](k, numero, tinte))
+            oscuro = bool(banda) or tinte
+            numero += 1
+            continue
+        else:
+            continue
+        oscuro = tinte_prueba
         numero += 1
     secciones.append(c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo))
 
