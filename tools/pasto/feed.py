@@ -21,6 +21,14 @@ def item_xml(m):
     gar = f", garantía de {m['garantia']} años" if m["garantia"] else ""
     desc = (f"{strip_tags(m['resumen'])} Precio por m² en rollo de 2 m de ancho; compra mínima nacional de 25 m². "
             f"El envío se cobra por rollo según el estado. Factura CFDI 4.0.")
+    # Entrega A del SEO nacional (2026-11-16): categoría 2826 (Hardware > Building Materials > Flooring & Carpet), donde
+    # Google clasifica el pasto sintético, y los datos técnicos como product_detail.
+    filas = [("Altura de fibra", f"{m['mm']} mm"), ("Peso total", f"{m['peso']} g/m²"), ("Medida del rollo", "2 × 25 m (50 m²)")]
+    if m["garantia"]:
+        filas.append(("Garantía", f"{m['garantia']} años"))
+    detalles = "\n".join(
+        f"    <g:product_detail><g:section_name>Ficha técnica</g:section_name><g:attribute_name>{escape(n)}"
+        f"</g:attribute_name><g:attribute_value>{escape(v)}</g:attribute_value></g:product_detail>" for n, v in filas)
     return f"""  <item>
     <g:id>VT-PST-{m['id'].upper()}</g:id>
     <g:title>{escape(f"Pasto sintético {m['nombre']} de {m['mm']} mm, precio por m²")}</g:title>
@@ -37,7 +45,8 @@ def item_xml(m):
     <g:identifier_exists>no</g:identifier_exists>
     <g:color>{escape(m['color'])}</g:color>
     <g:product_type>Pasto sintético &gt; {escape(m['nombre'])}</g:product_type>
-    <g:google_product_category>Home &amp; Garden &gt; Lawn &amp; Garden &gt; Gardening</g:google_product_category>
+    <g:google_product_category>2826</g:google_product_category>
+{detalles}
     <g:shipping>
       <g:country>MX</g:country>
       <g:service>Paquetería 3 a 5 días hábiles</g:service>

@@ -13,7 +13,7 @@ import entidad
 from ciudades import CIUDADES
 from componentes import dinero
 from contenido import seo
-from esquema import breadcrumb_schema
+from esquema import breadcrumb_schema, envio, product_schema
 
 CLAVES = tuple(x["slug"] for x in CIUDADES)
 POR_SLUG = {x["slug"]: x for x in CIUDADES}
@@ -46,26 +46,13 @@ def _instalacion(x):
 
 
 def _producto(x, zona, url, desde):
-    m = t.barato()
-    return {
-        "@type": "Product", "name": f"Pasto sintético con envío a {x['nombre_largo']}",
-        "brand": {"@type": "Brand", "name": datos.NOMBRE}, "image": [f"{SITE}{GAL}/{FOTO}.webp"],
-        "description": f"Pasto sintético en rollo de 50 m² con envío a {x['nombre_largo']}, desde ${desde}/m² puesto en tu casa.",
-        # SEO fase 1: el precio es "desde" (el rollo del modelo más barato; el tope es el menudeo del más caro), así que
-        # va como AggregateOffer con lowPrice y highPrice, y con el vendedor por @id a la entidad única.
-        "offers": {
-            "@type": "AggregateOffer", "priceCurrency": "MXN", "lowPrice": str(m["rollo"]),
-            "highPrice": str(max(x["t1"] for x in data.MODELOS)), "offerCount": str(len(data.MODELOS)),
-            "availability": "https://schema.org/InStock", "url": url, "seller": entidad.REF,
-            "shippingDetails": {
-                "@type": "OfferShippingDetails",
-                "shippingRate": {"@type": "MonetaryAmount", "value": str(data.ZONAS[zona]), "currency": "MXN"},
-                "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "MX", "addressRegion": x["estado"]},
-                "deliveryTime": {"@type": "ShippingDeliveryTime", "transitTime": {
-                    "@type": "QuantitativeValue", "minValue": 3, "maxValue": 5, "unitCode": "DAY"}},
-            },
-        },
-    }
+    """Entrega A del SEO nacional (2026-11-16): los 9 modelos reales (los mismos Product de sus fichas, con su Offer y el
+    flete solo hacia el estado de la ciudad), en vez de un Product genérico «con envío a …» con AggregateOffer."""
+    return {"@type": "ItemList", "name": f"Pasto sintético con envío a {x['nombre_largo']}",
+            "numberOfItems": len(data.MODELOS),
+            "itemListElement": [{"@type": "ListItem", "position": i,
+                                 "item": product_schema(m, with_id=False, envios=[envio(zona, [x["estado"]])])}
+                                for i, m in enumerate(data.MODELOS, 1)]}
 
 
 def _ya_pregunta_el_tiempo(x):
@@ -198,9 +185,8 @@ def contenido(x):
     }
 
 
-M_OFERTA = ("SEO fase 1: el precio de la página es un «desde» (rollo del modelo más barato), así que la oferta es un "
-            "AggregateOffer con lowPrice y highPrice y el vendedor por @id; ya no un Offer con un precio fijo.")
-M_JSONLD = {"Offer": M_OFERTA, "UnitPriceSpecification": M_OFERTA}
+# Entrega A del SEO nacional (2026-11-16): Offer y UnitPriceSpecification vuelven (un Offer por modelo, ver _producto).
+M_JSONLD = {}
 
 
 def paridad(x):

@@ -120,8 +120,11 @@ class TiendaPublicadaTest(unittest.TestCase):
         self.assertIn("<b>$162/m²</b>", cuerpo)
         self.assertIn("12 × ≈ $1,667", cuerpo)
         self.assertIn('href="/pasto-sintetico?estado=nuevo-leon#cotizador"', cuerpo)
-        productos = [n for n in grafo(texto) if n["@type"] == "Product"]
-        self.assertEqual(productos[0]["offers"]["shippingDetails"]["shippingRate"]["value"], "1150")
+        # Entrega A del SEO nacional: la lista de los 9 modelos, cada Offer con el flete solo hacia el estado.
+        lista = next(n for n in grafo(texto) if n["@type"] == "ItemList")
+        envio = lista["itemListElement"][0]["item"]["offers"]["shippingDetails"][0]
+        self.assertEqual(envio["shippingRate"]["value"], "1150")
+        self.assertEqual(envio["shippingDestination"]["addressRegion"], ["NLE"])
 
     def test_ciudades_sin_casi_duplicados(self):
         """Similitud media de 5-gramas (Jaccard) del texto de <main> entre las 11 ciudades: 0.37 en main, 0.44 antes de

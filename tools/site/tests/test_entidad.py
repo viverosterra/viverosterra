@@ -195,8 +195,12 @@ class EntidadEnElSitioTest(unittest.TestCase):
                     fallas.append(f"{pagina}: #negocio distinto")
                 if "aggregateRating" in n or "review" in n:
                     fallas.append(f"{pagina}: #negocio con calificación")
-                if ("address" in n) != (pagina in COMPLETO_EN):
+                # Entrega A del SEO nacional (2026-11-16): donde hay Product, el vendedor lleva domicilio, logo y redes.
+                vende = any(entidad._vende_con_offer(x) for x in nodos(html))
+                if ("address" in n) != (pagina in COMPLETO_EN or vende):
                     fallas.append(f"{pagina}: nodo completo o mínimo donde no toca")
+                if vende and pagina not in COMPLETO_EN and set(n) != set(entidad.negocio_vendedor()):
+                    fallas.append(f"{pagina}: el vendedor no es entidad.negocio_vendedor()")
         self.assertEqual(fallas, [])
 
     def test_el_nodo_completo_es_el_de_entidad(self):
