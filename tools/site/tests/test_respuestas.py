@@ -160,7 +160,7 @@ class SitemapFechasTest(unittest.TestCase):
 
     def test_las_fechas_son_las_del_encabezado_de_cada_fuente(self):
         fechas = sitemap_fechas.fechas_blog()
-        self.assertEqual(len(fechas), 49)  # 54 hasta la SEO fase 2c (cinco fusiones con 301)
+        self.assertEqual(len(fechas), 51)  # 54 hasta la SEO fase 2c (cinco fusiones con 301); +2 el 2026-11-16
         self.assertEqual(fechas[f"{datos.SITIO}/blog/acolchado-mulch-jardin-tampico"], "2026-10-05")
         # Sin dateModified en la fuente, vale la fecha de publicación.
         self.assertEqual(fechas[f"{datos.SITIO}/blog/cuando-regar-pasto-san-agustin-tampico"], "2026-04-20")

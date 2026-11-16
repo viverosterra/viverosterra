@@ -17,7 +17,9 @@ from componentes import dinero  # noqa: E402
 from contenido import articulo  # noqa: E402
 
 PERMITIDOS = ({f"${int(n):,}" for v in datos.PRECIOS.values() for n in (v if isinstance(v, tuple) else (v,))}  # parte entera: "$446" de "$446.60"
-              | {dinero(m[k]) for m in data.MODELOS for k in ("t1", "t2", "rollo")})
+              | {dinero(m[k]) for m in data.MODELOS for k in ("t1", "t2", "rollo")}
+              # Blog semanal 2026-11-16: los precios de temporada de datos.NOCHEBUENAS también son oficiales.
+              | {dinero(n) for p in datos.NOCHEBUENAS["productos"] for n in p["precios"]})
 PRECIO_RE = re.compile(r"\$\s?\d[\d,]*\d|\$\s?\d")
 _RIEGO = {dinero(a * m2) for a in datos.PRECIOS["riego_m2"] for m2 in (30, 50, 60, 80, 100, 120, 150, 200, 250, 500)}
 _PRESUPUESTO = {"$5", "$15", "$20", "$50", "$120", "$200"}  # "$5K, $20K, $50K": el presupuesto del lector, no un precio

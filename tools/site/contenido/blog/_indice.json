@@ -128,6 +128,34 @@
    "titulo": "Nuevos artículos",
    "tarjetas": [
     {
+     "href": "/blog/nochebuena-cuidados-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/nochebuenas/nochebuena-roja-tres-plantas-tampico-800.webp",
+      "alt": "Nochebuenas rojas en maceta en Tampico",
+      "ancho": 800,
+      "alto": 600
+     },
+     "categoria": "Plantas · Temporada",
+     "titulo": "Cómo cuidar una nochebuena en Tampico para que dure hasta febrero",
+     "texto": "Luz, riego y temperatura con el calor de la costa, por qué se caen las hojas y cómo hacer que vuelva a pintarse.",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/huerto-en-casa-tampico-otono-invierno",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/tierra-negra-jardin-tampico.webp",
+      "alt": "Huerto en casa en Tampico",
+      "ancho": 933,
+      "alto": 1400
+     },
+     "categoria": "Jardines · Guías",
+     "titulo": "Huerto en casa en Tampico: qué sembrar en otoño e invierno",
+     "texto": "Noviembre a febrero es la temporada buena: qué sembrar, qué tierra usar, riego y calendario de cosecha.",
+     "minutos": 8
+    },
+    {
      "href": "/blog/palma-bambu-chamaedorea-tampico",
      "foto": {
       "tipo": "foto",

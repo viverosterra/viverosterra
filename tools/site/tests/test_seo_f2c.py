@@ -354,7 +354,9 @@ class FotosTest(unittest.TestCase):
         nuevas = _fotos(html_de("/blog"))
         self.assertGreater(len(viejas), 30)
         self.assertEqual(sorted(set(viejas) - set(nuevas)), [])
-        self.assertEqual([f[0] for f in viejas], [f[0] for f in nuevas])  # mismas fotos, mismo orden
+        # Mismas fotos, mismo orden; las tarjetas de artículos publicados después (articulo.NUEVOS) se intercalan.
+        orden = iter(f[0] for f in nuevas)
+        self.assertTrue(all(src in orden for src in (f[0] for f in viejas)), "las fotos de main conservan su orden")
 
     def test_cada_foto_de_las_paginas_retiradas_sigue_en_public(self):
         todo = "\n".join(paginas_html().values())
