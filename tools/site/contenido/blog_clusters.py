@@ -29,6 +29,7 @@ NOMBRES_CIUDAD = {"cdmx": "CDMX", "guadalajara": "Guadalajara", "monterrey": "Mo
 _PLANTAS_IVA = "Plantas, palmas y árboles no llevan IVA."
 _GARANTIA_PLANTAS = f"Garantía de {datos.GARANTIA_PLANTAS[0].lower()}{datos.GARANTIA_PLANTAS[1:]}".replace(
     "(ver condiciones)", '(<a href="/politicas#garantia-plantas">ver condiciones</a>)')
+_NB5 = datos.NOCHEBUENAS["productos"][0]["precios"]  # maceta de 5": menudeo, mayoreo, …
 _COTIZA = "El precio depende de la especie y el tamaño: te lo damos por WhatsApp."
 LEDE = {
     "pasto-natural": (f"Pasto San Agustín a {dinero(P['pasto_solo_m2'])}/m² solo el pasto (no lleva IVA) y desde "
@@ -46,6 +47,8 @@ LEDE = {
     "banqueta": f"{_COTIZA} {_PLANTAS_IVA} {_GARANTIA_PLANTAS}",
     "plantas": f"{_COTIZA} {_PLANTAS_IVA} {_GARANTIA_PLANTAS}",
     "interior": f"{_COTIZA} {_PLANTAS_IVA} {_GARANTIA_PLANTAS}",
+    "nochebuenas": (f'Nochebuena en maceta de 5" a {dinero(_NB5[0])} en menudeo y a {dinero(_NB5[1])} desde '
+                    f"{datos.NOCHEBUENAS['cortes'][1]} piezas, sumando tamaños y colores. {_PLANTAS_IVA}"),
     "tierra": (f"Costal de tierra negra a {dinero(P['tierra_negra_costal'])} y metro cúbico a {dinero(P['tierra_negra_m3'])}. "
                f"{datos.SIN_MINIMO}"),
     "tezontle": f"Costal de tezontle rojo desde {dinero(P['tezontle_costal'])}. {datos.SIN_MINIMO}",
@@ -145,6 +148,17 @@ CLUSTERS = {
         "enlaces": (("plantas de interior en Tampico", "/plantas-de-interior-tampico"), ("catálogo del vivero", "/catalogo"),
                     VIVERO),
     },
+    # Blog semanal 2026-11-16: los cuidados de la nochebuena llevan a la página de temporada. Precios de datos.NOCHEBUENAS;
+    # sin garantía (decisión del dueño del 2026-11-09 para las nochebuenas).
+    "nochebuenas": {
+        "landing": (datos.NOCHEBUENAS["ruta"], "Nochebuenas en Tampico"),
+        "titulo": "¿Te faltan nochebuenas?",
+        "etiqueta": {"nombre": "Nochebuena", "cientifico": "Euphorbia pulcherrima", "antes": 'Maceta 5" · desde',
+                     "aviso": PRECIOS_ANIO, "monto": dinero(_NB5[0]), "unidad": "",
+                     "filas": ((f"Mayoreo, {datos.NOCHEBUENAS['cortes'][1]} piezas", dinero(_NB5[1])),)},
+        "enlaces": (("nochebuenas en Tampico", datos.NOCHEBUENAS["ruta"]), ("plantas de interior", "/plantas-de-interior-tampico"),
+                    VIVERO),
+    },
     "tierra": {
         "landing": ("/tierra-negra-vegetal-tampico", "Tierra negra en Tampico"),
         "titulo": "¿Cuánta tierra necesitas?",
@@ -186,7 +200,8 @@ POR_SLUG = (
                  "jardin-en-macetas-terraza-tampico-guia", "plantas-resistentes-sal-golfo-tampico",
                  "plantas-seguras-mascotas-jardin-tampico")),
     ("interior", ("ficus-elastica-cuidados-tampico", "plantas-interior-tampico")),
-    ("tierra", ("tierra-negra-costal-camion-tampico",)),
+    ("nochebuenas", ("nochebuena-cuidados-tampico",)),
+    ("tierra", ("huerto-en-casa-tampico-otono-invierno", "tierra-negra-costal-camion-tampico")),
     ("tezontle", ("tezontle-usos-jardin-tampico",)),
 )
 TEMA = {slug: tema for tema, slugs in POR_SLUG for slug in slugs}

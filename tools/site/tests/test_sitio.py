@@ -31,9 +31,9 @@ def nombre(path):
 
 
 class ShellEnTodoElSitioTest(unittest.TestCase):
-    def test_111_paginas_con_contexto(self):
+    def test_113_paginas_con_contexto(self):
         # 116 hasta la SEO fase 2c: seis artículos salen con 301 y entra la lista única de palmas.
-        self.assertEqual(len(PAGINAS), 111)
+        self.assertEqual(len(PAGINAS), 113)
         for path in PAGINAS:
             paginas.contexto(paginas.ruta_de(path))
 
