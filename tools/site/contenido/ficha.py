@@ -84,8 +84,10 @@ def titulo_y_descripcion(m):
     gar = f"con garantía de {m['garantia']} años" if m["garantia"] else "para uso decorativo"
     modelo = m["nombre"].rsplit(" ", 1)[0]  # "Aruba 10" → "Aruba": la altura va aparte, con su unidad
     titulo = f"Pasto Sintético {m['nombre']} mm desde ${m['rollo']}/m² | Viveros Terra"
-    descripcion = (f"Pasto sintético {modelo} de {m['mm']} mm y {m['peso']} g/m², {gar}. Desde ${m['rollo']}/m² en rollo, "
-                   "con factura y envío a todo México. Cotiza tus metros.")
+    # Entrega A del SEO nacional (2026-11-16): la descripción abre con el uso del modelo (data.py «ideal») para que las
+    # nueve no sean la misma plantilla, y dice «rollo de 2 × 25 m» y «precio por m²», que es como se busca.
+    descripcion = (f"{m['ideal']}: pasto sintético {modelo} de {m['mm']} mm, {gar.removeprefix('con ')}. Precio por m² "
+                   f"desde ${m['rollo']} en rollo de 2 × 25 m, envío a todo México.")
     return titulo, descripcion
 
 
@@ -159,7 +161,9 @@ def pagina(slug):
 
 M_VENDEDOR = ("SEO fase 1: el vendedor de cada producto es la entidad única #negocio por @id (antes, una Organization suelta "
               "con nombre, URL y teléfono en cada oferta).")
-PARIDAD = {"reemplazos": {}, "retirados": {}, "jsonld": {"Organization": M_VENDEDOR},
+M_OFERTA_A = ("Entrega A del SEO nacional (2026-11-16): un Offer con precio por modelo (Google Shopping no acepta "
+              "AggregateOffer en fichas de producto); los precios por cantidad van como UnitPriceSpecification.")
+PARIDAD = {"reemplazos": {}, "retirados": {}, "jsonld": {"Organization": M_VENDEDOR, "AggregateOffer": M_OFERTA_A},
            "hero": ("Entrega A de experiencia (2026-11-10), hero de marca: el rótulo del modelo pasa del kicker al lema en "
                     "serif; botón de WhatsApp bajo la etiqueta (antes el hero no tenía CTA en celular) con enlace al "
                     "cotizador y al teléfono; la existencia, la entrada y los datos van después del botón (en celular, "

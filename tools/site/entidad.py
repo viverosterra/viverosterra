@@ -63,6 +63,14 @@ def negocio_minimo():
     return {"@type": list(TIPO), "@id": NEGOCIO_ID, "name": datos.NOMBRE, "url": URL, "telephone": datos.TELEFONO_TEL}
 
 
+def negocio_vendedor():
+    """Entrega A del SEO nacional (2026-11-16): el negocio como vendedor de las páginas con Product (tienda, fichas y
+    ciudades). Google lee el grafo de cada página, así que el vendedor lleva ahí su domicilio, logo y redes; sin horario,
+    zona de servicio local ni descripción, que siguen solo en el nodo completo (home y /vivero-tampico)."""
+    completo = negocio()
+    return {**negocio_minimo(), **{k: completo[k] for k in ("logo", "image", "address", "priceRange", "sameAs")}}
+
+
 def negocio():
     """Nodo completo del negocio (solo en la home y en /vivero-tampico)."""
     return {
@@ -122,6 +130,13 @@ def _recorrer(nodo):
     elif isinstance(nodo, list):
         for valor in nodo:
             yield from _recorrer(valor)
+
+
+def _vende_con_offer(nodo):
+    """Product con al menos un Offer (no AggregateOffer): las páginas de la tienda donde el negocio es el vendedor."""
+    ofertas = nodo.get("offers") or []
+    ofertas = ofertas if isinstance(ofertas, list) else [ofertas]
+    return "Product" in _tipos(nodo) and any("Offer" in _tipos(o) for o in ofertas)
 
 
 def _tipos(nodo):
@@ -195,7 +210,8 @@ def completar(bloques, meta, cuerpo="", migas=None):
     con_grafo["@graph"] = _pagina(con_grafo["@graph"], meta, list(dict.fromkeys(selectores)), es_articulo)
     definidos = {n["@id"] for b in bloques for n in _recorrer(b) if _es_definicion(n)}
     nombrados = {n["@id"] for b in bloques for n in _recorrer(b) if "@id" in n}
-    for ident, minimo in ((NEGOCIO_ID, negocio_minimo), (SITIO_ID, sitio_minimo)):
+    vende = any(_vende_con_offer(n) for b in bloques for n in _recorrer(b))
+    for ident, minimo in ((NEGOCIO_ID, negocio_vendedor if vende else negocio_minimo), (SITIO_ID, sitio_minimo)):
         if ident in nombrados and ident not in definidos:
             con_grafo["@graph"] = con_grafo["@graph"] + [minimo()]
     return tuple(bloques)

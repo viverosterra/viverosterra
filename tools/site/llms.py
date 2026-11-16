@@ -22,6 +22,7 @@ import paginas
 sys.path.insert(1, str(Path(__file__).resolve().parents[1] / "pasto"))
 import data  # noqa: E402  (tools/pasto)
 import mensualidades  # noqa: E402  (tools/pasto)
+from ciudades import CIUDADES  # noqa: E402  (tools/pasto)
 
 P = datos.PRECIOS
 NB = datos.NOCHEBUENAS
@@ -81,6 +82,13 @@ SECCIONES = (
         ("Cuánto cuesta el pasto sintético en México", "/blog/cuanto-cuesta-pasto-sintetico-mexico",
          "precios por modelo y por ciudad"),
         ("Sintético o natural", "/blog/pasto-sintetico-vs-natural-tampico", "comparativa para el clima de Tampico"),
+        # Entrega A del SEO nacional (2026-11-16): cada modelo y cada ciudad con envío, para que un asistente los cite.
+        *((f"Pasto sintético {m['nombre']}", f"/pasto-sintetico/{m['slug']}",
+           f"{m['mm']} mm, {m['peso']} g/m², " + (f"garantía de {m['garantia']} años, " if m["garantia"] else "")
+           + f"desde ${m['rollo']}/m² en rollo; {m['ideal'].lower()}") for m in data.MODELOS),
+        *((f"Pasto sintético con envío a {x['nombre']}", f"/pasto-sintetico/envio/{x['slug']}",
+           f"flete a {x['nombre_largo']} de ${data.ZONAS[data.zona_de(x['estado'])]:,} por rollo y precio puesto por m²")
+          for x in CIUDADES),
     )),
     ("Plantas, palmas y árboles", (
         ("Plantas, palmas y árboles", "/plantas-palmas-arboles-tampico", "categorías del vivero"),

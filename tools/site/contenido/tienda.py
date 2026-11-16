@@ -20,7 +20,7 @@ BARATO = t.barato()
 DEFAULT = data.BY_SLUG["toscana-28"]
 DESDE = dinero(BARATO["rollo"])
 FLETE_MIN = dinero(min(data.ZONAS.values()))
-TITULO = f"Pasto Sintético desde {DESDE}/m² con Envío | Viveros Terra"
+TITULO = f"Comprar Pasto Sintético desde {DESDE}/m² con Envío a México"
 DESCRIPCION = (f"Compra pasto sintético en línea desde {DESDE}/m²: 9 modelos de 10 a 35 mm, factura {datos.FACTURA} y envío a todo "
                "México. Cotiza tu rollo.")
 GAL = t.GAL
@@ -163,8 +163,10 @@ CONTENIDO = {
 
 M_VENDEDOR = ("SEO fase 1: el vendedor de cada producto es la entidad única #negocio por @id (antes, una Organization suelta "
               "con nombre, URL y teléfono en cada oferta).")
+M_OFERTA_A = ("Entrega A del SEO nacional (2026-11-16): un Offer con precio por modelo (Google Shopping no acepta "
+              "AggregateOffer en fichas de producto); los precios por cantidad van como UnitPriceSpecification.")
 PARIDAD = {
-    "jsonld": {"Organization": M_VENDEDOR},
+    "jsonld": {"Organization": M_VENDEDOR, "AggregateOffer": M_OFERTA_A},
     "meta": seo.paridad(TITULO, DESCRIPCION),
     "reemplazos": {},
     "retirados": {},
