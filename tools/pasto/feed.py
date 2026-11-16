@@ -31,7 +31,7 @@ def item_xml(m):
         f"</g:attribute_name><g:attribute_value>{escape(v)}</g:attribute_value></g:product_detail>" for n, v in filas)
     return f"""  <item>
     <g:id>VT-PST-{m['id'].upper()}</g:id>
-    <g:title>{escape(f"Pasto sintético {m['nombre']} de {m['mm']} mm, precio por m²")}</g:title>
+    <g:title>{escape(f"Pasto sintético {m['nombre'].rsplit(' ', 1)[0]} de {m['mm']} mm, precio por m²")}</g:title>
     <g:description>{escape(desc)}</g:description>
     <g:link>{url}</g:link>
     <g:image_link>{SITE}/img/pasto-sintetico/{m['slug']}.jpg</g:image_link>
