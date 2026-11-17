@@ -90,7 +90,7 @@ FUENTE_PRINCIPAL = "/fonts/archivo-latin.woff2"
 
 
 def head(urls, tienda=False, plantas=False, materiales=False, precios=False, util=False, blog=False, nochebuenas=False,
-         temporada=False, obras=False, inicio=False, calculadora=False):
+         temporada=False, obras=False, inicio=False, calculadora=False, preguntas=False):
     """Favicon cuadrado (SVG y PNG de 192; /favicon.ico vive en la raíz de public/), geo de la tienda, fuente principal
     precargada, CSS del shell,
     GA4 una sola vez y terra.js diferido. Con tienda=True (páginas <body class="vt-pagina vt-tienda">), también
@@ -116,6 +116,8 @@ def head(urls, tienda=False, plantas=False, materiales=False, precios=False, uti
         lineas.append(f'<link rel="stylesheet" href="{urls["terra-tienda.css"]}">')
     if calculadora:  # /pasto-sintetico/cuantos-rollos (<body class="… vt-calculadora">, Entrega B 2026-11-16)
         lineas.append(f'<link rel="stylesheet" href="{urls["terra-calculadora.css"]}">')
+    if preguntas:  # páginas de pasto sintético con el panel de WhatsApp (<body class="… vt-preguntas">)
+        lineas.append(f'<link rel="stylesheet" href="{urls["terra-preguntas.css"]}">')
     if plantas:
         lineas.append(f'<link rel="stylesheet" href="{urls["terra-plantas.css"]}">')
     if materiales:

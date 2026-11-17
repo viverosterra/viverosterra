@@ -31,3 +31,13 @@ def json_pagina(fijo, corto=CORTO_SINTETICO, conjunto=SINTETICO):
     cuerpo = json.dumps({"conjunto": conjunto, "fijo": fijo, "corto": corto}, ensure_ascii=False, separators=(",", ":"))
     seguro = cuerpo.replace("</", "<\\/")
     return f'<script type="application/json" id="vt-preguntas">{seguro}</script>'
+
+
+SCRIPT = "/js/vt-preguntas.js"
+CLASE = " vt-preguntas"  # <body class="… vt-preguntas">: el shell agrega terra-preguntas.css
+
+
+def scripts(base_scripts=()):
+    """Los scripts de la página más vt-folio.js (folio del mensaje) y vt-preguntas.js, sin repetir y en ese orden."""
+    previos = tuple(base_scripts)
+    return previos + tuple(s for s in ("/js/vt-folio.js", SCRIPT) if s not in previos)

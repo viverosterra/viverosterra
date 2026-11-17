@@ -128,6 +128,7 @@
       ultimo = corte(largo.value, ancho.value);
       pintar(form, ultimo);
       if (ultimo) alCotizador(ultimo.m2);
+      if (ultimo && root.VTPreguntas) root.VTPreguntas.recordar({ m2: ultimo.m2 });
     };
     [largo, ancho].forEach((el) => el.addEventListener('input', calcular));
     form.addEventListener('submit', (e) => {

@@ -42,7 +42,7 @@ class TiendaPublicadaTest(unittest.TestCase):
             with self.subTest(ruta=ruta):
                 for viejo in VIEJOS:
                     self.assertNotIn(viejo, texto)
-                self.assertRegex(texto, r'<body class="vt-pagina vt-tienda( vt-calculadora)?">')  # calculadora: su hoja
+                self.assertRegex(texto, r'<body class="vt-pagina vt-tienda( vt-calculadora)?( vt-preguntas)?">')  # su hoja
                 self.assertRegex(texto, r'<link rel="stylesheet" href="/css/terra-tienda\.[0-9a-f]{10}\.css">')
                 self.assertNotIn("<style", texto)
 
@@ -156,10 +156,10 @@ class TiendaPublicadaTest(unittest.TestCase):
         self.assertEqual(len(TIENDA), 1 + 1 + 1 + 1 + len(data.MODELOS) + 19)  # + calculadora de rollos
 
     def test_scripts_en_orden(self):
-        esperado = {"/pasto-sintetico": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed", "tienda-hub"],
-                    "/pasto-sintetico/toscana-28": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed"],
-                    "/pasto-sintetico/envio/cdmx": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed"],
-                    "/pasto-sintetico-tampico": ["vt-mensualidades", "vt-folio", "tienda-pasto"]}
+        esperado = {"/pasto-sintetico": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed", "tienda-hub", "vt-preguntas"],
+                    "/pasto-sintetico/toscana-28": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed", "vt-preguntas"],
+                    "/pasto-sintetico/envio/cdmx": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed", "vt-preguntas"],
+                    "/pasto-sintetico-tampico": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-preguntas"]}
         for ruta, scripts in esperado.items():
             with self.subTest(ruta=ruta):
                 self.assertEqual(re.findall(r'<script src="/js/([\w-]+)\.js" defer>', html(ruta)), scripts)

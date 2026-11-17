@@ -9,6 +9,7 @@ import componentes as c
 import componentes_rollos as cr
 import datos
 import componentes_tienda as t
+import preguntas_wa as pw
 from plantillas import base
 
 CONTEXTO = "https://schema.org"
@@ -69,5 +70,6 @@ def render(k):
     return base.documento(base.meta_de(k), t.subnav() + "\n".join(secciones),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),),
-                          head_extra=(t.json_modelos(), t.SCRIPT_PRECIO_PUESTO), tras_main=t.lista_y_aviso(),
-                          scripts=SCRIPTS + tuple(k.get("scripts_extra", ())), clase_body="vt-pagina vt-tienda" + k.get("clase_extra", ""))
+                          head_extra=(t.json_modelos(), t.SCRIPT_PRECIO_PUESTO, pw.json_pagina(k.get("preguntas_fijo", {}))),
+                          tras_main=t.lista_y_aviso(), scripts=pw.scripts(SCRIPTS + tuple(k.get("scripts_extra", ()))),
+                          clase_body="vt-pagina vt-tienda" + k.get("clase_extra", "") + pw.CLASE)

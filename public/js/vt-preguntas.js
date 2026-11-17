@@ -99,5 +99,140 @@
     }
   })();
   root.VTPreguntas = Object.freeze({ ...api, recordar: (cambios) => recordar(sesion, cambios) });
-  /* PANEL */
+
+  const doc = root.document;
+  const datosPagina = (() => {
+    try {
+      return JSON.parse((doc.getElementById('vt-preguntas') || {}).textContent || 'null');
+    } catch (err) {
+      return null;
+    }
+  })();
+  if (!datosPagina || !root.HTMLDialogElement || !root.HTMLDialogElement.prototype.showModal) return;
+
+  const FIRMA = 'Vengo de viverosterra.com';
+  const modelos = Object.fromEntries(datosPagina.conjunto.preguntas[0].opciones || []);
+  const textoDe = (href) => {
+    try { return new URL(href).searchParams.get('text') || ''; } catch (err) { return ''; }
+  };
+  const numeroDe = (href) => {
+    try { return new URL(href).pathname.replace(/\D/g, ''); } catch (err) { return ''; }
+  };
+  const enlace = (numero, texto) => `https://wa.me/${numero}?text=${encodeURIComponent(texto + '\n\n' + FIRMA)}`;
+
+  function estadoTienda() {
+    try {
+      return (JSON.parse(root.localStorage.getItem('vt-cotizacion-v1') || '{}') || {}).estado || '';
+    } catch (err) {
+      return '';
+    }
+  }
+
+  // Los botones de cotizar de la página; no el encabezado, el pie, la lista de la tienda ni un mensaje que ya trae
+  // la cotización o la lista del cliente.
+  function interceptable(a, e) {
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button > 0) return false;
+    if (a.closest('header, footer, dialog') || a.id === 'cot-send' || a.hasAttribute('data-vt-sin-preguntas')) return false;
+    return !/Folio web:|Mi lista/i.test(textoDe(a.href));
+  }
+
+  let panel = null;
+  function crearPanel() {
+    panel = doc.createElement('dialog');
+    panel.className = 'vt-wa-panel';
+    panel.setAttribute('aria-labelledby', 'vt-wa-titulo');
+    panel.innerHTML = '<div class="vt-wa-panel__caja"><div class="vt-wa-panel__cab"><h2 id="vt-wa-titulo"></h2>'
+      + '<button type="button" class="vt-wa-panel__cerrar" aria-label="Cerrar">×</button></div>'
+      + '<div class="vt-wa-panel__preguntas"></div><p class="vt-wa-panel__rotulo">El mensaje que se va a enviar</p>'
+      + '<p class="vt-wa-panel__vista" aria-live="polite"></p>'
+      + '<a class="vt-btn vt-btn--wa vt-wa-panel__abrir" data-cta-wa target="_blank" rel="noopener">Abrir WhatsApp</a>'
+      + '<a class="vt-wa-panel__corto" data-cta-wa target="_blank" rel="noopener">Solo quiero contactarlos</a></div>';
+    doc.body.appendChild(panel);
+    panel.querySelector('.vt-wa-panel__cerrar').addEventListener('click', () => panel.close());
+    panel.addEventListener('click', (e) => { if (e.target === panel) panel.close(); });
+    return panel;
+  }
+
+  function grupo(q, r, ctx, pintar) {
+    const fs = doc.createElement('fieldset');
+    const lg = doc.createElement('legend');
+    lg.textContent = q.texto;
+    fs.appendChild(lg);
+    const opciones = q.clave === 'm2' && ctx.recordado.m2 ? [['exacto', `Unos ${ctx.recordado.m2} m²`], ...q.opciones] : q.opciones;
+    opciones.forEach(([v, t]) => {
+      const b = doc.createElement('button');
+      b.type = 'button';
+      b.dataset.q = q.clave;
+      b.dataset.v = v;
+      b.textContent = t;
+      b.addEventListener('click', () => { r[q.clave] = r[q.clave] === v ? '' : v; pintar(); });
+      fs.appendChild(b);
+    });
+    if (q.clave === 'destino') {
+      const sel = doc.createElement('select');
+      sel.setAttribute('aria-label', 'Estado');
+      const vacio = doc.createElement('option');
+      vacio.value = '';
+      vacio.textContent = 'Elige tu estado';
+      sel.appendChild(vacio);
+      datosPagina.conjunto.estados.forEach((e) => {
+        const o = doc.createElement('option');
+        o.value = e;
+        o.textContent = e;
+        sel.appendChild(o);
+      });
+      sel.addEventListener('change', () => { r.estado = sel.value; pintar(); });
+      fs.appendChild(sel);
+    }
+    return fs;
+  }
+
+  function abrir(original) {
+    const p = panel || crearPanel();
+    const conjunto = datosPagina.conjunto;
+    const estado = estadoTienda();
+    const ctx = { fijo: datosPagina.fijo || {}, modelos, folio: root.VTFolio ? root.VTFolio.folio : null,
+                  recordado: { ...leerVisita(sesion), ...(estado ? { estado } : {}) } };
+    const r = respuestasIniciales(conjunto, ctx);
+    const numero = numeroDe(original.href);
+    const cta = original.getAttribute('data-cta') || 'pagina:wa';
+    const vista = p.querySelector('.vt-wa-panel__vista');
+    const abrirWa = p.querySelector('.vt-wa-panel__abrir');
+    const corto = p.querySelector('.vt-wa-panel__corto');
+    const caja = p.querySelector('.vt-wa-panel__preguntas');
+    p.querySelector('#vt-wa-titulo').textContent = conjunto.titulo;
+    caja.textContent = '';
+    const pintar = () => {
+      const texto = armarMensaje(conjunto, r, ctx);
+      vista.textContent = texto;
+      abrirWa.href = enlace(numero, texto);
+      caja.querySelectorAll('[data-v]').forEach((b) => b.setAttribute('aria-pressed', String(r[b.dataset.q] === b.dataset.v)));
+      const sel = caja.querySelector('select');
+      if (sel) {
+        sel.hidden = r.destino !== 'envio';
+        sel.value = r.estado || '';
+      }
+    };
+    preguntasVisibles(conjunto, ctx).forEach((q) => caja.appendChild(grupo(q, r, ctx, pintar)));
+    corto.href = enlace(numero, datosPagina.corto);
+    const al = (tipo) => () => {
+      const respondidas = Object.keys(r).some((k) => r[k]);
+      const valor = tipo === 'corto' ? 'solo-contacto' : (respondidas ? 'respondidas' : 'omitidas');
+      if (root.VTMedicion) root.VTMedicion.whatsapp(`${cta}:panel`, { preguntas: valor });
+      p.close();
+    };
+    abrirWa.onclick = al('abrir');
+    corto.onclick = al('corto');
+    p.onclose = () => { if (original.isConnected) original.focus(); };
+    pintar();
+    p.showModal();
+  }
+
+  root.addEventListener('click', (e) => {
+    const a = e.target && e.target.closest ? e.target.closest('a[href^="https://wa.me/"]') : null;
+    if (!a || !interceptable(a, e)) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    abrir(a);
+  }, true);
 })(typeof window !== 'undefined' ? window : globalThis);

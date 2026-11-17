@@ -189,6 +189,7 @@ def contenido(x):
     mensaje = f"Hola, quiero cotizar pasto sintético con envío a {x['nombre']}.\nMetros aprox.: ___\nModelo: ___"
     return {
         "tipo": "ciudad",
+        "preguntas_fijo": {"estado": x["estado"], "ciudad": x["nombre"]},
         "meta": {"title": titulo, "description": descripcion, "robots": "index, follow, max-image-preview:large",
                  "canonical": url,
                  "og": (("og:type", "website"), ("og:site_name", datos.NOMBRE), ("og:url", url), ("og:title", titulo),

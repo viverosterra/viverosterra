@@ -6,6 +6,7 @@ Contenido: tools/site/contenido/ficha.py (desde tools/pasto/data.py). JS: tienda
 import componentes as c
 import datos
 import componentes_tienda as t
+import preguntas_wa as pw
 from plantillas import base
 
 CONTEXTO = "https://schema.org"
@@ -83,5 +84,5 @@ def render(k):
     return base.documento(base.meta_de(k), t.subnav() + "\n".join(secciones),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(t.foto_principal(m)),),
-                          head_extra=(t.json_modelo(m), t.SCRIPT_PRECIO_PUESTO), tras_main=fuera, scripts=SCRIPTS,
-                          clase_body="vt-pagina vt-tienda")
+                          head_extra=(t.json_modelo(m), t.SCRIPT_PRECIO_PUESTO, pw.json_pagina({"modelo": m["slug"]})),
+                          tras_main=fuera, scripts=pw.scripts(SCRIPTS), clase_body="vt-pagina vt-tienda" + pw.CLASE)

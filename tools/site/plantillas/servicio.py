@@ -15,6 +15,7 @@ sin garantía ni pago (la poda no tiene garantía ni mensualidades en datos.py) 
 import componentes as c
 import componentes_tienda as t
 from contenido import fotos_obra
+import preguntas_wa as pw
 from plantillas import base
 
 CONTEXTO = "https://schema.org"
@@ -235,6 +236,8 @@ def render(k):
         fuera = t.lista_y_aviso() + t.barra_compra(b["nombre"], b["precio"], ci["mensaje"])
     return base.documento(base.meta_de(k), (t.subnav() if tienda else "") + "\n".join(secciones),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
-                          precargas=(base.precarga_imagen(k["portada"]["foto"]),), scripts=_scripts(k),
-                          head_extra=(t.json_modelos(),) if tienda else (), tras_main=fuera,
-                          clase_body="vt-pagina vt-tienda" if tienda else "vt-pagina")
+                          precargas=(base.precarga_imagen(k["portada"]["foto"]),),
+                          scripts=pw.scripts(_scripts(k)) if "preguntas" in k else _scripts(k),
+                          head_extra=((t.json_modelos(),) if tienda else ())
+                          + ((pw.json_pagina(k["preguntas"]),) if "preguntas" in k else ()), tras_main=fuera,
+                          clase_body=("vt-pagina vt-tienda" if tienda else "vt-pagina") + (pw.CLASE if "preguntas" in k else ""))
