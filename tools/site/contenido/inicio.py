@@ -160,7 +160,7 @@ CONTENIDO = {
                  "etiqueta y viaja contigo al WhatsApp: no lo tienes que explicar dos veces."),
     },
     "obras": {
-        "titulo": "Fotos de obra, no de catálogo.",
+        "titulo": "Jardines que hemos hecho en Tampico.",
         "lede": "Cada foto lleva su pie: dónde y en qué etapa. Así ves lo que entregamos, no una promesa.",
         "figuras": (
             {"src": f"{OBRA}/terra/jardin-residencial-pasto-alberca.webp", "ancho": 1200, "alto": 918, "numero": 2,
@@ -282,7 +282,7 @@ PARIDAD = {
         "Empresa / Comercial": "Empresas y constructoras",
         "Proyecto B2B": "Empresas y constructoras",
         "¿Proyecto grande o mayoreo?": "Empresas y constructoras",
-        "Jardines que hemos hecho en Tampico": "Fotos de obra, no de catálogo.",
+        "Jardines que hemos hecho en Tampico": "Jardines que hemos hecho en Tampico.",
         "Así de fácil es trabajar con nosotros": "Cuatro pasos. Cada quien sabe qué le toca.",
         "Nos escribes": "Nos mandas medidas y foto",
         "Preguntas frecuentes sobre pasto y jardinería en Tampico": "Lo que nos preguntan antes de empezar.",
