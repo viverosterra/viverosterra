@@ -4,7 +4,7 @@
   "/css/terra.c87e62face.css"
  ],
  "terra-tienda.css": [
-  "/css/terra-tienda.e4f898b4b2.css"
+  "/css/terra-tienda.5d5ec8031b.css"
  ],
  "terra-plantas.css": [
   "/css/terra-plantas.0b388350ff.css"
@@ -31,6 +31,9 @@
  "terra-temporada.css": [
   "/css/terra-temporada.c827b9daa9.css",
   "/css/terra-temporada.03517f128e.css"
+ ],
+ "terra-calculadora.css": [
+  "/css/terra-calculadora.aee00bf5f2.css"
  ],
  "terra-inicio.css": [
   "/css/terra-inicio.03ba3608f3.css",

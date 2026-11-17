@@ -103,7 +103,7 @@ def subnav():
     """Barra de la tienda bajo el menú: atajos y "Mi lista (n)"; el (0) no se ve con la lista vacía."""
     return ('<nav class="vt-subnav" aria-label="Tienda de pasto sintético"><div class="vt-wrap vt-subnav__bar">'
             '<a href="/pasto-sintetico#modelos">Los 9 modelos</a><a href="/pasto-sintetico#elegir">¿Cuál me conviene?</a>'
-            '<a href="/pasto-sintetico#como-funciona">Cómo comprar</a>'
+            '<a href="/pasto-sintetico#como-funciona">Cómo comprar</a><a href="/pasto-sintetico/cuantos-rollos">¿Cuántos rollos?</a>'
             '<button class="vt-subnav__lista" type="button" data-open-cot aria-haspopup="dialog">Mi lista '
             '<span class="vt-subnav__n" data-cot-count data-empty="true">0</span></button></div></nav>')
 
@@ -173,7 +173,7 @@ FOLIO = ('<div class="vt-folio" id="q-folio" hidden><p class="vt-folio__listo">Y
 
 
 def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, local=False, titulo="Cotiza tu corte",
-              id_titulo="vt-h-cotizar", nivel=2, mensaje=None, tipo="tienda"):
+              id_titulo="vt-h-cotizar", nivel=2, mensaje=None, tipo="tienda", calculadora=True):
     """Cotizador de tienda-pasto.js. m: modelo inicial; con `modelos`, agrega el selector #modelo (hub y Tampico).
     showroom=True preselecciona "Recoger en showroom". local=True (venta local en Tampico): showroom o envío local
     según la colonia, sin flete por estado, y el "desde" es el material más barato. Envío nacional bajo 25 m²: el JS
@@ -205,7 +205,10 @@ def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, local=False, titu
         '<button type="button" id="m2-minus" aria-label="Restar 5 m²">−</button><input id="m2" type="number" '
         f'inputmode="numeric" min="{MIN_SHOWROOM}" max="5000" step="1" value="{m2}">'
         '<button type="button" id="m2-plus" aria-label="Sumar 5 m²">+</button></div>'
-        f'<div class="vt-chips" role="group" aria-label="Medidas rápidas">{chips}</div></div>'
+        f'<div class="vt-chips" role="group" aria-label="Medidas rápidas">{chips}</div>'
+        # Entrega B del SEO nacional: de cualquier cotizador a la calculadora de rollos (menos en la calculadora).
+        + ('<a class="vt-cotizador__calc" href="/pasto-sintetico/cuantos-rollos">¿No sabes cuántos m²? Calcúlalos con '
+           'tus medidas</a>' if calculadora else '') + '</div>'
         f'{_entrega(showroom, local)}{tabla_tiers(m)}'
         '<div class="vt-cuenta" aria-live="polite">'
         f'<p class="vt-cuenta__fila"><span>Precio aplicado</span><b id="q-pm2">{c.dinero(pm2)}/m²</b></p>'

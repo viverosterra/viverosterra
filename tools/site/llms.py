@@ -79,6 +79,9 @@ SECCIONES = (
         ("Tienda con envío a todo México", "/pasto-sintetico",
          f"{len(data.MODELOS)} modelos, fichas técnicas, cotizador y tabla de envío"),
         ("Pasto sintético para perros", "/pasto-sintetico/perros", "modelo, drenaje, olor y limpieza"),
+        # Entrega B del SEO nacional (2026-11-16).
+        ("¿Cuántos rollos de pasto sintético necesito?", "/pasto-sintetico/cuantos-rollos",
+         "calculadora: rollo de 2 × 25 m, tiras de 2 m, 10% para cortes y flete por estado"),
         ("Cuánto cuesta el pasto sintético en México", "/blog/cuanto-cuesta-pasto-sintetico-mexico",
          "precios por modelo y por ciudad"),
         ("Sintético o natural", "/blog/pasto-sintetico-vs-natural-tampico", "comparativa para el clima de Tampico"),

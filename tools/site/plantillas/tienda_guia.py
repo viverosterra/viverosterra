@@ -6,6 +6,7 @@ preguntas → CTA. Perros: respuesta directa → criterios → modelos → pregu
 contenido (k["secciones"]). Sin cotizador en la página: el CTA lleva al de la tienda con el estado elegido y a
 WhatsApp; la barra móvil del shell queda (paginas.py). Contenido: contenido/ciudad.py y contenido/perros.py."""
 import componentes as c
+import componentes_rollos as cr
 import datos
 import componentes_tienda as t
 from plantillas import base
@@ -31,6 +32,16 @@ def _cuerpo(s):
         return t.modelos_recomendados(s["items"], s.get("zona"), s.get("lugar", ""), s.get("estado", ""))
     if tipo == "pasos":
         return c.pasos(s["items"])
+    # Entrega B del SEO nacional (2026-11-16): /pasto-sintetico/cuantos-rollos, la única guía con cotizador.
+    if tipo == "calculadora":
+        return cr.calculadora()
+    if tipo == "cotizar":
+        return t.cotizador(s["modelo"], modelos=t.data.MODELOS, m2=s["m2"], titulo="Cotiza los m² que calculaste",
+                           id_titulo="vt-h-cotizador", nivel=3, calculadora=False)
+    if tipo == "medidas":
+        return cr.tabla_medidas()
+    if tipo == "estados":
+        return cr.tabla_estados(s["modelo"])
     if tipo == "faq":
         return c.faq(s["preguntas"]) + "".join(f'<p class="vt-promesa">{n}</p>' for n in s.get("notas", ()))
     raise ValueError(f"Sección desconocida: {tipo}")
@@ -57,4 +68,4 @@ def render(k):
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),),
                           head_extra=(t.json_modelos(), t.SCRIPT_PRECIO_PUESTO), tras_main=t.lista_y_aviso(),
-                          scripts=SCRIPTS, clase_body="vt-pagina vt-tienda")
+                          scripts=SCRIPTS + tuple(k.get("scripts_extra", ())), clase_body="vt-pagina vt-tienda" + k.get("clase_extra", ""))

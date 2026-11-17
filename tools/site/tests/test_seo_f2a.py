@@ -61,7 +61,8 @@ def tipos(nodo):
 
 class PaginasNuevasTest(unittest.TestCase):
     def test_registradas_con_contexto(self):
-        self.assertEqual(generar.NUEVAS, NUEVAS)
+        self.assertEqual(tuple(r for r, *_ in generar.SEO_F2A), NUEVAS)
+        self.assertTrue(set(NUEVAS) <= set(generar.NUEVAS))
         for ruta in NUEVAS:
             with self.subTest(ruta=ruta):
                 self.assertIn(ruta, [r for r, *_ in generar.PAGINAS])

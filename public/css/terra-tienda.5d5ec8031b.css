@@ -246,3 +246,4 @@
 .vt-tienda .vt-alturas__v{grid-column:2;font-size:var(--vt-text-xs);color:var(--vt-muted)}
 .vt-tienda .vt-alturas__v b{font-family:var(--vt-font-serif);font-style:italic;font-weight:400;font-size:18px;color:var(--vt-soil)}
 @media (min-width:768px){.vt-tienda .vt-alturas li{grid-template-columns:9em minmax(0,1fr) 11em}.vt-tienda .vt-alturas__v{grid-column:auto}}
+.vt-tienda main .vt-cotizador__calc{display:inline-block;margin-top:10px;font-size:var(--vt-text-sm);font-weight:600;color:var(--vt-field)}
