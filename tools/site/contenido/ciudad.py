@@ -1,16 +1,20 @@
-"""Contenido de las 11 páginas /pasto-sintetico/envio/<ciudad>. Solo datos: la plantilla es plantillas/tienda_guia.py.
+"""Contenido de las 19 páginas /pasto-sintetico/envio/<ciudad>. Solo datos: la plantilla es plantillas/tienda_guia.py.
 
 Textos de cada ciudad (intro, clima, modelos, preguntas) de tools/pasto/ciudades.py; precios, zonas y fletes de
-tools/pasto/data.py; mensualidades de tools/pasto/mensualidades.py. Título, descripción, canonical, Open Graph,
+tools/pasto/data.py; mensualidades de tools/pasto/mensualidades.py. Entrega C del SEO nacional (2026-11-16): sección
+«Antes de instalar» propia de cada ciudad (terreno, espacio de ejemplo con la calculadora, ciudades cercanas), textos
+fijos más cortos y 8 ciudades nuevas (ciudades.NUEVAS, sin captura de paridad). Título, descripción, canonical, Open Graph,
 Product con envío al estado y migas: los que publicaba tools/pasto/ciudad.py. PARIDAD: tests/test_paridad.py.
 """
+import math
 from types import SimpleNamespace
 
 import componentes_tienda as t
 import data
 import datos
 import entidad
-from ciudades import CIUDADES
+import rollos
+from ciudades import CIUDADES, NUEVAS
 from componentes import dinero
 from contenido import seo
 from esquema import breadcrumb_schema, envio, product_schema
@@ -24,25 +28,25 @@ FOTO = "obra-proyecto-02"  # og:image y Product.image (sin cambio); la foto de l
 FOTOS_PORTADA = ("obra-proyecto-02", "obra-proyecto-05", "obra-proyecto-03", "obra-proyecto-01")
 MIN = data.MIN_NACIONAL_M2
 ROLLO = data.ROLLO_M2
+TIER2_MIN_M2 = 10  # igual que public/js/tienda-pasto.js
+CERCANAS = 3
 
 
 def _llegada(x):
     return (
         {"titulo": "Confirmas y pagas", "quien": "tu", "cuando": "Al confirmar",
-         "texto": f"Transferencia o link de pago con tarjeta. Factura {datos.FACTURA}."},
+         "texto": f"Transferencia o tarjeta, con factura {datos.FACTURA}."},
         {"titulo": "Sale en rollo", "quien": "nosotros", "cuando": "1 a 2 días hábiles",
-         "texto": f"Rollo de 2 m de ancho, enrollado y protegido, con guía de rastreo hasta {x['nombre_largo']}."},
+         "texto": f"Enrollado y protegido, con guía de rastreo hasta {x['nombre_largo']}."},
         {"titulo": "Revisa al recibir", "quien": "tu", "cuando": "Al recibir",
-         "texto": (f"Que el empaque llegue completo a tu casa en {x['nombre']} y que los metros coincidan con tu pedido. "
-                   "Si algo no está bien, avísanos por WhatsApp con fotos.")},
+         "texto": f"Que los metros coincidan con tu pedido; si algo falla, mándanos fotos por WhatsApp."},
     )
 
 
 def _instalacion(x):
-    return (f"En {x['nombre']} lo instalas tú o un instalador de tu confianza: la instalación profesional de "
-            f"{datos.NOMBRE} es solo en Tampico, Ciudad Madero y Altamira. Un patio de {MIN} a {ROLLO} m² se instala en "
-            "un día con dos personas y te mandamos la guía con el pedido "
-            '(<a href="/blog/como-instalar-pasto-sintetico">guía de instalación paso a paso</a>).')
+    return (f"Tú o un instalador de {x['nombre']}: nosotros instalamos solo en Tampico, Madero y Altamira. "
+            f"{MIN} a {ROLLO} m² se ponen en un día entre dos personas con la "
+            '<a href="/blog/como-instalar-pasto-sintetico">guía de instalación</a>.')
 
 
 def _producto(x, zona, url, desde):
@@ -87,12 +91,66 @@ def _preguntas_envio(x, zona):
          f"{dinero(total[MIN] / MIN)}/m². Un rollo completo de {ROLLO} m² baja a {dinero(total[ROLLO] / ROLLO)}/m² puesto. "
          f"Los cortes de 2 a 9 m² son solo en el showroom de Cd. Madero."),
         (f"¿Cómo elijo el modelo para {n} sin ver una muestra?",
-         f"Como no ofrecemos muestras físicas, cada ficha tiene fotos de cerca, altura, peso y la comparativa con sus dos "
-         f"vecinos. Para {n} solemos empezar por {rec['nombre']}: {rec_razon[0].lower()}{rec_razon[1:]} Si dudas entre "
-         "dos, mándanos una foto de tu espacio por WhatsApp y te decimos cuál conviene."),
+         f"Sin muestras físicas: cada ficha trae fotos de cerca, altura y peso. Para {n} empieza por {rec['nombre']}: "
+         f"{rec_razon[0].lower()}{rec_razon[1:]} Si dudas, mándanos una foto de tu espacio por WhatsApp."),
         (f"¿Quién lo instala en {n}?", _instalacion(x)),
     ]
     return tuple(items)
+
+
+def _total(m, m2, zona):
+    """Material + flete de m2 metros con las reglas del cotizador (tienda-pasto.js: precioM2 y un flete por rollo)."""
+    precio = m["rollo"] if m2 >= ROLLO else (m["t2"] if m2 >= TIER2_MIN_M2 else m["t1"])
+    return m2 * precio + math.ceil(m2 / ROLLO) * data.ZONAS[zona]
+
+
+def _rollos_texto(n):
+    return "1 rollo" if n == 1 else f"{n} rollos"
+
+
+def _aviso_rollo(m, m2, total, zona):
+    """El mismo aviso del cotizador: si el rollo completo cuesta lo mismo o menos que lo que pides, se dice."""
+    if m2 >= ROLLO or _total(m, ROLLO, zona) > total:
+        return ""
+    return f" Un rollo completo de {ROLLO} m² sale en {dinero(_total(m, ROLLO, zona))}: te conviene más."
+
+
+def _ejemplo(x, zona):
+    """El espacio de ejemplo de la ciudad calculado como la calculadora (rollos.corte) y con su modelo recomendado."""
+    espacio, largo, ancho, *modelo = x["ejemplo"]
+    r = rollos.corte(largo, ancho)
+    rec = t.modelo(modelo[0] if modelo else x["modelos"][0][0])
+    total = _total(rec, r["m2"], zona)
+    pregunta = f"¿Cuánto pido para {espacio} de {largo} × {ancho} m?"
+    respuesta = (f"Son {r['area']} m². Con tiras de 2 m y 10% para cortes pide <b>{r['m2']} m²</b>, que viajan en "
+                 f"{_rollos_texto(r['rollos'])}. Con {rec['nombre']} salen en <b>{dinero(total)}</b> con envío a "
+                 f"{x['nombre']}.{_aviso_rollo(rec, r['m2'], total, zona)} Prueba tus medidas en la "
+                 '<a href="/pasto-sintetico/cuantos-rollos">calculadora de rollos</a>.')
+    return pregunta, respuesta
+
+
+def cercanas(x, n=CERCANAS):
+    """Las n ciudades con página más cercanas (distancia aproximada por coordenadas)."""
+    lat, lon = x["coords"]
+    escala = math.cos(math.radians(lat))
+
+    def distancia(y):
+        return math.hypot(y["coords"][0] - lat, (y["coords"][1] - lon) * escala)
+
+    return sorted((y for y in CIUDADES if y["slug"] != x["slug"]), key=distancia)[:n]
+
+
+def _cercanas(x):
+    barato = t.barato()
+    enlaces = ", ".join(f'<a href="/pasto-sintetico/envio/{y["slug"]}">{y["nombre"]}</a> '
+                        f'(desde ${data.landed_m2(barato, data.zona_de(y["estado"]))}/m²)' for y in cercanas(x))
+    return (f"¿Y si estoy en otra ciudad cerca de {x['nombre']}?",
+            f"También tienen precio puesto {enlaces}. Los 32 estados están en la "
+            '<a href="/pasto-sintetico/cuantos-rollos#envio-por-estado">tabla de envío por estado</a>.')
+
+
+def _antes_de_instalar(x, zona):
+    return ((f"¿Cómo preparo el terreno en {x['nombre']}?", x["terreno"]), _ejemplo(x, zona), _cercanas(x))
 
 
 # Encuadre de cada foto de portada (object-position; Entrega A de experiencia).
@@ -173,6 +231,8 @@ def contenido(x):
             {"tipo": "modelos", "id": "modelos", "rotulo": "Clima", "titulo": f"El pasto que conviene en {x['nombre']}",
              "lede": x["clima"], "items": x["modelos"], "zona": zona, "lugar": x["nombre"],
              "estado": estado},
+            {"tipo": "preguntas", "id": "instalar", "rotulo": "Tu espacio",
+             "titulo": f"Antes de instalar en {x['nombre']}", "items": _antes_de_instalar(x, zona)},
             {"tipo": "pasos", "id": "envio", "rotulo": "Envío", "titulo": f"Cómo te llega el pedido a {x['nombre']}",
              "items": _llegada(x)},
             {"tipo": "faq", "id": "preguntas", "rotulo": "Preguntas", "titulo": f"Preguntas frecuentes en {x['nombre']}",
@@ -205,4 +265,9 @@ def paridad(x):
 
 
 def pagina(slug):
+    if slug in NUEVAS:  # Entrega C (2026-11-16): página nueva, sin captura anterior
+        hero = ("Página nueva de la entrega C del SEO nacional (2026-11-16): el mismo hero de marca que las demás ciudades, "
+                "con el precio puesto en la ciudad en la etiqueta colgada y un solo botón de WhatsApp.")
+        return SimpleNamespace(CONTENIDO=contenido(POR_SLUG[slug]),
+                               PARIDAD={"reemplazos": {}, "retirados": {}, "hero": hero})
     return SimpleNamespace(CONTENIDO=contenido(POR_SLUG[slug]), PARIDAD=paridad(POR_SLUG[slug]))

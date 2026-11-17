@@ -2,7 +2,7 @@
 plantilla vive en tools/site/plantillas/<plantilla>.py y el contenido en tools/site/contenido/<contenido>.py.
 
 Un módulo de contenido de una sola página expone CONTENIDO y PARIDAD. Uno que arma varias páginas de los mismos datos
-(las 9 fichas o las 11 ciudades, desde tools/pasto/data.py) expone CLAVES y pagina(clave), que devuelve un objeto con
+(las 9 fichas o las 19 ciudades, desde tools/pasto/data.py) expone CLAVES y pagina(clave), que devuelve un objeto con
 CONTENIDO y PARIDAD; en PAGINAS su contenido se escribe "<módulo>:<clave>".
 
 Escribe cada página con el shell ya aplicado y solo si cambia, así una segunda corrida de build.py no toca nada. Para
@@ -12,6 +12,8 @@ import importlib
 from pathlib import Path
 
 import paginas
+import componentes  # noqa: F401  (agrega tools/pasto al path)
+from ciudades import NUEVAS as CIUDADES_NUEVAS  # noqa: E402
 import shell
 
 
@@ -43,6 +45,8 @@ SEO_F2A = (
 TIENDA_B = (("/pasto-sintetico/cuantos-rollos", "pasto-sintetico/cuantos-rollos/index.html", "tienda_guia",
              "cuantos_rollos"),)
 NUEVAS = tuple(ruta for ruta, *_ in SEO_F2A + TIENDA_B)
+# Entrega C del SEO nacional (2026-11-16): las 8 ciudades nuevas tampoco tienen captura anterior.
+NUEVAS += tuple(f"/pasto-sintetico/envio/{k}" for k in CIUDADES_NUEVAS)
 
 PAGINAS = (
     ("/", "index.html", "inicio", "inicio"),

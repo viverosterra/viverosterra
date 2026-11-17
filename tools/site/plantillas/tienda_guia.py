@@ -49,9 +49,11 @@ def _cuerpo(s):
 
 def _fila(k):
     """Entrega B de experiencia: tras los modelos recomendados, WhatsApp con el mensaje de la página y la prueba social
-    de la tienda (la opinión real de pasto sintético y la calificación de Google con su enlace)."""
+    de la tienda (la opinión real de pasto sintético y la calificación de Google con su enlace). En las ciudades no va
+    la opinión: es de un cliente de Tampico (Entrega C del SEO nacional, 2026-11-16)."""
+    opiniones = () if k["tipo"] == "ciudad" else datos.OPINION_SINTETICO_TAMPICO
     return (c.fila_seccion(k["cierre"]["mensaje"], k["tipo"], "modelos", "Cotizar mi pedido", contexto=True)
-            + c.prueba_cta(datos.OPINION_SINTETICO_TAMPICO, f"vendemos a todo México desde {datos.SINTETICO_NACIONAL_DESDE}"))
+            + c.prueba_cta(opiniones, f"vendemos a todo México desde {datos.SINTETICO_NACIONAL_DESDE}"))
 
 
 def render(k):

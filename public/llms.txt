@@ -117,6 +117,14 @@ Texto completo de las páginas principales: https://www.viverosterra.com/llms-fu
 - [Pasto sintético con envío a Mérida](https://www.viverosterra.com/pasto-sintetico/envio/merida): flete a Mérida, Yucatán de $1,400 por rollo y precio puesto por m²
 - [Pasto sintético con envío a Cancún](https://www.viverosterra.com/pasto-sintetico/envio/cancun): flete a Cancún, Quintana Roo de $1,400 por rollo y precio puesto por m²
 - [Pasto sintético con envío a Villahermosa](https://www.viverosterra.com/pasto-sintetico/envio/villahermosa): flete a Villahermosa, Tabasco de $1,400 por rollo y precio puesto por m²
+- [Pasto sintético con envío a Saltillo](https://www.viverosterra.com/pasto-sintetico/envio/saltillo): flete a Saltillo, Coahuila de $1,150 por rollo y precio puesto por m²
+- [Pasto sintético con envío a Torreón](https://www.viverosterra.com/pasto-sintetico/envio/torreon): flete a Torreón, Coahuila de $1,150 por rollo y precio puesto por m²
+- [Pasto sintético con envío a Chihuahua](https://www.viverosterra.com/pasto-sintetico/envio/chihuahua): flete a Chihuahua, Chihuahua de $1,400 por rollo y precio puesto por m²
+- [Pasto sintético con envío a Hermosillo](https://www.viverosterra.com/pasto-sintetico/envio/hermosillo): flete a Hermosillo, Sonora de $1,400 por rollo y precio puesto por m²
+- [Pasto sintético con envío a Tijuana](https://www.viverosterra.com/pasto-sintetico/envio/tijuana): flete a Tijuana, Baja California de $1,400 por rollo y precio puesto por m²
+- [Pasto sintético con envío a Aguascalientes](https://www.viverosterra.com/pasto-sintetico/envio/aguascalientes): flete a Aguascalientes de $900 por rollo y precio puesto por m²
+- [Pasto sintético con envío a Toluca](https://www.viverosterra.com/pasto-sintetico/envio/toluca): flete a Toluca, Estado de México de $900 por rollo y precio puesto por m²
+- [Pasto sintético con envío a Morelia](https://www.viverosterra.com/pasto-sintetico/envio/morelia): flete a Morelia, Michoacán de $900 por rollo y precio puesto por m²
 
 ## Plantas, palmas y árboles
 
