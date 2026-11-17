@@ -45,10 +45,11 @@ LIMPIEZA = (
 )
 # La foto del artículo fusionado (la de su tarjeta del índice del blog, mismo archivo, copia de 640 px y alt): las fotos
 # no se quitan (regla del dueño); el pie no dice dónde se tomó.
-FOTO_ARTICULO = {"src": "/img/pasto-sintetico-residencial-tampico.webp",
-                 "srcset": "/img/pasto-sintetico-residencial-tampico-640.webp 640w, /img/pasto-sintetico-residencial-tampico.webp 1024w",
-                 "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 1024, "alto": 1536, "numero": 2,
-                 "alt": "Pasto sintético para perros y mascotas", "lugar": "Pasto sintético residencial", "etapa": "Instalado"}
+FOTO_ARTICULO = {"src": "/img/obra/terra/pasto-sintetico-03-patio-con-pasto-sintetico.webp",
+                 "srcset": "/img/obra/terra/pasto-sintetico-03-patio-con-pasto-sintetico-640.webp 640w, /img/obra/terra/pasto-sintetico-03-patio-con-pasto-sintetico.webp 1038w",
+                 "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 1038, "alto": 1176, "numero": 2,
+                 "alt": "Patio con pasto sintético recién instalado por Viveros Terra, con muro blanco y una palma",
+                 "lugar": "Patio residencial", "etapa": "Instalado"}
 ERRORES = (
     ("No clavar bien el perímetro", "Una orilla suelta es una invitación a jalar y escarbar. Clava cada 15 a 20 cm."),
     ("Elegir fibra muy alta", "La de 35 mm o más se ve más lujosa, pero con orina diaria tarda más en secar."),

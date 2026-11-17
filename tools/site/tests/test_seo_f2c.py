@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import datos  # noqa: E402
 import paginas  # noqa: E402
 import shell  # noqa: E402
-from contenido import articulo, blog_seo_f2c, zona, zonas  # noqa: E402
+from contenido import articulo, blog_seo_f2c, fotos_paso1, zona, zonas  # noqa: E402
 
 PUBLIC = paginas.PUBLIC
 RAIZ = PUBLIC.parent
@@ -353,13 +353,18 @@ class FotosTest(unittest.TestCase):
         viejas = _fotos(_de_main("blog/index.html"))
         nuevas = _fotos(html_de("/blog"))
         self.assertGreater(len(viejas), 30)
-        self.assertEqual(sorted(set(viejas) - set(nuevas)), [])
-        self.assertEqual([f[0] for f in viejas], [f[0] for f in nuevas])  # mismas fotos, mismo orden
+        # Revisión de fotos, paso 1 (dueño, 2026-11-17): solo cambia lo que dice contenido/fotos_paso1.py.
+        esperadas = [fotos_paso1.tarjeta(src, alt) for src, _srcset, alt in viejas]
+        esperadas = [f for f in esperadas if f[0]]
+        self.assertEqual(esperadas, [(src, alt) for src, _srcset, alt in nuevas])  # mismas fotos, mismo orden
 
     def test_cada_foto_de_las_paginas_retiradas_sigue_en_public(self):
         todo = "\n".join(paginas_html().values())
         for origen, destino in FUSIONES.items():
-            for src, _srcset, _alt in _fotos(_de_main(f"{origen.strip('/')}/index.html")):
+            for src, _srcset, alt in _fotos(_de_main(f"{origen.strip('/')}/index.html")):
+                src = fotos_paso1.cuerpo(destino, src, alt)[0]  # revisión de fotos, paso 1
+                if src is None:
+                    continue
                 with self.subTest(origen=origen, src=src):
                     self.assertIn(f'src="{src}"', todo)
                     self.assertIn(f'src="{src}"', main_de(destino), "la foto sigue en su tema: en el destino")
@@ -373,12 +378,13 @@ class FotosTest(unittest.TestCase):
             "/blog/palmas-para-jardin-tampico": ("/img/plantas-tropicales-tampico-viveros.webp",
                                                  "Palmas tropicales disponibles en Viveros Terra Tampico — Washingtona, Areca, Viajero y más"),
         }.items():
+            src, alt = fotos_paso1.cuerpo(destino, src, alt)  # revisión de fotos, paso 1 (dueño, 2026-11-17)
             with self.subTest(destino=destino):
                 self.assertIn((src, None, alt), _fotos(html_de(destino)))
-        perros = [f for f in _fotos(html_de("/pasto-sintetico/perros")) if f[0] == "/img/pasto-sintetico-residencial-tampico.webp"]
-        self.assertEqual(perros, [("/img/pasto-sintetico-residencial-tampico.webp",
-                                   "/img/pasto-sintetico-residencial-tampico-640.webp 640w, /img/pasto-sintetico-residencial-tampico.webp 1024w",
-                                   "Pasto sintético para perros y mascotas")])
+        foto = "/img/obra/terra/pasto-sintetico-03-patio-con-pasto-sintetico"
+        perros = [f for f in _fotos(html_de("/pasto-sintetico/perros")) if f[0] == f"{foto}.webp"]
+        self.assertEqual(perros, [(f"{foto}.webp", f"{foto}-640.webp 640w, {foto}.webp 1038w",
+                                   "Patio con pasto sintético recién instalado por Viveros Terra, con muro blanco y una palma")])
 
     def test_las_tarjetas_de_los_fusionados_llevan_al_apartado_del_destino(self):
         indice = html_de("/blog")

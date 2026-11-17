@@ -147,7 +147,7 @@ CONTENIDO = {
              "desde": dinero(P["palma_desde"]), "unidad": "palma chica"},
             {"titulo": "Empresas y constructoras", "servicio": "empresas", "cotizar": "proyecto",
              "href": "/mayoreo-pasto-tampico",
-             "img": f"{OBRA}/instalacion-tuberia-riego-jardin.webp", "ancho": 900, "alto": 600,
+             "img": "/img/obra/terra/sistema-riego-02-chorros-cruzados-en-campo-640.webp", "ancho": 640, "alto": 439,
              "texto": (f"Mayoreo de pasto (solo pasto) desde {MINIMO} m², "
                        '<a href="/palmas-mayoreo-proyectos">palmas para proyectos</a>, mantenimiento recurrente y '
                        f"entrega por etapas. REPSE {datos.REPSE} y {datos.FACTURA}."),
@@ -170,7 +170,7 @@ CONTENIDO = {
              "alt": "Pasto San Agustín recién instalado junto a un andador.", "lugar": "Después",
              "etapa": "Día de instalación"},
             {"src": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111, "numero": 4,
-             "alt": "Rollos de pasto San Agustín recién cortados en la camioneta de reparto.",
+             "alt": "Colaborador de Viveros Terra cargando rollos de pasto recién cortados en la camioneta, con una carretilla llena al frente.",
              "lugar": "Rollos recién cortados", "etapa": "En la camioneta de reparto"},
             {"src": f"{OBRA}/instalacion-tuberia-riego-jardin.webp", "ancho": 900, "alto": 600, "numero": 5,
              "alt": "Cuadrilla de Viveros Terra instalando tubería de riego en un jardín.", "lugar": "Riego automático",

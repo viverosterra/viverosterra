@@ -108,7 +108,7 @@ CONTENIDO = {
                  "srcset": ("/img/portadas/palma-real-jardin-residencial-tampico-sm.webp 560w, "
                             "/img/portadas/palma-real-jardin-residencial-tampico.webp 900w"),
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 900, "alto": 1600, "numero": 1,
-                 "alt": "Palma real sembrada en un jardín residencial de Tampico",
+                 "alt": "Palma de tronco liso sembrada en un jardín con pasto y muro blanco",
                  "lugar": "Palma real en un jardín", "etapa": "Tampico"},
     },
     "especies": {"titulo": "Palmas de jardín y exóticas en el vivero", "lede": pc.LEDE_FOTOS, "items": ESPECIES},

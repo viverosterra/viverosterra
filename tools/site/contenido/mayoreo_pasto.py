@@ -102,7 +102,7 @@ PASOS = (
 
 FIGURAS = (
     {"src": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111, "numero": 2,
-     "alt": "Rollos de pasto San Agustín recién cortados en la camioneta de reparto.",
+     "alt": "Colaborador de Viveros Terra cargando rollos de pasto recién cortados en la camioneta, con una carretilla llena al frente.",
      "lugar": "Rollos recién cortados", "etapa": "En la camioneta de reparto"},
     {"src": f"{OBRA}/cuadrilla-tendiendo-pasto-san-agustin-640.webp", "ancho": 640, "alto": 960, "numero": 3,
      "alt": "Cuadrilla de Viveros Terra tendiendo pasto San Agustín en rollo.", "lugar": "Cuadrilla tendiendo pasto",

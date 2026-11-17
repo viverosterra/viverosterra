@@ -110,7 +110,7 @@ PASOS = (
 # Fotos reales que el sitio ya publica, con su alt y su pie de siempre (no son de una poda en particular).
 FIGURAS = (
     {"src": f"{OBRA}/mantenimiento-jardin-tropical-tampico.webp", "ancho": 960, "alto": 640, "numero": 2,
-     "alt": "Jardín residencial tropical con pasto y plantas recién podadas.",
+     "alt": "Jardinera con malangas de hoja grande y setos junto a un área de pasto, frente a una casa moderna.",
      "lugar": "Jardín residencial tropical", "etapa": "Mantenimiento mensual"},
     {"src": f"{TERRA}/palmas-tropicales-01-grupo-de-palmas.webp",
      "srcset": f"{TERRA}/palmas-tropicales-01-grupo-de-palmas-640.webp 640w, {TERRA}/palmas-tropicales-01-grupo-de-palmas.webp 1050w",

@@ -135,7 +135,7 @@ CONTENIDO = {
         },
         "mensaje": datos.MENSAJES["pasto-natural"],
         "foto": {"src": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111, "numero": 1,
-                 "alt": "Rollos de pasto San Agustín recién cortados, cargados en la camioneta de reparto.",
+                 "alt": "Colaborador de Viveros Terra cargando rollos de pasto recién cortados en la camioneta, con una carretilla llena al frente.",
                  "lugar": "Rollos recién cortados · en la camioneta de reparto", "etapa": "Cd. Madero"},
     },
     "prueba": {
@@ -300,7 +300,7 @@ CONTENIDO = {
              "texto": (f"La base ideal antes de instalar pasto. Costal {dinero(P['tierra_negra_costal'])} · m³ "
                        f"{dinero(P['tierra_negra_m3'])}.")},
             {"titulo": "Sistema de riego automático", "href": "/sistema-riego-tampico",
-             "img": f"{OBRA}/instalacion-tuberia-riego-jardin.webp", "ancho": 900, "alto": 600,
+             "img": "/img/obra/terra/sistema-riego-02-chorros-cruzados-en-campo-640.webp", "ancho": 640, "alto": 439,
              "texto": "Para que tu pasto siempre esté verde sin esfuerzo. Ahorra hasta 40% de agua."},
             {"titulo": "Mantenimiento mensual", "href": "/mantenimiento-jardines-tampico",
              "img": f"{OBRA}/mantenimiento-jardin-poda-tampico.webp", "ancho": 640, "alto": 960,

@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import paridad  # noqa: E402
 import paridad_blog  # noqa: E402
 import paridad_materiales  # noqa: E402
-from contenido import articulo, blog_correcciones as bc  # noqa: E402
+from contenido import articulo, blog_correcciones as bc, fotos_paso1  # noqa: E402
 
 
 def html_de(slug):
@@ -60,7 +60,10 @@ class BlogParidadTest(unittest.TestCase):
                 if portada:  # plan visual V4: la portada (la foto de su tarjeta del índice) va antes de las de la captura
                     self.assertEqual(nuevas[0]["src"], portada["src"])
                     nuevas = nuevas[1:]
-                self.assertEqual([re.sub(r"^(\.\./)+", "/", f["src"]) for f in viejas], [f["src"] for f in nuevas])
+                # Revisión de fotos, paso 1 (dueño, 2026-11-17): solo los cambios de contenido/fotos_paso1.py.
+                cambia = fotos_paso1.tarjeta if ruta == "/blog" else (lambda s, a: fotos_paso1.cuerpo(ruta, s, a))
+                esperadas = [cambia(re.sub(r"^(\.\./)+", "/", f["src"]), f.get("alt"))[0] for f in viejas]
+                self.assertEqual([s for s in esperadas if s], [f["src"] for f in nuevas])
 
     def test_cada_correccion_tiene_motivo(self):
         for slug, lista in bc.CORRECCIONES.items():
