@@ -143,7 +143,7 @@ class DatosTest(unittest.TestCase):
         url = datos.wa_url("Hola, ñ\nColonia: ___")
         self.assertTrue(url.startswith("https://wa.me/528333268008?text="))
         self.assertNotIn(" ", url)
-        self.assertEqual(unquote(url.split("text=", 1)[1]), "Hola, ñ\nColonia: ___")
+        self.assertEqual(unquote(url.split("text=", 1)[1]), "Hola, ñ")  # sin la raya (spec del primer mensaje)
 
     def test_redes_con_https_y_sin_subdominio_de_pais(self):
         for nombre, url in datos.REDES:

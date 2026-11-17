@@ -6,6 +6,7 @@ JS: tienda-pasto.js (cotizador y lista), tienda-hub.js (filtros, selector, preci
 import componentes as c
 import datos
 import componentes_tienda as t
+import preguntas_wa as pw
 from plantillas import base
 
 CONTEXTO = "https://schema.org"
@@ -82,5 +83,5 @@ def render(k):
     return base.documento(base.meta_de(k), t.subnav() + "\n".join(secciones),
                           jsonld_bloques=({"@context": CONTEXTO, "@graph": grafo},),
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),),
-                          head_extra=(t.json_modelos(completo=True),), tras_main=fuera, scripts=SCRIPTS,
-                          clase_body="vt-pagina vt-tienda")
+                          head_extra=(t.json_modelos(completo=True), pw.json_pagina({})), tras_main=fuera,
+                          scripts=pw.scripts(SCRIPTS), clase_body="vt-pagina vt-tienda" + pw.CLASE)

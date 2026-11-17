@@ -583,6 +583,8 @@
       ].filter(Boolean).join('\n');
       $$('[data-cta-wa]').filter((a) => !a.closest('#buybar')).forEach((a) => { a.href = waLink(msg); });
       mensajeCotizador = msg;
+      // Memoria de la visita para el panel de WhatsApp (vt-preguntas.js): solo lo que el cliente eligió.
+      if (tocado && !error && window.VTPreguntas) window.VTPreguntas.recordar({ modelo: model.slug, m2 });
       pintarContexto();
     }
 
@@ -683,6 +685,15 @@
   let tocado = false;
   function tocar() { tocado = true; }
 
+  function slugDeFicha() {
+    try {
+      const m = JSON.parse(($('#vt-model') || {}).textContent || 'null');
+      return m && typeof m.slug === 'string' ? m.slug : '';
+    } catch (err) {
+      return '';
+    }
+  }
+
   function modeloDeFicha() {
     try {
       const m = JSON.parse(($('#vt-model') || {}).textContent || 'null');
@@ -750,6 +761,8 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     estadoDesdeUrl();
+    // La ficha que el cliente abrió queda en la memoria de la visita (vt-preguntas.js la propone en otras páginas).
+    if (slugDeFicha() && window.VTPreguntas) window.VTPreguntas.recordar({ modelo: slugDeFicha() });
     renderCount();
     initDrawer();
     initToast();

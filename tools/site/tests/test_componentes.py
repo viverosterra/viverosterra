@@ -267,7 +267,7 @@ class MedidorTest(unittest.TestCase):
         self.assertIn('<b data-vt-o="monto">—</b>', html)
         self.assertNotIn("$5,760", html)
         cta = re.search(r'data-vt-o="cta" href="https://wa\.me/528333268008\?text=([^"]+)"', html).group(1)
-        self.assertEqual(unquote(cta), datos.con_firma(datos.MENSAJES["general"]))
+        self.assertEqual(unquote(cta), datos.sin_huecos(datos.con_firma(datos.MENSAJES["general"])))
         self.assertIn(f'data-mensaje-mayoreo="{c.esc(datos.con_firma(datos.MENSAJES["empresas"]))}"', html)
         for campo in ("largo", "ancho", "colonia"):
             self.assertIn(f'<label for="prueba-{campo}">', html)

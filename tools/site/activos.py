@@ -30,6 +30,7 @@ FUENTES = {
     "terra-nochebuenas.css": "css/terra-nochebuenas.css",
     "terra-temporada.css": "css/terra-temporada.css",
     "terra-calculadora.css": "css/terra-calculadora.css",
+    "terra-preguntas.css": "css/terra-preguntas.css",
     "terra-inicio.css": "css/terra-inicio.css",
     "terra.js": "js/terra.js",
 }

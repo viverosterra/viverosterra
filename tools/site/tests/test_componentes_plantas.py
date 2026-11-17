@@ -164,7 +164,7 @@ class ComponentesPlantasTest(unittest.TestCase):
     def test_pedido_especial_con_el_mensaje_de_main(self):
         html = cp.pedido_especial("catalogo")
         texto = unquote(re.search(r'href="https://wa\.me/\d+\?text=([^"]+)"', html).group(1))
-        self.assertEqual(texto, cp.mensaje_especial(""))
+        self.assertEqual(texto, datos.sin_huecos(cp.mensaje_especial("")))
         self.assertIn("No lo encontré en el catálogo", texto)
         self.assertIn('data-cta="catalogo:solEsp"', html)
 

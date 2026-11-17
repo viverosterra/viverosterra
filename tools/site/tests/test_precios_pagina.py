@@ -159,15 +159,15 @@ class PreciosTest(unittest.TestCase):
             bloque = HTML.split(f'id="{seccion}"', 1)[1].split(f'id="{siguiente}"', 1)[0]
             mensajes = re.findall(rf'data-cta="precios:{seccion}"[^>]*href="https://wa\.me/\d+\?text=([^"]+)"', bloque)
             with self.subTest(seccion=seccion):
-                self.assertEqual([unquote(m) for m in mensajes], [datos.con_firma(mensajes_paginas.PRECIOS_SECCIONES[seccion])])
+                self.assertEqual([unquote(m) for m in mensajes], [datos.sin_huecos(datos.con_firma(mensajes_paginas.PRECIOS_SECCIONES[seccion]))])
         self.assertEqual(len(set(mensajes_paginas.PRECIOS_SECCIONES.values())), len(mensajes_paginas.PRECIOS_SECCIONES))
 
     def test_poda_pide_fotos_con_su_mensaje(self):
         m = re.search(r'data-cta="precios:poda"[^>]*href="https://wa\.me/\d+\?text=([^"]+)"[^>]*>Mándanos fotos', HTML)
-        self.assertEqual(unquote(m.group(1)), datos.con_firma(mensajes_paginas.PRECIOS_SECCIONES["poda"]))
+        self.assertEqual(unquote(m.group(1)), datos.sin_huecos(datos.con_firma(mensajes_paginas.PRECIOS_SECCIONES["poda"])))
 
     def test_menu_y_barra_con_el_mensaje_de_la_portada(self):
-        esperado = datos.con_firma(mensajes_paginas.PRECIOS)
+        esperado = datos.sin_huecos(datos.con_firma(mensajes_paginas.PRECIOS))
         for lugar in ("hero", "header", "barra"):
             with self.subTest(lugar=lugar):
                 m = re.search(rf'data-cta="precios:{lugar}"[^>]*href="https://wa\.me/\d+\?text=([^"]+)"', HTML)

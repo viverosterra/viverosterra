@@ -23,7 +23,7 @@ class CalculadoraTest(unittest.TestCase):
     def test_empieza_vacia_y_manda_el_mensaje_de_la_pagina_firmado(self):
         self.assertIn('data-vt-o="cantidad">Escribe el área</b>', self.html)
         href = unescape(re.search(r'data-vt-o="cta" href="([^"]*)"', self.html).group(1))
-        self.assertEqual(unquote(href.split("text=", 1)[1]), datos.con_firma(MENSAJE))
+        self.assertEqual(unquote(href.split("text=", 1)[1]), datos.sin_huecos(datos.con_firma(MENSAJE)))
 
     def test_cantidad_en_banda_y_status_solo_en_el_resultado(self):
         """Revisión 2f: la cantidad va en la banda de la etiqueta y role="status" envuelve solo el resultado (cantidad,

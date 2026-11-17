@@ -146,7 +146,7 @@ class InicioTest(unittest.TestCase):
         self.assertEqual([s for s, _t, _r in enlaces], ["pasto-natural", "pasto-sintetico", "jardin", "plantas", "empresas"])
         for servicio, texto, rotulo in enlaces:
             with self.subTest(servicio=servicio):
-                self.assertEqual(unquote(texto), datos.mensaje(servicio))
+                self.assertEqual(unquote(texto), datos.sin_huecos(datos.mensaje(servicio)))
         # Textos cortos (no se parten en celular) y con el glifo de WhatsApp: la flecha es solo la de la fila.
         self.assertEqual([rotulo for _s, _t, rotulo in enlaces],
                          ["Cotizar pasto", "Cotizar sintético", "Cotizar jardín", "Cotizar plantas", "Cotizar proyecto"])
@@ -166,7 +166,7 @@ class InicioTest(unittest.TestCase):
                 self.assertEqual(MAIN.count(f'data-cta="home:{seccion}"'), 1)
                 boton = re.search(rf'<div class="vt-inicio__fila" data-hero-cta><a class="vt-btn vt-btn--wa" data-cta="home:{seccion}" '
                                   r'href="https://wa\.me/528333268008\?text=([^"]+)" target="_blank" rel="noopener">(.*?)</a>', tramo)
-                self.assertEqual(unquote(boton.group(1)), datos.mensaje("general"))
+                self.assertEqual(unquote(boton.group(1)), datos.sin_huecos(datos.mensaje("general")))
                 self.assertEqual(re.sub(r"<[^>]+>", "", boton.group(2)), f"{texto}→")
                 cola = tramo[tramo.index(f'data-cta="home:{seccion}"'):]
                 self.assertEqual(f'<p class="vt-promesa">{datos.PROMESA_COMPLETA}</p></div>' in cola, con_promesa)
@@ -231,7 +231,7 @@ class InicioTest(unittest.TestCase):
             href = re.search(rf'data-cta="{cta}" href="https://wa\.me/528333268008\?text=([^"]+)"', HTML).group(1)
             texto = unquote(href)
             with self.subTest(cta=cta):
-                self.assertTrue(texto.startswith(datos.MENSAJES["general"]))
+                self.assertTrue(texto.startswith(datos.sin_huecos(datos.MENSAJES["general"])))
                 self.assertTrue(texto.endswith(datos.FIRMA))
 
     def test_json_ld_conservado_y_faq_igual_a_la_visible(self):

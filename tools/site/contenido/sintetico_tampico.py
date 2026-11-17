@@ -128,6 +128,7 @@ CONTENIDO = {
              "garantia": (MENSAJE, "Cotizar pasto sintético instalado")},
     "respuesta": respuestas.de("/pasto-sintetico-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-sintetico",
+    "preguntas": {},  # panel de preguntas del WhatsApp (spec del primer mensaje, 2026-11-16)
     "prefijo": "sintetico",
     "meta": {
         "title": TITULO, "description": DESCRIPCION, "robots": "index, follow, max-image-preview:large", "canonical": URL,

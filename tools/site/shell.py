@@ -23,7 +23,7 @@ BODY_RE = re.compile(r'<body class="([^"]*)">')
 HOJAS_POR_CLASE = {"tienda": "vt-tienda", "plantas": "vt-plantas", "materiales": "vt-materiales", "precios": "vt-precios",
                    "util": "vt-util", "blog": "vt-blog", "nochebuenas": "vt-nochebuenas", "temporada": "vt-temporada",
                    "inicio": "vt-inicio",
-                   "calculadora": "vt-calculadora"}
+                   "calculadora": "vt-calculadora", "preguntas": "vt-preguntas"}
 OBRAS = 'class="vt-mosaico'
 CONTEO_BLOG_RE = re.compile(r'(<span data-vt-conteo="blog">)\d+(</span>)')
 

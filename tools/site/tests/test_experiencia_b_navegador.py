@@ -247,7 +247,10 @@ class ExperienciaBNavegadorTest(unittest.TestCase):
         page.evaluate("() => scrollTo(0, document.querySelector('.vt-galeria').getBoundingClientRect().top + scrollY)")
         page.wait_for_function("() => document.getElementById('buybar').dataset.visible === 'true'")
         self.assertLess(page.evaluate("() => scrollY") / 812, 2)
-        self.clic_unico(page, "#buybar a", "tienda:barra")
+        # Spec del primer mensaje de WhatsApp (2026-11-16): la barra abre el panel y el lead se mide al abrir WhatsApp.
+        page.evaluate("() => { window.dataLayer.length = 0; document.querySelector('#buybar a').click(); "
+                      "const a = document.querySelector('.vt-wa-panel__abrir'); a.click(); }")
+        self.assertEqual([e[2]["cta_id"] for e in page.evaluate(EVENTOS)], ["tienda:barra"])
 
     def test_catalogo_la_barra_cotiza_la_lista_directo_y_con_lista_vacia_ofrece_plantas(self):
         page = self.pagina("/catalogo.html")
@@ -256,8 +259,9 @@ class ExperienciaBNavegadorTest(unittest.TestCase):
         page.evaluate(SIN_SALIR)
         original = self.barra_y_cabeza(page)
         self.assertEqual(original["barra"], "Cotizar plantas")
-        self.assertIn("Planta o plantas: ___", texto(original["barra_href"]))
-        self.assertIn("Colonia de entrega: ___", texto(original["barra_href"]))
+        # Sin las rayas «___» (spec del primer mensaje de WhatsApp, 2026-11-16).
+        self.assertTrue(texto(original["barra_href"]).startswith("Hola, vi el catálogo y quiero cotizar plantas."))
+        self.assertNotIn("___", texto(original["barra_href"]))
         self.assertTrue(page.locator("[data-vt-abrir-lista]").is_hidden())
         page.locator('[data-vt-agregar="palma-areca"]').click()
         page.locator('#vt-agregar button[value="agregar"]').click()

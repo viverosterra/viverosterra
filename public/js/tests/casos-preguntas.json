@@ -1,0 +1,9 @@
+[
+  {"r": {}, "fijo": {}, "rec": {}, "esperado": "Hola, quiero cotizar pasto sintético."},
+  {"r": {"modelo": "toscana-28", "m2": "25-50", "destino": "envio", "estado": "Jalisco"}, "fijo": {}, "rec": {}, "esperado": "Hola, quiero cotizar pasto sintético Toscana 28, entre 25 y 50 m², con envío a Jalisco."},
+  {"r": {"m2": "<25", "destino": "recoger"}, "fijo": {"modelo": "irlanda-25"}, "rec": {}, "esperado": "Hola, quiero cotizar pasto sintético Irlanda 25, menos de 25 m², para recoger en el vivero de Cd. Madero."},
+  {"r": {"modelo": "no-se", "m2": ">100", "destino": "local"}, "fijo": {}, "rec": {}, "esperado": "Hola, quiero cotizar pasto sintético, más de 100 m², instalado en Tampico, Madero o Altamira.\nQuiero que me recomienden el modelo."},
+  {"r": {"modelo": "toscana-28", "m2": "50-100"}, "fijo": {"estado": "Nuevo León", "ciudad": "Monterrey"}, "rec": {}, "esperado": "Hola, quiero cotizar pasto sintético Toscana 28, entre 50 y 100 m², con envío a Monterrey (Nuevo León)."},
+  {"r": {"m2": "exacto"}, "fijo": {"modelo": "irlanda-25", "estado": "CDMX", "ciudad": "CDMX"}, "rec": {"m2": 40}, "esperado": "Hola, quiero cotizar pasto sintético Irlanda 25, unos 40 m², con envío a CDMX.\nFolio web: I25-40-CDMX"},
+  {"r": {"destino": "envio"}, "fijo": {}, "rec": {}, "esperado": "Hola, quiero cotizar pasto sintético."}
+]

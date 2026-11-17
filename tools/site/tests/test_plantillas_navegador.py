@@ -704,7 +704,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
         """Etapa 2c (auditoría 02): el plan elegido viaja al chat y a GA4 con su propio cta_id."""
         casos = (("/diseno-jardines-tampico/", "servicio-diseno", 2, "Plan Terra Completo ($6,500)"),
                  ("/mantenimiento-jardines-tampico/", "servicio-mantenimiento", 2, "Residencial premium"),
-                 ("/sistema-riego-tampico/", "servicio-riego", 3, "campo deportivo"))
+                 ("/sistema-riego-tampico/", "servicio-riego", 3, "área grande"))
         for ruta, tipo, n, frase in casos:
             page = self.pagina()
             page.add_init_script("window.open = () => null;")
@@ -1203,7 +1203,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 "() => Array.from(window.dataLayer).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
             texto = unquote(boton.get_attribute("href").split("text=", 1)[1])
             with self.subTest(ruta=ruta):
-                self.assertEqual(texto, datos.con_firma(mensajes_paginas.ZONAS[ruta.rstrip("/")]))
+                self.assertEqual(texto, datos.sin_huecos(datos.con_firma(mensajes_paginas.ZONAS[ruta.rstrip("/")])))
                 self.assertIn(["event", "generate_lead", {"method": "whatsapp", "cta_id": "zona:hero",
                                                           "service": "jardin"}], eventos)
 

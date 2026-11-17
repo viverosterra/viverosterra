@@ -86,7 +86,7 @@ class ComunTest(unittest.TestCase):
         for clave, e in ESPERADO.items():
             html, _m, _t, _g = pagina(clave)
             tipo = paginas.contexto(e["ruta"])["tipo"]
-            esperado = datos.con_firma(mensajes_paginas.SERVICIOS[e["ruta"]])
+            esperado = datos.sin_huecos(datos.con_firma(mensajes_paginas.SERVICIOS[e["ruta"]]))
             for seccion in ("hero", "cierre", "barra", "header"):
                 with self.subTest(pagina=clave, seccion=seccion):
                     self.assertEqual(mensajes_de(html, f"{tipo}:{seccion}")[0], esperado)
@@ -208,7 +208,7 @@ class RiegoTest(unittest.TestCase):
         sistemas = mensajes_de(html, r"servicio-riego:opcion-\d")
         self.assertIn("aspersores emergentes", sistemas[0])
         self.assertIn("goteo", sistemas[1])
-        self.assertIn("campo deportivo", sistemas[2])
+        self.assertIn("área grande", sistemas[2])
         self.assertNotIn("$15,000", texto)  # 100 m² × $180 = $18,000
         self.assertEqual(len(next(n for n in grafo if n["@type"] == "HowTo")["step"]), 5)
 
