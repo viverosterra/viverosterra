@@ -5,6 +5,7 @@ cifras de la empresa, precios oficiales, garantías, decisiones del dueño, perf
 Lo consumen los parciales del shell (tools/site/partials.py) y las pruebas; desde la Etapa 4, también el JSON-LD y
 llms.txt. Decisiones del dueño: docs/superpowers/specs/2026-11-07-mejora-integral-sitio-design.md.
 """
+import re
 from urllib.parse import quote
 
 SITIO = "https://www.viverosterra.com"
@@ -364,9 +365,44 @@ def mensaje(servicio):
     return con_firma(MENSAJES[servicio])
 
 
+_HUECO_SOLO = re.compile(r"^(.*\S)\s*:\s*___\s*$")
+_HUECO_CAMPO = re.compile(r",?\s*[^,:\n]+:\s*___")
+_HUECO_CANTIDAD = re.compile(r"___\s*×\s*")
+
+
+def _frase(texto):
+    """«Hola, quiero cotizar» → «Hola, quiero cotizar.»; «… no la encontré. Necesito» → «… no la encontré.»."""
+    previa = re.match(r"^(.*[.!?])\s+[^.!?]*$", texto)
+    if previa:
+        return previa.group(1)
+    return texto if texto[-1] in ".!?" else texto + "."
+
+
+def sin_huecos(texto):
+    """Quita las rayas «___» que el cliente casi nunca llena (spec del primer mensaje de WhatsApp, 2026-11-16): una
+    línea que solo pide un dato se quita (si es la primera, se vuelve frase: «Hola, quiero cotizar.»); dentro de una
+    línea se quita el campo. Mismos casos que terra.js (public/js/tests/casos-huecos.json)."""
+    salida = []
+    for i, linea in enumerate(texto.split("\n")):
+        if "___" not in linea:
+            salida.append(linea)
+            continue
+        linea = linea.replace("*___*", "___")
+        solo = _HUECO_SOLO.match(linea)
+        if solo and "___" not in solo.group(1):
+            if i == 0:
+                salida.append(_frase(solo.group(1)))
+            continue
+        limpia = _HUECO_CANTIDAD.sub("", _HUECO_CAMPO.sub("", linea)).replace("___", "")
+        limpia = re.sub(r" {2,}", " ", limpia).rstrip()
+        if limpia.strip():
+            salida.append(limpia)
+    return "\n".join(salida)
+
+
 def wa_url(texto):
-    """Enlace wa.me con el texto codificado por completo (espacios como %20, saltos como %0A)."""
-    return f"https://wa.me/{TELEFONO_WA}?text={quote(texto, safe='')}"
+    """Enlace wa.me con el texto sin huecos y codificado por completo (espacios como %20, saltos como %0A)."""
+    return f"https://wa.me/{TELEFONO_WA}?text={quote(sin_huecos(texto), safe='')}"
 
 
 # Temporada de Nochebuenas: fuente única de la página, su JSON-LD y el cotizador (public/js/vt-nochebuenas.js).

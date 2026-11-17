@@ -22,6 +22,30 @@
     return null;
   }
 
+  const HUECO_SOLO = /^(.*\S)\s*:\s*___\s*$/;
+  const HUECO_CAMPO = /,?\s*[^,:\n]+:\s*___/g;
+  const HUECO_CANTIDAD = /___\s*×\s*/g;
+  function frase(texto) {
+    const previa = texto.match(/^(.*[.!?])\s+[^.!?]*$/);
+    if (previa) return previa[1];
+    return /[.!?]$/.test(texto) ? texto : texto + '.';
+  }
+  // Quita las rayas «___» que el cliente casi nunca llena (spec del primer mensaje de WhatsApp). Mismos
+  // casos que datos.sin_huecos (public/js/tests/casos-huecos.json).
+  function sinHuecos(texto) {
+    const salida = [];
+    String(texto).split('\n').forEach((original, i) => {
+      if (original.indexOf('___') < 0) { salida.push(original); return; }
+      const linea = original.split('*___*').join('___');
+      const solo = linea.match(HUECO_SOLO);
+      if (solo && solo[1].indexOf('___') < 0) { if (i === 0) salida.push(frase(solo[1])); return; }
+      const limpia = linea.replace(HUECO_CAMPO, '').replace(HUECO_CANTIDAD, '').split('___').join('')
+        .replace(/ {2,}/g, ' ').replace(/\s+$/, '');
+      if (limpia.trim()) salida.push(limpia);
+    });
+    return salida.join('\n');
+  }
+
   function conFirma(href) {
     const partes = href.match(/^([^?#]*)(?:\?([^#]*))?(#.*)?$/);
     const base = partes[1];
@@ -37,8 +61,10 @@
         return href;
       }
     }
-    if (/viverosterra\.com/i.test(actual)) return href;
-    const nuevo = 'text=' + encodeURIComponent(actual ? actual + '\n\n' + FIRMA : FIRMA);
+    const limpio = sinHuecos(actual);
+    const firmado = /viverosterra\.com/i.test(limpio);
+    if (firmado && limpio === actual) return href;
+    const nuevo = 'text=' + encodeURIComponent(firmado ? limpio : (limpio ? limpio + '\n\n' + FIRMA : FIRMA));
     if (i >= 0) consulta[i] = nuevo;
     else consulta.push(nuevo);
     return base + '?' + consulta.join('&') + ancla;
@@ -217,6 +243,58 @@
     heroes.forEach((h) => observador.observe(h));
   }
 
+  // Préstamo de la barra fija y del "Cotizar" del encabezado (Entrega B de experiencia): una calculadora con
+  // resultado válido les presta su enlace y un texto corto ("Enviar mi medida", "Cotizar mi lista"); al borrar el
+  // resultado lo suelta y vuelven a su enlace y texto del HTML. Si dos calculadoras prestan, manda la última que
+  // cambió. El data-cta no cambia: el clic lo sigue midiendo medir() como <tipo>:barra o <tipo>:header, una sola vez.
+  // prestamoVigente es la parte pura: el último préstamo con enlace, o null.
+  function prestamoVigente(lista) {
+    for (let i = lista.length - 1; i >= 0; i -= 1) if (lista[i] && lista[i].href) return lista[i];
+    return null;
+  }
+
+  function textoFinal(el) {
+    const ultimo = el && el.lastChild;
+    return ultimo && ultimo.nodeType === 3 ? ultimo : null;
+  }
+
+  // En el encabezado del celular caben ~8 caracteres junto al logo a 320 px: un préstamo con texto dice "Enviar".
+  const CORTO = 'Enviar';
+  function prestamos(doc) {
+    const go = doc.querySelector('[data-vt-bar] .vt-bar__go');
+    const rotulo = textoFinal(go);
+    const cabeza = doc.querySelector('.vt-head__cta');
+    const largo = cabeza && cabeza.querySelector('.vt-head__cta-largo');
+    const corto = cabeza && cabeza.querySelector('.vt-head__cta-corto');
+    const origen = {
+      go: go && go.getAttribute('href'), rotulo: rotulo && rotulo.nodeValue, cabeza: cabeza && cabeza.getAttribute('href'),
+      largo: largo && largo.textContent, corto: corto && corto.textContent,
+    };
+    let lista = [];
+    function pintar() {
+      const p = prestamoVigente(lista);
+      // Un préstamo sin texto (solo cambia el mensaje, p. ej. el estado elegido en la tienda) deja los textos del HTML.
+      const texto = p && p.texto;
+      if (go) go.setAttribute('href', p ? p.href : origen.go);
+      if (rotulo) rotulo.nodeValue = texto || origen.rotulo;
+      if (cabeza) cabeza.setAttribute('href', p ? p.href : origen.cabeza);
+      if (largo) largo.textContent = texto || origen.largo;
+      if (corto) corto.textContent = (p && p.corto) || (texto ? CORTO : '') || origen.corto;
+    }
+    return Object.freeze({
+      // texto: barra y encabezado de escritorio; corto (opcional, CORTO si falta): el encabezado del celular.
+      prestar(clave, href, texto, corto) {
+        lista = lista.filter((p) => p.clave !== clave);
+        if (href) lista.push({ clave, href: String(href), texto: texto ? String(texto) : '', corto: corto ? String(corto) : '' });
+        pintar();
+      },
+      soltar(clave) {
+        lista = lista.filter((p) => p.clave !== clave);
+        pintar();
+      },
+    });
+  }
+
   // "Abierto ahora": el horario llega como "<días>@HH:MM-HH:MM;<días>@HH:MM-HH:MM" (días separados por coma, lunes = 1,
   // hora de México) y los festivos como "MM-DD,MM-DD", cada año. Se abre a la hora de apertura y a la de cierre ya está cerrado.
   const ABIERTO = 'Abierto ahora';
@@ -330,13 +408,15 @@
     doc.querySelectorAll('details[data-vt-plegable]').forEach((d) => { d.open = true; });
   }
 
-  const api = { FIRMA, HERO_CTA, ABIERTO, tipoEnlace, conFirma, evento, eventoWhatsapp, abierto };
+  const api = { FIRMA, HERO_CTA, ABIERTO, tipoEnlace, sinHuecos, conFirma, evento, eventoWhatsapp, abierto, prestamoVigente };
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas, plegables, horario, diasHasta, textoPreventa, preventa, reloj };
+    module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas, plegables, horario, diasHasta, textoPreventa, preventa, reloj, prestamos };
     return;
   }
   root.VTTerra = Object.freeze(api);
   root.VTMedicion = medicion(document, root);
+  // El encabezado y la barra ya están en el HTML cuando corre este script (defer): las calculadoras lo usan al arrancar.
+  root.VTBarra = prestamos(document);
   firmarAperturas(root);
   medir(document, root);
   const alDia = () => { horario(document, new Date()); preventa(document, new Date()); };

@@ -1,0 +1,42 @@
+[
+  [
+    "Hola, quiero cotizar: ___\nColonia: ___\nMetros aprox.: ___",
+    "Hola, quiero cotizar."
+  ],
+  [
+    "Hola, quiero cotizar pasto sintético.\nCiudad o colonia: ___\nMetros aprox.: ___",
+    "Hola, quiero cotizar pasto sintético."
+  ],
+  [
+    "Hola, quiero cotizar tierra negra.\nCostales o camión: ___\nCantidad: 3\nColonia de entrega: ___",
+    "Hola, quiero cotizar tierra negra.\nCantidad: 3"
+  ],
+  [
+    "Hola, quiero cotizar palmas.\n- ___ × Palma areca, altura aprox.: ___\n- 2 × Palma kerpis, altura aprox.: 1.5 m",
+    "Hola, quiero cotizar palmas.\n- Palma areca\n- 2 × Palma kerpis, altura aprox.: 1.5 m"
+  ],
+  [
+    "Hola, quiero cotizar una planta con medidas específicas: ___",
+    "Hola, quiero cotizar una planta con medidas específicas."
+  ],
+  [
+    "Hola, quiero cotizar mantenimiento.\nColonia: Petrolera\n\nVengo de viverosterra.com",
+    "Hola, quiero cotizar mantenimiento.\nColonia: Petrolera\n\nVengo de viverosterra.com"
+  ],
+  [
+    "Hola, quiero cotizar pasto.\nColonia: ___\n\nVengo de viverosterra.com",
+    "Hola, quiero cotizar pasto.\n\nVengo de viverosterra.com"
+  ],
+  [
+    "Hola, quiero cotizar pasto.\n¿Mi terreno está limpio, nivelado y con tierra negra?: ___\nTe mando foto del área.",
+    "Hola, quiero cotizar pasto.\nTe mando foto del área."
+  ],
+  [
+    "Hola, busqué una página en su sitio y no la encontré. Necesito: ___\n\nVengo de viverosterra.com",
+    "Hola, busqué una página en su sitio y no la encontré.\n\nVengo de viverosterra.com"
+  ],
+  [
+    "Hola Viveros Terra\n\nBusco: *___*\nNo lo encontré en el catálogo. ¿Lo manejan o pueden cotizarme?",
+    "Hola Viveros Terra\n\nNo lo encontré en el catálogo. ¿Lo manejan o pueden cotizarme?"
+  ]
+]

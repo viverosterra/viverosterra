@@ -22,6 +22,30 @@
     return null;
   }
 
+  const HUECO_SOLO = /^(.*\S)\s*:\s*___\s*$/;
+  const HUECO_CAMPO = /,?\s*[^,:\n]+:\s*___/g;
+  const HUECO_CANTIDAD = /___\s*×\s*/g;
+  function frase(texto) {
+    const previa = texto.match(/^(.*[.!?])\s+[^.!?]*$/);
+    if (previa) return previa[1];
+    return /[.!?]$/.test(texto) ? texto : texto + '.';
+  }
+  // Quita las rayas «___» que el cliente casi nunca llena (spec del primer mensaje de WhatsApp). Mismos
+  // casos que datos.sin_huecos (public/js/tests/casos-huecos.json).
+  function sinHuecos(texto) {
+    const salida = [];
+    String(texto).split('\n').forEach((original, i) => {
+      if (original.indexOf('___') < 0) { salida.push(original); return; }
+      const linea = original.split('*___*').join('___');
+      const solo = linea.match(HUECO_SOLO);
+      if (solo && solo[1].indexOf('___') < 0) { if (i === 0) salida.push(frase(solo[1])); return; }
+      const limpia = linea.replace(HUECO_CAMPO, '').replace(HUECO_CANTIDAD, '').split('___').join('')
+        .replace(/ {2,}/g, ' ').replace(/\s+$/, '');
+      if (limpia.trim()) salida.push(limpia);
+    });
+    return salida.join('\n');
+  }
+
   function conFirma(href) {
     const partes = href.match(/^([^?#]*)(?:\?([^#]*))?(#.*)?$/);
     const base = partes[1];
@@ -37,8 +61,10 @@
         return href;
       }
     }
-    if (/viverosterra\.com/i.test(actual)) return href;
-    const nuevo = 'text=' + encodeURIComponent(actual ? actual + '\n\n' + FIRMA : FIRMA);
+    const limpio = sinHuecos(actual);
+    const firmado = /viverosterra\.com/i.test(limpio);
+    if (firmado && limpio === actual) return href;
+    const nuevo = 'text=' + encodeURIComponent(firmado ? limpio : (limpio ? limpio + '\n\n' + FIRMA : FIRMA));
     if (i >= 0) consulta[i] = nuevo;
     else consulta.push(nuevo);
     return base + '?' + consulta.join('&') + ancla;
@@ -382,7 +408,7 @@
     doc.querySelectorAll('details[data-vt-plegable]').forEach((d) => { d.open = true; });
   }
 
-  const api = { FIRMA, HERO_CTA, ABIERTO, tipoEnlace, conFirma, evento, eventoWhatsapp, abierto, prestamoVigente };
+  const api = { FIRMA, HERO_CTA, ABIERTO, tipoEnlace, sinHuecos, conFirma, evento, eventoWhatsapp, abierto, prestamoVigente };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas, plegables, horario, diasHasta, textoPreventa, preventa, reloj, prestamos };
     return;

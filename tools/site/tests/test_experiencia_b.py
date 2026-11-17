@@ -125,7 +125,8 @@ class MensajesTest(unittest.TestCase):
         for hueco in ("Planta o plantas: ___", "Tamaño aprox.: ___", "Piezas: ___", "Colonia de entrega: ___"):
             self.assertIn(hueco, catalogo)
         vivero = mensajes_wa(html("/vivero-tampico").split('<section class="vt-portada', 1)[1])[0]
-        self.assertIn("Lo que busco: ___", vivero)
+        # Spec del primer mensaje de WhatsApp (2026-11-16): el enlace publicado sale sin las rayas.
+        self.assertEqual(vivero, datos.sin_huecos(datos.con_firma(mp.UTILITARIAS["vivero"])))
 
     def test_catalogo_cuenta_de_los_datos_y_filas_entre_tarjetas(self):
         from contenido import catalogo_datos as cd

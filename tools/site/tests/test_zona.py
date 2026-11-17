@@ -48,7 +48,7 @@ class ZonaTest(unittest.TestCase):
     def test_mensaje_de_la_zona_en_portada_cierre_y_shell(self):
         for ruta in ZONAS:
             html = html_de(ruta)
-            esperado = datos.con_firma(mensajes_paginas.ZONAS[ruta])
+            esperado = datos.sin_huecos(datos.con_firma(mensajes_paginas.ZONAS[ruta]))
             mensajes = [unquote(m) for m in re.findall(r'data-cta="zona:(?:hero|cierre|header|barra)"[^>]*href="https://'
                                                        r'wa\.me/\d+\?text=([^"]+)"', html)]
             with self.subTest(ruta=ruta):
@@ -100,10 +100,10 @@ class ZonaTest(unittest.TestCase):
         for ruta in ZONAS:
             m = re.search(r'data-cta="zona:precios"[^>]*href="https://wa\.me/\d+\?text=([^"]+)"[^>]*>Cotizar en ', html_de(ruta))
             with self.subTest(ruta=ruta):
-                self.assertEqual(unquote(m.group(1)), datos.con_firma(mensajes_paginas.ZONAS[ruta]))
+                self.assertEqual(unquote(m.group(1)), datos.sin_huecos(datos.con_firma(mensajes_paginas.ZONAS[ruta])))
         ruta = "/jardineria-aguila-tampico"
         m = re.search(r'data-cta="zona:poda"[^>]*href="https://wa\.me/\d+\?text=([^"]+)"[^>]*>Mándanos fotos', html_de(ruta))
-        self.assertEqual(unquote(m.group(1)), datos.con_firma(mensajes_paginas.PODA_ZONAS[ruta]))
+        self.assertEqual(unquote(m.group(1)), datos.sin_huecos(datos.con_firma(mensajes_paginas.PODA_ZONAS[ruta])))
         self.assertIn("en Águila y Altavista", unquote(m.group(1)))
 
     def test_costo_de_la_visita_corto_arriba_y_completo_solo_en_el_cierre(self):

@@ -64,7 +64,7 @@ class HubTest(unittest.TestCase):
         self.assertEqual(len(re.findall(r'<p class="vt-indice__desde">desde', self.h)), 2)
 
     def test_cada_whatsapp_lleva_su_plantilla_y_la_firma(self):
-        propios = [m for m in mensajes(self.h) if "Plantas que busco: ___" in m]
+        propios = [m for m in mensajes(self.h) if m == datos.sin_huecos(datos.con_firma(mensajes_paginas.PLANTAS["/plantas-palmas-arboles-tampico"]))]
         self.assertGreaterEqual(len(propios), 2)  # portada y cierre
         self.assertTrue(all(m.endswith(datos.FIRMA) for m in mensajes(self.h)))
 
@@ -164,7 +164,7 @@ class SubcategoriasTest(unittest.TestCase):
         for ruta in SUBCATEGORIAS:
             ms = mensajes(html(ruta))
             with self.subTest(ruta=ruta):
-                self.assertIn(datos.con_firma(mensajes_paginas.PLANTAS[ruta]), ms)
+                self.assertIn(datos.sin_huecos(datos.con_firma(mensajes_paginas.PLANTAS[ruta])), ms)
                 self.assertTrue(all(m.endswith(datos.FIRMA) for m in ms))
 
 

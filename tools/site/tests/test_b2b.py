@@ -95,7 +95,7 @@ class ComunTest(unittest.TestCase):
     def test_portada_cierre_y_shell_con_la_plantilla_de_compras(self):
         for clave, ruta in RUTAS.items():
             html, _m, _t, _g = pagina(clave)
-            esperado = datos.con_firma(mensajes_paginas.EMPRESAS[ruta])
+            esperado = datos.sin_huecos(datos.con_firma(mensajes_paginas.EMPRESAS[ruta]))
             with self.subTest(pagina=clave):
                 for seccion in ("hero", "cierre", "barra", "footer"):
                     self.assertEqual(set(mensajes_de(html, f"b2b:{seccion}")), {esperado}, seccion)
@@ -109,7 +109,7 @@ class ComunTest(unittest.TestCase):
                 planos = [m[0] for m in mensajes]
                 self.assertEqual(len(set(planos)), 3)
                 for m in planos:
-                    self.assertIn("Empresa", m)
+                    self.assertNotIn("___", m)
                     self.assertTrue(m.endswith(datos.FIRMA))
                 self.assertEqual(mensajes_de(html, "b2b:opcion-4"), [])
 

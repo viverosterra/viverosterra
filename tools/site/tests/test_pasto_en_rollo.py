@@ -53,7 +53,7 @@ class PastoEnRolloTest(unittest.TestCase):
             texto = unquote(re.search(rf'data-cta="{cta}" href="https://wa\.me/528333268008\?text=([^"]+)"', HTML)
                             .group(1))
             with self.subTest(cta=cta):
-                self.assertTrue(texto.startswith(datos.MENSAJES["pasto-natural"]))
+                self.assertTrue(texto.startswith(datos.sin_huecos(datos.MENSAJES["pasto-natural"])))
         self.assertIn('data-cta="servicio-pasto:medidor"', MAIN)
         self.assertIn('data-cta="servicio-pasto:simulador"', MAIN)
 
