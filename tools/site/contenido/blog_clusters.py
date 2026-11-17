@@ -202,6 +202,15 @@ A_PODA = ("poda-arboles-palmas-tampico-guia", "temporada-huracanes-proteger-jard
 PODA = ("poda de árboles en Tampico", "/poda-arboles-tampico")
 
 
+# Entrega D del SEO nacional (2026-11-16): cada artículo de sintético enlaza la guía de la tienda de su tema.
+GUIA_D = {"como-instalar-pasto-sintetico": ("rollo de 2 m o de 3.66 m", "/pasto-sintetico/ancho-del-rollo"),
+          "cuanto-cuesta-pasto-sintetico-mexico": ("cuántos rollos necesitas y envío por estado",
+                                                   "/pasto-sintetico/cuantos-rollos"),
+          "pasto-sintetico-calor-mexico": ("pasto sintético para alberca", "/pasto-sintetico/alberca"),
+          "pasto-sintetico-vs-natural-tampico": ("pasto sintético o natural en todo México", "/pasto-sintetico/vs-natural"),
+          "que-altura-de-pasto-sintetico-elegir": ("pasto sintético en azotea: peso por m²", "/pasto-sintetico/azotea")}
+
+
 def de(slug):
     """Copia del tema del artículo con sus enlaces finales (los de sintético rotan una ciudad con página de envío)."""
     tema = TEMA[slug]
@@ -216,4 +225,8 @@ def de(slug):
         enlaces = (PODA,) + enlaces[:2]
     if slug in A_PRECIOS and not any(h == "/precios" for _t, h in enlaces):
         enlaces = (("lista de precios vigente", "/precios"),) + enlaces[:2]
-    return {**base, "tema": tema, "enlaces": enlaces[:3], "landing": LANDING.get(slug, base["landing"]), "lede": LEDE[tema]}
+    tope = 3
+    if slug in GUIA_D:
+        enlaces = enlaces[:3] + (GUIA_D[slug],)
+        tope = 4
+    return {**base, "tema": tema, "enlaces": enlaces[:tope], "landing": LANDING.get(slug, base["landing"]), "lede": LEDE[tema]}

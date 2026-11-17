@@ -18,6 +18,7 @@ PUBLIC = Path(__file__).resolve().parents[2] / "public"
 def main():
     (PUBLIC / "feed-pasto-sintetico.xml").write_text(build_feed(), encoding="utf-8")
     upsert([f"{SITE}/pasto-sintetico", f"{SITE}/pasto-sintetico/perros", f"{SITE}/pasto-sintetico/cuantos-rollos"]
+           + [f"{SITE}/pasto-sintetico/{g}" for g in ("azotea", "alberca", "ancho-del-rollo", "vs-natural")]
            + [f"{SITE}/pasto-sintetico/envio/{c['slug']}" for c in CIUDADES]
            + [f"{SITE}/pasto-sintetico/{m['slug']}" for m in MODELOS], conservar=True)
 

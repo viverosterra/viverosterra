@@ -47,6 +47,10 @@ TIENDA_B = (("/pasto-sintetico/cuantos-rollos", "pasto-sintetico/cuantos-rollos/
 NUEVAS = tuple(ruta for ruta, *_ in SEO_F2A + TIENDA_B)
 # Entrega C del SEO nacional (2026-11-16): las 8 ciudades nuevas tampoco tienen captura anterior.
 NUEVAS += tuple(f"/pasto-sintetico/envio/{k}" for k in CIUDADES_NUEVAS)
+# Entrega D del SEO nacional (2026-11-16): guías de la tienda (azotea, alberca, ancho del rollo, sintético o natural).
+GUIAS_D = tuple((f"/pasto-sintetico/{k}", f"pasto-sintetico/{k}/index.html", "tienda_guia", f"guias_tienda:{k}")
+                for k in ("azotea", "alberca", "ancho-del-rollo", "vs-natural"))
+NUEVAS += tuple(ruta for ruta, *_ in GUIAS_D)
 
 PAGINAS = (
     ("/", "index.html", "inicio", "inicio"),
@@ -79,7 +83,7 @@ PAGINAS = (
 ) + _varias("ficha", lambda k: f"/pasto-sintetico/{k}", lambda k: f"pasto-sintetico/{k}/index.html", "ficha") + _varias(
     "ciudad", lambda k: f"/pasto-sintetico/envio/{k}", lambda k: f"pasto-sintetico/envio/{k}/index.html", "tienda_guia"
 ) + _varias("zona", lambda k: f"/{k}", lambda k: f"{k}/index.html", "zona") + UTILITARIAS + _varias(
-    "articulo", lambda k: f"/blog/{k}", lambda k: f"blog/{k}/index.html", "articulo") + SEO_F2A + TIENDA_B
+    "articulo", lambda k: f"/blog/{k}", lambda k: f"blog/{k}/index.html", "articulo") + SEO_F2A + TIENDA_B + GUIAS_D
 
 
 def cargar(contenido):
