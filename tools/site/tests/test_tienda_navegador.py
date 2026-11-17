@@ -226,8 +226,9 @@ class TiendaNavegadorTest(unittest.TestCase):
     def test_hub_en_celular_no_crece_de_mas(self):
         page = self.pagina(375, 812)
         page.goto(self.base + "/pasto-sintetico/", wait_until="load")
-        # main medía 17,805 px a 375 px; con las tarjetas horizontales el hub queda abajo de 1.2 veces eso.
-        self.assertLessEqual(page.evaluate("document.documentElement.scrollHeight"), 21366)
+        # main medía 17,805 px a 375 px; con las tarjetas horizontales el hub queda abajo de 1.2 veces eso (21,366).
+        # Entrega C (2026-11-16): 8 ciudades más en la cuadrícula, 4 filas de 2 a 375 px (+415 px): tope 21,800.
+        self.assertLessEqual(page.evaluate("document.documentElement.scrollHeight"), 21800)
 
     def test_precio_y_cta_en_el_primer_pantallazo_movil(self):
         page = self.pagina(375, 812)

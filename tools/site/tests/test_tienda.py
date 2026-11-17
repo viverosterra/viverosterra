@@ -127,8 +127,8 @@ class TiendaPublicadaTest(unittest.TestCase):
         self.assertEqual(envio["shippingDestination"]["addressRegion"], ["NLE"])
 
     def test_ciudades_sin_casi_duplicados(self):
-        """Similitud media de 5-gramas (Jaccard) del texto de <main> entre las 11 ciudades: 0.37 en main, 0.44 antes de
-        hacer propias las preguntas de envío; falla arriba de 0.47."""
+        """Similitud media de 5-gramas (Jaccard) del texto de <main> entre las ciudades: 0.37 con 11, 0.44 antes de
+        hacer propias las preguntas de envío; 0.32 con 19 tras la entrega C (2026-11-16); falla arriba de 0.35."""
         def shingles(ruta):
             texto = html_mod.unescape(re.sub(r"<[^>]+>", " ", re.sub(r"<(script|style)\b.*?</\1>", " ",
                                                                       principal(html(ruta)), flags=re.S))).lower()
@@ -136,9 +136,9 @@ class TiendaPublicadaTest(unittest.TestCase):
             return {tuple(palabras[i:i + 5]) for i in range(len(palabras) - 4)}
 
         ciudades = [shingles(r) for r in TIENDA if r.startswith("/pasto-sintetico/envio/")]
-        self.assertEqual(len(ciudades), 11)
+        self.assertEqual(len(ciudades), 19)
         pares = [len(a & b) / len(a | b) for a, b in itertools.combinations(ciudades, 2)]
-        self.assertLessEqual(sum(pares) / len(pares), 0.47)
+        self.assertLessEqual(sum(pares) / len(pares), 0.35)
 
     def test_ciudades_sin_pregunta_de_tiempo_repetida(self):
         for ruta in (r for r in TIENDA if r.startswith("/pasto-sintetico/envio/")):
@@ -153,7 +153,7 @@ class TiendaPublicadaTest(unittest.TestCase):
         # SEO fase 2c: el artículo de perros se fusionó aquí (301); la página ya no lo enlaza.
         self.assertNotIn('href="/blog/pasto-sintetico-para-perros"', cuerpo)
     def test_veinticinco_paginas_de_sintetico_con_plantilla(self):
-        self.assertEqual(len(TIENDA), 1 + 1 + 1 + 1 + len(data.MODELOS) + 11)  # + calculadora de rollos
+        self.assertEqual(len(TIENDA), 1 + 1 + 1 + 1 + len(data.MODELOS) + 19)  # + calculadora de rollos
 
     def test_scripts_en_orden(self):
         esperado = {"/pasto-sintetico": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed", "tienda-hub"],

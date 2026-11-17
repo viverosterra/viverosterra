@@ -8,12 +8,14 @@ SLUGS = {m["slug"] for m in MODELOS}
 
 
 class CiudadesTest(unittest.TestCase):
-    def test_once_ciudades(self):
-        self.assertEqual(len(CIUDADES), 11)
+    def test_diecinueve_ciudades(self):
+        self.assertEqual(len(CIUDADES), 19)  # 11 + 8 de la entrega C del SEO nacional (2026-11-16)
 
     def test_estado_valido_y_zona_esperada(self):
         esperado = {"cdmx": "A", "guadalajara": "A", "queretaro": "A", "san-luis-potosi": "A", "leon": "A",
-                    "puebla": "A", "monterrey": "B", "veracruz": "B", "merida": "C", "cancun": "C", "villahermosa": "C"}
+                    "puebla": "A", "monterrey": "B", "veracruz": "B", "merida": "C", "cancun": "C", "villahermosa": "C",
+                    "saltillo": "B", "torreon": "B", "chihuahua": "C", "hermosillo": "C", "tijuana": "C",
+                    "aguascalientes": "A", "toluca": "A", "morelia": "A"}
         for c in CIUDADES:
             self.assertEqual(zona_de(c["estado"]), esperado[c["slug"]], c["slug"])
 
