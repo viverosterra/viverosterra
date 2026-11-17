@@ -142,10 +142,10 @@ class PreguntasNavegadorTest(unittest.TestCase):
         page.locator(ABRIR).click()
         eventos = page.evaluate(
             "() => Array.from(window.dataLayer || []).map((a) => Array.from(a)).filter((a) => a[0] === 'event')")
-        self.assertIn(["event", "generate_lead", {"method": "whatsapp", "cta_id": "blog:hero:panel",
-                                                  "service": "pasto-sintetico", "preguntas": "respondidas"}], eventos)
-        # El clic original en el botón no se midió aparte.
-        self.assertFalse(any(e[2].get("cta_id") == "blog:hero" for e in eventos if e[1] == "generate_lead"))
+        # Un solo generate_lead, con el cta_id del botón de siempre y cómo se abrió el WhatsApp.
+        self.assertEqual([e for e in eventos if e[1] == "generate_lead"],
+                         [["event", "generate_lead", {"method": "whatsapp", "cta_id": "blog:hero",
+                                                      "service": "pasto-sintetico", "preguntas": "respondidas"}]])
 
     def test_no_desborda_en_cuatro_anchos(self):
         for ancho in (320, 375, 768, 1440):

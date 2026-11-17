@@ -196,6 +196,9 @@ class TiendaNavegadorTest(unittest.TestCase):
         page.evaluate("() => { document.querySelector('#buybar [data-cta-wa]').addEventListener('click', "
                       "(e) => e.preventDefault()); }")
         page.dispatch_event("#buybar [data-cta-wa]", "click")
+        # Spec del primer mensaje de WhatsApp (2026-11-16): la barra abre el panel; el lead se mide al abrir WhatsApp.
+        page.evaluate("() => { const a = document.querySelector('.vt-wa-panel__abrir'); "
+                      "a.addEventListener('click', (e) => e.preventDefault()); a.click(); }")
         leads = page.evaluate("() => Array.from(window.dataLayer || []).map((a) => Array.from(a))"
                               ".filter((a) => a[0] === 'event' && a[1] === 'generate_lead').map((a) => a[2].cta_id)")
         self.assertEqual(leads, ["tienda:barra"])

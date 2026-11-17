@@ -115,10 +115,9 @@
   const textoDe = (href) => {
     try { return new URL(href).searchParams.get('text') || ''; } catch (err) { return ''; }
   };
-  const numeroDe = (href) => {
-    try { return new URL(href).pathname.replace(/\D/g, ''); } catch (err) { return ''; }
-  };
-  const enlace = (numero, texto) => `https://wa.me/${numero}?text=${encodeURIComponent(texto + '\n\n' + FIRMA)}`;
+  // El número real de WhatsApp de Viveros Terra (datos.TELEFONO_WA; test_reglas lo verifica en cada archivo).
+  const TELEFONO = '528333268008';
+  const enlace = (texto) => `https://wa.me/${TELEFONO}?text=${encodeURIComponent(texto + '\n\n' + FIRMA)}`;
 
   function estadoTienda() {
     try {
@@ -146,10 +145,11 @@
     panel.setAttribute('aria-labelledby', 'vt-wa-titulo');
     panel.innerHTML = '<div class="vt-wa-panel__caja"><div class="vt-wa-panel__cab"><h2 id="vt-wa-titulo"></h2>'
       + '<button type="button" class="vt-wa-panel__cerrar" aria-label="Cerrar">×</button></div>'
-      + '<div class="vt-wa-panel__preguntas"></div><p class="vt-wa-panel__rotulo">El mensaje que se va a enviar</p>'
+      + '<div class="vt-wa-panel__preguntas"></div><div class="vt-wa-panel__pie">'
+      + '<p class="vt-wa-panel__rotulo">El mensaje que se va a enviar</p>'
       + '<p class="vt-wa-panel__vista" aria-live="polite"></p>'
       + '<a class="vt-btn vt-btn--wa vt-wa-panel__abrir" data-cta-wa target="_blank" rel="noopener">Abrir WhatsApp</a>'
-      + '<a class="vt-wa-panel__corto" data-cta-wa target="_blank" rel="noopener">Solo quiero contactarlos</a></div>';
+      + '<a class="vt-wa-panel__corto" data-cta-wa target="_blank" rel="noopener">Solo quiero contactarlos</a></div></div>';
     doc.body.appendChild(panel);
     panel.querySelector('.vt-wa-panel__cerrar').addEventListener('click', () => panel.close());
     panel.addEventListener('click', (e) => { if (e.target === panel) panel.close(); });
@@ -197,7 +197,6 @@
     const ctx = { fijo: datosPagina.fijo || {}, modelos, folio: root.VTFolio ? root.VTFolio.folio : null,
                   recordado: { ...leerVisita(sesion), ...(estado ? { estado } : {}) } };
     const r = respuestasIniciales(conjunto, ctx);
-    const numero = numeroDe(original.href);
     const cta = original.getAttribute('data-cta') || 'pagina:wa';
     const vista = p.querySelector('.vt-wa-panel__vista');
     const abrirWa = p.querySelector('.vt-wa-panel__abrir');
@@ -208,7 +207,7 @@
     const pintar = () => {
       const texto = armarMensaje(conjunto, r, ctx);
       vista.textContent = texto;
-      abrirWa.href = enlace(numero, texto);
+      abrirWa.href = enlace(texto);
       caja.querySelectorAll('[data-v]').forEach((b) => b.setAttribute('aria-pressed', String(r[b.dataset.q] === b.dataset.v)));
       const sel = caja.querySelector('select');
       if (sel) {
@@ -217,11 +216,11 @@
       }
     };
     preguntasVisibles(conjunto, ctx).forEach((q) => caja.appendChild(grupo(q, r, ctx, pintar)));
-    corto.href = enlace(numero, datosPagina.corto);
+    corto.href = enlace(datosPagina.corto);
     const al = (tipo) => () => {
       const respondidas = Object.keys(r).some((k) => r[k]);
       const valor = tipo === 'corto' ? 'solo-contacto' : (respondidas ? 'respondidas' : 'omitidas');
-      if (root.VTMedicion) root.VTMedicion.whatsapp(`${cta}:panel`, { preguntas: valor });
+      if (root.VTMedicion) root.VTMedicion.whatsapp(cta, { preguntas: valor });
       p.close();
     };
     abrirWa.onclick = al('abrir');
