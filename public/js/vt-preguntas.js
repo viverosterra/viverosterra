@@ -132,8 +132,11 @@
   // la cotización o la lista del cliente.
   function interceptable(a, e) {
     if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button > 0) return false;
-    if (a.closest('header, footer, dialog') || a.id === 'cot-send' || a.hasAttribute('data-vt-sin-preguntas')) return false;
-    return !/Folio web:|Mi lista/i.test(textoDe(a.href));
+    if (a.closest('.vt-head, .vt-foot, #vt-mmenu, dialog') || a.id === 'cot-send' || a.hasAttribute('data-vt-sin-preguntas')) return false;
+    // El botón del cotizador ya lleva el mensaje de la cotización (tienda-pasto.js); la barra de compra, solo si el
+    // cliente ya cotizó o armó su lista.
+    if (a.matches('[data-cta-wa]') && !a.closest('#buybar')) return false;
+    return !/Folio web:|Mi lista|Necesito \d/i.test(textoDe(a.href));
   }
 
   let panel = null;
