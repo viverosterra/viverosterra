@@ -1,0 +1,27 @@
+.vt-calculadora .vt-rollos{display:grid;gap:18px;max-width:880px}
+.vt-calculadora .vt-rollos__campos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.vt-calculadora .vt-rollos input{width:100%;min-height:48px;font-size:var(--vt-text-lg);font-weight:700;font-variant-numeric:tabular-nums}
+.vt-calculadora .vt-rollos__res{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin:0;border:1px solid var(--vt-line);background:var(--vt-line)}
+.vt-calculadora .vt-rollos__dato{padding:10px 12px;background:var(--vt-card)}
+.vt-calculadora .vt-rollos__dato dt{font-size:var(--vt-text-xs);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--vt-muted)}
+.vt-calculadora .vt-rollos__dato dd{margin:2px 0 0;font-size:var(--vt-text-base);font-weight:700;font-variant-numeric:tabular-nums;color:var(--vt-ink)}
+.vt-calculadora .vt-rollos__clave{grid-column:1/-1;background:var(--vt-field-deep);color:var(--vt-on-dark)}
+.vt-calculadora .vt-rollos__clave dt,.vt-calculadora .vt-rollos__clave dd{color:inherit}
+.vt-calculadora .vt-rollos__clave dd{font-size:var(--vt-text-h2);font-weight:800;line-height:1.1}
+.vt-calculadora .vt-rollos[data-valido="false"] .vt-rollos__res{opacity:.55}
+.vt-calculadora main .vt-rollos__nota{margin:0;font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
+.vt-calculadora main .vt-rollos__nota:not(:empty){padding:8px 12px;border-left:3px solid var(--vt-field);background:var(--vt-bone-2)}
+.vt-calculadora .vt-rollos__plano{margin:0}
+.vt-calculadora .vt-rollos__plano svg{display:block;width:100%;max-width:480px;height:auto}
+.vt-calculadora .vt-rollos__plano figcaption{margin-top:6px;font-size:var(--vt-text-xs);color:var(--vt-muted)}
+.vt-calculadora .vt-rollos__tira--0{fill:var(--vt-field)}
+.vt-calculadora .vt-rollos__tira--1{fill:var(--vt-field-deep)}
+.vt-calculadora .vt-rollos__sobra{fill:var(--vt-field-100);stroke:var(--vt-field);stroke-width:.04;stroke-dasharray:.15 .1}
+.vt-calculadora .vt-rollos__espacio{fill:none;stroke:var(--vt-ink);stroke-width:.08}
+.vt-calculadora .vt-rollos button{justify-self:start}
+.vt-calculadora #precio .vt-cotizador{max-width:640px;scroll-margin-top:calc(var(--vt-head-h) + 16px)}
+@media (min-width:768px){
+.vt-calculadora .vt-rollos{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;column-gap:32px}
+.vt-calculadora .vt-rollos__campos,.vt-calculadora .vt-rollos__res,.vt-calculadora .vt-rollos__nota,.vt-calculadora .vt-rollos button{grid-column:1}
+.vt-calculadora .vt-rollos__plano{grid-column:2;grid-row:1/span 4}
+}

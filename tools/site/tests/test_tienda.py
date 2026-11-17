@@ -42,7 +42,7 @@ class TiendaPublicadaTest(unittest.TestCase):
             with self.subTest(ruta=ruta):
                 for viejo in VIEJOS:
                     self.assertNotIn(viejo, texto)
-                self.assertIn('<body class="vt-pagina vt-tienda">', texto)
+                self.assertRegex(texto, r'<body class="vt-pagina vt-tienda( vt-calculadora)?">')  # calculadora: su hoja
                 self.assertRegex(texto, r'<link rel="stylesheet" href="/css/terra-tienda\.[0-9a-f]{10}\.css">')
                 self.assertNotIn("<style", texto)
 
@@ -153,7 +153,7 @@ class TiendaPublicadaTest(unittest.TestCase):
         # SEO fase 2c: el artículo de perros se fusionó aquí (301); la página ya no lo enlaza.
         self.assertNotIn('href="/blog/pasto-sintetico-para-perros"', cuerpo)
     def test_veinticinco_paginas_de_sintetico_con_plantilla(self):
-        self.assertEqual(len(TIENDA), 1 + 1 + 1 + len(data.MODELOS) + 11)
+        self.assertEqual(len(TIENDA), 1 + 1 + 1 + 1 + len(data.MODELOS) + 11)  # + calculadora de rollos
 
     def test_scripts_en_orden(self):
         esperado = {"/pasto-sintetico": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed", "tienda-hub"],

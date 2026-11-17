@@ -20,7 +20,8 @@ MENU = (
      "nota": f"desde ${P['sintetico_tienda_m2']}/m²",
      "items": (("Instalado en Tampico", "/pasto-sintetico-tampico"),
                ("Tienda con envío a todo México", "/pasto-sintetico"),
-               ("Para perros", "/pasto-sintetico/perros"))},
+               ("Para perros", "/pasto-sintetico/perros"),
+               ("¿Cuántos rollos necesito?", "/pasto-sintetico/cuantos-rollos"))},
     # En celular, "Servicios de jardín" (reescritura 19); en escritorio no cabe y se queda "Jardín" (medido a 1100 px).
     {"id": "jardin", "texto": "Jardín", "texto_movil": "Servicios de jardín", "href": None,
      "nota": f"desde ${P['mantenimiento_mes']}/mes",
@@ -89,7 +90,7 @@ FUENTE_PRINCIPAL = "/fonts/archivo-latin.woff2"
 
 
 def head(urls, tienda=False, plantas=False, materiales=False, precios=False, util=False, blog=False, nochebuenas=False,
-         temporada=False, obras=False, inicio=False):
+         temporada=False, obras=False, inicio=False, calculadora=False):
     """Favicon cuadrado (SVG y PNG de 192; /favicon.ico vive en la raíz de public/), geo de la tienda, fuente principal
     precargada, CSS del shell,
     GA4 una sola vez y terra.js diferido. Con tienda=True (páginas <body class="vt-pagina vt-tienda">), también
@@ -113,6 +114,8 @@ def head(urls, tienda=False, plantas=False, materiales=False, precios=False, uti
     ]
     if tienda:
         lineas.append(f'<link rel="stylesheet" href="{urls["terra-tienda.css"]}">')
+    if calculadora:  # /pasto-sintetico/cuantos-rollos (<body class="… vt-calculadora">, Entrega B 2026-11-16)
+        lineas.append(f'<link rel="stylesheet" href="{urls["terra-calculadora.css"]}">')
     if plantas:
         lineas.append(f'<link rel="stylesheet" href="{urls["terra-plantas.css"]}">')
     if materiales:

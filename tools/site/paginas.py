@@ -14,7 +14,7 @@ SIN_BARRA = {"tienda", "catalogo"}
 RUTAS_SIN_BARRA = {"/cuestionario", "/gracias", "/datos-envio", "/pasto-sintetico-tampico",
                    datos.NOCHEBUENAS["ruta"]}
 # Páginas de la tienda sin cotizador ni #buybar (Etapa 2b): llevan la barra móvil del shell.
-RUTAS_CON_BARRA = {"/pasto-sintetico/perros"}
+RUTAS_CON_BARRA = {"/pasto-sintetico/perros", "/pasto-sintetico/cuantos-rollos"}
 
 _PLANTAS = ("plantas", "plantas", "plantas")
 _MATERIAL = ("material", "plantas", "materiales")
