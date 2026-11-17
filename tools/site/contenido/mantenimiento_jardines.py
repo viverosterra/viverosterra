@@ -164,10 +164,10 @@ PASOS = (
 
 FIGURAS = (
     {"src": f"{OBRA}/mantenimiento-jardin-tropical-tampico.webp", "ancho": 960, "alto": 640, "numero": 2,
-     "alt": "Jardín residencial tropical con pasto y plantas recién podadas.",
+     "alt": "Jardinera con malangas de hoja grande y setos junto a un área de pasto, frente a una casa moderna.",
      "lugar": "Jardín residencial tropical", "etapa": "Mantenimiento mensual"},
     {"src": f"{OBRA}/mantenimiento-areas-verdes-empresa.webp", "ancho": 640, "alto": 961, "numero": 3,
-     "alt": "Áreas verdes de una empresa con pasto cortado y arriates.",
+     "alt": "Andador curvo entre gramíneas, follaje morado, pasto y árboles jóvenes en un área verde ajardinada.",
      "lugar": "Áreas verdes de empresa", "etapa": "Mantenimiento programado"},
     {"src": f"{OBRA}/mantenimiento-jardin-residencial-pasto.webp", "ancho": 640, "alto": 961, "numero": 4,
      "alt": "Jardín residencial con pasto parejo y plantas ornamentales.",
@@ -313,10 +313,10 @@ CONTENIDO = {
              "texto": (f"Pasto desde {dinero(P['pasto_solo_m2'])}/m² · Instalado desde "
                        f"{dinero(P['pasto_instalado_m2'])}/m². {datos.TERRENO_LISTO_CORTO}")},
             {"titulo": "Diseño de Jardines", "href": "/diseno-jardines-tampico",
-             "img": f"{OBRA}/diseno-jardin-paisajismo-tampico.webp", "ancho": 640, "alto": 427,
+             "img": "/img/obra/terra/diseno-jardines-01-muro-de-piedra-con-jardinera-640.webp", "ancho": 640, "alto": 495,
              "texto": f"Plan Terra desde {dinero(P['diseno'])} · Propuesta visual"},
             {"titulo": "Sistema de Riego", "href": "/sistema-riego-tampico",
-             "img": f"{OBRA}/instalacion-tuberia-riego-jardin.webp", "ancho": 900, "alto": 600,
+             "img": "/img/obra/terra/sistema-riego-02-chorros-cruzados-en-campo-640.webp", "ancho": 640, "alto": 439,
              "texto": f"Automatizado · Ahorra {datos.RIEGO_AHORRO} de agua"},
             # SEO fase 2a (2026-11-11): la poda de árboles y palmas y el derribo tienen su página.
             {"titulo": "Poda de árboles en Tampico", "href": "/poda-arboles-tampico",

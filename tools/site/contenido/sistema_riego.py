@@ -281,7 +281,7 @@ CONTENIDO = {
              "texto": (f"San Agustín desde {dinero(P['pasto_solo_m2'])}/m² · Instalado desde "
                        f"{dinero(P['pasto_instalado_m2'])}/m². {datos.TERRENO_LISTO_CORTO}")},
             {"titulo": "Diseño de Jardines", "href": "/diseno-jardines-tampico",
-             "img": f"{OBRA}/diseno-jardin-paisajismo-tampico.webp", "ancho": 640, "alto": 427,
+             "img": "/img/obra/terra/diseno-jardines-01-muro-de-piedra-con-jardinera-640.webp", "ancho": 640, "alto": 495,
              "texto": f"Plan Terra desde {dinero(P['diseno'])} · Propuesta visual incluida"},
             {"titulo": "Mantenimiento", "href": "/mantenimiento-jardines-tampico",
              "img": f"{OBRA}/mantenimiento-jardin-poda-tampico.webp", "ancho": 640, "alto": 960,

@@ -32,8 +32,8 @@ DISENO = (f"Esencial de {dinero(P['diseno'])}, Completo de {dinero(P['diseno_com
 # lugar, etapa)
 FOTOS = {
     "jardineria-lomas-de-rosales-tampico": ("diseno-jardines-tampico-proyecto", 960, 1574,
-                                            "Jardín residencial diseñado por Viveros Terra en Tampico", "Tampico",
-                                            "Terminado"),
+                                            "Alocasias, filodendro y helechos junto a un muro de piedra", "Follaje de sombra",
+                                            "Plantas"),
     "jardineria-country-club-tampico": ("jardin-residencial-tropical-tampico", 960, 640,
                                         "Jardín residencial con plantas tropicales en Tampico",
                                         "Jardín con plantas tropicales", "Tampico"),
@@ -44,11 +44,11 @@ FOTOS = {
                                              "Aspersores de riego automático funcionando en un jardín",
                                              "Sistema de riego por aspersión", "Instalado"),
     "jardineria-ciudad-madero": ("diseno-jardines-madero-altamira-pasto", 960, 640,
-                                 "Jardín con pasto San Agustín atendido por Viveros Terra", "Pasto San Agustín",
-                                 "Jardín atendido"),
+                                 "Jardín con césped, macizo de ixoras y cica frente a ventanales", "Ixoras y cica",
+                                 "Jardín"),
     "jardineria-altamira": ("jardineria-areas-verdes-tampico", 793, 1190,
-                            "Áreas verdes con pasto San Agustín atendidas por Viveros Terra", "Áreas verdes",
-                            "Jardín atendido"),
+                            "Área verde con andador, árboles jóvenes, pastos ornamentales y macizos de plantas", "Áreas verdes",
+                            "Área común"),
 }
 
 ZONAS = {

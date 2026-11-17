@@ -52,11 +52,11 @@ META = {
 }
 FIGURAS = (
     {"src": "/img/tezontle-rojo-jardin-tampico-sendero.webp", "ancho": 194, "alto": 259, "numero": 1,
-     "alt": "Jardín residencial con tezontle rojo y pasto en Tampico", "lugar": "Tezontle y pasto", "etapa": "Jardín"},
+     "alt": "Sendero curvo de tezontle rojo con bordillo de ladrillo entre el pasto", "lugar": "Tezontle y pasto", "etapa": "Jardín"},
     {"src": "/img/tezontle-rojo-jardin-lateral-tampico.webp", "ancho": 259, "alto": 194, "numero": 2,
-     "alt": "Sendero lateral de tezontle rojo en un jardín de Tampico", "lugar": "Sendero lateral", "etapa": "Jardín"},
+     "alt": "Pasillo lateral con tezontle rojo, pasos de piedra y lavanda", "lugar": "Sendero lateral", "etapa": "Jardín"},
     {"src": "/img/tezontle-rojo-bordillo-jardin-tampico.webp", "ancho": 259, "alto": 195, "numero": 3,
-     "alt": "Tezontle rojo con bordillo decorativo en un jardín residencial de Tampico", "lugar": "Con bordillo",
+     "alt": "Patio con pasto, pasos de piedra y arriates cubiertos de tezontle rojo", "lugar": "Con bordillo",
      "etapa": "Arriate"},
 )
 USOS = (

@@ -197,7 +197,7 @@ FIGURAS = (
      "alt": "Jardín residencial con pasto, arriates y plantas ornamentales.",
      "lugar": "Tampico", "etapa": "Terminado"},
     {"src": f"{OBRA}/diseno-jardin-pasto-madero.webp", "ancho": 640, "alto": 427, "numero": 4,
-     "alt": "Jardín con pasto San Agustín y plantas en Ciudad Madero.",
+     "alt": "Arriate curvo con ixoras, helechos y una cica junto a pasto.",
      "lugar": "Ciudad Madero", "etapa": "Terminado"},
 )
 
@@ -230,7 +230,7 @@ CONTENIDO = {
                  "srcset": ("/img/portadas/diseno-jardines-tampico-proyecto-sm.webp 560w, "
                             "/img/portadas/diseno-jardines-tampico-proyecto.webp 960w"),
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 960, "alto": 1574, "numero": 1,
-                 "alt": "Jardín residencial diseñado por Viveros Terra en Tampico",
+                 "alt": "Alocasias, filodendro y helechos junto a un muro de piedra",
                  "lugar": "Tampico", "etapa": "Terminado"},
     },
     "prueba": {
@@ -329,7 +329,7 @@ CONTENIDO = {
              "texto": (f"Pasto desde {dinero(P['pasto_solo_m2'])}/m² · Instalado desde "
                        f"{dinero(P['pasto_instalado_m2'])}/m². {datos.TERRENO_LISTO_CORTO}")},
             {"titulo": "Sistema de Riego", "href": "/sistema-riego-tampico",
-             "img": f"{OBRA}/instalacion-tuberia-riego-jardin.webp", "ancho": 900, "alto": 600,
+             "img": "/img/obra/terra/sistema-riego-02-chorros-cruzados-en-campo-640.webp", "ancho": 640, "alto": 439,
              "texto": f"Automatizado · Ahorra {datos.RIEGO_AHORRO} de agua"},
             {"titulo": "Mantenimiento de Jardines", "href": "/mantenimiento-jardines-tampico",
              "img": f"{OBRA}/mantenimiento-jardin-poda-tampico.webp", "ancho": 640, "alto": 960,

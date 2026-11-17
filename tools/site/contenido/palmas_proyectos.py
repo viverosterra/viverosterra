@@ -151,10 +151,10 @@ FIGURAS = (
      "alt": "Palmas en costal listas para entrega en el patio del vivero.", "lugar": "Patio del vivero",
      "etapa": "Palmas para entrega"},
     {"src": "/img/especie-coco-plumoso-tampico.webp", "ancho": 466, "alto": 700, "numero": 3,
-     "alt": "Coco plumoso (Syagrus romanzoffiana) en nuestro vivero.", "lugar": "Coco plumoso",
+     "alt": "Hilera de palmas coco plumoso en bolsa en nuestro vivero.", "lugar": "Coco plumoso",
      "etapa": "En nuestro vivero"},
     {"src": "/img/especie-palma-areca-tampico.webp", "ancho": 700, "alto": 525, "numero": 4,
-     "alt": "Palma areca (Dypsis lutescens) en nuestro vivero.", "lugar": "Palma areca",
+     "alt": "Palmas areca en jardineras negras de nuestro vivero.", "lugar": "Palma areca",
      "etapa": "En nuestro vivero"},
 )
 
@@ -208,7 +208,7 @@ CONTENIDO = {
                  "srcset": ("/img/portadas/palmas-reales-mayoreo-vivero-tampico-sm.webp 560w, "
                             "/img/portadas/palmas-reales-mayoreo-vivero-tampico.webp 694w"),
                  "sizes": "(min-width: 1024px) 560px, 100vw", "ancho": 694, "alto": 1041, "numero": 1,
-                 "alt": "Palmas reales en el vivero listas para proyecto", "lugar": "Palmas reales en el vivero",
+                 "alt": "Palmas con el cepellón envuelto, listas para entrega en el vivero", "lugar": "Palmas en el vivero",
                  "etapa": "Para proyecto"},
     },
     "prueba": {

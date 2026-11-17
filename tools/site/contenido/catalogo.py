@@ -57,7 +57,7 @@ CONTENIDO = {
          "img": "/img/portadas/instalacion-pasto-rollo-san-agustin-tampico-sm.webp", "ancho": 560, "alto": 840},
         {"titulo": "Pasto sintético", "href": "/pasto-sintetico",
          "texto": f"Envío a todo México desde {dinero(P['sintetico_tienda_m2'])}/m².",
-         "img": "/img/pasto-sintetico-proyecto-01.webp", "ancho": 900, "alto": 756},
+         "img": "/img/obra/terra/pasto-sintetico-03-patio-con-pasto-sintetico-640.webp", "ancho": 640, "alto": 725},
         {"titulo": "Tierra negra", "href": "/tierra-negra-vegetal-tampico",
          "texto": f"Costal {dinero(P['tierra_negra_costal'])} · m³ {dinero(P['tierra_negra_m3'])}.",
          "img": "/img/portadas/camion-tierra-negra-entrega-tampico-sm.webp", "ancho": 560, "alto": 373})},

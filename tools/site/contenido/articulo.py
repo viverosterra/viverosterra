@@ -8,7 +8,7 @@ from pathlib import Path
 
 import datos
 import paginas
-from contenido import blog_clusters
+from contenido import blog_clusters, fotos_paso1
 
 DIR = Path(__file__).resolve().parent / "blog"
 CLAVES = tuple(sorted(p.stem for p in DIR.glob("*.html")))
@@ -78,7 +78,10 @@ class _Pagina:
             "relacionados_titulo": doc["relacionados_titulo"], "relacionados": tuple(doc["relacionados"]),
             "portada": PORTADAS.get(slug),
         }
-        self.PARIDAD = {**(doc.get("paridad") or {"reemplazos": {}, "retirados": {}}), "jsonld": {"Organization": M_AUTOR, **({"ImageObject": M_LOGO} if "ImageObject" in json.dumps(doc["jsonld"]) else {})},
+        base = doc.get("paridad") or {"reemplazos": {}, "retirados": {}}
+        if slug in fotos_paso1.OG:  # revisión de fotos, paso 1: la imagen al compartir es la portada nueva
+            base = {**base, "meta": {**base.get("meta", {}), "og:image": (datos.SITIO + fotos_paso1.OG[slug], fotos_paso1.MOTIVO)}}
+        self.PARIDAD = {**base, "jsonld": {"Organization": M_AUTOR, **({"ImageObject": M_LOGO} if "ImageObject" in json.dumps(doc["jsonld"]) else {})},
                         "hero": HERO, "terreno": TERRENO, "ritmo": RITMO, **({"portada": PORTADA} if slug in PORTADAS else {})}
 
 

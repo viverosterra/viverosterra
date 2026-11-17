@@ -68,18 +68,18 @@ PORTADA_FOTO = {
     "etapa": "Tampico"}
 FIGURAS_QUE_ES = (
     _figura("/img/tierra-negra-preparacion-pasto-tampico.webp", 1400, 787, 2,
-            "Tierra negra vegetal extendida para instalar pasto en un jardín de Tampico", "Base para pasto", "Preparación"),
+            "Textura de tierra negra fina y suelta", "Base para pasto", "Preparación"),
     _figura("/img/tierra-negra-camion-volteo-tampico.webp", 821, 471, 3,
-            "Entrega de tierra negra en camión volteo en Tampico", "Camión volteo", "Entrega a granel"),
+            "Manos sosteniendo tierra negra con materia orgánica", "Tierra negra", "Textura"),
     _figura("/img/tierra-negra-suministro-jardin-tampico.webp", 1400, 787, 4,
-            "Tierra negra con materia orgánica para jardines en Tampico", "Tierra negra", "En el jardín"),
+            "Tierra recién extendida con línea de riego para preparar el jardín", "Tierra negra", "En el jardín"),
 )
 FIGURAS_GALERIA = (
     _figura("/img/camion-tierra-negra-descarga-tampico.webp", 1053, 1018, 5,
-            "Camión de Viveros Terra descargando tierra negra en una obra de jardinería en Tampico", "Descarga en obra",
+            "Camión de volteo descargando tierra negra a granel", "Descarga en obra",
             "Camión volteo"),
     _figura("/img/tierra-negra-vegetal-costales-tampico.webp", 1400, 933, 6,
-            "Costales de tierra negra vegetal de Viveros Terra", "Costales", "Por costal"),
+            "Costales de tierra apilados y carretilla con sustrato", "Costales", "Por costal"),
     _figura("/img/tierra-negra-sacos-viveros-terra.webp", 1400, 933, 7, "Tierra negra vegetal en sacos para jardín",
             "Sacos de tierra negra", "Por costal"),
 )

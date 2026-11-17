@@ -85,7 +85,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/jardineria-profesional-tampico-empresa.webp",
-      "alt": "Árboles para banqueta en Tampico",
+      "alt": "Jardinero arrodillado junto a un filodendro con tijeras de podar",
       "ancho": 1536,
       "alto": 1024
      },
@@ -98,10 +98,10 @@
      "href": "/blog/cuidados-palma-del-viajero-ravenala",
      "foto": {
       "tipo": "foto",
-      "src": "/img/plantas-tropicales-tampico-viveros.webp",
-      "alt": "Palma del Viajero en Tampico",
-      "ancho": 1024,
-      "alto": 1536
+      "src": "/img/especie-palma-viajera-tampico.webp",
+      "alt": "Palma del viajero (Ravenala madagascariensis) con sus hojas en abanico",
+      "ancho": 700,
+      "alto": 466
      },
      "categoria": "Palmas",
      "titulo": "Palma del Viajero: Guía Completa (Crece el Doble en Tampico)",
@@ -113,7 +113,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/pasto-en-rollo-san-agustin-tampico.webp",
-      "alt": "Pasto San Agustín vs Japonés en Tampico",
+      "alt": "Trabajador de Viveros Terra descarga pasto en rollo de una camioneta a una carretilla",
       "ancho": 1024,
       "alto": 1264
      },
@@ -132,7 +132,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/especie-palma-bambu-chamaedorea-tampico.webp",
-      "alt": "Palma bambú Chamaedorea en Tampico",
+      "alt": "Palma bambú (Chamaedorea) en maceta",
       "ancho": 575,
       "alto": 700
      },
@@ -146,7 +146,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/jardineria-profesional-tampico-empresa.webp",
-      "alt": "Jardín en Tampico pensado para perros y gatos",
+      "alt": "Jardinero arrodillado junto a un filodendro con tijeras de podar",
       "ancho": 1536,
       "alto": 1024
      },
@@ -171,13 +171,6 @@
     },
     {
      "href": "/blog/palma-bismarckia-bismarckia-nobilis-tampico",
-     "foto": {
-      "tipo": "foto",
-      "src": "/img/jardin-residencial-tropical-tampico.webp",
-      "alt": "Palma Bismarckia en Tampico",
-      "ancho": 1536,
-      "alto": 1024
-     },
      "categoria": "Palmas",
      "titulo": "Palma Bismarckia en Tampico: cuidados, tamaños y guía completa",
      "texto": "Hojas plateado-azuladas, sol pleno y riego moderado: tamaños de 1 a 4 m. Cotiza por WhatsApp.",
@@ -199,13 +192,6 @@
     },
     {
      "href": "/blog/palma-triangular-dypsis-decaryi-tampico",
-     "foto": {
-      "tipo": "foto",
-      "src": "/img/especie-palma-triangulo-tampico.webp",
-      "alt": "Palma Triangular Dypsis decaryi en Tampico",
-      "ancho": 700,
-      "alto": 700
-     },
      "categoria": "Palmas",
      "titulo": "Palma Triangular en Tampico: cuidados, tamaños y guía completa",
      "texto": "Hojas plateadas y tronco en forma de triángulo: sol pleno, riego moderado y alturas de 1 a 4 m. Cotiza por WhatsApp.",
@@ -216,7 +202,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/plantas-tropicales-tampico-viveros.webp",
-      "alt": "Proteger plantas de los nortes en Tampico",
+      "alt": "Alocasia de hojas grandes con helechos al pie frente a un muro verde",
       "ancho": 1024,
       "alto": 1536
      },
@@ -229,10 +215,10 @@
      "href": "/blog/duranta-erecta-tampico-cuidados-seto",
      "foto": {
       "tipo": "foto",
-      "src": "/img/plantas-ornamentales-tampico-viveros-terra.webp",
-      "alt": "Duranta erecta en Tampico",
-      "ancho": 1024,
-      "alto": 1536
+      "src": "/img/obra/terra/mantenimiento-jardines-02-recorte-de-seto-a-mano.webp",
+      "alt": "Colaborador de Viveros Terra recortando un seto con tijeras de mano",
+      "ancho": 973,
+      "alto": 1200
      },
      "categoria": "Plantas · Arbustos",
      "titulo": "Duranta en Tampico: cuidados, poda y cómo hacer un seto florido",
@@ -244,7 +230,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/especie-palma-cola-zorra-tampico.webp",
-      "alt": "Palma Cola de Zorro Wodyetia bifurcata en Tampico",
+      "alt": "Ilustración de palma cola de zorro (Wodyetia bifurcata)",
       "ancho": 700,
       "alto": 700
      },
@@ -257,10 +243,10 @@
      "href": "/blog/acolchado-mulch-jardin-tampico",
      "foto": {
       "tipo": "foto",
-      "src": "/img/jardin-residencial-tropical-tampico.webp",
-      "alt": "Acolchado mulch en el jardín en Tampico",
-      "ancho": 1536,
-      "alto": 1024
+      "src": "/img/plantacion-arbol-jardin-residencial-tampico.webp",
+      "alt": "Carretilla con mulch y costales apilados",
+      "ancho": 1400,
+      "alto": 1866
      },
      "categoria": "Jardines · Guías",
      "titulo": "Acolchado (mulch) en el jardín en Tampico: qué usar y cómo aplicarlo",
@@ -272,7 +258,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/tierra-negra-jardin-tampico.webp",
-      "alt": "Cómo evitar encharcamientos en el jardín en Tampico",
+      "alt": "Patio con tierra recién extendida y línea de riego, listo para jardín",
       "ancho": 933,
       "alto": 1400
      },
@@ -283,13 +269,6 @@
     },
     {
      "href": "/blog/palma-kerpis-howea-forsteriana-tampico",
-     "foto": {
-      "tipo": "foto",
-      "src": "/img/especie-palma-kerpis-tampico.webp",
-      "alt": "Palma Kerpis Howea forsteriana en Tampico",
-      "ancho": 641,
-      "alto": 700
-     },
      "categoria": "Palmas",
      "titulo": "Palma Kerpis en Tampico: cuidados, precio y guía completa",
      "texto": "La palma de interior más elegante: tolera luz baja y crece lento.",
@@ -300,7 +279,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/especie-coco-plumoso-tampico.webp",
-      "alt": "Palma Coco Plumoso Syagrus romanzoffiana en Tampico",
+      "alt": "Hilera de palmas coco plumoso en bolsa listas para plantar",
       "ancho": 466,
       "alto": 700
      },
@@ -314,7 +293,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/jardin-residencial-tropical-tampico.webp",
-      "alt": "Plagas comunes del jardín en temporada de lluvias en Tampico",
+      "alt": "Jardín con plantas de hoja grande, seto y pasto junto a una casa moderna",
       "ancho": 1536,
       "alto": 1024
      },
@@ -328,7 +307,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/jardin-residencial-tropical-tampico.webp",
-      "alt": "Hongos en plantas por exceso de humedad en Tampico",
+      "alt": "Jardín con plantas de hoja grande, seto y pasto junto a una casa moderna",
       "ancho": 1536,
       "alto": 1024
      },
@@ -342,7 +321,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/especie-palma-areca-tampico.webp",
-      "alt": "Palma Areca Dypsis lutescens en Tampico",
+      "alt": "Palmas areca en jardineras negras junto a un ventanal",
       "ancho": 700,
       "alto": 525
      },
@@ -356,7 +335,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/mantenimiento-jardines-poda-pasto-tampico.webp",
-      "alt": "Cómo podar árboles y palmas en Tampico",
+      "alt": "Jardinero con camisa de Viveros Terra cortando el pasto con podadora",
       "ancho": 1024,
       "alto": 1536
      },
@@ -370,7 +349,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/especie-palma-washingtonia-tampico.webp",
-      "alt": "Palma Washingtona Washingtonia robusta en Tampico",
+      "alt": "Hilera de palmas Washingtonia en maceta en un vivero",
       "ancho": 700,
       "alto": 700
      },
@@ -384,7 +363,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/plantas-ornamentales-tampico-viveros-terra.webp",
-      "alt": "Jardín vertical con plantas ornamentales en Tampico",
+      "alt": "Laurel rosa con flores rosas en una jardinera blanca",
       "ancho": 1024,
       "alto": 1536
      },
@@ -412,7 +391,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/palma-real-jardin-residencial-tampico.webp",
-      "alt": "Palma Real Roystonea regia en Tampico",
+      "alt": "Palma alta de tronco liso en un jardín con pasto y muro blanco",
       "ancho": 900,
       "alto": 1600
      },
@@ -426,7 +405,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/mantenimiento-jardines-poda-pasto-tampico.webp",
-      "alt": "Proteger jardín en temporada de huracanes Tampico",
+      "alt": "Jardinero con camisa de Viveros Terra cortando el pasto con podadora",
       "ancho": 1024,
       "alto": 1536
      },
@@ -440,7 +419,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/pasto-sintetico/toscana-28.jpg",
-      "alt": "Precios pasto sintético México 2026",
+      "alt": "Muestra de pasto sintético Toscana de 28 mm vista de cerca",
       "ancho": 800,
       "alto": 800
      },
@@ -453,10 +432,10 @@
      "href": "/pasto-sintetico/perros",
      "foto": {
       "tipo": "foto",
-      "src": "/img/pasto-sintetico-residencial-tampico.webp",
-      "alt": "Pasto sintético para perros y mascotas",
-      "ancho": 1024,
-      "alto": 1536
+      "src": "/img/obra/terra/pasto-sintetico-03-patio-con-pasto-sintetico.webp",
+      "alt": "Patio con pasto sintético recién instalado por Viveros Terra, con muro blanco y una palma",
+      "ancho": 1038,
+      "alto": 1176
      },
      "categoria": "Pasto Sintético",
      "titulo": "Pasto sintético para perros: limpieza, olor y modelos",
@@ -468,7 +447,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/pasto-sintetico/japones-35.jpg",
-      "alt": "Qué altura de pasto sintético elegir",
+      "alt": "Muestra de pasto sintético Japonés de 35 mm vista desde arriba",
       "ancho": 800,
       "alto": 800
      },
@@ -482,7 +461,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/pasto-sintetico-tampico-instalacion.webp",
-      "alt": "Cómo instalar pasto sintético tú mismo",
+      "alt": "Pasto sintético con cajete de tierra alrededor de un árbol, junto a un muro de piedra",
       "ancho": 1400,
       "alto": 933
      },
@@ -496,7 +475,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/pasto-sintetico-artificial-casa-tampico.webp",
-      "alt": "Pasto sintético y calor en México",
+      "alt": "Instalación de pasto frente a un edificio moderno con alberca",
       "ancho": 1080,
       "alto": 1350
      },
@@ -510,7 +489,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/diseno-jardines-tampico-proyecto.webp",
-      "alt": "Precios jardín Tampico 2026",
+      "alt": "Jardín de sombra con alocasias, filodendro y helechos junto a un muro de piedra",
       "ancho": 1290,
       "alto": 2115
      },
@@ -524,7 +503,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/instalacion-pasto-san-agustin-jardin-residencial-tampico-madero.webp",
-      "alt": "Césped amarillo causas y soluciones Tampico",
+      "alt": "Jardín con pasto verde frente a una casa moderna con palmas",
       "ancho": 1280,
       "alto": 720
      },
@@ -537,10 +516,10 @@
      "href": "/blog/palmas-para-jardin-tampico",
      "foto": {
       "tipo": "foto",
-      "src": "/img/plantas-tropicales-tampico-viveros.webp",
-      "alt": "Palmas para jardines en Tampico",
-      "ancho": 1024,
-      "alto": 1536
+      "src": "/img/obra/palmas-en-costal-vivero.webp",
+      "alt": "Palmas con el cepellón envuelto en costal en el patio de Viveros Terra",
+      "ancho": 640,
+      "alto": 961
      },
      "categoria": "Palmas",
      "titulo": "8 palmas para jardín en Tampico, con precios",
@@ -552,7 +531,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/jardin-residencial-plantas-pasto-tampico.webp",
-      "alt": "Jardín bajo presupuesto Tampico",
+      "alt": "Jardín residencial con arbustos, cintas variegadas, pasto y un árbol joven",
       "ancho": 933,
       "alto": 1400
      },
@@ -566,7 +545,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/pasto-en-rollo-san-agustin-tampico.webp",
-      "alt": "Errores pasto San Agustín Tampico",
+      "alt": "Trabajador de Viveros Terra descarga pasto en rollo de una camioneta a una carretilla",
       "ancho": 1024,
       "alto": 1264
      },
@@ -580,7 +559,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/tierra-negra-jardin-tampico.webp",
-      "alt": "Tierra negra costal o camión Tampico",
+      "alt": "Patio con tierra recién extendida y línea de riego, listo para jardín",
       "ancho": 933,
       "alto": 1400
      },
@@ -594,7 +573,7 @@
      "foto": {
       "tipo": "foto",
       "src": "/img/instalacion-riego-tuberias-jardines-tampico.webp",
-      "alt": "Sistema riego automático Tampico ROI",
+      "alt": "Cuadrilla con chaleco Terra instalando tubería y conexiones de riego en una zanja",
       "ancho": 900,
       "alto": 675
      },
@@ -607,10 +586,10 @@
      "href": "/blog/como-medir-plantas-altura-cepellon",
      "foto": {
       "tipo": "foto",
-      "src": "/img/plantas-ornamentales-tampico-viveros-terra.webp",
-      "alt": "Cómo medir plantas altura cepellón",
-      "ancho": 1024,
-      "alto": 1536
+      "src": "/img/portadas/palmas-reales-mayoreo-vivero-tampico.webp",
+      "alt": "Palmas con el cepellón envuelto, listas para entrega en el vivero",
+      "ancho": 694,
+      "alto": 1041
      },
      "categoria": "Guías",
      "titulo": "Cómo se miden las plantas: altura, cepellón, fronda",
