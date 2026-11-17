@@ -137,7 +137,11 @@ CONTENIDO = {
                  "lede": ("Precio puesto con el modelo más económico, envío incluido. Enviamos a los 32 estados; estas son "
                           "las ciudades con guía propia."),
                  "perros": ('¿Tienes perros? Lee <a href="/pasto-sintetico/perros">qué pasto sintético conviene para '
-                            "mascotas</a>.")},
+                            "mascotas</a>. Más guías: "  # entrega D del SEO nacional (2026-11-16)
+                            '<a href="/pasto-sintetico/azotea">en azotea</a>, '
+                            '<a href="/pasto-sintetico/alberca">para alberca</a>, '
+                            '<a href="/pasto-sintetico/ancho-del-rollo">rollo de 2 m o de 3.66 m</a> y '
+                            '<a href="/pasto-sintetico/vs-natural">sintético o natural</a>.')},
     "comparativa": {"titulo": "Comparativa de modelos por altura, peso y precio",
                     "nota": ("Rollos de 2 m de ancho, 50 m² por rollo. Precios por rollo completo con IVA incluido. El "
                              "envío se suma según tu estado.")},

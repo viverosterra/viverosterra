@@ -85,6 +85,11 @@ SECCIONES = (
         ("Cuánto cuesta el pasto sintético en México", "/blog/cuanto-cuesta-pasto-sintetico-mexico",
          "precios por modelo y por ciudad"),
         ("Sintético o natural", "/blog/pasto-sintetico-vs-natural-tampico", "comparativa para el clima de Tampico"),
+        # Entrega D del SEO nacional (2026-11-16): guías de la tienda.
+        ("Pasto sintético o natural en México", "/pasto-sintetico/vs-natural", "agua, mantenimiento, heladas y calor por región"),
+        ("Pasto sintético en azotea", "/pasto-sintetico/azotea", "peso por m² y por rollo de cada modelo; instalación sin clavos"),
+        ("Pasto sintético para alberca", "/pasto-sintetico/alberca", "drenaje, desnivel y cuidados con cloro y sal"),
+        ("Rollo de 2 m o de 3.66 m", "/pasto-sintetico/ancho-del-rollo", "uniones y sobrante en medidas comunes de patio"),
         # Entrega A del SEO nacional (2026-11-16): cada modelo y cada ciudad con envío, para que un asistente los cite.
         *((f"Pasto sintético {m['nombre']}", f"/pasto-sintetico/{m['slug']}",
            f"{m['mm']} mm, {m['peso']} g/m², " + (f"garantía de {m['garantia']} años, " if m["garantia"] else "")

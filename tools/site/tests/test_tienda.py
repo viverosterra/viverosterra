@@ -153,7 +153,7 @@ class TiendaPublicadaTest(unittest.TestCase):
         # SEO fase 2c: el artículo de perros se fusionó aquí (301); la página ya no lo enlaza.
         self.assertNotIn('href="/blog/pasto-sintetico-para-perros"', cuerpo)
     def test_veinticinco_paginas_de_sintetico_con_plantilla(self):
-        self.assertEqual(len(TIENDA), 1 + 1 + 1 + 1 + len(data.MODELOS) + 19)  # + calculadora de rollos
+        self.assertEqual(len(TIENDA), 1 + 1 + 1 + 1 + len(data.MODELOS) + 19 + 4)  # + 4 guías (entrega D)  # + calculadora de rollos
 
     def test_scripts_en_orden(self):
         esperado = {"/pasto-sintetico": ["vt-mensualidades", "vt-folio", "tienda-pasto", "vt-landed", "tienda-hub", "vt-preguntas"],

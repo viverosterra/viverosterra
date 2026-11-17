@@ -43,6 +43,9 @@ def _cuerpo(s):
         return cr.tabla_medidas()
     if tipo == "estados":
         return cr.tabla_estados(s["modelo"])
+    # Entrega D del SEO nacional (2026-11-16): tabla de las guías (pesos por modelo, anchos, sintético contra natural).
+    if tipo == "tabla":
+        return c.tabla_comparativa(s["cabeza"], s["filas"], s["nota"])
     if tipo == "faq":
         return c.faq(s["preguntas"]) + "".join(f'<p class="vt-promesa">{n}</p>' for n in s.get("notas", ()))
     raise ValueError(f"Sección desconocida: {tipo}")
@@ -52,7 +55,7 @@ def _fila(k):
     """Entrega B de experiencia: tras los modelos recomendados, WhatsApp con el mensaje de la página y la prueba social
     de la tienda (la opinión real de pasto sintético y la calificación de Google con su enlace). En las ciudades no va
     la opinión: es de un cliente de Tampico (Entrega C del SEO nacional, 2026-11-16)."""
-    opiniones = () if k["tipo"] == "ciudad" else datos.OPINION_SINTETICO_TAMPICO
+    opiniones = () if k["tipo"] == "ciudad" or k.get("sin_opinion") else datos.OPINION_SINTETICO_TAMPICO
     return (c.fila_seccion(k["cierre"]["mensaje"], k["tipo"], "modelos", "Cotizar mi pedido", contexto=True)
             + c.prueba_cta(opiniones, f"vendemos a todo México desde {datos.SINTETICO_NACIONAL_DESDE}"))
 
