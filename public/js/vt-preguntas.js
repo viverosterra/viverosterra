@@ -43,6 +43,7 @@
   }
 
   function respuestasIniciales(conjunto, ctx) {
+    if (conjunto.id !== 'sintetico') return {};
     const fijo = ctx.fijo || {};
     const rec = ctx.recordado || {};
     const r = {};
@@ -66,7 +67,20 @@
     return null;
   }
 
+  // Servicios de Tampico (entrega 2): inicio + la frase de cada respuesta (o el `defecto` de la pregunta) + "." + cola.
+  function armarServicio(conjunto, r) {
+    const orden = conjunto.orden || conjunto.preguntas.map((q) => q.clave);
+    let texto = conjunto.inicio;
+    orden.forEach((clave) => {
+      const q = conjunto.preguntas.find((x) => x.clave === clave);
+      const op = q && q.opciones.find((o) => o[0] === r[clave]);
+      texto += op ? (op[2] || '') : ((q && q.defecto) || '');
+    });
+    return texto + '.' + (conjunto.cola ? '\n' + conjunto.cola : '');
+  }
+
   function armarMensaje(conjunto, r, ctx) {
+    if (conjunto.inicio) return armarServicio(conjunto, r);
     const fijo = ctx.fijo || {};
     const rec = ctx.recordado || {};
     const modelo = r.modelo || fijo.modelo || '';
@@ -135,7 +149,12 @@
     // El botón del cotizador ya lleva el mensaje de la cotización (tienda-pasto.js); la barra de compra, solo si el
     // cliente ya cotizó o armó su lista.
     if (a.matches('[data-cta-wa]') && !a.closest('#buybar')) return false;
-    return !/Folio web:|Mi lista|Necesito \d/i.test(textoDe(a.href));
+    // El medidor y los simuladores arman su propio mensaje.
+    if (a.matches('[data-vt-o], [data-sim-wa]')) return false;
+    const texto = textoDe(a.href).replace(/\n\nVengo de viverosterra\.com\s*$/, '');
+    // En los servicios solo los botones con el mensaje general de la página: los de cada plan ya dicen qué quieren.
+    if (datosPagina.generico) return texto === datosPagina.generico;
+    return !/Folio web:|Mi lista|Necesito \d/i.test(texto);
   }
 
   let panel = null;
@@ -161,7 +180,7 @@
     const lg = doc.createElement('legend');
     lg.textContent = q.texto;
     fs.appendChild(lg);
-    const opciones = q.clave === 'm2' && ctx.recordado.m2 ? [['exacto', `Unos ${ctx.recordado.m2} m²`], ...q.opciones] : q.opciones;
+    const opciones = q.clave === 'm2' && datosPagina.conjunto.id === 'sintetico' && ctx.recordado.m2 ? [['exacto', `Unos ${ctx.recordado.m2} m²`], ...q.opciones] : q.opciones;
     opciones.forEach(([v, t]) => {
       const b = doc.createElement('button');
       b.type = 'button';

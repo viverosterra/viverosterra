@@ -204,6 +204,7 @@ FIGURAS = (
 CONTENIDO = {
     "respuesta": respuestas.de("/diseno-jardines-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-diseno",
+    "preguntas": "diseno",  # panel de WhatsApp, entrega 2 (spec del primer mensaje, 2026-11-16)
     "prefijo": "diseno",
     # Entrega B de experiencia: CTA al terminar las opiniones (antes, 8 pantallas del hero a los planes sin CTA).
     "ctas": {"prueba": (MENSAJE, "Cotizar mi diseño"),

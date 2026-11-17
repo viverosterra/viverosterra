@@ -151,6 +151,7 @@ CONTENIDO = {
     "ctas": {"garantia": (MENSAJE, "Cotizar mi sistema de riego")},
     "respuesta": respuestas.de("/sistema-riego-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-riego",
+    "preguntas": "riego",  # panel de WhatsApp, entrega 2 (spec del primer mensaje, 2026-11-16)
     "prefijo": "riego",
     "meta": META,
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "howto": "Cómo instalar un sistema de riego automático en Tampico",

@@ -107,6 +107,7 @@ SECTORES = (
 CONTENIDO = {
     "respuesta": respuestas.de("/pasto-en-rollo-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-pasto",
+    "preguntas": "pasto",  # panel de WhatsApp, entrega 2 (spec del primer mensaje, 2026-11-16)
     "prefijo": "pasto",
     # Entrega B de experiencia: CTA al terminar las opiniones (antes, 9.8 pantallas del hero al Medidor sin CTA).
     "ctas": {"prueba": (datos.MENSAJES["pasto-natural"], "Cotizar mi patio"),
