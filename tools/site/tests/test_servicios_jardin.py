@@ -73,7 +73,7 @@ class ComunTest(unittest.TestCase):
                 self.assertNotRegex(html, r"fonts\.googleapis|/css/(?:tailwind|design-system|servicios|legacy-fixes)")
                 for viejo in ("svc-hero", "plan-pay", "<form", "sendWA", "sendRW", "sim-titulo", "<style"):
                     self.assertNotIn(viejo, html)
-                self.assertIn('<body class="vt-pagina">', html)
+                self.assertIn('<body class="vt-pagina vt-preguntas">', html)  # panel de WhatsApp (entrega 2)
 
     def test_tres_opciones_cada_una_con_su_mensaje(self):
         for clave, e in ESPERADO.items():
