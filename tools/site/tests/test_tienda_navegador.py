@@ -231,7 +231,8 @@ class TiendaNavegadorTest(unittest.TestCase):
         page.goto(self.base + "/pasto-sintetico/", wait_until="load")
         # main medía 17,805 px a 375 px; con las tarjetas horizontales el hub queda abajo de 1.2 veces eso (21,366).
         # Entrega C (2026-11-16): 8 ciudades más en la cuadrícula, 4 filas de 2 a 375 px (+415 px): tope 21,800.
-        self.assertLessEqual(page.evaluate("document.documentElement.scrollHeight"), 21800)
+        # Entrega D (2026-11-16): la línea de guías bajo las ciudades (+2 renglones): tope 21,900.
+        self.assertLessEqual(page.evaluate("document.documentElement.scrollHeight"), 21900)
 
     def test_precio_y_cta_en_el_primer_pantallazo_movil(self):
         page = self.pagina(375, 812)

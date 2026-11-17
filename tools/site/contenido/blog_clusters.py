@@ -225,8 +225,6 @@ def de(slug):
         enlaces = (PODA,) + enlaces[:2]
     if slug in A_PRECIOS and not any(h == "/precios" for _t, h in enlaces):
         enlaces = (("lista de precios vigente", "/precios"),) + enlaces[:2]
-    tope = 3
-    if slug in GUIA_D:
-        enlaces = enlaces[:3] + (GUIA_D[slug],)
-        tope = 4
-    return {**base, "tema": tema, "enlaces": enlaces[:tope], "landing": LANDING.get(slug, base["landing"]), "lede": LEDE[tema]}
+    if slug in GUIA_D:  # la guía va en lugar del enlace a Tampico (sigue en el CTA, el menú y el pie): máximo 3
+        enlaces = (enlaces[0], GUIA_D[slug]) + enlaces[2:]
+    return {**base, "tema": tema, "enlaces": enlaces[:3], "landing": LANDING.get(slug, base["landing"]), "lede": LEDE[tema]}
