@@ -21,6 +21,13 @@ from plantillas import base
 CONTEXTO = "https://schema.org"
 
 
+def _json_preguntas(k):
+    """Panel de WhatsApp (spec del primer mensaje): k["preguntas"] es "sintetico" o la clave de preguntas_wa.SERVICIOS."""
+    if k["preguntas"] == "sintetico":
+        return pw.json_pagina({})
+    return pw.json_servicio(k["preguntas"], k["portada"]["mensaje"])
+
+
 def _scripts(k):
     """vt-mensualidades.js primero (lo usan el Medidor, el simulador y el cotizador); cada uno solo si la página lo trae."""
     con_medidor = bool(k.get("precio", {}).get("titulo_medidor"))
@@ -239,5 +246,5 @@ def render(k):
                           precargas=(base.precarga_imagen(k["portada"]["foto"]),),
                           scripts=pw.scripts(_scripts(k)) if "preguntas" in k else _scripts(k),
                           head_extra=((t.json_modelos(),) if tienda else ())
-                          + ((pw.json_pagina(k["preguntas"]),) if "preguntas" in k else ()), tras_main=fuera,
+                          + ((_json_preguntas(k),) if "preguntas" in k else ()), tras_main=fuera,
                           clase_body=("vt-pagina vt-tienda" if tienda else "vt-pagina") + (pw.CLASE if "preguntas" in k else ""))

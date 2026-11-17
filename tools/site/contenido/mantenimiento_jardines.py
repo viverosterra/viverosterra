@@ -186,6 +186,7 @@ SECTORES = (
 CONTENIDO = {
     "respuesta": respuestas.de("/mantenimiento-jardines-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-mantenimiento",
+    "preguntas": "mantenimiento",  # panel de WhatsApp, entrega 2 (spec del primer mensaje, 2026-11-16)
     "prefijo": "mantenimiento",
     # Entrega B de experiencia: CTA tras "qué incluye" y tras la garantía (antes, 14.5 pantallas sin CTA en línea).
     "ctas": {"prueba": (MENSAJE, "Cotizar mi mantenimiento"), "incluye": (MENSAJE, "Pedir mi plan de visitas"),

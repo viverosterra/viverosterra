@@ -160,5 +160,45 @@ class PreguntasNavegadorTest(unittest.TestCase):
                 self.assertGreaterEqual(caja["x"], -0.5)
 
 
+    # Entrega 2: servicios de Tampico.
+    def test_mantenimiento_arma_tamano_frecuencia_y_lugar(self):
+        page = self.pagina(375, 812)
+        self.abrir_panel(page, "/mantenimiento-jardines-tampico/", "servicio-mantenimiento:hero")
+        self.assertEqual(page.locator(".vt-wa-panel legend").all_inner_texts(),
+                         ["¿Tamaño del jardín?", "¿Cada cuándo?", "¿Dónde?"])
+        self.toca(page, "tamano", "mediano")
+        self.toca(page, "frecuencia", "mensual")
+        self.toca(page, "lugar", "tampico")
+        esperado = "Hola, quiero cotizar mantenimiento de jardín de 50 a 200 m², cada mes en Tampico."
+        self.assertEqual(page.locator(VISTA).inner_text(), esperado)
+        self.assertEqual(texto_de(page, ABRIR), esperado + "\n\n" + datos.FIRMA)
+        self.assertEqual(texto_de(page, ".vt-wa-panel__corto"),
+                         "Hola, tengo una pregunta sobre mantenimiento de jardín.\n\n" + datos.FIRMA)
+
+    def test_poda_con_su_cola(self):
+        page = self.pagina()
+        self.abrir_panel(page, "/poda-arboles-tampico/", "servicio-poda:hero")
+        self.toca(page, "que", "arbol")
+        self.toca(page, "servicio", "derribo")
+        self.assertEqual(page.locator(VISTA).inner_text(),
+                         "Hola, quiero cotizar el derribo de un árbol.\nLes mando fotos y la ubicación.")
+
+    def test_los_botones_de_cada_plan_no_abren_el_panel(self):
+        page = self.pagina()
+        page.goto(self.base + "/mantenimiento-jardines-tampico/", wait_until="load")
+        page.evaluate("document.addEventListener('click', (e) => e.preventDefault())")
+        page.locator('a[data-cta="servicio-mantenimiento:opcion-1"]').first.click()
+        self.assertEqual(page.locator("dialog.vt-wa-panel[open]").count(), 0)
+
+    def test_pasto_en_rollo_no_trae_lo_recordado_de_la_tienda(self):
+        page = self.pagina()
+        page.goto(self.base + "/pasto-sintetico/cuantos-rollos/", wait_until="load")
+        page.fill("#r-largo", "7")
+        page.fill("#r-ancho", "5")
+        self.abrir_panel(page, "/pasto-en-rollo-tampico/", "servicio-pasto:hero")
+        self.assertEqual(page.locator('.vt-wa-panel [aria-pressed="true"]').count(), 0)
+        self.assertEqual(page.locator(VISTA).inner_text(), "Hola, quiero cotizar pasto San Agustín en rollo.")
+
+
 if __name__ == "__main__":
     unittest.main()

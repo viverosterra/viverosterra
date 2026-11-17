@@ -45,3 +45,23 @@ test('memoria de la visita: valida y tolera errores', () => {
   assert.deepStrictEqual(P.leerVisita(roto), {});
   assert.doesNotThrow(() => P.recordar(roto, { m2: 10 }));
 });
+
+test('servicios de Tampico: casos compartidos con preguntas_wa.py', () => {
+  const conjuntos = require('./conjuntos-servicios.json');
+  for (const [clave, r, esperado] of require('./casos-servicios.json')) {
+    assert.strictEqual(P.armarMensaje(conjuntos[clave], r, { fijo: {}, recordado: {} }), esperado);
+  }
+});
+
+test('servicios: nada recordado de la tienda ni frases rotas', () => {
+  const conjuntos = require('./conjuntos-servicios.json');
+  for (const c of Object.values(conjuntos)) {
+    assert.deepStrictEqual(P.respuestasIniciales(c, { fijo: {}, recordado: { m2: 40, estado: 'Jalisco' } }), {});
+    for (const q of c.preguntas) {
+      for (const [v] of q.opciones) {
+        const t = P.armarMensaje(c, { [q.clave]: v }, { fijo: {} });
+        assert.ok(!/___|,,|, \.|\s\.|\s,/.test(t), t);
+      }
+    }
+  }
+});

@@ -1,0 +1,86 @@
+[
+ [
+  "mantenimiento",
+  {},
+  "Hola, quiero cotizar mantenimiento de jardín."
+ ],
+ [
+  "mantenimiento",
+  {
+   "tamano": "mediano",
+   "frecuencia": "mensual",
+   "lugar": "tampico"
+  },
+  "Hola, quiero cotizar mantenimiento de jardín de 50 a 200 m², cada mes en Tampico."
+ ],
+ [
+  "mantenimiento",
+  {
+   "frecuencia": "no-se",
+   "lugar": "altamira"
+  },
+  "Hola, quiero cotizar mantenimiento de jardín en Altamira."
+ ],
+ [
+  "poda",
+  {},
+  "Hola, quiero cotizar poda o derribo de árboles o palmas.\nLes mando fotos y la ubicación."
+ ],
+ [
+  "poda",
+  {
+   "que": "arbol",
+   "servicio": "derribo",
+   "lugar": "madero"
+  },
+  "Hola, quiero cotizar el derribo de un árbol en Ciudad Madero.\nLes mando fotos y la ubicación."
+ ],
+ [
+  "poda",
+  {
+   "que": "varios",
+   "servicio": "revisar"
+  },
+  "Hola, quiero cotizar una revisión de varios árboles y palmas.\nLes mando fotos y la ubicación."
+ ],
+ [
+  "pasto",
+  {
+   "modo": "instalado",
+   "metros": "50-200",
+   "lugar": "tampico"
+  },
+  "Hola, quiero cotizar pasto San Agustín en rollo, instalado, entre 50 y 200 m² en Tampico."
+ ],
+ [
+  "pasto",
+  {
+   "modo": "solo",
+   "metros": ">=500",
+   "lugar": "otro"
+  },
+  "Hola, quiero cotizar pasto San Agustín en rollo, solo el pasto, 500 m² o más (mayoreo), fuera de Tampico, Madero y Altamira."
+ ],
+ [
+  "riego",
+  {
+   "para": "pasto",
+   "tamano": "grande",
+   "lugar": "madero"
+  },
+  "Hola, quiero cotizar riego automático con aspersores para el pasto, jardín de más de 200 m² en Ciudad Madero.\nLes mando fotos del espacio."
+ ],
+ [
+  "riego",
+  {},
+  "Hola, quiero cotizar riego automático.\nLes mando fotos del espacio."
+ ],
+ [
+  "diseno",
+  {
+   "plan": "completo",
+   "tamano": "chico"
+  },
+  "Hola, me interesa el diseño de mi jardín con el Plan Terra Completo, jardín de menos de 50 m².\nLes mando fotos del espacio."
+ ]
+]

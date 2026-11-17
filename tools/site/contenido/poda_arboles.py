@@ -122,6 +122,7 @@ FIGURAS = (
 CONTENIDO = {
     "respuesta": respuestas.de(RUTA),
     "tipo": "servicio-poda",
+    "preguntas": "poda",  # panel de WhatsApp, entrega 2 (spec del primer mensaje, 2026-11-16)
     "prefijo": "poda",
     "ctas": {"opciones": (MENSAJE, "Cotizar poda o derribo"), "faq": (MENSAJE, "Preguntar por WhatsApp")},
     "meta": META,
