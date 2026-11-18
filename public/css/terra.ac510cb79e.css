@@ -386,14 +386,17 @@
 @media (hover:hover){.vt-indice li:hover .vt-indice__ir{transform:translateX(4px)}}
 .vt-pagina main .vt-indice li:hover h3 a,.vt-pagina main .vt-indice h3 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
 .vt-pagina main .vt-indice p{margin:0;font-size:var(--vt-text-sm);line-height:1.45;color:var(--vt-ink-2)}
-.vt-indice__desde{grid-column:2}
+.vt-indice__precio{grid-column:2}
+.vt-indice__monto{white-space:nowrap}
 .vt-precio-marca{font-size:20px}
 @media (min-width:900px){
-.vt-indice li{grid-template-columns:120px minmax(0,1.1fr) minmax(0,1.3fr) 190px 24px;gap:24px;padding:20px 0}
+.vt-indice li{grid-template-columns:120px minmax(0,1.1fr) minmax(0,1.3fr) 230px 24px;gap:24px;padding:20px 0}
 .vt-indice__n{display:none}
 .vt-indice__ir{display:block}
 .vt-pagina .vt-indice img{grid-row:auto;width:120px;height:80px}
-.vt-indice__desde{grid-column:auto;text-align:right}
+.vt-indice__precio{grid-column:4;text-align:right}
+.vt-indice__ir{grid-column:5;grid-row:1}
+.vt-indice li>:nth-child(n+7){grid-column:2 / 5}
 }
 .vt-medidor{display:grid;gap:24px}
 .vt-medidor__form{display:grid;gap:16px;align-content:start}
@@ -666,7 +669,7 @@
 .vt-pagina .vt-portada:not(.vt-portada--sinfoto) .vt-etiqueta-x{transform-origin:50% -40px;animation:vt-balanceo .9s var(--vt-ease-out) both}
 }
 @supports (animation-timeline:view()){
-.vt-pagina main :is(.vt-bloque,.vt-art__cuerpo) h2{animation:vt-titulo linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
+.vt-pagina main :is(.vt-bloque,.vt-art__cuerpo) h2:not(.vt-art__respuesta-t){animation:vt-titulo linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
 .vt-pagina main :is(.vt-obras,.vt-mosaico,.vt-nb-galeria) .vt-fig__marco{animation:vt-sube linear both;animation-timeline:view();animation-range:entry 0% cover 28%}
 }
 }

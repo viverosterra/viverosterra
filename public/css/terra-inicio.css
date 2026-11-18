@@ -16,7 +16,7 @@
 .vt-inicio main .vt-medidor__garantia{margin-top:12px;font-size:var(--vt-text-xs);line-height:1.45;color:var(--vt-muted)}
 
 /* ---------- Qué hacemos: WhatsApp de cada servicio, bajo su precio ---------- */
-.vt-inicio main .vt-indice__wa{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600}
+.vt-inicio main .vt-indice__wa{display:flex;width:fit-content;align-items:center;gap:8px;min-height:44px;font-weight:600}
 
 /* ---------- WhatsApp al final de opiniones, proceso, precios y preguntas ---------- */
 .vt-inicio .vt-inicio__fila{margin-top:32px}
@@ -39,3 +39,5 @@
   }
 }
 @keyframes vt-inicio-foto{from{clip-path:inset(0 0 40% 0)}to{clip-path:inset(0)}}
+
+@media (min-width:900px){.vt-inicio main .vt-indice__wa{margin-left:auto}}

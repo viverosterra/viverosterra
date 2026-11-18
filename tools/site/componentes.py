@@ -390,17 +390,19 @@ def _cotizar_servicio(item, tipo):
 
 
 def indice(items, tipo=None):
-    """Filas tipo índice: foto, número, título con enlace (toda la fila lo abre), qué incluye, "desde" con la marca
-    amarilla y flecha. Las filas con servicio y cotizar (la home, con su tipo) llevan además su enlace de WhatsApp bajo
+    """Filas tipo índice: foto, número, título con enlace (toda la fila lo abre), qué incluye, bloque de precio ("desde"
+    con la marca amarilla y, si la hay, su condición) y flecha. El bloque de precio es un solo hijo de la fila: así una
+    condición larga nunca ocupa la columna de la flecha ni la de la foto. El monto y su unidad no se parten. Las filas
+    con servicio y cotizar (la home, con su tipo) llevan además su enlace de WhatsApp bajo
     el precio."""
     filas = "".join(
         f'<li><img src="{esc(i["img"])}" width="{i["ancho"]}" height="{i["alto"]}" alt="" loading="lazy" decoding="async">'
         f'<span class="vt-indice__n" aria-hidden="true">{n:02d}</span>'
         f'<h3><a href="{esc(i["href"])}">{i["titulo"]}</a></h3><p>{i["texto"]}</p>'
-        f'<p class="vt-indice__desde">desde <span class="vt-precio-marca">{i["desde"]}</span> {i["unidad"]}'
-        f'{_cotizar_servicio(i, tipo) if tipo and i.get("servicio") else ""}</p>'
+        f'<div class="vt-indice__precio"><p class="vt-indice__desde"><span class="vt-indice__monto">desde '
+        f'<span class="vt-precio-marca">{i["desde"]}</span> {i["unidad"]}</span>{_cotizar_servicio(i, tipo) if tipo and i.get("servicio") else ""}</p>'
         + (f'<p class="vt-indice__cond">{esc(i["cond"])}</p>' if i.get("cond") else "")
-        + '<span class="vt-indice__ir" aria-hidden="true">→</span></li>'
+        + '</div><span class="vt-indice__ir" aria-hidden="true">→</span></li>'
         for n, i in enumerate(items, 1))
     return f'<ol class="vt-indice">{filas}</ol>'
 
