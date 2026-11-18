@@ -117,7 +117,7 @@ def indice_subcategorias(items):
         filas.append(f'<li><img src="{esc(i["img"])}" width="{i["ancho"]}" height="{i["alto"]}" alt="" loading="lazy" '
                      f'decoding="async"><span class="vt-indice__n" aria-hidden="true">{n:02d}</span>'
                      f'<h3><a href="{esc(i["href"])}">{i["titulo"]}</a></h3><p>{i["texto"]}</p>'
-                     f'<p class="vt-indice__desde">{precio}</p><span class="vt-indice__ir" aria-hidden="true">→</span></li>')
+                     f'<div class="vt-indice__precio"><p class="vt-indice__desde">{precio}</p></div><span class="vt-indice__ir" aria-hidden="true">→</span></li>')
     return f'<ol class="vt-indice">{"".join(filas)}</ol>'
 
 
