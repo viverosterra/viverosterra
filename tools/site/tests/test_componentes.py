@@ -107,7 +107,8 @@ class BloquesTest(unittest.TestCase):
     def test_planes_salen_de_la_formula_oficial(self):
         html = c.planes_mensualidades()
         for plazo, minimo in ((3, "$2,000"), (6, "$5,000"), (9, "$15,000"), (12, "$15,000")):
-            self.assertIn(f"<dt>{plazo} mensualidades</dt><dd>desde {minimo}</dd>", html)
+            # Auditoría de la home (2026-11-19): «desde $2,000» se leía como la mensualidad; es la compra mínima.
+            self.assertIn(f"<dt>{plazo} mensualidades</dt><dd>compra mínima {minimo}</dd>", html)
         self.assertNotRegex(html, r"(?i)sin intereses|\bMSI\b")
 
     def test_simulador_con_el_marcado_de_vt_simulador(self):

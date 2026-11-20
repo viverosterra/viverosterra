@@ -378,16 +378,21 @@
   }
 
   // Sin separador inicial: en escritorio lo pone el CSS del banner y en celular la frase sustituye al renglón de precios.
-  function textoPreventa(dias) {
+  // Auditoría de la home (nov. 2026): «faltan 11 días» no decía si empezaba o terminaba; ahora la fecha de cierre.
+  const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre',
+    'noviembre', 'diciembre'];
+  function textoPreventa(dias, hasta) {
     if (!Number.isInteger(dias) || dias < 0) return '';
     if (dias === 0) return 'Último día de preventa';
-    return dias === 1 ? 'Preventa: falta 1 día' : 'Preventa: faltan ' + dias + ' días';
+    const m = String(hasta || '').match(FECHA_RE);
+    return m ? 'Preventa hasta el ' + Number(m[3]) + ' de ' + MESES[Number(m[2]) - 1] : 'Preventa abierta';
   }
 
   // Banner de temporada: solo días, sin horas ni cuenta regresiva; pasada la fecha el <span> queda vacío.
   function preventa(doc, ahora) {
     doc.querySelectorAll('[data-vt-hasta]').forEach((el) => {
-      el.textContent = textoPreventa(diasHasta(ahora, el.getAttribute('data-vt-hasta'), el.getAttribute('data-vt-build')));
+      const hasta = el.getAttribute('data-vt-hasta');
+      el.textContent = textoPreventa(diasHasta(ahora, hasta, el.getAttribute('data-vt-build')), hasta);
     });
   }
 

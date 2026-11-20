@@ -18,7 +18,7 @@
 /* Antes de que terra.js escriba los días que faltan, el renglón de precios ocupa el mismo renglón único (cortado con
    puntos suspensivos si no cabe): al llegar la frase el banner no cambia de alto ni empuja la portada (CLS). */
 @media (max-width:1023px){.vt-temporada .vt-navidad__txt>span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}}
-.vt-temporada .vt-navidad__cta{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border-radius:var(--vt-radius-tag);background:var(--vt-tag);color:var(--vt-tag-ink);font-size:var(--vt-text-sm);font-weight:700;white-space:nowrap}
+.vt-temporada .vt-navidad__cta{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border-radius:var(--vt-radius-tag);background:var(--vt-bone);color:var(--vt-navidad);font-size:var(--vt-text-sm);font-weight:700;white-space:nowrap}
 .vt-temporada .vt-navidad__flecha{transition:transform var(--vt-duration-fast) var(--vt-ease-out)}
 @media (hover:hover){.vt-temporada .vt-navidad:hover .vt-navidad__flecha{transform:translateX(3px)}}
 .vt-temporada .vt-navidad:active .vt-navidad__cta{transform:translateY(1px)}
@@ -32,3 +32,6 @@
 }
 @media (min-width:1024px){.vt-temporada .vt-navidad__hasta:not(:empty)::before{content:" · "}}
 @media (prefers-reduced-motion:reduce){.vt-temporada .vt-navidad__flecha{transition:none}.vt-temporada .vt-navidad:hover .vt-navidad__flecha{transform:none}}
+/* Auditoría de la home (2026-11-19): la portada con pliegue descuenta el banner (64 px y su filete) para que el botón
+   principal siga completo en la primera pantalla del celular. */
+.vt-temporada .vt-portada{--vt-sobre:67px}

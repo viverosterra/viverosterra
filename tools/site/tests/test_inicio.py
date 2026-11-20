@@ -11,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import datos  # noqa: E402
 import paginas  # noqa: E402
+from contenido.inicio import MENSAJES  # noqa: E402
 from test_reglas import textos_publicos  # noqa: E402
 
 HTML = (paginas.PUBLIC / "index.html").read_text(encoding="utf-8")
@@ -42,8 +43,9 @@ class InicioTest(unittest.TestCase):
         self.assertIn("/css/terra-inicio.", HTML[:HTML.index("</head>")])
 
     def test_secuencia_de_la_plantilla(self):
-        marcas = ('class="vt-portada"', 'class="vt-datos vt-datos--tira"', 'id="vt-h-que"', 'data-vt-medidor', 'id="vt-h-obras"',
-                  'class="vt-logos"', 'id="vt-h-opiniones"', 'id="vt-h-como"', 'id="vt-h-precios"', 'id="vt-h-faq"', 'id="vt-h-cobertura"', 'class="vt-cierre"')
+        # Auditoría de la home (2026-11-19, entrega B): los clientes suben a la franja de confianza bajo la portada.
+        marcas = ('class="vt-portada ', 'class="vt-datos vt-datos--tira"', 'class="vt-logos"', 'id="vt-h-que"',
+                  'data-vt-medidor', 'id="vt-h-obras"', 'id="vt-h-opiniones"', 'id="vt-h-como"', 'id="vt-h-precios"', 'id="vt-h-faq"', 'id="vt-h-cobertura"', 'class="vt-cierre"')
         posiciones = [MAIN.index(m) for m in marcas]
         self.assertEqual(posiciones, sorted(posiciones))
 
@@ -64,30 +66,36 @@ class InicioTest(unittest.TestCase):
         self.assertIn('data-cta="home:hero"', portada)
         self.assertIn('href="#medidor"', portada)
         self.assertIn('loading="eager" fetchpriority="high"', portada)
-        self.assertIn('<link rel="preload" as="image" href="/img/obra/cuadrilla-tendiendo-pasto-san-agustin.webp"', HTML)
+        # Auditoría (2026-11-19, entrega B): cada pantalla precarga solo su versión de la foto.
+        self.assertIn('<link rel="preload" as="image" media="(max-width:1023px)" imagesrcset="/img/obra/cuadrilla-tendiendo-pasto-'
+                      'san-agustin-movil-480.webp 480w', HTML)
+        self.assertIn('<link rel="preload" as="image" media="(min-width:1024px)" href="/img/obra/cuadrilla-tendiendo-pasto-'
+                      'san-agustin.webp"', HTML)
 
     def test_hero_con_un_solo_boton_dos_enlaces_y_linea_de_confianza(self):
         """Spec del hero (2026-11-09, §1): kicker, lede, un botón de WhatsApp, dos enlaces de texto y confianza."""
-        portada = MAIN[MAIN.index('class="vt-portada"'):MAIN.index('id="vt-h-que"')]
+        portada = MAIN[MAIN.index('class="vt-portada '):MAIN.index('id="vt-h-que"')]
         self.assertIn(f'<p class="vt-kicker">Vivero y cuadrilla propia · Desde {datos.DESDE}</p>', portada)
         self.assertIn(f'<p class="vt-lede">Pasto San Agustín en rollo, diseño de jardines y {datos.VARIEDADES} variedades '
                       "de plantas, en Tampico, Madero y Altamira.</p>", portada)
         self.assertEqual(portada.count("vt-btn--wa"), 1)
         self.assertNotIn("vt-btn--linea", portada)
         self.assertRegex(portada, r'<div class="vt-portada__cta" data-hero-cta><a class="vt-btn vt-btn--wa" data-cta="home:hero" ')
-        self.assertIn('<a data-cta="home:hero" href="#medidor" id="vt-calcula-patio">Calcula tu patio <span aria-hidden="true">→</span></a>', portada)
+        self.assertIn('<a data-cta="home:hero" href="#medidor" id="vt-calcula-patio">Calcular cuánto cuesta mi patio '
+                      '<span aria-hidden="true">→</span></a>', portada)
         self.assertIn(f'<a data-cta="home:hero" href="tel:{datos.TELEFONO_TEL}">Llamar {datos.TELEFONO_VISIBLE}</a>', portada)
         confianza = re.search(r'<p class="vt-portada__confianza">(.*?)</p>', portada, re.S).group(1)
         plano = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", confianza)).strip()
         # Con separadores reales en el DOM (decorativos: aria-hidden), para que sin CSS no se lea pegado.
-        self.assertEqual(plano, f"{datos.PROMESA_COMPLETA} · {datos.GOOGLE} · {datos.CLIENTES} clientes")
-        self.assertEqual(confianza.count('<span class="vt-portada__sep" aria-hidden="true"> · </span>'), 2)
+        # Auditoría (2026-11-19, entrega A): junto al botón, las dudas que frenan el clic (respuesta, garantía, pago).
+        self.assertEqual(plano, f"{datos.PROMESA_COMPLETA} · {datos.GOOGLE} · Garantía de arraigo de {datos.ARRAIGO} "
+                                "( condiciones ) · Contado o mensualidades con tarjeta")
+        self.assertEqual(confianza.count('<span class="vt-portada__sep" aria-hidden="true"> · </span>'), 3)
         self.assertNotIn("También:", portada)
         self.assertNotIn("vt-portada__tambien", portada)
-        # Entrega A de experiencia (2026-11-10): la home usa el componente común, con la foto antes de la etiqueta en el
-        # DOM; sin vt-portada--pliegue, terra.css la manda al final en celular (order) y la etiqueta queda, como antes,
-        # entre el lede y el botón. El cuadro de datos sigue igual.
-        self.assertNotIn("vt-portada--pliegue", portada)
+        # Auditoría (2026-11-19, entrega B): con vt-portada--pliegue, como el resto del sitio, la foto de la cuadrilla entra
+        # en la primera pantalla del celular, con la etiqueta montada encima.
+        self.assertIn("vt-portada--pliegue", MAIN[:MAIN.index('id="vt-h-que"')])
         orden = [portada.index(m) for m in ('class="vt-lede"', 'class="vt-portada__foto"', 'class="vt-etiqueta"', "data-hero-cta",
                                             'class="vt-datos vt-datos--tira"')]
         self.assertEqual(orden, sorted(orden))
@@ -115,7 +123,7 @@ class InicioTest(unittest.TestCase):
         marca = f'<span data-vt-horario="{datos.horario_marca()}" data-vt-festivos="{datos.festivos_marca()}" data-vt-build="{datos.ACTUALIZADO}">{datos.PROMESA_COMPLETA}</span>'
         self.assertEqual(MAIN.count(marca), 2)
         self.assertEqual(MAIN.count("data-vt-horario"), 2)
-        self.assertIn(marca, MAIN[MAIN.index('class="vt-portada"'):MAIN.index('id="vt-h-que"')])
+        self.assertIn(marca, MAIN[MAIN.index('class="vt-portada '):MAIN.index('id="vt-h-que"')])
         self.assertIn(marca, MAIN[MAIN.index('class="vt-cierre"'):])
         self.assertNotIn("Abierto ahora", HTML)
         self.assertNotIn("aria-live", MAIN)
@@ -156,9 +164,11 @@ class InicioTest(unittest.TestCase):
         """Spec del hero §6: el tramo largo sin CTA ahora tiene uno al final de cada sección."""
         """Revisión de diseño (2026-11-09): cada fila esconde la barra fija mientras se ve (data-hero-cta), su botón
         dice a qué invita. Plan visual V1 (2026-11-11): ninguna lleva la promesa debajo (va en el hero y en el cierre)."""
-        limites = (("opiniones", 'id="vt-h-opiniones"', 'id="vt-h-como"', "Cotizar mi jardín por WhatsApp", False),
-                   ("proceso", 'id="vt-h-como"', 'id="vt-h-precios"', "Empezar por WhatsApp", False),
-                   ("precios", 'id="vt-h-precios"', 'id="vt-h-faq"', "Pedir mi precio por WhatsApp", False),
+        # Auditoría (2026-11-19): la galería suma su botón y cada fila abre su propio mensaje (MENSAJES de la home).
+        limites = (("obras", 'id="vt-h-obras"', 'id="vt-h-opiniones"', "Quiero un jardín así", False),
+                   ("opiniones", 'id="vt-h-opiniones"', 'id="vt-h-como"', "Cotizar mi jardín por WhatsApp", False),
+                   ("proceso", 'id="vt-h-como"', 'id="vt-h-precios"', "Mandar mi foto por WhatsApp", False),
+                   ("precios", 'id="vt-h-precios"', 'id="vt-h-faq"', "Pedir mi precio cerrado por WhatsApp", False),
                    ("faq", 'id="vt-h-faq"', 'id="vt-h-cobertura"', "Preguntar por WhatsApp", False))
         for seccion, inicio, fin, texto, con_promesa in limites:
             tramo = MAIN[MAIN.index(inicio):MAIN.index(fin)]
@@ -166,11 +176,12 @@ class InicioTest(unittest.TestCase):
                 self.assertEqual(MAIN.count(f'data-cta="home:{seccion}"'), 1)
                 boton = re.search(rf'<div class="vt-inicio__fila" data-hero-cta><a class="vt-btn vt-btn--wa" data-cta="home:{seccion}" '
                                   r'href="https://wa\.me/528333268008\?text=([^"]+)" target="_blank" rel="noopener">(.*?)</a>', tramo)
-                self.assertEqual(unquote(boton.group(1)), datos.sin_huecos(datos.mensaje("general")))
+                self.assertEqual(unquote(boton.group(1)), datos.sin_huecos(datos.con_firma(MENSAJES[seccion])))
+                self.assertNotEqual(unquote(boton.group(1)), datos.sin_huecos(datos.mensaje("general")))
                 self.assertEqual(re.sub(r"<[^>]+>", "", boton.group(2)), f"{texto}→")
                 cola = tramo[tramo.index(f'data-cta="home:{seccion}"'):]
                 self.assertEqual(f'<p class="vt-promesa">{datos.PROMESA_COMPLETA}</p></div>' in cola, con_promesa)
-                self.assertNotRegex(cola, r"<(?:table|details|blockquote|ol)\b")
+                self.assertNotRegex(cola, r"<(?:table|details|blockquote|ol|figure)\b")
 
     def test_cierre_promesa_antes_del_boton_garantia_y_costo_de_visita_despues(self):
         """Spec del hero §7: lo último antes del botón es la promesa de respuesta; la garantía y la frase del costo de
@@ -198,14 +209,14 @@ class InicioTest(unittest.TestCase):
     def test_enlace_a_las_resenas_de_google_en_opiniones(self):
         opiniones = MAIN[MAIN.index('id="vt-h-opiniones"'):MAIN.index('id="vt-h-como"')]
         self.assertIn(f'<p class="vt-inicio__resenas"><a href="{datos.MAPS_URL}" target="_blank" rel="noopener">'
-                      "Ver las reseñas en Google</a></p>", opiniones)
+                      "Leer las 24 reseñas en Google</a></p>", opiniones)
         self.assertLess(opiniones.index("</ul>"), opiniones.index("vt-inicio__resenas"))
         self.assertLess(opiniones.index("vt-inicio__resenas"), opiniones.index('data-cta="home:opiniones"'))
 
     def test_datos_y_copy_del_dueno(self):
         for frase in (datos.PROMESA_COMPLETA, datos.GOOGLE, datos.M2_INSTALADOS, f"REPSE {datos.REPSE}",
                       "Obregón 209 Sur", datos.LLEGADA_PASTO, datos.ANTICIPO, datos.PRIMER_RIEGO,
-                      "la reponemos sin costo", f"{datos.CLIENTES} clientes · {datos.INSTALACIONES} instalaciones"):
+                      "la reponemos sin costo", datos.INSTALACIONES, f"{datos.CLIENTES} familias y empresas"):
             with self.subTest(frase=frase):
                 self.assertIn(frase, TEXTO)
         for cliente in datos.CLIENTES_B2B:
@@ -214,8 +225,8 @@ class InicioTest(unittest.TestCase):
                     self.assertIn('<li class="vt-logos__nombre">Renault</li>', HTML)
                 else:
                     self.assertIn(f'alt="{cliente}"', HTML)
-        # Las tres menciones de la garantía de arraigo enlazan a las condiciones del pasto (antes, a /politicas).
-        self.assertEqual(MAIN.count('<a href="/protocolo-cuidados-pasto-san-agustin#garantia">ver condiciones</a>'), 3)
+        # Todas las menciones de la garantía de arraigo enlazan a las condiciones del pasto (antes, a /politicas).
+        self.assertEqual(MAIN.count('href="/protocolo-cuidados-pasto-san-agustin#garantia"'), 5)
         self.assertNotIn('href="/politicas"', MAIN)
         self.assertTrue((paginas.PUBLIC / "protocolo-cuidados-pasto-san-agustin.html").is_file())
 
@@ -239,7 +250,8 @@ class InicioTest(unittest.TestCase):
         faq = ld("FAQPage")
         visibles = [re.sub(r"<[^>]+>", "", s) for s in re.findall(r"<summary>(.*?)</summary>", MAIN)]
         self.assertEqual([q["name"] for q in faq["mainEntity"]], visibles)
-        self.assertEqual(len(visibles), 6)
+        # Auditoría (2026-11-19, entrega A): + garantía, mensualidades, anticipo y llegada del pasto.
+        self.assertEqual(len(visibles), 10)
         self.assertEqual(faq["mainEntity"][0]["acceptedAnswer"]["text"], datos.RESPUESTA_PRECIO_PASTO)
         # SEO fase 0 (2026-11-10): la home no es una ruta; su BreadcrumbList enumeraba el menú y Google pintaba
         # "› … › Catálogo" como si fuera la jerarquía de la página.

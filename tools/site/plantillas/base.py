@@ -34,6 +34,12 @@ def imagen_de(foto):
 def precarga_imagen(f):
     """<link rel="preload"> de la imagen principal (nunca lazy; spec §3.3)."""
     extra = f' imagesrcset="{escape(f["srcset"])}" imagesizes="{escape(f["sizes"])}"' if f.get("srcset") else ""
+    if f.get("movil"):  # cada pantalla precarga solo su versión (la de celular es el recorte ligero)
+        m = f["movil"]
+        return (f'<link rel="preload" as="image" media="(max-width:{m["hasta"]}px)" imagesrcset="{escape(m["srcset"])}" '
+                f'imagesizes="{escape(m["sizes"])}" fetchpriority="high">'
+                f'<link rel="preload" as="image" media="(min-width:{m["hasta"] + 1}px)" href="{escape(f["src"])}"{extra} '
+                'fetchpriority="high">')
     return f'<link rel="preload" as="image" href="{escape(f["src"])}"{extra} fetchpriority="high">'
 
 
