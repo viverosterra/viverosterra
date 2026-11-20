@@ -60,6 +60,8 @@ def _precio(k, numero, tinte):
     p = k["precio"]
     if "tabla" in p:
         cuerpo = c.tabla_comparativa(p["tabla"]["columnas"], p["tabla"]["filas"], p["caption"])
+        if p.get("plegable"):  # auditoría por página (2026-11-20): cerrada en celular, abierta desde 768 px
+            cuerpo = c.plegable(p["plegable"], cuerpo)
     else:
         cuerpo = c.tabla_precios(p["filas"], p["caption"], concepto="Forma de compra")
     if p.get("titulo_medidor"):
@@ -118,8 +120,9 @@ def _visita(k, numero, tinte):
     v = k["visita"]
     enlaces = "".join(f'<a class="vt-btn vt-btn--linea" href="{c.esc(h)}" target="_blank" rel="noopener">{x}</a>'
                       for x, h in v["mapas"])
-    cuerpo = f'{c.cuadro_datos(v["datos"])}<div class="vt-cta vt-mt-s">{enlaces}{c.boton_tel(k["tipo"] + ":visita")}</div>'
-    return c.bloque(numero, "Showroom", "vt-h-visita", v["titulo"], cuerpo, lede=v.get("lede"), id_seccion="showroom",
+    cuerpo = (f'{c.cuadro_datos(v["datos"])}<div class="vt-cta vt-mt-s">{enlaces}{c.boton_tel(k["tipo"] + ":visita")}</div>'
+              + _cta(k, "visita"))  # auditoría por página (2026-11-20): confirmar existencia por WhatsApp antes de ir
+    return c.bloque(numero, "Vivero", "vt-h-visita", v["titulo"], cuerpo, lede=v.get("lede"), id_seccion="showroom",
                     tinte=tinte, ritmo="apoyo")
 
 

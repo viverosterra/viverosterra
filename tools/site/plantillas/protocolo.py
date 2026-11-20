@@ -22,12 +22,21 @@ def _senales(items):
         f'<li class="vt-modo"><h3>{s["titulo"]}</h3>{_lista(s["items"])}</li>' for s in items) + "</ul>"
 
 
+def _cta_senales(k):
+    """Botón de WhatsApp tras las señales (auditoría por página, 2026-11-20): k["senales_cta"] = (mensaje, texto)."""
+    if not k.get("senales_cta"):
+        return ""
+    mensaje, texto = k["senales_cta"]
+    return c.fila_seccion(mensaje, k["tipo"], "senales", texto)
+
+
 def render(k):
     tipo, g, ci = k["tipo"], k["garantia"], k["cierre"]
     bloques = [
         cu.cabeza(k["cabeza"]),
         c.bloque(1, "Plan de cuidados", "vt-h-plan", k["plan"]["titulo"], _fases(k["plan"]["fases"]), lede=k["plan"]["lede"]),
-        c.bloque(2, "Señales", "vt-h-senales", k["senales"]["titulo"], _senales(k["senales"]["items"]), tinte=True),
+        c.bloque(2, "Señales", "vt-h-senales", k["senales"]["titulo"], _senales(k["senales"]["items"]) + _cta_senales(k),
+                 tinte=True),
         c.bloque(3, "Después del día 20", "vt-h-mant", k["mantenimiento"]["titulo"], _lista(k["mantenimiento"]["items"])),
         c.bloque(4, "Garantía", "vt-h-garantia", g["titulo"], _lista(g["condiciones"]) + f'<p class="vt-promesa">{g["pie"]}</p>',
                  lede=g["lede"], tinte=True, id_seccion="garantia"),

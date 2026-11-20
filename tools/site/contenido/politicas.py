@@ -37,7 +37,7 @@ SECCIONES = (
             f"<strong>Costo de envío:</strong> se cobra por cada rollo enviado, según el destino. Como referencia, va de "
             f"aproximadamente {FLETE_MIN} a {FLETE_MAX} por rollo. El costo exacto se confirma con tu código postal antes "
             "de pagar.",
-            f"<strong>Compra mínima nacional:</strong> {data.MIN_NACIONAL_M2} m². En nuestro showroom de Tampico se vende "
+            f"<strong>Compra mínima nacional:</strong> {data.MIN_NACIONAL_M2} m². En nuestro vivero de Cd. Madero se vende "
             f"desde {data.MIN_SHOWROOM_M2} m² sin flete.",
             "<strong>Rastreo:</strong> te compartimos guía de rastreo para que sigas tu pedido.",
             "<strong>Presentación:</strong> el pasto se envía en rollo de 2 m de ancho.",
@@ -100,6 +100,9 @@ SECCIONES = (
             "El problema fue reportado antes del día 21.",
         )),
         ("p", f'{datos.PRIMER_RIEGO} Lee el <a href="/protocolo-cuidados-pasto-san-agustin">protocolo de cuidado del pasto</a>.'),
+        # Auditoría por página (2026-11-20): botón tras la garantía del pasto, con su mensaje.
+        ("cta", ("Hola, tengo una duda sobre la garantía de arraigo.", "utilidad:garantia-pasto",
+                 "Preguntar por mi garantía")),
     )},
     {"id": "mensualidades", "titulo": "Pago en mensualidades con tarjeta de crédito", "corto": "Mensualidades", "bloques": (
         ("p", f"Puedes pagar en {' o '.join(', '.join(str(p) for p in mensualidades.PLAZOS).rsplit(', ', 1))} mensualidades "
@@ -145,7 +148,7 @@ SECCIONES = (
         ("ul", (
             f"<strong>WhatsApp / Tel:</strong> {datos.TELEFONO_VISIBLE}",
             f"<strong>Correo:</strong> {datos.CORREO_FORMULARIOS}",
-            f"<strong>Showroom:</strong> {datos.CALLE}, {datos.COLONIA}, Cd. Madero, Tamaulipas",
+            f"<strong>Vivero:</strong> {datos.CALLE}, {datos.COLONIA}, Cd. Madero, Tamaulipas",
             f"<strong>Horario:</strong> {datos.HORARIO}",
         )),
     )},

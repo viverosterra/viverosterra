@@ -91,14 +91,19 @@ PODA_ZONAS = {
 # m²"), y un mensaje por sección de la lista para que el chat llegue diciendo qué se quiere cotizar.
 PRECIOS = "Hola, vi la lista de precios y quiero cotizar.\nColonia: ___\nMetros aprox.: ___"
 PRECIOS_SECCIONES = {
-    "pasto": "Hola, quiero cotizar pasto San Agustín instalado.\nColonia: ___\nMetros aprox.: ___",
-    "servicios": ("Hola, quiero cotizar un servicio de jardín.\nMantenimiento, diseño o riego: ___\nColonia: ___\n"
-                  "Metros aprox.: ___"),
+    # Auditoría por página (2026-11-20): cada mensaje dice que viene de la lista y qué se quiere; el del pasto ya no fuerza
+    # «instalado» (la tabla también trae solo pasto y mayoreo).
+    "pasto": ("Hola, vi la lista de precios y quiero cotizar pasto San Agustín en rollo (solo el pasto o instalado).\n"
+              "Colonia: ___\nMetros aprox.: ___"),
+    "servicios": ("Hola, vi la lista de precios y quiero cotizar mantenimiento, diseño o riego para mi jardín.\n"
+                  "Colonia: ___\nMetros aprox.: ___"),
     "poda": _PODA.format(""),
-    "sintetico": "Hola, quiero cotizar pasto sintético.\nModelo: ___\nMetros aprox.: ___\nColonia o ciudad: ___",
-    "materiales": "Hola, quiero cotizar materiales.\nMaterial: ___\nCantidad: ___\nColonia de entrega: ___",
-    "plantas": ("Hola, quiero cotizar plantas o palmas.\nPlantas que busco: ___\nTamaño aprox.: ___\n"
-                "Colonia de entrega: ___"),
+    "sintetico": ("Hola, vi la lista de precios y quiero cotizar pasto sintético (material o instalado).\nModelo: ___\n"
+                  "Metros aprox.: ___\nColonia o ciudad: ___"),
+    "materiales": ("Hola, vi la lista de precios y quiero cotizar tierra, tezontle, mármol o piedra con entrega a mi "
+                   "colonia.\nCantidad: ___\nColonia de entrega: ___"),
+    "plantas": ("Hola, vi la lista de precios y quiero saber existencia y precio de plantas o palmas.\n"
+                "Plantas que busco: ___\nTamaño aprox.: ___"),
 }
 
 # SEO fase 2a (2026-11-11): las cuatro páginas nuevas, con los huecos ___ como el resto del sitio. La usan la portada y

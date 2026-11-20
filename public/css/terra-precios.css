@@ -8,7 +8,7 @@
 .vt-precios .vt-tabla--compacta tbody th a{font-weight:700}
 @media (max-width:640px){
   .vt-precios .vt-tabla--compacta :is(th,td){padding:10px 8px;font-size:var(--vt-text-sm)}
-  .vt-precios .vt-tabla--compacta thead th{font-size:11px;letter-spacing:.02em}
+  .vt-precios .vt-tabla--compacta thead th{font-size:13px;letter-spacing:.02em}
 }
 
 /* Lista de precios: el precio queda en el mismo renglón que la unidad (la línea base es de terra.css, compartida con las

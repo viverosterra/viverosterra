@@ -114,7 +114,7 @@ class RitmoTest(unittest.TestCase):
         self.assertIn("<details open", c.faq((("a", "b"),)))
 
     def test_tablas_plegadas_conservan_su_titulo_y_su_contenido(self):
-        plegadas = {"/pasto-en-rollo-tampico": 2, "/diseno-jardines-tampico": 2, "/mantenimiento-jardines-tampico": 1,
+        plegadas = {"/pasto-en-rollo-tampico": 2, "/diseno-jardines-tampico": 2, "/mantenimiento-jardines-tampico": 2,  # auditoría 2026-11-20: también «Dos temporadas»
                     "/sistema-riego-tampico": 1}
         for ruta, n in plegadas.items():
             h = main(html(ruta))

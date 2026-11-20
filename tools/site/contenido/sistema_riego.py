@@ -148,7 +148,10 @@ SECTORES = (
 
 CONTENIDO = {
     # Entrega C de experiencia: CTA tras la garantía (antes, 6.9 pantallas de los sistemas al simulador sin CTA).
-    "ctas": {"garantia": (MENSAJE, "Cotizar mi sistema de riego")},
+    # Auditoría por página (2026-11-20): filas tras la prueba y el precio (antes, 5.8 pantallas de la portada a los
+    # sistemas sin botón). El mensaje es el general: abre el panel de preguntas.
+    "ctas": {"prueba": (MENSAJE, "Mandar fotos de mi jardín"), "precio": (MENSAJE, "Pedir precio cerrado de mi sistema"),
+             "garantia": (MENSAJE, "Cotizar mi sistema de riego")},
     "respuesta": respuestas.de("/sistema-riego-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-riego",
     "preguntas": "riego",  # panel de WhatsApp, entrega 2 (spec del primer mensaje, 2026-11-16)
@@ -250,8 +253,8 @@ CONTENIDO = {
     },
     "pago": {
         "titulo": "Cómo se paga: anticipo y mensualidades con tarjeta de crédito.",
-        "lede": (f"{datos.ANTICIPO} Puedes pagar de contado o en mensualidades con tarjeta de crédito desde "
-                 f"{DESDE_MENSUALIDADES}."),
+        "lede": (f"{datos.ANTICIPO} Puedes pagar de contado o en mensualidades con tarjeta de crédito si tu compra es "
+                 f"de {DESDE_MENSUALIDADES} o más."),
         "puntos": (
             "Recibes el precio del sistema, la instalación y la obra civil por separado.",
             "Contado (transferencia, efectivo o tarjeta en una exhibición): el precio más bajo.",
@@ -277,7 +280,7 @@ CONTENIDO = {
         "titulo": "Otros servicios de Viveros Terra",
         "items": (
             {"titulo": "Pasto en Rollo", "href": "/pasto-en-rollo-tampico",
-             "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111,
+             "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta-560.webp", "ancho": 560, "alto": 691,
              "texto": (f"San Agustín desde {dinero(P['pasto_solo_m2'])}/m² · Instalado desde "
                        f"{dinero(P['pasto_instalado_m2'])}/m². {datos.TERRENO_LISTO_CORTO}")},
             {"titulo": "Diseño de Jardines", "href": "/diseno-jardines-tampico",
