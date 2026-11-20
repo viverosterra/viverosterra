@@ -6,6 +6,7 @@ sección después de la portada es opcional según el contenido (el orden no cam
 import componentes as c
 import componentes_plantas as cp
 import datos
+import mensajes_paginas as mp
 from contenido import plantas_comun as pc
 from contenido import fotos_obra
 from plantillas import base
@@ -25,8 +26,19 @@ CTA_TEXTO = "Cotizar mis plantas"
 MAX_SIN_CTA = 6  # especies (dos por renglón en celular, ~1 pantalla por renglón) antes de partir la rejilla con un CTA
 
 
+def _mensaje(k, seccion):
+    """(mensaje, texto del botón) de la sección (auditoría por página, 2026-11-20: cada fila dice qué leyó la persona;
+    antes las 9 filas del hub abrían el mismo mensaje). Sin entrada, el de la página y el texto de siempre."""
+    base = seccion.removesuffix("-medio").replace("destacadas", "especies")
+    mensaje, texto = mp.PLANTAS_SECCIONES.get(base, (k["portada"]["mensaje"], k.get("cta_texto", CTA_TEXTO)))
+    if base == "especies":
+        mensaje = mp.PLANTAS_ESPECIES.get(k["meta"]["canonical"].removeprefix(datos.SITIO), mensaje)
+    return mensaje, texto
+
+
 def _fila(k, seccion, prueba=False):
-    fila = c.fila_seccion(k["portada"]["mensaje"], k["tipo"], seccion, k.get("cta_texto", CTA_TEXTO))
+    mensaje, texto = _mensaje(k, seccion)
+    fila = c.fila_seccion(mensaje, k["tipo"], seccion, texto)
     if not prueba:
         return fila
     cifras = (f"<b>{c.esc(datos.CLIENTES)}</b> clientes · <b>{c.esc(datos.VARIEDADES)}</b> variedades en el vivero · "
@@ -38,7 +50,8 @@ def _fila(k, seccion, prueba=False):
 
 def _necesidad(k, n):
     x = k["necesidad"]
-    return c.bloque(n, "Por necesidad", "vt-h-necesidad", x["titulo"], cp.necesidades(x["items"], k["tipo"]) + _fila(k, "necesidad"),
+    # La prueba social va en la primera fila de la página (auditoría por página: en el hub llegaba en la pantalla 11).
+    return c.bloque(n, "Por necesidad", "vt-h-necesidad", x["titulo"], cp.necesidades(x["items"], k["tipo"]) + _fila(k, "necesidad", prueba=True),
                     lede=x["lede"], tinte=True)
 
 
@@ -53,16 +66,19 @@ def _especies(k, n):
     nota = f'<p class="vt-promesa">{x["nota"]}</p>' if x.get("nota") else ""
     seccion = "destacadas" if k.get("_destacadas") else "especies"
     items = tuple(x["items"])
-    # Una rejilla larga se parte en dos con una fila de WhatsApp en medio (más de MAX_SIN_CTA especies, ~6 pantallas).
-    if len(items) > MAX_SIN_CTA:
-        mitad = (len(items) + 1) // 2
-        rejilla = (cp.especies(items[:mitad], k["tipo"], primero=2) + _fila(k, f"{seccion}-medio")
-                   + cp.especies(items[mitad:], k["tipo"], primero=2 + mitad))
-    else:
-        rejilla = cp.especies(items, k["tipo"], primero=2)
+    # Una rejilla larga se parte con una fila de WhatsApp cada MAX_SIN_CTA especies (auditoría por página: partida a
+    # la mitad, las 16 del hub dejaban tramos de casi 4 pantallas). El último trozo lleva la fila de la sección.
+    trozos = [items[i:i + MAX_SIN_CTA] for i in range(0, len(items), MAX_SIN_CTA)]
+    if len(trozos) > 1 and len(trozos[-1]) < MAX_SIN_CTA // 2:  # un resto corto se une al trozo anterior
+        trozos[-2:] = [trozos[-2] + trozos[-1]]
+    partes, primero = [], 2
+    for i, trozo in enumerate(trozos):
+        partes.append(cp.especies(trozo, k["tipo"], primero=primero) + (_fila(k, f"{seccion}-medio") if i < len(trozos) - 1 else ""))
+        primero += len(trozo)
+    rejilla = "".join(partes)
+    prueba = not k.get("necesidad") and (seccion == "especies" or k.get("_primera"))
     return c.bloque(n, x.get("rotulo", "En el vivero"), x.get("id", "vt-h-especies"), x["titulo"],
-                    rejilla + nota + _fila(k, seccion, prueba=seccion == "especies" or k.get("_primera")),
-                    lede=x.get("lede"))
+                    rejilla + nota + _fila(k, seccion, prueba=prueba), lede=x.get("lede"))
 
 
 def _precios(k, n):
@@ -98,13 +114,23 @@ def _guias(k, n):
 
 def _relacionados(k, n):
     x = k["relacionados"]
-    return c.bloque(n, "También", "vt-h-rel", x["titulo"], c.relacionados(x["items"]), tinte=True)
+    # En celular, una junto a otra con desplazamiento horizontal (auditoría por página: apiladas eran ~3 pantallas
+    # sin botón antes del cierre del hub).
+    return c.bloque(n, "También", "vt-h-rel", x["titulo"], c.relacionados(x["items"], fila=True), tinte=True)
 
 
 SECCIONES = (("necesidad", _necesidad), ("subcategorias", _subcategorias), ("especies", _especies),
              ("destacadas", lambda k, n: _especies(dict(k, especies=k["destacadas"], _destacadas=True, _primera=not k.get("especies")), n)), ("precios", _precios),
              ("lista", _lista), ("garantia", _garantia), ("faq", _faq), ("guias", _guias),
              ("relacionados", _relacionados))
+
+
+def _con_fila(seccion, fila):
+    """La fila de WhatsApp al final del contenido de una sección (antes del cierre de su .vt-wrap)."""
+    fin = "</div></section>"
+    if not seccion.endswith(fin):
+        raise ValueError("sección sin el cierre esperado")
+    return seccion[:-len(fin)] + fila + fin
 
 
 def render(k):
@@ -115,9 +141,11 @@ def render(k):
         if k.get(clave):
             secciones.append(armar(k, len(secciones)))
         if clave == "destacadas" and obras:  # las fotos reales van justo después de las especies
-            secciones.append(c.bloque_obras(len(secciones), obras, "\n".join(secciones)))
+            # Con su fila de WhatsApp (auditoría por página: tras las fotos venían hasta 3.7 pantallas sin botón).
+            secciones.append(_con_fila(c.bloque_obras(len(secciones), obras, "\n".join(secciones)), _fila(k, "obras")))
     ci = k["cierre"]
-    secciones.append(c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo))
+    boton = {"texto": ci["texto"]} if ci.get("texto") else {}
+    secciones.append(c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo, **boton))
     j = k["jsonld"]
     speakable = {"@type": "SpeakableSpecification", "cssSelector": list(j["speakable"])}
     grafo = [pagina_ld(k["meta"]["canonical"]), *j.get("nodos", ()), c.faq_jsonld(k["faq"]["preguntas"]), j["migas"], speakable]

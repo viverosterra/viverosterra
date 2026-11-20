@@ -12,6 +12,7 @@ como estaban: el título dice "con precio" y se reescribe en la Etapa 3 (spec §
 import datos
 import mensajes_paginas
 from componentes import dinero
+from contenido import catalogo_datos as cd
 from contenido import plantas_comun as pc
 from contenido import seo
 
@@ -21,8 +22,10 @@ RUTA = "/catalogo"
 URL = f"{SITE}{RUTA}"
 TITULO = "Catálogo de Plantas y Árboles en Tampico | Viveros Terra"
 IMAGEN = f"{SITE}/img/plantas-tropicales-tampico-viveros.webp"
-DESCRIPCION = ("Catálogo con más de 200 plantas, palmas, árboles y pasto en Tampico. Filtra por categoría, arma tu lista y recibe la "
-               "cotización por WhatsApp.")
+# Auditoría por página (2026-11-20): decía «más de 200 plantas, palmas, árboles y pasto»; el catálogo trae las especies
+# de catalogo_datos (hoy 117) y nada de pasto (tiene su página).
+DESCRIPCION = (f"Catálogo con {len(cd.ESPECIES)} plantas, palmas y árboles del vivero en Tampico. Filtra por luz o tamaño, "
+               "arma tu lista y recibe la cotización por WhatsApp.")
 META = {
     "title": TITULO,
     "description": DESCRIPCION,
@@ -47,6 +50,8 @@ CONTENIDO = {
         "precios": (f"{datos.PALMAS_PRECIO}. Flamboyán desde {dinero(P['flamboyan'])}. Las demás especies, según "
                     "cotización por tamaño."),
         "mensaje": MENSAJE,
+        # Confianza junto al botón (auditoría por página: la garantía solo aparecía al final, en la pantalla 45).
+        "dato": 'Garantía de 30 días en lo que sembramos, <a href="/politicas#garantia-plantas">con condiciones</a>',
     },
     "rejilla": {"titulo": "Especies del vivero"},
     "pedido": {"titulo": "¿No encontraste lo que buscas?",

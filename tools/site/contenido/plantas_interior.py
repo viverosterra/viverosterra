@@ -64,9 +64,10 @@ CONTENIDO = {
         "h1": "Plantas de interior para casas y oficinas en Tampico",
         "lede": "Ficus lyrata, monstera, ZZ, sansiviera y más. Te las llevamos a domicilio.",
         "etiqueta": {"codigo": "Interior", "aviso": f"Precios {datos.ANIO}", "nombre": "Plantas de interior",
-                     "antes": "Precio", "monto": "Por tamaño", "unidad": datos.SEGUN_COTIZACION.lower(),
+                     "antes": "Precio", "monto": "Por tamaño", "sin_precio": True, "unidad": datos.SEGUN_COTIZACION.lower(),
                      "nota": "Cotiza con una foto del lugar."},
         "mensaje": MENSAJE,
+        "cta_texto": "Mandar foto de mi espacio",
         "foto": {"src": "/img/portadas/plantas-ornamentales-tampico-viveros-terra-sm.webp",
                  "srcset": ("/img/portadas/plantas-ornamentales-tampico-viveros-terra-sm.webp 560w, "
                             "/img/portadas/plantas-ornamentales-tampico-viveros-terra.webp 960w"),
@@ -74,7 +75,7 @@ CONTENIDO = {
                  "alt": "Plantas ornamentales con flor en una jardinera",
                  "lugar": "Plantas ornamentales", "etapa": "Tampico"},
     },
-    "especies": {"titulo": "Las más solicitadas en Tampico", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
+    "especies": {"titulo": "Plantas de interior con luz, riego y altura", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
     "lista": pc.LISTA,
     "garantia": pc.GARANTIA,
     "faq": {"titulo": "Plantas de interior en Tampico: lo que más nos preguntan", "preguntas": PREGUNTAS},
@@ -83,8 +84,8 @@ CONTENIDO = {
         ("Ficus elastica (hule): cuidados", "/blog/ficus-elastica-cuidados-tampico"),
         ("Palma areca en Tampico: cuidados", "/blog/palma-areca-tampico"),
         ("Jardín en macetas para terraza", "/blog/jardin-en-macetas-terraza-tampico-guia"))},
-    "relacionados": {"titulo": "Más servicios en Viveros Terra", "items": pc.otras_subcategorias(RUTA)},
-    "cierre": {"titulo": "¿Listo para cotizar?",
+    "relacionados": {"titulo": "Otras plantas del vivero", "items": pc.otras_subcategorias(RUTA)},
+    "cierre": {"titulo": "¿Ya sabes qué planta quieres para tu casa u oficina?", "texto": "Mandar foto de mi espacio",
                "lede": "Dinos si es casa u oficina, cuánta luz tiene y la colonia; te respondemos con precio.",
                "mensaje": MENSAJE},
     "jsonld": {"migas": pc.migas_ld(NOMBRE, RUTA), "nodos": (pc.lista_ld(NOMBRE, [s for s, _t, _a in ESPECIES]),),
@@ -97,6 +98,11 @@ PARIDAD = {
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {
+        # Auditoría por página (2026-11-20): «más solicitadas» afirma una preferencia sin dato.
+        "Las más solicitadas en Tampico": "Plantas de interior con luz, riego y altura",
+        # Auditoría por página: la sección lista las otras subcategorías de plantas, no servicios.
+        "Más servicios en Viveros Terra": "Otras plantas del vivero",
+        "¿Listo para cotizar?": "¿Ya sabes qué planta quieres para tu casa u oficina?",
         "Plantas de interior tampico — Todo lo que necesitas saber": (
             "Plantas de interior en Tampico: lo que más nos preguntan"),
     },

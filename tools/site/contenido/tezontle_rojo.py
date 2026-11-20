@@ -138,6 +138,7 @@ PREGUNTAS = (
 CONTENIDO = {
     "tipo": mc.TIPO,
     "prefijo": "vt-tezontle",
+    "precio_primero": True,  # auditoría por página (plantillas/material.py)
     "meta": META,
     "migas": MIGAS,
     "portada": {
@@ -152,6 +153,7 @@ CONTENIDO = {
                      "filas": (("Por m³", SEGUN), ("Camión volteo 14 m³", SEGUN)),
                      "nota": f"Factura {datos.FACTURA}. La entrega se cotiza según tu colonia."},
         "mensaje": MENSAJE,
+        "cta_texto": "Pedir precio con entrega",
     },
     "que_es": {
         "titulo": "¿Por qué el tezontle funciona tan bien en Tampico?",

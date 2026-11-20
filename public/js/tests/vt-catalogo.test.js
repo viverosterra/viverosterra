@@ -51,7 +51,7 @@ test('coincide: O dentro de un grupo, Y entre grupos y búsqueda sin acentos', (
 
 test('mensaje de una especie que no está en el catálogo', () => {
   assert.equal(c.mensajeEspecial('  Palma phoenix 4 m '), 'Hola Viveros Terra\n\nBusco: *Palma phoenix 4 m*\nNo lo encontré en el catálogo. ¿Lo manejan o pueden cotizarme?');
-  assert.ok(c.mensajeEspecial('').includes('*___*'));
+  assert.equal(c.mensajeEspecial('  '), 'Hola, busco una planta que no vi en el catálogo. Les digo cuál y de qué tamaño.');
 });
 
 const ESPECIES = {

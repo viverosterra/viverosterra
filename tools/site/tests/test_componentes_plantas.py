@@ -18,7 +18,10 @@ VIVERO = "En nuestro vivero"
 class ComponentesPlantasTest(unittest.TestCase):
     def test_foto_de_especie_con_dimensiones_alt_y_pie_sin_afirmar_el_vivero(self):
         html = cp.foto_especie(cd.especie("palma-real"), 3)
-        self.assertIn('src="/img/catalogo/palma-real-tampico.webp" width="480"', html)
+        # Auditoría por página: con su versión de 320 px (la misma foto) en el srcset.
+        self.assertIn('src="/img/catalogo/palma-real-tampico.webp" srcset="/img/catalogo/palma-real-tampico-320.webp 320w, '
+                      '/img/catalogo/palma-real-tampico.webp 480w" sizes="', html)
+        self.assertIn('width="480"', html)
         self.assertIn('loading="lazy"', html)
         self.assertIn('alt="Palma Real (Roystonea regia)"', html)
         self.assertIn("<figcaption><b>Fig. 03</b> · Palma Real</figcaption>", html)
@@ -164,8 +167,8 @@ class ComponentesPlantasTest(unittest.TestCase):
     def test_pedido_especial_con_el_mensaje_de_main(self):
         html = cp.pedido_especial("catalogo")
         texto = unquote(re.search(r'href="https://wa\.me/\d+\?text=([^"]+)"', html).group(1))
-        self.assertEqual(texto, datos.sin_huecos(cp.mensaje_especial("")))
-        self.assertIn("No lo encontré en el catálogo", texto)
+        self.assertEqual(texto, datos.con_firma(cp.ESPECIAL_VACIO))  # sin hueco ni «No lo encontré» sin objeto
+        self.assertIn("No lo encontré en el catálogo", cp.mensaje_especial("palma phoenix"))  # con texto, el de main
         self.assertIn('data-cta="catalogo:solEsp"', html)
 
 

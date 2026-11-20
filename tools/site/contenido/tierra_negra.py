@@ -55,8 +55,15 @@ META = {
 }
 
 
+# Las fotos se ven a lo ancho del celular (~343 px): su versión de 720 px (la misma foto) en el srcset (auditoría por
+# página, 2026-11-20: bajaban de 821 a 1400 px, hasta 293 KB cada una).
+SIZES_FIGURA = "(min-width: 900px) 40vw, (min-width: 560px) 50vw, calc(100vw - 32px)"
+
+
 def _figura(src, ancho, alto, numero, alt, lugar, etapa):
-    return {"src": src, "ancho": ancho, "alto": alto, "numero": numero, "alt": alt, "lugar": lugar, "etapa": etapa}
+    chica = src.removesuffix(".webp") + "-720.webp"
+    return {"src": src, "ancho": ancho, "alto": alto, "numero": numero, "alt": alt, "lugar": lugar, "etapa": etapa,
+            "srcset": f"{chica} 720w, {src} {ancho}w", "sizes": SIZES_FIGURA}
 
 
 PORTADA_FOTO = {
@@ -144,6 +151,7 @@ PREGUNTAS = (
 
 CONTENIDO = {
     "tipo": mc.TIPO,
+    "precio_primero": True, "opiniones_tras_usos": True,  # auditoría por página (plantillas/material.py)
     "prefijo": "vt-tierra",
     "meta": META,
     "migas": MIGAS,
@@ -151,7 +159,8 @@ CONTENIDO = {
         "kicker": "Tampico · Madero · Altamira",
         "pos_d": "88% 50%",
         "pos": "50% 55%",
-        "dato": "La entrega se cotiza según tu colonia",
+        # Auditoría por página: «La entrega se cotiza según tu colonia» ya está en la etiqueta y se repetía aquí.
+        "dato": f"Factura {datos.FACTURA}",
         "enlaces": (("Calcula cuánta necesitas", "#calculadora", "material:calculadora"),),
         "h1": 'Tierra negra en Tampico <span class="vt-serif">por costal, m³ o camión</span>',
         "lede": (f"La tierra negra vegetal cuesta {COSTAL} el costal y {M3} el m³ a granel. Recoges en el vivero o te la "
@@ -161,6 +170,7 @@ CONTENIDO = {
                      "filas": (("Por m³ a granel", M3), (f"Camión volteo {CAMIONES[0][0]} m³", dinero(CAMIONES[0][1]))),
                      "nota": "La entrega se cotiza según tu colonia."},
         "mensaje": MENSAJE,
+        "cta_texto": "Pedir precio con entrega",
         "foto": PORTADA_FOTO,
     },
     "que_es": {
@@ -205,7 +215,9 @@ CONTENIDO = {
                           ("Arma tu lista de plantas", "/catalogo"), ("Guía de jardines", "/blog/diseno-jardines-tampico-guia"))},
     "cierre": {"titulo": "Cotiza tu tierra negra",
                "lede": "Dinos la cantidad y tu colonia y te mandamos el precio con la entrega.",
-               "fondo": {"src": "/img/camion-tierra-negra-entrega-tampico.webp", "ancho": 1400, "alto": 933}},
+               "fondo": {"src": "/img/camion-tierra-negra-entrega-tampico.webp", "ancho": 1400, "alto": 933,
+                         "srcset": ("/img/camion-tierra-negra-entrega-tampico-640.webp 640w, "
+                                    "/img/camion-tierra-negra-entrega-tampico.webp 1400w")}},
     "pedido": mc.pedido("Ejemplo: 3 m³ de tierra negra, entrega en Ciudad Madero"),
     "jsonld": {
         "producto": mc.producto(

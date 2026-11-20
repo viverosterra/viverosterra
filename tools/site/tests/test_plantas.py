@@ -129,7 +129,8 @@ class SubcategoriasTest(unittest.TestCase):
                 self.assertGreaterEqual(len(tarjetas), 6)
                 self.assertNotIn("Foto pendiente", h)
                 for t in tarjetas:
-                    src = re.search(r'<img src="(/img/catalogo/([a-z0-9-]+)-tampico\.webp)" width="\d+" height="\d+"', t)
+                    src = re.search(r'<img src="(/img/catalogo/([a-z0-9-]+)-tampico\.webp)"(?: srcset="[^"]+" sizes="[^"]+")? '
+                                    r'width="\d+" height="\d+"', t)
                     self.assertIsNotNone(src)
                     self.assertTrue((PUBLIC / src.group(1).lstrip("/")).exists())
                     self.assertNotIn(src.group(2), pc.FOTOS_SOLO_CATALOGO)
@@ -138,7 +139,7 @@ class SubcategoriasTest(unittest.TestCase):
 
     def test_etiqueta_con_desde_de_datos_o_segun_cotizacion(self):
         for ruta, desde in datos.DESDE_PLANTAS.items():
-            etiqueta = re.search(r'<p class="vt-etiqueta__precio">(.*?)</p>', html(ruta), re.S).group(1)
+            etiqueta = re.search(r'<p class="vt-etiqueta__precio(?: is-vacio)?">(.*?)</p>', html(ruta), re.S).group(1)
             with self.subTest(ruta=ruta):
                 self.assertIn(f"${desde}" if desde else "según cotización", etiqueta.lower())
 
@@ -174,8 +175,12 @@ class CatalogoTest(unittest.TestCase):
 
     def test_orden_buscador_rejilla_pedido_garantia(self):
         orden = ['id="vt-h1"', "data-vt-filtros", "data-vt-rejilla", "data-vt-especial", "/politicas#garantia-plantas"]
-        posiciones = [self.h.index(x) for x in orden]
+        # La garantía de abajo sigue al final (rindex); desde la auditoría por página también va, con sus condiciones,
+        # en la línea de confianza junto al botón de arriba.
+        posiciones = [self.h.index(x) for x in orden[:-1]] + [self.h.rindex(orden[-1])]
         self.assertEqual(posiciones, sorted(posiciones))
+        self.assertLess(self.h.index('aria-label="Garantía"'), posiciones[-1])
+        self.assertLess(self.h.index("/politicas#garantia-plantas"), self.h.index("data-vt-filtros"))
 
     def test_rejilla_completa_sin_proxy_ni_js_en_linea(self):
         self.assertEqual(self.h.count('data-vt-agregar="'), 117)

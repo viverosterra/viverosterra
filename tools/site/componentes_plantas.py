@@ -50,13 +50,26 @@ def sin_foto(e):
             '<text class="vt-sinfoto-tagtexto" x="240" y="460" text-anchor="middle">Foto pendiente</text></svg>')
 
 
+# Auditoría por página (2026-11-20): la foto se ve a ~150 px de ancho en celular (dos por renglón) y bajaba de 480 px;
+# las más anchas que VARIANTE_MIN traen su versión de 320 px (<foto>-320.webp, la misma foto) en el srcset.
+VARIANTE, VARIANTE_MIN = 320, 341
+SIZES_ESPECIE = "(min-width: 1100px) 260px, (min-width: 768px) 30vw, 42vw"
+
+
+def srcset_especie(e):
+    if e["ancho"] < VARIANTE_MIN:
+        return ""
+    chica = e["img"].removesuffix(".webp") + f"-{VARIANTE}.webp"
+    return f' srcset="{esc(chica)} {VARIANTE}w, {esc(e["img"])} {e["ancho"]}w" sizes="{SIZES_ESPECIE}"'
+
+
 def foto_especie(e, numero, carga="lazy"):
     """carga: "alta" (la primera del catálogo), "eager" o "lazy". Sin foto publicable, el marcador de sin_foto()."""
     if not cd.tiene_foto(e):
         return f'<figure class="vt-esp__foto">{sin_foto(e)}{pie_especie(e, numero)}</figure>'
     loading = "lazy" if carga == "lazy" else "eager"
     prioridad = ' fetchpriority="high"' if carga == "alta" else ""
-    return (f'<figure class="vt-esp__foto"><img src="{esc(e["img"])}" width="{e["ancho"]}" height="{e["alto"]}" '
+    return (f'<figure class="vt-esp__foto"><img src="{esc(e["img"])}"{srcset_especie(e)} width="{e["ancho"]}" height="{e["alto"]}" '
             f'loading="{loading}"{prioridad} decoding="async" alt="{esc(alt_especie(e))}">'
             f'{pie_especie(e, numero)}</figure>')
 
@@ -130,17 +143,23 @@ def necesidades(items, tipo):
     return f'<ul class="vt-necesidades">{filas}</ul>'
 
 
+def _grupo_filtro(g, leyenda, opciones, clase="vt-filtro"):
+    return (f'<fieldset class="{clase}"><legend>{leyenda}</legend>' + "".join(
+        f'<button type="button" class="vt-chip-p" data-vt-g="{g}" data-vt-v="{v}" aria-pressed="false">{t}</button>'
+        for v, t in opciones) + "</fieldset>")
+
+
 def filtros_catalogo(total):
-    grupos = "".join(
-        f'<fieldset class="vt-filtro"><legend>{leyenda}</legend>' + "".join(
-            f'<button type="button" class="vt-chip-p" data-vt-g="{g}" data-vt-v="{v}" aria-pressed="false">{t}</button>'
-            for v, t in opciones) + "</fieldset>"
-        for g, leyenda, opciones in OPCIONES)
+    # Auditoría por página (2026-11-20): el tipo (árboles, palmas, plantas) queda a la vista para saltar a lo suyo en un
+    # catálogo de ~40 pantallas; luz, tamaño, riego y uso siguen dentro de «Filtros».
+    tipo = _grupo_filtro(*OPCIONES[0], clase="vt-filtro vt-filtro--tipo")
+    grupos = "".join(_grupo_filtro(*o) for o in OPCIONES[1:])
     # Sin action: test_reglas solo admite formularios a formsubmit. Sin JS, Enter recarga la misma página con ?q=.
     return ('<form class="vt-buscador" role="search" aria-label="Buscar y filtrar plantas" data-vt-filtros>'
             '<div class="vt-campo"><label for="vt-cat-q">Busca por nombre, uso o luz</label>'
             '<div class="vt-control"><input id="vt-cat-q" type="search" name="q" autocomplete="off" '
             'placeholder="Ej. palma, banqueta, sombra"></div></div>'
+            f'{tipo}'
             '<details class="vt-buscador__filtros" data-vt-plegable><summary><span>Filtros<span data-vt-o="n-filtros">'
             '</span></span></summary>'
             f'<div class="vt-buscador__grupos">{grupos}</div></details>'
@@ -194,13 +213,15 @@ def rejilla_catalogo(especies_=None, tipo="catalogo", mensaje=None):
             '<div class="vt-cat__vacio" data-vt-vacio hidden><p>No hay especies con esos filtros. Quita alguno o '
             'pregúntanos por la que buscas:</p>'
             f'<a class="vt-btn vt-btn--wa" data-cta="{esc(tipo)}:solEsp-vacio" data-vt-o="vacio-wa" '
-            f'href="{esc(datos.wa_url(mensaje_especial("")))}" target="_blank" rel="noopener">{WA_GLIFO}'
+            f'href="{esc(datos.wa_url(datos.con_firma(mensaje_especial(""))))}" target="_blank" rel="noopener">{WA_GLIFO}'
             'Preguntar por WhatsApp</a></div>')
 
 
 CTA_BARRA = "Cotizar plantas"
-CTA_REJILLA = "Cotizar o preguntar"
-CADA_FILA = 12  # tarjetas entre dos filas de WhatsApp en la rejilla (el mismo número que CADA_FILA de vt-catalogo.js)
+CTA_REJILLA = "Mandar mi lista o preguntar"
+# Tarjetas entre dos filas de WhatsApp en la rejilla (el mismo número que CADA_FILA de vt-catalogo.js). Auditoría por
+# página (2026-11-20): con 12 quedaban 4.3 pantallas del celular sin botón; con 8, menos de 3.
+CADA_FILA = 8
 
 
 def fila_rejilla(mensaje, tipo):
@@ -234,7 +255,7 @@ def lista_catalogo(tipo, mensaje=datos.MENSAJES["plantas"]):
         'aria-label="Cerrar la lista"><span aria-hidden="true">×</span></button></div>'
         '<p class="vt-promesa" data-vt-o="resumen">Tu lista está vacía.</p><ul class="vt-lista" data-vt-o="items"></ul>'
         f'<a class="vt-btn vt-btn--wa vt-lista__enviar" data-cta="{esc(tipo)}:sendWA" data-vt-o="enviar" '
-        f'href="{esc(datos.wa_url(""))}" target="_blank" rel="noopener" hidden>{WA_GLIFO}Cotizar por WhatsApp</a>'
+        f'href="{esc(datos.wa_url(""))}" target="_blank" rel="noopener" hidden>{WA_GLIFO}Mandar mi lista por WhatsApp</a>'
         '<p class="vt-dialogo__botones"><button type="button" class="vt-btn vt-btn--linea" data-vt-cerrar>Seguir viendo'
         '</button><button type="button" class="vt-lista__vaciar" data-vt-vaciar>Vaciar lista</button></p>'
         f'<p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p></dialog>'
@@ -249,9 +270,16 @@ def lista_catalogo(tipo, mensaje=datos.MENSAJES["plantas"]):
         '<p class="vt-sr" role="status" data-vt-o="aviso"></p></div>')
 
 
+# Con el campo vacío (auditoría por página, 2026-11-20): antes salía «Hola Viveros Terra / No lo encontré en el
+# catálogo…» sin decir qué, o con el hueco ___. El mismo texto vive en mensajeEspecial() de public/js/vt-catalogo.js.
+ESPECIAL_VACIO = "Hola, busco una planta que no vi en el catálogo. Les digo cuál y de qué tamaño."
+
+
 def mensaje_especial(texto):
-    """El mensaje de solEsp() de main; con el campo vacío lleva el hueco ___ (igual que mensajeEspecial() del JS)."""
-    valor = (texto or "").strip() or "___"
+    """El mensaje de solEsp() de main con lo que se buscó; sin texto, ESPECIAL_VACIO (igual que mensajeEspecial() del JS)."""
+    valor = (texto or "").strip()
+    if not valor:
+        return ESPECIAL_VACIO
     return f"Hola Viveros Terra\n\nBusco: *{valor}*\nNo lo encontré en el catálogo. ¿Lo manejan o pueden cotizarme?"
 
 
@@ -259,6 +287,6 @@ def pedido_especial(tipo):
     return ('<div class="vt-especial" data-vt-especial><div class="vt-campo"><label for="vt-especial-q">Planta, árbol, '
             'tamaño o medida que buscas</label><div class="vt-control"><input id="vt-especial-q" type="text" '
             'autocomplete="off" maxlength="120" placeholder="Ej. palma phoenix de 4 m"></div></div>'
-            f'<a class="vt-btn vt-btn--wa" data-cta="{esc(tipo)}:solEsp" href="{esc(datos.wa_url(mensaje_especial("")))}" '
-            f'target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp<span class="vt-flecha" aria-hidden="true">→'
+            f'<a class="vt-btn vt-btn--wa" data-cta="{esc(tipo)}:solEsp" href="{esc(datos.wa_url(datos.con_firma(mensaje_especial(""))))}" '
+            f'target="_blank" rel="noopener">{WA_GLIFO}Preguntar por esa planta<span class="vt-flecha" aria-hidden="true">→'
             '</span></a></div>')
