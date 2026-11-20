@@ -15,9 +15,12 @@ NEGOCIO = entidad.REF
 
 
 def render(k):
-    faq = f'<h2 id="preguntas">{k["faq_titulo"]}</h2>{c.faq(k["faq"])}' if k["faq"] else ""
+    # Auditoría por página (2026-11-20): una línea de WhatsApp antes de las preguntas cierra el último tramo sin botón
+    # (4.3–5 pantallas del celular entre la última línea y el cierre).
+    faq = (f'{cb.cta_lectura(k["mensaje"], k["tipo"], "preguntas", k["tema"])}<h2 id="preguntas">{k["faq_titulo"]}</h2>'
+           f'{c.faq(k["faq"])}' if k["faq"] else "")
     cuerpo = (f'<div class="vt-wrap vt-art"><article class="vt-art__cuerpo" aria-labelledby="vt-h1">{cb.respuesta(k["respuesta"])}'
-              f'{cb.indice_movil(k["indice"])}{_con_cta_medio(k["cuerpo"], cb.cta_medio(k["tema"], k["tipo"], k["mensaje"]), k)}{faq}'
+              f'{cb.indice_movil(k["indice"])}{cb.fotos_cuerpo(_con_cta_medio(k["cuerpo"], cb.cta_medio(k["tema"], k["tipo"], k["mensaje"]), k))}{faq}'
               f'{cb.enlaces(k["tema"]["enlaces"])}</article>'
               f'<aside class="vt-art__margen">{cb.indice(k["indice"])}{cb.cta_margen(k["tema"], k["tipo"])}</aside></div>')
     grafo = _grafo(k)
@@ -35,14 +38,19 @@ def render(k):
 # de un H2 o un H3, nunca a media sección) cada vez que se acumulan unos LECTURA_PESO caracteres de lectura (texto; cada
 # imagen y cada tabla cuentan como un tramo de texto), para que ningún tramo del celular pase de 6 pantallas sin un
 # WhatsApp en línea. Medido a 375 px: ~1,000 caracteres por pantalla.
-LECTURA_PESO = 2400
+# Auditoría por página (2026-11-20): 1,500 (antes 2,400) para no pasar de unas 3 pantallas sin botón.
+LECTURA_PESO = 1500
 PESO_IMAGEN, PESO_TABLA = 400, 900
+# Auditoría por página (2026-11-20): cada renglón de lista o de tabla ocupa al menos un renglón de pantalla aunque traiga
+# poco texto (los ejemplos de presupuesto medían 3.5 pantallas con poco peso).
+PESO_RENGLON = 80
 CORTE_RE = re.compile(r"<h[23]\b")
 
 
 def _peso(fragmento):
     texto = re.sub(r"<[^>]+>", "", fragmento)
-    return len(texto) + PESO_IMAGEN * fragmento.count("<img") + PESO_TABLA * fragmento.count("<table")
+    return (len(texto) + PESO_IMAGEN * fragmento.count("<img") + PESO_TABLA * fragmento.count("<table")
+            + PESO_RENGLON * (fragmento.count("<li") + fragmento.count("<tr")))
 
 
 def _con_cta_medio(cuerpo, cta, k):
@@ -51,20 +59,28 @@ def _con_cta_medio(cuerpo, cta, k):
     desde el último CTA llega a LECTURA_PESO (no a menos de un tercio de LECTURA_PESO del final)."""
     h2 = [m.start() for m in re.finditer(r"<h2\b", cuerpo)]
     medio = h2[2] if len(h2) > 2 else len(cuerpo)
+    precio = _fin_de_precio(cuerpo, h2)
     cortes, previo, n = [], 0, 0
-    for pos in sorted({m.start() for m in CORTE_RE.finditer(cuerpo)} | {medio}):
+    for pos in sorted({m.start() for m in CORTE_RE.finditer(cuerpo)} | {medio} | ({precio} - {medio, None})):
         if pos == medio:
             cortes.append((pos, cta))
             previo = pos
-        elif _peso(cuerpo[previo:pos]) >= LECTURA_PESO and _peso(cuerpo[pos:]) >= LECTURA_PESO / 3:
+        elif pos == precio or (_peso(cuerpo[previo:pos]) >= LECTURA_PESO and _peso(cuerpo[pos:]) >= LECTURA_PESO / 3):
             n += 1
-            cortes.append((pos, cb.cta_lectura(k["mensaje"], k["tipo"], n)))
+            cortes.append((pos, cb.cta_lectura(k["mensaje"], k["tipo"], n, k["tema"])))
             previo = pos
     salida, desde = [], 0
     for pos, html in cortes:
         salida += [cuerpo[desde:pos], html]
         desde = pos
     return "".join(salida) + cuerpo[desde:]
+
+
+def _fin_de_precio(cuerpo, h2):
+    """Auditoría por página (2026-11-20): donde termina la sección «¿Cuánto cuesta…?» (<h2 id="precio">), el siguiente
+    <h2>: ahí va siempre una línea de WhatsApp, junto al precio. None si el artículo no tiene esa sección."""
+    inicio = cuerpo.find('<h2 id="precio"')
+    return next((pos for pos in h2 if pos > inicio), None) if inicio >= 0 else None
 
 
 def _migas_ld(k):
@@ -101,5 +117,6 @@ def _precarga(k):
     f = k.get("portada")
     if f:  # plan visual V4: la portada es la primera imagen y el LCP
         return (base.precarga_imagen({"src": f["src"], "srcset": cb.portada_srcset(f), "sizes": cb.PORTADA_SIZES}),)
-    m = re.search(r'<img src="([^"]+)"', k["cuerpo"])
-    return (base.precarga_imagen({"src": m.group(1)}),) if m else ()
+    # Auditoría por página (2026-11-20): sin portada no se precarga nada; la primera foto del cuerpo está a unas dos
+    # pantallas y competía con el titular.
+    return ()

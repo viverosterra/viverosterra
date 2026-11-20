@@ -133,12 +133,13 @@ class RitmoTest(unittest.TestCase):
                 self.assertEqual(len(set(textos)), len(textos))
                 self.assertNotIn(c.CTA_WA, textos)
 
-    def test_blog_con_fila_cada_12_tarjetas_y_lineas_de_lectura(self):
+    def test_blog_con_fila_cada_8_tarjetas_y_lineas_de_lectura(self):
+        # Auditoría por página (2026-11-20): cada 8 tarjetas (antes 12, con 4.3 pantallas del celular sin botón).
         h = main(html("/blog"))
         partes = h.split('<li class="vt-blog-fila"')
-        self.assertGreaterEqual(len(partes), 4)
+        self.assertGreaterEqual(len(partes), 6)
         for previo in partes[1:-1]:
-            self.assertEqual(previo.count('<li class="vt-blog-t'), 12)
+            self.assertEqual(previo.count('<li class="vt-blog-t'), 8)
         articulo = main(html("/blog/pasto-san-agustin-vs-japones"))
         self.assertIn('data-cta="blog:medio-wa"', articulo)
 

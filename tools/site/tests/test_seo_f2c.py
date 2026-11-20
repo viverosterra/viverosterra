@@ -380,7 +380,8 @@ class FotosTest(unittest.TestCase):
         }.items():
             src, alt = fotos_paso1.cuerpo(destino, src, alt)  # revisión de fotos, paso 1 (dueño, 2026-11-17)
             with self.subTest(destino=destino):
-                self.assertIn((src, None, alt), _fotos(html_de(destino)))
+                # Auditoría por página (2026-11-20): la foto del cuerpo puede llevar srcset con su copia de 640 px.
+                self.assertIn((src, alt), [(f[0], f[2]) for f in _fotos(html_de(destino))])
         foto = "/img/obra/terra/pasto-sintetico-03-patio-con-pasto-sintetico"
         perros = [f for f in _fotos(html_de("/pasto-sintetico/perros")) if f[0] == f"{foto}.webp"]
         self.assertEqual(perros, [(f"{foto}.webp", f"{foto}-640.webp 640w, {foto}.webp 1038w",

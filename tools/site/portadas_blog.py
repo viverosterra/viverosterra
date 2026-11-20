@@ -37,5 +37,50 @@ def generar():
     print(f"portadas del blog: {hechas} copias de {ANCHO} px escritas")
 
 
+# Auditoría por página (2026-11-20): copias de la MISMA foto, sin recorte, para las miniaturas del índice (320 px y 640 px)
+# y para las fotos del cuerpo de los artículos (640 px), con calidad 80. No reescribe las que ya existen.
+CALIDAD_AUDITORIA = 80
+
+
+def _fotos_del_blog():
+    """(src, ancho) de las fotos del índice y de las del cuerpo de los artículos."""
+    import re
+
+    from contenido import blog_indice
+
+    fotos = {blog_indice.CONTENIDO["foto"]["src"]: int(blog_indice.CONTENIDO["foto"]["ancho"])}
+    for sec in blog_indice.CONTENIDO["secciones"]:
+        for t in sec["tarjetas"]:
+            if t.get("foto"):
+                fotos[t["foto"]["src"]] = int(t["foto"]["ancho"])
+    indice = dict(fotos)
+    for slug in articulo.CLAVES:
+        for src, ancho in re.findall(r'<img src="([^"]+)" width="(\d+)"', articulo.leer(slug)[1]):
+            fotos.setdefault(src, int(ancho))
+    return indice, fotos
+
+
+def copias_auditoria():
+    from PIL import Image
+
+    import componentes_blog as cb
+
+    indice, fotos = _fotos_del_blog()
+    pedidos = [(src, 320) for src, ancho in indice.items() if ancho > 320]
+    pedidos += [(src, 640) for src, ancho in fotos.items() if ancho > cb.UMBRAL_COPIA]
+    hechas = 0
+    for src, ancho in pedidos:
+        destino = paginas.PUBLIC / cb.copia(src, ancho).lstrip("/")
+        if destino.exists():
+            continue
+        with Image.open(paginas.PUBLIC / src.lstrip("/")) as im:
+            alto = round(im.height * ancho / im.width)
+            im.convert("RGB").resize((ancho, alto), Image.LANCZOS).save(destino, "WEBP", quality=CALIDAD_AUDITORIA,
+                                                                        method=6)
+        hechas += 1
+    print(f"blog: {hechas} copias nuevas de 320 y 640 px escritas")
+
+
 if __name__ == "__main__":
     generar()
+    copias_auditoria()
