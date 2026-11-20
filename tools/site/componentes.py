@@ -522,13 +522,22 @@ def fichas(items):
     return f'<ul class="vt-modos vt-fichas">{"".join(filas)}</ul>'
 
 
+# Ancho de la foto de tarjeta: una columna en celular, dos desde 640 px y tres desde 1024 px (.vt-relacionados).
+SIZES_TARJETA = "(min-width: 1024px) 360px, (min-width: 640px) 50vw, 90vw"
+
+
+def _srcset_tarjeta(i):
+    """srcset opcional de la tarjeta (auditoría por página, 2026-11-20): i["srcset"] con las versiones 4:3 de la misma foto."""
+    return f' srcset="{esc(i["srcset"])}" sizes="{SIZES_TARJETA}"' if i.get("srcset") else ""
+
+
 def relacionados(items, fila=False):
     """Tarjetas del sistema: foto, título con enlace (toda la tarjeta lo abre) y texto. items: titulo, href, texto, img,
     ancho, alto. fila=True (servicios, Entrega C de experiencia): en celular, una junto a otra con desplazamiento
     horizontal."""
-    filas = "".join(f'<li class="vt-tarjeta"><img src="{esc(i["img"])}" width="{i["ancho"]}" height="{i["alto"]}" alt="" '
-                    f'loading="lazy" decoding="async"><h3><a href="{esc(i["href"])}">{i["titulo"]}</a></h3>'
-                    f'<p>{i["texto"]}</p></li>' for i in items)
+    filas = "".join(f'<li class="vt-tarjeta"><img src="{esc(i["img"])}"{_srcset_tarjeta(i)} width="{i["ancho"]}" '
+                    f'height="{i["alto"]}" alt="" loading="lazy" decoding="async"><h3><a href="{esc(i["href"])}">'
+                    f'{i["titulo"]}</a></h3><p>{i["texto"]}</p></li>' for i in items)
     return f'<ul class="vt-relacionados{" vt-relacionados--fila" if fila else ""}">{filas}</ul>'
 
 

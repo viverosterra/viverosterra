@@ -111,6 +111,7 @@ FIGURAS = (
      "alt": "Pasto San Agustín recién instalado junto a un andador.", "lugar": "Después", "etapa": "Día de instalación"},
 )
 
+PREGUNTA_COMPRAS = "Hola, tengo una pregunta de compras sobre pasto al mayoreo (factura, REPSE o entregas)."
 PAQUETES = (
     {"cta": "Cotizar solo el pasto", "rotulo": "Paquete 1 · Solo pasto", "titulo": "Pasto de mayoreo para tu cuadrilla", "precio": MAYOREO,
      "unidad": "/m²", "detalle": f"en pedidos de {MINIMO} m² o más",
@@ -136,7 +137,10 @@ PAQUETES = (
 
 CONTENIDO = {
     # Entrega C de experiencia: filas de WhatsApp tras los clientes y las preguntas (antes, 7.1 a 7.3 pantallas sin CTA).
-    "ctas": {"prueba": (MENSAJE, "Cotizar pasto para mi obra"), "faq": (MENSAJE, "Preguntar por WhatsApp")},
+    # Auditoría por página (2026-11-20): fila bajo la garantía (con el mensaje de su paquete) y la de preguntas con un
+    # mensaje de compras, no el del hero.
+    "ctas": {"prueba": (MENSAJE, "Cotizar pasto para mi obra"), "garantia": (PAQUETES[1]["mensaje"], "Cotizar pasto instalado con garantía"),
+             "faq": (PREGUNTA_COMPRAS, "Hacer mi pregunta de compras")},
     "respuesta": respuestas.de("/mayoreo-pasto-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "b2b",
     "prefijo": "may",

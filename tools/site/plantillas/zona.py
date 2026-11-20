@@ -1,6 +1,6 @@
 """Plantilla de zona (spec §3.3): ruta visible → H1 "Jardinería en {zona}" con el precio ancla en la etiqueta y CTA con
 la plantilla de la zona → los 4 servicios que más pide la zona con precio (de datos.py; los demás, en /precios) → lo que pide un jardín en
-esta zona (el problema local) → colonias atendidas con su código postal → preguntas → otras zonas → CTA final.
+esta zona (el problema local, con su fila de WhatsApp para mandar fotos) → colonias atendidas con su código postal → preguntas → otras zonas → CTA final.
 
 Del orden del spec no entran, por regla del dueño: el caso real de la zona (ninguno tiene permiso; se agrega con su
 prueba cuando el dueño lo dé) y el tiempo desde el vivero (sin distancias ni tiempos de llegada). Páginas: las 6
@@ -22,7 +22,10 @@ def render(k):
                  cz.lista(pr["filas"], pr["caption"])
                  + cz.cotizar(*pr["cotizar"], f"{tipo}:precios", despues=VER_LISTA) + f'<p class="vt-promesa">{pr["nota"]}</p>',
                  lede=pr["lede"], tinte=True, id_seccion="precios"),
-        c.bloque(2, "Tu jardín", "vt-h-zona", re_["titulo"], c.fichas(re_["items"]), lede=re_.get("lede"), id_seccion="zona"),
+        # Auditoría por página (2026-11-20): fila de WhatsApp tras «Lo que pide un jardín» (antes, 4.8 pantallas sin botón).
+        c.bloque(2, "Tu jardín", "vt-h-zona", re_["titulo"],
+                 c.fichas(re_["items"]) + c.fila_seccion(re_["cta"][1], tipo, "zona", re_["cta"][0]),
+                 lede=re_.get("lede"), id_seccion="zona"),
         c.bloque(3, "Colonias", "vt-h-colonias", co["titulo"],
                  cz.colonias(co["items"], f"Colonias y códigos postales de {co['municipio']} (SEPOMEX)."),
                  lede=co["lede"], tinte=True, id_seccion="colonias"),

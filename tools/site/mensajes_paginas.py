@@ -77,6 +77,17 @@ ZONAS = {
     "/jardineria-ciudad-madero": _ZONA.format("Cd. Madero"),
     "/jardineria-altamira": _ZONA.format("Altamira"),
 }
+# Auditoría por página (2026-11-20): fila de WhatsApp tras «Lo que pide un jardín en esta zona» (antes, 4.8 pantallas
+# del celular sin botón entre la lista de precios y el cierre). Pide revisar el jardín con fotos, no otra cotización.
+_REVISION = "Hola, quiero que revisen mi jardín en {}. Les mando fotos del espacio."
+REVISION_ZONAS = {
+    "/jardineria-lomas-de-rosales-tampico": _REVISION.format("Lomas de Rosales"),
+    "/jardineria-country-club-tampico": _REVISION.format("Club Campestre"),
+    "/jardineria-aguila-tampico": _REVISION.format("Águila y Altavista"),
+    "/jardineria-lomas-del-chairel-tampico": _REVISION.format("Lomas del Chairel"),
+    "/jardineria-ciudad-madero": _REVISION.format("Cd. Madero"),
+    "/jardineria-altamira": _REVISION.format("Altamira"),
+}
 # Poda en la zona: su renglón de la lista pide fotos (el precio depende del tamaño y de los residuos).
 _PODA = "Hola, quiero cotizar poda de palmas y árboles{}.\nColonia: ___\nCuántos árboles o palmas: ___\nLes mando fotos."
 PODA_ZONAS = {
@@ -108,7 +119,8 @@ SEO_F2A = {
                               "Cuántos árboles o palmas: ___\nPoda o derribo: ___\nLes mando fotos y la ubicación."),
     "/empresas": ("Hola, quiero cotizar áreas verdes para mi empresa.\nEmpresa: ___\n"
                   "Servicio (mantenimiento, pasto, palmas o riego): ___\nUbicación: ___\nm² aprox.: ___"),
-    "/nosotros": "Hola, quiero cotizar: ___\nColonia: ___\nMetros aprox.: ___",
+    # Auditoría por página (2026-11-20): sin los huecos quedaba «Hola, quiero cotizar.» en los 7 botones de la página.
+    "/nosotros": "Hola, vi la página de Viveros Terra y quiero cotizar. Les mando foto de mi espacio.",
     "/zonas": "Hola, quiero cotizar jardinería.\nColonia: ___\nServicio que necesito: ___\nMetros aprox.: ___",
 }
 
@@ -221,7 +233,8 @@ def mensaje_blog(slug):
 
 # Etapa 2i: mensajes propios de las utilitarias, los de main (la firma la agrega datos.con_firma).
 UTILITARIAS = {
-    "gracias": "Hola, acabo de enviar una cotización por el cotizador y quiero avanzar",
+    # Auditoría por página (2026-11-20): a /gracias llegan los 7 formularios, no solo el cotizador.
+    "gracias": "Hola, acabo de enviar mis datos por el formulario de su sitio y quiero avanzar. Les mando fotos de mi espacio.",
     "cuestionario": "Hola, quiero empezar un proyecto de jardín en Tampico",
     "politicas": "Hola, tengo una duda sobre envíos/devoluciones",
     "privacidad": "Hola, tengo una duda sobre el aviso de privacidad",
@@ -229,5 +242,13 @@ UTILITARIAS = {
     # Reescritura 10 (Entrega B de experiencia): los huecos con ___, como en el resto del sitio, y la colonia.
     "vivero": "Hola, quiero visitar el vivero o cotizar plantas.\nLo que busco: ___\nTamaño aprox.: ___\nColonia: ___",
     "vivero_planta": "Hola, estoy buscando una planta en el vivero de Tampico, ¿la tienen?",
+    # Auditoría por página (2026-11-20): filas de sección de /vivero-tampico y /nosotros con el contexto de su sección.
+    "vivero_visita": "Hola, voy a ir al vivero en Madero y quiero saber si tienen lo que busco.",
+    "vivero_entrega": "Hola, quiero plantas a domicilio. ¿Cuánto cuesta la entrega a mi colonia?",
+    "vivero_mayoreo": "Hola, quiero cotizar plantas, palmas o pasto al mayoreo para un proyecto.",
+    "nosotros_servicio": "Hola, quiero saber qué servicio me conviene para mi jardín. Les mando foto del espacio.",
+    "empresas_repse": "Hola, quiero cotizar áreas verdes para mi empresa. Necesitamos REPSE y factura CFDI.",
+    "empresas_proyecto": "Hola, quiero cotizar áreas verdes para un proyecto fuera de Tampico, Madero y Altamira.",
+    "zonas_colonia": "Hola, quiero cotizar jardinería en mi colonia. Les mando la ubicación y una foto.",
     "no_encontrada": "Hola, busqué una página en su sitio y no la encontré. Necesito: ___",
 }

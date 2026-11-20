@@ -2,6 +2,8 @@
 el domicilio sale de datos.py. Se suman a la sección de transferencias los encargados que ya existen (paquetería, servicio
 de formularios, cobro con tarjeta), sin nombrar al proveedor de la terminal: ver C10 del plan. El marco legal citado no se
 toca: lo revisa el abogado del dueño."""
+import html
+
 import datos
 import mensajes_paginas
 from contenido import seo
@@ -10,6 +12,7 @@ SITE = datos.SITIO
 URL = f"{SITE}/politica-privacidad"
 ACTUALIZADO = "noviembre de 2026"
 TEL, CORREO = datos.TELEFONO_VISIBLE, datos.CORREO_FORMULARIOS
+ARCO_WA = datos.wa_url(datos.con_firma(mensajes_paginas.UTILITARIAS["privacidad"]))
 SECCIONES = (
     {"id": "responsable", "titulo": "Responsable", "bloques": (
         ("p", f"<strong>Responsable:</strong> Viveros Terra, con domicilio en {datos.CALLE}, Cd. Madero, Tamaulipas, México. "
@@ -39,7 +42,9 @@ SECCIONES = (
         ("p", "Usted tiene derecho a <strong>Acceder, Rectificar, Cancelar u Oponerse</strong> al tratamiento de sus datos "
               "personales en cualquier momento. Para ejercer estos derechos:"),
         ("ul", (f'<strong>Correo:</strong> {CORREO} con asunto "Derechos ARCO"',
-                f'<strong>WhatsApp:</strong> <a data-cta="utilidad:cuerpo" href="https://wa.me/{datos.TELEFONO_WA}">{TEL}</a>',
+                # Auditoría por página (2026-11-20): el enlace abría WhatsApp sin mensaje; ahora con el de la duda de privacidad.
+                (f'<strong>WhatsApp:</strong> <a data-cta="utilidad:cuerpo" href="{html.escape(ARCO_WA)}" target="_blank" '
+                 f'rel="noopener">{TEL}</a>'),
                 f"<strong>Presencial:</strong> {datos.CALLE}, Cd. Madero, Tamaulipas. Lunes a viernes, 9am–6pm.")),
         ("p", "Responderemos su solicitud en un plazo máximo de 20 días hábiles, conforme al artículo 32 de la LFPDPPP."),)},
     {"id": "cookies", "titulo": "5. Uso de cookies y tecnologías de rastreo", "corto": "Cookies", "bloques": (

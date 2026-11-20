@@ -38,7 +38,7 @@ META = {
                 ("twitter:description", DESCRIPCION)),
 }
 ALTAMIRA = {"titulo": "Jardinería en Altamira", "href": "/jardineria-altamira",
-            "img": "/img/portadas/jardineria-areas-verdes-tampico-sm.webp", "ancho": 560, "alto": 840,
+            **b2b_comun.tarjeta("/img/portadas/jardineria-areas-verdes-tampico"),
             "texto": "Casas y empresas de Altamira y Lagunas de Miralta"}
 HIJOS = b2b_comun.PAGINAS + (ALTAMIRA,)
 OPINIONES = (datos.OPINIONES_MANTENIMIENTO[1], datos.OPINIONES_RIEGO[1], datos.OPINIONES_PASTO_EN_ROLLO[1])
@@ -79,22 +79,26 @@ CONTENIDO = {
         "foto": FOTO,
     },
     "secciones": (
+        # Auditoría por página (2026-11-20): clientes, REPSE y opiniones bajo la portada (antes, tras los servicios) y con
+        # su fila de WhatsApp: el tramo de 5 pantallas del celular sin botón queda en menos de 3.
+        {"clase": "clientes", "rotulo": "Clientes", "id": "vt-h-clientes", "ancla": "clientes",
+         "titulo": f"Empresas que nos han contratado · {datos.PROYECTOS_B2B} proyectos B2B",
+         "lede": f"Clientes que nos dieron permiso de mostrar su nombre. Trabajamos con empresas desde {datos.DESDE}.",
+         "titulo_opinion": "Lo que dicen las empresas", "opiniones": OPINIONES,
+         "cta": (mensajes_paginas.UTILITARIAS["empresas_repse"], "Cotizar con REPSE y factura")},
         {"clase": "tarjetas", "rotulo": "Servicios", "id": "vt-h-servicios", "ancla": "servicios",
          "titulo": "Lo que hacemos para empresas",
          "lede": (f"Un mismo proveedor para el pasto, las palmas, el riego y el mantenimiento. Plan empresa de "
                   f"mantenimiento {SEGUN.lower()}."),
          "items": HIJOS, "cta": (MENSAJE, "Cotizar para mi empresa")},
-        {"clase": "clientes", "rotulo": "Clientes", "id": "vt-h-clientes", "ancla": "clientes",
-         "titulo": f"Empresas que nos han contratado · {datos.PROYECTOS_B2B} proyectos B2B",
-         "lede": f"Clientes que nos dieron permiso de mostrar su nombre. Trabajamos con empresas desde {datos.DESDE}.",
-         "titulo_opinion": "Lo que dicen las empresas", "opiniones": OPINIONES},
         {"clase": "fichas", "rotulo": "Documentación", "id": "vt-h-docs", "ancla": "documentacion",
          "titulo": "Documentación para compras", "lede": "Lo que suele pedir un departamento de compras.",
          "items": b2b_comun.DOCUMENTACION},
         {"clase": "cobertura", "rotulo": "Cobertura", "id": "vt-h-cobertura",
          "titulo": "Dónde y a quién atendemos",
          "lede": "Tampico, Ciudad Madero y Altamira; fuera de la zona conurbada, por proyecto.",
-         **b2b_comun.COBERTURA, "cta": (MENSAJE, "Cotizar mi proyecto")},
+         **b2b_comun.COBERTURA,
+         "cta": (mensajes_paginas.UTILITARIAS["empresas_proyecto"], "Cotizar un proyecto fuera de la zona")},
     ),
     "faq": {"titulo": "Preguntas de compras", "preguntas": PREGUNTAS},
     "cierre": {

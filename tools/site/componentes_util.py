@@ -20,14 +20,15 @@ def boton_wa_texto(texto, mensaje, cta):
 
 def cabeza(k):
     """Ruta visible (si la hay), kicker, H1, entrada y, opcional, foto de producción. k: h1, lede, kicker, migas, foto
-    (src, ancho, alto, alt), aviso. La foto es la única imagen prioritaria de la página."""
+    (src, ancho, alto, alt y, opcionales, srcset y sizes), aviso. La foto es la única imagen prioritaria de la página."""
     ruta = c.migas(k["migas"]) if k.get("migas") else ""
     aviso = f'<p class="vt-promesa">{k["aviso"]}</p>' if k.get("aviso") else ""
     extra = k.get("extra", "")
     foto = ""
     if k.get("foto"):
         f = k["foto"]
-        foto = (f'<div class="vt-util__foto"><img src="{esc(f["src"])}" width="{f["ancho"]}" height="{f["alto"]}" '
+        juego = f' srcset="{esc(f["srcset"])}" sizes="{esc(f["sizes"])}"' if f.get("srcset") else ""
+        foto = (f'<div class="vt-util__foto"><img src="{esc(f["src"])}"{juego} width="{f["ancho"]}" height="{f["alto"]}" '
                 f'alt="{esc(f["alt"])}" loading="eager" fetchpriority="high" decoding="async"></div>')
     return (f'<section class="vt-util__cabeza vt-titular vt-titular--larga" aria-labelledby="vt-h1"><div class="vt-wrap">{ruta}'
             f'<div class="vt-util__intro"><div><p class="vt-kicker">{k["kicker"]}</p><h1 id="vt-h1">{k["h1"]}</h1>'

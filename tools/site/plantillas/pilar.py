@@ -6,7 +6,8 @@ su FAQPage) → CTA final. Páginas: /empresas (contenido/empresas.py), /nosotro
 (k["clase_body"], opcional, suma la hoja de una familia: /vivero-tampico conserva la de las utilitarias para su etiqueta).
 
 k["secciones"]: tuple de dicts con clase ("fichas", "tarjetas", "clientes", "datos" o "cobertura"), rotulo, id (del
-<h2>), titulo y, opcionales, lede, ancla (id de la sección), cta (mensaje, texto) y momento (banda oscura a media
+<h2>), titulo y, opcionales, lede, ancla (id de la sección), cta (mensaje, texto), fila (tarjetas en fila con
+desplazamiento en celular) y momento (banda oscura a media
 página, componentes.momento). k["jsonld"]["nodos"]: los nodos propios del @graph (Service, AboutPage, CollectionPage…);
 el BreadcrumbList sale de las migas visibles y el WebPage lo cierra entidad.completar.
 """
@@ -21,7 +22,7 @@ def _cuerpo(s):
     if clase == "fichas":
         return c.fichas(s["items"])
     if clase == "tarjetas":
-        return c.relacionados(s["items"])
+        return c.relacionados(s["items"], fila=s.get("fila", False))
     if clase == "clientes":
         opiniones = c.testimonios(s["opiniones"]) if s.get("opiniones") else ""
         return c.logos() + c.repse() + (f'<h3 class="vt-mt">{s["titulo_opinion"]}</h3>{opiniones}' if opiniones else "")

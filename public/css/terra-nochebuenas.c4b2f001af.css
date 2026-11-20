@@ -48,13 +48,14 @@
 .vt-nochebuenas .vt-nb-tabla{table-layout:auto;max-width:64rem}
 .vt-nochebuenas .vt-nb-tabla :is(th,td){padding:12px 6px;vertical-align:middle}
 .vt-nochebuenas .vt-nb-tabla thead th{font-size:12px;letter-spacing:0;line-height:1.25}
-.vt-nochebuenas .vt-nb-tabla th small{display:block;margin-top:2px;font-size:10px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--vt-muted)}
+.vt-nochebuenas .vt-nb-tabla th small{display:block;margin-top:2px;font-size:11px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--vt-muted)}
 .vt-nochebuenas .vt-nb-tabla tbody th{font-size:13px;font-weight:700;line-height:1.2}
 .vt-nochebuenas .vt-nb-tabla td{text-align:right;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
 .vt-nochebuenas .vt-nb-tabla thead th:not(:first-child){text-align:right}
 .vt-nochebuenas .vt-nb-tabla tr:hover th{background:var(--vt-field-100)}
 .vt-nochebuenas .vt-nb-tabla td:last-child{background:var(--vt-tag);color:var(--vt-tag-ink)}
 .vt-nochebuenas main .vt-nb-nota-tabla{max-width:60ch;margin:16px 0 0;color:var(--vt-ink-2)}
+@media (min-width:360px){.vt-nochebuenas .vt-nb-tabla :is(thead th,th small){font-size:13px}}
 @media (min-width:640px){
 .vt-nochebuenas .vt-nb-tabla :is(th,td){padding:16px 14px}
 .vt-nochebuenas .vt-nb-tabla :is(thead th,th small){font-size:var(--vt-text-xs)}
