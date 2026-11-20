@@ -102,7 +102,9 @@
 .vt-tienda .plan[data-disabled="true"]{border-style:dashed;color:var(--vt-muted);cursor:not-allowed}
 .vt-tienda .plan input{accent-color:var(--vt-field)}
 .vt-tienda .vt-plan__n{font-weight:700;font-size:var(--vt-text-sm)}
-.vt-tienda .vt-plan__n small{display:block;font-weight:400;color:var(--vt-muted)}
+.vt-tienda .vt-plan__n small{display:block;font-weight:400;font-size:var(--vt-text-xs);color:var(--vt-muted)}
+/* Auditoría por página (2026-11-20): notas de pago y rótulos de la comparativa a 13 px (antes <small>, 12.5 px). */
+.vt-tienda .vt-tabla--fija small{font-size:var(--vt-text-xs)}
 .vt-tienda .vt-plan__monto{font-size:var(--vt-text-sm);font-weight:800;text-align:right;white-space:nowrap}
 .vt-tienda .vt-plan__total{grid-column:2 / -1;font-size:var(--vt-text-xs);color:var(--vt-muted);text-align:right}
 .vt-tienda .vt-plan__total:empty,.vt-tienda .pay-rule{display:none}

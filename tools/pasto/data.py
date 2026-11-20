@@ -146,7 +146,7 @@ MODELOS = [
     {
         "slug": "toscana-18", "id": "toscana18", "nombre": "Toscana 18", "n": 2,
         "mm": 18, "peso": "950", "peso_num": 950, "garantia": 5,
-        "color": "Verde olivo y esmeralda", "tag": "El más económico", "lema": "Buen pasto sin gastar de más.", "stock": True,
+        "color": "Verde olivo y esmeralda", "tag": "Buen precio", "lema": "Buen pasto sin gastar de más.", "stock": True,
         "t1": 199, "t2": 169, "rollo": 149,
         "usos": ["precio", "terraza"],
         "scores": {"precio": 5, "realismo": 2, "resistencia": 2, "ligero": 1},
