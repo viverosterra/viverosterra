@@ -74,14 +74,17 @@ class _Pagina:
             "actualizado": fecha_larga(modificado), "actualizado_iso": modificado,
             "respuesta": doc["respuesta"], "cuerpo": cuerpo, "faq_titulo": doc["faq_titulo"],
             "faq": tuple(tuple(p) for p in doc["faq"]), "indice": indice(cuerpo, doc["faq"], doc["faq_titulo"], doc["respuesta"]),
-            "tema": tema, "mensaje": paginas.contexto(ruta)["mensaje"].rsplit("\n\n", 1)[0],
+            "tema": tema,
+            # Auditoría por página (2026-11-20): los botones del artículo llevan el mensaje con contexto del tema; el menú,
+            # la barra y el pie, el de paginas.contexto.
+            "mensaje": blog_clusters.MENSAJES.get(slug) or paginas.contexto(ruta)["mensaje"].rsplit("\n\n", 1)[0],
             "relacionados_titulo": doc["relacionados_titulo"], "relacionados": tuple(doc["relacionados"]),
             "portada": PORTADAS.get(slug),
         }
         base = doc.get("paridad") or {"reemplazos": {}, "retirados": {}}
         if slug in fotos_paso1.OG:  # revisión de fotos, paso 1: la imagen al compartir es la portada nueva
             base = {**base, "meta": {**base.get("meta", {}), "og:image": (datos.SITIO + fotos_paso1.OG[slug], fotos_paso1.MOTIVO)}}
-        self.PARIDAD = {**base, "jsonld": {"Organization": M_AUTOR, **({"ImageObject": M_LOGO} if "ImageObject" in json.dumps(doc["jsonld"]) else {})},
+        self.PARIDAD = {**base, "auditoria": AUDITORIA, "jsonld": {"Organization": M_AUTOR, **({"ImageObject": M_LOGO} if "ImageObject" in json.dumps(doc["jsonld"]) else {})},
                         "hero": HERO, "terreno": TERRENO, "ritmo": RITMO, **({"portada": PORTADA} if slug in PORTADAS else {})}
 
 
@@ -127,3 +130,8 @@ TERRENO = ("decisión del dueño 2026-11-10: el instalado considera terreno list
 
 def pagina(slug):
     return _Pagina(slug)
+
+
+AUDITORIA = ("Auditoría por página (2026-11-20): botones de WhatsApp con verbo y mensaje de su tema (blog_clusters.WA y "
+             "MENSAJES), línea de WhatsApp tras el precio y antes de las preguntas, LECTURA_PESO 1,500 y peso por renglón de lista, confianza junto al "
+             "botón del cierre y fotos del cuerpo con lazy, copia de 640 px y sin precarga.")

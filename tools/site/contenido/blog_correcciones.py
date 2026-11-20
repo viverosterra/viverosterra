@@ -569,8 +569,27 @@ FUSION_2C = {
          f"{datos.ENTREGA_COBRO}</p>\n<p>Para proyectos de mayoreo o fraccionamientos", M_CAMIONES),
     ),
 }
-FILAS = {slug: FILAS.get(slug, ()) + REVISION.get(slug, ()) + FUSION_2C.get(slug, ())
-         for slug in dict.fromkeys((*FILAS, *REVISION, *FUSION_2C))}
+# Auditoría por página del blog (2026-11-20): el vivero que vende desde 2 m² está en Cd. Madero, no en Tampico ni se llama
+# «showroom» (como en la franja de datos de la home), y el instalado de pasto natural lleva su condición de terreno listo.
+M_VIVERO = ("El vivero donde se vende pasto sintético desde 2 m² está en Obregón 209 Sur, Cd. Madero (datos.py); «showroom» "
+            "pasa a «vivero», como en la home.")
+AUDITORIA = {
+    "cuanto-cuesta-pasto-sintetico-mexico": (
+        ("C319", "en el showroom de Tampico se vende desde 2 m².", "en el vivero de Cd. Madero se vende desde 2 m².",
+         M_VIVERO),
+    ),
+    "que-altura-de-pasto-sintetico-elegir": (
+        ("C320", "Si estás en Tampico o Madero, tócalos en el showroom.",
+         "Si estás en Tampico o Madero, tócalos en el vivero de Cd. Madero.", M_VIVERO),
+    ),
+    "pasto-sintetico-vs-natural-tampico": (
+        ("C321", "<td>Instalación (50 m²)</td><td>desde $6,000</td>",
+         f"<td>Instalación (50 m²)</td><td>desde $6,000 con terreno listo (limpio, nivelado y con tierra negra)</td>",
+         M_TERRENO),
+    ),
+}
+FILAS = {slug: FILAS.get(slug, ()) + REVISION.get(slug, ()) + FUSION_2C.get(slug, ()) + AUDITORIA.get(slug, ())
+         for slug in dict.fromkeys((*FILAS, *REVISION, *FUSION_2C, *AUDITORIA))}
 
 
 def claves():

@@ -133,7 +133,9 @@ PIE_TIPO = {
     "ciudad": "Hola, tengo una pregunta sobre pasto sintético",
 }
 
-# Artículo del blog (slug) → mensaje.
+# Artículo del blog (slug) → mensaje (también el del menú, la barra y el pie del artículo). Auditoría por página
+# (2026-11-20): riego y tierra negra llevaban un hueco «___» a media frase; al quitarlo el mensaje quedaba cortado
+# («…de m²», «…tierra negra para»).
 BLOG = {
     "acolchado-mulch-jardin-tampico": "Hola, vi el artículo de acolchado (mulch) y quiero cotizar",
     "arboles-para-sembrar-en-banqueta": 'Hola, leí su artículo "7 árboles para banqueta que no levantan el pavimento en Tampico" y quiero cotizar.',
@@ -180,10 +182,10 @@ BLOG = {
     "plantas-resistentes-sal-golfo-tampico": 'Hola, leí su artículo "12 plantas resistentes a la sal del Golfo para jardines costeros en Tampico" y quiero cotizar.',
     "poda-arboles-palmas-tampico-guia": "Hola, vi el artículo de poda y necesito ayuda con mi jardín",
     "que-altura-de-pasto-sintetico-elegir": 'Hola, leí su artículo "¿Qué altura de pasto sintético elegir? 10, 18, 28 o 35 mm" y quiero cotizar.',
-    "sistema-riego-automatizado-tampico": "Hola, quiero cotizar riego automático para mi jardín de ___ m²",
+    "sistema-riego-automatizado-tampico": "Hola, leí la guía de riego automático y quiero cotizar el riego de mi jardín; les paso los m² y mi colonia.",
     "temporada-huracanes-proteger-jardin-tampico": "Hola, vi el blog de Viveros Terra y quiero una cotización de poda preventiva",
     "tezontle-usos-jardin-tampico": 'Hola, leí su artículo "¿Para qué sirve el tezontle? 8 usos en el jardín" y quiero cotizar.',
-    "tierra-negra-costal-camion-tampico": "Hola, quiero cotizar tierra negra para ___",
+    "tierra-negra-costal-camion-tampico": "Hola, leí la guía de tierra negra y quiero saber si me conviene costal o camión; les paso metros y colonia.",
 }
 
 # Tema del artículo por palabras del slug, en orden: el primero que coincide da el `service` de GA4.
