@@ -123,7 +123,7 @@ def _azotea():
                                ("Factura", datos.FACTURA, "Persona física o moral"))}
     secciones = (
         {"tipo": "tabla", "id": "peso", "rotulo": "Peso", "titulo": "Cuánto pesa cada modelo por m² y por rollo",
-         **_tabla_pesos()},
+         "fila": "Preguntar qué modelo conviene a mi azotea", **_tabla_pesos()},
         {"tipo": "pasos", "id": "instalar", "rotulo": "Instalar", "titulo": "Cómo se pone en una azotea",
          "items": AZOTEA_PASOS},
         {"tipo": "modelos", "id": "modelos", "rotulo": "Modelos", "titulo": "Tres modelos para azotea",
@@ -265,7 +265,8 @@ def _ancho():
                                ("Entrega", "3 a 5 días", "A todo México"),
                                ("Factura", datos.FACTURA, "Persona física o moral"))}
     secciones = (
-        {"tipo": "tabla", "id": "comparar", "rotulo": "Comparar", "titulo": "Cuánto se usa con cada ancho", **tabla},
+        {"tipo": "tabla", "id": "comparar", "rotulo": "Comparar", "titulo": "Cuánto se usa con cada ancho",
+         "fila": "Cotizar mi rollo de 2 m", **tabla},
         {"tipo": "preguntas", "id": "claves", "rotulo": "Qué cambia", "titulo": "Lo que cambia con el ancho",
          "items": claves},
         {"tipo": "faq", "id": "preguntas", "rotulo": "Preguntas", "titulo": "Preguntas sobre el ancho del rollo",
@@ -334,7 +335,7 @@ def _vs():
                                ("Factura", datos.FACTURA, "Persona física o moral"))}
     secciones = (
         {"tipo": "tabla", "id": "comparar", "rotulo": "Comparar", "titulo": "Sintético contra natural, punto por punto",
-         **criterios},
+         "fila": "Cotizar pasto sintético", **criterios},
         {"tipo": "preguntas", "id": "clima", "rotulo": "Clima", "titulo": "Qué cambia según tu región", "items": regiones},
         {"tipo": "preguntas", "id": "cuando", "rotulo": "Decidir", "titulo": "Cuándo conviene cada uno", "items": cuando},
         {"tipo": "faq", "id": "preguntas", "rotulo": "Preguntas", "titulo": "Preguntas frecuentes", "preguntas": faq},

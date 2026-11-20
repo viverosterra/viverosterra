@@ -383,7 +383,8 @@ class FotosTest(unittest.TestCase):
                 self.assertIn((src, None, alt), _fotos(html_de(destino)))
         foto = "/img/obra/terra/pasto-sintetico-03-patio-con-pasto-sintetico"
         perros = [f for f in _fotos(html_de("/pasto-sintetico/perros")) if f[0] == f"{foto}.webp"]
-        self.assertEqual(perros, [(f"{foto}.webp", f"{foto}-640.webp 640w, {foto}.webp 1038w",
+        # Auditoría por página (2026-11-20): misma foto, con una copia más de 800 px en el srcset.
+        self.assertEqual(perros, [(f"{foto}.webp", f"{foto}-640.webp 640w, {foto}-800.webp 800w, {foto}.webp 1038w",
                                    "Patio con pasto sintético recién instalado por Viveros Terra, con muro blanco y una palma")])
 
     def test_las_tarjetas_de_los_fusionados_llevan_al_apartado_del_destino(self):

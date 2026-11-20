@@ -33,7 +33,7 @@ PREGUNTAS = (
      'de esta página calcula tu total estimado. Más detalle en la <a href="/blog/cuanto-cuesta-pasto-sintetico-mexico">'
      "guía de precios</a>."),
     ("¿Cuál es la compra mínima?",
-     f"Para envío nacional el mínimo es {data.MIN_NACIONAL_M2} m², medio rollo. En el showroom de Cd. Madero puedes "
+     f"Para envío nacional el mínimo es {data.MIN_NACIONAL_M2} m², medio rollo. En el vivero de Cd. Madero puedes "
      f"comprar desde {data.MIN_SHOWROOM_M2} m² sin flete."),
     ("¿Cuánto tarda el envío?",
      "De 3 a 5 días hábiles después de confirmar tu pago, según el destino. Te compartimos la guía de rastreo."),
@@ -69,8 +69,9 @@ DIY = (
      "texto": "Cepilla a contrapelo para levantar la fibra y darle aspecto natural."},
 )
 
-OBRAS = tuple({"src": f"{GAL}/{n}-sm.webp", "srcset": f"{GAL}/{n}-sm.webp 560w, {GAL}/{n}.webp 960w",
-               "sizes": "(min-width: 1024px) 400px, 80vw", "ancho": w, "alto": h, "alt": alt, "numero": i,
+# Auditoría por página (2026-11-20): copia de 720 px de la misma foto y sizes al ancho real en celular (~91vw).
+OBRAS = tuple({"src": f"{GAL}/{n}-sm.webp", "srcset": t.srcset_obra(n, w),
+               "sizes": "(min-width: 1024px) 400px, 92vw", "ancho": w, "alto": h, "alt": alt, "numero": i,
                "lugar": cap, "etapa": "Obra con pasto sintético"}
               for i, (n, w, h, alt, cap) in enumerate(data.OBRAS, 2))
 
@@ -103,15 +104,15 @@ CONTENIDO = {
         "rollo": BARATO["rollo"],
         "nota_precio": f"+ envío desde {FLETE_MIN} por rollo. Elige tu estado para ver el precio puesto.",
         "mensualidades": 'Paga en mensualidades con tarjeta de crédito. <a href="#cotizador">Calcula tu plan</a>',
-        "foto": {"src": f"{GAL}/obra-proyecto-03-sm.webp", "srcset": f"{GAL}/obra-proyecto-03-sm.webp 560w, "
-                 f"{GAL}/obra-proyecto-03.webp 960w", "sizes": "(min-width: 1024px) 620px, 100vw", "ancho": 960,
+        "foto": {"src": f"{GAL}/obra-proyecto-03-sm.webp", "srcset": t.srcset_obra("obra-proyecto-03", 960),
+                 "sizes": "(min-width: 1024px) 620px, 100vw", "ancho": 960,
                  "alto": 1280, "numero": 1, "alt": "Residencia con palmas y jardín de pasto sintético instalado",
                  "lugar": "Residencia con palmas", "etapa": "Proyecto con pasto de la colección"},
         "datos": (("Respuesta", "Menos de 1 hora", f"En horario: {datos.HORARIO}"),
                   ("Garantía", "3 a 8 años", "De fábrica, según el modelo"),
                   ("Devoluciones", "7 días", "Nuevo y sin cortar"), ("Factura", datos.FACTURA, "Persona física o moral"),
-                  ("Envío nacional", f"Desde {datos.SINTETICO_NACIONAL_DESDE}", "3 a 5 días hábiles"),
-                  ("Showroom", datos.CALLE_CORTA, f"Vivero desde {datos.DESDE}")),
+                  ("Vendemos a todo México", f"Desde {datos.SINTETICO_NACIONAL_DESDE}", "Llega en 3 a 5 días hábiles"),
+                  ("Vivero", f"{datos.CALLE_CORTA}, Cd. Madero", f"Desde {datos.DESDE}")),
         "mensaje": datos.MENSAJES["pasto-sintetico"],
         "texto_modelos": f"Ver los {len(data.MODELOS)} modelos",
     },
@@ -131,7 +132,7 @@ CONTENIDO = {
                   "titulo_envio": "Costo de envío por estado",
                   "lede_envio": (f"El envío se cobra por rollo de {data.ROLLO_M2} m². Un pedido de {data.MIN_NACIONAL_M2} a "
                                  f"{data.ROLLO_M2} m² viaja en 1 rollo; de 51 a 100 m², en 2. En Tampico, Madero y Altamira puedes "
-                                 "recoger en el showroom sin flete."),
+                                 "recoger en el vivero sin flete."),
                   "nota_envio": "Te confirmamos el costo exacto con tu código postal antes de pagar."},
     "ciudades": {"titulo": "Envíos a tu ciudad con precio puesto", "items": CIUDADES,
                  "lede": ("Precio puesto con el modelo más económico, envío incluido. Enviamos a los 32 estados; estas son "
@@ -156,10 +157,10 @@ CONTENIDO = {
                  "guia": '<a href="/blog/como-instalar-pasto-sintetico">Ver la guía completa paso a paso</a>'},
     "faq": {"titulo": "Preguntas frecuentes sobre pasto sintético", "preguntas": PREGUNTAS},
     "cierre": {"titulo": "¿Estás en Tampico, Madero o Altamira?",
-               "lede": (f'Visita el showroom en {datos.CALLE_CORTA}, Cd. Madero. Vendemos desde 2 m² sin flete e '
+               "lede": (f'Visita el vivero en {datos.CALLE_CORTA}, Cd. Madero. Vendemos desde 2 m² sin flete e '
                         'instalamos en Tampico, Madero y Altamira: <a href="/pasto-sintetico-tampico">venta e '
                         'instalación en Tampico</a> · <a href="/pasto-sintetico-tampico#showroom">cómo llegar al '
-                        "showroom</a>."),
+                        "vivero</a>."),
                "mensaje": datos.MENSAJES["pasto-sintetico"]},
     "barra": {"nombre": "Pasto sintético · 9 modelos", "precio": f"Desde {DESDE}/m²", "rollo": BARATO["rollo"]},
     "default": DEFAULT,
