@@ -45,6 +45,11 @@ DONDE = (f"Viveros Terra tiene su vivero en {datos.CALLE}, {datos.COLONIA}, Ciud
          "de plantas, palmas, árboles ornamentales y plantas de interior, especies adaptadas al clima cálido-húmedo del Golfo de México.")
 MENSAJE = mensajes_paginas.UTILITARIAS["vivero"]
 MENSAJE_PLANTA = mensajes_paginas.UTILITARIAS["vivero_planta"]
+# Auditoría por página (2026-11-20): cada fila de sección con el contexto de su sección (antes, la de entregas mandaba
+# el mensaje del hero y «Dónde estamos» y «Mayoreo» no tenían botón: 5.2 y 3.9 pantallas del celular sin uno).
+MENSAJE_VISITA = mensajes_paginas.UTILITARIAS["vivero_visita"]
+MENSAJE_ENTREGA = mensajes_paginas.UTILITARIAS["vivero_entrega"]
+MENSAJE_MAYOREO = mensajes_paginas.UTILITARIAS["vivero_mayoreo"]
 ENTREGA = ("Entregamos en Tampico, Ciudad Madero y Altamira; te confirmamos el costo por WhatsApp según tu colonia.")
 
 # SEO fase 1: las categorías del vivero como lista de sus páginas (antes, un OfferCatalog con tres Product sin precio ni
@@ -79,14 +84,13 @@ CATEGORIAS_LD = {"@type": "ItemList", "name": "Categorías del vivero", "itemLis
 # datos.GARANTIA_PLANTAS sin su "(ver condiciones)" final, que aquí va como enlace (tests/test_seo_f2b.py lo amarra).
 GARANTIA = datos.GARANTIA_PLANTAS.removesuffix(" (ver condiciones).")
 
+# Auditoría por página (2026-11-20): sin las fichas «Domicilio» y «Horario», que se repetían en la franja, «Cómo llegar» y
+# las preguntas; el «único domicilio» pasa a la ficha «En el mapa».
 HECHOS = (
     {"titulo": f"{datos.VARIEDADES} variedades", "texto": "Plantas, palmas y árboles en el vivero."},
     {"titulo": str(datos.DESDE), "texto": f"Año de fundación, en {datos.CIUDAD}."},
     {"titulo": "30 días de garantía",
      "texto": 'En las plantas que sembramos nosotros. <a href="/politicas#garantia-plantas">Ver condiciones</a>.'},
-    {"titulo": "Domicilio",
-     "texto": f"{datos.DOMICILIO_COMPLETO}. {datos.REFERENCIA}. Es el único domicilio del negocio."},
-    {"titulo": "Horario", "texto": f"{datos.HORARIO}. {CERRADO}"},
     {"titulo": "Antes de venir",
      "texto": (f"Escríbenos por WhatsApp qué buscas y el tamaño: {datos.PROMESA[0].lower()}{datos.PROMESA[1:]}. "
                f"{datos.GOOGLE}.")},
@@ -101,7 +105,8 @@ LLEGAR = (
     {"titulo": "En Ciudad Madero",
      "texto": (f"Estamos en la {datos.COLONIA}, {datos.CP}. Si ya conoces el Walmart de Madero, el vivero está "
                "enfrente.")},
-    {"titulo": "En el mapa", "texto": f"{datos.CALLE}, {datos.COLONIA}, Ciudad Madero, Tamaulipas. {MAPAS}."},
+    {"titulo": "En el mapa", "texto": (f"{datos.CALLE}, {datos.COLONIA}, {datos.CP} Ciudad Madero, Tamaulipas. Es el "
+                                       f"único domicilio del negocio. {MAPAS}.")},
 )
 ENTREGAS = (
     {"titulo": "Entrega a domicilio", "texto": ENTREGA},
@@ -162,7 +167,7 @@ PREGUNTAS = (
      f"{datos.TERRENO_LISTO_CORTO[1:-1]}). Llega al vivero {datos.LLEGADA_PASTO}."),
     ("¿Viveros Terra y Viveros Terra Tampico son el mismo vivero?",
      f"Sí. «{datos.NOMBRE_ALTERNO}» es el nombre con que aparece el mismo negocio en algunos perfiles; el domicilio es "
-     f"uno solo: {datos.DOMICILIO_COMPLETO}."),
+     f"uno solo: {datos.DOMICILIO_COMPLETO}"),
 )
 # SEO fase 0 (mapa de palabras clave, 2026-11-10): título de 60 y descripción de 153; el mismo texto va en Open Graph.
 TITULO = f"Vivero en Tampico y Cd. Madero: {datos.VARIEDADES} Plantas | {datos.NOMBRE}"
@@ -190,7 +195,7 @@ CONTENIDO = {
     "secciones": (
         {"clase": "fichas", "rotulo": "Dónde estamos", "id": "vt-h-donde", "ancla": "donde",
          "titulo": 'Viveros Terra en Ciudad Madero, <span class="vt-serif">frente a Walmart</span>', "lede": DONDE,
-         "items": HECHOS},
+         "items": HECHOS, "cta": (MENSAJE_VISITA, "Avisar que voy al vivero")},
         {"clase": "fichas", "rotulo": "Categorías", "id": "vt-h-categorias", "ancla": "categorias",
          "titulo": 'Categorías <span class="vt-serif">en el vivero</span>',
          "lede": ("Plantas adaptadas al clima cálido-húmedo de Tampico. Cada categoría tiene su página con especies, "
@@ -206,11 +211,11 @@ CONTENIDO = {
         {"clase": "fichas", "rotulo": "Entregas", "id": "vt-h-entregas", "ancla": "entregas",
          "titulo": 'Entrega a domicilio <span class="vt-serif">o recoge en el vivero</span>',
          "lede": "Coordinamos cada entrega por WhatsApp, con su costo según tu colonia.",
-         "items": ENTREGAS, "cta": (MENSAJE, "Cotizar por WhatsApp")},
+         "items": ENTREGAS, "cta": (MENSAJE_ENTREGA, "Preguntar costo de entrega a mi colonia")},
         {"clase": "fichas", "rotulo": "Mayoreo", "id": "vt-h-mayoreo", "ancla": "mayoreo",
          "titulo": 'Mayoreo <span class="vt-serif">para obras y empresas</span>',
          "lede": "Atendemos a constructoras, arquitectos, hoteles y empresas, con cotización por volumen.",
-         "items": MAYOREO},
+         "items": MAYOREO, "cta": (MENSAJE_MAYOREO, "Cotizar mayoreo para mi proyecto")},
         {"clase": "fichas", "rotulo": "Temporada", "id": "vt-h-temporada", "ancla": "temporada",
          "titulo": 'De temporada <span class="vt-serif">y desde el vivero</span>',
          "lede": "Lo que cambia con la temporada y los servicios que salen del vivero hacia tu jardín.",

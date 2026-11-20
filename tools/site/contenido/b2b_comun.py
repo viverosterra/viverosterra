@@ -45,26 +45,34 @@ SECTORES = (
 COBERTURA = {
     "zonas": datos.ZONAS, "por_proyecto": datos.ZONAS_POR_PROYECTO, "sectores": SECTORES,
 }
+
+
+def tarjeta(base):
+    """Foto de tarjeta (auditoría por página, 2026-11-20): las versiones de 480 y 640 px del recorte 4:3 que la tarjeta ya
+    mostraba (.vt-tarjeta img, aspect-ratio 4/3 y object-fit cover); antes bajaba la foto completa, de hasta 153 KB."""
+    return {"img": f"{base}-480.webp", "ancho": 480, "alto": 360, "srcset": f"{base}-480.webp 480w, {base}-640.webp 640w"}
+
+
 PAGINAS = (
     {"titulo": "Mayoreo de pasto", "href": "/mayoreo-pasto-tampico",
-     "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111,
+     **tarjeta(f"{OBRA}/rollos-pasto-san-agustin-camioneta"),
      "texto": f"San Agustín desde {dinero(P['pasto_mayoreo_m2'])}/m² en pedidos de {MINIMO} m² o más · entregas por etapas"},
     {"titulo": "Palmas para proyectos", "href": "/palmas-mayoreo-proyectos",
-     "img": f"{OBRA}/palmas-en-costal-vivero.webp", "ancho": 640, "alto": 961,
+     **tarjeta(f"{OBRA}/palmas-en-costal-vivero"),
      "texto": (f"Areca y coco plumoso desde {dinero(P['palma_desde'])} y palma real desde {dinero(P['palma_real'])} en "
                "tamaño chico")},
     {"titulo": "Mantenimiento de áreas verdes", "href": "/mantenimiento-jardines-tampico",
-     "img": f"{OBRA}/mantenimiento-areas-verdes-empresa.webp", "ancho": 640, "alto": 961,
+     **tarjeta(f"{OBRA}/mantenimiento-areas-verdes-empresa"),
      "texto": f"Empresas, fraccionamientos e industria · REPSE {datos.REPSE} y factura {datos.FACTURA}"},
     {"titulo": "Riego para grandes áreas", "href": "/sistema-riego-tampico",
-     "img": f"{OBRA}/riego-tecnico-sistema-industrial.webp", "ancho": 960, "alto": 640,
+     **tarjeta(f"{OBRA}/riego-tecnico-sistema-industrial"),
      "texto": "Parques industriales, escuelas y campos deportivos con pasto natural"},
 )
 
 
 # El pilar de empresas (mapa §4b, clúster 6): sus hijos lo enlazan con el ancla «proveedor de áreas verdes con REPSE».
 EMPRESAS = {"titulo": "Proveedor de áreas verdes con REPSE", "href": "/empresas",
-            "img": "/img/portadas/jardineria-areas-verdes-tampico-sm.webp", "ancho": 560, "alto": 840,
+            **tarjeta("/img/portadas/jardineria-areas-verdes-tampico"),
             "texto": f"Todo lo que hacemos para empresas · REPSE {datos.REPSE} y factura {datos.FACTURA}"}
 
 

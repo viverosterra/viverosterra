@@ -805,7 +805,9 @@ class PlantillasNavegadorTest(unittest.TestCase):
         page.goto(self.base + "/mayoreo-pasto-tampico/", wait_until="load")
         page.locator("[data-vt-volumen] .vt-etiqueta").scroll_into_view_if_needed()
         page.wait_for_function("() => document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
-        page.locator("#vt-h-faq").scroll_into_view_if_needed()
+        # Auditoría por página (2026-11-20): la fila de WhatsApp bajo la garantía queda junto a «Preguntas» y, a la vista,
+        # también esconde la barra (data-hero-cta); la barra se comprueba en «Proceso», sin fila ni formulario cerca.
+        page.locator("#vt-h-proceso").scroll_into_view_if_needed()
         page.wait_for_function("() => !document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
 
     @staticmethod

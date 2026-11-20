@@ -105,7 +105,7 @@ CONTENIDO = {
                     "Mandar foto de mi pasto por WhatsApp"),
     "cierre": {"titulo": "¿Tienes dudas? Estamos aquí",
                "lede": (f"Mándanos foto de tu pasto por WhatsApp y te ayudamos con el diagnóstico y la solución. "
-                        f"{datos.DOMICILIO_COMPLETO}."),
+                        f"{datos.DOMICILIO_COMPLETO}"),
                "mensaje": MENSAJE},
     "jsonld": (JSONLD,),
 }

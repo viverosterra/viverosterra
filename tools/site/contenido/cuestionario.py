@@ -112,7 +112,12 @@ CONTENIDO = {
                         "a proponerte un diseño a tu medida. Al enviarlo te escribimos por WhatsApp "
                         f"{datos.PROMESA.replace('Respondemos ', '')}."),
                "aviso": datos.VISITA_COSTO_CORTO,
-               "foto": {"src": "/img/diseno-jardin-instalacion-plantas-tampico.webp", "ancho": 787, "alto": 1400, "alt": ""}},
+               # Auditoría por página (2026-11-20): srcset con la versión de 560 px de la misma foto para el celular (202 KB
+               # contra 513 KB); el src sigue siendo el de main (tests/test_util_reglas.py compara las fotos).
+               "foto": {"src": "/img/diseno-jardin-instalacion-plantas-tampico.webp", "ancho": 787, "alto": 1400, "alt": "",
+                        "srcset": ("/img/diseno-jardin-instalacion-plantas-tampico-560.webp 560w, "
+                                   "/img/diseno-jardin-instalacion-plantas-tampico.webp 787w"),
+                        "sizes": "(min-width: 900px) 40vw, 100vw"}},
     "form": {"accion": componentes.FORMULARIO_ACCION, "cta": "cuestionario:formulario",
              "ocultos": (("_subject", "Nuevo cuestionario de jardín — Viveros Terra"), ("_next", componentes.FORMULARIO_GRACIAS),
                          ("_template", "table"), ("_captcha", "false")),
