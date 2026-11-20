@@ -113,7 +113,9 @@ FIGURAS = (
      "alt": "Jardinera con malangas de hoja grande y setos junto a un área de pasto, frente a una casa moderna.",
      "lugar": "Jardín residencial tropical", "etapa": "Mantenimiento mensual"},
     {"src": f"{TERRA}/palmas-tropicales-01-grupo-de-palmas.webp",
-     "srcset": f"{TERRA}/palmas-tropicales-01-grupo-de-palmas-640.webp 640w, {TERRA}/palmas-tropicales-01-grupo-de-palmas.webp 1050w",
+     "srcset": (f"{TERRA}/palmas-tropicales-01-grupo-de-palmas-640.webp 640w, "
+                f"{TERRA}/palmas-tropicales-01-grupo-de-palmas-800.webp 800w, "  # auditoría 2026-11-20: misma foto, 800 px
+                f"{TERRA}/palmas-tropicales-01-grupo-de-palmas.webp 1050w"),
      "sizes": "(min-width: 900px) 33vw, 100vw", "ancho": 1050, "alto": 1200, "numero": 3,
      "alt": "Jardinera con un grupo de palmas sobre tierra negra, junto a un muro blanco.",
      "lugar": "Grupo de palmas", "etapa": "En instalación"},
@@ -124,7 +126,9 @@ CONTENIDO = {
     "tipo": "servicio-poda",
     "preguntas": "poda",  # panel de WhatsApp, entrega 2 (spec del primer mensaje, 2026-11-16)
     "prefijo": "poda",
-    "ctas": {"opciones": (MENSAJE, "Cotizar poda o derribo"), "faq": (MENSAJE, "Preguntar por WhatsApp")},
+    # Auditoría por página (2026-11-20): la fila de "opciones" no se pintaba (la plantilla no la usa); pasa al precio,
+    # donde cierra el tramo de 4.9 pantallas sin botón. Mensaje general: abre el panel de preguntas.
+    "ctas": {"precio": (MENSAJE, "Mandar fotos del árbol por WhatsApp"), "faq": (MENSAJE, "Preguntar por WhatsApp")},
     "meta": META,
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Poda de árboles", None)),
@@ -150,7 +154,8 @@ CONTENIDO = {
                  "las hojas secas o amarillas. Si una raíz levanta la banqueta, te recomendamos especies de raíz "
                  'controlada (<a href="/arboles-para-banqueta-tampico">árboles para banqueta</a>).'),
         "figuras": FIGURAS,
-        "nota": (PERMISO, "Antes de agendar"),
+        # Auditoría por página (2026-11-20): el aviso del permiso ya va en «Antes de agendar», el proceso y las preguntas.
+        "nota": ("En palmas solo cortamos hojas secas o amarillas: nada de «poda huracán».", "En la poda"),
         "titulo_clientes": f"Empresas que nos han contratado · {datos.PROYECTOS_B2B} proyectos B2B",
     },
     "opciones": {

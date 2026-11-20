@@ -523,7 +523,7 @@
 .vt-control span{padding-right:12px;font-weight:700;color:var(--vt-soil)}
 .vt-opciones{display:grid;gap:8px;margin:0;padding:0;border:0}
 .vt-opciones label{position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:48px;padding:10px 14px;border:1.5px solid var(--vt-line-strong);border-radius:var(--vt-radius);background:var(--vt-card);font-size:15px;font-weight:600;cursor:pointer}
-.vt-opciones small{font-weight:700;font-variant-numeric:tabular-nums;color:var(--vt-ink-2)}
+.vt-opciones small{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--vt-ink-2)}
 .vt-opciones input{position:absolute;opacity:0;pointer-events:none}
 .vt-opciones label:has(input:checked){border-color:var(--vt-field);background:var(--vt-field-100);box-shadow:inset 0 0 0 1px var(--vt-field)}
 .vt-opciones label:has(input:focus-visible){outline:2px solid var(--vt-field);outline-offset:2px}

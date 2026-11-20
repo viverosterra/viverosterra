@@ -10,7 +10,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import generar  # noqa: E402
 from plantillas import servicio  # noqa: E402
 
-BASE = generar.cargar("pasto_en_rollo").CONTENIDO
+# La plantilla con su orden por defecto (servicio.ORDEN): desde la auditoría por página (2026-11-20) pasto en rollo trae
+# su propio orden (el precio antes de las fotos de obra).
+BASE = {k: v for k, v in generar.cargar("pasto_en_rollo").CONTENIDO.items() if k != "orden"}
 
 
 def main_de(k):

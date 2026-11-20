@@ -10,7 +10,11 @@ from contenido import seo
 P = datos.PRECIOS
 SITE = datos.SITIO
 URL = f"{SITE}/protocolo-cuidados-pasto-san-agustin"
-FOTO = {"src": "/img/instalacion-pasto-rollo-san-agustin-tampico.webp", "ancho": 1024, "alto": 1536, "alt": ""}
+# Auditoría por página (2026-11-20): la misma foto en 720 px para celular (la caja mide hasta 320 px de alto).
+FOTO = {"src": "/img/instalacion-pasto-rollo-san-agustin-tampico.webp", "ancho": 1024, "alto": 1536, "alt": "",
+        "srcset": ("/img/instalacion-pasto-rollo-san-agustin-tampico-720.webp 720w, "
+                   "/img/instalacion-pasto-rollo-san-agustin-tampico.webp 1024w"),
+        "sizes": "(min-width: 900px) 40vw, 92vw"}
 MENSAJE = mensajes_paginas.UTILITARIAS["protocolo"]
 # SEO fase 0 (mapa de palabras clave, 2026-11-10): título de 57 y descripción de 154; el mismo texto va en Open Graph.
 TITULO = f"Pasto San Agustín Recién Puesto: Cuidados | {datos.NOMBRE}"
@@ -74,9 +78,9 @@ CONTENIDO = {
             "<strong>Parches amarillos:</strong> generalmente falta de agua. Aumenta el riego en esa zona y riega profundo.",
             "<strong>Parches café/seco:</strong> puede ser quemadura por sol intenso + calor. Riega de inmediato y considera malla de sombra temporal.",
             "<strong>Bordes que se levantan:</strong> las esquinas necesitan más agua. Riega 20 minutos extra en esa área.")},
-        {"titulo": "Señales de problema — llámanos antes de actuar", "items": (
+        {"titulo": "Señales de problema — escríbenos antes de actuar", "items": (
             "<strong>No arraiga después del día 20:</strong> contáctanos antes de hacer cualquier cambio. No apliques nada sin consultarnos.",
-            "<strong>Zona completamente café y seca (más de 1 m²):</strong> llámanos ese mismo día con foto.",
+            "<strong>Zona completamente café y seca (más de 1 m²):</strong> escríbenos por WhatsApp ese mismo día con foto.",
             "<strong>Aparición de hongos o manchas oscuras:</strong> puede ser exceso de humedad — reduce el riego y avísanos.")},
     )},
     "mantenimiento": {"titulo": 'Mantenimiento <span class="vt-serif">a partir del día 21</span>', "items": (
@@ -96,6 +100,9 @@ CONTENIDO = {
                      "El problema fue reportado antes del día 21"),
                  "pie": (f"{datos.GARANTIA_PASTO.replace(' (ver condiciones)', '')} En caso de duda sobre si el problema aplica a "
                          f"garantía, contáctanos con foto. {datos.PROMESA}.")},
+    # Auditoría por página (2026-11-20): botón tras las señales, con su mensaje.
+    "senales_cta": ("Hola, mi pasto San Agustín recién instalado tiene una señal de alerta. Les mando foto.",
+                    "Mandar foto de mi pasto por WhatsApp"),
     "cierre": {"titulo": "¿Tienes dudas? Estamos aquí",
                "lede": (f"Mándanos foto de tu pasto por WhatsApp y te ayudamos con el diagnóstico y la solución. "
                         f"{datos.DOMICILIO_COMPLETO}."),

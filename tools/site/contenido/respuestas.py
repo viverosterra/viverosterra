@@ -30,6 +30,11 @@ FRECUENCIAS = datos.FRECUENCIAS_MANTENIMIENTO
 HORARIO = (f"de lunes a viernes de {int(_ABRE[:2])} a {int(_CIERRA[:2])} h y sábados de {int(_ABRE_SAB[:2])} a "
            f"{int(_CIERRA_SAB[:2])} h")
 
+# «Toscana 18 y 28»: los modelos para llevar hoy, sin repetir la familia (cabe en las 60 palabras de «En corto»).
+_HOY = [m["nombre"] for m in data.MODELOS if m["stock"]]
+_PARA_HOY = (f"{_HOY[0]} y {' y '.join(n.split()[-1] for n in _HOY[1:])}"
+             if len({n.split()[0] for n in _HOY}) == 1 and len(_HOY) > 1 else " y ".join(_HOY))
+
 TEXTOS = {
     # Decisión del dueño (2026-11-10): la condición de terreno listo (datos.TERRENO_LISTO, completa, con el precio del
     # instalado) va en "En corto" de la home y de pasto en rollo. Para caber en 60 palabras, la frase de entrada se
@@ -40,12 +45,13 @@ TEXTOS = {
     "/pasto-en-rollo-tampico": (
         f"Pasto San Agustín en {ZONA_CORTA}: {dinero(P['pasto_solo_m2'])}/m² solo el pasto, sin IVA. "
         f"{datos.TERRENO_LISTO}"),
+    # Auditoría por página (2026-11-20): $139 es el rollo de 50 m²; el corte desde 2 m² empieza en otro precio.
     "/pasto-sintetico-tampico": (  # tienda, subproyecto 1 (2026-11-12): el material primero
-        f"En {ZONA}, {datos.NOMBRE} vende pasto sintético desde {dinero(ROLLO_MIN)} por m², desde 2 m², "
-        f"en su showroom de {datos.CALLE_CORTA}, {datos.CIUDAD}; "
-        f"{' y '.join(m['nombre'] for m in data.MODELOS if m['stock'])} se llevan el mismo día. Instalado cuesta de "
+        f"En {ZONA}, {datos.NOMBRE} vende pasto sintético desde {dinero(ROLLO_MIN)} por m² en rollo de {data.ROLLO_M2} m² "
+        f"(cortes desde 2 m², desde {dinero(min(m['t1'] for m in data.MODELOS))}/m²) en su vivero de {datos.CIUDAD}; "
+        f"{_PARA_HOY} se llevan hoy. Instalado cuesta de "
         f"{dinero_exacto(SINT_MIN)} a {dinero_exacto(SINT_MAX)} por m², con material, colocación e IVA (precios "
-        f"{datos.ANIO}); la preparación del terreno se cotiza aparte."),
+        f"{datos.ANIO}); la preparación del terreno va aparte."),
     "/pasto-sintetico": (
         f"{datos.NOMBRE} envía pasto sintético a todo México desde {datos.CIUDAD}, Tamaulipas: {len(data.MODELOS)} "
         f"modelos de {ALTURAS[0]} a {ALTURAS[-1]} mm, desde {dinero(ROLLO_MIN)} por m² en rollo de {data.ROLLO_M2} m², "

@@ -21,8 +21,10 @@ NEGOCIO = f"{SITE}/#negocio"
 INST_MIN, INST_MAX = datos.PRECIOS["sintetico_instalado_m2"]
 INST_MIN_TXT, INST_MAX_TXT = dinero_exacto(INST_MIN), dinero_exacto(INST_MAX)
 MIN_RETAIL = min(m["rollo"] for m in data.MODELOS)
+MIN_CORTE = min(m["t1"] for m in data.MODELOS)  # el corte de 2 a 9 m² más barato
 STOCK = [m for m in data.MODELOS if m["stock"]]
 HOY = " y ".join(m["nombre"] for m in STOCK)
+HOY_O = " o ".join(m["nombre"] for m in STOCK)  # «Sí, si es Toscana 18 o Toscana 28»
 T18, T28 = data.BY_SLUG["toscana-18"], data.BY_SLUG["toscana-28"]
 APPLE_MAPS = f"https://maps.apple.com/?daddr={datos.GEO[0]},{datos.GEO[1]}&q=Viveros%20Terra"
 DOMICILIO = f"{datos.CALLE}, {datos.COLONIA}, {datos.CP} Cd. Madero, frente a Walmart"
@@ -34,7 +36,11 @@ DESCRIPCION = (f"Compra pasto sintético en Tampico desde ${MIN_RETAIL}/m², cor
                f"Cd. Madero. Instalado desde {INST_MIN_TXT}/m².")
 OG_IMG = f"{SITE}{GAL}/obra-residencial-tampico.webp"
 MENSAJE = datos.MENSAJES["pasto-sintetico"]
-MENSAJE_MATERIAL = "Hola, quiero comprar pasto sintético en el showroom. ¿Tienen existencia?\nModelo: ___\nMetros: ___"
+MENSAJE_INSTALACION = ("Hola, quiero cotizar la instalación de pasto sintético. ¿Pueden venir a medir?\nColonia: ___\n"
+                       "Metros aprox.: ___")
+# Auditoría por página (2026-11-20): la visita al vivero pedía confirmar existencia por WhatsApp y no tenía botón.
+MENSAJE_VISITA = "Hola, quiero pasar al vivero por pasto sintético. ¿Tienen existencia del modelo que busco?"
+MENSAJE_MATERIAL = "Hola, quiero comprar pasto sintético en el vivero. ¿Tienen existencia?\nModelo: ___\nMetros: ___"
 
 PREGUNTAS = (
     ("¿Dónde comprar pasto sintético en Tampico?",
@@ -46,9 +52,9 @@ PREGUNTAS = (
      f"${T18['t1']}/m² en cortes de 2 a 9 m². Toscana 28 va de ${T28['rollo']}/m² a ${T28['t1']}/m². Los precios "
      "incluyen IVA."),
     ("¿Cuál es la compra mínima?",
-     "En el showroom vendemos desde 2 m². El rollo mide 2 m de ancho, así que los cortes van de 2 en 2 m²."),
+     "En el vivero vendemos desde 2 m². El rollo mide 2 m de ancho, así que los cortes van de 2 en 2 m²."),
     ("¿Puedo recogerlo el mismo día?",
-     f"Sí, si es {HOY}. Te recomendamos confirmar existencia por WhatsApp antes de pasar. Los demás modelos llegan en 3 "
+     f"Sí, si es {HOY_O}. Te recomendamos confirmar existencia por WhatsApp antes de pasar. Los demás modelos llegan en 3 "
      "a 5 días hábiles. Los pedimos en cuanto confirmas tu pedido con el pago."),
     ("¿Hacen envío dentro de Tampico, Madero y Altamira?",
      "Sí. Envío local según tu colonia; te lo cotizamos."),
@@ -125,7 +131,10 @@ CONTENIDO = {
     # Entrega C de experiencia: CTA de la banda de garantía (antes, 7.4 pantallas del cotizador al cierre sin CTA).
     # Tienda, subproyecto 1: CTA del material tras la tabla de precios (la prueba bajó y dejaba 6.8 pantallas sin CTA).
     "ctas": {"precio": (MENSAJE_MATERIAL, "Cotizar mi material"), "prueba": (MENSAJE, "Cotizar mi pasto sintético"),
-             "garantia": (MENSAJE, "Cotizar pasto sintético instalado")},
+             # Auditoría por página (2026-11-20): el botón dice «instalado» y ahora manda el mensaje de la instalación.
+             "garantia": (MENSAJE_INSTALACION, "Cotizar pasto sintético instalado"),
+             # Filas tras las preguntas y en la visita (antes, 4.2 pantallas de la garantía al cierre sin botón).
+             "faq": (MENSAJE, "Preguntar por WhatsApp"), "visita": (MENSAJE_VISITA, "Preguntar antes de ir al vivero")},
     "respuesta": respuestas.de("/pasto-sintetico-tampico"),  # SEO fase 1: respuesta directa bajo la portada
     "tipo": "servicio-sintetico",
     "preguntas": "sintetico",  # panel de preguntas del WhatsApp (spec del primer mensaje, 2026-11-16)
@@ -143,11 +152,11 @@ CONTENIDO = {
     "portada": {
         "kicker": "Pasto sintético · Tampico, Madero y Altamira",
         "pos": "50% 62%",
-        "dato": "Los 9 modelos en existencia",
-        "enlaces": (("Calcula tu material", "#cotizador"), ("Cómo llegar al showroom", "#showroom")),
+        "dato": "Cortes desde 2 m², a tu medida",  # auditoría 2026-11-20: decía «Los 9 modelos en existencia»
+        "enlaces": (("Calcula tu material", "#cotizador"), ("Cómo llegar al vivero", "#showroom")),
         "h1": 'Pasto sintético en Tampico <span class="vt-serif">material o instalado</span>',
-        "lede": (f"Llévate el material del showroom en Cd. Madero desde {dinero(MIN_RETAIL)}/m² o déjanos la instalación "
-                 f"completa. En la región desde {datos.DESDE}."),
+        "lede": (f"Llévate el material del vivero en Cd. Madero desde {dinero(MIN_RETAIL)}/m² o déjanos la instalación "
+                 "completa."),
         "etiqueta": {
             "codigo": "Sintético · Tampico", "aviso": "Con IVA", "nombre": "Pasto sintético en rollo",
             "antes": "Solo el material · desde", "monto": dinero(MIN_RETAIL), "unidad": "/m²",
@@ -175,26 +184,29 @@ CONTENIDO = {
         "items": (
             {"cta": "Cotizar el material", "rotulo": "Opción 1", "titulo": "Compras el material", "precio": MIN_RETAIL, "unidad": "/m²",
              "detalle": "Material con IVA, cortado a tu medida", "rec": True,
-             "puntos": ("Desde 2 m², cortado a tu medida", f"{HOY} para llevar hoy",
+             "puntos": (f"Cortes desde 2 m² (desde {dinero(MIN_CORTE)}/m²); rollo de 50 m² desde {dinero(MIN_RETAIL)}/m²",
+                        f"{HOY} para llevar hoy",
                         "Kit de pegamento, cinta y clavos", "Envío local según tu colonia; te lo cotizamos."),
              "mensaje": MENSAJE_MATERIAL},
             {"cta": "Cotizar la instalación", "rotulo": "Opción 2", "titulo": "Nosotros lo instalamos", "precio": INST_MIN, "unidad": "/m²",
              "detalle": "Material y colocación",
-             "puntos": (datos.VISITA_COSTO_CORTO, "Colocación, uniones, orillas y cepillado",
-                        "Material con garantía de fábrica"),
+             "puntos": ("Colocación, uniones, orillas y cepillado", "Material con garantía de fábrica",
+                        datos.VISITA_COSTO_CORTO),
              "nota": ("Cada terreno es distinto. Si el tuyo necesita retiro, nivelación o base drenante, lo vemos en la "
                       "visita y te lo cotizamos aparte, antes de empezar y sin sorpresas."),
-             "mensaje": ("Hola, quiero cotizar la instalación de pasto sintético. ¿Pueden venir a medir?\nColonia: ___\n"
-                         "Metros aprox.: ___")},
+             "mensaje": MENSAJE_INSTALACION},
         ),
     },
     "precio": {
         "titulo": "Precio del pasto sintético en Tampico",
         "lede": (f"Precio por m² del material, con IVA. Entre más metros, menor precio. Instalación con material y "
                  f"colocación de {INST_MIN_TXT} a {INST_MAX_TXT}/m² según el modelo."),
+        # Auditoría por página (2026-11-20): plegada en celular (3 pantallas; la calculadora ya muestra el «desde» de cada
+        # modelo); desde 768 px, abierta. El botón «Cotizar mi material» queda a la vista.
+        "plegable": "Ver precios de los 9 modelos",
         "tabla": {"columnas": ("Modelo", "2 a 9 m²", "10 a 49 m²", "Rollo 50 m²"),
                   "filas": tuple(_fila_precio(m) for m in data.MODELOS)},
-        "caption": ("Si el modelo no está en el showroom, llega en 3 a 5 días hábiles. Lo enviamos en cuanto confirmas tu "
+        "caption": ("Si el modelo no está en el vivero, llega en 3 a 5 días hábiles. Lo enviamos en cuanto confirmas tu "
                     f"pedido con el pago. Precios vigentes en {datos.ANIO}."),
     },
     "cotizador": {
@@ -215,7 +227,7 @@ CONTENIDO = {
     "garantia": {
         "banda": True,  # Entrega C: banda oscura a media página con la garantía de fábrica (tools/pasto/data.py)
         "titulo": "Garantía de fábrica de 3 a 8 años, según el modelo.", "grande": "3–8", "unidad": "años",
-        "resumen": "La gestionamos nosotros, con el material que instalamos o que compras en el showroom.",
+        "resumen": "La gestionamos nosotros, con el material que instalamos o que compras en el vivero.",
         "puntos": (("Garantía de fábrica de 3 a 8 años según el modelo; la gestionamos nosotros.", True),
                    ("Bien instalado dura de 8 a 12 años en uso residencial.", True),
                    ("Si tu terreno necesita retiro, nivelación o base drenante, te lo cotizamos aparte antes de empezar.",
@@ -243,10 +255,12 @@ CONTENIDO = {
         "mapas": (("Cómo llegar con Google Maps", datos.MAPS_URL), ("Abrir en Apple Maps", APPLE_MAPS)),
     },
     "cierre": {
-        "titulo": "¿No estás en Tampico? Enviamos a todo México",
-        "lede": ("Los mismos 9 modelos llegan a cualquier estado en 3 a 5 días hábiles, con factura: "
-                 '<a href="/pasto-sintetico">ver la tienda nacional</a>. En Tampico, Madero y Altamira, escríbenos y '
-                 "cotizamos la instalación."),
+        # Auditoría por página (2026-11-20): el cierre le hablaba a quien no es de Tampico; la tienda nacional sigue
+        # enlazada en la entrada.
+        "titulo": "Mándanos tus metros y te ayudamos a elegir modelo",
+        "lede": ("Llévate el material del vivero en Cd. Madero o te lo instalamos en Tampico, Madero y Altamira. ¿Estás en otro "
+                 "estado? Los mismos 9 modelos llegan en 3 a 5 días hábiles: "
+                 '<a href="/pasto-sintetico">ver la tienda nacional</a>.'),
         "mensaje": MENSAJE,
     },
     "barra": {"nombre": "Pasto sintético en Tampico", "precio": f"Material desde {dinero(MIN_RETAIL)}/m²"},
@@ -258,6 +272,8 @@ M_NEGOCIO = ("SEO fase 1: la página ya no redefine el negocio con otros campos 
 PARIDAD = {
     "jsonld": {tipo: M_NEGOCIO for tipo in ("Store", "PostalAddress", "GeoCoordinates", "Offer")},
     "reemplazos": {"$385": f"${int(INST_MIN)}", "$650": INST_MAX_TXT,  # la captura guarda la parte entera
+                   # Auditoría por página (2026-11-20): el cierre le habla a quien está en Tampico.
+                   "¿No estás en Tampico? Enviamos a todo México": "Mándanos tus metros y te ayudamos a elegir modelo",
                    # Tienda, subproyecto 1 (2026-11-12): el H1 nombra primero el material.
                    "Pasto sintético en Tampico venta e instalación": "Pasto sintético en Tampico material o instalado"},  # la captura guarda la parte entera
     "meta": seo.paridad(TITULO, DESCRIPCION, {
