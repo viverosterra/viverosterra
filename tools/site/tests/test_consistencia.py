@@ -178,7 +178,9 @@ class ConsistenciaTest(unittest.TestCase):
 
     def test_home_con_cifras_oficiales(self):
         home = TEXTOS[PUBLIC / "index.html"]
-        self.assertIn(f"{datos.CLIENTES} clientes · {datos.INSTALACIONES} instalaciones", home)
+        # Auditoría de la home (2026-11-19): las cifras pasan a la franja de confianza bajo la portada.
+        for cifra in (datos.INSTALACIONES, datos.M2_INSTALADOS, datos.GOOGLE.split()[0], f"{datos.CLIENTES} familias y empresas"):
+            self.assertIn(cifra, home)
         faq = re.search(r'"name":"¿Cuánto cuesta el pasto en rollo en Tampico\?","acceptedAnswer":\{"@type":"Answer",'
                         r'"text":"([^"]+)"', PAGINAS[PUBLIC / "index.html"]).group(1)
         for cifra in (f"${PRECIOS['pasto_solo_m2']} por m²", f"desde ${PRECIOS['pasto_instalado_m2']} por m²",

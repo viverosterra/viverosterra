@@ -184,7 +184,7 @@
         if (p === 1) { pie.textContent = total ? dinero(total) : '—'; return; }
         const ok = disponibles.includes(p);
         i.disabled = !ok;
-        pie.textContent = ok ? `${dinero(M.totalAPlazos(total, p) / p)}/mes` : `desde ${dinero(M.minimoDe(p))}`;
+        pie.textContent = ok ? `${dinero(M.totalAPlazos(total, p) / p)}/mes` : `compra mínima ${dinero(M.minimoDe(p))}`;
       });
     }
     function vacio(calc, mensaje, aviso) {

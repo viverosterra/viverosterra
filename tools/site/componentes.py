@@ -278,7 +278,7 @@ DATOS_EMPRESA = (
 DATOS_TIRA = (
     ("Desde", str(datos.DESDE), "En Cd. Madero y Tampico"),
     ("Instalado", datos.M2_INSTALADOS, "En Tamaulipas y la Huasteca"),
-    ("Showroom", datos.CALLE_CORTA, datos.REFERENCIA),
+    ("Vivero", datos.CALLE_CORTA, datos.REFERENCIA),
     ("Factura", datos.FACTURA, f"REPSE {datos.REPSE}"),
 )
 
@@ -299,14 +299,22 @@ def figura(f, principal=False):
     principal carga con prioridad; las demás son lazy."""
     carga = 'loading="eager" fetchpriority="high"' if principal else 'loading="lazy"'
     srcset = f' srcset="{esc(f["srcset"])}" sizes="{esc(f["sizes"])}"' if f.get("srcset") else ""
-    return (f'<figure class="vt-fig"><div class="vt-fig__marco"><img src="{esc(f["src"])}"{srcset} width="{esc(f["ancho"])}" '
-            f'height="{esc(f["alto"])}" {carga} decoding="async" alt="{esc(f["alt"])}"></div>'
+    img = (f'<img src="{esc(f["src"])}"{srcset} width="{esc(f["ancho"])}" height="{esc(f["alto"])}" {carga} '
+           f'decoding="async" alt="{esc(f["alt"])}">')
+    if f.get("movil"):  # recorte propio para celular (portada de la home, auditoría 2026-11-19)
+        m = f["movil"]
+        img = (f'<picture><source media="(max-width:{m["hasta"]}px)" srcset="{esc(m["srcset"])}" '
+               f'sizes="{esc(m["sizes"])}">{img}</picture>')
+    return (f'<figure class="vt-fig"><div class="vt-fig__marco">{img}</div>'
             f'<figcaption><span><b>Fig. {f["numero"]:02d}</b> · {f["lugar"]}</span><span>{f["etapa"]}</span></figcaption>'
             f'</figure>')
 
 
-def obras(figuras, nota_html=""):
-    return f'<div class="vt-obras">{"".join(figura(f) for f in figuras)}{nota_html}</div>'
+def obras(figuras, nota_html="", carrusel=False):
+    """carrusel=True (home, auditoría 2026-11-19): en celular las fotos van en fila con desplazamiento horizontal; la
+    fila se puede enfocar para recorrerla con el teclado."""
+    foco = ' tabindex="0" aria-label="Fotos de jardines entregados"' if carrusel else ""
+    return f'<div class="vt-obras"{foco}>{"".join(figura(f) for f in figuras)}{nota_html}</div>'
 
 
 def mosaico(figuras, desde):
@@ -600,17 +608,17 @@ def cierre(titulo, lede, mensaje, tipo, texto=CTA_WA):
     """CTA final en verde profundo, con el mensaje que se abre a la vista. texto: el del botón (dice qué se pide)."""
     return (f'<section class="vt-cierre" aria-labelledby="vt-cierre-titulo"><div class="vt-wrap vt-cierre__grid"><div>'
             f'<h2 id="vt-cierre-titulo">{titulo}</h2><p class="vt-lede">{lede}</p>{fila_cta(mensaje, tipo, "cierre", texto=texto)}</div>'
-            f'<p class="vt-cierre__msg"><b>El mensaje que se abre</b>{esc(datos.con_firma(mensaje))}</p></div></section>')
+            f'<p class="vt-cierre__msg"><b>El mensaje que se abre</b>{esc(datos.sin_huecos(datos.con_firma(mensaje)))}</p></div></section>')
 
 
 # ---------- mensualidades con tarjeta de crédito ----------
 def planes_mensualidades():
     """Plazos y montos mínimos de tools/pasto/mensualidades.py (los mismos de vt-mensualidades.js)."""
-    celdas = "".join(f"<div><dt>{p} mensualidades</dt><dd>desde {dinero(mensualidades.minimo_de(p))}</dd></div>"
+    celdas = "".join(f"<div><dt>{p} mensualidades</dt><dd>compra mínima {dinero(mensualidades.minimo_de(p))}</dd></div>"
                      for p in mensualidades.PLAZOS)
     return ('<div class="vt-planes"><div class="vt-planes__cabeza"><b>Mensualidades con tarjeta de crédito</b>'
             '<span>El contado (transferencia, efectivo o tarjeta en una exhibición) es el precio más bajo.</span></div>'
-            f'<dl>{celdas}</dl><p>Montos mínimos de cotización por plazo. El total a plazos es mayor que el de contado y '
+            f'<dl>{celdas}</dl><p>Cada plazo pide una compra mínima. El total a plazos es mayor que el de contado y '
             'te lo mostramos antes de enviarte el link de pago. Tu banco debe aceptar el plan. '
             '<a href="/politicas#mensualidades">Condiciones</a></p></div>')
 
@@ -747,7 +755,7 @@ def _opcion_plazo(prefijo, plazo):
     if plazo == 1:
         return (f'<label><span>Contado</span><small data-vt-plazo="1">—</small><input type="radio" '
                 f'name="{prefijo}-plazo" value="1" checked></label>')
-    return (f'<label><span>{plazo} meses</span><small data-vt-plazo="{plazo}">desde '
+    return (f'<label><span>{plazo} meses</span><small data-vt-plazo="{plazo}">compra mínima '
             f'{dinero(mensualidades.minimo_de(plazo))}</small><input type="radio" name="{prefijo}-plazo" '
             f'value="{plazo}" disabled></label>')
 
@@ -1099,7 +1107,8 @@ def confianza(dato=""):
     """Línea de confianza: la promesa única (con "Abierto ahora" en horario), la calificación de Google y, si la hay,
     un dato real propio de la página (HTML corto)."""
     nota, _, resenas = datos.GOOGLE.partition(" ")
-    partes = [promesa_horario(), f"<span><b>{esc(nota)}</b> {esc(resenas)}</span>"] + ([f"<span>{dato}</span>"] if dato else [])
+    extras = dato if isinstance(dato, (tuple, list)) else ((dato,) if dato else ())  # varios datos: tupla de HTML
+    partes = [promesa_horario(), f"<span><b>{esc(nota)}</b> {esc(resenas)}</span>"] + [f"<span>{d}</span>" for d in extras]
     return f'<p class="vt-portada__confianza">{SEP_CONFIANZA.join(partes)}</p>'
 
 

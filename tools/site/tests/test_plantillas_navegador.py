@@ -284,7 +284,8 @@ class PlantillasNavegadorTest(unittest.TestCase):
             page.wait_for_function("() => document.querySelector('[data-vt-bar]').classList.contains('is-oculta')")
             precio = page.locator(".vt-portada .vt-etiqueta__precio").bounding_box()
             cta = page.locator(".vt-portada [data-hero-cta] .vt-btn--wa").bounding_box()
-            lede = page.locator(".vt-portada .vt-lede").bounding_box()
+            # Auditoría (2026-11-19, entrega B): en celular la entrada cede su lugar a la foto (pliegue); el titular va antes.
+            lede = page.locator(".vt-portada h1").bounding_box()
             with self.subTest(ancho=ancho, alto=alto):
                 self.assertLessEqual(precio["y"] + precio["height"], alto)
                 self.assertLessEqual(cta["y"] + cta["height"], alto)
@@ -343,7 +344,8 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 if lado_a_lado:
                     self.assertAlmostEqual(cta["y"], etiqueta["y"], delta=2)
                     self.assertLessEqual(marco["height"], alto * 0.8)
-                    self.assertAlmostEqual(marco["width"] / marco["height"], 16 / 9, places=1)
+                    # Con pliegue (auditoría 2026-11-19) la foto se ajusta al alto que queda: apaisada, nunca vertical.
+                    self.assertTrue(1.6 <= marco["width"] / marco["height"] <= 2.6, marco)
                 self.assertLessEqual(page.evaluate("() => document.documentElement.scrollWidth - document.documentElement.clientWidth"), 1)
 
     def test_home_confianza_con_separadores_en_el_dom_que_no_se_pintan(self):
@@ -351,7 +353,8 @@ class PlantillasNavegadorTest(unittest.TestCase):
         # prueba dependía de la hora en que corría.
         page = self.pagina_a_la_hora(375, 812, "2026-11-16T05:00:00Z")
         self.assertEqual(page.locator(".vt-portada__confianza").evaluate("e => e.textContent"),
-                         f"{datos.PROMESA_COMPLETA} · {datos.GOOGLE} · {datos.CLIENTES} clientes")
+                         f"{datos.PROMESA_COMPLETA} · {datos.GOOGLE} · Garantía de arraigo de {datos.ARRAIGO} "
+                         "(condiciones) · Contado o mensualidades con tarjeta")
         self.assertEqual(page.locator(".vt-portada__sep:visible").count(), 0)
 
     def test_home_filas_de_seccion_esconden_la_barra_y_caben_a_320(self):
@@ -360,7 +363,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
         oculta = "document.querySelector('[data-vt-bar]').classList.contains('is-oculta')"
         page = self.pagina(320, 640)
         page.goto(self.base + "/", wait_until="load")
-        for seccion in ("opiniones", "proceso", "precios", "faq"):
+        for seccion in ("obras", "opiniones", "proceso", "precios", "faq"):
             boton = page.locator(f'a[data-cta="home:{seccion}"]')
             boton.scroll_into_view_if_needed()
             page.wait_for_function(f"() => {oculta}")
@@ -370,8 +373,9 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 self.assertLessEqual(caja["x"] + caja["width"], 320)
                 self.assertGreaterEqual(caja["height"], 44)
                 self.assertEqual(page.evaluate(SALIDOS_DEL_MAIN, "main *"), [])
-        # Fuera de las filas (en las fotos de obra no hay ningún CTA propio) la barra vuelve.
-        page.evaluate("() => scrollTo(0, document.querySelector('.vt-obras').getBoundingClientRect().top + scrollY)")
+        # Fuera de las filas (en los pasos de «Cómo trabajamos», lejos de su botón) la barra vuelve. Desde la auditoría
+        # (2026-11-19) la galería tiene su propio botón.
+        page.evaluate("() => scrollTo(0, document.querySelector('.vt-pasos').getBoundingClientRect().top + scrollY)")
         page.wait_for_function(f"() => !{oculta}")
 
     def test_home_medidor_renglon_vivo_barra_con_la_medida_y_garantia_solo_instalado(self):
@@ -528,7 +532,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
             page = self.pagina(ancho, alto, movimiento=True, js=js)
             page.goto(self.base + "/", wait_until="commit")
             page.wait_for_selector(".vt-portada [data-hero-cta] .vt-btn--wa")
-            for selector in ("h1", ".vt-portada .vt-lede", ".vt-portada .vt-etiqueta__precio",
+            for selector in ("h1", ".vt-portada .vt-lede" if ancho > 639 else ".vt-portada__lema", ".vt-portada .vt-etiqueta__precio",
                              ".vt-portada [data-hero-cta] .vt-btn--wa"):
                 elemento = page.locator(selector)
                 with self.subTest(ancho=ancho, js=js, selector=selector):
@@ -604,8 +608,8 @@ class PlantillasNavegadorTest(unittest.TestCase):
         los precios (solo si hay texto) y el banner no crece. Con el reloj del cliente antes del build, nada."""
         hasta = datos.NOCHEBUENAS["preventa"]["hasta"]
         precios = "Desde $89 en menudeo y desde $65 por volumen"
-        casos = ((f"{hasta}T18:00:00Z", "Último día de preventa"), ("2026-11-09T18:00:00Z", "Preventa: faltan 21 días"),
-                 ("2026-11-29T18:00:00Z", "Preventa: falta 1 día"), ("2026-12-05T18:00:00Z", ""),
+        casos = ((f"{hasta}T18:00:00Z", "Último día de preventa"), ("2026-11-09T18:00:00Z", "Preventa hasta el 30 de noviembre"),
+                 ("2026-11-29T18:00:00Z", "Preventa hasta el 30 de noviembre"), ("2026-12-05T18:00:00Z", ""),
                  ("2026-10-20T18:00:00Z", ""))
         for instante, texto in casos:
             page = self.pagina_a_la_hora(1440, 900, instante)
@@ -624,7 +628,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
                 con_dias = instante.startswith("2026-11")
                 with self.subTest(ancho=ancho, instante=instante):
                     self.assertEqual(page.locator(".vt-navidad__txt > span").inner_text(),
-                                     "Preventa: faltan 21 días" if con_dias else precios)
+                                     "Preventa hasta el 30 de noviembre" if con_dias else precios)
                     self.assertEqual(page.locator(".vt-navidad__precios").is_visible(), not con_dias)
                 altos.setdefault(ancho, []).append(page.locator(".vt-navidad").bounding_box()["height"])
         for ancho, (con_dias, sin_dias) in altos.items():

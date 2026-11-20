@@ -438,26 +438,27 @@ test('diasHasta con la fecha del build: reloj atrasado no cuenta y nunca hay má
   assert.strictEqual(diasHasta(new Date('2026-11-25T18:00:00Z'), '2026-11-30', 'ayer'), 5);
 });
 
-test('textoPreventa: faltan N días, falta 1 día, último día y nada después', () => {
+test('textoPreventa: fecha de cierre, último día y nada después', () => {
+  // Auditoría de la home (2026-11-19): «faltan 11 días» no decía si empezaba o terminaba; ahora dice la fecha.
   // Sin el " · " inicial: en escritorio lo pone el CSS; en celular la frase sustituye al renglón de precios.
-  assert.strictEqual(textoPreventa(21), 'Preventa: faltan 21 días');
-  assert.strictEqual(textoPreventa(2), 'Preventa: faltan 2 días');
-  assert.strictEqual(textoPreventa(1), 'Preventa: falta 1 día');
-  assert.strictEqual(textoPreventa(0), 'Último día de preventa');
-  assert.strictEqual(textoPreventa(-1), '');
-  for (const raro of [null, undefined, NaN, 2.5, '3', Infinity]) assert.strictEqual(textoPreventa(raro), '', String(raro));
+  assert.strictEqual(textoPreventa(21, '2026-11-30'), 'Preventa hasta el 30 de noviembre');
+  assert.strictEqual(textoPreventa(1, '2026-12-01'), 'Preventa hasta el 1 de diciembre');
+  assert.strictEqual(textoPreventa(2, 'fecha rara'), 'Preventa abierta');
+  assert.strictEqual(textoPreventa(0, '2026-11-30'), 'Último día de preventa');
+  assert.strictEqual(textoPreventa(-1, '2026-11-30'), '');
+  for (const raro of [null, undefined, NaN, 2.5, '3', Infinity]) assert.strictEqual(textoPreventa(raro, '2026-11-30'), '', String(raro));
 });
 
 test('preventa escribe el texto en cada [data-vt-hasta]; la fecha llega del HTML, no de terra.js', () => {
   const span = { textContent: '', getAttribute: (n) => ({ 'data-vt-hasta': '2026-11-30', 'data-vt-build': '2026-11-09' }[n] || null) };
   const doc = { querySelectorAll: (s) => (s === '[data-vt-hasta]' ? [span] : []) };
   preventa(doc, new Date('2026-11-09T18:00:00Z'));
-  assert.strictEqual(span.textContent, 'Preventa: faltan 21 días');
+  assert.strictEqual(span.textContent, 'Preventa hasta el 30 de noviembre');
   // Reloj del cliente atrasado (antes de la fecha del build): no se muestra nada.
   preventa(doc, new Date('2026-10-01T18:00:00Z'));
   assert.strictEqual(span.textContent, '');
   preventa(doc, new Date('2026-11-20T18:00:00Z'));
-  assert.strictEqual(span.textContent, 'Preventa: faltan 10 días');
+  assert.strictEqual(span.textContent, 'Preventa hasta el 30 de noviembre');
   preventa(doc, new Date('2026-12-05T18:00:00Z'));
   assert.strictEqual(span.textContent, '');
   const fuente = fs.readFileSync(path.join(__dirname, '..', 'terra.js'), 'utf8');

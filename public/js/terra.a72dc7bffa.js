@@ -22,6 +22,30 @@
     return null;
   }
 
+  const HUECO_SOLO = /^(.*\S)\s*:\s*___\s*$/;
+  const HUECO_CAMPO = /,?\s*[^,:\n]+:\s*___/g;
+  const HUECO_CANTIDAD = /___\s*×\s*/g;
+  function frase(texto) {
+    const previa = texto.match(/^(.*[.!?])\s+[^.!?]*$/);
+    if (previa) return previa[1];
+    return /[.!?]$/.test(texto) ? texto : texto + '.';
+  }
+  // Quita las rayas «___» que el cliente casi nunca llena (spec del primer mensaje de WhatsApp). Mismos
+  // casos que datos.sin_huecos (public/js/tests/casos-huecos.json).
+  function sinHuecos(texto) {
+    const salida = [];
+    String(texto).split('\n').forEach((original, i) => {
+      if (original.indexOf('___') < 0) { salida.push(original); return; }
+      const linea = original.split('*___*').join('___');
+      const solo = linea.match(HUECO_SOLO);
+      if (solo && solo[1].indexOf('___') < 0) { if (i === 0) salida.push(frase(solo[1])); return; }
+      const limpia = linea.replace(HUECO_CAMPO, '').replace(HUECO_CANTIDAD, '').split('___').join('')
+        .replace(/ {2,}/g, ' ').replace(/\s+$/, '');
+      if (limpia.trim()) salida.push(limpia);
+    });
+    return salida.join('\n');
+  }
+
   function conFirma(href) {
     const partes = href.match(/^([^?#]*)(?:\?([^#]*))?(#.*)?$/);
     const base = partes[1];
@@ -37,8 +61,10 @@
         return href;
       }
     }
-    if (/viverosterra\.com/i.test(actual)) return href;
-    const nuevo = 'text=' + encodeURIComponent(actual ? actual + '\n\n' + FIRMA : FIRMA);
+    const limpio = sinHuecos(actual);
+    const firmado = /viverosterra\.com/i.test(limpio);
+    if (firmado && limpio === actual) return href;
+    const nuevo = 'text=' + encodeURIComponent(firmado ? limpio : (limpio ? limpio + '\n\n' + FIRMA : FIRMA));
     if (i >= 0) consulta[i] = nuevo;
     else consulta.push(nuevo);
     return base + '?' + consulta.join('&') + ancla;
@@ -352,16 +378,21 @@
   }
 
   // Sin separador inicial: en escritorio lo pone el CSS del banner y en celular la frase sustituye al renglón de precios.
-  function textoPreventa(dias) {
+  // Auditoría de la home (nov. 2026): «faltan 11 días» no decía si empezaba o terminaba; ahora la fecha de cierre.
+  const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre',
+    'noviembre', 'diciembre'];
+  function textoPreventa(dias, hasta) {
     if (!Number.isInteger(dias) || dias < 0) return '';
     if (dias === 0) return 'Último día de preventa';
-    return dias === 1 ? 'Preventa: falta 1 día' : 'Preventa: faltan ' + dias + ' días';
+    const m = String(hasta || '').match(FECHA_RE);
+    return m ? 'Preventa hasta el ' + Number(m[3]) + ' de ' + MESES[Number(m[2]) - 1] : 'Preventa abierta';
   }
 
   // Banner de temporada: solo días, sin horas ni cuenta regresiva; pasada la fecha el <span> queda vacío.
   function preventa(doc, ahora) {
     doc.querySelectorAll('[data-vt-hasta]').forEach((el) => {
-      el.textContent = textoPreventa(diasHasta(ahora, el.getAttribute('data-vt-hasta'), el.getAttribute('data-vt-build')));
+      const hasta = el.getAttribute('data-vt-hasta');
+      el.textContent = textoPreventa(diasHasta(ahora, hasta, el.getAttribute('data-vt-build')), hasta);
     });
   }
 
@@ -382,7 +413,7 @@
     doc.querySelectorAll('details[data-vt-plegable]').forEach((d) => { d.open = true; });
   }
 
-  const api = { FIRMA, HERO_CTA, ABIERTO, tipoEnlace, conFirma, evento, eventoWhatsapp, abierto, prestamoVigente };
+  const api = { FIRMA, HERO_CTA, ABIERTO, tipoEnlace, sinHuecos, conFirma, evento, eventoWhatsapp, abierto, prestamoVigente };
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = { ...api, medir, menu, barra, medicion, firmarAperturas, plegables, horario, diasHasta, textoPreventa, preventa, reloj, prestamos };
     return;

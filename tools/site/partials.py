@@ -264,7 +264,10 @@ def _columnas_pie(tipo):
 
 def _columna(titulo, enlaces):
     items = "".join(f'<li><a href="{href}">{esc(texto)}</a></li>' for texto, href in enlaces)
-    return f'<div class="vt-foot__col"><h2 class="vt-foot__h">{esc(titulo)}</h2><ul>{items}</ul></div>'
+    # Auditoría de la home (2026-11-19): en celular las columnas de enlaces salen plegadas (acortan la página unas 1.5
+    # pantallas); terra.js las abre desde 768 px. Los enlaces siguen en el HTML para buscadores.
+    return (f'<details class="vt-foot__col" data-vt-plegable><summary class="vt-foot__sum"><h2 class="vt-foot__h">'
+            f'{esc(titulo)}</h2></summary><ul>{items}</ul></details>')
 
 
 def barra(ctx):

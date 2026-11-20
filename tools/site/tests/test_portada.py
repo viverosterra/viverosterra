@@ -171,10 +171,11 @@ class HeroCssTest(unittest.TestCase):
     def setUp(self):
         self.terra = re.sub(r"/\*.*?\*/", "", (CSS / "terra.css").read_text(encoding="utf-8"), flags=re.S)
 
-    def test_boton_principal_alto_con_sombra_amarilla_y_estados(self):
+    def test_boton_principal_alto_con_sombra_y_estados(self):
         boton = re.search(r"\.vt-portada__cta \.vt-btn\{([^}]*)\}", self.terra).group(1)
         self.assertTrue(60 <= int(re.search(r"min-height:(\d+)px", boton).group(1)) <= 66)
-        self.assertRegex(boton, r"box-shadow:\d+px \d+px 0 var\(--vt-tag\)")
+        # Auditoría de la home (2026-11-19): el amarillo queda solo para los precios; la sombra es verde hondo.
+        self.assertRegex(boton, r"box-shadow:\d+px \d+px 0 var\(--vt-field-deep\)")
         self.assertIn("@media (hover:hover){.vt-portada__cta .vt-btn:hover{", self.terra)
         for estado in (":active", ":focus-visible"):
             self.assertIn(f".vt-portada__cta .vt-btn{estado}{{", self.terra)
