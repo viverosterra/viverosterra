@@ -288,7 +288,7 @@ class ExperienciaBNavegadorTest(unittest.TestCase):
         page = self.pagina("/catalogo.html?cat=palmas")
         filas = page.locator("[data-vt-cta-rejilla]:not([hidden])")
         visibles = page.evaluate("() => document.querySelectorAll('[data-vt-esp]:not([hidden])').length")
-        self.assertLessEqual(filas.count(), visibles // 12)
+        self.assertLessEqual(filas.count(), visibles // 8)  # CADA_FILA: 12 → 8 en la auditoría por página
         page.locator("[data-vt-limpiar]").click()
         self.assertGreaterEqual(page.locator("[data-vt-cta-rejilla]:not([hidden])").count(), 8)
 

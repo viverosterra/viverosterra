@@ -67,9 +67,10 @@ CONTENIDO = {
         "h1": "Árboles para banqueta que no levantan el pavimento",
         "lede": "Olivo negro, neem, fresno, encino y más. Te los llevamos y los sembramos.",
         "etiqueta": {"codigo": "Banqueta", "aviso": f"Precios {datos.ANIO}", "nombre": "Árboles para banqueta",
-                     "antes": "Precio", "monto": "Por tamaño", "unidad": datos.SEGUN_COTIZACION.lower(),
+                     "antes": "Precio", "monto": "Por tamaño", "sin_precio": True, "unidad": datos.SEGUN_COTIZACION.lower(),
                      "nota": "Cotiza con la medida de tu banqueta."},
         "mensaje": MENSAJE,
+        "cta_texto": "Mandar foto de mi espacio",
         "foto": {"src": "/img/portadas/arboles-vivero-tampico-mayoreo-sm.webp",
                  "srcset": ("/img/portadas/arboles-vivero-tampico-mayoreo-sm.webp 560w, "
                             "/img/portadas/arboles-vivero-tampico-mayoreo.webp 960w"),
@@ -77,7 +78,7 @@ CONTENIDO = {
                  "alt": "Árboles jóvenes en el vivero listos para sembrar en banqueta",
                  "lugar": "Árboles jóvenes en el vivero", "etapa": "Cd. Madero"},
     },
-    "especies": {"titulo": "Las más solicitadas en Tampico", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
+    "especies": {"titulo": "Árboles para banqueta con su ficha", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
     "lista": pc.LISTA,
     "garantia": pc.GARANTIA,
     "faq": {"titulo": "Árboles para banqueta en Tampico: lo que más nos preguntan", "preguntas": PREGUNTAS},
@@ -85,8 +86,8 @@ CONTENIDO = {
         ("7 árboles para banqueta que no levantan el pavimento", "/blog/arboles-para-sembrar-en-banqueta"),
         ("Poda de árboles y palmas", "/blog/poda-arboles-palmas-tampico-guia"),
         ("Cómo plantar una palma o un árbol", "/blog/como-plantar-palma-arbol-paso-a-paso-tampico"))},
-    "relacionados": {"titulo": "Más servicios en Viveros Terra", "items": pc.otras_subcategorias(RUTA)},
-    "cierre": {"titulo": "¿Listo para cotizar?",
+    "relacionados": {"titulo": "Otras plantas del vivero", "items": pc.otras_subcategorias(RUTA)},
+    "cierre": {"titulo": "¿Cuántos árboles van en tu banqueta?", "texto": "Mandar foto de mi espacio",
                "lede": "Dinos el ancho de la banqueta, cuántos árboles y la colonia; te respondemos con precio.",
                "mensaje": MENSAJE},
     "jsonld": {"migas": pc.migas_ld(NOMBRE, RUTA), "nodos": (pc.lista_ld(NOMBRE, [s for s, _t, _a in ESPECIES]),),
@@ -99,6 +100,11 @@ PARIDAD = {
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {
+        # Auditoría por página (2026-11-20): «más solicitadas» afirma una preferencia sin dato.
+        "Las más solicitadas en Tampico": "Árboles para banqueta con su ficha",
+        # Auditoría por página: la sección lista las otras subcategorías de plantas, no servicios.
+        "Más servicios en Viveros Terra": "Otras plantas del vivero",
+        "¿Listo para cotizar?": "¿Cuántos árboles van en tu banqueta?",
         "Árboles para banqueta tampico — Todo lo que necesitas saber": (
             "Árboles para banqueta en Tampico: lo que más nos preguntan"),
     },

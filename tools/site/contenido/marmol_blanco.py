@@ -67,9 +67,14 @@ FIGURAS = (
     {"src": "/img/marmol-blanco-alberca-palmera-tampico.webp", "ancho": 900, "alto": 1200, "numero": 2,
      "alt": "Mármol blanco decorativo alrededor de una alberca con palmera en Tampico", "lugar": "Borde de alberca",
      "etapa": "Con palmera"},
+    # Auditoría por página: su versión de 720 px (la misma foto) en el srcset; se ven a lo ancho del celular.
     {"src": "/img/marmol-blanco-arriate-suculentas-tampico.webp", "ancho": 1200, "alto": 1200, "numero": 3,
+     "srcset": ("/img/marmol-blanco-arriate-suculentas-tampico-720.webp 720w, "
+                "/img/marmol-blanco-arriate-suculentas-tampico.webp 1200w"), "sizes": "(min-width: 900px) 40vw, (min-width: 560px) 50vw, calc(100vw - 32px)",
      "alt": "Mármol blanco como borde decorativo con suculentas en un jardín", "lugar": "Arriate", "etapa": "Suculentas"},
     {"src": "/img/marmol-blanco-maceta-decorativa-tampico.webp", "ancho": 1200, "alto": 1180, "numero": 4,
+     "srcset": ("/img/marmol-blanco-maceta-decorativa-tampico-720.webp 720w, "
+                "/img/marmol-blanco-maceta-decorativa-tampico.webp 1200w"), "sizes": "(min-width: 900px) 40vw, (min-width: 560px) 50vw, calc(100vw - 32px)",
      "alt": "Mármol blanco en una maceta decorativa con suculenta", "lugar": "Maceta", "etapa": "Capa decorativa"},
     {"src": "/img/marmol-blanco-costales-vivero-tampico-1200.webp", "ancho": 1200, "alto": 904, "numero": 5,
      "srcset": ("/img/marmol-blanco-costales-vivero-tampico-640.webp 640w, "
@@ -79,6 +84,9 @@ FIGURAS = (
      "lugar": "Costales en el vivero", "etapa": "Listos para entrega"},
 )
 FIGURA_SACO = {"src": "/img/marmol-blanco-saco-costal-tampico.webp", "ancho": 1024, "alto": 1536, "numero": 6,
+               "srcset": ("/img/marmol-blanco-saco-costal-tampico-720.webp 720w, "
+                          "/img/marmol-blanco-saco-costal-tampico.webp 1024w"),
+               "sizes": "(min-width: 1024px) 40vw, calc(100vw - 32px)",
                "alt": "Saco de mármol blanco triturado", "lugar": "Saco de mármol blanco", "etapa": "Por saco"}
 USOS = (
     {"titulo": "Senderos y caminos", "texto": "Caminos firmes y permeables dentro del jardín, con un brillo natural que se "
@@ -159,7 +167,8 @@ CONTENIDO = {
     "portada": {
         "kicker": "Tampico · Madero · Altamira",
         "pos": "50% 55%",
-        "dato": "La entrega se cobra por viaje",
+        # Auditoría por página: «La entrega se cobra por viaje» ya está en la nota de la etiqueta.
+        "dato": f"Factura {datos.FACTURA}",
         "enlaces": (("Calcula cuántos sacos necesitas", "#calculadora", "material:calculadora"),),
         "h1": 'Mármol blanco <span class="vt-serif">para jardín en Tampico</span>',
         "lede": (f"Grava de mármol blanco de {mc.MARMOL_MEDIDA} para arriates y andadores: {SACO} el saco, "
@@ -169,6 +178,7 @@ CONTENIDO = {
                      "filas": (("3 sacos cubren", "1 m²"), ("Por volumen (20 sacos o más)", SEGUN)),
                      "nota": f"{CONDICION[0].upper()}{CONDICION[1:]}. La entrega se cobra por viaje."},
         "mensaje": MENSAJE,
+        "cta_texto": "Pedir precio con entrega",
         "foto": PORTADA_FOTO,
     },
     "que_es": {
@@ -201,7 +211,7 @@ CONTENIDO = {
             {"titulo": "Guía rápida de sacos por uso", "caption": "Sacos por m² según el uso y la capa",
              "columnas": ("Uso", "Capa", "Sacos por m²"),
              "filas": GUIA},
-            {"titulo": "Mármol blanco, tezontle o piedra bola", "caption": "¿Cuál elegir?",
+            {"titulo": "Mármol blanco, tezontle o piedra bola", "caption": "¿Cuál elegir?", "plegable": True,
              "columnas": ("Característica", "Mármol blanco", "Tezontle rojo", "Piedra bola"),
              "filas": (("Precio por saco o costal", SACO, f"desde {dinero(P['tezontle_costal'])}",
                         f"{mc.PIEDRA_BOLA_VENTA.capitalize()}, {SEGUN.lower()}"),
@@ -229,7 +239,9 @@ CONTENIDO = {
               "enlaces": (("Arma tu lista de plantas", "/catalogo"),)},
     "cierre": {"titulo": "Cotiza tu mármol blanco",
                "lede": "Dinos los m² y tu colonia y te mandamos el total con la entrega.",
-               "fondo": {"src": "/img/jardin-residencial-pasto-san-agustin-tampico.webp", "ancho": 1280, "alto": 720}},
+               "fondo": {"src": "/img/jardin-residencial-pasto-san-agustin-tampico.webp", "ancho": 1280, "alto": 720,
+                         "srcset": ("/img/jardin-residencial-pasto-san-agustin-tampico-640.webp 640w, "
+                                    "/img/jardin-residencial-pasto-san-agustin-tampico.webp 1280w")}},
     "pedido": mc.pedido("Ejemplo: 36 sacos de mármol blanco, entrega en Tampico"),
     "jsonld": {
         "producto": mc.producto(

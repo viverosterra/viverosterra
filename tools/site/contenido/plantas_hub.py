@@ -67,9 +67,6 @@ PREGUNTAS = (
     ("¿Cuánto cuestan los árboles en Tampico?",
      f"{FLAMBOYAN}. Los demás árboles (neem, ficus, laurel de la India, olivo negro, jacaranda y más) se cotizan según "
      "la especie y el tamaño del ejemplar."),
-    ("¿Qué palmas crecen mejor en Tampico?",
-     "Las mejor adaptadas al clima cálido y húmedo de Tampico son la washingtonia, la palma del viajero, la cycas "
-     "revoluta y la palma areca para semisombra."),
     pc.PREGUNTA_ENTREGA,
     ("¿Qué palmas crecen mejor en el calor de Tampico?",
      "La washingtonia (crece rápido y tolera el viento del Golfo), la palma del viajero (resiste el calor intenso), la "
@@ -105,6 +102,7 @@ CONTENIDO = {
                                ("Palma real", f"desde {dinero(P['palma_real'])}")),
                      "nota": "El precio sube con la altura; las demás especies, según cotización."},
         "mensaje": MENSAJE,
+        "cta_texto": "Mandar foto de mi espacio",
         "foto": {"src": "/img/portadas/arboles-tampico-viveros-terra-sm.webp",
                  "srcset": ("/img/portadas/arboles-tampico-viveros-terra-sm.webp 560w, "
                             "/img/portadas/arboles-tampico-viveros-terra.webp 960w"),
@@ -146,7 +144,7 @@ CONTENIDO = {
         {"titulo": "Palmas para proyectos", "href": "/palmas-mayoreo-proyectos",
          "texto": "Hoteles, fraccionamientos, industria y gobierno: volumen, CFDI 4.0 y entrega por etapas.",
          "img": "/img/portadas/palmas-reales-mayoreo-vivero-tampico-sm.webp", "ancho": 560, "alto": 841})},
-    "cierre": {"titulo": "¿Ya sabes qué quieres sembrar?",
+    "cierre": {"titulo": "¿Ya sabes qué quieres sembrar?", "texto": "Mandar foto de mi espacio",
                "lede": "Mándanos qué buscas, el tamaño y la colonia; te respondemos con precio por tamaño.",
                "mensaje": MENSAJE},
     "jsonld": {
@@ -187,6 +185,8 @@ PARIDAD = {
         "Croton": "Croto Petra",
     },
     "retirados": {
+        "¿Qué palmas crecen mejor en Tampico?": ("Auditoría por página (2026-11-20): repetía «¿Qué palmas crecen mejor "
+                                                 "en el calor de Tampico?», que se queda con la misma respuesta y más datos."),
         "+20 árboles más": "Tarjeta que solo enlazaba el catálogo; la cubre «Arma tu lista» (los 25 árboles del catálogo).",
         "Tabachín": ("Usaba la foto de la Tronadora y el catálogo llama tabachín al flamboyán; no se publica como "
                      "especie aparte hasta que el dueño diga cuál es (pregunta 2)."),

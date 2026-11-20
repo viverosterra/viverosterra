@@ -26,7 +26,7 @@
   const PULSO_MS = 200;
   const MAX_ITEMS = 200;
   const MAX_TAMANO = 60; // maxlength del campo "Otro tamaño o medida especial"
-  const CADA_FILA = 12; // tarjetas visibles entre dos filas de WhatsApp (≈ 4 pantallas del celular; múltiplo de 2, 3 y 4 columnas)
+  const CADA_FILA = 8; // tarjetas visibles entre dos filas de WhatsApp (< 3 pantallas del celular; múltiplo de 2 y 4 columnas)
 
   function normalizar(texto) {
     return String(texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
@@ -149,8 +149,11 @@
     return WA + encodeURIComponent(mensajeLista(lista));
   }
 
+  // Sin texto, el mismo mensaje que componentes_plantas.ESPECIAL_VACIO (antes llevaba el hueco ___).
+  const ESPECIAL_VACIO = 'Hola, busco una planta que no vi en el catálogo. Les digo cuál y de qué tamaño.';
   function mensajeEspecial(texto) {
-    const valor = String(texto || '').trim() || '___';
+    const valor = String(texto || '').trim();
+    if (!valor) return ESPECIAL_VACIO;
     return 'Hola Viveros Terra\n\nBusco: *' + valor + '*\nNo lo encontré en el catálogo. ¿Lo manejan o pueden cotizarme?';
   }
 

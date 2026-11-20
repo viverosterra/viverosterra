@@ -43,6 +43,37 @@ PLANTAS = {
                                      "Luz del lugar (mucha o poca): ___\nColonia: ___\nLes mando foto del espacio."),
 }
 
+# Filas de WhatsApp de cada sección de las páginas de plantas (auditoría por página, 2026-11-20): cada botón dice qué
+# leyó la persona en esa sección; el de la portada y el del cierre siguen con PLANTAS. Clave: la sección de
+# plantillas/hub_categoria.py; valor: (mensaje, texto del botón). Sin huecos ___ (se mandan tal cual, con la firma).
+PLANTAS_SECCIONES = {
+    "necesidad": ("Hola, no sé qué plantas van en mi espacio (sol, sombra o cerca del mar). Les mando foto para que me "
+                  "recomienden.", "Pedir que me recomienden"),
+    "subcategorias": ("Hola, quiero cotizar palmas, árboles o plantas para mi casa. Les mando foto del espacio.",
+                      "Cotizar mis plantas"),
+    "especies": ("Hola, vi las especies en su página y quiero precio por tamaño. Les paso cuáles me interesan.",
+                 "Pedir precio de mis favoritas"),
+    "obras": ("Hola, vi las fotos del vivero en su página y quiero cotizar plantas. Les mando foto de mi espacio.",
+              "Mandar foto de mi espacio"),
+    "precios": ("Hola, quiero el precio de una palma según su altura. Les digo cuál y qué altura busco.",
+                "Preguntar precio por altura"),
+    "garantia": ("Hola, quiero que me lleven y siembren las plantas. Les mando foto del espacio.",
+                 "Pedir que me las siembren"),
+    "faq": ("Hola, tengo una duda sobre plantas antes de cotizar.", "Preguntar mi duda"),
+}
+# Mensaje de la fila de especies por página (dice qué especies vio).
+PLANTAS_ESPECIES = {
+    "/palmas-tropicales-tampico": "Hola, vi las palmas en su página y quiero precio por altura. Les paso cuáles me interesan.",
+    "/arboles-ornamentales-tampico": ("Hola, vi los árboles en su página y quiero precio por tamaño. Les paso cuáles me "
+                                      "interesan."),
+    "/arboles-para-banqueta-tampico": ("Hola, vi los árboles para banqueta en su página y quiero precio por tamaño. Les "
+                                       "paso cuáles me interesan y el ancho de mi banqueta."),
+    "/plantas-de-interior-tampico": ("Hola, vi las plantas de interior en su página y quiero precio por tamaño. Les paso "
+                                     "cuáles me interesan."),
+    "/plantas-para-jardin-tampico": ("Hola, vi las plantas para jardín en su página y quiero precio por tamaño. Les paso "
+                                     "cuáles me interesan."),
+}
+
 # Nochebuenas, por modo (datos.NOCHEBUENAS["modo"]): mensaje de la página y del shell; el cotizador lo reemplaza por el pedido
 # completo. paginas.contexto elige el del modo vigente.
 NOCHEBUENAS = {
@@ -64,6 +95,25 @@ MATERIALES = {
     # Piedra bola: a granel, sin medidas (dueño, 2026-11-08): el mensaje ya no pide "Medida".
     "/piedra-bola-rio-tampico": ("Hola, quiero cotizar piedra bola de río.\nMetros a cubrir: ___\n"
                                  "Colonia de entrega: ___\nLes mando foto del espacio."),
+}
+
+# Filas de WhatsApp de cada sección de los materiales (auditoría por página, 2026-11-20): cada botón dice qué leyó la
+# persona; el de la portada, el del cierre y la calculadora sin área siguen con MATERIALES. Sin huecos ___.
+_MATERIAL = {"/tierra-negra-vegetal-tampico": "tierra negra", "/tezontle-rojo-tampico": "tezontle rojo",
+             "/marmol-blanco-tampico": "mármol blanco", "/piedra-bola-rio-tampico": "piedra bola de río"}
+MATERIALES_SECCIONES = {
+    ruta: {
+        "precio": {"/marmol-blanco-tampico": "Hola, quiero mármol blanco. Les paso los m² y mi colonia para el total con entrega.",
+                   "/piedra-bola-rio-tampico": ("Hola, quiero piedra bola de río. Les paso los m² y mi colonia para que me "
+                                                "den precio con entrega.")}.get(
+            ruta, f"Hola, quiero {nombre}. ¿Cuánto me sale con entrega a mi colonia? Les paso cantidad y colonia."),
+        "que_es": f"Hola, quiero {nombre} para mi jardín. Les mando foto del espacio para que me digan cuánto necesito.",
+        "usos": f"Hola, quiero {nombre} para uno de los usos de su página. Les digo cuál y cuántos m² son.",
+        "entrega": f"Hola, quiero saber cuánto cuesta la entrega de {nombre} a mi colonia.",
+        "instalacion": f"Hola, quiero que me instalen {nombre}. Les mando foto y medidas del espacio.",
+        "faq": f"Hola, tengo una duda sobre {nombre} antes de comprar.",
+    }
+    for ruta, nombre in _MATERIAL.items()
 }
 
 # Zonas (Etapa 2g): la plantilla de main de cada zona (tools/pasto/zonas.py, guided()), con los huecos ___. La usan la

@@ -9,6 +9,7 @@ como estaban (Etapa 3).
 import datos
 import mensajes_paginas
 from componentes import dinero
+from contenido import catalogo_datos as cd
 from contenido import plantas_comun as pc
 from contenido import seo
 
@@ -63,7 +64,7 @@ CONTENIDO = {
         "kicker": "Tampico · Madero · Altamira",
         "pos": "50% 66%",
         "dato": 'Garantía de 30 días en lo que sembramos, <a href="/politicas#garantia-plantas">con condiciones</a>',
-        "enlaces": (("Ver los 25 árboles del catálogo", "/catalogo?cat=arboles", "plantas:catalogo"),),
+        "enlaces": ((f'Ver los {cd.cuenta({"cat": ["arboles"]})} árboles del catálogo', "/catalogo?cat=arboles", "plantas:catalogo"),),
         "lema": "Árboles de sombra y de flor para tu casa.",
         "h1": "Árboles ornamentales para jardines en Tampico",
         "lede": f"{FLAMBOYAN}. Te los llevamos y los sembramos.",
@@ -71,6 +72,7 @@ CONTENIDO = {
                      "cientifico": "Delonix regia", "antes": "desde", "monto": dinero(P["flamboyan"]), "unidad": "",
                      "nota": "Los demás árboles, según especie y tamaño."},
         "mensaje": MENSAJE,
+        "cta_texto": "Preguntar precio por tamaño",
         "foto": {"src": "/img/portadas/arboles-tampico-viveros-terra-sm.webp",
                  "srcset": ("/img/portadas/arboles-tampico-viveros-terra-sm.webp 560w, "
                             "/img/portadas/arboles-tampico-viveros-terra.webp 960w"),
@@ -78,7 +80,7 @@ CONTENIDO = {
                  "alt": "Equipo de Viveros Terra sembrando un árbol ornamental en Tampico",
                  "lugar": "Siembra de un árbol ornamental", "etapa": "Tampico"},
     },
-    "especies": {"titulo": "Las más solicitadas en Tampico", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
+    "especies": {"titulo": "Árboles de sombra y de flor con su ficha", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
     "lista": pc.LISTA,
     "garantia": pc.GARANTIA,
     "faq": {"titulo": "Árboles ornamentales en Tampico: lo que más nos preguntan", "preguntas": PREGUNTAS},
@@ -86,8 +88,8 @@ CONTENIDO = {
         ("Flamboyán en Tampico: cuidados y floración", "/blog/framboyan-delonix-regia-tampico"),
         ("7 árboles para banqueta que no levantan el pavimento", "/blog/arboles-para-sembrar-en-banqueta"),
         ("Poda de árboles y palmas", "/blog/poda-arboles-palmas-tampico-guia"))},
-    "relacionados": {"titulo": "Más servicios en Viveros Terra", "items": pc.otras_subcategorias(RUTA)},
-    "cierre": {"titulo": "¿Listo para cotizar?",
+    "relacionados": {"titulo": "Otras plantas del vivero", "items": pc.otras_subcategorias(RUTA)},
+    "cierre": {"titulo": "¿Ya sabes qué árbol quieres?", "texto": "Preguntar precio por tamaño",
                "lede": "Dinos qué árbol buscas, la altura y la colonia; te respondemos con precio por tamaño.",
                "mensaje": MENSAJE},
     "jsonld": {"migas": pc.migas_ld(NOMBRE, RUTA), "nodos": (pc.lista_ld(NOMBRE, [s for s, _t, _a in ESPECIES]),),
@@ -100,6 +102,11 @@ PARIDAD = {
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {
+        # Auditoría por página (2026-11-20): «más solicitadas» afirma una preferencia sin dato.
+        "Las más solicitadas en Tampico": "Árboles de sombra y de flor con su ficha",
+        # Auditoría por página: la sección lista las otras subcategorías de plantas, no servicios.
+        "Más servicios en Viveros Terra": "Otras plantas del vivero",
+        "¿Listo para cotizar?": "¿Ya sabes qué árbol quieres?",
         "Árboles ornamentales tampico — Todo lo que necesitas saber": (
             "Árboles ornamentales en Tampico: lo que más nos preguntan"),
     },

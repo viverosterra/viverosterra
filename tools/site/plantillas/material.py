@@ -10,6 +10,8 @@ Páginas: /tierra-negra-vegetal-tampico, /tezontle-rojo-tampico, /marmol-blanco-
 (tools/site/contenido/). <body class="vt-pagina vt-materiales">: el shell agrega terra-materiales.css."""
 import componentes as c
 import componentes_materiales as cm
+import datos
+import mensajes_paginas as mp
 from plantillas import base
 
 CONTEXTO = "https://schema.org"
@@ -36,13 +38,22 @@ def _que_es(k, n):
         cuerpo += '<ul class="vt-checks vt-mt">' + "".join(f"<li><span>{x}</span></li>" for x in q["puntos"]) + "</ul>"
     if q.get("figuras"):
         cuerpo += c.obras(q["figuras"])
+    cuerpo += _fila(k, "que_es")  # "qué es" cierra con su botón (auditoría por página: hasta 5 pantallas sin uno)
     return c.bloque(n(), "Qué es", "vt-h-que", q["titulo"], cuerpo, lede=q.get("lede"))
 
 
-def _fila(k, seccion, texto):
+# Textos de las filas de WhatsApp por sección (auditoría por página, 2026-11-20: dicen qué pasa al tocarlos).
+TEXTOS = {"precio": "Pedir mi total con entrega", "que_es": "Mandar foto de mi espacio",
+          "usos": "Pedir la cantidad para mi uso", "entrega": "Preguntar el costo de entrega",
+          "instalacion": "Pedir que me lo instalen", "faq": "Preguntar mi duda"}
+
+
+def _fila(k, seccion):
     """Fila de WhatsApp al final de una sección larga (Entrega C de experiencia: ningún tramo de más de 6 pantallas del
-    celular sin CTA), con el mensaje de la página."""
-    return c.fila_seccion(k["portada"]["mensaje"], k["tipo"], seccion, texto)
+    celular sin CTA), con el mensaje de esa sección (mensajes_paginas.MATERIALES_SECCIONES) o, sin él, el de la página."""
+    ruta = k["meta"]["canonical"].removeprefix(datos.SITIO)
+    mensaje = mp.MATERIALES_SECCIONES.get(ruta, {}).get(seccion, k["portada"]["mensaje"])
+    return c.fila_seccion(mensaje, k["tipo"], seccion, TEXTOS[seccion])
 
 
 def _precio(k, n):
@@ -52,16 +63,19 @@ def _precio(k, n):
         cuerpo = f'<div class="vt-dos"><div>{c.figura(p["figura"])}</div><div>{cuerpo}</div></div>'
     if p.get("nota"):
         cuerpo += f'<p class="vt-promesa">{p["nota"]}</p>'
+    cuerpo += _fila(k, "precio")  # el botón va junto al precio, antes de las tablas de apoyo
     for t in p.get("tablas", ()):
-        cuerpo += f'<h3 class="vt-mt">{t["titulo"]}</h3>' + c.tabla_comparativa(t["columnas"], t["filas"], t["caption"])
-    cuerpo += _fila(k, "precio", f'Cotizar {k["calculadora"]["nombre"]}')
+        tabla = c.tabla_comparativa(t["columnas"], t["filas"], t["caption"])
+        # plegable=True: cerrada en celular (auditoría por página: la sección de precio del mármol medía 2.3 pantallas).
+        cuerpo += c.plegable(t["titulo"], tabla) if t.get("plegable") else f'<h3 class="vt-mt">{t["titulo"]}</h3>' + tabla
     return c.bloque(n(), "Precio", "vt-h-precio", p["titulo"], cuerpo, lede=p.get("lede"), tinte=True,
                     id_seccion="precio", ritmo="clave")
 
 
 def _usos(k, n):
     u = k["usos"]
-    return c.bloque(n(), "Usos", "vt-h-usos", u["titulo"], c.fichas(u["items"]), lede=u.get("lede"))
+    # Con su fila de WhatsApp (auditoría por página: usos y calculadora sumaban hasta 5 pantallas sin botón).
+    return c.bloque(n(), "Usos", "vt-h-usos", u["titulo"], c.fichas(u["items"]) + _fila(k, "usos"), lede=u.get("lede"))
 
 
 def _calculadora(k, n):
@@ -73,14 +87,15 @@ def _calculadora(k, n):
 
 def _entrega(k, n):
     e = k["entrega"]
-    return c.bloque(n(), "Entrega", "vt-h-entrega", e["titulo"], c.fichas(e["items"]), lede=e.get("lede"),
-                    id_seccion="entrega")
+    return c.bloque(n(), "Entrega", "vt-h-entrega", e["titulo"], c.fichas(e["items"]) + _fila(k, "entrega"),
+                    lede=e.get("lede"), id_seccion="entrega")
 
 
 def _extra(k, n, clave):
     x = k[clave]
     if clave == "instalacion":
-        cuerpo = c.pasos(x["pasos"]) + (f'<p class="vt-promesa">{x["nota"]}</p>' if x.get("nota") else "")
+        # Con nota (el mármol ofrece instalarlo): su fila de WhatsApp para pedirlo (auditoría por página).
+        cuerpo = c.pasos(x["pasos"]) + (f'<p class="vt-promesa">{x["nota"]}</p>' + _fila(k, "instalacion") if x.get("nota") else "")
         return c.bloque(n(), "Instalación", "vt-h-instalacion", x["titulo"], cuerpo, lede=x.get("lede"), tinte=True)
     if clave == "galeria":
         return c.bloque(n(), "Fotos", "vt-h-galeria", x["titulo"], c.obras(x["figuras"]), lede=x.get("lede"))
@@ -110,17 +125,26 @@ def pagina_ld(url, negocio):
 def render(k):
     tipo, n = k["tipo"], _Numero()
     secciones = [cm.portada(k["portada"], tipo, k["migas"])]
-    if k.get("que_es"):
-        secciones.append(_que_es(k, n))
-    secciones += [_precio(k, n), _usos(k, n), _calculadora(k, n), _entrega(k, n)]
-    secciones += [_extra(k, n, clave) for clave in ("galeria", "opiniones") if k.get(clave)]
+    # precio_primero (auditoría por página, 2026-11-20): el precio y su botón justo bajo la portada; "qué es" después.
+    # opiniones_tras_usos: las opiniones suben antes de la calculadora (antes llegaban hasta la pantalla 11), entre dos
+    # botones; el momento oscuro sigue lejos del hero y del cierre (test_visual_v2).
+    primeras = [_precio, _que_es] if k.get("precio_primero") else [_que_es, _precio]
+    for armar in primeras:
+        if armar is _precio or k.get("que_es"):
+            secciones.append(armar(k, n))
+    secciones.append(_usos(k, n))
+    if k.get("opiniones_tras_usos") and k.get("opiniones"):
+        secciones.append(_extra(k, n, "opiniones"))
+    secciones += [_calculadora(k, n), _entrega(k, n)]
+    tardias = ("galeria",) if k.get("opiniones_tras_usos") else ("galeria", "opiniones")
+    secciones += [_extra(k, n, clave) for clave in tardias if k.get(clave)]
     f = k["faq"]
     secciones.append(c.bloque_dos(n(), "Preguntas", "vt-h-faq", f["titulo"], "",
-                                  c.faq(f["preguntas"]) + _fila(k, "faq", "Preguntar por WhatsApp"), tinte=True,
+                                  c.faq(f["preguntas"]) + _fila(k, "faq"), tinte=True,
                                   ritmo="apoyo"))
     secciones += [_extra(k, n, clave) for clave in ("combinaciones", "instalacion") if k.get(clave)]
     ci = k["cierre"]
-    cierre = cm.cierre(ci, k["portada"]["mensaje"], tipo)
+    cierre = cm.cierre(ci, k["portada"]["mensaje"], tipo, k["portada"].get("cta_texto"))
     otros = _otros(k, n)
     secciones += [otros, cierre] if k["otros"].get("antes_del_cierre") else [cierre, otros]
     secciones.append(_pedido(k, n))
