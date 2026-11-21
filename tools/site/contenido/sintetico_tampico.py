@@ -45,8 +45,11 @@ MENSAJE_MATERIAL = "Hola, quiero comprar pasto sintético en el vivero. ¿Tienen
 PREGUNTAS = (
     ("¿Dónde comprar pasto sintético en Tampico?",
      f"En Viveros Terra, en {datos.CALLE}, {datos.COLONIA}, Cd. Madero, frente a Walmart. Tenemos {HOY} en existencia "
-     "para llevar hoy; los otros 7 modelos también están en existencia y llegan en 3 a 5 días. Atendemos de lunes a "
-     "viernes de 9 a 18 h y sábado de 9 a 14 h."),
+     # Dueño, 2026-11-21: «tenemos en existencia, sujeto a disponibilidad y las cantidades que requieran» (antes: «también
+     # están en existencia y llegan en 3 a 5 días», que se contradecía).
+     "para llevar hoy; los otros 7 modelos también los tenemos en existencia, sujetos a disponibilidad según la cantidad "
+     "que necesites: confírmala por WhatsApp antes de pasar. Atendemos de lunes a viernes de 9 a 18 h y sábado de 9 a "
+     "14 h."),
     ("¿Cuánto cuesta el pasto sintético por m² en Tampico?",
      f"Solo el material cuesta desde ${MIN_RETAIL}/m² en rollo completo. Toscana 18 va de ${T18['rollo']}/m² en rollo a "
      f"${T18['t1']}/m² en cortes de 2 a 9 m². Toscana 28 va de ${T28['rollo']}/m² a ${T28['t1']}/m². Los precios "

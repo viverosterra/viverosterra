@@ -120,6 +120,21 @@ SIN_MINIMO = "Sin mínimo de compra."
 ENTREGA_COBRO = "La entrega a domicilio se cobra por viaje, según tu colonia."
 FACTURACION = "Todas las compras se pueden facturar."
 CONDICIONES_MATERIALES = f"{SIN_MINIMO} {ENTREGA_COBRO} {FACTURACION}"
+# Tierra negra y tezontle a granel (dueño, 2026-11-21): el precio por m³ y por camión ya incluye la entrega; se revisa la
+# ubicación para confirmar que esté dentro del radio con entrega incluida y, si no, se ajusta el precio. En costales la
+# entrega se sigue cobrando por viaje. El radio no se publica (ni kilómetros ni colonias): «nuestra zona de reparto».
+ENTREGA_INCLUIDA = "Por m³ y por camión, el precio ya incluye la entrega dentro de nuestra zona de reparto."
+ENTREGA_CONFIRMA = ("Mándanos tu ubicación y te la confirmamos antes de que pagues; si quedas fuera de la zona, te decimos "
+                    "el ajuste por escrito.")
+ENTREGA_COSTALES = "En costales, la entrega a domicilio se cobra por viaje, según tu colonia."
+ENTREGA_GRANEL = f"{ENTREGA_INCLUIDA} {ENTREGA_CONFIRMA}"
+ENTREGA_INCLUIDA_CORTA = "Entrega incluida en nuestra zona de reparto"
+CONDICIONES_GRANEL = f"{SIN_MINIMO} {ENTREGA_GRANEL} {ENTREGA_COSTALES} {FACTURACION}"
+# Donde se habla de todos los materiales a la vez (/precios, /politicas, llms.txt): la regla general y su excepción.
+ENTREGA_GRANEL_EXCEPCION = f"En tierra negra y tezontle p{ENTREGA_INCLUIDA[1:]}"
+CONDICIONES_MATERIALES_TODAS = f"{CONDICIONES_MATERIALES} {ENTREGA_GRANEL_EXCEPCION} {ENTREGA_CONFIRMA}"
+# Riego (dueño, 2026-11-21): la garantía en materiales e instalación es de 3 meses. Sin más condiciones publicadas.
+GARANTIA_RIEGO = "3 meses"
 # Poda y derribo (respuestas del dueño, 2026-11-11): también se derriban árboles completos; poda y derribo van según
 # cotización (la poda desde PRECIOS["poda"]) y el retiro de los residuos que se generan va como partida aparte en la
 # cotización. El permiso municipal, cuando se necesita, lo tramita el dueño del predio: el sitio nunca dice que Viveros
@@ -304,19 +319,22 @@ OPINIONES_RIEGO = (
 # Opiniones reales con nombre de las páginas de materiales de main, textuales; el dueño confirmó que son reales y que hay
 # permiso (2026-11-08). Solo texto visible: nunca aggregateRating ni Review con calificación. En la de David M. y la de
 # Patricia H., main tenía cruzados el lugar y las iniciales; aquí cada cita va con su nombre y su lugar.
+# Decisión del dueño (2026-11-21): se recorta, sin reescribir, lo que contradice al sitio: en la de Ricardo O. salió
+# «y el pasto arraigó en menos de 10 días» (el arraigo publicado es ARRAIGO) y en las de piedra bola salieron «mediana» y
+# «grande» (se vende a granel, sin medidas). El resto de cada cita sigue textual.
 OPINIONES_TIERRA_NEGRA = (
     ("Pedimos tierra negra para nivelar 200 m² antes de instalar pasto. El material llegó en perfectas condiciones, el "
-     "camión descargó exactamente donde necesitábamos y el pasto arraigó en menos de 10 días. Resultado excelente.",
+     "camión descargó exactamente donde necesitábamos. Resultado excelente.",
      "Ricardo O.", "Administrador de condominio · Altamira"),
     ("Compré costales para mejorar el jardín de mi casa en Madero. La diferencia con la tierra que tenía antes fue "
      "inmediata — las plantas están más verdes y el pasto que pusimos sobre ella arraigó muy rápido. Lo recomiendo.",
      "Laura P.", "Cliente residencial · Ciudad Madero"),
 )
 OPINIONES_PIEDRA_BOLA = (
-    ("Hice un jardín zen en mi terraza usando piedra bola mediana, arena y bambú. Todo lo conseguí en Viveros Terra. La "
+    ("Hice un jardín zen en mi terraza usando piedra bola, arena y bambú. Todo lo conseguí en Viveros Terra. La "
      "calidad de la piedra era muy buena y la entrega fue rápida.",
      "Patricia H.", "Residencial · Tampico"),
-    ("Usamos piedra bola grande para los bordes de la fuente del hotel. Queda muy natural y elegante. Viveros Terra nos "
+    ("Usamos piedra bola para los bordes de la fuente del hotel. Queda muy natural y elegante. Viveros Terra nos "
      "cotizó bien y coordinaron la entrega en el horario que necesitábamos.",
      "David M.", "Hotel · Altamira"),
 )

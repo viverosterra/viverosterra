@@ -98,7 +98,8 @@ class ZonaTest(unittest.TestCase):
 
     def test_cotizar_en_la_zona_y_poda_con_su_mensaje(self):
         for ruta in ZONAS:
-            m = re.search(r'data-cta="zona:precios"[^>]*href="https://wa\.me/\d+\?text=([^"]+)"[^>]*>Cotizar en ', html_de(ruta))
+            m = re.search(r'data-cta="zona:precios"[^>]*href="https://wa\.me/\d+\?text=([^"]+)"[^>]*>(?:<[^>]+>)*Pedir precio para mi jardín en ',
+                          html_de(ruta))  # dueño, 2026-11-21: antes «Cotizar en {zona}»
             with self.subTest(ruta=ruta):
                 self.assertEqual(unquote(m.group(1)), datos.sin_huecos(datos.con_firma(mensajes_paginas.ZONAS[ruta])))
         ruta = "/jardineria-aguila-tampico"

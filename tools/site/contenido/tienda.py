@@ -95,7 +95,8 @@ CONTENIDO = {
     "migas": (("Inicio", "/"), ("Pasto sintético", None)),
     "portada": {
         "kicker": "Tienda · Envío a todo México",
-        "existencia": f"{len(data.MODELOS)} modelos en existencia.",
+        # Dueño, 2026-11-21: en existencia, sujeto a disponibilidad y a la cantidad que se requiera.
+        "existencia": f"{len(data.MODELOS)} modelos en existencia, sujetos a disponibilidad según la cantidad.",
         "dato": f"Vendemos a todo México desde {datos.SINTETICO_NACIONAL_DESDE}",
         "h1": 'Pasto sintético <span class="vt-serif">con envío a todo México</span>',
         "rotulo_estado": "Precio puesto en tu puerta",

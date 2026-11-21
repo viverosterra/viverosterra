@@ -741,7 +741,11 @@
       hero.setAttribute('href', base ? waLink(base) : ctaOriginal.hero);
     }
     if (window.VTBarra) {
-      if (ctx) window.VTBarra.prestar('tienda', ctx.href, ctx.texto);
+      // En una página de ciudad el encabezado ya dice la ciudad (paginas.py, 2026-11-21): el estado guardado de otra
+      // visita no lo pisa; la cotización y la lista (que traen texto) sí viajan.
+      const cabeza = $('.vt-head');
+      const enCiudad = !!cabeza && cabeza.getAttribute('data-vt-tipo') === 'ciudad';
+      if (ctx && (ctx.texto || !enCiudad)) window.VTBarra.prestar('tienda', ctx.href, ctx.texto);
       else window.VTBarra.soltar('tienda');
     }
   }

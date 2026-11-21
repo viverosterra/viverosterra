@@ -159,7 +159,7 @@ CONTENIDO = {
          "cotizar": ("Pedir material con entrega", COTIZAR["materiales"]),
          "nota": ('Recoges en el <a href="/vivero-tampico">vivero de Cd. Madero</a> o te lo llevamos en Tampico, Madero y '
                   "Altamira. "
-                  f"{datos.CONDICIONES_MATERIALES}")},
+                  f"{datos.CONDICIONES_MATERIALES_TODAS}")},  # dueño, 2026-11-21: m³ y camión con entrega incluida
         {"id": "plantas", "rotulo": "Vivero", "titulo": 'Plantas, palmas <span class="vt-serif">y árboles</span>',
          "filas": lp.PLANTAS, "concepto": "Planta", "caption": f"Precios {datos.ANIO}. Las plantas no llevan IVA.",
          "cotizar": ("Preguntar existencia de plantas y palmas", COTIZAR["plantas"]),

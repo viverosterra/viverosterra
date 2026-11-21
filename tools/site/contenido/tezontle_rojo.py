@@ -6,8 +6,9 @@ Precio de datos.PRECIOS: costal desde $200 (como en la home). El m³ ($3,200) y 
 (main decía $350 aquí y $250 en la página del mármol) y la piedra de río a granel, sin medidas ni el $280. Sin “+300
 jardines”, “3–5 años sin reposición”, “90% de la maleza”, “del 60% al 95%”, “imbatible” ni “gratis”. Sin foto de
 portada (main no la tenía); sus 4 fotos, en su orden. Meta como estaba publicada. El peso del costal no se publica:
-main decía “15 kg” y “de 25 a 30 kg” y el dueño no lo tiene (PARIDAD["cifras"]). Sin mínimo de compra, entrega por
-viaje y factura en todo (datos.CONDICIONES_MATERIALES).
+main decía “15 kg” y “de 25 a 30 kg” y el dueño no lo tiene (PARIDAD["cifras"]). Sin mínimo de compra y factura en todo;
+el m³ y el camión ya incluyen la entrega en la zona de reparto y los costales la pagan por viaje (dueño, 2026-11-21:
+datos.CONDICIONES_GRANEL).
 """
 import datos
 import mensajes_paginas
@@ -105,8 +106,7 @@ PASOS = (
 PREGUNTAS = (
     ("¿Cuánto cuesta el tezontle rojo por camión en Tampico?",
      f"El costal de tezontle rojo cuesta desde {COSTAL}. El m³ suelto y el camión volteo de 14 m³ se cotizan según el "
-     "volumen y la distancia de entrega: escríbenos tu colonia y la cantidad y te mandamos el precio por escrito antes "
-     "de que confirmes."),
+     f"volumen. {datos.ENTREGA_GRANEL}"),  # dueño, 2026-11-21: m³ y camión con entrega incluida
     ("¿Para qué sirve el tezontle en un jardín?",
      "Para ayudar a controlar la maleza sin herbicidas, hacer senderos y caminos decorativos, cubrir arriates, mejorar el "
      "drenaje en suelos arcillosos y como acabado decorativo que contrasta con el verde del pasto y las plantas."),
@@ -126,13 +126,13 @@ PREGUNTAS = (
      "grosor en metros = m³. Usa la calculadora de esta página o mándanos tus medidas."),
     ("¿Entregan tezontle a domicilio en Tampico y Altamira?",
      f"Sí. Entregamos en Tampico, Ciudad Madero y Altamira, y en {datos.ZONAS_POR_PROYECTO} por proyecto: por costal en "
-     "vehículo de reparto para cantidades chicas y en camión volteo de 14 m³ para proyectos grandes. El costo de entrega "
-     "va en la cotización según tu dirección."),
+     "vehículo de reparto para cantidades chicas y en camión volteo de 14 m³ para proyectos grandes. "
+     f"{datos.ENTREGA_GRANEL} {datos.ENTREGA_COSTALES}"),  # dueño, 2026-11-21
     ("¿Es necesaria la membrana antigerminante con el tezontle?",
      "Para control de maleza, sí: sin membrana el tezontle ayuda, pero las semillas que caen desde arriba pueden germinar "
      "entre las piedras. Para uso decorativo o senderos de mucho tránsito no es indispensable. Te orientamos sobre la "
      "membrana para tu proyecto."),
-    mc.pregunta_condiciones("tezontle"),
+    mc.pregunta_condiciones("tezontle", granel_incluida=True),
 )
 
 CONTENIDO = {
@@ -151,7 +151,7 @@ CONTENIDO = {
         "etiqueta": {"codigo": "Tezontle rojo", "aviso": f"Precios {datos.ANIO}", "nombre": "Costal", "antes": "desde",
                      "monto": COSTAL, "unidad": "por costal",
                      "filas": (("Por m³", SEGUN), ("Camión volteo 14 m³", SEGUN)),
-                     "nota": f"Factura {datos.FACTURA}. La entrega se cotiza según tu colonia."},
+                     "nota": f"{mc.ENTREGA_GRANEL_DATO}."},  # dueño, 2026-11-21 (la factura ya va en la línea de confianza)
         "mensaje": MENSAJE,
         "cta_texto": "Pedir precio con entrega",
     },
@@ -176,12 +176,12 @@ CONTENIDO = {
         "filas": (
             {"nombre": "Por costal", "detalle": "Recoger o a domicilio", "unidad": "costal",
              "precio": P["tezontle_costal"], "desde": True},
-            {"nombre": "Por m³ suelto", "detalle": "Entregado en tu domicilio", "unidad": "m³",
+            {"nombre": "Por m³ suelto", "detalle": datos.ENTREGA_INCLUIDA_CORTA, "unidad": "m³",  # dueño, 2026-11-21
              "precio": None},
-            {"nombre": "Camión volteo de 14 m³", "detalle": "Descarga en tu domicilio u obra, con factura",
+            {"nombre": "Camión volteo de 14 m³", "detalle": "Entrega y descarga incluidas en nuestra zona de reparto, con factura",
              "unidad": "camión", "precio": None},
         ),
-        "nota": datos.CONDICIONES_MATERIALES,
+        "nota": datos.CONDICIONES_GRANEL,  # dueño, 2026-11-21
         "tablas": ({
             "titulo": "Tezontle, mármol blanco o piedra de río",
             "caption": "Tres materiales decorativos para senderos, bordes y arriates",
@@ -199,7 +199,7 @@ CONTENIDO = {
              "lede": "Cada uso tiene su capa y su cantidad de referencia.", "items": USOS},
     "calculadora": {"clave": "tezontle", "nombre": "tezontle", "titulo": "¿Cuánto tezontle necesitas?",
                     "lede": "Escribe el área y para qué lo usas: te damos los m³, la presentación y los costales."},
-    "entrega": mc.entrega("el tezontle"),
+    "entrega": mc.entrega("el tezontle", granel_incluida=True),
     "combinaciones": {"titulo": "El tezontle combina perfectamente con...", "items": COMBINACIONES},
     "instalacion": {"titulo": "Cómo instalar tezontle en 4 pasos", "pasos": PASOS},
     "faq": {"titulo": "Todo sobre tezontle en Tampico", "preguntas": PREGUNTAS},

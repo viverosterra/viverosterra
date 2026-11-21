@@ -245,7 +245,7 @@ def precios():
          f"{datos.SEGUN_COTIZACION.lower()}"),
         f"Mármol blanco: {_dinero(P['marmol_saco'])} el saco, {datos.MARMOL_CONDICION}",
         f"Piedra bola de río: {datos.PIEDRA_BOLA_VENTA}, {datos.SEGUN_COTIZACION.lower()}",
-        f"Materiales: {datos.CONDICIONES_MATERIALES}".rstrip("."),
+        f"Materiales: {datos.CONDICIONES_MATERIALES_TODAS}".rstrip("."),  # dueño, 2026-11-21
         (f"Nochebuenas {NB['temporada']}: maceta de 5\" a {_dinero(menudeo)} por pieza al menudeo y desde "
          f"{_dinero(volumen)} en pedidos de {NB['cortes'][-1]} piezas o más. Precio de preventa: "
          f"{round(preventa['descuento'] * 100)}% menos en pedidos de menos de {NB['cortes'][-1]} piezas confirmados a "

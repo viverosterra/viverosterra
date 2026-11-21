@@ -39,6 +39,9 @@ LIMITE_PREVENTA = fecha_larga(NB["preventa"]["hasta"])
 LIMITE_MAYOREO = fecha_larga(NB["fecha_limite_mayoreo"])
 ENTREGA_MAYOREO = fecha_larga(NB["entrega_mayoreo_antes"])
 PIDE_ANTES = f"Pide antes del {LIMITE_MAYOREO}"
+PREGUNTA_CUANDO = "¿Cuándo debo pedir para empresas o posadas?"
+RESPUESTA_CUANDO = (f"La preventa de mayoreo cierra el {LIMITE_MAYOREO} y entregamos antes del {ENTREGA_MAYOREO}. Si ya pasó "
+                    "esa fecha, escríbenos por WhatsApp y te decimos qué hay disponible.")
 
 HERO = next(f for f in FOTOS if f["uso"] == "hero")
 GALERIA = tuple(f for f in FOTOS if f["uso"] != "hero")
@@ -182,8 +185,9 @@ PREGUNTAS = (
     ("¿Entregan en Madero y Altamira?",
      f"Sí. La entrega va incluida desde {ENTREGA_DESDE} por pedido. Debajo de ese monto, según tu ubicación o colonia y te la cotizamos por WhatsApp."),
     ("¿Facturan?", f"Sí, con {datos.FACTURA}."),
-    ("¿Cuándo debo pedir para empresas o posadas?",
-     "Lo antes posible. Confírmanos por WhatsApp y te decimos la fecha de entrega."),
+    # Decisión del dueño (2026-11-21): antes «Lo antes posible…». Las fechas salen de datos.NOCHEBUENAS y la respuesta
+    # sigue siendo cierta después del cierre (las demás fechas de la página se ocultan solas con data-nb-hasta).
+    (PREGUNTA_CUANDO, RESPUESTA_CUANDO),
     ("¿Cuánto dura una nochebuena?", "Bien cuidada, hasta febrero."),
     ("¿Cómo la cuido con el calor de Tampico?",
      "Dale luz brillante indirecta, sin sol directo, entre 18–24 °C. Riega cuando la tierra esté apenas seca, sin agua acumulada "

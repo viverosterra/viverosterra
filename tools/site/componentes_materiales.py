@@ -199,8 +199,10 @@ FILAS = {
     "piedra-bola": (),
 }
 NOTAS = {
-    "tierra-negra": f"m² × grosor de la capa = m³, redondeado hacia arriba. {datos.ENTREGA_COBRO}",
-    "tezontle": "m² × grosor de la capa = m³, redondeado hacia arriba. El m³ y el camión se cotizan según tu colonia.",
+    # Dueño, 2026-11-21: en tierra negra y tezontle, el m³ y el camión ya incluyen la entrega en la zona de reparto.
+    "tierra-negra": f"m² × grosor de la capa = m³, redondeado hacia arriba. {datos.ENTREGA_GRANEL}",
+    "tezontle": ("m² × grosor de la capa = m³, redondeado hacia arriba. El m³ y el camión se cotizan según el volumen. "
+                 f"{datos.ENTREGA_GRANEL}"),
     "marmol": (f"3 sacos por m² con capa de 3 a 4 cm; 4 con 5 cm y 5 con 6 cm. Saco a {c.dinero(P['marmol_saco'])}, "
                f"{datos.MARMOL_CONDICION}; la entrega se cobra aparte. Peso con sacos de ≈ 20 kg."),
     "piedra-bola": ("Con capa de 8 a 10 cm se usan de 120 a 150 kg por m². Se vende a granel: mándanos los kg y la "

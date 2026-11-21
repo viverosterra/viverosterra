@@ -39,6 +39,8 @@ PERMITIDOS = ({dinero(n) for v in datos.PRECIOS.values() for n in (v if isinstan
 PRECIO_RE = re.compile(r"\$\s?\d[\d,]*\d|\$\s?\d")
 # Lo que sigue sin precio publicado (dueño, 2026-11-08: "según cotización"): la piedra bola y el m³ y el camión del
 # tezontle. Como $200 y $1,500 sí están en datos.py, se detectan por cercanía.
+# Tierra negra y tezontle: el m³ y el camión ya incluyen la entrega en la zona de reparto (dueño, 2026-11-21).
+GRANEL_CON_ENTREGA = ("/tierra-negra-vegetal-tampico", "/tezontle-rojo-tampico")
 SIN_PRECIO_RE = re.compile(r"piedra bola[^.$]{0,30}\$\s?\d", re.I)
 SIN_PRECIO_TEZONTLE_RE = re.compile(r"(?:\bm³|cami[oó]n(?:es)?)[^.$]{0,25}\$\s?\d", re.I)
 # Palabras del dueño que solo se publican así (2026-11-08): "sujeto a disponibilidad" junto al precio del mármol y "Sin
@@ -166,15 +168,40 @@ class MaterialesReglasTest(unittest.TestCase):
 
     def test_condiciones_del_dueno_en_las_cuatro(self):
         """Sin mínimo de compra, entrega por viaje y factura en todas las compras (dueño, 2026-11-08), en la sección de
-        entrega y en una pregunta frecuente de las cuatro páginas."""
+        entrega y en una pregunta frecuente de las cuatro páginas. Respuesta nueva del dueño (2026-11-21): en tierra
+        negra y tezontle, el precio por m³ y por camión ya incluye la entrega dentro de la zona de reparto (se confirma
+        con la ubicación) y solo los costales la pagan por viaje; mármol y piedra bola siguen igual."""
         self.assertEqual(datos.CONDICIONES_MATERIALES, "Sin mínimo de compra. La entrega a domicilio se cobra por viaje, "
                                                        "según tu colonia. Todas las compras se pueden facturar.")
+        self.assertEqual(datos.ENTREGA_INCLUIDA, "Por m³ y por camión, el precio ya incluye la entrega dentro de nuestra "
+                                                 "zona de reparto.")
+        self.assertEqual(datos.ENTREGA_CONFIRMA, "Mándanos tu ubicación y te la confirmamos antes de que pagues; si quedas "
+                                                 "fuera de la zona, te decimos el ajuste por escrito.")
+        self.assertEqual(datos.ENTREGA_COSTALES, "En costales, la entrega a domicilio se cobra por viaje, según tu colonia.")
         for ruta in MATERIALES:
             texto = visible_y_ld(html_de(ruta))
+            granel = ruta in GRANEL_CON_ENTREGA
             with self.subTest(ruta=ruta):
-                for frase in (datos.SIN_MINIMO, datos.ENTREGA_COBRO, datos.FACTURACION):
+                entrega = ((datos.ENTREGA_INCLUIDA, datos.ENTREGA_CONFIRMA, datos.ENTREGA_COSTALES) if granel
+                           else (datos.ENTREGA_COBRO,))
+                for frase in (datos.SIN_MINIMO, *entrega, datos.FACTURACION):
                     self.assertIn(frase, texto)
-                self.assertIn(datos.CONDICIONES_MATERIALES, texto)
+                self.assertIn(datos.CONDICIONES_GRANEL if granel else datos.CONDICIONES_MATERIALES, texto)
+                if granel:  # la regla anterior ya no se publica para el m³ ni el camión
+                    self.assertNotIn(datos.ENTREGA_COBRO, texto)
+                    self.assertNotRegex(texto, r"(?i)costo de entrega va en la cotización|\bflete\b|\b\d+ ?km\b")
+                    self.assertIn("Entrega y descarga incluidas en nuestra zona de reparto", texto)
+                else:
+                    self.assertNotIn("zona de reparto", texto)
+
+    def test_opiniones_recortadas_donde_contradicen(self):
+        """Decisión del dueño (2026-11-21): las reseñas no dicen lo que el sitio contradice (arraigo en menos de 10 días;
+        piedra bola por medidas). Solo se recortó: el resto de cada cita sigue textual."""
+        citas = " ".join(c for c, _n, _d in datos.OPINIONES_TIERRA_NEGRA + datos.OPINIONES_PIEDRA_BOLA)
+        self.assertNotRegex(citas, r"(?i)10 días|mediana|grande")
+        self.assertIn("el camión descargó exactamente donde necesitábamos. Resultado excelente.", citas)
+        self.assertIn("usando piedra bola, arena y bambú", citas)
+        self.assertIn("Usamos piedra bola para los bordes de la fuente del hotel", citas)
 
     def test_opiniones_confirmadas_sin_calificacion(self):
         """Ricardo O. y Laura P. (tierra negra) y Patricia H. y David M. (piedra bola) vuelven textuales, con permiso del

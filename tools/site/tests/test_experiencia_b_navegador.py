@@ -202,6 +202,21 @@ class ExperienciaBNavegadorTest(unittest.TestCase):
         self.assertEqual(page.locator('[data-nb-o="escalon"]').text_content(), "Mayoreo (12 a 49 piezas)")
         self.clic_unico(page, "[data-nb-bar] .vt-bar__go", "nochebuenas:barra")
 
+    def test_ciudad_y_ficha_dicen_donde_esta_el_cliente_en_el_encabezado(self):
+        """Decisión del dueño (2026-11-21): el «Cotizar» del encabezado dice la ciudad o el modelo de la página; el estado
+        guardado de otra visita no pisa a la ciudad y en la ficha viaja junto al modelo."""
+        page = self.pagina("/pasto-sintetico/")
+        page.evaluate("() => localStorage.removeItem('vt-cotizacion-v1')")
+        page.reload(wait_until="load")
+        page.locator("#hero-estado").select_option("Jalisco")
+        page.goto(page.url.replace("/pasto-sintetico/", "/pasto-sintetico/envio/monterrey"), wait_until="load")
+        self.assertEqual(texto(page.locator(CABEZA).get_attribute("href")),
+                         "Hola, quiero cotizar pasto sintético con envío a Monterrey.\n\n" + datos.FIRMA)
+        page.goto(page.url.replace("/envio/monterrey", "/capri-20"), wait_until="load")
+        self.assertEqual(texto(page.locator(CABEZA).get_attribute("href")),
+                         "Hola, quiero cotizar el pasto sintético Capri 20.\nMi estado: Jalisco\nMetros aprox.: ___")
+        page.evaluate("() => localStorage.removeItem('vt-cotizacion-v1')")
+
     def test_tienda_estado_cotizador_y_lista_viajan_a_la_barra_al_hero_y_al_encabezado(self):
         page = self.pagina("/pasto-sintetico/")
         page.evaluate("() => localStorage.removeItem('vt-cotizacion-v1')")

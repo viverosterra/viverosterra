@@ -43,7 +43,7 @@ SECCIONES = (
             "<strong>Presentación:</strong> el pasto se envía en rollo de 2 m de ancho.",
         )),
         ("h3", "Materiales en Tampico, Madero y Altamira"),
-        ("p", datos.CONDICIONES_MATERIALES),
+        ("p", datos.CONDICIONES_MATERIALES_TODAS),  # dueño, 2026-11-21: m³ y camión con entrega incluida
     )},
     {"id": "devoluciones", "titulo": "Política de Devoluciones", "corto": "Devoluciones", "bloques": (
         ("ul", (

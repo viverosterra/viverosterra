@@ -5,7 +5,8 @@ Precios solo de datos.PRECIOS (respuestas del dueño, 2026-11-08): tierra negra 
 $100 y camiones de 5, 8 y 14 m³ a $3,500, $5,200 y $8,000; tezontle desde $200 el costal; mármol $250 el saco, IVA
 incluido y sujeto a disponibilidad. El m³ y el camión de tezontle y la piedra bola (a granel, sin medidas) van "según
 cotización" (regla del dueño: no se inventa). Sin mínimo de compra, la entrega se cobra por viaje y todo se factura
-(datos.CONDICIONES_MATERIALES). Sin plazos de entrega, sin existencias, sin "gratis"; el pago, con anticipo.
+(datos.CONDICIONES_MATERIALES); en tierra negra y tezontle, el m³ y el camión ya incluyen la entrega en la zona de reparto
+(dueño, 2026-11-21: datos.CONDICIONES_GRANEL). Sin plazos de entrega, sin existencias, sin "gratis"; el pago, con anticipo.
 """
 import datos
 from componentes import dinero
@@ -26,6 +27,8 @@ TEZONTLE_CAPA_MALEZA = "6 a 8 cm"
 # El dueño no tiene el peso de los costales (2026-11-08): el "≈ 20 kg" del saco de mármol queda solo en la calculadora
 # (componentes_materiales: sacos → kg aproximados). Pregunta pendiente al dueño.
 MARMOL_SACO = dinero(P["marmol_saco"])
+# Tierra negra y tezontle (dueño, 2026-11-21): línea corta para portada y etiqueta.
+ENTREGA_GRANEL_DATO = f"Por m³ y camión: {datos.ENTREGA_INCLUIDA_CORTA[0].lower()}{datos.ENTREGA_INCLUIDA_CORTA[1:]}"
 CAMIONES_TIERRA = " · ".join(f"{m3} m³ {dinero(precio)}" for m3, precio in datos.TIERRA_CAMIONES)
 
 RESUMEN = {
@@ -55,31 +58,38 @@ def otros(ruta, orden, con_miniatura=False):
                  for r in orden if r != ruta)
 
 
-def entrega(material):
+def entrega(material, granel_incluida=False):
     """Recoger en el vivero o a domicilio (se cobra por viaje según la colonia), sin mínimo de compra, anticipo y
-    factura en todas las compras (datos.CONDICIONES_MATERIALES). Sin plazo: no está en datos.py."""
+    factura en todas las compras (datos.CONDICIONES_MATERIALES). Sin plazo: no está en datos.py.
+    Con granel_incluida=True (tierra negra y tezontle; dueño, 2026-11-21) el m³ y el camión ya incluyen la entrega en la
+    zona de reparto y solo los costales la pagan por viaje (datos.CONDICIONES_GRANEL)."""
+    condiciones = datos.CONDICIONES_GRANEL if granel_incluida else datos.CONDICIONES_MATERIALES
+    llevamos = (f"{datos.ENTREGA_GRANEL} {datos.ENTREGA_COSTALES}" if granel_incluida
+                else f"{datos.ENTREGA_COBRO} Te decimos el costo antes de que confirmes.")
     return {
         "titulo": f"¿Cómo te entregamos {material}?",
-        "lede": f"Lo recoges en el vivero o te lo llevamos. {datos.CONDICIONES_MATERIALES}",
+        "lede": f"Lo recoges en el vivero o te lo llevamos. {condiciones}",
         "items": (
             {"titulo": "Recoges en el vivero",
              "texto": (f'En el <a href="/vivero-tampico">vivero de Cd. Madero</a>: {datos.CALLE_CORTA} '
                        f"({datos.REFERENCIA}). {datos.HORARIO}.")},
             {"titulo": "Te lo llevamos",
              "texto": (f"A Tampico, Ciudad Madero y Altamira; {datos.ZONAS_POR_PROYECTO}, por proyecto. "
-                       f"{datos.ENTREGA_COBRO} Te decimos el costo antes de que confirmes.")},
+                       f"{llevamos}")},
             {"titulo": "Pago y factura",
              "texto": f"{datos.SIN_MINIMO} {datos.ANTICIPO} {datos.FACTURACION} Emitimos factura {datos.FACTURA}."},
         ),
     }
 
 
-def pregunta_condiciones(material, pregunta=None):
+def pregunta_condiciones(material, pregunta=None, granel_incluida=False):
     """Pregunta frecuente de las cuatro páginas con las condiciones del dueño: sin mínimo, entrega por viaje y factura.
-    `pregunta` conserva la de main donde ya existía (tierra negra: "¿Dan factura CFDI…?")."""
+    `pregunta` conserva la de main donde ya existía (tierra negra: "¿Dan factura CFDI…?"). Con granel_incluida=True
+    (tierra negra y tezontle; dueño, 2026-11-21): m³ y camión con entrega incluida en la zona de reparto."""
+    entrega_texto = f"{datos.ENTREGA_GRANEL} {datos.ENTREGA_COSTALES}" if granel_incluida else datos.ENTREGA_COBRO
     return (pregunta or f"¿Hay compra mínima de {material}? ¿Dan factura?",
             f"{datos.FACTURACION} Emitimos factura {datos.FACTURA}: pídela al cotizar con tu RFC y datos fiscales. "
-            f"{datos.SIN_MINIMO} {datos.ENTREGA_COBRO}")
+            f"{datos.SIN_MINIMO} {entrega_texto}")
 
 
 def pedido(ejemplo):
