@@ -233,6 +233,7 @@
 @media (max-width:767px){
 .vt-portada--pliegue .vt-portada__pliegue{display:flex;flex-direction:column;min-height:calc(100vh - 250px);min-height:calc(100svh - var(--vt-head-h) - var(--vt-pt) - var(--vt-sobre,0px) - 92px)}
 .vt-portada--pliegue .vt-portada__foto{order:0;position:relative;flex:1 1 0;min-height:0;max-height:80vw;margin-top:14px;container:vt-foto / size}
+.vt-portada--pliegue .vt-portada__pliegue:not(:has(.vt-etiqueta)) .vt-portada__foto{max-height:100vw}
 @container vt-foto (max-height:88px){.vt-portada--pliegue figcaption{display:none}}
 @container vt-foto (max-height:24px){.vt-portada--pliegue .vt-fig{display:none}}
 .vt-portada--pliegue .vt-fig{position:absolute;inset:0 0 calc(min(56px,100%) * -1);overflow:hidden}
@@ -321,6 +322,7 @@
 .vt-etiqueta__precio b{font-size:38px;letter-spacing:-.02em;font-variation-settings:"wdth" 80}
 .vt-medidor__res .vt-etiqueta__precio b{font-size:var(--vt-text-precio)}
 .vt-pagina main .vt-etiqueta .vt-etiqueta__precio.is-vacio{background:var(--vt-bone-2)}
+.vt-pagina main .vt-etiqueta .vt-etiqueta__precio.is-vacio b{font-size:1.375rem;line-height:1.2}
 .vt-etiqueta__precio span{font-size:16px;font-weight:600}
 .vt-pagina main .vt-etiqueta__fila{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--vt-line-strong);font-size:var(--vt-text-sm);color:var(--vt-ink-2)}
 .vt-etiqueta__fila b{color:var(--vt-ink);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -626,6 +628,7 @@
 .vt-cierre__fondo{position:absolute;inset:0;z-index:-1;width:100%;height:100%;object-fit:cover;opacity:.15}
 .vt-otros{display:flex;flex-wrap:wrap;gap:12px;list-style:none}
 .vt-otros li{position:relative;display:flex;align-items:center;gap:12px;min-height:64px;padding:8px 16px 8px 8px;border:1px solid var(--vt-line);background:var(--vt-card)}
+@media (max-width:639px){.vt-otros li{flex:1 1 100%}}
 .vt-otros img{width:48px;height:48px;object-fit:cover}
 .vt-otros a{color:var(--vt-ink);font-weight:700;text-decoration:none}
 .vt-otros a::after{content:"";position:absolute;inset:0}

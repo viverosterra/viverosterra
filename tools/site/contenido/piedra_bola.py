@@ -91,7 +91,7 @@ CONTENIDO = {
         # Auditoría por página: el amarillo es solo para precios; los kg por m² pasan a una fila.
         "etiqueta": {"codigo": "Piedra bola", "aviso": "A granel", "nombre": "Piedra bola de río", "antes": "Precio",
                      "monto": SEGUN.capitalize(), "unidad": "por escrito", "sin_precio": True,
-                     "filas": (("Por m² (capa de 8 a 10 cm)", "120–150 kg"),
+                     "filas": (("Por m²", "120–150 kg"),
                                ("Venta", datos.PIEDRA_BOLA_VENTA.capitalize())),
                      "nota": f"{datos.SIN_MINIMO} Te damos el precio por escrito con la entrega."},
         "mensaje": MENSAJE,

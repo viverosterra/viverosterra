@@ -113,7 +113,7 @@ CONTENIDO = {
     # Auditoría por página (2026-11-20): textos que dicen qué pasa; el mensaje sigue siendo el general (abre el panel de
     # preguntas de vt-preguntas.js). Filas tras la comparativa, el proceso y las preguntas (antes, tramos de 3.6 a 5.5
     # pantallas sin botón).
-    "ctas": {"prueba": (datos.MENSAJES["pasto-natural"], "Mandar medidas y foto de mi patio"),
+    "ctas": {"prueba": (datos.MENSAJES["pasto-natural"], "Mandar medidas y foto"),
              "garantia": (datos.MENSAJES["pasto-natural"], "Pedir mi precio cerrado instalado"),
              "objecion": (datos.MENSAJES["pasto-natural"], "Preguntar cuál me conviene"),
              "proceso": (datos.MENSAJES["pasto-natural"], "Mandar foto de mi terreno"),
@@ -137,7 +137,7 @@ CONTENIDO = {
         "lema": "Recién cortado, del campo a tu jardín.",
         "lede": f"Cortado para tu pedido: llega del campo {datos.LLEGADA_PASTO}.",
         "etiqueta": {
-            "codigo": "Pasto · 01", "aviso": "Rollo de 40 × 60 cm", "nombre": "Pasto San Agustín",
+            "codigo": "Pasto · 01", "aviso": "Rollo 40 × 60 cm", "nombre": "Pasto San Agustín",
             "cientifico": "Stenotaphrum secundatum", "antes": "Instalado · desde",
             "monto": dinero(P["pasto_instalado_m2"]), "unidad": "/m²",
             "cond": datos.TERRENO_LISTO_CORTO,  # decisión del dueño (2026-11-10): el instalado considera terreno listo
@@ -150,7 +150,7 @@ CONTENIDO = {
                             f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp 900w"),
                  "sizes": "(min-width: 1024px) 560px, 100vw",
                  "alt": "Colaborador de Viveros Terra cargando rollos de pasto recién cortados en la camioneta, con una carretilla llena al frente.",
-                 "lugar": "Rollos recién cortados · en la camioneta de reparto", "etapa": "Cd. Madero"},
+                 "lugar": "Rollos recién cortados", "etapa": "Cd. Madero"},
     },
     "prueba": {
         "titulo": "Lo que entregamos, documentado.",
