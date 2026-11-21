@@ -74,9 +74,9 @@ MATERIALES = (
     {"nombre": "Tierra negra vegetal", "href": "/tierra-negra-vegetal-tampico", "unidad": "costal",
      "precio": P["tierra_negra_costal"], "detalle": "Recoges en el vivero o te la llevamos."},
     {"nombre": "Tierra negra vegetal", "href": "/tierra-negra-vegetal-tampico", "unidad": "m³",
-     "precio": P["tierra_negra_m3"], "detalle": "A granel."},
+     "precio": P["tierra_negra_m3"], "detalle": f"A granel. {datos.ENTREGA_INCLUIDA_CORTA}."},  # dueño, 2026-11-21
     *({"nombre": f"Tierra negra vegetal · camión de {m3} m³", "href": "/tierra-negra-vegetal-tampico",
-       "unidad": "camión", "precio": precio, "detalle": "Camión volteo: descarga en tu domicilio u obra."}
+       "unidad": "camión", "precio": precio, "detalle": "Camión volteo: entrega y descarga incluidas en nuestra zona de reparto."}
       for m3, precio in datos.TIERRA_CAMIONES),
     {"nombre": "Tierra preparada", "href": "/tierra-negra-vegetal-tampico", "unidad": "costal",
      "precio": P["tierra_preparada_costal"], "detalle": "Con hojarasca y abono."},

@@ -5,8 +5,16 @@ Toda página de public/ debe tener contexto. Si agregas una página, agrégala a
 """
 from pathlib import Path
 
+import sys
+
 import datos
 import mensajes_paginas
+
+PASTO = str(Path(__file__).resolve().parents[1] / "pasto")
+if PASTO not in sys.path:
+    sys.path.append(PASTO)  # al final, como en componentes.py: tools/pasto también tiene un build.py
+import data  # noqa: E402
+from ciudades import CIUDADES  # noqa: E402
 
 PUBLIC = Path(__file__).resolve().parents[2] / "public"
 SIN_BARRA = {"tienda", "catalogo"}
@@ -78,8 +86,26 @@ def ruta_de(path, public=PUBLIC):
     raise ValueError(f"No es una página HTML: {rel}")
 
 
+# Decisión del dueño (2026-11-21): en la tienda de pasto sintético, el «Cotizar» del encabezado y del menú dicen qué
+# ficha o qué ciudad está viendo la persona. El de la ficha es, palabra por palabra, el que arma tienda-pasto.js
+# (mensajeBase) cuando hay JavaScript: así no se pisan. El hub y las guías siguen con el genérico; la barra fija y el pie
+# también (la barra abre el panel de preguntas, que arma su propio mensaje).
+CIUDAD_POR_SLUG = {c["slug"]: c["nombre"] for c in CIUDADES}
+
+
+def mensaje_tienda(ruta):
+    """Mensaje del encabezado y del menú para una ficha o una ciudad de la tienda; None en el resto de las rutas."""
+    if ruta.startswith("/pasto-sintetico/envio/"):
+        ciudad = CIUDAD_POR_SLUG.get(ruta.rsplit("/", 1)[1])
+        return ciudad and (f"Hola, quiero cotizar pasto sintético con envío a {ciudad}.\nMetros aprox.: ___\n"
+                           "Modelo (si ya lo elegiste): ___")
+    modelo = data.BY_SLUG.get(ruta.removeprefix("/pasto-sintetico/")) if ruta.startswith("/pasto-sintetico/") else None
+    return modelo and f"Hola, quiero cotizar el pasto sintético {modelo['nombre']}.\nMi estado: ___\nMetros aprox.: ___"
+
+
 def contexto(ruta):
-    """Diccionario nuevo con ruta, tipo, activo, servicio, barra y mensajes de WhatsApp (menú/barra y pie) de la ruta."""
+    """Diccionario nuevo con ruta, tipo, activo, servicio, barra y mensajes de WhatsApp (menú, barra y pie) de la ruta.
+    "mensaje" es el del encabezado y el menú; "mensaje_barra" solo difiere en las fichas y ciudades de la tienda."""
     valores = EXACTAS.get(ruta)
     if valores is None:
         valores = next((v for prefijo, v in PREFIJOS if ruta.startswith(prefijo)), None)
@@ -101,6 +127,7 @@ def contexto(ruta):
         "activo": activo,
         "servicio": servicio,
         "barra": (tipo not in SIN_BARRA and ruta not in RUTAS_SIN_BARRA) or ruta in RUTAS_CON_BARRA,
-        "mensaje": datos.con_firma(texto),
+        "mensaje": datos.con_firma(mensaje_tienda(ruta) or texto),
+        "mensaje_barra": datos.con_firma(texto),
         "mensaje_pie": datos.con_firma(texto_pie or texto),
     }

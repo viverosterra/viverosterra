@@ -167,7 +167,8 @@ class TiendaPublicadaTest(unittest.TestCase):
     def test_tampico_con_opciones_cotizador_y_showroom(self):
         texto = html("/pasto-sintetico-tampico")
         cuerpo = principal(texto)
-        self.assertIn("los otros 7 modelos también están en existencia", cuerpo)
+        # Respuesta nueva del dueño (2026-11-21): en existencia, sujeto a disponibilidad y a la cantidad requerida.
+        self.assertIn("los otros 7 modelos también los tenemos en existencia, sujetos a disponibilidad según la cantidad que necesites", cuerpo)
         self.assertIn('id="showroom"', cuerpo)
         self.assertIn('<option value="showroom" selected>', cuerpo)
         self.assertEqual(cuerpo.count('<li class="vt-modo'), 2)

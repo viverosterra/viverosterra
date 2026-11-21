@@ -5,7 +5,8 @@ Precios de datos.PRECIOS (dueño, 2026-11-08): costal $90, tierra preparada $100
 $3,500, $5,200 y $8,000 (la tabla de camiones; nunca el "camión desde $5,000" de main, que no confirmó). Las 8 fotos de
 main, en su orden. Sin “Entrega inmediata”, “+500 jardines”, “40% más rápido” ni “gratis”; las opiniones de Ricardo O.
 y Laura P. vuelven textuales (reales y con permiso: datos.OPINIONES_TIERRA_NEGRA), sin calificación en el JSON-LD.
-Sin mínimo de compra, entrega por viaje y factura en todo (datos.CONDICIONES_MATERIALES). Título, robots y canonical
+Sin mínimo de compra y factura en todo; el m³ y el camión ya incluyen la entrega en la zona de reparto y los costales la
+pagan por viaje (dueño, 2026-11-21: datos.CONDICIONES_GRANEL). Título, robots y canonical
 como estaban; la descripción y el Open Graph pierden el camión "desde $5,000" y el “gratis” (PARIDAD["meta"]). El peso
 del costal no se publica: main decía “≈ 20 kg” y “de 30 a 40 kg” y el dueño no lo tiene (PARIDAD["cifras"]).
 """
@@ -26,6 +27,7 @@ CAMIONES = datos.TIERRA_CAMIONES
 CAMIONES_TEXTO = ", ".join(f"{m3} m³ a {dinero(precio)}" for m3, precio in CAMIONES[:-1]) + \
     f" y {CAMIONES[-1][0]} m³ a {dinero(CAMIONES[-1][1])}"
 MENSAJE = mensajes_paginas.MATERIALES[RUTA]
+ENTREGA_CAMION = "Entrega y descarga incluidas en nuestra zona de reparto"  # dueño, 2026-11-21
 MIGAS, MIGAS_LD = mc.migas(RUTA, "Tierra negra vegetal")
 TITULO = f"Tierra Negra en Tampico: Costal {COSTAL} y Camión | Viveros Terra"
 DESCRIPCION = (f"Tierra negra vegetal en Tampico: costal {COSTAL}, preparada {PREPARADA}, m³ {M3} y camión de {CAMIONES[0][0]} m³ "
@@ -120,9 +122,9 @@ USOS = (
 
 PREGUNTAS = (
     ("¿Cuánto cuesta un camión de tierra negra en Tampico?",
-     f"El camión volteo de tierra negra cuesta según su tamaño: {CAMIONES_TEXTO}. {datos.ENTREGA_COBRO} A granel por m³ "
-     f"cuesta {M3}; el costal, {COSTAL}, y la tierra preparada, {PREPARADA} el costal. Escríbenos tu colonia y la "
-     "cantidad y te mandamos el total por escrito antes de que confirmes."),
+     f"El camión volteo de tierra negra cuesta según su tamaño: {CAMIONES_TEXTO}. A granel por m³ "
+     f"cuesta {M3}; el costal, {COSTAL}, y la tierra preparada, {PREPARADA} el costal. {datos.ENTREGA_GRANEL} "
+     f"{datos.ENTREGA_COSTALES}"),  # dueño, 2026-11-21: m³ y camión con entrega incluida
     ("¿Para qué sirve la tierra negra vegetal?",
      "Para preparar terrenos antes de instalar pasto en rollo, rellenar cajetes de árboles y palmas, mejorar el suelo "
      "arcilloso de Tampico, nivelar terrenos y como sustrato base en macetas grandes. Aporta materia orgánica, retiene "
@@ -142,11 +144,11 @@ PREGUNTAS = (
     ("¿Entregan tierra negra a domicilio en toda la zona de Tampico?",
      f"Sí. Entregamos en Tampico, Ciudad Madero y Altamira, y en {datos.ZONAS_POR_PROYECTO} por proyecto, en camión "
      "volteo con descarga en tu domicilio u obra. Para accesos restringidos coordinamos el horario y la forma de "
-     "descarga. El costo de entrega va en la cotización según la distancia."),
+     f"descarga. {datos.ENTREGA_GRANEL} {datos.ENTREGA_COSTALES}"),  # dueño, 2026-11-21
     ("¿Se puede usar tierra negra para macetas y jardineras?",
      "Sí, mezclada con perlita o arena gruesa en proporción 70/30: la tierra negra pura en maceta se compacta con el "
      "riego frecuente y se encharca. La mezcla aporta los nutrientes de la tierra negra y el drenaje de la perlita."),
-    mc.pregunta_condiciones("tierra negra", "¿Dan factura CFDI por la tierra negra?"),
+    mc.pregunta_condiciones("tierra negra", "¿Dan factura CFDI por la tierra negra?", granel_incluida=True),
 )
 
 CONTENIDO = {
@@ -159,8 +161,8 @@ CONTENIDO = {
         "kicker": "Tampico · Madero · Altamira",
         "pos_d": "88% 50%",
         "pos": "50% 55%",
-        # Auditoría por página: «La entrega se cotiza según tu colonia» ya está en la etiqueta y se repetía aquí.
-        "dato": f"Factura {datos.FACTURA}",
+        # Dueño, 2026-11-21: el m³ y el camión ya incluyen la entrega (antes: «Factura …», que sigue en la tabla).
+        "dato": mc.ENTREGA_GRANEL_DATO,
         "enlaces": (("Calcula cuánta necesitas", "#calculadora", "material:calculadora"),),
         "h1": 'Tierra negra en Tampico <span class="vt-serif">por costal, m³ o camión</span>',
         "lede": (f"La tierra negra vegetal cuesta {COSTAL} el costal y {M3} el m³ a granel. Recoges en el vivero o te la "
@@ -168,7 +170,7 @@ CONTENIDO = {
         "etiqueta": {"codigo": "Tierra negra", "aviso": f"Precios {datos.ANIO}", "nombre": "Costal", "antes": "",
                      "monto": COSTAL, "unidad": "por costal",
                      "filas": (("Por m³ a granel", M3), (f"Camión volteo {CAMIONES[0][0]} m³", dinero(CAMIONES[0][1]))),
-                     "nota": "La entrega se cotiza según tu colonia."},
+                     "nota": f"Factura {datos.FACTURA}. En costales, la entrega se cotiza según tu colonia."},  # dueño, 2026-11-21
         "mensaje": MENSAJE,
         "cta_texto": "Pedir precio con entrega",
         "foto": PORTADA_FOTO,
@@ -194,18 +196,18 @@ CONTENIDO = {
              "unidad": "costal", "precio": P["tierra_negra_costal"]},
             {"nombre": "Tierra negra preparada", "detalle": "Costal con hojarasca y abono, para macetas",
              "unidad": "costal", "precio": P["tierra_preparada_costal"]},
-            {"nombre": "A granel por m³", "detalle": "Entregada en tu domicilio", "unidad": "m³",
+            {"nombre": "A granel por m³", "detalle": datos.ENTREGA_INCLUIDA_CORTA, "unidad": "m³",  # dueño, 2026-11-21
              "precio": P["tierra_negra_m3"]},
-            *({"nombre": f"Camión volteo de {m3} m³", "detalle": "Descarga en tu domicilio u obra", "unidad": "camión",
+            *({"nombre": f"Camión volteo de {m3} m³", "detalle": ENTREGA_CAMION, "unidad": "camión",
                "precio": precio} for m3, precio in CAMIONES),
         ),
-        "nota": f"{datos.ENTREGA_COBRO} {datos.FACTURACION}",
+        "nota": f"{datos.ENTREGA_GRANEL} {datos.ENTREGA_COSTALES} {datos.FACTURACION}",  # dueño, 2026-11-21
     },
     "usos": {"titulo": "¿Para qué usas la tierra negra?",
              "lede": "Cada uso tiene su capa y su cantidad de referencia.", "items": USOS},
     "calculadora": {"clave": "tierra-negra", "nombre": "tierra negra", "titulo": "¿Cuánta tierra negra necesitas?",
                     "lede": "Escribe el área y el grosor de la capa: te damos los m³, la presentación y los costales."},
-    "entrega": mc.entrega("la tierra negra"),
+    "entrega": mc.entrega("la tierra negra", granel_incluida=True),
     "galeria": {"titulo": "Así luce la tierra negra de Viveros Terra", "figuras": FIGURAS_GALERIA},
     "opiniones": {"titulo": "Lo que dicen nuestros clientes", "items": datos.OPINIONES_TIERRA_NEGRA},
     "faq": {"titulo": "Todo sobre tierra negra en Tampico", "preguntas": PREGUNTAS},

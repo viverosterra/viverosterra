@@ -170,7 +170,9 @@ class ContenidoVisibleTest(unittest.TestCase):
                       "Desde 12 piezas, sumando tamaños y colores. $75 la de 5\" y $119 la de 6\".",
                       'Maceta 5" $89 y $75', 'Maceta 6" $139 y $119', 'Maceta 7" $199 y $169', "Colgante $339 y $279",
                       'Macetón 12" sobre pedido, desde $865', "$3,500", "te la cotizamos por WhatsApp", "CFDI 4.0",
-                      "Lo antes posible. Confírmanos por WhatsApp y te decimos la fecha de entrega.",
+                      # Decisión del dueño (2026-11-21): antes «Lo antes posible. Confírmanos por WhatsApp…».
+                      "La preventa de mayoreo cierra el 30 de noviembre y entregamos antes del 12 de diciembre. Si ya pasó "
+                      "esa fecha, escríbenos por WhatsApp y te decimos qué hay disponible.",
                       "antes del 30 de noviembre", "antes del 12 de diciembre", "hasta febrero", "18–24 °C",
                       "cubremaceta", "aire acondicionado", "veterinario", "mismo precio que la roja"):
             with self.subTest(frase=frase):
@@ -181,7 +183,12 @@ class ContenidoVisibleTest(unittest.TestCase):
         faq = faq[:faq.index("</section>")]
         self.assertNotIn("<details", faq)
         self.assertEqual(len(re.findall(r"<h3\b", faq)), len(contenido.PREGUNTAS))
-        self.assertNotIn("30 de noviembre", texto(faq))
+        # Las preguntas no llevan fechas que caducan (no se ocultan con data-nb-hasta). Única excepción, por decisión
+        # del dueño (2026-11-21): «¿Cuándo debo pedir…?», cuya respuesta dice qué hacer si la fecha ya pasó.
+        self.assertEqual(contenido.RESPUESTA_CUANDO.count("30 de noviembre"), 1)
+        self.assertIn("Si ya pasó esa fecha", contenido.RESPUESTA_CUANDO)
+        self.assertNotIn("30 de noviembre", texto(faq).replace(contenido.RESPUESTA_CUANDO, ""))
+        self.assertNotIn(contenido.PREGUNTA_CUANDO, [q for q, _a in contenido.PREGUNTAS_POSTEMPORADA])
 
     def test_como_funciona_y_fechas_que_se_ocultan(self):
         for frase in ("Cotizas en línea", "Confirmas y apartas por WhatsApp", "50% de anticipo en mayoreo y en precio preventa",

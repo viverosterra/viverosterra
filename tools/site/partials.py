@@ -273,7 +273,7 @@ def _columna(titulo, enlaces):
 def barra(ctx):
     """Barra fija móvil [Cotizar por WhatsApp | teléfono]; terra.js la oculta mientras el CTA del hero se ve."""
     tipo = ctx["tipo"]
-    wa = esc(datos.wa_url(ctx["mensaje"]))
+    wa = esc(datos.wa_url(ctx.get("mensaje_barra", ctx["mensaje"])))
     return f"""<div class="vt-bar" data-vt-bar role="region" aria-label="Contacto rápido">
 <a class="vt-btn vt-btn--wa vt-bar__go" data-cta="{tipo}:barra" href="{wa}" target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp</a>
 <a class="vt-bar__tel" data-cta="{tipo}:barra" href="tel:{datos.TELEFONO_TEL}" aria-label="Llamar {datos.TELEFONO_VISIBLE}"><svg aria-hidden="true"><use href="#vt-i-tel"/></svg></a>

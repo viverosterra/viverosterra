@@ -98,7 +98,8 @@ PREGUNTAS = (
      "Sí. La mayoría de los sistemas residenciales funcionan con la presión normal de la red (1.5 a 4 bar). Si la presión "
      "es baja, se puede incluir una bomba pequeña en el diseño."),
     ("¿Dan garantía en la instalación?",
-     "Sí. Garantizamos la instalación y los materiales: fugas o fallas por causas de la instalación, las atendemos. "
+     f"Sí. Garantizamos la instalación y los materiales por {datos.GARANTIA_RIEGO}: fugas o fallas por causas de la "
+     "instalación, las atendemos. "
      "También damos mantenimiento preventivo y correctivo del sistema ya instalado."),
     ("¿Instalan riego para áreas comerciales e industriales en Tampico?",
      "Sí. Tenemos experiencia en parques industriales, escuelas, áreas verdes de gobierno y campos deportivos con pasto "
@@ -239,11 +240,12 @@ CONTENIDO = {
                 "lede": "De la cotización a tu jardín regándose solo, sin sorpresas en el precio.",
                 "pasos": PASOS},
     "garantia": {
-        "titulo": "Garantía en materiales e instalación.",
-        "resumen": "Fugas o fallas por causas de la instalación: las atendemos.",
+        # Dueño, 2026-11-21: la garantía de riego es de 3 meses (datos.GARANTIA_RIEGO); sin más condiciones publicadas.
+        "titulo": f"Garantía de {datos.GARANTIA_RIEGO} en materiales e instalación.",
+        "resumen": f"Durante {datos.GARANTIA_RIEGO}, fugas o fallas por causas de la instalación: las atendemos.",
         "puntos": (
-            ("Garantizamos la instalación y los materiales: fugas o fallas por causas de la instalación, las atendemos.",
-             True),
+            (f"Garantizamos la instalación y los materiales por {datos.GARANTIA_RIEGO}: fugas o fallas por causas de la "
+             "instalación, las atendemos.", True),
             ("Equipo Hunter, Rain Bird y Toro, con repuestos en México.", True),
             ("Programamos en horarios de baja evaporación y te explicamos cómo ajustarlo en temporada de lluvias.", True),
             ("Mantenimiento preventivo y correctivo del sistema ya instalado.", True),

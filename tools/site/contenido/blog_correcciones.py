@@ -588,8 +588,25 @@ AUDITORIA = {
          M_TERRENO),
     ),
 }
-FILAS = {slug: FILAS.get(slug, ()) + REVISION.get(slug, ()) + FUSION_2C.get(slug, ()) + AUDITORIA.get(slug, ())
-         for slug in dict.fromkeys((*FILAS, *REVISION, *FUSION_2C, *AUDITORIA))}
+# Decisión del dueño (2026-11-21): en tierra negra, el precio por m³ y por camión ya incluye la entrega dentro de la zona
+# de reparto (se confirma con la ubicación; fuera de la zona se ajusta el precio); en costales se cobra por viaje. Estas
+# filas van al final: corrigen lo que dejaron C210 y C318 (datos.ENTREGA_COBRO) y el «flete» del camión del artículo.
+M_ENTREGA_GRANEL = ("Decisión del dueño (2026-11-21): el m³ y el camión de tierra negra ya incluyen la entrega en la zona de "
+                    "reparto; solo los costales la pagan por viaje (datos.ENTREGA_INCLUIDA, ENTREGA_CONFIRMA y ENTREGA_COSTALES).")
+ENTREGA_GRANEL = {
+    "tierra-negra-costal-camion-tampico": (
+        ("C322", datos.ENTREGA_COBRO, f"{datos.ENTREGA_GRANEL} {datos.ENTREGA_COSTALES}", M_ENTREGA_GRANEL),
+        ("C323", "el costo del flete de camión supera el ahorro por volumen",
+         "el camión más chico es de 5 m³, más de lo que necesitas", M_ENTREGA_GRANEL),
+        ("C324", "a partir de ese umbral, el ahorro por m³ del camión supera el costo del flete",
+         "a partir de ese umbral, el camión sale más barato por m³ que los costales", M_ENTREGA_GRANEL),
+        ("C325", "Conviene costal (flete de camión no justificado)", "Conviene costal (un camión completo sobra)",
+         M_ENTREGA_GRANEL),
+    ),
+}
+FILAS = {slug: (FILAS.get(slug, ()) + REVISION.get(slug, ()) + FUSION_2C.get(slug, ()) + AUDITORIA.get(slug, ())
+                + ENTREGA_GRANEL.get(slug, ()))
+         for slug in dict.fromkeys((*FILAS, *REVISION, *FUSION_2C, *AUDITORIA, *ENTREGA_GRANEL))}
 
 
 def claves():

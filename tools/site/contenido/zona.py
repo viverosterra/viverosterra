@@ -377,7 +377,8 @@ def contenido(slug):
             "lede": f"Lo que hacemos en {corto}, con el precio de la lista oficial.",
             "filas": lista_precios.filas_zona(z["servicios"], f"/{slug}"),
             "caption": f"Precios {datos.ANIO} con IVA" + (", salvo las palmas, que no llevan IVA." if "palmas" in z["servicios"] else "."),
-            "cotizar": (f"Cotizar en {corto}", mensaje),
+            # Decisión del dueño (2026-11-21): antes «Cotizar en {zona}»; el mensaje no cambia.
+            "cotizar": (f"Pedir precio para mi jardín en {corto}", mensaje),
             "nota": datos.ANTICIPO,
         },
         "retos": {"titulo": 'Lo que pide un jardín <span class="vt-serif">en esta zona</span>',

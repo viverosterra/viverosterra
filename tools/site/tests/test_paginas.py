@@ -89,10 +89,26 @@ class ContextoTest(unittest.TestCase):
         precios = paginas.contexto("/precios")
         self.assertEqual(precios["mensaje"], "Hola, vi la lista de precios y quiero cotizar.\nColonia: ___\nMetros aprox.: ___" + firma)
         self.assertEqual(precios["mensaje_pie"], "Hola, tengo una pregunta sobre precios" + firma)
-        for ruta in ("/pasto-sintetico", "/pasto-sintetico/toscana-28", "/pasto-sintetico/envio/cdmx"):
+        # Decisión del dueño (2026-11-21): en fichas y ciudades, el encabezado y el menú dicen el modelo o la ciudad
+        # (antes, el genérico de pasto sintético en las tres). El hub, las guías, la barra y el pie no cambian.
+        generico = datos.mensaje("pasto-sintetico")
+        esperados = {
+            "/pasto-sintetico": generico,
+            "/pasto-sintetico/perros": generico,
+            "/pasto-sintetico/toscana-28": ("Hola, quiero cotizar el pasto sintético Toscana 28.\nMi estado: ___\n"
+                                            "Metros aprox.: ___" + firma),
+            "/pasto-sintetico/capri-20": ("Hola, quiero cotizar el pasto sintético Capri 20.\nMi estado: ___\n"
+                                          "Metros aprox.: ___" + firma),
+            "/pasto-sintetico/envio/cdmx": ("Hola, quiero cotizar pasto sintético con envío a CDMX.\nMetros aprox.: ___\n"
+                                            "Modelo (si ya lo elegiste): ___" + firma),
+            "/pasto-sintetico/envio/monterrey": ("Hola, quiero cotizar pasto sintético con envío a Monterrey.\n"
+                                                 "Metros aprox.: ___\nModelo (si ya lo elegiste): ___" + firma),
+        }
+        for ruta, mensaje in esperados.items():
             with self.subTest(ruta=ruta):
                 ctx = paginas.contexto(ruta)
-                self.assertEqual(ctx["mensaje"], datos.mensaje("pasto-sintetico"))
+                self.assertEqual(ctx["mensaje"], mensaje)
+                self.assertEqual(ctx["mensaje_barra"], generico)
                 self.assertEqual(ctx["mensaje_pie"], "Hola, tengo una pregunta sobre pasto sintético" + firma)
         self.assertEqual(paginas.contexto("/")["mensaje_pie"], datos.mensaje("general"))
 

@@ -234,7 +234,9 @@ class ConsistenciaTest(unittest.TestCase):
 
     def test_sintetico_en_existencia_y_para_llevar_solo_toscana(self):
         texto = TEXTOS[PUBLIC / "pasto-sintetico-tampico" / "index.html"]
-        self.assertIn("los otros 7 modelos también están en existencia", texto)
+        # Respuesta nueva del dueño (2026-11-21): en existencia, sujeto a disponibilidad y a la cantidad requerida.
+        self.assertIn("los otros 7 modelos también los tenemos en existencia, sujetos a disponibilidad según la cantidad que necesites", texto)
+        self.assertNotIn("también están en existencia y llegan en 3 a 5 días", texto)
         for path, t in TEXTOS.items():
             for m in re.finditer(r"\bpara llevar\b", t, re.I):
                 with self.subTest(pagina=nombre(path), pos=m.start()):
