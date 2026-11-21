@@ -114,8 +114,12 @@ class FotosPublicadasTest(unittest.TestCase):
                 self.assertLessEqual(archivo.stat().st_size, 120 * 1024)
 
     def test_sin_fotos_sobrantes(self):
-        publicadas = {p.name for p in (PUBLIC / "img" / "catalogo").glob("*.webp")}
+        # Las versiones de 320 px (<foto>-320.webp, la misma foto; auditoría por página) van junto a su original.
+        todas = {p.name for p in (PUBLIC / "img" / "catalogo").glob("*.webp")}
+        chicas = {n for n in todas if n.endswith("-320.webp")}
+        publicadas = todas - chicas
         self.assertEqual(publicadas, {f"{e['slug']}-tampico.webp" for e in CON_FOTO})
+        self.assertLessEqual({n.removesuffix("-320.webp") + ".webp" for n in chicas}, publicadas)
 
     def test_cada_especie_con_foto_en_main_tiene_su_archivo_local(self):
         """Decisión del dueño (2026-11-08): las fotos quedan como en main. Cada especie del catálogo de main (todas

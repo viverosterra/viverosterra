@@ -127,7 +127,11 @@ PARA = (
 )
 PARA_TITULO = "¿Para quién es este pedido?"
 MINIMO_SUGERIDO = f"Mínimo sugerido: {MINIMO_MAYOREO} piezas"
-GALERIA_TEXTO = {"titulo": "Fotos reales de temporadas anteriores", "lede": "Nochebuena roja. Rosa y jaspeada, sobre pedido y al mismo precio."}
+GALERIA_TEXTO = {"titulo": "Fotos reales de temporadas anteriores", "lede": "Nochebuena roja. Rosa y jaspeada, sobre pedido y al mismo precio.",
+                 # Auditoría por página (2026-11-20): fila de WhatsApp al terminar las fotos, con el mensaje de quien las vio.
+                 "cta": {"temporada": "Pedir Nochebuenas como estas", "preventa": "Apartar Nochebuenas como estas"},
+                 "mensajes": {"temporada": "Hola, vi las fotos de sus Nochebuenas y quiero hacer un pedido.",
+                              "preventa": "Hola, vi las fotos de sus Nochebuenas y quiero apartar un pedido."}}
 CONFIANZA = {"titulo": "Referencias y factura",
              "sellos": ((datos.GOOGLE, "Calificación pública del vivero"), (datos.FACTURA, "Factura para persona física o moral")),
              "clientes": "Empresas e instituciones que han confiado en Viveros Terra"}

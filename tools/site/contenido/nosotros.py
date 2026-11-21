@@ -10,7 +10,7 @@ la home y en /vivero-tampico. Página nueva: sin captura de paridad.
 import datos
 import entidad
 import mensajes_paginas
-from componentes import dinero
+from componentes import dinero, esc
 from contenido import respuestas
 
 P = datos.PRECIOS
@@ -62,12 +62,15 @@ HACEMOS = (
 )
 DONDE = (
     {"titulo": "Domicilio",
-     "texto": (f"{datos.DOMICILIO_COMPLETO}. {datos.REFERENCIA}. "
+     # DOMICILIO_COMPLETO ya termina en «Tamps.»: sin otro punto (auditoría por página, 2026-11-20: salía «Tamps..»).
+     "texto": (f"{datos.DOMICILIO_COMPLETO} {datos.REFERENCIA}. "
                f'<a href="{datos.MAPS_URL}" target="_blank" rel="noopener">Abrir en Google Maps</a> · '
                '<a href="/vivero-tampico">vivero en Cd. Madero</a>.')},
     {"titulo": "Horario", "texto": f"{datos.HORARIO}. Domingo cerrado."},
+    # Auditoría por página (2026-11-20): decía «WhatsApp y teléfono» con un solo enlace tel:; ahora uno para cada uno.
     {"titulo": "Contacto",
-     "texto": (f'WhatsApp y teléfono <a href="tel:{datos.TELEFONO_TEL}">{datos.TELEFONO_VISIBLE}</a> · correo '
+     "texto": (f'{datos.TELEFONO_VISIBLE}: <a data-cta="nosotros:contacto" href="{esc(datos.wa_url(datos.con_firma(MENSAJE)))}" '
+               f'target="_blank" rel="noopener">WhatsApp</a> o <a href="tel:{datos.TELEFONO_TEL}">llamar</a> · correo '
                f'<a href="mailto:{datos.CORREO_FORMULARIOS}">{datos.CORREO_FORMULARIOS}</a>.')},
 )
 PERFILES = tuple({"titulo": f'<a href="{url}" target="_blank" rel="noopener">{nombre}</a>',
@@ -110,19 +113,21 @@ CONTENIDO = {
         "foto": FOTO,
     },
     "secciones": (
+        # Auditoría por página (2026-11-20): la confianza (clientes y REPSE) bajo la portada, como en la home.
+        {"clase": "clientes", "rotulo": "Clientes", "id": "vt-h-clientes", "ancla": "clientes",
+         "titulo": f"Empresas que nos han contratado · {datos.PROYECTOS_B2B} proyectos B2B",
+         "lede": "Clientes que nos dieron permiso de mostrar su nombre."},
         {"clase": "datos", "rotulo": "Historia", "id": "vt-h-historia", "ancla": "historia",
          "titulo": f"Desde {datos.DESDE}, en cifras",
          "lede": f"{datos.NOMBRE} se fundó el {FUNDACION} en {datos.CIUDAD}. Esto llevamos hecho desde entonces.",
          "celdas": CIFRAS},
         {"clase": "fichas", "rotulo": "Qué hacemos", "id": "vt-h-hacemos", "ancla": "que-hacemos",
          "titulo": "Lo que hacemos", "lede": "Cada servicio tiene su página con precios y preguntas.", "items": HACEMOS,
-         "cta": (MENSAJE, "Cotizar por WhatsApp")},
-        {"clase": "clientes", "rotulo": "Clientes", "id": "vt-h-clientes", "ancla": "clientes",
-         "titulo": f"Empresas que nos han contratado · {datos.PROYECTOS_B2B} proyectos B2B",
-         "lede": "Clientes que nos dieron permiso de mostrar su nombre."},
+         "cta": (mensajes_paginas.UTILITARIAS["nosotros_servicio"], "Mandar foto y decir qué necesito")},
         {"clase": "fichas", "rotulo": "Dónde estamos", "id": "vt-h-donde", "ancla": "donde",
          "titulo": "Un solo domicilio, en Ciudad Madero", "lede": "El mismo en el sitio, en Google y en los perfiles.",
-         "items": DONDE},
+         # Auditoría por página (2026-11-20): antes, 4.5 pantallas del celular sin botón entre «Qué hacemos» y el cierre.
+         "items": DONDE, "cta": (mensajes_paginas.UTILITARIAS["vivero_planta"], "Preguntar si tienen lo que busco")},
         {"clase": "fichas", "rotulo": "Perfiles", "id": "vt-h-perfiles", "ancla": "perfiles",
          "titulo": "Perfiles oficiales", "lede": "Solo estos perfiles son de Viveros Terra.", "items": PERFILES},
     ),

@@ -110,8 +110,19 @@ CONTENIDO = {
     "preguntas": "pasto",  # panel de WhatsApp, entrega 2 (spec del primer mensaje, 2026-11-16)
     "prefijo": "pasto",
     # Entrega B de experiencia: CTA al terminar las opiniones (antes, 9.8 pantallas del hero al Medidor sin CTA).
-    "ctas": {"prueba": (datos.MENSAJES["pasto-natural"], "Cotizar mi patio"),
-             "garantia": (datos.MENSAJES["pasto-natural"], "Cotizar pasto instalado")},
+    # Auditoría por página (2026-11-20): textos que dicen qué pasa; el mensaje sigue siendo el general (abre el panel de
+    # preguntas de vt-preguntas.js). Filas tras la comparativa, el proceso y las preguntas (antes, tramos de 3.6 a 5.5
+    # pantallas sin botón).
+    "ctas": {"prueba": (datos.MENSAJES["pasto-natural"], "Mandar medidas y foto"),
+             "garantia": (datos.MENSAJES["pasto-natural"], "Pedir mi precio cerrado instalado"),
+             "objecion": (datos.MENSAJES["pasto-natural"], "Preguntar cuál me conviene"),
+             "proceso": (datos.MENSAJES["pasto-natural"], "Mandar foto de mi terreno"),
+             "faq": (datos.MENSAJES["pasto-natural"], "Preguntar mi duda por WhatsApp")},
+    # Auditoría por página (2026-11-20): el precio antes de las fotos de obra (antes, 4.9 pantallas de las opiniones al
+    # botón del Medidor).
+    # Mismas claves que plantillas/servicio.ORDEN, con "obras" después del precio.
+    "orden": ("prueba", "opciones", "incluye", "precio", "cotizador", "obras", "objecion", "proceso", "garantia", "pago",
+              "faq", "visita", "cobertura", "relacionados"),
     "meta": META,
     "jsonld": {"producto": PRODUCTO, "migas": MIGAS_LD, "howto": "Cómo instalar pasto en rollo San Agustín en Tampico",
                "speakable": entidad.SPEAKABLE},
@@ -126,7 +137,7 @@ CONTENIDO = {
         "lema": "Recién cortado, del campo a tu jardín.",
         "lede": f"Cortado para tu pedido: llega del campo {datos.LLEGADA_PASTO}.",
         "etiqueta": {
-            "codigo": "Pasto · 01", "aviso": "Tepe 40 × 60 cm", "nombre": "Pasto San Agustín",
+            "codigo": "Pasto · 01", "aviso": "Rollo 40 × 60 cm", "nombre": "Pasto San Agustín",
             "cientifico": "Stenotaphrum secundatum", "antes": "Instalado · desde",
             "monto": dinero(P["pasto_instalado_m2"]), "unidad": "/m²",
             "cond": datos.TERRENO_LISTO_CORTO,  # decisión del dueño (2026-11-10): el instalado considera terreno listo
@@ -135,8 +146,11 @@ CONTENIDO = {
         },
         "mensaje": datos.MENSAJES["pasto-natural"],
         "foto": {"src": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111, "numero": 1,
+                 "srcset": (f"{OBRA}/rollos-pasto-san-agustin-camioneta-560.webp 560w, "
+                            f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp 900w"),
+                 "sizes": "(min-width: 1024px) 560px, 100vw",
                  "alt": "Colaborador de Viveros Terra cargando rollos de pasto recién cortados en la camioneta, con una carretilla llena al frente.",
-                 "lugar": "Rollos recién cortados · en la camioneta de reparto", "etapa": "Cd. Madero"},
+                 "lugar": "Rollos recién cortados", "etapa": "Cd. Madero"},
     },
     "prueba": {
         "titulo": "Lo que entregamos, documentado.",
@@ -144,10 +158,14 @@ CONTENIDO = {
                  "humedad del Golfo. Así se ve en cada etapa."),
         "figuras": (
             {"src": f"{OBRA}/terra/jardin-residencial-pasto-alberca.webp", "ancho": 1200, "alto": 918, "numero": 2,
+             # Auditoría por página (2026-11-20): la misma foto en 720 px para celular (antes, 332 KB a 341 px).
+             "srcset": (f"{OBRA}/terra/jardin-residencial-pasto-alberca-720.webp 720w, "
+                        f"{OBRA}/terra/jardin-residencial-pasto-alberca.webp 1200w"),
+             "sizes": "(min-width:900px) 40vw, 92vw",
              "alt": "Jardín residencial con pasto parejo alrededor de una alberca de forma libre, con palmeras y muro de piedra.",
              "lugar": "Jardín residencial con pasto", "etapa": "Terminado"},
             {"src": f"{OBRA}/cuadrilla-tendiendo-pasto-san-agustin-640.webp", "ancho": 640, "alto": 960, "numero": 3,
-             "alt": "Integrante de la cuadrilla tendiendo tepes de pasto San Agustín.", "lugar": "Tendido de tepes",
+             "alt": "Integrante de la cuadrilla tendiendo rollos de pasto San Agustín.", "lugar": "Tendido de rollos",
              "etapa": "Día de instalación"},
             {"src": f"{OBRA}/pasto-san-agustin-recien-instalado.webp", "ancho": 640, "alto": 960, "numero": 4,
              "alt": "Pasto recién instalado con el borde recortado contra el andador.", "lugar": "Después",
@@ -156,7 +174,8 @@ CONTENIDO = {
              "alt": "Aspersor regando el borde de un jardín con pasto San Agustín.", "lugar": "Riego de arraigo",
              "etapa": "Aspersión en el borde"},
         ),
-        "nota": ("En sombra profunda el San Agustín no prende. Ahí va otra solución, y te lo decimos antes de cobrarte.",
+        "nota": ("En sombra profunda el San Agustín no prende: si tu jardín la tiene, te lo decimos al medir y te "
+                 "proponemos otra solución.",
                  "Al medir, en tu jardín"),
         # Prueba social: la opinión aprobada de la home sobre pasto, las dos de esta página anteriores a 2a (reales y con
         # permiso del dueño, 2026-11-07), todas textuales, y los clientes con permiso del dueño.
@@ -234,11 +253,11 @@ CONTENIDO = {
             # Decisión del dueño (2026-11-10): el precio considera el terreno listo; lo que falte se cotiza aparte.
             {"titulo": "Terreno listo para instalar", "quien": "juntos", "cuando": "Antes de instalar",
              "texto": f"{datos.TERRENO_LISTO} {tierra_negra_cruzada()}"},
-            {"titulo": "Tendido de los tepes", "quien": "nosotros", "cuando": "Día de instalación",
-             "texto": ("Tepes de 40 × 60 cm en patrón de ladrillo, uniones desfasadas y sin huecos, presionados para que "
+            {"titulo": "Tendido de los rollos", "quien": "nosotros", "cuando": "Día de instalación",
+             "texto": ("Rollos de 40 × 60 cm en patrón de ladrillo, uniones desfasadas y sin huecos, presionados para que "
                        "la raíz toque el suelo.")},
             {"titulo": "Primer riego", "quien": "tu", "cuando": "Primeras 2 horas",
-             "texto": ("El primer riego lo haces tú: riega hasta que el agua atraviese el tepe. Te enseñamos cuánta agua "
+             "texto": ("El primer riego lo haces tú: riega hasta que el agua atraviese el rollo. Te enseñamos cuánta agua "
                        "darle antes de irnos.")},
             {"titulo": "Riego diario", "quien": "tu", "cuando": "Días 1 a 20",
              "texto": ("Abundante, de preferencia mañana y tarde, siguiendo el "
@@ -268,8 +287,8 @@ CONTENIDO = {
     },
     "pago": {
         "titulo": "Cómo se paga: anticipo y mensualidades con tarjeta de crédito.",
-        "lede": (f"{datos.ANTICIPO} Puedes pagar de contado o en mensualidades con tarjeta de crédito desde "
-                 f"{DESDE_MENSUALIDADES}."),
+        "lede": (f"{datos.ANTICIPO} Puedes pagar de contado o en mensualidades con tarjeta de crédito si tu compra es de "
+                 f"{DESDE_MENSUALIDADES} o más."),
         "puntos": (
             "Recibes el precio del pasto, la entrega y la instalación por separado.",
             "Contado (transferencia, efectivo o tarjeta en una exhibición): el precio más bajo.",
@@ -322,7 +341,7 @@ PARIDAD = {
         "Tres formas de tener tu jardín verde": "¿Cuánto cuesta el pasto San Agustín en Tampico?",
         "Cómo instalar pasto en rollo San Agustín en 5 pasos": (
             "Cómo se instala el pasto en rollo: cinco pasos, dos son tuyos."),
-        "Colocación de los tepes": "Tendido de los tepes",
+        "Colocación de los tepes": "Tendido de los rollos",
         "Primer riego (lo haces tú)": "Primer riego",
         "Riego abundante y diario los primeros 15 a 20 días": "Riego diario",
         "Primera poda a los 21 días": "Primera poda",

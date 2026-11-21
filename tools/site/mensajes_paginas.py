@@ -43,6 +43,37 @@ PLANTAS = {
                                      "Luz del lugar (mucha o poca): ___\nColonia: ___\nLes mando foto del espacio."),
 }
 
+# Filas de WhatsApp de cada sección de las páginas de plantas (auditoría por página, 2026-11-20): cada botón dice qué
+# leyó la persona en esa sección; el de la portada y el del cierre siguen con PLANTAS. Clave: la sección de
+# plantillas/hub_categoria.py; valor: (mensaje, texto del botón). Sin huecos ___ (se mandan tal cual, con la firma).
+PLANTAS_SECCIONES = {
+    "necesidad": ("Hola, no sé qué plantas van en mi espacio (sol, sombra o cerca del mar). Les mando foto para que me "
+                  "recomienden.", "Pedir que me recomienden"),
+    "subcategorias": ("Hola, quiero cotizar palmas, árboles o plantas para mi casa. Les mando foto del espacio.",
+                      "Cotizar mis plantas"),
+    "especies": ("Hola, vi las especies en su página y quiero precio por tamaño. Les paso cuáles me interesan.",
+                 "Pedir precio de mis favoritas"),
+    "obras": ("Hola, vi las fotos del vivero en su página y quiero cotizar plantas. Les mando foto de mi espacio.",
+              "Mandar foto de mi espacio"),
+    "precios": ("Hola, quiero el precio de una palma según su altura. Les digo cuál y qué altura busco.",
+                "Preguntar precio por altura"),
+    "garantia": ("Hola, quiero que me lleven y siembren las plantas. Les mando foto del espacio.",
+                 "Pedir que me las siembren"),
+    "faq": ("Hola, tengo una duda sobre plantas antes de cotizar.", "Preguntar mi duda"),
+}
+# Mensaje de la fila de especies por página (dice qué especies vio).
+PLANTAS_ESPECIES = {
+    "/palmas-tropicales-tampico": "Hola, vi las palmas en su página y quiero precio por altura. Les paso cuáles me interesan.",
+    "/arboles-ornamentales-tampico": ("Hola, vi los árboles en su página y quiero precio por tamaño. Les paso cuáles me "
+                                      "interesan."),
+    "/arboles-para-banqueta-tampico": ("Hola, vi los árboles para banqueta en su página y quiero precio por tamaño. Les "
+                                       "paso cuáles me interesan y el ancho de mi banqueta."),
+    "/plantas-de-interior-tampico": ("Hola, vi las plantas de interior en su página y quiero precio por tamaño. Les paso "
+                                     "cuáles me interesan."),
+    "/plantas-para-jardin-tampico": ("Hola, vi las plantas para jardín en su página y quiero precio por tamaño. Les paso "
+                                     "cuáles me interesan."),
+}
+
 # Nochebuenas, por modo (datos.NOCHEBUENAS["modo"]): mensaje de la página y del shell; el cotizador lo reemplaza por el pedido
 # completo. paginas.contexto elige el del modo vigente.
 NOCHEBUENAS = {
@@ -66,6 +97,25 @@ MATERIALES = {
                                  "Colonia de entrega: ___\nLes mando foto del espacio."),
 }
 
+# Filas de WhatsApp de cada sección de los materiales (auditoría por página, 2026-11-20): cada botón dice qué leyó la
+# persona; el de la portada, el del cierre y la calculadora sin área siguen con MATERIALES. Sin huecos ___.
+_MATERIAL = {"/tierra-negra-vegetal-tampico": "tierra negra", "/tezontle-rojo-tampico": "tezontle rojo",
+             "/marmol-blanco-tampico": "mármol blanco", "/piedra-bola-rio-tampico": "piedra bola de río"}
+MATERIALES_SECCIONES = {
+    ruta: {
+        "precio": {"/marmol-blanco-tampico": "Hola, quiero mármol blanco. Les paso los m² y mi colonia para el total con entrega.",
+                   "/piedra-bola-rio-tampico": ("Hola, quiero piedra bola de río. Les paso los m² y mi colonia para que me "
+                                                "den precio con entrega.")}.get(
+            ruta, f"Hola, quiero {nombre}. ¿Cuánto me sale con entrega a mi colonia? Les paso cantidad y colonia."),
+        "que_es": f"Hola, quiero {nombre} para mi jardín. Les mando foto del espacio para que me digan cuánto necesito.",
+        "usos": f"Hola, quiero {nombre} para uno de los usos de su página. Les digo cuál y cuántos m² son.",
+        "entrega": f"Hola, quiero saber cuánto cuesta la entrega de {nombre} a mi colonia.",
+        "instalacion": f"Hola, quiero que me instalen {nombre}. Les mando foto y medidas del espacio.",
+        "faq": f"Hola, tengo una duda sobre {nombre} antes de comprar.",
+    }
+    for ruta, nombre in _MATERIAL.items()
+}
+
 # Zonas (Etapa 2g): la plantilla de main de cada zona (tools/pasto/zonas.py, guided()), con los huecos ___. La usan la
 # portada y el cierre y, por RUTAS, el menú, la barra móvil y el pie (antes llevaban el genérico de jardín).
 _ZONA = "Hola, quiero cotizar jardinería en {}.\nColonia: ___\nServicio que necesito: ___\nMetros aprox.: ___\nLes mando foto del espacio."
@@ -76,6 +126,17 @@ ZONAS = {
     "/jardineria-lomas-del-chairel-tampico": _ZONA.format("Lomas del Chairel"),
     "/jardineria-ciudad-madero": _ZONA.format("Cd. Madero"),
     "/jardineria-altamira": _ZONA.format("Altamira"),
+}
+# Auditoría por página (2026-11-20): fila de WhatsApp tras «Lo que pide un jardín en esta zona» (antes, 4.8 pantallas
+# del celular sin botón entre la lista de precios y el cierre). Pide revisar el jardín con fotos, no otra cotización.
+_REVISION = "Hola, quiero que revisen mi jardín en {}. Les mando fotos del espacio."
+REVISION_ZONAS = {
+    "/jardineria-lomas-de-rosales-tampico": _REVISION.format("Lomas de Rosales"),
+    "/jardineria-country-club-tampico": _REVISION.format("Club Campestre"),
+    "/jardineria-aguila-tampico": _REVISION.format("Águila y Altavista"),
+    "/jardineria-lomas-del-chairel-tampico": _REVISION.format("Lomas del Chairel"),
+    "/jardineria-ciudad-madero": _REVISION.format("Cd. Madero"),
+    "/jardineria-altamira": _REVISION.format("Altamira"),
 }
 # Poda en la zona: su renglón de la lista pide fotos (el precio depende del tamaño y de los residuos).
 _PODA = "Hola, quiero cotizar poda de palmas y árboles{}.\nColonia: ___\nCuántos árboles o palmas: ___\nLes mando fotos."
@@ -91,14 +152,19 @@ PODA_ZONAS = {
 # m²"), y un mensaje por sección de la lista para que el chat llegue diciendo qué se quiere cotizar.
 PRECIOS = "Hola, vi la lista de precios y quiero cotizar.\nColonia: ___\nMetros aprox.: ___"
 PRECIOS_SECCIONES = {
-    "pasto": "Hola, quiero cotizar pasto San Agustín instalado.\nColonia: ___\nMetros aprox.: ___",
-    "servicios": ("Hola, quiero cotizar un servicio de jardín.\nMantenimiento, diseño o riego: ___\nColonia: ___\n"
-                  "Metros aprox.: ___"),
+    # Auditoría por página (2026-11-20): cada mensaje dice que viene de la lista y qué se quiere; el del pasto ya no fuerza
+    # «instalado» (la tabla también trae solo pasto y mayoreo).
+    "pasto": ("Hola, vi la lista de precios y quiero cotizar pasto San Agustín en rollo (solo el pasto o instalado).\n"
+              "Colonia: ___\nMetros aprox.: ___"),
+    "servicios": ("Hola, vi la lista de precios y quiero cotizar mantenimiento, diseño o riego para mi jardín.\n"
+                  "Colonia: ___\nMetros aprox.: ___"),
     "poda": _PODA.format(""),
-    "sintetico": "Hola, quiero cotizar pasto sintético.\nModelo: ___\nMetros aprox.: ___\nColonia o ciudad: ___",
-    "materiales": "Hola, quiero cotizar materiales.\nMaterial: ___\nCantidad: ___\nColonia de entrega: ___",
-    "plantas": ("Hola, quiero cotizar plantas o palmas.\nPlantas que busco: ___\nTamaño aprox.: ___\n"
-                "Colonia de entrega: ___"),
+    "sintetico": ("Hola, vi la lista de precios y quiero cotizar pasto sintético (material o instalado).\nModelo: ___\n"
+                  "Metros aprox.: ___\nColonia o ciudad: ___"),
+    "materiales": ("Hola, vi la lista de precios y quiero cotizar tierra, tezontle, mármol o piedra con entrega a mi "
+                   "colonia.\nCantidad: ___\nColonia de entrega: ___"),
+    "plantas": ("Hola, vi la lista de precios y quiero saber existencia y precio de plantas o palmas.\n"
+                "Plantas que busco: ___\nTamaño aprox.: ___"),
 }
 
 # SEO fase 2a (2026-11-11): las cuatro páginas nuevas, con los huecos ___ como el resto del sitio. La usan la portada y
@@ -108,7 +174,8 @@ SEO_F2A = {
                               "Cuántos árboles o palmas: ___\nPoda o derribo: ___\nLes mando fotos y la ubicación."),
     "/empresas": ("Hola, quiero cotizar áreas verdes para mi empresa.\nEmpresa: ___\n"
                   "Servicio (mantenimiento, pasto, palmas o riego): ___\nUbicación: ___\nm² aprox.: ___"),
-    "/nosotros": "Hola, quiero cotizar: ___\nColonia: ___\nMetros aprox.: ___",
+    # Auditoría por página (2026-11-20): sin los huecos quedaba «Hola, quiero cotizar.» en los 7 botones de la página.
+    "/nosotros": "Hola, vi la página de Viveros Terra y quiero cotizar. Les mando foto de mi espacio.",
     "/zonas": "Hola, quiero cotizar jardinería.\nColonia: ___\nServicio que necesito: ___\nMetros aprox.: ___",
 }
 
@@ -133,7 +200,9 @@ PIE_TIPO = {
     "ciudad": "Hola, tengo una pregunta sobre pasto sintético",
 }
 
-# Artículo del blog (slug) → mensaje.
+# Artículo del blog (slug) → mensaje (también el del menú, la barra y el pie del artículo). Auditoría por página
+# (2026-11-20): riego y tierra negra llevaban un hueco «___» a media frase; al quitarlo el mensaje quedaba cortado
+# («…de m²», «…tierra negra para»).
 BLOG = {
     "acolchado-mulch-jardin-tampico": "Hola, vi el artículo de acolchado (mulch) y quiero cotizar",
     "arboles-para-sembrar-en-banqueta": 'Hola, leí su artículo "7 árboles para banqueta que no levantan el pavimento en Tampico" y quiero cotizar.',
@@ -180,10 +249,10 @@ BLOG = {
     "plantas-resistentes-sal-golfo-tampico": 'Hola, leí su artículo "12 plantas resistentes a la sal del Golfo para jardines costeros en Tampico" y quiero cotizar.',
     "poda-arboles-palmas-tampico-guia": "Hola, vi el artículo de poda y necesito ayuda con mi jardín",
     "que-altura-de-pasto-sintetico-elegir": 'Hola, leí su artículo "¿Qué altura de pasto sintético elegir? 10, 18, 28 o 35 mm" y quiero cotizar.',
-    "sistema-riego-automatizado-tampico": "Hola, quiero cotizar riego automático para mi jardín de ___ m²",
+    "sistema-riego-automatizado-tampico": "Hola, leí la guía de riego automático y quiero cotizar el riego de mi jardín; les paso los m² y mi colonia.",
     "temporada-huracanes-proteger-jardin-tampico": "Hola, vi el blog de Viveros Terra y quiero una cotización de poda preventiva",
     "tezontle-usos-jardin-tampico": 'Hola, leí su artículo "¿Para qué sirve el tezontle? 8 usos en el jardín" y quiero cotizar.',
-    "tierra-negra-costal-camion-tampico": "Hola, quiero cotizar tierra negra para ___",
+    "tierra-negra-costal-camion-tampico": "Hola, leí la guía de tierra negra y quiero saber si me conviene costal o camión; les paso metros y colonia.",
 }
 
 # Tema del artículo por palabras del slug, en orden: el primero que coincide da el `service` de GA4.
@@ -221,7 +290,8 @@ def mensaje_blog(slug):
 
 # Etapa 2i: mensajes propios de las utilitarias, los de main (la firma la agrega datos.con_firma).
 UTILITARIAS = {
-    "gracias": "Hola, acabo de enviar una cotización por el cotizador y quiero avanzar",
+    # Auditoría por página (2026-11-20): a /gracias llegan los 7 formularios, no solo el cotizador.
+    "gracias": "Hola, acabo de enviar mis datos por el formulario de su sitio y quiero avanzar. Les mando fotos de mi espacio.",
     "cuestionario": "Hola, quiero empezar un proyecto de jardín en Tampico",
     "politicas": "Hola, tengo una duda sobre envíos/devoluciones",
     "privacidad": "Hola, tengo una duda sobre el aviso de privacidad",
@@ -229,5 +299,13 @@ UTILITARIAS = {
     # Reescritura 10 (Entrega B de experiencia): los huecos con ___, como en el resto del sitio, y la colonia.
     "vivero": "Hola, quiero visitar el vivero o cotizar plantas.\nLo que busco: ___\nTamaño aprox.: ___\nColonia: ___",
     "vivero_planta": "Hola, estoy buscando una planta en el vivero de Tampico, ¿la tienen?",
+    # Auditoría por página (2026-11-20): filas de sección de /vivero-tampico y /nosotros con el contexto de su sección.
+    "vivero_visita": "Hola, voy a ir al vivero en Madero y quiero saber si tienen lo que busco.",
+    "vivero_entrega": "Hola, quiero plantas a domicilio. ¿Cuánto cuesta la entrega a mi colonia?",
+    "vivero_mayoreo": "Hola, quiero cotizar plantas, palmas o pasto al mayoreo para un proyecto.",
+    "nosotros_servicio": "Hola, quiero saber qué servicio me conviene para mi jardín. Les mando foto del espacio.",
+    "empresas_repse": "Hola, quiero cotizar áreas verdes para mi empresa. Necesitamos REPSE y factura CFDI.",
+    "empresas_proyecto": "Hola, quiero cotizar áreas verdes para un proyecto fuera de Tampico, Madero y Altamira.",
+    "zonas_colonia": "Hola, quiero cotizar jardinería en mi colonia. Les mando la ubicación y una foto.",
     "no_encontrada": "Hola, busqué una página en su sitio y no la encontré. Necesito: ___",
 }

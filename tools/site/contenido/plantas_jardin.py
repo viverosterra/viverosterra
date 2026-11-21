@@ -69,9 +69,10 @@ CONTENIDO = {
         "lede": ("Ornamentales, tropicales y de cobertura. Te decimos cuáles van en sol o en sombra, te las llevamos y, si "
                  "quieres, las sembramos."),
         "etiqueta": {"codigo": "Jardín", "aviso": f"Precios {datos.ANIO}", "nombre": "Plantas para jardín",
-                     "antes": "Precio", "monto": "Por tamaño", "unidad": datos.SEGUN_COTIZACION.lower(),
+                     "antes": "Precio", "monto": "Por tamaño", "sin_precio": True, "unidad": datos.SEGUN_COTIZACION.lower(),
                      "nota": "Cotiza con una foto de tu espacio."},
         "mensaje": MENSAJE,
+        "cta_texto": "Mandar foto de mi espacio",
         "foto": {"src": "/img/portadas/jardin-residencial-tropical-tampico-sm.webp",
                  "srcset": ("/img/portadas/jardin-residencial-tropical-tampico-sm.webp 560w, "
                             "/img/portadas/jardin-residencial-tropical-tampico.webp 960w"),
@@ -79,7 +80,7 @@ CONTENIDO = {
                  "alt": "Jardín residencial con plantas tropicales en Tampico",
                  "lugar": "Jardín con plantas tropicales", "etapa": "Tampico"},
     },
-    "especies": {"titulo": "Las más solicitadas en Tampico", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
+    "especies": {"titulo": "Plantas para jardín con luz, riego y altura", "lede": pc.LEDE_FOTOS, "items": ESPECIES},
     "lista": pc.LISTA,
     "garantia": pc.GARANTIA,
     "faq": {"titulo": "Plantas para jardín en Tampico: lo que más nos preguntan", "preguntas": PREGUNTAS},
@@ -88,8 +89,8 @@ CONTENIDO = {
         ("Bugambilia en Tampico: cuidados y floración", "/blog/buganvilia-tampico-cuidados-floracion"),
         ("Duranta: cuidados y setos", "/blog/duranta-erecta-tampico-cuidados-seto"),
         ("Jardín en macetas para terraza", "/blog/jardin-en-macetas-terraza-tampico-guia"))},
-    "relacionados": {"titulo": "Más servicios en Viveros Terra", "items": pc.otras_subcategorias(RUTA)},
-    "cierre": {"titulo": "¿Listo para cotizar?",
+    "relacionados": {"titulo": "Otras plantas del vivero", "items": pc.otras_subcategorias(RUTA)},
+    "cierre": {"titulo": "¿Ya sabes qué quieres sembrar?", "texto": "Mandar foto de mi espacio",
                "lede": "Dinos si el lugar es de sol o de sombra, los metros y la colonia; te respondemos con precio.",
                "mensaje": MENSAJE},
     "jsonld": {"migas": pc.migas_ld(NOMBRE, RUTA), "nodos": (pc.lista_ld(NOMBRE, [s for s, _t, _a in ESPECIES]),),
@@ -102,6 +103,11 @@ PARIDAD = {
         "PostalAddress": "Iba dentro del LocalBusiness recortado de main; la dirección es del nodo #negocio de la home.",
     },
     "reemplazos": {
+        # Auditoría por página (2026-11-20): «más solicitadas» afirma una preferencia sin dato.
+        "Las más solicitadas en Tampico": "Plantas para jardín con luz, riego y altura",
+        # Auditoría por página: la sección lista las otras subcategorías de plantas, no servicios.
+        "Más servicios en Viveros Terra": "Otras plantas del vivero",
+        "¿Listo para cotizar?": "¿Ya sabes qué quieres sembrar?",
         "Plantas para jardín tampico — Todo lo que necesitas saber": (
             "Plantas para jardín en Tampico: lo que más nos preguntan"),
     },

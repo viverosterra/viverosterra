@@ -89,7 +89,7 @@ def _preguntas_envio(x, zona):
         (f"¿Cuánto es lo mínimo que puedo pedir a {n}?",
          f"{MIN} m², medio rollo: con {barato['nombre']} son {dinero(total[MIN])} con envío a {n}, "
          f"{dinero(total[MIN] / MIN)}/m². Un rollo completo de {ROLLO} m² baja a {dinero(total[ROLLO] / ROLLO)}/m² puesto. "
-         f"Los cortes de 2 a 9 m² son solo en el showroom de Cd. Madero."),
+         f"Los cortes de 2 a 9 m² son solo en el vivero de Cd. Madero."),
         (f"¿Cómo elijo el modelo para {n} sin ver una muestra?",
          f"Sin muestras físicas: cada ficha trae fotos de cerca, altura y peso. Para {n} empieza por {rec['nombre']}: "
          f"{rec_razon[0].lower()}{rec_razon[1:]} Si dudas, mándanos una foto de tu espacio por WhatsApp."),
@@ -219,11 +219,11 @@ def contenido(x):
                       ("Entrega", "3 a 5 días", "Hábiles, con guía de rastreo"),
                       ("Compra mínima", f"{MIN} m²", "Medio rollo"),
                       ("Factura", datos.FACTURA, "Persona física o moral"),
-                      ("Vendemos a todo México", f"Desde {datos.SINTETICO_NACIONAL_DESDE}", f"Showroom en {datos.CALLE_CORTA}")),
+                      ("Vendemos a todo México", f"Desde {datos.SINTETICO_NACIONAL_DESDE}", "Enviamos desde Cd. Madero, Tamps.")),
         },
         "secciones": (
             {"tipo": "totales", "id": "precios", "rotulo": "Precios", "titulo": f"Cuánto cuesta con envío a {x['nombre']}",
-             "lede": x["intro"], "modelo": m, "zona": zona,
+             "lede": x["intro"], "modelo": m, "zona": zona, "fila": "Pedir mi total con envío",
              "notas": (f"El flete exacto a {x['nombre_largo']} se confirma con tu código postal antes de pagar.",
                        "Mensualidades con tarjeta de crédito; el total en mensualidades es mayor que el de contado. "
                        f'Calcula tu plan en el <a href="/pasto-sintetico?estado={estado}#cotizador">cotizador</a>.')},

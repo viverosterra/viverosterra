@@ -104,6 +104,7 @@ CONTENIDO = {
                      "filas": (("Palma real", f"desde {dinero(P['palma_real'])}"),),
                      "nota": "El precio sube con la altura."},
         "mensaje": MENSAJE,
+        "cta_texto": "Preguntar precio por altura",
         "foto": {"src": "/img/portadas/palma-real-jardin-residencial-tampico-sm.webp",
                  "srcset": ("/img/portadas/palma-real-jardin-residencial-tampico-sm.webp 560w, "
                             "/img/portadas/palma-real-jardin-residencial-tampico.webp 900w"),
@@ -130,8 +131,8 @@ CONTENIDO = {
         ("Palma areca en Tampico: cuidados", "/blog/palma-areca-tampico"),
         ("Palma real: cuidados y crecimiento", "/blog/palma-real-roystonea-regia-tampico"),
         ("8 palmas para jardín con precios", "/blog/palmas-para-jardin-tampico"))},
-    "relacionados": {"titulo": "Más servicios en Viveros Terra", "items": pc.otras_subcategorias(RUTA)},
-    "cierre": {"titulo": "¿Listo para cotizar?",
+    "relacionados": {"titulo": "Otras plantas del vivero", "items": pc.otras_subcategorias(RUTA)},
+    "cierre": {"titulo": "¿Ya sabes qué palma quieres?", "texto": "Preguntar precio por altura",
                "lede": "Dinos qué palma buscas, la altura y la colonia; te respondemos con precio por tamaño.",
                "mensaje": MENSAJE},
     "jsonld": {

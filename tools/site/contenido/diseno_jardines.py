@@ -85,7 +85,7 @@ PLANES = (
      "mensaje": (f"Hola, me interesa el Plan Terra Esencial ({dinero(ESENCIAL)}).\nColonia: ___\nMetros aprox.: ___\n"
                  "Les mando fotos del espacio.")},
     {"cta": f"Quiero el Completo ({dinero(COMPLETO)})", "rotulo": "Plan 2 · Con visita", "titulo": "Completo", "precio": COMPLETO, "desde": False, "unidad": "MXN",
-     "mensualidad": True, "rec": True, "detalle": "Del diseño al jardín terminado · entrega en 10 días hábiles",
+     "mensualidad": True, "rec": True, "detalle": "Con visita y medidas · diseño en 10 días hábiles",
      "puntos": ("Todo lo del Esencial",
                 "Visita técnica al sitio (1 hora con el diseñador)",
                 "Toma de medidas profesional y análisis del terreno",
@@ -169,7 +169,7 @@ PREGUNTAS = (
 )
 
 PASOS = (
-    {"titulo": "Envías fotos y cuéntanos tu visión", "quien": "tu", "cuando": "Por WhatsApp",
+    {"titulo": "Nos mandas fotos y nos cuentas qué quieres", "quien": "tu", "cuando": "Por WhatsApp",
      "texto": ("Nos mandas fotos del espacio, medidas aproximadas, tu estilo preferido y el uso que le darás al "
                "jardín.")},
     {"titulo": "Estudio de gustos y preferencias", "quien": "juntos", "cuando": "Antes de diseñar",
@@ -207,7 +207,10 @@ CONTENIDO = {
     "preguntas": "diseno",  # panel de WhatsApp, entrega 2 (spec del primer mensaje, 2026-11-16)
     "prefijo": "diseno",
     # Entrega B de experiencia: CTA al terminar las opiniones (antes, 8 pantallas del hero a los planes sin CTA).
-    "ctas": {"prueba": (MENSAJE, "Cotizar mi diseño"),
+    # Auditoría por página (2026-11-20): textos que dicen qué pasa (el mensaje sigue siendo el general: abre el panel de
+    # preguntas) y fila tras el proceso (antes, 3.4 pantallas de los planes a la garantía sin botón).
+    "ctas": {"prueba": (MENSAJE, "Mandar fotos de mi espacio"),
+             "proceso": (MENSAJE, "Empezar con mis fotos por WhatsApp"),
              # Entrega C: CTA de la banda de garantía.
              "garantia": (MENSAJE, "Cotizar diseño y obra")},
     "meta": META,
@@ -299,7 +302,7 @@ CONTENIDO = {
     "pago": {
         "titulo": "Cómo se paga: anticipo y mensualidades con tarjeta de crédito.",
         "lede": (f"{datos.ANTICIPO} El diseño y la obra se cotizan por separado; los dos se pueden pagar de contado o "
-                 f"en mensualidades con tarjeta de crédito desde {DESDE_MENSUALIDADES}."),
+                 f"en mensualidades con tarjeta de crédito si la compra es de {DESDE_MENSUALIDADES} o más."),
         "puntos": (
             "Cada plan muestra su precio de contado y su plazo más largo con tarjeta de crédito.",
             "Contado (transferencia, efectivo o tarjeta en una exhibición): el precio más bajo.",
@@ -325,7 +328,7 @@ CONTENIDO = {
         "titulo": "Otros servicios de Viveros Terra",
         "items": (
             {"titulo": "Pasto en Rollo San Agustín", "href": "/pasto-en-rollo-tampico",
-             "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111,
+             "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta-560.webp", "ancho": 560, "alto": 691,
              "texto": (f"Pasto desde {dinero(P['pasto_solo_m2'])}/m² · Instalado desde "
                        f"{dinero(P['pasto_instalado_m2'])}/m². {datos.TERRENO_LISTO_CORTO}")},
             {"titulo": "Sistema de Riego", "href": "/sistema-riego-tampico",
@@ -354,6 +357,8 @@ PARIDAD = {
             "¿Se descuenta el costo del diseño si contrato la ejecución?"),
         "Tardan cuanto tiempo en entregar el diseno?": "¿Cuánto tiempo tardan en entregar el diseño?",
         "Como se eligen las plantas para mi jardin?": "¿Cómo se eligen las plantas para mi jardín?",
+        # Auditoría por página (2026-11-20): el paso 1 mezclaba «envías» con «cuéntanos».
+        "Envías fotos y cuéntanos tu visión": "Nos mandas fotos y nos cuentas qué quieres",
     },
     "retirados": {
         "Diseño de jardines profesional con acompañamiento": (

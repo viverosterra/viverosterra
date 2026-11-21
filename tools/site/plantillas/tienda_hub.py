@@ -1,6 +1,6 @@
 """Plantilla del hub de la tienda (/pasto-sintetico): portada con el precio puesto por estado y la foto principal
-precargada → cuadro de datos → catálogo con filtros y Agregar → selector "¿cuál te conviene?" → comparador de otra
-oferta → cotizador con envío y tabla de fletes → ciudades → comparativa de los 9 → obras con pies FIG. → cómo comprar
+precargada → cuadro de datos → catálogo con filtros, Agregar y WhatsApp → selector "¿cuál te conviene?" →
+cotizador con envío y tabla de fletes → comparador de otra oferta → ciudades (6 a la vista, el resto plegado) → comparativa de los 9 → obras con pies FIG. → cómo comprar
 (TÚ / NOSOTROS / JUNTOS) → instálalo tú → preguntas → CTA final (Tampico). Contenido: tools/site/contenido/tienda.py.
 JS: tienda-pasto.js (cotizador y lista), tienda-hub.js (filtros, selector, precio puesto, comparador), vt-landed.js."""
 import componentes as c
@@ -32,7 +32,7 @@ def _portada(k):
     return c.portada(portada, k["tipo"], k["migas"], datos_html=c.cuadro_datos(p["datos"]), clase="vt-portada-t vt-portada-hub")
 
 
-def _cotizador(k):
+def _cotizador(k, n):
     q = k["cotizador"]
     calculo = "".join(f"<li><span>{x}</span></li>" for x in q["calculo"])
     # Junto al CTA del cotizador, la prueba social de la tienda (Entrega B de experiencia): opinión real de pasto sintético
@@ -42,13 +42,24 @@ def _cotizador(k):
               f'<div><h3>{q["titulo_calculo"]}</h3><ul class="vt-checks vt-mt-s">{calculo}</ul>{prueba}</div></div>'
               f'<h3 class="vt-mt" id="envio">{q["titulo_envio"]}</h3><p class="vt-lede">{q["lede_envio"]}</p>'
               f'{t.zonas_acordeon()}<p class="vt-promesa">{q["nota_envio"]}</p>')
-    return c.bloque(4, "Cotizador", "vt-h-cotizador", q["titulo"], cuerpo, tinte=True, id_seccion="cotizador")
+    return c.bloque(n, "Cotizador", "vt-h-cotizador", q["titulo"], cuerpo, tinte=True, id_seccion="cotizador")
 
 
 def _fila(k, seccion, texto):
     """Entrega B de experiencia: WhatsApp en los tramos largos del hub (antes, 12 pantallas sin CTA); tienda-pasto.js le
     pone lo que el cliente ya eligió (estado, cotizador o lista)."""
     return c.fila_seccion(k["cierre"]["mensaje"], k["tipo"], seccion, texto, contexto=True)
+
+
+CIUDADES_A_LA_VISTA = 6
+
+
+def _ciudades(items):
+    """Auditoría por página (2026-11-20): las 6 primeras ciudades a la vista y las demás en un plegable (antes, 19
+    tarjetas: casi 3 pantallas del celular sin botón). Los enlaces siguen en el HTML."""
+    vista, resto = items[:CIUDADES_A_LA_VISTA], items[CIUDADES_A_LA_VISTA:]
+    return t.ciudades_destacadas(vista) + (c.plegable(f"Las otras {len(resto)} ciudades", t.ciudades_destacadas(resto))
+                                           if resto else "")
 
 
 def render(k):
@@ -58,13 +69,17 @@ def render(k):
     secciones = (
         _portada(k),
         c.respuesta(k.get("respuesta")),
-        c.bloque(1, "Colección", "vt-h-modelos", mo["titulo"], t.catalogo(), lede=mo["lede"], id_seccion="modelos"),
+        # Auditoría por página (2026-11-20): fila de WhatsApp al final del catálogo (antes, 5.7 pantallas sin botón entre
+        # la portada y el selector) y el comparador de otra oferta pasa debajo del cotizador.
+        c.bloque(1, "Colección", "vt-h-modelos", mo["titulo"], t.catalogo() + _fila(k, "modelos", "Preguntar por un modelo"),
+                 lede=mo["lede"], id_seccion="modelos"),
         c.bloque(2, "Elegir", "vt-h-elegir", el["titulo"], t.selector_modelo() + _fila(k, "quiz", "Pedir mi recomendación"),
                  tinte=True, id_seccion="elegir"),
-        c.bloque(3, "Comparar", "vt-h-comparar", co["titulo"], t.comparador(), lede=co["lede"], id_seccion="comparar"),
-        _cotizador(k),
+        _cotizador(k, 3),
+        c.bloque(4, "Comparar", "vt-h-comparar", co["titulo"], t.comparador() + _fila(k, "comparar", "Pedir mi precio puesto"),
+                 lede=co["lede"], id_seccion="comparar"),
         c.bloque(5, "Ciudades", "vt-h-ciudades", ci["titulo"],
-                 t.ciudades_destacadas(ci["items"]) + f'<p class="vt-promesa">{ci["perros"]}</p>'
+                 _ciudades(ci["items"]) + f'<p class="vt-promesa">{ci["perros"]}</p>'
                  + _fila(k, "ciudades", "Cotizar con envío a mi ciudad"), lede=ci["lede"], id_seccion="ciudades"),
         c.bloque(6, "Comparativa", "vt-h-comparativa", cp["titulo"],
                  t.grafica_alturas() + t.tabla_modelos() + f'<p class="vt-promesa">{cp["nota"]}</p>' + _fila(k, "comparativa", "Cotizar mi modelo"),

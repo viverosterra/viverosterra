@@ -26,14 +26,24 @@ def lista_ld(secciones):
                                 for n, (href, titulo) in enumerate(articulos.items(), 1)]}
 
 
-CADA_FILA = 12
+# Auditoría por página (2026-11-20): cada 8 tarjetas (antes 12, con 4.3 pantallas del celular sin botón).
+CADA_FILA = 8
 FILA_TEXTO = "¿Tienes una duda de tu jardín? Mándanos foto, colonia y metros."
+# Auditoría por página (2026-11-20): el botón dice lo que pide la fila (antes «Preguntar por WhatsApp»).
+BOTON = "Mandar foto de mi jardín"
+# La portada baja la copia de 640 px de la misma foto en celular (antes el original de 1,536 px, 274 KB).
+PORTADA_SIZES = "(min-width:1024px) 42vw, 56vw"
 
 
 def _fila_wa(k, n):
     """Renglón de la lista con un enlace de WhatsApp de texto: no interrumpe la lectura ni compite con las tarjetas."""
-    enlace = c.wa_texto(k["mensaje"], f'{k["tipo"]}:lista-{n}', "Preguntar por WhatsApp")
+    enlace = c.wa_texto(k["mensaje"], f'{k["tipo"]}:lista-{n}', BOTON)
     return f'<li class="vt-blog-fila" data-hero-cta><p>{FILA_TEXTO} {enlace}</p></li>'
+
+
+def _srcset_portada(f):
+    srcset = cb.srcset_de(f["src"], f["ancho"], (640,))
+    return f' srcset="{esc(srcset)}" sizes="{PORTADA_SIZES}"' if srcset else ""
 
 
 def render(k):
@@ -42,7 +52,7 @@ def render(k):
     portada = (f'<section class="{c.clase_titular(k["h1"], "vt-blog-p")}" aria-labelledby="vt-h1"><div class="vt-wrap">{c.migas(k["migas"])}<div class="vt-blog-p__g"><div>'
                f'<p class="vt-kicker"><span data-vt-conteo="blog">52</span> guías · {c.datos.AUTOR_BLOG}</p><h1 id="vt-h1">{k["h1"]}</h1>'
                f'<p class="vt-lede">{k["lede"]}</p>{c.enlaces_portada((c.enlace_wa(k["mensaje"], k["tipo"] + ":hero"),), k["tipo"])}</div>'
-               f'<img src="{esc(f["src"])}" width="{f["ancho"]}" height="{f["alto"]}" alt="{esc(f["alt"])}" loading="eager" fetchpriority="high" decoding="async">'
+               f'<img src="{esc(f["src"])}"{_srcset_portada(f)} width="{f["ancho"]}" height="{f["alto"]}" alt="{esc(f["alt"])}" loading="eager" fetchpriority="high" decoding="async">'
                f'</div></div></section>')
     secciones, contadas = [], 0
     total = sum(len(s["tarjetas"]) for s in k["secciones"])
@@ -60,5 +70,5 @@ def render(k):
     servicios = "".join(f'<li><a href="{esc(h)}"><b>{t}</b><span>{d}</span></a></li>' for h, t, d in k["servicios"])
     secciones.append(c.bloque(len(k["secciones"]) + 1, "Servicios", "vt-h-serv", "¿Buscas servicio profesional en Tampico?",
                               f'<ul class="vt-blog-s">{servicios}</ul>' + c.fila_cta(k["mensaje"], k["tipo"], "cierre")))
-    return base.documento(base.meta_de(k), portada + "\n".join(secciones), precargas=(base.precarga_imagen({"src": f["src"]}),), jsonld_bloques=({"@context": "https://schema.org", "@graph": [blog_ld(k["jsonld"]), lista_ld(k["secciones"])]},),
+    return base.documento(base.meta_de(k), portada + "\n".join(secciones), precargas=(base.precarga_imagen({"src": f["src"], "srcset": cb.srcset_de(f["src"], f["ancho"], (640,)), "sizes": PORTADA_SIZES}),), jsonld_bloques=({"@context": "https://schema.org", "@graph": [blog_ld(k["jsonld"]), lista_ld(k["secciones"])]},),
                           clase_body="vt-pagina vt-blog")

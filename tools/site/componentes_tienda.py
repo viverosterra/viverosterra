@@ -22,7 +22,7 @@ ROLLO_M2 = data.ROLLO_M2
 MIN_NACIONAL = data.MIN_NACIONAL_M2
 MIN_SHOWROOM = data.MIN_SHOWROOM_M2
 TIERS = (("rollo", "Rollo completo", f"{ROLLO_M2} m² o más"), ("t2", "Corte mediano", "10 a 49 m²"),
-         ("t1", "Corte chico", "2 a 9 m², solo en showroom"))
+         ("t1", "Corte chico", "2 a 9 m², solo en el vivero de Cd. Madero"))
 NOTA_FLETE = "Te confirmamos el flete exacto a tu dirección antes de pagar."
 TARIFAS = tuple(data.ZONAS[z] for z in sorted(data.ZONAS))
 TARIFAS_TEXTO = f"{c.dinero(TARIFAS[0])}, {c.dinero(TARIFAS[1])} o {c.dinero(TARIFAS[2])}"
@@ -44,10 +44,16 @@ def img_textura(m):
     return f"{GAL}/{m['slug']}-2-sm.webp"
 
 
+def img_mini(m):
+    """La misma foto de textura a 240 px (auditoría por página, 2026-11-20): el catálogo la muestra a ~112 px y la lista
+    y el selector a 64–96 px; antes bajaban la copia -sm de 420 px (~88 KB cada una)."""
+    return f"{GAL}/{m['slug']}-2-240.webp"
+
+
 # ---------- datos para el JS ----------
 def datos_modelo_js(m):
     """Lo que tienda-pasto.js necesita de un modelo para cotizarlo y agregarlo a la lista."""
-    return {"slug": m["slug"], "nombre": m["nombre"], "img": img_textura(m), "t1": m["t1"], "t2": m["t2"],
+    return {"slug": m["slug"], "nombre": m["nombre"], "img": img_mini(m), "t1": m["t1"], "t2": m["t2"],
             "rollo": m["rollo"]}
 
 
@@ -64,7 +70,7 @@ def json_modelos(modelos=None, completo=False):
         fila = {"slug": m["slug"]}
         if completo:
             fila["id"] = m["id"]
-        fila.update({"nombre": m["nombre"], "img": img_textura(m), "t1": m["t1"], "t2": m["t2"], "rollo": m["rollo"]})
+        fila.update({"nombre": m["nombre"], "img": img_mini(m), "t1": m["t1"], "t2": m["t2"], "rollo": m["rollo"]})
         if completo:
             fila.update({"scores": m["scores"], "tag": m["tag"], "mm": m["mm"]})
         filas.append(fila)
@@ -94,7 +100,7 @@ def chip_mm(mm):
 
 def existencia(m):
     """Línea de existencia: los 9 en existencia nacional; para llevar hoy solo Toscana 18 y 28 (stock en data.py)."""
-    hoy = (f'<span>{esc(m["nombre"])} para llevar hoy en el showroom de {datos.CALLE_CORTA}</span>'
+    hoy = (f'<span>{esc(m["nombre"])} para llevar hoy en el vivero de {datos.CALLE_CORTA}, Cd. Madero</span>'
            if m["stock"] else "")
     return f'<p class="vt-existencia"><span>En existencia · envío a todo México en 3 a 5 días hábiles</span>{hoy}</p>'
 
@@ -158,11 +164,11 @@ def _entrega(showroom, local):
     nacional (data-local: tienda-pasto.js no agrega los estados)."""
     if local:
         return ('<div class="vt-campo"><label for="estado">Entrega</label><div class="vt-control"><select id="estado" '
-                'data-local><option value="showroom" selected>Recoger en showroom, Cd. Madero</option><option value="local">'
+                'data-local><option value="showroom" selected>Recoger en el vivero, Cd. Madero</option><option value="local">'
                 'Envío local en Tampico, Madero o Altamira</option></select></div></div>')
     sel_showroom = " selected" if showroom else ""
     return ('<div class="vt-campo"><label for="estado">Entrega</label><div class="vt-control"><select id="estado">'
-            f'<option value="">Selecciona tu estado</option><option value="showroom"{sel_showroom}>Recoger en showroom, '
+            f'<option value="">Selecciona tu estado</option><option value="showroom"{sel_showroom}>Recoger en el vivero, '
             'Cd. Madero</option></select></div></div>')
 
 
@@ -181,7 +187,9 @@ def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, local=False, titu
     queda vacío)."""
     pm2 = m["rollo"] if m2 >= ROLLO_M2 else (m["t2"] if m2 >= 10 else m["t1"])
     material = pm2 * m2
-    texto = mensaje or (f"Hola, quiero cotizar el pasto sintético {m['nombre']}.\nNecesito ___ m².\n"
+    # Auditoría por página (2026-11-20): «Necesito ___ m².» se publicaba como «Necesito m².» (sin número); el campo
+    # «Metros aprox.: ___» lo quita entero el limpiador de huecos.
+    texto = mensaje or (f"Hola, quiero cotizar el pasto sintético {m['nombre']}.\nMetros aprox.: ___\n"
                         + ("Mi colonia: ___" if local else "Mi estado: ___"))
     href = esc(datos.wa_url(datos.con_firma(texto)))
     chips = "".join(f'<button class="vt-chip" type="button" data-m2="{n}" aria-pressed="{"true" if n == m2 else "false"}">'
@@ -190,7 +198,7 @@ def cotizador(m, *, modelos=None, m2=ROLLO_M2, showroom=False, local=False, titu
     if local:
         desde = (f'<p class="vt-cotizador__desde">Material desde <b>{c.dinero(barato(modelos)["rollo"])}</b>/m² en rollo, '
                  'IVA incluido · envío local según tu colonia</p>')
-        envio = ('<p class="vt-cuenta__fila"><span id="q-envio-label">Recoger en showroom</span><b id="q-envio">$0'
+        envio = ('<p class="vt-cuenta__fila"><span id="q-envio-label">Recoger en el vivero</span><b id="q-envio">$0'
                  '</b></p>')
         nota = "Te cotizamos el envío local según tu colonia antes de pagar."
     else:
@@ -233,7 +241,7 @@ def lista_y_aviso():
         'id="cot-close" aria-label="Cerrar">×</button></div><div class="vt-lista__cuerpo" id="cot-list"></div>'
         '<div class="vt-lista__pie" id="cot-foot" hidden><div class="vt-campo"><label for="cot-estado">Entrega</label>'
         '<div class="vt-control"><select id="cot-estado"><option value="">Selecciona tu estado</option>'
-        '<option value="showroom">Recoger en showroom, Cd. Madero</option></select></div></div>'
+        '<option value="showroom">Recoger en el vivero, Cd. Madero</option></select></div></div>'
         '<p class="vt-cuenta__total"><span id="cot-total-label">Total estimado del material</span><b id="cot-total">$0</b>'
         f'</p><a class="vt-btn vt-btn--wa" id="cot-send" data-cta="tienda:lista" href="https://wa.me/{datos.TELEFONO_WA}" '
         f'target="_blank" rel="noopener">{WA_GLIFO}Cotizar por WhatsApp</a>'
@@ -275,7 +283,8 @@ def tarjeta(m):
            if m["stock"] else "")
     return (
         f'<article class="spec-card vt-tarjeta-p" data-usos="{" ".join(m["usos"])}" id="m-{m["slug"]}">'
-        f'<a class="vt-tarjeta-p__foto" href="{url}" tabindex="-1" aria-hidden="true"><img src="{img_textura(m)}" '
+        f'<a class="vt-tarjeta-p__foto" href="{url}" tabindex="-1" aria-hidden="true"><img src="{img_mini(m)}" '
+        f'srcset="{img_mini(m)} 240w, {img_textura(m)} 420w" sizes="(min-width: 768px) 320px, 120px" '
         f'width="420" height="560" alt="" loading="lazy" decoding="async">{chip_mm(m["mm"])}</a>'
         f'<div class="vt-tarjeta-p__cuerpo"><p class="vt-tarjeta-p__tag">N.º {m["n"]:02d} · {esc(m["tag"])}</p>'
         f'<h3 class="spec-card__name"><a href="{url}">{esc(m["nombre"])}</a></h3>{hoy}{regla_altura(m["mm"])}'
@@ -400,8 +409,9 @@ def galeria(m):
         # marca): no va lazy, pero tampoco con prioridad.
         carga = ('loading="eager" fetchpriority="high"', 'loading="eager"')[i] if i < 2 else 'loading="lazy"'
         # Las diapositivas 2+ están en la pista horizontal y Chrome las baja de inmediato aunque sean lazy: en celular
-        # piden la copia de 420 px (no la de 720), así no le quitan ancho de banda a la foto principal ni al texto.
-        tamanos = "(min-width: 1024px) 620px, 100vw" if i == 0 else "(min-width: 1024px) 620px, 240px"
+        # piden la copia de 420 px (no la de 720), así no le quitan ancho de banda a la foto principal ni al texto. Con
+        # 240px el celular a 2x pedía 480 px y bajaba la de 720 (~240 KB): 200px la deja en la de 420 (auditoría 2026-11-20).
+        tamanos = "(min-width: 1024px) 620px, 100vw" if i == 0 else "(min-width: 1024px) 620px, 200px"
         diapos.append(f'<figure class="gallery__slide vt-fig"><div class="vt-fig__marco"><img src="{base}-sm.webp" '
                       f'srcset="{base}-sm.webp 420w, {base}.webp 720w" sizes="{tamanos}" '
                       f'width="720" height="960" alt="{esc(alt)}" {carga} decoding="async">'
@@ -489,10 +499,19 @@ def comparativa(m):
 
 
 # ---------- ciudades ----------
+# Auditoría por página (2026-11-20): copias de 720 px de las mismas fotos de obra (el celular a 2x pedía la de 960 px).
+OBRAS_720 = ("obra-proyecto-02", "obra-proyecto-03", "obra-proyecto-04", "obra-proyecto-05")
+
+
+def srcset_obra(nombre, ancho):
+    medio = f", {GAL}/{nombre}-720.webp 720w" if nombre in OBRAS_720 else ""
+    return f"{GAL}/{nombre}-sm.webp 560w{medio}, {GAL}/{nombre}.webp {ancho}w"
+
+
 def foto_obra(nombre, sizes, etapa, numero=1):
     """Figura de portada con una foto real de obra (data.OBRAS: medidas, alt y pie); se precarga como foto principal."""
     _n, ancho, alto, alt, lugar = next(o for o in data.OBRAS if o[0] == nombre)
-    return {"src": f"{GAL}/{nombre}-sm.webp", "srcset": f"{GAL}/{nombre}-sm.webp 560w, {GAL}/{nombre}.webp {ancho}w",
+    return {"src": f"{GAL}/{nombre}-sm.webp", "srcset": srcset_obra(nombre, ancho),
             "sizes": sizes, "ancho": ancho, "alto": alto, "numero": numero, "alt": alt, "lugar": lugar, "etapa": etapa}
 
 

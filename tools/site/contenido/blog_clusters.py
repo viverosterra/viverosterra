@@ -52,6 +52,23 @@ LEDE = {
 }
 
 
+# Auditoría por página del blog (2026-11-20): el botón de WhatsApp dice qué pasa al tocarlo (antes «Cotizar por WhatsApp» y
+# «Preguntar por WhatsApp» en los 49) y la línea entre secciones pide lo que sirve para el tema (antes «colonia y los metros»
+# también en palmas y plantas). El menú, la barra y el pie siguen con «Cotizar por WhatsApp».
+_EXISTENCIA = ("Preguntar existencia y precio",
+               "¿No sabes qué tamaño te conviene? Dinos dónde la vas a poner y te mandamos fotos y precio:")
+_FOTOS = ("Mandar fotos por WhatsApp", "¿Tu jardín ya tiene el problema? Mándanos fotos y te decimos qué hacer:")
+_MEDIDAS = ("Mandar medidas y fotos", "¿Ya tienes los metros? Mándanos medidas y fotos y te damos un precio:")
+_PEDIDO = ("Calcular mi pedido por WhatsApp", "¿No sabes cuánto pedir? Dinos los metros y te calculamos costales o camión:")
+WA = {
+    "pasto-natural": ("Pedir mi precio por WhatsApp", "¿Ya tienes los metros? Te damos el precio de tu pasto, solo o instalado:"),
+    "pasto-sintetico": ("Pedir precio con envío", "¿Ya tienes los metros? Te damos el precio con envío a tu ciudad:"),
+    "riego": _MEDIDAS, "diseno": _MEDIDAS, "mantenimiento": _FOTOS,
+    "palmas": _EXISTENCIA, "palmas-cotizacion": _EXISTENCIA, "arboles": _EXISTENCIA, "banqueta": _EXISTENCIA,
+    "plantas": _EXISTENCIA, "interior": _EXISTENCIA, "tierra": _PEDIDO, "tezontle": _PEDIDO,
+}
+
+
 def _desde(monto, antes="Desde", unidad=""):
     return {"antes": antes, "monto": monto, "unidad": unidad}
 
@@ -227,4 +244,62 @@ def de(slug):
         enlaces = (("lista de precios vigente", "/precios"),) + enlaces[:2]
     if slug in GUIA_D:  # la guía va en lugar del enlace a Tampico (sigue en el CTA, el menú y el pie): máximo 3
         enlaces = (enlaces[0], GUIA_D[slug]) + enlaces[2:]
-    return {**base, "tema": tema, "enlaces": enlaces[:3], "landing": LANDING.get(slug, base["landing"]), "lede": LEDE[tema]}
+    boton, lectura = WA[tema]
+    return {**base, "tema": tema, "enlaces": enlaces[:3], "landing": LANDING.get(slug, base["landing"]), "lede": LEDE[tema],
+            "boton": boton, "lectura": lectura}
+
+
+# Auditoría por página del blog (2026-11-20): el mensaje de los botones del artículo (portada, líneas de lectura, media
+# lectura y cierre) dice qué quiere el cliente y qué va a mandar (antes «leí su artículo "<título>" y quiero cotizar»).
+# El menú, la barra y el pie siguen con el de mensajes_paginas.BLOG.
+MENSAJES = {
+    "acolchado-mulch-jardin-tampico": "Hola, leí su guía de acolchado (mulch). Les mando fotos de mi jardín para que me digan qué tiene y cuánto cuesta atenderlo.",
+    "arboles-para-sembrar-en-banqueta": "Hola, leí la guía de árboles para banqueta. Quiero precio y existencia; les digo tamaño, cuántas y mi colonia.",
+    "buganvilia-tampico-cuidados-floracion": "Hola, leí la guía de la buganvilia. Quiero precio y existencia; les digo tamaño, cuántas y mi colonia.",
+    "cesped-amarillo-tampico-causas-soluciones": "Hola, mi césped se está poniendo amarillo y necesito diagnóstico",
+    "como-ahorrar-agua-jardin-tampico": "Hola, leí la guía para ahorrar agua en el jardín y quiero cotizar riego automático; les paso los m² y mi colonia.",
+    "como-evitar-encharcamientos-jardin-tampico": "Hola, leí su guía de encharcamientos y drenaje. Les mando fotos de mi jardín para que me digan qué tiene y cuánto cuesta atenderlo.",
+    "como-instalar-pasto-sintetico": "Hola, leí la guía para instalar pasto sintético. Quiero precio con envío; les digo metros y ciudad.",
+    "como-medir-plantas-altura-cepellon": "Hola, leí la guía para medir plantas. Les paso la planta, la altura y el cepellón que busco para que me den precio.",
+    "como-plantar-palma-arbol-paso-a-paso-tampico": "Hola, leí la guía para plantar una palma o árbol y quiero cotizar la plantación; les digo cuál y mi colonia.",
+    "cuando-plantar-pasto-tampico-calendario": "Hola, leí el calendario para plantar pasto. Quiero precio del pasto en rollo; les mando metros, colonia y si lo quiero instalado.",
+    "cuando-regar-pasto-san-agustin-tampico": "Hola, leí la guía de riego del pasto San Agustín. Les mando fotos de mi pasto para que me digan qué tiene y cuánto cuesta atenderlo.",
+    "cuanto-cuesta-jardin-tampico-precios": "Hola, leí la guía de precios de jardines y quiero un precio para el mío; les mando metros, fotos y colonia.",
+    "cuanto-cuesta-pasto-sintetico-mexico": "Hola, leí la guía de precios del pasto sintético. Quiero precio con envío; les digo metros y ciudad.",
+    "cuidados-palma-del-viajero-ravenala": "Hola, leí la guía de la Palma del Viajero. Quiero precio y existencia; les digo la altura que busco y mi colonia.",
+    "diseno-jardines-tampico-guia": "Hola, leí la guía de diseño de jardines. Me interesa el Plan Terra; les mando fotos y metros de mi jardín.",
+    "duranta-erecta-tampico-cuidados-seto": "Hola, leí la guía de la duranta para seto. Quiero precio y existencia; les digo tamaño, cuántas y mi colonia.",
+    "errores-pasto-san-agustin-tampico": "Hola, leí la guía de errores del pasto San Agustín. Les mando fotos de mi pasto para que me digan qué tiene y cuánto cuesta el mantenimiento.",
+    "fertilizacion-jardines-tampico-temporada-lluvias": "Hola, leí su guía de fertilización. Les mando fotos de mi jardín para que me digan qué tiene y cuánto cuesta atenderlo.",
+    "ficus-elastica-cuidados-tampico": "Hola, leí la guía del Ficus Elastica. Quiero precio y existencia; les digo tamaño, cuántas y mi colonia.",
+    "framboyan-delonix-regia-tampico": "Hola, leí la guía del Flamboyán. Quiero precio y existencia; les digo el tamaño que busco y mi colonia.",
+    "hongos-plantas-exceso-humedad-tampico": "Hola, leí su guía de hongos en plantas. Les mando fotos de mi jardín para que me digan qué tiene y cuánto cuesta atenderlo.",
+    "jardin-en-macetas-terraza-tampico-guia": "Hola, leí la guía de jardín en macetas y terrazas. Quiero precio y existencia; les digo tamaño, cuántas y mi colonia.",
+    "jardin-vertical-tampico-guia": "Hola, leí la guía de jardín vertical y quiero cotizar el mío; les mando medidas y fotos del muro.",
+    "jardines-temporada-lluvias-tampico": "Hola, leí su guía de jardines en temporada de lluvias. Les mando fotos de mi jardín para que me digan qué tiene y cuánto cuesta atenderlo.",
+    "nortes-tampico-proteger-plantas-jardin": "Hola, leí su guía de nortes. Les mando fotos de mi jardín para que me digan qué tiene y cuánto cuesta atenderlo.",
+    "palma-areca-tampico": "Hola, leí la guía de la Palma Areca. Quiero precio y existencia; les digo la altura que busco y mi colonia.",
+    "palma-bambu-chamaedorea-tampico": "Hola, leí la guía de la Palma Bambú. Quiero precio y existencia; les digo la altura que busco y mi colonia.",
+    "palma-bismarckia-bismarckia-nobilis-tampico": "Hola, leí la guía de la Palma Bismarckia. Quiero precio y existencia; les digo la altura que busco y mi colonia.",
+    "palma-coco-plumoso-tampico": "Hola, leí la guía de la Palma Coco Plumoso. Quiero precio y existencia; les digo la altura que busco y mi colonia.",
+    "palma-cola-de-zorro-wodyetia-bifurcata-tampico": "Hola, leí la guía de la Palma Cola de Zorro. Quiero precio y existencia; les digo la altura que busco y mi colonia.",
+    "palma-kerpis-howea-forsteriana-tampico": "Hola, leí la guía de la Palma Kerpis. Quiero precio y existencia; les digo la altura que busco y mi colonia.",
+    "palma-real-roystonea-regia-tampico": "Hola, leí la guía de la Palma Real. Quiero precio y existencia; les digo la altura que busco y mi colonia.",
+    "palma-triangular-dypsis-decaryi-tampico": "Hola, leí la guía de la Palma Triangular. Quiero precio y existencia; les digo la altura que busco y mi colonia.",
+    "palma-washingtona-tampico": "Hola, leí la guía de la Palma Washingtona. Quiero precio y existencia; les digo la altura que busco y mi colonia.",
+    "palmas-para-jardin-tampico": "Hola, leí la guía de 8 palmas para jardín. Quiero precio y existencia; les digo cuál, la altura y mi colonia.",
+    "pasto-san-agustin-instalacion-mantenimiento": "Hola, leí la guía para instalar pasto San Agustín. Quiero precio del pasto en rollo; les mando metros, colonia y si lo quiero instalado.",
+    "pasto-san-agustin-vs-japones": "Hola, leí la comparativa de pasto San Agustín y japonés. Quiero precio del pasto en rollo; les mando metros, colonia y si lo quiero instalado.",
+    "pasto-sintetico-calor-mexico": "Hola, leí la guía del pasto sintético en el calor. Quiero precio con envío; les digo metros y ciudad.",
+    "pasto-sintetico-vs-natural-tampico": "Hola, leí la comparativa de pasto sintético y natural. Quiero precio instalado en mi casa; les digo metros y colonia.",
+    "plagas-comunes-jardin-tampico": "Hola, leí su guía de plagas del jardín. Les mando fotos de mis plantas para que me digan qué tienen y cuánto cuesta atenderlas.",
+    "plantas-interior-tampico": "Hola, leí la guía de plantas de interior. Quiero precio y existencia; les digo tamaño, cuántas y mi colonia.",
+    "plantas-resistentes-sal-golfo-tampico": "Hola, leí la guía de plantas resistentes a la sal. Quiero precio y existencia; les digo tamaño, cuántas y mi colonia.",
+    "plantas-seguras-mascotas-jardin-tampico": "Hola, leí la guía de plantas seguras para mascotas. Quiero precio y existencia; les digo tamaño, cuántas y mi colonia.",
+    "poda-arboles-palmas-tampico-guia": "Hola, leí su guía de poda y quiero cotizar la poda de mis árboles o palmas; les mando fotos y ubicación.",
+    "que-altura-de-pasto-sintetico-elegir": "Hola, leí la guía de alturas de pasto sintético. Quiero que me recomienden modelo y precio; les digo metros, ciudad y para qué lo uso.",
+    "sistema-riego-automatizado-tampico": "Hola, leí la guía de riego automático y quiero cotizar el riego de mi jardín; les paso los m² y mi colonia.",
+    "temporada-huracanes-proteger-jardin-tampico": "Hola, leí su guía de huracanes y quiero cotizar una poda preventiva; les mando fotos y ubicación.",
+    "tezontle-usos-jardin-tampico": "Hola, leí la guía del tezontle. Quiero precio por costal; les digo cuántos y mi colonia.",
+    "tierra-negra-costal-camion-tampico": "Hola, leí la guía de tierra negra y quiero saber si me conviene costal o camión; les paso metros y colonia.",
+}

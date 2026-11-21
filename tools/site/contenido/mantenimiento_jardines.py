@@ -189,8 +189,11 @@ CONTENIDO = {
     "preguntas": "mantenimiento",  # panel de WhatsApp, entrega 2 (spec del primer mensaje, 2026-11-16)
     "prefijo": "mantenimiento",
     # Entrega B de experiencia: CTA tras "qué incluye" y tras la garantía (antes, 14.5 pantallas sin CTA en línea).
+    # Auditoría por página (2026-11-20): fila tras el proceso (antes, 4 pantallas sin botón) y la de la garantía con
+    # texto propio y el mensaje general (antes repetía «Cotizar el plan básico» de la tarjeta del plan 1).
     "ctas": {"prueba": (MENSAJE, "Cotizar mi mantenimiento"), "incluye": (MENSAJE, "Pedir mi plan de visitas"),
-             "garantia": (PLANES[0]["mensaje"], "Cotizar el plan básico"), "faq": (MENSAJE, "Preguntar por WhatsApp")},
+             "proceso": (MENSAJE, "Agendar mi visita por WhatsApp"),
+             "garantia": (MENSAJE, "Pedir mi visita inicial"), "faq": (MENSAJE, "Preguntar por WhatsApp")},
     "meta": META,
     "jsonld": {"producto": SERVICIO, "migas": MIGAS_LD, "speakable": entidad.SPEAKABLE},
     "migas": (("Inicio", "/"), ("Mantenimiento de jardines", None)),
@@ -259,6 +262,9 @@ CONTENIDO = {
                  "Mensual o cada 21 días"),
             ),
             "caption": "Frecuencia según la temporada en Tampico.",
+            # Auditoría por página (2026-11-20): plegada en celular; las frecuencias ya están en los planes y en las
+            # preguntas, y el cierre de abajo queda a la vista.
+            "plegable": "Frecuencia por temporada, mes por mes",
             "cierre": f"La frecuencia final ({FRECUENCIAS}) la fijamos contigo según tu plan y lo que necesita tu jardín.",
         },
     },
@@ -309,7 +315,7 @@ CONTENIDO = {
         "titulo": "Otros servicios de Viveros Terra",
         "items": (
             {"titulo": "Pasto en Rollo San Agustín", "href": "/pasto-en-rollo-tampico",
-             "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta.webp", "ancho": 900, "alto": 1111,
+             "img": f"{OBRA}/rollos-pasto-san-agustin-camioneta-560.webp", "ancho": 560, "alto": 691,
              "texto": (f"Pasto desde {dinero(P['pasto_solo_m2'])}/m² · Instalado desde "
                        f"{dinero(P['pasto_instalado_m2'])}/m². {datos.TERRENO_LISTO_CORTO}")},
             {"titulo": "Diseño de Jardines", "href": "/diseno-jardines-tampico",

@@ -77,11 +77,15 @@ def render(k):
     secciones = [c.portada(k["portada"], tipo, k["migas"]), c.respuesta(k.get("respuesta")), _prueba(k, 1), _escalas(k, 2), _correo(k, 3),
                  _documentacion(k, 4), _paquetes(k, 5),
                  c.momento(c.bloque(6, "Proceso", "vt-h-proceso", p["titulo"], c.pasos(p["pasos"]), lede=p["lede"])),
-                 c.garantia(dict(g, numero=7, id_titulo="vt-h-garantia", rotulo="Garantía")),
+                 # Auditoría por página (2026-11-20): fila de WhatsApp bajo la garantía (antes, ~4 pantallas sin botón
+                 # entre los paquetes y las preguntas).
+                 c.garantia(dict(g, numero=7, id_titulo="vt-h-garantia", rotulo="Garantía", cta_html=_cta(k, "garantia"))),
                  c.bloque_dos(8, "Preguntas de compras", "vt-h-faq", f["titulo"], "", c.faq(f["preguntas"]) + _cta(k, "faq"),
                               tinte=True, ritmo="apoyo"),
                  _cobertura(k, 9),
-                 c.bloque(10, "Para empresas", "vt-h-rel", r["titulo"], c.relacionados(r["items"]), tinte=True),
+                 # Auditoría por página (2026-11-20): en celular, las otras páginas en fila con desplazamiento (antes, 2.1
+                 # pantallas de tarjetas apiladas antes del cierre).
+                 c.bloque(10, "Para empresas", "vt-h-rel", r["titulo"], c.relacionados(r["items"], fila=True), tinte=True),
                  c.cierre(ci["titulo"], ci["lede"], ci["mensaje"], tipo)]
     j = k["jsonld"]
     speakable = [{"@type": "SpeakableSpecification", "cssSelector": list(j["speakable"])}]

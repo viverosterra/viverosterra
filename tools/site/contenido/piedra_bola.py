@@ -78,6 +78,7 @@ PREGUNTAS = (
 CONTENIDO = {
     "tipo": mc.TIPO,
     "prefijo": "vt-piedra",
+    "precio_primero": True, "opiniones_tras_usos": True,  # auditoría por página (plantillas/material.py)
     "meta": META,
     "migas": MIGAS,
     "portada": {
@@ -87,11 +88,14 @@ CONTENIDO = {
         "h1": 'Piedra bola de río en Tampico <span class="vt-serif">para jardines y senderos</span>',
         "lede": ("Piedra de río natural, a granel, para senderos, jardines secos y fuentes. El precio se cotiza según "
                  "la cantidad."),
-        "etiqueta": {"codigo": "Piedra bola", "aviso": "A granel", "nombre": "Por m²", "antes": "",
-                     "monto": "120–150 kg", "unidad": "capa de 8 a 10 cm",
-                     "filas": (("Venta", datos.PIEDRA_BOLA_VENTA.capitalize()), ("Precio", SEGUN)),
+        # Auditoría por página: el amarillo es solo para precios; los kg por m² pasan a una fila.
+        "etiqueta": {"codigo": "Piedra bola", "aviso": "A granel", "nombre": "Piedra bola de río", "antes": "Precio",
+                     "monto": SEGUN.capitalize(), "unidad": "por escrito", "sin_precio": True,
+                     "filas": (("Por m²", "120–150 kg"),
+                               ("Venta", datos.PIEDRA_BOLA_VENTA.capitalize())),
                      "nota": f"{datos.SIN_MINIMO} Te damos el precio por escrito con la entrega."},
         "mensaje": MENSAJE,
+        "cta_texto": "Pedir precio con entrega",
     },
     "que_es": {
         "titulo": "¿Qué es la piedra bola de río y para qué sirve en jardines?",
@@ -120,7 +124,9 @@ CONTENIDO = {
     "faq": {"titulo": "Todo sobre piedra bola de río en Tampico", "preguntas": PREGUNTAS},
     "cierre": {"titulo": "¿Qué proyecto tienes en mente con piedra bola de río?",
                "lede": "Dinos el área y tu colonia y te mandamos el precio con la entrega.",
-               "fondo": {"src": "/img/jardin-residencial-plantas-pasto-tampico.webp", "ancho": 933, "alto": 1400}},
+               "fondo": {"src": "/img/jardin-residencial-plantas-pasto-tampico.webp", "ancho": 933, "alto": 1400,
+                         "srcset": ("/img/jardin-residencial-plantas-pasto-tampico-640.webp 640w, "
+                                    "/img/jardin-residencial-plantas-pasto-tampico.webp 933w")}},
     "otros": {"titulo": "Otros materiales decorativos",
               "items": mc.otros(RUTA, ("/tezontle-rojo-tampico", "/tierra-negra-vegetal-tampico", "/marmol-blanco-tampico"),
                                 con_miniatura=True)},

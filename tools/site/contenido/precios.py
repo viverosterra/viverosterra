@@ -136,35 +136,35 @@ CONTENIDO = {
         {"id": "pasto", "rotulo": "Pasto natural", "titulo": 'Pasto San Agustín <span class="vt-serif">en rollo</span>',
          "filas": lp.PASTO, "concepto": "Producto",
          "caption": f"Precios {datos.ANIO}. El instalado incluye IVA. {datos.PASTO_SIN_IVA}. {datos.TERRENO_LISTO}",
-         "cotizar": ("Cotizar pasto por WhatsApp", COTIZAR["pasto"]),
+         "cotizar": ("Pedir precio de mi pasto por WhatsApp", COTIZAR["pasto"]),
          "nota": ('<a href="/pasto-en-rollo-tampico">Pasto en rollo en Tampico</a>: solo el pasto, recoges en el vivero o '
                   "se cobra la entrega según tu colonia. "
                   '<a href="/protocolo-cuidados-pasto-san-agustin">Protocolo de riego y garantía</a>.')},
         {"id": "servicios", "rotulo": "Servicios", "titulo": 'Mantenimiento, diseño <span class="vt-serif">y riego</span>',
          "filas": lp.SERVICIOS, "concepto": "Servicio", "caption": f"Precios {datos.ANIO} con IVA.",
-         "cotizar": ("Cotizar un servicio por WhatsApp", COTIZAR["servicios"]),
+         "cotizar": ("Preguntar por mantenimiento, diseño o riego", COTIZAR["servicios"]),
          "nota": (f"Contratos con empresas con factura y REPSE {datos.REPSE}. Guía: "
                   '<a href="/blog/cuanto-cuesta-jardin-tampico-precios">cuánto cuesta hacer un jardín en Tampico</a>.')},
         {"id": "sintetico", "rotulo": "Pasto sintético",
          "titulo": 'Pasto sintético <span class="vt-serif">por modelo</span>', "modelos": True,
          "lede": (f"Material por m² según cuánto compres. Instalado en Tampico, Madero y Altamira de {SINT_MIN} a "
                   f"{SINT_MAX}/m² con material y colocación."),
-         "cotizar": ("Cotizar pasto sintético por WhatsApp", COTIZAR["sintetico"]),
-         "nota": (f"Cortes de {data.MIN_SHOWROOM_M2} a 9 m² solo en el showroom. Envío a todo México desde "
+         "cotizar": ("Preguntar existencia y precio del sintético", COTIZAR["sintetico"]),
+         "nota": (f"Cortes de {data.MIN_SHOWROOM_M2} a 9 m² solo en el vivero. Envío a todo México desde "
                   f"{data.MIN_NACIONAL_M2} m²; el flete se cobra por rollo según tu estado. "
                   '<a href="/pasto-sintetico">Ver la tienda</a> · <a href="/pasto-sintetico-tampico">Instalación en '
                   "Tampico</a>")},
         {"id": "materiales", "rotulo": "Materiales", "titulo": 'Tierra, tezontle <span class="vt-serif">y piedra</span>',
          "filas": lp.MATERIALES, "concepto": "Material", "caption": f"Precios {datos.ANIO} con IVA.",
-         "cotizar": ("Cotizar materiales por WhatsApp", COTIZAR["materiales"]),
+         "cotizar": ("Pedir material con entrega", COTIZAR["materiales"]),
          "nota": ('Recoges en el <a href="/vivero-tampico">vivero de Cd. Madero</a> o te lo llevamos en Tampico, Madero y '
                   "Altamira. "
                   f"{datos.CONDICIONES_MATERIALES}")},
         {"id": "plantas", "rotulo": "Vivero", "titulo": 'Plantas, palmas <span class="vt-serif">y árboles</span>',
          "filas": lp.PLANTAS, "concepto": "Planta", "caption": f"Precios {datos.ANIO}. Las plantas no llevan IVA.",
-         "cotizar": ("Cotizar plantas por WhatsApp", COTIZAR["plantas"]),
+         "cotizar": ("Preguntar existencia de plantas y palmas", COTIZAR["plantas"]),
          "nota": ('Arma tu lista en el <a href="/catalogo">catálogo</a> y mándala por WhatsApp. '
-                  f"{datos.GARANTIA_PLANTAS.replace(' (ver condiciones)', '')} "
+                  f"Garantía de arraigo de {datos.GARANTIA_PLANTAS.replace(' (ver condiciones)', '')} "
                   '<a href="/politicas#garantia-plantas">Ver condiciones</a>.')},
     ),
     "pago": {
@@ -186,7 +186,7 @@ CONTENIDO = {
             {"id": "garantia-pasto", "titulo": f"Pasto San Agustín: arraigo de {datos.ARRAIGO}",
              "texto": datos.GARANTIA_PASTO.replace(" (ver condiciones)", ""),
              "enlace": ("Protocolo de riego y condiciones", "/protocolo-cuidados-pasto-san-agustin")},
-            {"id": "garantia-plantas", "titulo": "Plantas y palmas: 30 días",
+            {"id": "garantia-plantas", "titulo": "Plantas y palmas que sembramos: 30 días",
              "texto": (f"{datos.GARANTIA_PLANTAS.replace(' (ver condiciones)', '')} No cubre falta de riego, cambio de "
                        "lugar, daños por mascotas ni clima extremo."),
              "enlace": ("Condiciones de la garantía de plantas", "/politicas#garantia-plantas")},

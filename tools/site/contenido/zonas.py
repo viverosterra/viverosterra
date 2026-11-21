@@ -110,7 +110,10 @@ CONTENIDO = {
         {"clase": "tarjetas", "rotulo": "Zonas", "id": "vt-h-zonas", "ancla": "zonas",
          "titulo": "Seis zonas con página propia",
          "lede": "Cada zona tiene sus precios, las colonias que atendemos y sus preguntas frecuentes.",
-         "items": TARJETAS, "cta": (MENSAJE, "Cotizar en mi zona")},
+         # Auditoría por página (2026-11-20): en celular las 6 tarjetas van en fila con desplazamiento (antes, 3.4
+         # pantallas apiladas: 4.5 sin botón) y el botón pide la colonia y una foto.
+         "items": TARJETAS, "fila": True,
+         "cta": (mensajes_paginas.UTILITARIAS["zonas_colonia"], "Mandar mi colonia y una foto")},
         {"clase": "fichas", "rotulo": "Ciudades", "id": "vt-h-ciudades", "ancla": "ciudades",
          "titulo": "Tampico, Ciudad Madero y Altamira", "lede": "Lo que atendemos en cada ciudad.", "items": CIUDADES},
         {"clase": "fichas", "rotulo": "Servicios", "id": "vt-h-servicios", "ancla": "servicios",

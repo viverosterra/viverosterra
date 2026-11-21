@@ -288,13 +288,15 @@ def portada(p, tipo, migas_items):
     return c.portada(p, tipo, migas_items)
 
 
-def cierre(ci, mensaje, tipo):
-    """CTA final (componentes.cierre) con, si main la tenía, su foto de fondo decorativa (alt="")."""
-    html = c.cierre(ci["titulo"], ci["lede"], mensaje, tipo)
+def cierre(ci, mensaje, tipo, texto=None):
+    """CTA final (componentes.cierre) con, si main la tenía, su foto de fondo decorativa (alt=""). texto: el del botón.
+    Con srcset en el fondo, sizes="50vw": la foto va al 15% de opacidad y basta media resolución (auditoría por página)."""
+    html = c.cierre(ci["titulo"], ci["lede"], mensaje, tipo, **({"texto": texto} if texto else {}))
     f = ci.get("fondo")
     if not f:
         return html
-    fondo = (f'<img class="vt-cierre__fondo" src="{esc(f["src"])}" width="{f["ancho"]}" height="{f["alto"]}" alt="" '
+    srcset = f' srcset="{esc(f["srcset"])}" sizes="50vw"' if f.get("srcset") else ""
+    fondo = (f'<img class="vt-cierre__fondo" src="{esc(f["src"])}"{srcset} width="{f["ancho"]}" height="{f["alto"]}" alt="" '
              'loading="lazy" decoding="async">')
     return html.replace('<section class="vt-cierre"', '<section class="vt-cierre vt-cierre--foto"', 1).replace(
         '<div class="vt-wrap vt-cierre__grid">', f'{fondo}<div class="vt-wrap vt-cierre__grid">', 1)

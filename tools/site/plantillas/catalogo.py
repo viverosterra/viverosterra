@@ -30,7 +30,7 @@ def render(k):
               f'<p class="vt-portada__lema vt-serif">{ca["lema"]}</p><p class="vt-lede">{ca["lede"]}</p>'
               f'<p class="vt-cat__precios">{ca["precios"]}</p>'
               f'<div class="vt-portada__cta" data-hero-cta>{c.boton_wa(ca["mensaje"], f"{tipo}:hero")}</div>'
-              f'{c.enlaces_portada((), tipo)}</div></section>')
+              f'{c.enlaces_portada((), tipo)}{c.confianza(ca.get("dato", ""))}</div></section>')
     rejilla = (f'<section class="vt-bloque vt-cat__rejilla" aria-labelledby="vt-h-rejilla"><div class="vt-wrap">'
                f'<h2 id="vt-h-rejilla" class="vt-sr">{k["rejilla"]["titulo"]}</h2>'
                f'{cp.filtros_catalogo(len(cd.ESPECIES))}{cp.rejilla_catalogo(tipo=tipo, mensaje=ca["mensaje"])}</div></section>')

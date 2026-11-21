@@ -1,5 +1,5 @@
 """Plantilla de la página de temporada de Nochebuenas (spec §4): portada → cotizador → tabla de precios → ¿para quién? →
-galería → confianza → cómo funciona → cuidados → preguntas → datos de la planta → CTA final, más la barra fija móvil.
+galería (con su fila de WhatsApp) → confianza → cómo funciona → cuidados → preguntas → datos de la planta → CTA final, más la barra fija móvil.
 
 render(k, modo) arma los tres modos del spec §7; sin modo usa datos.NOCHEBUENAS["modo"]. public/js/vt-nochebuenas.js lee el
 JSON incrustado y los atributos data-nb-*. <body class="vt-pagina vt-nochebuenas">: el shell agrega terra-nochebuenas.css.
@@ -192,7 +192,10 @@ def _galeria(k, modo, n):
     figuras = "".join(f'<div class="vt-nb-galeria__f vt-nb-galeria__f--{f["id"]}">{c.figura(_foto(f, i, SIZES_GALERIA[f["id"]]))}</div>'
                       for i, f in enumerate(fotos, 2))
     x = k["galeria"]
-    return c.bloque(next(n), "Fotos", "vt-h-galeria", x["titulo"], f'<div class="vt-nb-galeria">{figuras}</div>',
+    # Auditoría por página (2026-11-20): fila de WhatsApp al terminar las fotos (antes, 5.5 pantallas del celular sin
+    # botón entre «¿Para quién?» y «Cómo funciona»). Sin ella fuera de temporada: ahí el cierre ya invita a escribir.
+    fila = "" if modo == SIN_MODO_COTIZADOR else c.fila_seccion(x["mensajes"][modo], TIPO, "galeria", x["cta"][modo])
+    return c.bloque(next(n), "Fotos", "vt-h-galeria", x["titulo"], f'<div class="vt-nb-galeria">{figuras}</div>{fila}',
                     lede=None if modo == SIN_MODO_COTIZADOR else x["lede"], tinte=True)
 
 

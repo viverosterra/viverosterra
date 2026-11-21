@@ -42,7 +42,9 @@ def _cuerpo(s):
     if tipo == "medidas":
         return cr.tabla_medidas()
     if tipo == "estados":
-        return cr.tabla_estados(s["modelo"])
+        # Auditoría por página (2026-11-20): las tres zonas a la vista y los 32 estados plegados (antes, unas 9
+        # pantallas del celular sin botón). Las 32 filas siguen en el HTML.
+        return t.zonas_acordeon() + c.plegable("Flete y precio puesto en los 32 estados", cr.tabla_estados(s["modelo"]))
     # Entrega D del SEO nacional (2026-11-16): tabla de las guías (pesos por modelo, anchos, sintético contra natural).
     if tipo == "tabla":
         return c.tabla_comparativa(s["cabeza"], s["filas"], s["nota"])
@@ -60,10 +62,20 @@ def _fila(k):
             + c.prueba_cta(opiniones, f"vendemos a todo México desde {datos.SINTETICO_NACIONAL_DESDE}"))
 
 
+def _fila_seccion(k, s):
+    """Auditoría por página (2026-11-20): WhatsApp al final de las secciones largas que no tenían botón (tablas de las
+    guías, totales de la ciudad, cómo se calcula): ningún tramo de más de ~3 pantallas del celular sin botón. Lleva el
+    mensaje de la página y, como las demás filas de la tienda, lo que el cliente ya eligió (data-vt-ctx)."""
+    if not s.get("fila"):
+        return ""
+    return c.fila_seccion(k["cierre"]["mensaje"], k["tipo"], s["id"], s["fila"], contexto=True)
+
+
 def render(k):
     secciones = [_portada(k)]
     for n, s in enumerate(k["secciones"], 1):
-        cuerpo = _cuerpo(s) + (c.figura(s["figura"]) if s.get("figura") else "") + (_fila(k) if s["tipo"] == "modelos" else "")
+        cuerpo = (_cuerpo(s) + (c.figura(s["figura"]) if s.get("figura") else "") + _fila_seccion(k, s)
+                  + (_fila(k) if s["tipo"] == "modelos" else ""))
         secciones.append(c.bloque(n, s["rotulo"], f"vt-h-{s['id']}", s["titulo"], cuerpo, lede=s.get("lede"),
                                   tinte=n % 2 == 0, id_seccion=s["id"]))
     ci = k["cierre"]

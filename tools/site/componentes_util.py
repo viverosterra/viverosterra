@@ -27,7 +27,9 @@ def cabeza(k):
     foto = ""
     if k.get("foto"):
         f = k["foto"]
-        foto = (f'<div class="vt-util__foto"><img src="{esc(f["src"])}" width="{f["ancho"]}" height="{f["alto"]}" '
+        # Opcional (auditoría por página, 2026-11-20): srcset y sizes con versiones más chicas de la misma foto.
+        srcset = f' srcset="{esc(f["srcset"])}" sizes="{esc(f["sizes"])}"' if f.get("srcset") else ""
+        foto = (f'<div class="vt-util__foto"><img src="{esc(f["src"])}"{srcset} width="{f["ancho"]}" height="{f["alto"]}" '
                 f'alt="{esc(f["alt"])}" loading="eager" fetchpriority="high" decoding="async"></div>')
     return (f'<section class="vt-util__cabeza vt-titular vt-titular--larga" aria-labelledby="vt-h1"><div class="vt-wrap">{ruta}'
             f'<div class="vt-util__intro"><div><p class="vt-kicker">{k["kicker"]}</p><h1 id="vt-h1">{k["h1"]}</h1>'
@@ -40,6 +42,9 @@ def _bloque_legal(b):
         return f"<p>{valor}</p>"
     if tipo == "h3":
         return f"<h3>{valor}</h3>"
+    if tipo == "cta":  # fila de WhatsApp (mensaje, "tipo:sección", texto); auditoría por página, 2026-11-20
+        mensaje, cta, texto = valor
+        return c.fila_seccion(mensaje, *cta.split(":", 1), texto)
     etiqueta = "ol" if tipo == "ol" else "ul"
     return f"<{etiqueta}>" + "".join(f"<li>{x}</li>" for x in valor) + f"</{etiqueta}>"
 

@@ -69,9 +69,9 @@
     const min = isPickup ? MIN_SHOWROOM_M2 : MIN_NACIONAL_M2;
     if (!Number.isFinite(m2) || m2 < min) {
       return { error: isPickup
-        ? `En showroom vendemos desde ${MIN_SHOWROOM_M2} m².`
+        ? `En el vivero de Cd. Madero vendemos desde ${MIN_SHOWROOM_M2} m².`
         // Reescritura 14 (Entrega B de experiencia): el aviso dice cómo seguir.
-        : `Para envío nacional el mínimo es ${MIN_NACIONAL_M2} m² (medio rollo). Sube a ${MIN_NACIONAL_M2} m² o elige "Recoger en showroom, Cd. Madero", donde vendemos desde ${MIN_SHOWROOM_M2} m².` };
+        : `Para envío nacional el mínimo es ${MIN_NACIONAL_M2} m² (medio rollo). Sube a ${MIN_NACIONAL_M2} m² o elige "Recoger en el vivero, Cd. Madero", donde vendemos desde ${MIN_SHOWROOM_M2} m².` };
     }
     const pm2 = precioM2(model, m2);
     const material = pm2 * m2;
@@ -194,7 +194,7 @@
   }
 
   function estadoLabel(estado) {
-    if (estado === PICKUP) return 'Lo recojo en el showroom de Cd. Madero';
+    if (estado === PICKUP) return 'Lo recojo en el vivero de Cd. Madero';
     if (estado === LOCAL) return 'Envío local en Tampico, Madero o Altamira (según mi colonia)';
     return estado ? `Entrega en ${estado}` : '';
   }
@@ -542,7 +542,7 @@
         envioLabel.textContent = 'Envío local';
         envioEl.textContent = 'Según tu colonia';
       } else if (estado === PICKUP) {
-        envioLabel.textContent = 'Recoger en showroom';
+        envioLabel.textContent = 'Recoger en el vivero';
         envioEl.textContent = '$0';
       } else if (!error) {
         envioLabel.textContent = `Envío · ${q.rollos} rollo${q.rollos > 1 ? 's' : ''} · ${ZONAS[q.zona].nombre}`;

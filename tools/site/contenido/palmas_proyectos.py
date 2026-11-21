@@ -158,6 +158,7 @@ FIGURAS = (
      "etapa": "En nuestro vivero"},
 )
 
+PREGUNTA_COMPRAS = "Hola, tengo una pregunta de compras sobre palmas para proyecto (factura, REPSE o entregas)."
 PAQUETES = (
     {"cta": "Cotizar para un fraccionamiento", "rotulo": "Paquete 1 · Fraccionamientos", "titulo": "Áreas comunes, camellones y casa muestra",
      "precio_texto": SEGUN_ALTURA,
@@ -182,7 +183,10 @@ PAQUETES = (
 
 CONTENIDO = {
     # Entrega C de experiencia: filas de WhatsApp tras los clientes y las preguntas (antes, 7.1 a 7.3 pantallas sin CTA).
-    "ctas": {"prueba": (MENSAJE, "Cotizar palmas para mi proyecto"), "faq": (MENSAJE, "Preguntar por WhatsApp")},
+    # Auditoría por página (2026-11-20): fila bajo la garantía y la de preguntas con un
+    # mensaje de compras, no el del hero.
+    "ctas": {"prueba": (MENSAJE, "Cotizar palmas para mi proyecto"), "garantia": (MENSAJE, "Cotizar palmas sembradas con garantía"),
+             "faq": (PREGUNTA_COMPRAS, "Hacer mi pregunta de compras")},
     "tipo": "b2b",
     "prefijo": "pal",
     "meta": META,

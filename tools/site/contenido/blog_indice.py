@@ -73,3 +73,6 @@ PARIDAD["cta"] = 'Entrega B de experiencia (2026-11-10), CTA y recorrido: mensaj
 
 # Lo que cambia por la Entrega C de experiencia (ritmo y movimiento).
 PARIDAD["ritmo"] = 'Entrega C de experiencia (2026-11-10), ritmo y movimiento: una fila discreta de WhatsApp («Preguntar por WhatsApp») cada 12 tarjetas (antes, 25.4 pantallas sin CTA); en celular la tarjeta con foto va a dos columnas con la miniatura en su misma proporción; revelado por scroll de encabezados y figuras y balanceo de la etiqueta en escritorio.'
+PARIDAD["auditoria"] = ("Auditoría por página (2026-11-20): la fila de WhatsApp va cada 8 tarjetas (antes 12) con el botón «Mandar "
+                        "foto de mi jardín»; las miniaturas bajan copias de 320 y 640 px de la misma foto y la portada su copia "
+                        "de 640 px (antes, los originales: 6.7 MB al recorrer el índice).")

@@ -27,7 +27,9 @@ BARATO = t.barato()
 EJ = rollos.corte(*cr.EJEMPLO)
 MIN, ROLLO = data.MIN_NACIONAL_M2, data.ROLLO_M2
 GUIA = '<a href="/blog/como-instalar-pasto-sintetico">guía de instalación</a>'
-MENSAJE = "Hola, ya calculé mi pasto sintético en la web.\nMedidas: ___ × ___ m\nEstado: ___"
+# Auditoría por página (2026-11-20): «Medidas: ___ × ___ m» se publicaba como « × m», y «ya calculé» se mandaba
+# antes de calcular. El campo «Largo × ancho: ___» lo quita entero el limpiador de huecos.
+MENSAJE = "Hola, les mando las medidas de mi espacio para cotizar pasto sintético.\nLargo × ancho: ___\nEstado: ___"
 
 RESPUESTA = (f"Un rollo mide 2 × 25 m ({ROLLO} m²). Un patio de {cr.EJEMPLO[0]} × {cr.EJEMPLO[1]} m "
              f"({cr.num(EJ['area'])} m²) lleva <b>{EJ['m2']} m²</b>: {cr.tiras_texto(EJ)} y {cr.rollos_texto(EJ)} de envío.")
@@ -50,13 +52,13 @@ COMO = (
 FAQ = (
     ("¿Cuántos m² trae un rollo de pasto sintético?",
      f"{ROLLO} m²: 2 m de ancho por 25 m de largo. Se vende por m², desde {MIN} m² con envío a todo México y desde "
-     f"{data.MIN_SHOWROOM_M2} m² en el showroom de Cd. Madero."),
+     f"{data.MIN_SHOWROOM_M2} m² en el vivero de Cd. Madero."),
     ("¿Cuánto cuesta el envío de un rollo?",
      f"Depende de tu estado: {t.TARIFAS_TEXTO} por rollo de {ROLLO} m², con IVA. De {ROLLO + 1} a {ROLLO * 2} m² son dos "
      "rollos. La tabla de arriba trae el flete de cada estado."),
     ("¿Cuánto cuesta el pasto sintético por m²?",
      f"Desde {dinero(BARATO['rollo'])}/m² en rollo completo ({BARATO['nombre']}). De 10 a 49 m² aplica el precio de corte "
-     "mediano de cada modelo, y de 2 a 9 m² el de corte chico, solo en el showroom."),
+     "mediano de cada modelo, y de 2 a 9 m² el de corte chico, solo en el vivero de Cd. Madero."),
     ("¿Cuánto tarda en llegar?",
      "Sale de Cd. Madero en 1 a 2 días hábiles y llega de 3 a 5 días hábiles después de confirmar el pago, con guía de "
      "rastreo."),
@@ -95,7 +97,8 @@ CONTENIDO = {
         {"tipo": "medidas", "id": "medidas", "rotulo": "Medidas comunes",
          "titulo": "Cuántos m² pedir para las medidas más comunes"},
         {"tipo": "preguntas", "id": "como-se-calcula", "rotulo": "Cómo se calcula",
-         "titulo": "Cómo calcular el pasto sintético que necesitas", "items": COMO},
+         "titulo": "Cómo calcular el pasto sintético que necesitas", "items": COMO,
+         "fila": "Mandar mis medidas"},
         {"tipo": "estados", "id": "envio-por-estado", "rotulo": "Envío", "titulo": "Costo de envío por estado",
          "lede": ("El flete se cobra por rollo de 50 m²: hasta 50 m² es un rollo, de 51 a 100 m² son dos. Llega de 3 a 5 "
                   "días hábiles, con guía de rastreo."),

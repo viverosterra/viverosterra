@@ -10,6 +10,7 @@ from urllib.parse import unquote
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import componentes as c  # noqa: E402
+import componentes_plantas as cp  # noqa: E402
 import datos  # noqa: E402
 import mensajes_paginas as mp  # noqa: E402
 import paginas  # noqa: E402
@@ -132,7 +133,8 @@ class MensajesTest(unittest.TestCase):
         from contenido import catalogo_datos as cd
         h = html("/catalogo")
         self.assertIn(f"{len(cd.ESPECIES)} especies", h)
-        self.assertEqual(h.count("data-vt-cta-rejilla"), (len(cd.ESPECIES) - 1) // 12)
+        # Una fila cada CADA_FILA tarjetas (12 → 8 en la auditoría por página: 4.3 pantallas sin botón).
+        self.assertEqual(h.count("data-vt-cta-rejilla"), (len(cd.ESPECIES) - 1) // cp.CADA_FILA)
 
 
 class MenuTest(unittest.TestCase):

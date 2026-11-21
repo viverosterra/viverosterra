@@ -1,6 +1,9 @@
 """Componentes del artículo y del índice del blog (Etapa 2h)."""
+import re
+
 import componentes as c
 import datos
+import paginas
 from partials import esc
 
 P = datos.PRECIOS
@@ -21,7 +24,7 @@ def cabeza(k):
     tiempo = f'<span>{k["minutos"]} min de lectura</span>' if k["minutos"] else ""
     # Hero de lectura (Entrega A de experiencia): la escala de titular del sitio, el lema en serif y el WhatsApp como
     # enlace de texto (con su data-cta ":hero", la barra fija no tapa la respuesta directa al cargar); sin botón grande.
-    enlaces = c.enlaces_portada((c.enlace_wa(k["mensaje"], f'{k["tipo"]}:hero'),), k["tipo"])
+    enlaces = c.enlaces_portada((c.enlace_wa(k["mensaje"], f'{k["tipo"]}:hero', k["tema"]["boton"]),), k["tipo"])
     foto = k.get("portada")
     clase = c.clase_titular(k["h1"], "vt-art__cabeza") + (" vt-art__cabeza--foto" if foto else "")
     return (f'<header class="{clase}"><div class="vt-wrap">{c.migas(k["migas"])}'
@@ -51,6 +54,36 @@ def portada(f):
     return (f'<figure class="vt-art__portada"><img src="{esc(f["src"])}"{srcset} '
             f'width="{f["ancho"]}" height="{f["alto"]}" alt="" loading="eager" '
             f'fetchpriority="high" decoding="async"></figure>')
+
+
+# Auditoría por página (2026-11-20): las fotos del cuerpo bajan al acercarse (loading="lazy") y, si son de más de
+# UMBRAL_COPIA px, en celular la copia de 640 px de la MISMA foto (tools/site/portadas_blog.py); antes, el original de
+# 900–1,536 px (hasta 385 KB) y la primera precargada con prioridad alta aunque estaba a dos pantallas.
+CUERPO_SIZES = "(min-width:1024px) 680px, 56vw"
+UMBRAL_COPIA = 720
+FOTO_RE = re.compile(r'<img src="([^"]+)" width="(\d+)"([^>]*)>')
+
+
+def copia(src, ancho):
+    """Ruta de la copia <foto>-<ancho>.webp junto al original."""
+    return src.rsplit(".", 1)[0] + f"-{ancho}.webp"
+
+
+def con_copia(src, ancho):
+    """¿Existe en public/ la copia de `ancho` px de la foto?"""
+    return (paginas.PUBLIC / copia(src, ancho).lstrip("/")).exists()
+
+
+def _foto_cuerpo(m):
+    src, ancho, resto = m.groups()
+    srcset = (f' srcset="{esc(copia(src, 640))} 640w, {esc(src)} {ancho}w" sizes="{CUERPO_SIZES}"'
+              if int(ancho) > UMBRAL_COPIA and con_copia(src, 640) else "")
+    carga = "" if "loading=" in resto else ' loading="lazy" decoding="async"'
+    return f'<img src="{src}"{srcset} width="{ancho}"{resto}{carga}>'
+
+
+def fotos_cuerpo(html):
+    return FOTO_RE.sub(_foto_cuerpo, html)
 
 
 def respuesta(r):
@@ -83,15 +116,13 @@ def cta_medio(tema, tipo, mensaje):
     href, texto = tema["landing"]
     return (f'<aside class="vt-art__medio" aria-label="Siguiente paso"><p>{tema["titulo"]}</p>'
             f'<a data-cta="{tipo}:medio" href="{esc(href)}">{texto}<span class="vt-flecha" aria-hidden="true">→</span></a>'
-            f'{c.wa_texto(mensaje, f"{tipo}:medio-wa", "Preguntar por WhatsApp")}</aside>')
+            f'{c.wa_texto(mensaje, f"{tipo}:medio-wa", tema["boton"])}</aside>')
 
 
-LECTURA = "¿Tu caso es distinto? Cuéntanos tu colonia y los metros:"
-
-
-def cta_lectura(mensaje, tipo, n):
-    """Línea discreta de WhatsApp entre dos secciones largas del artículo (Entrega C de experiencia)."""
-    return (f'<p class="vt-art__wa">{LECTURA} {c.wa_texto(mensaje, f"{tipo}:lectura-{n}", "Preguntar por WhatsApp")}'
+def cta_lectura(mensaje, tipo, n, tema):
+    """Línea discreta de WhatsApp entre dos secciones largas del artículo (Entrega C de experiencia); su frase y su botón
+    son los del tema (auditoría por página, 2026-11-20: blog_clusters.WA)."""
+    return (f'<p class="vt-art__wa">{tema["lectura"]} {c.wa_texto(mensaje, f"{tipo}:lectura-{n}", tema["boton"])}'
             '</p>')
 
 
@@ -115,6 +146,11 @@ def etiqueta_de(tema):
             **tema["etiqueta"]}
 
 
+# Auditoría por página del blog (2026-11-20): la confianza junto al botón del cierre (antes solo en el pie), con los datos
+# de datos.py.
+CONFIANZA = esc(f"{datos.GOOGLE} · Desde {datos.DESDE} · {datos.INSTALACIONES} instalaciones")
+
+
 def producto(tema, mensaje, tipo):
     href, texto = tema["landing"]
     return (f'<section class="vt-art__producto" aria-labelledby="vt-art-prod"><div class="vt-wrap vt-art__producto-grid"><div>'
@@ -123,7 +159,8 @@ def producto(tema, mensaje, tipo):
             + (f'<p class="vt-lede">{tema["lede"]}</p>' if tema.get("lede") else "")
             + f'<div class="vt-cta"><a class="vt-btn vt-btn--tinta" '
             f'data-cta="{tipo}:landing" href="{esc(href)}">{texto}<span class="vt-flecha" aria-hidden="true">→</span></a>'
-            f'{c.boton_wa(mensaje, f"{tipo}:cierre")}</div><p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}</p></div>'
+            f'{c.boton_wa(mensaje, f"{tipo}:cierre", tema["boton"])}</div><p class="vt-promesa">{esc(datos.PROMESA_COMPLETA)}'
+            f'<br>{CONFIANZA}</p></div>'
             f'{c.etiqueta(etiqueta_de(tema))}</div></section>')
 
 
@@ -134,12 +171,25 @@ def relacionados(titulo, items):
             f'<ul>{filas}</ul></div></section>')
 
 
+# Auditoría por página (2026-11-20): la miniatura del índice mide 128 px en celular y un tercio o la mitad del ancho en
+# pantallas mayores; baja la copia de 320 px (o la de 640) de la MISMA foto en vez del original de hasta 425 KB.
+TARJETA_SIZES = "(max-width:639.98px) 128px, (max-width:1023.98px) 46vw, 380px"
+
+
+def srcset_de(src, ancho, anchos=(320, 640)):
+    """srcset con las copias que existen (más chicas que el original) y el original; vacío si no hay copias."""
+    copias = [f"{copia(src, a)} {a}w" for a in anchos if a < int(ancho) and con_copia(src, a)]
+    return ", ".join(copias + [f"{src} {ancho}w"]) if copias else ""
+
+
 def tarjeta_indice(t):
     foto = ""
     if t.get("foto"):
         f = t["foto"]
-        foto = (f'<img src="{esc(f["src"])}" width="{f["ancho"]}" height="{f["alto"]}" alt="{esc(f["alt"])}" loading="lazy" '
-                f'decoding="async">')
+        srcset = srcset_de(f["src"], f["ancho"])
+        extra = f' srcset="{esc(srcset)}" sizes="{TARJETA_SIZES}"' if srcset else ""
+        foto = (f'<img src="{esc(f["src"])}"{extra} width="{f["ancho"]}" height="{f["alto"]}" alt="{esc(f["alt"])}" '
+                f'loading="lazy" decoding="async">')
     minutos = f'<span>{t["minutos"]} min</span>' if t.get("minutos") else ""
     return (f'<li class="vt-blog-t{" vt-blog-t--foto" if foto else ""}">{foto}<div><p class="vt-art__rel-c">{esc(t["categoria"])}</p>'
             f'<h3><a href="{esc(t["href"])}">{t["titulo"]}</a></h3><p>{t["texto"]}</p>{minutos}</div></li>')

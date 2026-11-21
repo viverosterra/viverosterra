@@ -114,7 +114,7 @@ class RitmoTest(unittest.TestCase):
         self.assertIn("<details open", c.faq((("a", "b"),)))
 
     def test_tablas_plegadas_conservan_su_titulo_y_su_contenido(self):
-        plegadas = {"/pasto-en-rollo-tampico": 2, "/diseno-jardines-tampico": 2, "/mantenimiento-jardines-tampico": 1,
+        plegadas = {"/pasto-en-rollo-tampico": 2, "/diseno-jardines-tampico": 2, "/mantenimiento-jardines-tampico": 2,  # auditoría 2026-11-20: también «Dos temporadas»
                     "/sistema-riego-tampico": 1}
         for ruta, n in plegadas.items():
             h = main(html(ruta))
@@ -133,12 +133,13 @@ class RitmoTest(unittest.TestCase):
                 self.assertEqual(len(set(textos)), len(textos))
                 self.assertNotIn(c.CTA_WA, textos)
 
-    def test_blog_con_fila_cada_12_tarjetas_y_lineas_de_lectura(self):
+    def test_blog_con_fila_cada_8_tarjetas_y_lineas_de_lectura(self):
+        # Auditoría por página (2026-11-20): cada 8 tarjetas (antes 12, con 4.3 pantallas del celular sin botón).
         h = main(html("/blog"))
         partes = h.split('<li class="vt-blog-fila"')
-        self.assertGreaterEqual(len(partes), 4)
+        self.assertGreaterEqual(len(partes), 6)
         for previo in partes[1:-1]:
-            self.assertEqual(previo.count('<li class="vt-blog-t'), 12)
+            self.assertEqual(previo.count('<li class="vt-blog-t'), 8)
         articulo = main(html("/blog/pasto-san-agustin-vs-japones"))
         self.assertIn('data-cta="blog:medio-wa"', articulo)
 

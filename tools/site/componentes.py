@@ -246,7 +246,8 @@ def etiqueta(e, cordel=True):
     """Etiqueta amarilla de precio. e: codigo, aviso, nombre, cientifico, antes, monto, unidad, filas, nota y cond. El
     envoltorio lleva la sombra y, con cordel=True, el cordel que cuelga del ojal (solo en escritorio). cond: la condición
     del precio en una línea chica pegada a la banda amarilla, visible también en la etiqueta compacta del celular
-    (datos.TERRENO_LISTO_CORTO junto al pasto instalado: decisión del dueño, 2026-11-10)."""
+    (datos.TERRENO_LISTO_CORTO junto al pasto instalado: decisión del dueño, 2026-11-10). sin_precio=True: la banda va
+    en tono neutro (el amarillo es solo para precios; auditoría por página, 2026-11-20)."""
     cond = f'<p class="vt-etiqueta__cond">{esc(e["cond"])}</p>' if e.get("cond") else ""
     filas = [f'<p class="vt-etiqueta__fila"><span>{t}</span><b>{v}</b></p>' for t, v in e.get("filas", ())]
     if cond and e.get("cond_fila"):  # la condición es de una fila (el instalado en /precios): va debajo de ella
@@ -259,7 +260,7 @@ def etiqueta(e, cordel=True):
     return (f'<div class="vt-etiqueta-x{" vt-etiqueta-x--cordel" if cordel else ""}"><div class="vt-etiqueta">'
             f'<p class="vt-etiqueta__cod"><span>{e["codigo"]}</span>{aviso}</p>'
             f'<p class="vt-etiqueta__nombre">{e["nombre"]}</p>{sci}'
-            f'<p class="vt-etiqueta__precio"><small>{unidades(e["antes"])}</small><b>{e["monto"]}</b><span>{e["unidad"]}</span></p>'
+            f'<p class="vt-etiqueta__precio{" is-vacio" if e.get("sin_precio") else ""}"><small>{unidades(e["antes"])}</small><b>{e["monto"]}</b><span>{e["unidad"]}</span></p>'
             f'{cond}{filas}{nota}</div></div>')
 
 
@@ -522,13 +523,22 @@ def fichas(items):
     return f'<ul class="vt-modos vt-fichas">{"".join(filas)}</ul>'
 
 
+# Ancho de la foto de tarjeta: una columna en celular, dos desde 640 px y tres desde 1024 px (.vt-relacionados).
+SIZES_TARJETA = "(min-width: 1024px) 360px, (min-width: 640px) 50vw, 90vw"
+
+
+def _srcset_tarjeta(i):
+    """srcset opcional de la tarjeta (auditoría por página, 2026-11-20): i["srcset"] con las versiones 4:3 de la misma foto."""
+    return f' srcset="{esc(i["srcset"])}" sizes="{SIZES_TARJETA}"' if i.get("srcset") else ""
+
+
 def relacionados(items, fila=False):
     """Tarjetas del sistema: foto, título con enlace (toda la tarjeta lo abre) y texto. items: titulo, href, texto, img,
     ancho, alto. fila=True (servicios, Entrega C de experiencia): en celular, una junto a otra con desplazamiento
     horizontal."""
-    filas = "".join(f'<li class="vt-tarjeta"><img src="{esc(i["img"])}" width="{i["ancho"]}" height="{i["alto"]}" alt="" '
-                    f'loading="lazy" decoding="async"><h3><a href="{esc(i["href"])}">{i["titulo"]}</a></h3>'
-                    f'<p>{i["texto"]}</p></li>' for i in items)
+    filas = "".join(f'<li class="vt-tarjeta"><img src="{esc(i["img"])}"{_srcset_tarjeta(i)} width="{i["ancho"]}" '
+                    f'height="{i["alto"]}" alt="" loading="lazy" decoding="async"><h3><a href="{esc(i["href"])}">'
+                    f'{i["titulo"]}</a></h3><p>{i["texto"]}</p></li>' for i in items)
     return f'<ul class="vt-relacionados{" vt-relacionados--fila" if fila else ""}">{filas}</ul>'
 
 
@@ -1146,7 +1156,7 @@ def portada(p, tipo, migas_items=None, pliegue=True, datos_html=None, clase=""):
     lema = f'<p class="vt-portada__lema vt-serif">{p["lema"]}</p>' if p.get("lema") else ""
     foto = f'<div class="vt-portada__foto"{estilo_foto(p)}>{figura(p["foto"], principal=True)}</div>' if p.get("foto") else ""
     precio = p.get("etiqueta_html") or (etiqueta(p["etiqueta"]) if p.get("etiqueta") else "")
-    boton = p.get("cta") or boton_wa(p["mensaje"], f"{tipo}:hero")
+    boton = p.get("cta") or boton_wa(p["mensaje"], f"{tipo}:hero", p.get("cta_texto", CTA_WA))
     cuadro = tira_datos() if datos_html is None else datos_html
     return (
         f'<section class="{clase_portada(p, pliegue, clase)}" aria-labelledby="vt-h1"><div class="vt-wrap">'
