@@ -6,6 +6,7 @@ import html as html_mod
 import json
 import re
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -14,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import componentes as c  # noqa: E402
 import datos  # noqa: E402
 import entidad  # noqa: E402
+import paginas  # noqa: E402
 import paridad  # noqa: E402
 import sitemap_fechas  # noqa: E402
 from contenido import respuestas  # noqa: E402
@@ -165,6 +167,55 @@ class SitemapFechasTest(unittest.TestCase):
         # Sin dateModified en la fuente, vale la fecha de publicación.
         self.assertEqual(fechas[f"{datos.SITIO}/blog/cuando-regar-pasto-san-agustin-tampico"], "2026-04-20")
         self.assertFalse(sitemap_fechas.sincronizar(), "el sitemap publicado ya trae las fechas")
+
+
+class SitemapPaginasTest(unittest.TestCase):
+    """Auditoría de posicionamiento (2026-11-22): el <lastmod> de una página que no es artículo es el día en que cambió
+    su texto, no una fecha puesta a mano."""
+    def _sitio(self, texto):
+        carpeta = Path(tempfile.mkdtemp())
+        (carpeta / "pagina").mkdir()
+        (carpeta / "pagina" / "index.html").write_text(f"<nav>menú</nav><main><h1>{texto}</h1></main><footer>pie</footer>", encoding="utf-8")
+        return carpeta
+
+    def test_la_fecha_cambia_solo_si_cambia_el_texto(self):
+        url = f"{datos.SITIO}/pagina"
+        xml = f"<url><loc>{url}</loc><lastmod>2026-11-10</lastmod></url><url><loc>{datos.SITIO}/blog/a</loc><lastmod>2026-04-20</lastmod></url>"
+        sitio = self._sitio("Pasto a $85")
+        fechas, registro = sitemap_fechas.fechas_paginas(xml, {}, sitio, hoy="2026-12-01")
+        self.assertEqual(fechas, {url: "2026-11-10"}, "una URL nueva entra con la fecha que ya traía; el blog no se toca aquí")
+        self.assertEqual(sitemap_fechas.fechas_paginas(xml, registro, sitio, hoy="2026-12-02"), (fechas, registro))
+        (sitio / "pagina" / "index.html").write_text("<nav>otro menú</nav><main><h1>Pasto  a $85</h1></main>", encoding="utf-8")
+        self.assertEqual(sitemap_fechas.fechas_paginas(xml, registro, sitio, hoy="2026-12-02")[0], fechas, "menú, pie y espacios no cuentan")
+        (sitio / "pagina" / "index.html").write_text("<main><h1>Pasto a $90</h1></main>", encoding="utf-8")
+        self.assertEqual(sitemap_fechas.fechas_paginas(xml, registro, sitio, hoy="2026-12-02")[0], {url: "2026-12-02"})
+
+    def test_falla_si_la_url_no_tiene_archivo(self):
+        xml = f"<url><loc>{datos.SITIO}/no-existe</loc><lastmod>2026-11-10</lastmod></url>"
+        with self.assertRaises(ValueError):
+            sitemap_fechas.fechas_paginas(xml, {}, self._sitio("x"))
+
+    def test_el_registro_cubre_todas_las_paginas_del_mapa(self):
+        xml = (paginas.PUBLIC / "sitemap.xml").read_text(encoding="utf-8")
+        registro = sitemap_fechas.leer_registro()
+        for url, lastmod in sitemap_fechas.ENTRADA_RE.findall(xml):
+            if "/blog/" not in url:
+                with self.subTest(url=url):
+                    self.assertEqual(registro[url]["fecha"], lastmod)
+
+
+class IndexNowTest(unittest.TestCase):
+    def test_la_llave_esta_publicada_y_el_pedido_la_nombra(self):
+        import indexnow
+        self.assertEqual((paginas.PUBLIC / f"{indexnow.LLAVE}.txt").read_text(encoding="utf-8"), indexnow.LLAVE)
+        cuerpo = indexnow.cuerpo([f"{datos.SITIO}/precios"])
+        self.assertEqual(cuerpo["host"], "www.viverosterra.com")
+        self.assertEqual(cuerpo["keyLocation"], f"{datos.SITIO}/{indexnow.LLAVE}.txt")
+
+    def test_manda_solo_las_paginas_de_la_fecha_en_adelante(self):
+        import indexnow
+        xml = "<loc>https://x.com/a</loc><lastmod>2026-11-21</lastmod><loc>https://x.com/b</loc><lastmod>2026-04-20</lastmod>"
+        self.assertEqual(indexnow.urls_desde("2026-11-01", xml), ["https://x.com/a"])
 
 
 if __name__ == "__main__":

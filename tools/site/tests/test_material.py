@@ -107,8 +107,10 @@ class MaterialTest(unittest.TestCase):
         mapa = SITEMAP.read_text(encoding="utf-8")
         for ruta in MIGRADAS:
             with self.subTest(ruta=ruta):
-                # 2026-11-10: título, descripción y H1 de la fase 0 de SEO (antes, 2026-11-08: revisión de materiales).
-                self.assertIn(f"<loc>{datos.SITIO}{ruta}</loc><lastmod>2026-11-10</lastmod>", mapa)
+                # 2026-11-10: título, descripción y H1 de la fase 0 de SEO. Desde 2026-11-22 la fecha es la del último
+                # cambio de texto de la página (sitemap_fechas.fechas_paginas): nunca anterior a esa revisión.
+                fecha = re.search(rf"<loc>{re.escape(datos.SITIO + ruta)}</loc><lastmod>([^<]+)</lastmod>", mapa).group(1)
+                self.assertGreaterEqual(fecha, "2026-11-10")
 
     def test_hoja_de_materiales(self):
         for ruta in MIGRADAS:

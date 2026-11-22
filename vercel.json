@@ -869,6 +869,56 @@
       "source": "/blog/jardin-bajo-presupuesto-tampico",
       "destination": "/blog/cuanto-cuesta-jardin-tampico-precios",
       "permanent": true
+    },
+    {
+      "source": "/blog/tierra-negra-tampico-guia",
+      "destination": "/blog/tierra-negra-costal-camion-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/blog/como-instalar-pasto-en-rollo",
+      "destination": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+      "permanent": true
+    },
+    {
+      "source": "/blog/palmas-exoticas-coleccion-tampico",
+      "destination": "/blog/palmas-para-jardin-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/blog/diseno-jardines-tropicales-tampico",
+      "destination": "/blog/diseno-jardines-tampico-guia",
+      "permanent": true
+    },
+    {
+      "source": "/blog/mantenimiento-jardin-tampico-guia",
+      "destination": "/mantenimiento-jardines-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/blog/plantas-resistentes-calor-tampico",
+      "destination": "/plantas-para-jardin-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/blog/sistema-riego-automatico-jardin",
+      "destination": "/blog/sistema-riego-automatizado-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/blog/plantas-interior-oficinas-tampico",
+      "destination": "/blog/plantas-interior-tampico",
+      "permanent": true
+    },
+    {
+      "source": "/blog/arboles-banqueta-tampico-sin-dano",
+      "destination": "/blog/arboles-para-sembrar-en-banqueta",
+      "permanent": true
+    },
+    {
+      "source": "/blog/como-elegir-palma-jardin-tampico",
+      "destination": "/blog/palmas-para-jardin-tampico",
+      "permanent": true
     }
   ],
   "cleanUrls": true,
