@@ -539,7 +539,9 @@ class ConfiguracionTest(unittest.TestCase):
 
     def test_sitemap_con_la_fecha_de_datos(self):
         sitemap = (paginas.PUBLIC / "sitemap.xml").read_text(encoding="utf-8")
-        self.assertIn(f"<loc>{URL}</loc><lastmod>{NB['ultima_actualizacion']}</lastmod>", sitemap)
+        # Desde 2026-11-22 el mapa lleva el día del último cambio de texto: nunca anterior a la fecha de los datos.
+        fecha = re.search(rf"<loc>{re.escape(URL)}</loc><lastmod>([^<]+)</lastmod>", sitemap).group(1)
+        self.assertGreaterEqual(fecha, NB['ultima_actualizacion'])
 
     def test_llms_txt(self):
         self.assertIn(URL, (paginas.PUBLIC / "llms.txt").read_text(encoding="utf-8"))

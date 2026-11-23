@@ -35,6 +35,17 @@ FIJOS = {
     "/venta-palmas-mayoreo-huasteca": "/palmas-mayoreo-proyectos",
     # SEO fase 2a (2026-11-11, mapa §3a): el 301 viejo del puerto industrial cae en el pilar de empresas.
     "/jardineria-puerto-industrial-altamira": "/empresas",
+    # Search Console (2026-11-22): 10 direcciones del blog anterior respondían 404; cada una cae en la página del mismo tema.
+    "/blog/tierra-negra-tampico-guia": "/blog/tierra-negra-costal-camion-tampico",
+    "/blog/como-instalar-pasto-en-rollo": "/blog/pasto-san-agustin-instalacion-mantenimiento",
+    "/blog/palmas-exoticas-coleccion-tampico": "/blog/palmas-para-jardin-tampico",
+    "/blog/diseno-jardines-tropicales-tampico": DISENO_GUIA,
+    "/blog/mantenimiento-jardin-tampico-guia": "/mantenimiento-jardines-tampico",
+    "/blog/plantas-resistentes-calor-tampico": "/plantas-para-jardin-tampico",
+    "/blog/sistema-riego-automatico-jardin": RIEGO_GUIA,
+    "/blog/plantas-interior-oficinas-tampico": "/blog/plantas-interior-tampico",
+    "/blog/arboles-banqueta-tampico-sin-dano": "/blog/arboles-para-sembrar-en-banqueta",
+    "/blog/como-elegir-palma-jardin-tampico": "/blog/palmas-para-jardin-tampico",
     # Encontrados al revisar el resto de /post/*: una guía cae en la guía del mismo tema, no en la página de servicio.
     "/post/sistemas-de-riego-automatizado-tampico": RIEGO_GUIA,
     "/post/guía-definitiva-del-sistema-de-riego-automático-en-méxico-ahorra-agua-y-optimiza-tu-jardín": RIEGO_GUIA,
