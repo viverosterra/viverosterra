@@ -134,7 +134,7 @@ class ContenidoVisibleTest(unittest.TestCase):
     def test_etiqueta_del_hero_muestra_la_condicion_en_una_fila(self):
         portada = self.main[:self.main.index("</section>")]
         filas = [texto(f) for f in re.findall(r'<p class="vt-etiqueta__fila">.*?</p>', portada, re.S)]
-        self.assertEqual(filas, ['Maceta 5", menudeo $89', "Mayoreo, 12 piezas $75", "200 piezas o más $65"])
+        self.assertEqual(filas, ['Maceta 5", menudeo $105', "Mayoreo, 12 piezas $75", "200 piezas o más $65"])
         self.assertNotIn("vt-etiqueta__nota", portada)
 
     def test_sin_opiniones_con_nombre(self):
@@ -160,15 +160,15 @@ class ContenidoVisibleTest(unittest.TestCase):
             fila = next(f for f in re.findall(r"<tr>.*?</tr>", tabla, re.S) if html.escape(p["nombre"], quote=True) in f or p["nombre"] in f)
             for precio in p["precios"]:
                 self.assertIn(c.dinero(precio), fila)
-        self.assertIn("$1,195", texto(tabla))
+        self.assertIn("$985", texto(tabla))
         self.assertIn("$65", texto(tabla))
         self.assertIn("Los escalones se calculan con el total del pedido: puedes combinar tamaños y colores. Mismo precio en roja, "
                       "rosa y jaspeada.", self.visible)
 
     def test_preguntas_literales(self):
-        for frase in ("En Viveros Terra, desde $89 la de 5 pulgadas en menudeo y desde $65 en pedidos de 200 piezas o más.",
+        for frase in ("En Viveros Terra, desde $105 la de 5 pulgadas en menudeo y desde $65 en pedidos de 200 piezas o más.",
                       "Desde 12 piezas, sumando tamaños y colores. $75 la de 5\" y $119 la de 6\".",
-                      'Maceta 5" $89 y $75', 'Maceta 6" $139 y $119', 'Maceta 7" $199 y $169', "Colgante $339 y $279",
+                      'Maceta 5" $105 y $75', 'Maceta 6" $150 y $119', 'Maceta 7" $190 y $169', "Colgante $339 y $279",
                       'Macetón 12" sobre pedido, desde $865', "$3,500", "te la cotizamos por WhatsApp", "CFDI 4.0",
                       # Decisión del dueño (2026-11-21): antes «Lo antes posible. Confírmanos por WhatsApp…».
                       "La preventa de mayoreo cierra el 30 de noviembre y entregamos antes del 12 de diciembre. Si ya pasó "
@@ -240,7 +240,7 @@ class ContenidoVisibleTest(unittest.TestCase):
     def test_cierre_con_contacto_y_actualizacion(self):
         cierre = self.main[self.main.index("vt-cierre-titulo"):]
         plano = texto(cierre)
-        for frase in (datos.DOMICILIO_COMPLETO, datos.HORARIO, "Última actualización: 8 de noviembre de 2026"):
+        for frase in (datos.DOMICILIO_COMPLETO, datos.HORARIO, "Última actualización: 22 de noviembre de 2026"):
             with self.subTest(frase=frase):
                 self.assertIn(frase, plano)
         self.assertIn(datos.MAPS_URL, cierre)
@@ -548,7 +548,7 @@ class ConfiguracionTest(unittest.TestCase):
 
     def test_home_y_hub_enlazan_la_pagina(self):
         home = (paginas.PUBLIC / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Desde $89 en menudeo y desde $65 por volumen", home)
+        self.assertIn("Desde $105 en menudeo y desde $65 por volumen", home)
         hub = (paginas.PUBLIC / "plantas-palmas-arboles-tampico" / "index.html").read_text(encoding="utf-8")
         main_home = re.search(r"<main\b.*</main>", home, re.S).group(0)
         main_hub = re.search(r"<main\b.*</main>", hub, re.S).group(0)
