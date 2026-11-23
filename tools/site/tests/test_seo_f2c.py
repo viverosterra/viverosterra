@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import datos  # noqa: E402
 import paginas  # noqa: E402
 import shell  # noqa: E402
-from contenido import articulo, blog_seo_f2c, fotos_paso1, zona, zonas  # noqa: E402
+from contenido import articulo, blog_indice, blog_seo_f2c, fotos_paso1, zona, zonas  # noqa: E402
 
 PUBLIC = paginas.PUBLIC
 RAIZ = PUBLIC.parent
@@ -352,6 +352,10 @@ class FotosTest(unittest.TestCase):
     def test_el_indice_del_blog_conserva_todas_las_fotos_de_main(self):
         viejas = _fotos(_de_main("blog/index.html"))
         nuevas = _fotos(html_de("/blog"))
+        # Las tarjetas de los artículos publicados después de la 2c no estaban en la captura.
+        tras = {t["foto"]["src"] for s in blog_indice.CONTENIDO["secciones"] for t in s["tarjetas"]
+                if t.get("foto") and t["href"].removeprefix("/blog/") in articulo.TRAS_2C}
+        nuevas = [f for f in nuevas if f[0] not in tras]
         self.assertGreater(len(viejas), 30)
         # Revisión de fotos, paso 1 (dueño, 2026-11-17): solo cambia lo que dice contenido/fotos_paso1.py.
         esperadas = [fotos_paso1.tarjeta(src, alt) for src, _srcset, alt in viejas]
