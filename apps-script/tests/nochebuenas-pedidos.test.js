@@ -222,8 +222,8 @@ for (const [piezas, correcto, incorrecto] of [[11, 'Menudeo', 'Mayoreo'], [12, '
 test('rechaza un total mayor que piezas por el precio máximo', () => {
   const lineas = '2 × Macetón 12" Roja';
   const { enviar, datos } = cargar();
-  assert.strictEqual(enviar(pedido({ lineas, piezas: 2, escalon: 'Menudeo', total: 2390 })), 'ok');
-  assert.strictEqual(enviar(pedido({ lineas, piezas: 2, escalon: 'Menudeo', total: 2391 })), 'error');
+  assert.strictEqual(enviar(pedido({ lineas, piezas: 2, escalon: 'Menudeo', total: 1970 })), 'ok');
+  assert.strictEqual(enviar(pedido({ lineas, piezas: 2, escalon: 'Menudeo', total: 1971 })), 'error');
   assert.strictEqual(datos().length, 1);
 });
 

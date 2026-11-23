@@ -432,14 +432,16 @@ NOCHEBUENAS = {
     "cortes": (1, 12, 50, 200),
     "nombres_escalon": ("Menudeo", "Mayoreo", "Mayoreo Plus", "Proyecto"),
     "productos": (
-        {"clave": "5", "nombre": 'Maceta 5"', "precios": (89, 75, 69, 65)},
-        {"clave": "6", "nombre": 'Maceta 6"', "precios": (139, 119, 109, 105)},
-        {"clave": "7", "nombre": 'Maceta 7"', "precios": (199, 169, 155, 149)},
+        {"clave": "5", "nombre": 'Maceta 5"', "precios": (105, 75, 69, 65)},
+        {"clave": "6", "nombre": 'Maceta 6"', "precios": (150, 119, 109, 105)},
+        {"clave": "7", "nombre": 'Maceta 7"', "precios": (190, 169, 155, 149)},
         # Decisión del dueño 2026-11-11: costo $400; por proporción de tamaño saldría ~$310 (abajo del costo), así que va
         # por costo con los descuentos por escalón de la lista. En existencia.
         {"clave": "8", "nombre": 'Maceta 8"', "precios": (699, 589, 539, 519)},
         {"clave": "colgante", "nombre": "Colgante", "precios": (339, 279, 259, 249)},
-        {"clave": "12", "nombre": 'Macetón 12"', "precios": (1195, 995, 899, 865), "sobre_pedido": True},
+        # Dueño 2026-11-22: menudeo 5" $105, 6" $150, 7" $190, 12" $985; mayoreo del 12" baja a $899 para quedar
+        # abajo del menudeo; el resto del mayoreo no cambia.
+        {"clave": "12", "nombre": 'Macetón 12"', "precios": (985, 899, 899, 865), "sobre_pedido": True},
     ),
     "variedades": ("Roja", "Rosa", "Jaspeada"),
     "variedades_sobre_pedido": ("Rosa", "Jaspeada"),  # decisión del dueño, 2026-11-09
@@ -450,5 +452,5 @@ NOCHEBUENAS = {
     "fecha_limite_mayoreo": "2026-11-30",
     "entrega_mayoreo_antes": "2026-12-12",
     "anticipo_pct": 50,  # solo en esta página, por indicación del dueño
-    "ultima_actualizacion": "2026-11-08",
+    "ultima_actualizacion": "2026-11-22",
 }

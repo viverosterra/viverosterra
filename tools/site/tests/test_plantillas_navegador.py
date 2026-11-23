@@ -607,7 +607,7 @@ class PlantillasNavegadorTest(unittest.TestCase):
         """Desde 1024 px el banner agrega los días que faltan al renglón de precios; abajo de eso la frase sustituye a
         los precios (solo si hay texto) y el banner no crece. Con el reloj del cliente antes del build, nada."""
         hasta = datos.NOCHEBUENAS["preventa"]["hasta"]
-        precios = "Desde $89 en menudeo y desde $65 por volumen"
+        precios = "Desde $105 en menudeo y desde $65 por volumen"
         casos = ((f"{hasta}T18:00:00Z", "Último día de preventa"), ("2026-11-09T18:00:00Z", "Preventa hasta el 30 de noviembre"),
                  ("2026-11-29T18:00:00Z", "Preventa hasta el 30 de noviembre"), ("2026-12-05T18:00:00Z", ""),
                  ("2026-10-20T18:00:00Z", ""))

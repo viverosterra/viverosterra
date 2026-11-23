@@ -35,7 +35,7 @@ class InicioTest(unittest.TestCase):
         self.assertRegex(MAIN.lstrip(), rf'^<aside class="vt-navidad-x" aria-label="Temporada de Nochebuenas"><a class="vt-navidad" data-cta="home:banner-nochebuenas" href="{ruta}">')
         banner = re.search(r'<a class="vt-navidad".*?</a>', MAIN, re.S).group(0)
         plano = re.sub(r"<[^>]+>", "", banner)
-        for frase in ("Nochebuenas 2026", "Pedidos abiertos", "Desde $89 en menudeo y desde $65 por volumen", "Ver nochebuenas"):
+        for frase in ("Nochebuenas 2026", "Pedidos abiertos", "Desde $105 en menudeo y desde $65 por volumen", "Ver nochebuenas"):
             self.assertIn(frase, plano)
         self.assertEqual(MAIN.count(f'href="{ruta}"'), 1, "un solo enlace de temporada en la home: el banner sustituye a la franja")
         self.assertIn('<body class="vt-pagina vt-inicio vt-temporada">', HTML)
@@ -201,7 +201,7 @@ class InicioTest(unittest.TestCase):
         hasta = datos.NOCHEBUENAS["preventa"]["hasta"]
         banner = re.search(r'<a class="vt-navidad".*?</a>', MAIN, re.S).group(0)
         self.assertEqual(banner.count("data-vt-hasta"), 1)
-        self.assertIn(f'<span class="vt-navidad__precios">Desde $89 en menudeo y desde $65 por volumen</span>'
+        self.assertIn(f'<span class="vt-navidad__precios">Desde $105 en menudeo y desde $65 por volumen</span>'
                       f'<span class="vt-navidad__hasta" data-vt-hasta="{hasta}" data-vt-build="{datos.ACTUALIZADO}"></span>', banner)
         self.assertNotRegex(re.sub(r"<[^>]+>", "", banner), r"(?i)preventa|faltan")
         self.assertEqual(HTML.count("data-vt-hasta"), 1)

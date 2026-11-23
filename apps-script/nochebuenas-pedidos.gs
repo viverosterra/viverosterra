@@ -8,7 +8,7 @@ const ESCALONES = ['Menudeo','Mayoreo','Mayoreo Plus','Proyecto'];
 const ZONAS = ['','Tampico','Madero','Altamira','Recojo en vivero'];
 const TIPOS = ['','Hogar','Empresa/regalo','Restaurante/hotel','Comercio/plaza','Gobierno','Evento/posada','Iglesia/escuela'];
 const CORTES = [1, 12, 50, 200];
-const PRECIO_MAXIMO = 1195;
+const PRECIO_MAXIMO = 985;
 const MAX_CUERPO = 5000, MAX_LINEAS_TEXTO = 1500, MAX_POR_MINUTO = 30, MAX_POR_DIA = 2000, MAX_FILAS = 5000;
 const SEGUNDOS_MAX_CACHE = 21600; // el máximo que admite CacheService: cada escritura renueva el contador del día
 const LINEA = /^([1-9]\d{0,3}) × (?:Maceta [567]"|Colgante|Macetón 12") (?:Roja|Rosa|Jaspeada)$/;

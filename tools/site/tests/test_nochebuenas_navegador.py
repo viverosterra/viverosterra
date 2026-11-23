@@ -84,8 +84,8 @@ class NochebuenasNavegadorTest(unittest.TestCase):
     def test_diez_de_seis_con_nudge(self):
         page = self.abrir(self.contexto())
         self.poner(page, 0, "6", 10)
-        self.assertEqual(self.salida(page, "total"), "$1,390")
-        self.assertEqual(self.salida(page, "nudge"), "Te faltan 2 piezas para precio Mayoreo: por $38 más te llevas 12 y ahorras $240")
+        self.assertEqual(self.salida(page, "total"), "$1,500")
+        self.assertEqual(self.salida(page, "nudge"), "Te faltan 2 piezas para precio Mayoreo: te llevas 12, pagas $72 menos y ahorras $372")
 
     def test_doce_de_seis(self):
         page = self.abrir(self.contexto())
@@ -119,12 +119,12 @@ class NochebuenasNavegadorTest(unittest.TestCase):
         self.assertFalse(fila.locator('[data-nb-accion="quitar"]').is_visible())
         fila.locator('[data-nb-accion="mas"]').click()
         self.assertEqual(fila.locator('[data-nb-campo="cantidad"]').input_value(), "2")
-        self.assertEqual(self.salida(page, "total"), "$278")
+        self.assertEqual(self.salida(page, "total"), "$300")
         fila.locator('[data-nb-accion="menos"]').click()
-        self.assertEqual(self.salida(page, "total"), "$139")
+        self.assertEqual(self.salida(page, "total"), "$150")
         page.locator('[data-nb-accion="agregar"]').click()
         self.assertEqual(page.locator("[data-nb-linea]").count(), 2)
-        self.assertEqual(self.salida(page, "total"), "$278")
+        self.assertEqual(self.salida(page, "total"), "$300")
         page.locator("[data-nb-linea]").nth(1).locator('[data-nb-accion="quitar"]').click()
         self.assertEqual(page.locator("[data-nb-linea]").count(), 1)
 
@@ -274,7 +274,7 @@ class NochebuenasNavegadorTest(unittest.TestCase):
         page = self.abrir(self.contexto(hoy=EN_PREVENTA))
         self.poner(page, 0, "6", 12)
         self.assertEqual(self.salida(page, "desglose"), "Subtotal $1,428 · Preventa −$71")
-        self.assertEqual(self.salida(page, "ahorro"), "Ahorras $240 vs. menudeo")
+        self.assertEqual(self.salida(page, "ahorro"), "Ahorras $372 vs. menudeo")
 
     def test_lista_de_fechas_vencidas_no_deja_hueco(self):
         page = self.abrir(self.contexto(hoy=FUERA_DE_PREVENTA))
