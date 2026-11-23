@@ -14,8 +14,12 @@ DIR = Path(__file__).resolve().parent / "blog"
 CLAVES = tuple(sorted(p.stem for p in DIR.glob("*.html")))
 # Artículos escritos directamente en este formato (sin página anterior que comparar): quedan fuera de las pruebas de paridad.
 NUEVOS = ("palma-bambu-chamaedorea-tampico", "plantas-seguras-mascotas-jardin-tampico",
+          # Blog semanal (2026-11-23).
+          "palma-rubelina-phoenix-roebelenii-tampico", "plantas-de-sombra-jardin-tampico",
           # SEO fase 2c (2026-11-11): la lista única de palmas, fusión con 301 de dos artículos (contenido/blog_seo_f2c.py).
           "palmas-para-jardin-tampico")
+# Publicados después de la SEO fase 2c: sus tarjetas del índice no estaban en la captura de antes de la 2c.
+TRAS_2C = ("palma-rubelina-phoenix-roebelenii-tampico", "plantas-de-sombra-jardin-tampico")
 MESES = ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre",
          "diciembre")
 M_LOGO = "Era el logo del publisher; ahora el publisher es una referencia por @id a la entidad única #negocio."
