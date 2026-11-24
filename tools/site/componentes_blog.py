@@ -9,7 +9,7 @@ from partials import esc
 P = datos.PRECIOS
 SERVICIOS = ("riego", "diseno", "mantenimiento")
 # Decisión del dueño (2026-11-08): el pasto natural, las plantas, los árboles y las palmas no llevan IVA.
-SIN_IVA = ("pasto-natural", "palmas", "palmas-cotizacion", "arboles", "banqueta", "plantas", "interior")
+SIN_IVA = ("pasto-natural", "palmas", "palmas-cotizacion", "arboles", "banqueta", "plantas", "interior", "nochebuenas")
 
 
 # Lema de los artículos (Entrega A de experiencia): el mismo para todos, tomado de la descripción del blog ("consejos

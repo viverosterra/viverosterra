@@ -156,6 +156,174 @@
      "minutos": 7
     },
     {
+     "href": "/blog/nochebuena-cuidados-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/nochebuenas/nochebuena-roja-tres-plantas-tampico-800.webp",
+      "alt": "Tres nochebuenas rojas en maceta en Tampico",
+      "ancho": 800,
+      "alto": 600
+     },
+     "categoria": "Plantas · Temporada",
+     "titulo": "Cómo cuidar una nochebuena en Tampico para que dure hasta febrero",
+     "texto": "Con el calor y la humedad de la costa, la nochebuena se cuida distinto que en el centro del país: luz, riego y temperatura para que no…",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/huerto-en-casa-tampico-otono-invierno",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/tierra-negra-jardin-tampico.webp",
+      "alt": "Tierra negra lista para sembrar un huerto en casa en Tampico",
+      "ancho": 933,
+      "alto": 1400
+     },
+     "categoria": "Jardines · Guías",
+     "titulo": "Huerto en casa en Tampico: qué sembrar en otoño e invierno",
+     "texto": "En Tampico el verano es demasiado caliente para casi todas las hortalizas. La temporada fresca, de noviembre a febrero, es la buena:…",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/plantas-con-flor-invierno-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/plantas-tropicales-tampico-viveros.webp",
+      "alt": "Plantas con flor para el jardín en Tampico en temporada seca",
+      "ancho": 1024,
+      "alto": 1536
+     },
+     "categoria": "Jardines · Temporada",
+     "titulo": "Plantas con flor para el invierno en Tampico: 7 opciones que no se rinden con los nortes",
+     "texto": "Noviembre marca el fin de las lluvias y el inicio de la temporada seca. Es buen momento para sembrar color: estas plantas aguantan el…",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/flor-de-mayo-plumeria-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/arboles-tampico-viveros-terra.webp",
+      "alt": "Flor de Mayo Plumeria en Tampico",
+      "ancho": 1050,
+      "alto": 1400
+     },
+     "categoria": "Plantas · Árboles",
+     "titulo": "Flor de Mayo (Plumeria) en Tampico: cuidados, tamaños y guía completa",
+     "texto": "Flores fragantes de cinco pétalos, sol pleno y muy poco riego: la Flor de Mayo (Plumeria) es un árbol ideal para banquetas y jardines…",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/jardin-colibries-mariposas-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/catalogo/heliconia-baby-enana-tampico.webp",
+      "alt": "Heliconia, una de las flores favoritas de los colibríes",
+      "ancho": 343,
+      "alto": 720
+     },
+     "categoria": "Jardines",
+     "titulo": "Plantas que Atraen Colibríes y Mariposas a tu Jardín en Tampico",
+     "texto": "Heliconia, Tronadora, Bugambilia, Duranta y otras cinco especies que, bien combinadas, mantienen tu jardín visitado por colibríes y…",
+     "minutos": 9
+    },
+    {
+     "href": "/blog/adenium-rosa-del-desierto-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/catalogo/adenium-rosa-del-desierto-tampico.webp",
+      "alt": "Rosa del desierto (Adenium obesum) en maceta",
+      "ancho": 480,
+      "alto": 480
+     },
+     "categoria": "Plantas",
+     "titulo": "Rosa del Desierto (Adenium) en Tampico: Cómo Cuidarla en Clima Húmedo",
+     "texto": "Flores rosa intenso sobre un tronco carnoso muy llamativo. El Adenium es de las plantas de colección más buscadas — pero en el clima…",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/composta-casera-jardin-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/tierra-negra-jardin-tampico.webp",
+      "alt": "Tierra negra rica en materia orgánica para el jardín",
+      "ancho": 933,
+      "alto": 1400
+     },
+     "categoria": "Jardines",
+     "titulo": "Composta Casera para tu Jardín en Tampico: Guía Paso a Paso",
+     "texto": "Convierte la poda, el pasto cortado y los restos de cocina en el mejor abono para tu jardín — y aprovecha el calor de Tampico, que…",
+     "minutos": 9
+    },
+    {
+     "href": "/blog/bambu-tarro-pantalla-privacidad-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/catalogo/bambu-tarro-tampico.webp",
+      "alt": "Bambú tarro (Bambusa vulgaris) en el vivero",
+      "ancho": 480,
+      "alto": 480
+     },
+     "categoria": "Plantas",
+     "titulo": "Bambú Tarro en Tampico: Cuidados, Precio y Pantalla de Privacidad",
+     "texto": "Hasta 6 metros de altura en su primer año y crecimiento en mata compacta, no invasiva: el Bambusa vulgaris es la forma más rápida de…",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/preparar-jardin-temporada-seca-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/jardin-residencial-tropical-tampico.webp",
+      "alt": "Jardín residencial preparado para la temporada seca en Tampico",
+      "ancho": 1536,
+      "alto": 1024
+     },
+     "categoria": "Jardines · Temporada",
+     "titulo": "Cómo Preparar tu Jardín para la Temporada Seca en Tampico",
+     "texto": "Octubre es el mes clave: lo que hagas antes de que termine la lluvia decide si tu jardín llega verde a abril o se pasa seis meses…",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/cycas-revoluta-cuidados-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/especie-cycas-revoluta-tampico.webp",
+      "alt": "Cycas Revoluta o Palma Cica en jardín en Tampico",
+      "ancho": 700,
+      "alto": 700
+     },
+     "categoria": "Plantas · Palmas",
+     "titulo": "Cycas Revoluta (Palma Cica) en Tampico: Cuidados, Precio y Guía Completa",
+     "texto": "Una de las plantas más antiguas del planeta y también de las más resistentes: crece apenas 5-10 cm al año, tolera la sequía y…",
+     "minutos": 7
+    },
+    {
+     "href": "/blog/monstera-deliciosa-costilla-de-adan-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/plantas-ornamentales-tampico-viveros-terra.webp",
+      "alt": "Monstera Deliciosa Piñanona en jardín tropical de Tampico",
+      "ancho": 1024,
+      "alto": 1536
+     },
+     "categoria": "Plantas de Interior",
+     "titulo": "Monstera Deliciosa (Piñanona) en Tampico: Cuidados y Guía Completa",
+     "texto": "Hojas grandes con perforaciones naturales y el ícono del diseño de interiores moderno: la Costilla de Adán encuentra en el clima…",
+     "minutos": 8
+    },
+    {
+     "href": "/blog/control-maleza-pasto-san-agustin-tampico",
+     "foto": {
+      "tipo": "foto",
+      "src": "/img/pasto-en-rollo-san-agustin-tampico.webp",
+      "alt": "Pasto San Agustín denso y sano sin maleza en un jardín de Tampico",
+      "ancho": 1024,
+      "alto": 1264
+     },
+     "categoria": "Pasto",
+     "titulo": "Control de Maleza en el Pasto San Agustín en Tampico",
+     "texto": "Coquillo, grama china, verdolaga: cómo identificar la maleza que invade el pasto en la recta final de las lluvias, qué herbicida usar…",
+     "minutos": 9
+    },
+    {
      "href": "/blog/palma-bambu-chamaedorea-tampico",
      "foto": {
       "tipo": "foto",

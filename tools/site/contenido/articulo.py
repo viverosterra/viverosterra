@@ -16,10 +16,13 @@ CLAVES = tuple(sorted(p.stem for p in DIR.glob("*.html")))
 NUEVOS = ("palma-bambu-chamaedorea-tampico", "plantas-seguras-mascotas-jardin-tampico",
           # Blog semanal (2026-11-23).
           "palma-rubelina-phoenix-roebelenii-tampico", "plantas-de-sombra-jardin-tampico",
+          # Artículos atrasados del blog semanal (sep–nov 2026), publicados el 2026-11-24.
+          "control-maleza-pasto-san-agustin-tampico", "monstera-deliciosa-costilla-de-adan-tampico", "cycas-revoluta-cuidados-tampico", "preparar-jardin-temporada-seca-tampico", "bambu-tarro-pantalla-privacidad-tampico", "composta-casera-jardin-tampico", "adenium-rosa-del-desierto-tampico", "jardin-colibries-mariposas-tampico", "flor-de-mayo-plumeria-tampico", "plantas-con-flor-invierno-tampico", "nochebuena-cuidados-tampico", "huerto-en-casa-tampico-otono-invierno",
           # SEO fase 2c (2026-11-11): la lista única de palmas, fusión con 301 de dos artículos (contenido/blog_seo_f2c.py).
           "palmas-para-jardin-tampico")
 # Publicados después de la SEO fase 2c: sus tarjetas del índice no estaban en la captura de antes de la 2c.
-TRAS_2C = ("palma-rubelina-phoenix-roebelenii-tampico", "plantas-de-sombra-jardin-tampico")
+TRAS_2C = ("palma-rubelina-phoenix-roebelenii-tampico", "plantas-de-sombra-jardin-tampico",
+           "control-maleza-pasto-san-agustin-tampico", "monstera-deliciosa-costilla-de-adan-tampico", "cycas-revoluta-cuidados-tampico", "preparar-jardin-temporada-seca-tampico", "bambu-tarro-pantalla-privacidad-tampico", "composta-casera-jardin-tampico", "adenium-rosa-del-desierto-tampico", "jardin-colibries-mariposas-tampico", "flor-de-mayo-plumeria-tampico", "plantas-con-flor-invierno-tampico", "nochebuena-cuidados-tampico", "huerto-en-casa-tampico-otono-invierno")
 MESES = ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre",
          "diciembre")
 M_LOGO = "Era el logo del publisher; ahora el publisher es una referencia por @id a la entidad única #negocio."
