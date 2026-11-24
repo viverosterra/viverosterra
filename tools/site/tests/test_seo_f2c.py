@@ -353,9 +353,11 @@ class FotosTest(unittest.TestCase):
         viejas = _fotos(_de_main("blog/index.html"))
         nuevas = _fotos(html_de("/blog"))
         # Las tarjetas de los artículos publicados después de la 2c no estaban en la captura.
-        tras = {t["foto"]["src"] for s in blog_indice.CONTENIDO["secciones"] for t in s["tarjetas"]
-                if t.get("foto") and t["href"].removeprefix("/blog/") in articulo.TRAS_2C}
-        nuevas = [f for f in nuevas if f[0] not in tras]
+        # Se quita una sola foto por tarjeta (src y alt): algunas reusan fotos que ya estaban en otras tarjetas.
+        for t in (t for s in blog_indice.CONTENIDO["secciones"] for t in s["tarjetas"]
+                  if t.get("foto") and t["href"].removeprefix("/blog/") in articulo.TRAS_2C):
+            i = next(k for k, f in enumerate(nuevas) if f[0] == t["foto"]["src"] and f[2] == t["foto"]["alt"])
+            del nuevas[i]
         self.assertGreater(len(viejas), 30)
         # Revisión de fotos, paso 1 (dueño, 2026-11-17): solo cambia lo que dice contenido/fotos_paso1.py.
         esperadas = [fotos_paso1.tarjeta(src, alt) for src, _srcset, alt in viejas]

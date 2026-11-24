@@ -25,9 +25,9 @@ def permitido_borrar(doc):
 
 
 class BlogParidadTest(unittest.TestCase):
-    def test_son_51_articulos(self):
+    def test_son_63_articulos(self):
         # 54 hasta la SEO fase 2c: seis salen con 301 y entra la lista única de palmas (articulo.NUEVOS).
-        self.assertEqual(len(articulo.CLAVES), 51)
+        self.assertEqual(len(articulo.CLAVES), 63)
         self.assertEqual(len(articulo.CLAVES) - len(articulo.NUEVOS), len(list(paridad_blog.DIR_TEXTO.glob("*.txt"))))
 
     def test_nada_se_agrega_al_texto_del_articulo(self):

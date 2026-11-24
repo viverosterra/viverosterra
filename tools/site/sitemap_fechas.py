@@ -38,7 +38,7 @@ def aplicar(xml, fechas):
 
 
 # Día de la entrega en curso: la fecha que toma una página cuando cambia su texto. Subirla al empezar cada entrega.
-ENTREGA = "2026-11-23"
+ENTREGA = "2026-11-24"
 REGISTRO = Path(__file__).resolve().parent / "sitemap_registro.json"
 ENTRADA_RE = re.compile(r"<loc>([^<]+)</loc>\s*<lastmod>([^<]*)</lastmod>")
 MAIN_RE = re.compile(r"<main\b.*?</main>", re.S)
